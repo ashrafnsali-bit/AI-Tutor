@@ -26,6 +26,8 @@ export interface StudentProfile {
   name: string;
   nameAr?: string;
   nameEn?: string;
+  username?: string;
+  email?: string;
   age: number;
   dateOfBirth: string;
   specialization: Specialization;

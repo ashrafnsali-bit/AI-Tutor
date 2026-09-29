@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import type { GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { X, User, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { X, User, ShieldAlert, CheckCircle2, Users } from 'lucide-react';
 
 interface StudentProfileModalProps {
   isOpen: boolean;
   profile: StudentProfile;
   onSave: (updated: StudentProfile) => void;
+  onSwitchAccount?: () => void;
   onClose: () => void;
 }
 
@@ -14,6 +15,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   isOpen,
   profile,
   onSave,
+  onSwitchAccount,
   onClose
 }) => {
   if (!isOpen) return null;
@@ -420,14 +422,30 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
           </div>
         </div>
 
-        <div className="modal-footer">
-          <button type="button" className="btn-secondary" onClick={onClose}>
-            {t.btnCancel}
-          </button>
-          <button type="submit" className="btn-primary">
-            <CheckCircle2 size={18} />
-            <span>{t.btnSaveProfile}</span>
-          </button>
+        <div className="modal-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {onSwitchAccount ? (
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                onClose();
+                onSwitchAccount();
+              }}
+              style={{ background: 'rgba(56, 189, 248, 0.1)', borderColor: 'rgba(56, 189, 248, 0.3)', color: '#38bdf8' }}
+            >
+              <Users size={16} />
+              <span>{formData.language === 'en' ? 'Switch / Add Student' : 'تبديل الطالب / إضافة حساب'}</span>
+            </button>
+          ) : <div />}
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button type="button" className="btn-secondary" onClick={onClose}>
+              {t.btnCancel}
+            </button>
+            <button type="submit" className="btn-primary">
+              <CheckCircle2 size={18} />
+              <span>{t.btnSaveProfile}</span>
+            </button>
+          </div>
         </div>
       </form>
       </div>

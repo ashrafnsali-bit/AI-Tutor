@@ -9,28 +9,34 @@ import {
   Award,
   Globe,
   Sparkles,
-  UserPlus
+  Users,
+  LogOut,
+  LogIn
 } from 'lucide-react';
 
 interface NavbarProps {
   profile: StudentProfile;
   hasApiKey: boolean;
+  isLoggedIn?: boolean;
   onOpenProfile: () => void;
   onOpenApiKey: () => void;
   onOpenParental: () => void;
   onOpenTutor?: () => void;
   onOpenAuth?: () => void;
+  onLogout?: () => void;
   onToggleLanguage: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   profile,
   hasApiKey,
+  isLoggedIn = false,
   onOpenProfile,
   onOpenApiKey,
   onOpenParental,
   onOpenTutor,
   onOpenAuth,
+  onLogout,
   onToggleLanguage
 }) => {
   const t = getTranslations(profile.language);
@@ -57,28 +63,71 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Student Quick Pill */}
-        <div className="student-badge-card" onClick={onOpenProfile} title={t.editProfileTooltip}>
-          <div className="avatar-circle">
-            <User size={18} />
-          </div>
-          <div className="student-meta">
-            <span className="student-name">{displayName}</span>
-            <div className="student-tags">
-              <span className="tag-spec">
-                {isPrimarySchool
-                  ? t.primarySchoolStage
-                  : isMiddleSchool
-                  ? t.middleSchoolStage
-                  : (t.specLabels[profile.specialization] || profile.specialization)}
-              </span>
-              <span className="tag-grade">{t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}</span>
+        {/* Student Profile & Session Section */}
+        <div className="student-profile-wrapper">
+          {/* Student Profile Badge Card */}
+          <div className="student-badge-card" onClick={onOpenProfile} title={t.editProfileTooltip}>
+            <div className="avatar-circle">
+              <User size={18} />
+            </div>
+            <div className="student-meta">
+              <span className="student-name">{displayName}</span>
+              <div className="student-tags">
+                <span className="tag-spec">
+                  {isPrimarySchool
+                    ? t.primarySchoolStage
+                    : isMiddleSchool
+                    ? t.middleSchoolStage
+                    : (t.specLabels[profile.specialization] || profile.specialization)}
+                </span>
+                <span className="tag-grade">{t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}</span>
+              </div>
+            </div>
+            <div className="student-score" title={t.masteryPointsTooltip}>
+              <Award size={14} className="score-icon" />
+              <span>{profile.masteryPoints} {t.pointsShort}</span>
             </div>
           </div>
-          <div className="student-score" title={t.masteryPointsTooltip}>
-            <Award size={14} className="score-icon" />
-            <span>{profile.masteryPoints} {t.pointsShort}</span>
-          </div>
+
+          {/* User Session Controls */}
+          {isLoggedIn ? (
+            <div className="user-session-actions">
+              {onOpenAuth && (
+                <button 
+                  type="button" 
+                  className="btn-user-action" 
+                  onClick={onOpenAuth}
+                  title={t.switchStudentTooltip}
+                >
+                  <Users size={14} />
+                  <span>{t.switchStudent}</span>
+                </button>
+              )}
+              {onLogout && (
+                <button 
+                  type="button" 
+                  className="btn-user-action btn-user-logout" 
+                  onClick={onLogout}
+                  title={t.logoutTooltip}
+                >
+                  <LogOut size={14} />
+                  <span>{t.logout}</span>
+                </button>
+              )}
+            </div>
+          ) : (
+            onOpenAuth && (
+              <button 
+                type="button" 
+                className="btn-user-action btn-user-login-cta" 
+                onClick={onOpenAuth}
+                title={t.loginOrRegister}
+              >
+                <LogIn size={14} />
+                <span>{t.loginOrRegister}</span>
+              </button>
+            )
+          )}
         </div>
 
         {/* Action Controls */}
@@ -139,22 +188,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <ShieldCheck size={16} className="parental-icon" />
             <span>{t.parentalBtn}</span>
           </button>
-
-          {/* Student Account / Database Registration Button */}
-          {onOpenAuth && (
-            <button 
-              type="button" 
-              className="btn-header btn-auth-portal" 
-              onClick={onOpenAuth}
-              title={isEn ? "Student Account / Register in Database" : "تسجيل طالب جديد أو تسجيل الدخول في قاعدة البيانات"}
-              style={{ background: 'rgba(56, 189, 248, 0.12)', borderColor: 'rgba(56, 189, 248, 0.35)', color: '#38bdf8' }}
-            >
-              <UserPlus size={16} />
-              <span>{isEn ? 'Student Portal' : 'تسجيل طالب جديد'}</span>
-            </button>
-          )}
         </div>
       </div>
     </header>
   );
 };
+

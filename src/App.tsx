@@ -9,7 +9,8 @@ import {
   getActiveUserAccount, 
   updateUserAccount, 
   saveUserSubjectLectures, 
-  loadUserSubjectLectures 
+  loadUserSubjectLectures,
+  logoutUserAccount
 } from './services/database';
 import { Navbar } from './components/Navbar';
 import { LectureRoadmap } from './components/LectureRoadmap';
@@ -105,10 +106,16 @@ export function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
+  // User session state
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return !!localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+  });
+
   // Check active user from database on startup
   useEffect(() => {
     getActiveUserAccount().then((user) => {
       if (user) {
+        setIsLoggedIn(true);
         setProfile(user);
         loadUserSubjectLectures(user.id, user.subject).then((savedLecs) => {
           if (savedLecs && savedLecs.length > 0) {
@@ -264,6 +271,7 @@ export function App() {
   };
 
   const handleAuthSuccess = async (user: UserAccount) => {
+    setIsLoggedIn(true);
     setProfile(user);
     const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
     const effectiveLecs = (dbLecs && dbLecs.length > 0) ? dbLecs : loadSubjectLectures(user.subject);
@@ -272,17 +280,29 @@ export function App() {
     setIsAuthOpen(false);
   };
 
+  const handleLogout = async () => {
+    await logoutUserAccount();
+    setIsLoggedIn(false);
+    const freshProfile = INITIAL_STUDENT_PROFILE;
+    setProfile(freshProfile);
+    const freshLecs = loadSubjectLectures(freshProfile.subject);
+    setLectures(freshLecs);
+    setSelectedLectureId(freshLecs[0]?.id || '');
+  };
+
   return (
     <div className="app-root">
       {/* Top Navigation */}
       <Navbar
         profile={profile}
         hasApiKey={!!apiKey}
+        isLoggedIn={isLoggedIn}
         onOpenProfile={() => setIsProfileOpen(true)}
         onOpenApiKey={() => setIsApiKeyOpen(true)}
         onOpenParental={() => setIsParentalOpen(true)}
         onOpenTutor={() => setIsChatOpen(true)}
         onOpenAuth={() => setIsAuthOpen(true)}
+        onLogout={handleLogout}
         onToggleLanguage={handleToggleLanguage}
       />
 
@@ -312,8 +332,6 @@ export function App() {
       </div>
 
       {/* Socratic Chat Drawer */}
-
-      {/* Socratic Chat Drawer */}
       <SocraticChat
         isOpen={isChatOpen}
         lecture={activeLecture}
@@ -340,6 +358,7 @@ export function App() {
         isOpen={isProfileOpen}
         profile={profile}
         onSave={handleSaveProfile}
+        onSwitchAccount={() => setIsAuthOpen(true)}
         onClose={() => setIsProfileOpen(false)}
       />
 
