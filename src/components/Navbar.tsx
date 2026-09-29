@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { 
@@ -6,12 +6,14 @@ import {
   Key, 
   ShieldCheck, 
   User, 
-  Award,
-  Globe,
-  Sparkles,
-  Users,
-  LogOut,
-  LogIn
+  Award, 
+  Globe, 
+  Sparkles, 
+  Users, 
+  LogOut, 
+  LogIn,
+  Menu,
+  X
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -39,6 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLogout,
   onToggleLanguage
 }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = getTranslations(profile.language);
   const isEn = profile.language === 'en';
   const displayName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
@@ -51,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Brand Logo */}
         <div className="brand-group">
           <div className="brand-icon-wrapper">
-            <GraduationCap className="brand-icon" size={28} />
+            <GraduationCap className="brand-icon" size={26} />
             <span className="brand-pulse"></span>
           </div>
           <div className="brand-text">
@@ -63,8 +66,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Student Profile & Session Section */}
-        <div className="student-profile-wrapper">
+        {/* Desktop Student Profile & Session Section */}
+        <div className="student-profile-wrapper desktop-only">
           {/* Student Profile Badge Card */}
           <div className="student-badge-card" onClick={onOpenProfile} title={t.editProfileTooltip}>
             <div className="avatar-circle">
@@ -130,9 +133,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
 
-        {/* Action Controls */}
-        <div className="header-actions">
-          {/* Refined Glassmorphic Language Switcher */}
+        {/* Desktop Action Controls */}
+        <div className="header-actions desktop-only">
+          {/* Language Switcher */}
           <div className="lang-pill-container" title={isEn ? "تبديل اللغة إلى العربية" : "Switch language to English"}>
             <Globe size={15} className="lang-globe-icon" />
             <div className="lang-segments-wrap">
@@ -189,7 +192,154 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>{t.parentalBtn}</span>
           </button>
         </div>
+
+        {/* Mobile Header Right Bar */}
+        <div className="mobile-header-bar mobile-only">
+          <button 
+            type="button" 
+            className="mobile-avatar-btn" 
+            onClick={onOpenProfile}
+            title={t.editProfileTooltip}
+          >
+            <div className="avatar-circle">
+              <User size={16} />
+            </div>
+            <span className="mobile-points-badge">{profile.masteryPoints} {t.pointsShort}</span>
+          </button>
+
+          <button
+            type="button"
+            className="btn-mobile-menu"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="القائمة"
+          >
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Drawer Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="mobile-nav-drawer mobile-only">
+          {/* Active Student Summary */}
+          <div className="mobile-student-summary" onClick={() => { setIsMobileMenuOpen(false); onOpenProfile(); }}>
+            <div className="avatar-circle">
+              <User size={20} />
+            </div>
+            <div className="mobile-student-info">
+              <div className="mobile-student-name">{displayName}</div>
+              <div className="mobile-student-stage">
+                {isPrimarySchool
+                  ? t.primarySchoolStage
+                  : isMiddleSchool
+                  ? t.middleSchoolStage
+                  : (t.specLabels[profile.specialization] || profile.specialization)}
+                {' • '}
+                {t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}
+              </div>
+            </div>
+            <div className="student-score">
+              <Award size={14} className="score-icon" />
+              <span>{profile.masteryPoints} {t.pointsShort}</span>
+            </div>
+          </div>
+
+          {/* Account Actions */}
+          <div className="mobile-account-actions">
+            {isLoggedIn ? (
+              <>
+                {onOpenAuth && (
+                  <button
+                    type="button"
+                    className="btn-mobile-action"
+                    onClick={() => { setIsMobileMenuOpen(false); onOpenAuth(); }}
+                  >
+                    <Users size={16} />
+                    <span>{t.switchStudent}</span>
+                  </button>
+                )}
+                {onLogout && (
+                  <button
+                    type="button"
+                    className="btn-mobile-action btn-mobile-logout"
+                    onClick={() => { setIsMobileMenuOpen(false); onLogout(); }}
+                  >
+                    <LogOut size={16} />
+                    <span>{t.logout}</span>
+                  </button>
+                )}
+              </>
+            ) : (
+              onOpenAuth && (
+                <button
+                  type="button"
+                  className="btn-mobile-action btn-mobile-login"
+                  onClick={() => { setIsMobileMenuOpen(false); onOpenAuth(); }}
+                >
+                  <LogIn size={16} />
+                  <span>{t.loginOrRegister}</span>
+                </button>
+              )
+            )}
+          </div>
+
+          {/* Language Toggle */}
+          <div className="mobile-drawer-lang">
+            <span className="drawer-section-title">
+              <Globe size={15} />
+              <span>{isEn ? "Language / اللغة" : "لغة الواجهة والتعلم"}</span>
+            </span>
+            <div className="mobile-lang-tabs">
+              <button
+                type="button"
+                className={`mobile-lang-tab ${profile.language === 'ar' ? 'active' : ''}`}
+                onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
+              >
+                العربية
+              </button>
+              <button
+                type="button"
+                className={`mobile-lang-tab ${profile.language === 'en' ? 'active' : ''}`}
+                onClick={() => { if (profile.language !== 'en') onToggleLanguage(); }}
+              >
+                English
+              </button>
+            </div>
+          </div>
+
+          {/* Primary Quick Actions */}
+          <div className="mobile-tools-grid">
+            {onOpenTutor && (
+              <button
+                type="button"
+                className="btn-mobile-tool btn-mobile-tutor"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenTutor(); }}
+              >
+                <Sparkles size={18} />
+                <span>{t.floatingTutorBtn}</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="btn-mobile-tool"
+              onClick={() => { setIsMobileMenuOpen(false); onOpenApiKey(); }}
+            >
+              <Key size={18} />
+              <span>{hasApiKey ? t.geminiActive : t.geminiPending}</span>
+            </button>
+
+            <button
+              type="button"
+              className="btn-mobile-tool"
+              onClick={() => { setIsMobileMenuOpen(false); onOpenParental(); }}
+            >
+              <ShieldCheck size={18} />
+              <span>{t.parentalBtn}</span>
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { AssessmentResult, Lecture, StudentProfile, Subject, UserAccount } from './types';
+import { BookOpen, Map } from 'lucide-react';
 import { 
   INITIAL_STUDENT_PROFILE, 
   loadSubjectLectures, 
@@ -270,6 +271,9 @@ export function App() {
     updateUserAccount(sanitized.id, sanitized).catch(() => {});
   };
 
+  // Mobile Tab view: 'lecture' | 'roadmap'
+  const [mobileTab, setMobileTab] = useState<'lecture' | 'roadmap'>('lecture');
+
   const handleAuthSuccess = async (user: UserAccount) => {
     setIsLoggedIn(true);
     setProfile(user);
@@ -306,8 +310,28 @@ export function App() {
         onToggleLanguage={handleToggleLanguage}
       />
 
+      {/* Mobile Learning Hub Segmented Switcher */}
+      <div className="mobile-workspace-tabs mobile-only">
+        <button
+          type="button"
+          className={`mobile-tab-btn ${mobileTab === 'lecture' ? 'tab-active' : ''}`}
+          onClick={() => setMobileTab('lecture')}
+        >
+          <BookOpen size={16} />
+          <span>{profile.language === 'en' ? 'Active Lecture' : 'المحاضرة والشرح'}</span>
+        </button>
+        <button
+          type="button"
+          className={`mobile-tab-btn ${mobileTab === 'roadmap' ? 'tab-active' : ''}`}
+          onClick={() => setMobileTab('roadmap')}
+        >
+          <Map size={16} />
+          <span>{profile.language === 'en' ? 'Course Roadmap' : 'مسار المنهج (4)'}</span>
+        </button>
+      </div>
+
       {/* Main Learning Hub Grid */}
-      <div className="learning-workspace">
+      <div className={`learning-workspace mobile-view-${mobileTab}`}>
         {/* Sidebar Roadmap with Locked Gates */}
         <LectureRoadmap
           lectures={lectures}
@@ -316,6 +340,7 @@ export function App() {
           profile={profile}
           onSelectLecture={(id) => {
             setSelectedLectureId(id);
+            setMobileTab('lecture');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
@@ -326,7 +351,10 @@ export function App() {
           lang={profile.language}
           onStartAssessment={() => setIsAssessmentOpen(true)}
           onOpenTutor={() => setIsChatOpen(true)}
-          onNextLecture={handleNextLecture}
+          onNextLecture={() => {
+            handleNextLecture();
+            setMobileTab('lecture');
+          }}
           hasNextUnlocked={hasNextUnlocked}
         />
       </div>
