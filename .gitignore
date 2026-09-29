@@ -1,0 +1,44 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Dependencies and Build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+credentials.json
+*.pem
+*.key
+*.cert
+
+# Private / Personal Documents & Temp files
+*.docx
+*.doc
+*.pdf
+~$*
+.DS_Store
+Thumbs.db
+
+# Agent / Tool cache
+.gemini/
+.agents/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
