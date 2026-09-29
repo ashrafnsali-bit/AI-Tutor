@@ -1,33 +1,14 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getCountryInfo } from '../data/curriculumCountries';
-import { 
-  BookOpen, 
-  Lightbulb, 
-  HelpCircle, 
-  ChevronRight, 
-  ChevronLeft, 
-  CheckCircle, 
-  Award, 
-  AlertOctagon,
-  Sparkles,
-  ArrowRight,
-  ArrowLeft,
-  Flame,
-  CheckCircle2,
-  Compass,
-  GraduationCap,
-  Building2,
-  Calendar,
-  Layers,
-  Target,
-  Sprout,
-  BookMarked,
-  FileCheck2,
-  Eye,
-  EyeOff,
-  HelpCircle as QuestionIcon
+import {
+  BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
+  AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
+  GraduationCap, Building2, Calendar, Layers, Target,
+  Sprout, BookMarked, FileCheck2, Eye, EyeOff, ChevronDown,
+  ChevronUp, Play, Pause, SkipForward, Calculator,
+  PenTool, Star, Zap, ArrowRight, RefreshCw, X
 } from 'lucide-react';
 
 interface LectureViewerProps {
@@ -41,611 +22,597 @@ interface LectureViewerProps {
 }
 
 export const LectureViewer: React.FC<LectureViewerProps> = ({
-  lecture,
-  lang,
-  profile,
-  onStartAssessment,
-  onOpenTutor,
-  onNextLecture,
-  hasNextUnlocked
+  lecture, lang, profile, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const [highestStepVisited, setHighestStepVisited] = useState(0);
-
-  // Interactive Formative Checks State (for "تحقق من فهمك")
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
-  const [formativeChecked, setFormativeChecked] = useState<Record<string, boolean>>({});
-  const [formativeHints, setFormativeHints] = useState<Record<string, boolean>>({});
-
-  // Textbook Exercises Solution Reveal State
+  const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
+  const [formativeHints, setFormativeHints]       = useState<Record<string, boolean>>({});
   const [revealedSolutions, setRevealedSolutions] = useState<Record<string, boolean>>({});
+  const [openSections, setOpenSections]           = useState<Record<number, boolean>>({ 0: true });
+  const [activeExampleStep, setActiveExampleStep] = useState<Record<string, number>>({});
+  const [showAllSteps, setShowAllSteps]           = useState<Record<string, boolean>>({});
 
   const t = getTranslations(lang);
   const isEn = lang === 'en';
   const countryInfo = getCountryInfo(lecture.country || profile?.country || 'SA');
 
-  // Reset steps & interactive states when switching lecture
   useEffect(() => {
-    setActiveStepIndex(0);
-    setHighestStepVisited(0);
     setFormativeSelected({});
     setFormativeChecked({});
     setFormativeHints({});
     setRevealedSolutions({});
+    setOpenSections({ 0: true });
+    setActiveExampleStep({});
+    setShowAllSteps({});
   }, [lecture.id]);
 
-  const title = (isEn ? lecture.titleEn : lecture.titleAr) || lecture.titleAr || '';
-  const subtitle = (isEn ? lecture.subtitleEn : lecture.subtitleAr) || lecture.subtitleAr || '';
-  const summary = (isEn ? lecture.summaryEn : lecture.summaryAr) || lecture.summaryAr || '';
-  const keyConcepts = (isEn ? lecture.keyConceptsEn : lecture.keyConceptsAr) || lecture.keyConceptsAr || [];
+  const title      = (isEn ? lecture.titleEn      : lecture.titleAr)      || lecture.titleAr  || '';
+  const subtitle   = (isEn ? lecture.subtitleEn   : lecture.subtitleAr)   || lecture.subtitleAr|| '';
+  const summary    = (isEn ? lecture.summaryEn     : lecture.summaryAr)    || lecture.summaryAr || '';
+  const keyConcepts= (isEn ? lecture.keyConceptsEn: lecture.keyConceptsAr)|| [];
+  const conceptMap = (isEn ? lecture.conceptMapEn : lecture.conceptMapAr) || [];
+  const outcomes   = (isEn ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || [];
+  const vocab      = lecture.vocabulary || [];
+  const warmup     = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || '';
 
-  const warmup = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || lecture.warmupHookAr;
-  const learningOutcomes = (isEn ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || lecture.learningOutcomesAr || [];
-  const conceptMap = (isEn ? lecture.conceptMapEn : lecture.conceptMapAr) || lecture.conceptMapAr || [];
-
-  const gradeName = isEn 
-    ? (lecture.gradeLevelNameEn || profile?.gradeLevel || 'Grade Level')
-    : (lecture.gradeLevelNameAr || (profile ? t.gradeLabels[profile.gradeLevel] : '') || 'الصف الدراسي المقرر');
-
-  const termName = isEn
-    ? (lecture.termEn || countryInfo.termDefaultEn)
-    : (lecture.termAr || countryInfo.termDefaultAr);
-
-  const unitTitle = isEn
-    ? (lecture.unitTitleEn || `${t.unitLabel} 1`)
-    : (lecture.unitTitleAr || `${t.unitLabel} الأولى`);
-
-  const lessonNumber = isEn
-    ? (lecture.lessonNumberEn || `${t.lessonNumberLabel} ${lecture.order}`)
-    : (lecture.lessonNumberAr || `${t.lessonNumberLabel} ${lecture.order}`);
-
-  const primaryExample = lecture.sections[0]?.interactiveExample;
-  const totalSteps = primaryExample?.steps.length || 0;
-  const hasCompletedAllSteps = totalSteps > 0 && highestStepVisited >= totalSteps - 1;
-
-  const handleStepChange = (newIdx: number) => {
-    setActiveStepIndex(newIdx);
-    setHighestStepVisited((prev) => Math.max(prev, newIdx));
+  const handleSelectFormativeOption = (checkId: string, oIdx: number) => {
+    if (!formativeChecked[checkId]) setFormativeSelected(p => ({ ...p, [checkId]: oIdx }));
   };
-
-  const scrollToExample = () => {
-    const el = document.getElementById('interactive-example-section');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
-  const handleSelectFormativeOption = (checkId: string, optIdx: number) => {
-    setFormativeSelected((prev) => ({ ...prev, [checkId]: optIdx }));
-    // reset checked state if student changes their answer
-    setFormativeChecked((prev) => ({ ...prev, [checkId]: false }));
-  };
-
   const handleCheckFormativeAnswer = (checkId: string) => {
-    setFormativeChecked((prev) => ({ ...prev, [checkId]: true }));
+    if (formativeSelected[checkId] !== undefined) setFormativeChecked(p => ({ ...p, [checkId]: true }));
   };
+  const handleToggleHint     = (id: string) => setFormativeHints(p => ({ ...p, [id]: !p[id] }));
+  const handleToggleSolution = (id: string) => setRevealedSolutions(p => ({ ...p, [id]: !p[id] }));
+  const toggleSection        = (idx: number) => setOpenSections(p => ({ ...p, [idx]: !p[idx] }));
+  const stepKey              = (secIdx: number, exTitle: string) => `${secIdx}-${exTitle}`;
+  const advanceStep = (key: string, total: number) =>
+    setActiveExampleStep(p => ({ ...p, [key]: Math.min((p[key] ?? 0) + 1, total - 1) }));
+  const resetSteps = (key: string) =>
+    setActiveExampleStep(p => ({ ...p, [key]: 0 }));
 
-  const handleToggleHint = (checkId: string) => {
-    setFormativeHints((prev) => ({ ...prev, [checkId]: !prev[checkId] }));
-  };
-
-  const handleToggleSolution = (exerciseId: string) => {
-    setRevealedSolutions((prev) => ({ ...prev, [exerciseId]: !prev[exerciseId] }));
-  };
+  const passed = lecture.lastAttempt?.passed;
+  const score  = lecture.lastAttempt?.score;
 
   return (
-    <main className="lecture-main-content">
-      {/* 1. Official National Curriculum Accreditation Bar */}
-      <section className="curriculum-accreditation-header">
-        <div className="accreditation-top-row">
-          <div className="ministry-badge">
-            <span className="country-flag-icon">{countryInfo.flag}</span>
-            <div className="ministry-text-col">
-              <span className="ministry-title">{isEn ? countryInfo.ministryEn : countryInfo.ministryAr}</span>
-              <span className="curriculum-subtag">{isEn ? countryInfo.systemNameEn : countryInfo.systemNameAr}</span>
-            </div>
-          </div>
-          <div className="accreditation-pills">
-            <span className="acc-pill pill-grade">
-              <GraduationCap size={14} />
-              <span>{gradeName}</span>
+    <main className="lecture-viewer-root" dir={isEn ? 'ltr' : 'rtl'}>
+
+      {/* ═══ BAND 1 — CURRICULUM BANNER ═══ */}
+      <div className="curriculum-identity-band">
+        <div className="curriculum-id-left">
+          <span className="country-flag-badge">{countryInfo.flag}</span>
+          <div className="curriculum-id-text">
+            <span className="curriculum-ministry-label">
+              {isEn ? countryInfo.systemNameEn : countryInfo.systemNameAr}
             </span>
-            <span className="acc-pill pill-term">
-              <Calendar size={13} />
-              <span>{termName}</span>
+            <span className="curriculum-sub-label">
+              {isEn ? countryInfo.ministryEn : countryInfo.ministryAr}
             </span>
           </div>
         </div>
+        <div className="curriculum-id-pills">
+          {lecture.gradeLevelNameAr && (
+            <span className="curr-pill curr-pill-grade">
+              <GraduationCap size={12} />
+              {isEn ? lecture.gradeLevelNameEn : lecture.gradeLevelNameAr}
+            </span>
+          )}
+          {lecture.termAr && (
+            <span className="curr-pill curr-pill-term">
+              <Calendar size={12} />
+              {isEn ? lecture.termEn : lecture.termAr}
+            </span>
+          )}
+          {lecture.unitTitleAr && (
+            <span className="curr-pill curr-pill-unit">
+              <Layers size={12} />
+              {isEn ? lecture.unitTitleEn : lecture.unitTitleAr}
+            </span>
+          )}
+        </div>
+      </div>
 
-        <div className="unit-lesson-locator">
-          <span className="locator-unit">
-            <Layers size={14} />
-            <strong>{t.unitLabel}:</strong> {unitTitle}
-          </span>
-          <span className="locator-separator">•</span>
-          <span className="locator-lesson">
+      {/* ═══ BAND 2 — LESSON TITLE HERO ═══ */}
+      <header className="lesson-hero-header">
+        <div className="lesson-hero-left">
+          <div className="lesson-number-chip">
             <BookMarked size={14} />
-            <strong>{lessonNumber}</strong>
-          </span>
-        </div>
-      </section>
+            {isEn ? lecture.lessonNumberEn : lecture.lessonNumberAr}
+          </div>
+          <h1 className="lesson-hero-title">{title}</h1>
+          <p className="lesson-hero-subtitle">{subtitle}</p>
 
-      {/* 2. Lecture Hero Banner */}
-      <section className="lecture-header-hero">
-        <div className="hero-top-row">
-          <span className="lecture-badge-pill">{t.lectureNumBadge(lecture.order)}</span>
-          <span className="lecture-duration-tag">{t.sessionDuration(lecture.durationMinutes)}</span>
-        </div>
-
-        <h2 className="hero-lecture-title">{title}</h2>
-        <p className="hero-lecture-subtitle">{subtitle}</p>
-
-        {/* Key Concepts Target Pills */}
-        <div className="key-concepts-container">
-          <span className="concepts-title">{t.keyConceptsHeading}</span>
-          <div className="concepts-pills-list">
-            {keyConcepts.map((concept, idx) => (
-              <span key={idx} className="concept-chip">
-                <Sparkles size={14} className="chip-sparkle" />
-                {concept}
+          <div className="lesson-hero-meta">
+            <span className="lesson-meta-badge">
+              <Flame size={13} />
+              {lecture.durationMinutes} {t.minutesUnit}
+            </span>
+            {passed !== undefined && (
+              <span className={`lesson-meta-badge ${passed ? 'badge-passed' : 'badge-failed'}`}>
+                <Star size={13} />
+                {passed ? `${score}% ✓` : `${score}% ✗`}
               </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Summary Box */}
-        <div className="summary-quote-box">
-          <p className="summary-quote-text">{summary}</p>
-        </div>
-      </section>
-
-      {/* 3. Mental Warm-up & Real-World Connection (التهيئة والربط بالواقع) */}
-      {warmup && (
-        <section className="lecture-warmup-card">
-          <div className="warmup-card-header">
-            <div className="warmup-icon-circle">
-              <Sprout size={20} />
-            </div>
-            <h3 className="warmup-title">{t.warmupHookHeading}</h3>
-          </div>
-          <p className="warmup-body-text">{warmup}</p>
-        </section>
-      )}
-
-      {/* 4. Target Learning Outcomes & Indicators (نواتج التعلم ومؤشرات الأداء) */}
-      {learningOutcomes && learningOutcomes.length > 0 && (
-        <section className="lecture-outcomes-card">
-          <div className="outcomes-card-header">
-            <div className="outcomes-icon-circle">
-              <Target size={20} />
-            </div>
-            <h3 className="outcomes-title">{t.learningOutcomesHeading}</h3>
-          </div>
-          <ul className="outcomes-list">
-            {learningOutcomes.map((outcome, idx) => (
-              <li key={idx} className="outcome-item">
-                <FileCheck2 size={16} className="outcome-check-icon" />
-                <span>{outcome}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* 5. Key Vocabulary & Official Definitions (فكرة الدرس والمفردات) */}
-      {lecture.vocabulary && lecture.vocabulary.length > 0 && (
-        <section className="lecture-vocabulary-card">
-          <div className="vocabulary-card-header">
-            <div className="vocab-icon-circle">
-              <BookOpen size={20} />
-            </div>
-            <h3 className="vocab-title">{t.lessonIdeaHeading}</h3>
-          </div>
-          <div className="vocabulary-grid">
-            {lecture.vocabulary.map((vItem, vIdx) => {
-              const term = isEn ? vItem.termEn : vItem.termAr;
-              const def = isEn ? vItem.definitionEn : vItem.definitionAr;
-              return (
-                <div key={vIdx} className="vocab-item-card">
-                  <div className="vocab-term-badge">
-                    <span className="term-label-small">{t.vocabularyTerm}</span>
-                    <h4 className="vocab-term-name">{term}</h4>
-                  </div>
-                  <div className="vocab-def-box">
-                    <span className="def-label-small">{t.vocabularyDef}</span>
-                    <p className="vocab-def-text">{def}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-      {/* 6. Mandatory Assessment Gate Banner */}
-      <section className={`assessment-trigger-banner ${lecture.isCompleted ? 'banner-completed' : lecture.lastAttempt ? 'banner-retry' : 'banner-pending'}`}>
-        <div className="trigger-content">
-          <div className="trigger-icon-box">
-            {lecture.isCompleted ? (
-              <Award size={28} className="trigger-icon-done" />
-            ) : lecture.lastAttempt ? (
-              <AlertOctagon size={28} className="trigger-icon-retry" />
-            ) : (
-              <Flame size={28} className="trigger-icon-gate" />
+            )}
+            {lecture.isCompleted && (
+              <span className="lesson-meta-badge badge-completed">
+                <CheckCircle2 size={13} />
+                {isEn ? 'Completed' : 'مكتمل'}
+              </span>
             )}
           </div>
-          <div className="trigger-text-col">
-            <div className="trigger-badge-row">
-              <span className="trigger-badge">{t.gateRequirementBadge}</span>
-              {lecture.isCompleted && <span className="trigger-badge-pass">{t.passedBadge}</span>}
-              {!lecture.isCompleted && hasCompletedAllSteps && (
-                <span className="trigger-badge-ready">
-                  <CheckCircle2 size={13} />
-                  <span>{isEn ? 'Worked Steps Reviewed' : 'تم استيعاب الخطوات'}</span>
-                </span>
-              )}
+        </div>
+      </header>
+
+      {/* ═══ SECTION 1 — WARM-UP / REAL WORLD HOOK ═══ */}
+      {warmup && (
+        <section className="lesson-section warmup-section">
+          <div className="lesson-section-head warmup-head">
+            <div className="section-head-icon warmup-icon-wrap">
+              <Zap size={18} />
             </div>
-            <h3 className="trigger-title">
-              {lecture.isCompleted
-                ? t.bannerPassedTitle(lecture.lastAttempt?.score || 100)
-                : lecture.lastAttempt
-                ? t.bannerRetryTitle(lecture.lastAttempt.score)
-                : t.bannerPendingTitle(lecture.order)}
-            </h3>
-            <p className="trigger-desc">
-              {lecture.isCompleted
-                ? t.bannerPassedDesc
-                : lecture.lastAttempt
-                ? t.bannerRetryDesc
-                : !hasCompletedAllSteps
-                ? (isEn 
-                    ? 'Recommended: Review the interactive step-by-step example below before attempting the mandatory assessment.' 
-                    : 'يُنصح باستعراض خطوات التطبيق العملي التفاعلي بالأسفل لضمان جاهزيتك قبل خوض الاختبار الإلزامي.')
-                : t.bannerPendingDesc}
-            </p>
+            <h2 className="lesson-section-title">
+              {isEn ? '🌍 Real-World Connection' : '🌍 ربط بالحياة اليومية'}
+            </h2>
           </div>
+          <div className="warmup-bubble">
+            <p className="warmup-text">{warmup}</p>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ SECTION 2 — LEARNING OUTCOMES ═══ */}
+      {outcomes.length > 0 && (
+        <section className="lesson-section outcomes-section">
+          <div className="lesson-section-head outcomes-head">
+            <div className="section-head-icon outcomes-icon-wrap">
+              <Target size={18} />
+            </div>
+            <h2 className="lesson-section-title">
+              {isEn ? '🎯 Learning Objectives' : '🎯 أهداف الدرس'}
+            </h2>
+          </div>
+          <div className="outcomes-checklist">
+            {outcomes.map((out, i) => (
+              <div key={i} className="outcome-item">
+                <div className="outcome-check-circle">
+                  <CheckCircle2 size={14} />
+                </div>
+                <span className="outcome-text">{out}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══ SECTION 3 — KEY VOCABULARY (مفردات الدرس) ═══ */}
+      {vocab.length > 0 && (
+        <section className="lesson-section vocab-section">
+          <div className="lesson-section-head vocab-head">
+            <div className="section-head-icon vocab-icon-wrap">
+              <BookOpen size={18} />
+            </div>
+            <h2 className="lesson-section-title">
+              {isEn ? '📚 Key Terms & Vocabulary' : '📚 مصطلحات الدرس'}
+            </h2>
+          </div>
+          <div className="vocab-grid">
+            {vocab.map((v, i) => (
+              <div key={i} className="vocab-card">
+                <div className="vocab-term-row">
+                  <span className="vocab-term-ar">{v.termAr}</span>
+                  {v.termEn !== v.termAr && (
+                    <span className="vocab-term-en">{v.termEn}</span>
+                  )}
+                </div>
+                <p className="vocab-definition">
+                  {isEn ? v.definitionEn : v.definitionAr}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══ SECTION 4 — LESSON CONTENT SECTIONS ═══ */}
+      <section className="lesson-sections-container">
+        <div className="lesson-section-head content-head">
+          <div className="section-head-icon content-icon-wrap">
+            <PenTool size={18} />
+          </div>
+          <h2 className="lesson-section-title">
+            {isEn ? '📖 Lesson Content' : '📖 شرح الدرس'}
+          </h2>
         </div>
 
-        <div className="trigger-actions">
-          {!hasCompletedAllSteps && !lecture.isCompleted && (
-            <button 
-              type="button" 
-              className="btn-secondary btn-review-first"
-              onClick={scrollToExample}
-              title={isEn ? 'Scroll to worked example' : 'الانتقال إلى خطوات التطبيق العملي'}
-            >
-              <Compass size={17} />
-              <span>{isEn ? 'Explore Steps First' : 'خطوات الحل أولاً'}</span>
-            </button>
-          )}
-
-          <button 
-            type="button" 
-            className="btn-primary btn-launch-quiz"
-            onClick={onStartAssessment}
-          >
-            <BookOpen size={18} />
-            <span>{lecture.isCompleted ? t.btnRetakeQuiz : lecture.lastAttempt ? t.btnRetryNow : t.btnLaunchQuiz}</span>
-          </button>
-
-          {hasNextUnlocked && onNextLecture && (
-            <button 
-              type="button" 
-              className="btn-success btn-next-lecture"
-              onClick={onNextLecture}
-            >
-              <span>{t.btnNextLecture}</span>
-              {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
-            </button>
-          )}
-        </div>
-      </section>
-
-      {/* 7. Main In-Depth Lecture Sections */}
-      <div className="lecture-sections-list">
-        <div className="sections-header-divider">
-          <BookOpen size={18} />
-          <span>{t.detailedExplanationHeading}</span>
-        </div>
-
-        {lecture.sections.map((section, sIdx) => {
-          const sectionTitle = (isEn ? section.titleEn : section.titleAr) || section.titleAr || '';
-          const sectionContent = (isEn ? section.contentEn : section.contentAr) || section.contentAr || '';
-          const tips = (isEn ? section.tipsEn : section.tipsAr) || section.tipsAr || [];
-          const check = section.formativeCheck;
+        {lecture.sections.map((sec, secIdx) => {
+          const secTitle   = isEn ? sec.titleEn   : sec.titleAr;
+          const secContent = isEn ? sec.contentEn : sec.contentAr;
+          const tips       = isEn ? sec.tipsEn    : sec.tipsAr;
+          const check      = sec.formativeCheck;
+          const ex         = sec.interactiveExample;
+          const isOpen     = openSections[secIdx] !== false;
+          const exKey      = ex ? stepKey(secIdx, ex.titleAr || '') : '';
+          const currentStep = ex ? (activeExampleStep[exKey] ?? 0) : 0;
+          const allShown    = ex ? (showAllSteps[exKey] ?? false) : false;
 
           return (
-            <article key={sIdx} className="lecture-section-card">
-              <h3 className="section-title">{sectionTitle}</h3>
-              <div className="section-body-text">
-                {sectionContent.split('\n\n').map((paragraph, pIdx) => (
-                  <p key={pIdx} className="section-paragraph">{paragraph}</p>
-                ))}
-              </div>
+            <article key={secIdx} className="content-section-card">
+              {/* Section Header / Accordion Toggle */}
+              <button
+                type="button"
+                className={`section-accordion-header ${isOpen ? 'accordion-open' : ''}`}
+                onClick={() => toggleSection(secIdx)}
+              >
+                <div className="section-header-left">
+                  <span className="section-number-badge">{secIdx + 1}</span>
+                  <span className="section-title-text">{secTitle}</span>
+                </div>
+                <div className="section-header-right">
+                  {check && (
+                    <span className="section-has-check-badge">
+                      <CheckCircle size={12} />
+                      {isEn ? 'Quiz' : 'تحقق'}
+                    </span>
+                  )}
+                  {ex && (
+                    <span className="section-has-example-badge">
+                      <Calculator size={12} />
+                      {isEn ? 'Example' : 'مثال'}
+                    </span>
+                  )}
+                  {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </div>
+              </button>
 
-              {/* Interactive Step-by-Step Worked Example */}
-              {section.interactiveExample && (() => {
-                const example = section.interactiveExample;
-                const exampleTitle = (isEn ? example.titleEn : example.titleAr) || example.titleAr || '';
-                const exampleTakeaway = (isEn ? example.takeawayEn : example.takeawayAr) || example.takeawayAr || '';
-                const activeStep = example.steps[activeStepIndex];
-                const stepText = (isEn ? activeStep?.textEn : activeStep?.textAr) || activeStep?.textAr || '';
-                const stepNote = (isEn ? activeStep?.noteEn : activeStep?.noteAr) || activeStep?.noteAr;
+              {isOpen && (
+                <div className="section-body">
 
-                return (
-                  <div id="interactive-example-section" className="interactive-example-box">
-                    <div className="example-header">
-                      <div className="example-title-group">
-                        <span className="example-pill">{t.practicalExampleBadge}</span>
-                        <h4 className="example-heading">{exampleTitle}</h4>
-                      </div>
-                      {example.equation && (
-                        <div className="equation-badge" dir="ltr">
-                          <code>{example.equation}</code>
-                        </div>
-                      )}
-                    </div>
+                  {/* Main Explanation Text */}
+                  <div className="section-explanation">
+                    {secContent.split('\n').filter(Boolean).map((para, pi) => (
+                      <p key={pi} className="section-para">{para}</p>
+                    ))}
+                  </div>
 
-                    {/* Steps Visualizer */}
-                    <div className="steps-visualizer">
-                      <div className="step-display-card">
-                        <div className="step-counter-row">
-                          <span className="step-counter">
-                            {t.stepCounter(activeStepIndex + 1, example.steps.length)}
-                          </span>
-                          <span className="step-progress-percent">
-                            {Math.round(((activeStepIndex + 1) / example.steps.length) * 100)}%
-                          </span>
+                  {/* ── INTERACTIVE WORKED EXAMPLE (Step-by-Step) ── */}
+                  {ex && (
+                    <div className="worked-example-card">
+                      <div className="we-header">
+                        <div className="we-header-left">
+                          <div className="we-icon-wrap">
+                            <Calculator size={16} />
+                          </div>
+                          <div>
+                            <span className="we-label">{isEn ? 'Worked Example' : 'مثال محلول'}</span>
+                            <h4 className="we-title">
+                              {isEn ? ex.titleEn : ex.titleAr}
+                            </h4>
+                          </div>
                         </div>
-                        <div className="step-main-text">
-                          {stepText}
-                        </div>
-                        {stepNote && (
-                          <div className="step-note-box">
-                            💡 <strong>{t.mathNote}</strong> {stepNote}
+                        {ex.equation && (
+                          <div className="we-equation-badge">
+                            {ex.equation}
                           </div>
                         )}
                       </div>
 
-                      {/* Numbered Step Buttons Bar */}
-                      <div className="step-numbered-tabs">
-                        {example.steps.map((_, dotIdx) => (
-                          <button
-                            key={dotIdx}
-                            type="button"
-                            className={`step-tab-btn ${dotIdx === activeStepIndex ? 'tab-btn-active' : dotIdx <= highestStepVisited ? 'tab-btn-visited' : ''}`}
-                            onClick={() => handleStepChange(dotIdx)}
-                            title={`${isEn ? 'Jump to Step' : 'الانتقال للخطوة'} ${dotIdx + 1}`}
-                          >
-                            <span>{dotIdx + 1}</span>
-                          </button>
+                      {/* Step-by-Step Progress */}
+                      <div className="we-steps-progress">
+                        {ex.steps.map((_, sIdx) => (
+                          <div
+                            key={sIdx}
+                            className={`we-step-dot ${sIdx <= currentStep || allShown ? 'step-dot-active' : ''} ${sIdx === currentStep && !allShown ? 'step-dot-current' : ''}`}
+                          />
                         ))}
                       </div>
 
-                      <div className="steps-navigation-bar">
-                        <button
-                          type="button"
-                          className="btn-step-nav"
-                          disabled={activeStepIndex === 0}
-                          onClick={() => handleStepChange(Math.max(0, activeStepIndex - 1))}
-                        >
-                          {isEn ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
-                          <span>{t.btnPrevStep}</span>
-                        </button>
+                      {/* Steps Display */}
+                      <div className="we-steps-list">
+                        {ex.steps.map((step, sIdx) => {
+                          const visible = allShown || sIdx <= currentStep;
+                          if (!visible) return null;
+                          const stepText = isEn ? step.textEn : step.textAr;
+                          const stepNote = isEn ? step.noteEn : step.noteAr;
+                          return (
+                            <div
+                              key={sIdx}
+                              className={`we-step-row ${sIdx === currentStep && !allShown ? 'step-row-highlight' : ''}`}
+                            >
+                              <div className="we-step-num">{step.stepNumber}</div>
+                              <div className="we-step-content">
+                                <p className="we-step-text">{stepText}</p>
+                                {stepNote && (
+                                  <span className="we-step-note">
+                                    <Lightbulb size={11} /> {stepNote}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
 
-                        {activeStepIndex < example.steps.length - 1 ? (
+                      {/* Step Navigation Controls */}
+                      <div className="we-nav-controls">
+                        {!allShown && currentStep < ex.steps.length - 1 ? (
                           <button
                             type="button"
-                            className="btn-step-nav btn-step-next-active"
-                            onClick={() => handleStepChange(activeStepIndex + 1)}
+                            className="we-btn-next"
+                            onClick={() => advanceStep(exKey, ex.steps.length)}
                           >
-                            <span>{t.btnNextStep}</span>
-                            {isEn ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+                            <Play size={14} />
+                            {isEn ? 'Next Step' : 'الخطوة التالية'}
                           </button>
-                        ) : (
-                          <div className="step-completed-badge">
-                            <CheckCircle2 size={16} />
-                            <span>{isEn ? 'All Steps Reviewed! Ready for Quiz' : 'أكملت جميع الخطوات! جاهز للاختبار'}</span>
+                        ) : !allShown ? (
+                          <button
+                            type="button"
+                            className="we-btn-next we-btn-finish"
+                            onClick={() => setShowAllSteps(p => ({ ...p, [exKey]: true }))}
+                          >
+                            <SkipForward size={14} />
+                            {isEn ? 'See All Steps' : 'عرض جميع الخطوات'}
+                          </button>
+                        ) : null}
+                        <button
+                          type="button"
+                          className="we-btn-reset"
+                          onClick={() => {
+                            resetSteps(exKey);
+                            setShowAllSteps(p => ({ ...p, [exKey]: false }));
+                          }}
+                        >
+                          <RefreshCw size={13} />
+                          {isEn ? 'Restart' : 'إعادة'}
+                        </button>
+                      </div>
+
+                      {/* Golden Takeaway */}
+                      <div className="we-takeaway">
+                        <Star size={14} className="takeaway-star" />
+                        <p className="takeaway-text">
+                          {isEn ? ex.takeawayEn : ex.takeawayAr}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ── TIPS BOX ── */}
+                  {tips && tips.length > 0 && (
+                    <div className="tips-box-v2">
+                      <div className="tips-v2-header">
+                        <Lightbulb size={16} className="tips-v2-icon" />
+                        <span>{isEn ? 'Key Tips' : 'نصائح مهمة'}</span>
+                      </div>
+                      <ul className="tips-v2-list">
+                        {tips.map((tip, ti) => (
+                          <li key={ti} className="tips-v2-item">
+                            <span className="tip-dot">◆</span>
+                            <span>{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* ── FORMATIVE CHECK ── */}
+                  {check && (() => {
+                    const opts        = isEn ? check.optionsEn : check.optionsAr;
+                    const qText       = isEn ? check.questionEn : check.questionAr;
+                    const explanation = isEn ? check.explanationEn : check.explanationAr;
+                    const hint        = isEn ? check.hintEn : check.hintAr;
+                    const selectedIdx = formativeSelected[check.id];
+                    const isChecked   = formativeChecked[check.id];
+                    const isCorrect   = isChecked && selectedIdx === check.correctIndex;
+                    const isHintOpen  = formativeHints[check.id];
+
+                    return (
+                      <div className="formative-check-v2">
+                        <div className="fc-header-v2">
+                          <div className="fc-icon-v2">❓</div>
+                          <div>
+                            <span className="fc-label-v2">
+                              {isEn ? 'Check Your Understanding' : 'تحقق من فهمك'}
+                            </span>
+                            <p className="fc-question-v2">{qText}</p>
+                          </div>
+                        </div>
+
+                        <div className="fc-options-v2">
+                          {opts.map((opt, oIdx) => {
+                            let cls = 'fc-option-v2';
+                            const isSelected = selectedIdx === oIdx;
+                            if (isChecked) {
+                              if (oIdx === check.correctIndex) cls += ' fc-opt-correct';
+                              else if (isSelected)            cls += ' fc-opt-wrong';
+                            } else if (isSelected) {
+                              cls += ' fc-opt-selected';
+                            }
+                            return (
+                              <button
+                                key={oIdx}
+                                type="button"
+                                className={cls}
+                                onClick={() => handleSelectFormativeOption(check.id, oIdx)}
+                              >
+                                <span className="fc-opt-letter">
+                                  {['أ', 'ب', 'ج', 'د'][oIdx] || String.fromCharCode(65 + oIdx)}
+                                </span>
+                                <span className="fc-opt-text">{opt}</span>
+                                {isChecked && oIdx === check.correctIndex && (
+                                  <CheckCircle2 size={14} className="fc-opt-icon-ok" />
+                                )}
+                                {isChecked && isSelected && oIdx !== check.correctIndex && (
+                                  <X size={14} className="fc-opt-icon-err" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <div className="fc-actions-v2">
+                          {!isChecked && (
+                            <button
+                              type="button"
+                              className="fc-btn-check"
+                              disabled={selectedIdx === undefined}
+                              onClick={() => handleCheckFormativeAnswer(check.id)}
+                            >
+                              <CheckCircle2 size={15} />
+                              {isEn ? 'Check Answer' : 'تحقق من الإجابة'}
+                            </button>
+                          )}
+                          {hint && (
+                            <button
+                              type="button"
+                              className="fc-btn-hint"
+                              onClick={() => handleToggleHint(check.id)}
+                            >
+                              <Lightbulb size={14} />
+                              {isHintOpen ? (isEn ? 'Hide Hint' : 'إخفاء التلميح') : (isEn ? 'Show Hint' : 'تلميح')}
+                            </button>
+                          )}
+                        </div>
+
+                        {isHintOpen && hint && (
+                          <div className="fc-hint-box">
+                            <Lightbulb size={13} />
+                            <span>{hint}</span>
+                          </div>
+                        )}
+
+                        {isChecked && (
+                          <div className={`fc-feedback-v2 ${isCorrect ? 'fc-correct' : 'fc-wrong'}`}>
+                            <div className="fc-feedback-head">
+                              {isCorrect
+                                ? <><CheckCircle size={16} /> <span>{isEn ? '✅ Correct! Well done!' : '✅ ممتاز! إجابة صحيحة!'}</span></>
+                                : <><AlertOctagon size={16} /> <span>{isEn ? '❌ Not quite right.' : '❌ ليست الإجابة الصحيحة.'}</span></>
+                              }
+                            </div>
+                            <p className="fc-feedback-exp">{explanation}</p>
                           </div>
                         )}
                       </div>
-                    </div>
-
-                    <div className="example-takeaway">
-                      <span className="takeaway-badge">{t.goldenTakeawayBadge}</span>
-                      <p className="takeaway-text">{exampleTakeaway}</p>
-                    </div>
-                  </div>
-                );
-              })()}
-
-              {/* Interactive "تحقق من فهمك" (Formative Check) embedded in section */}
-              {check && (() => {
-                const questionText = isEn ? check.questionEn : check.questionAr;
-                const options = isEn ? check.optionsEn : check.optionsAr;
-                const explanation = isEn ? check.explanationEn : check.explanationAr;
-                const hint = isEn ? check.hintEn : check.hintAr;
-                const selectedIdx = formativeSelected[check.id];
-                const isChecked = formativeChecked[check.id];
-                const isCorrect = isChecked && selectedIdx === check.correctIndex;
-                const isWrong = isChecked && selectedIdx !== undefined && selectedIdx !== check.correctIndex;
-                const isHintOpen = formativeHints[check.id];
-
-                return (
-                  <div className="formative-check-card">
-                    <div className="formative-check-header">
-                      <div className="formative-title-group">
-                        <QuestionIcon size={18} className="formative-icon" />
-                        <h4 className="formative-heading">{t.formativeCheckHeading}</h4>
-                      </div>
-                      <span className="formative-subtitle">{t.formativeCheckSubtitle}</span>
-                    </div>
-
-                    <p className="formative-question-text">{questionText}</p>
-
-                    {/* Options List */}
-                    <div className="formative-options-grid">
-                      {options.map((opt, oIdx) => {
-                        const isSelected = selectedIdx === oIdx;
-                        let optionClass = 'formative-option-btn';
-                        if (isSelected) optionClass += ' option-selected';
-                        if (isChecked) {
-                          if (oIdx === check.correctIndex) optionClass += ' option-correct';
-                          else if (isSelected) optionClass += ' option-wrong';
-                        }
-
-                        return (
-                          <button
-                            key={oIdx}
-                            type="button"
-                            className={optionClass}
-                            onClick={() => handleSelectFormativeOption(check.id, oIdx)}
-                          >
-                            <span className="option-indicator-circle">
-                              {String.fromCharCode(65 + oIdx)}
-                            </span>
-                            <span className="option-text">{opt}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Action & Feedback Row */}
-                    <div className="formative-actions-row">
-                      <button
-                        type="button"
-                        className="btn-check-answer"
-                        disabled={selectedIdx === undefined}
-                        onClick={() => handleCheckFormativeAnswer(check.id)}
-                      >
-                        <CheckCircle2 size={16} />
-                        <span>{t.checkAnswerBtn}</span>
-                      </button>
-
-                      {hint && (
-                        <button
-                          type="button"
-                          className="btn-formative-hint"
-                          onClick={() => handleToggleHint(check.id)}
-                        >
-                          <Lightbulb size={15} />
-                          <span>{t.showHintBtn}</span>
-                        </button>
-                      )}
-                    </div>
-
-                    {/* Guiding Hint Dropdown */}
-                    {isHintOpen && hint && (
-                      <div className="formative-hint-box">
-                        💡 <strong>تلميح:</strong> {hint}
-                      </div>
-                    )}
-
-                    {/* Post-Check Feedback Banner */}
-                    {isChecked && (
-                      <div className={`formative-feedback-box ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`}>
-                        <div className="feedback-headline">
-                          {isCorrect ? (
-                            <>
-                              <CheckCircle size={18} className="feedback-icon-ok" />
-                              <span>{t.correctFeedback}</span>
-                            </>
-                          ) : (
-                            <>
-                              <AlertOctagon size={18} className="feedback-icon-err" />
-                              <span>{t.incorrectFeedback}</span>
-                            </>
-                          )}
-                        </div>
-                        <p className="feedback-explanation">{explanation}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
-
-              {/* Tips & Common Pitfalls */}
-              {tips && tips.length > 0 && (
-                <div className="tips-box">
-                  <div className="tips-header">
-                    <Lightbulb size={18} className="tips-icon" />
-                    <span className="tips-title">{t.tipsHeader}</span>
-                  </div>
-                  <ul className="tips-list">
-                    {tips.map((tip, tIdx) => (
-                      <li key={tIdx} className="tip-item">
-                        <CheckCircle size={15} className="tip-check" />
-                        <span>{tip}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    );
+                  })()}
                 </div>
               )}
             </article>
           );
         })}
-      </div>
+      </section>
 
-      {/* 8. Concept Map & Lesson Synthesis (خريطة المفاهيم وخلاصة الدرس) */}
-      {conceptMap && conceptMap.length > 0 && (
-        <section className="concept-map-card">
-          <div className="concept-map-header">
-            <Compass size={20} className="map-icon" />
-            <h3 className="concept-map-title">{t.conceptMapHeading}</h3>
+      {/* ═══ SECTION 5 — LESSON SUMMARY ═══ */}
+      {summary && (
+        <section className="lesson-section summary-section">
+          <div className="lesson-section-head summary-head">
+            <div className="section-head-icon summary-icon-wrap">
+              <Sprout size={18} />
+            </div>
+            <h2 className="lesson-section-title">
+              {isEn ? '📝 Lesson Summary' : '📝 ملخص الدرس'}
+            </h2>
           </div>
-          <div className="concept-map-nodes">
-            {conceptMap.map((node, nIdx) => (
-              <div key={nIdx} className="concept-node-item">
-                <span className="node-number">{nIdx + 1}</span>
-                <span className="node-text">{node}</span>
+          <div className="summary-card">
+            <p className="summary-text">{summary}</p>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ SECTION 6 — KEY CONCEPTS ═══ */}
+      {keyConcepts.length > 0 && (
+        <section className="lesson-section concepts-section">
+          <div className="lesson-section-head concepts-head">
+            <div className="section-head-icon concepts-icon-wrap">
+              <Layers size={18} />
+            </div>
+            <h2 className="lesson-section-title">
+              {isEn ? '🔑 Key Concepts' : '🔑 المفاهيم الأساسية'}
+            </h2>
+          </div>
+          <div className="concepts-tags">
+            {keyConcepts.map((c, i) => (
+              <span key={i} className="concept-tag">{c}</span>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══ SECTION 7 — CONCEPT MAP ═══ */}
+      {conceptMap.length > 0 && (
+        <section className="lesson-section concept-map-section">
+          <div className="lesson-section-head concept-map-head">
+            <div className="section-head-icon concept-map-icon-wrap">
+              <Compass size={18} />
+            </div>
+            <h2 className="lesson-section-title">
+              {isEn ? '🗺️ Concept Map' : '🗺️ خريطة المفاهيم'}
+            </h2>
+          </div>
+          <div className="concept-map-v2">
+            {conceptMap.map((node, i) => (
+              <div key={i} className="concept-map-node-v2">
+                <span className="cm-node-num">{i + 1}</span>
+                <span className="cm-node-text">{node}</span>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {/* 9. Guided Official Textbook Exercises (تدريبات وأنشطة الكتاب المدرسي المقرر) */}
+      {/* ═══ SECTION 8 — TEXTBOOK EXERCISES (تدريبات الكتاب) ═══ */}
       {lecture.textbookExercises && lecture.textbookExercises.length > 0 && (
-        <section className="textbook-exercises-card">
-          <div className="textbook-card-header">
-            <FileCheck2 size={20} className="exercises-icon" />
-            <h3 className="exercises-title">{t.textbookExercisesHeading}</h3>
+        <section className="lesson-section exercises-section">
+          <div className="lesson-section-head exercises-head">
+            <div className="section-head-icon exercises-icon-wrap">
+              <FileCheck2 size={18} />
+            </div>
+            <h2 className="lesson-section-title">
+              {isEn ? '✏️ Guided Exercises' : '✏️ تدريبات الكتاب المدرسي'}
+            </h2>
           </div>
-          <div className="exercises-list">
+
+          <div className="exercises-v2-list">
             {lecture.textbookExercises.map((ex, exIdx) => {
-              const qText = isEn ? ex.questionEn : ex.questionAr;
-              const steps = isEn ? ex.solutionStepsEn : ex.solutionStepsAr;
-              const answer = isEn ? ex.answerEn : ex.answerAr;
-              const isRevealed = revealedSolutions[ex.id];
+              const qText  = isEn ? ex.questionEn  : ex.questionAr;
+              const steps  = isEn ? ex.solutionStepsEn : ex.solutionStepsAr;
+              const answer = isEn ? ex.answerEn    : ex.answerAr;
+              const revealed = revealedSolutions[ex.id];
 
               return (
-                <div key={exIdx} className="exercise-box">
-                  <div className="exercise-question-row">
-                    <span className="exercise-number-badge">تمرين {exIdx + 1}</span>
-                    <p className="exercise-question-text">{qText}</p>
+                <div key={exIdx} className="exercise-v2-card">
+                  <div className="ex-v2-top">
+                    <div className="ex-v2-num-badge">
+                      {isEn ? `Ex ${exIdx + 1}` : `تمرين ${exIdx + 1}`}
+                    </div>
+                    <p className="ex-v2-question">{qText}</p>
                   </div>
 
                   <button
                     type="button"
-                    className="btn-toggle-solution"
+                    className="ex-v2-toggle-btn"
                     onClick={() => handleToggleSolution(ex.id)}
                   >
-                    {isRevealed ? <EyeOff size={15} /> : <Eye size={15} />}
-                    <span>{isRevealed ? t.hideSolutionBtn : t.viewSolutionBtn}</span>
+                    {revealed ? <EyeOff size={14} /> : <Eye size={14} />}
+                    <span>
+                      {revealed
+                        ? (isEn ? 'Hide Solution' : 'إخفاء الحل')
+                        : (isEn ? 'Show Step-by-Step Solution' : 'عرض الحل خطوة بخطوة')}
+                    </span>
                   </button>
 
-                  {isRevealed && (
-                    <div className="exercise-solution-drawer">
-                      <span className="solution-drawer-title">خطوات الحل النموذجي المعتمد:</span>
-                      <ol className="solution-steps-list">
-                        {steps.map((st, stIdx) => (
-                          <li key={stIdx} className="solution-step-item">
-                            <span>{st}</span>
-                          </li>
+                  {revealed && (
+                    <div className="ex-v2-solution">
+                      <div className="ex-solution-steps">
+                        {steps.map((st, si) => (
+                          <div key={si} className="ex-solution-step-row">
+                            <span className="ex-sol-step-num">{si + 1}</span>
+                            <span className="ex-sol-step-text">{st}</span>
+                          </div>
                         ))}
-                      </ol>
-                      <div className="solution-final-answer">
-                        <strong>النتيجة النهائية المعتمدة:</strong> {answer}
+                      </div>
+                      <div className="ex-final-answer">
+                        <Award size={15} />
+                        <span>{isEn ? 'Answer:' : 'الإجابة:'}</span>
+                        <strong>{answer}</strong>
                       </div>
                     </div>
                   )}
@@ -656,21 +623,72 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
         </section>
       )}
 
-      {/* 10. Socratic Assistant Callout */}
-      <section className="socratic-callout-card">
-        <div className="callout-content">
-          <div className="callout-icon-circle">
-            <HelpCircle size={28} />
+      {/* ═══ SECTION 9 — SOCRATIC AI TUTOR ═══ */}
+      <section className="lesson-section socratic-cta-section">
+        <div className="socratic-cta-card">
+          <div className="socratic-cta-icon-wrap">
+            <HelpCircle size={26} />
           </div>
-          <div>
-            <h4 className="callout-title">{t.socraticCalloutTitle}</h4>
-            <p className="callout-desc">{t.socraticCalloutDesc}</p>
+          <div className="socratic-cta-text">
+            <h4 className="socratic-cta-title">{t.socraticCalloutTitle}</h4>
+            <p className="socratic-cta-desc">{t.socraticCalloutDesc}</p>
+          </div>
+          <button type="button" className="socratic-cta-btn" onClick={onOpenTutor}>
+            <Sparkles size={16} />
+            {t.btnAskSocratic}
+          </button>
+        </div>
+      </section>
+
+      {/* ═══ SECTION 10 — ASSESSMENT CTA ═══ */}
+      <section className="lesson-section assessment-launch-section">
+        <div className="assessment-launch-card">
+          <div className="al-left">
+            <div className="al-icon-wrap">
+              <BookMarked size={24} />
+            </div>
+            <div>
+              <h3 className="al-title">
+                {isEn ? '🏆 Ready for the Assessment?' : '🏆 هل أنت مستعد للتقييم؟'}
+              </h3>
+              <p className="al-desc">
+                {isEn
+                  ? `Score ${lecture.passingScoreRequired}% or above to unlock the next lesson.`
+                  : `احصل على ${lecture.passingScoreRequired}% أو أعلى لفتح الدرس التالي.`}
+              </p>
+              {lecture.lastAttempt && (
+                <span className={`al-last-attempt ${lecture.lastAttempt.passed ? 'al-passed' : 'al-failed'}`}>
+                  {isEn ? `Last attempt: ${lecture.lastAttempt.score}%` : `آخر محاولة: ${lecture.lastAttempt.score}%`}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="al-right">
+            <button
+              id="btn-start-assessment"
+              type="button"
+              className={`al-btn-primary ${lecture.isCompleted ? 'al-btn-retry' : ''}`}
+              onClick={onStartAssessment}
+            >
+              {lecture.isCompleted ? (
+                <><RefreshCw size={17} /> {isEn ? 'Retake' : 'إعادة التقييم'}</>
+              ) : (
+                <><Play size={17} /> {isEn ? 'Start Assessment' : 'ابدأ التقييم'}</>
+              )}
+            </button>
+
+            {hasNextUnlocked && onNextLecture && (
+              <button
+                type="button"
+                className="al-btn-next"
+                onClick={onNextLecture}
+              >
+                {isEn ? 'Next Lesson' : 'الدرس التالي'}
+                <ArrowRight size={16} />
+              </button>
+            )}
           </div>
         </div>
-        <button type="button" className="btn-socratic-open" onClick={onOpenTutor}>
-          <span>{t.btnAskSocratic}</span>
-          <Sparkles size={18} />
-        </button>
       </section>
     </main>
   );
