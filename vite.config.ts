@@ -4,19 +4,5 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './',
-  build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: 'assets/index.js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-            return 'assets/index.css';
-          }
-          return 'assets/[name].[ext]';
-        }
-      }
-    }
-  }
+  base: './'
 })
