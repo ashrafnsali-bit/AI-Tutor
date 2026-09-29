@@ -29,6 +29,42 @@ export const translations = {
     stageHintMiddle: 'المرحلة المتوسطة (تعليم أساسي موحد، لا توجد مسارات تخصصية)',
     stageHintHigh: 'المرحلة الثانوية (مسارات تخصصية تؤهل للجامعة)',
 
+    // Countries & Curricula
+    countrySelectLabel: 'منهج الدولة المعتمد للطالب',
+    countryLabels: {
+      SA: 'المملكة العربية السعودية (وزارة التعليم 🇸🇦)',
+      EG: 'جمهورية مصر العربية (وزارة التربية والتعليم 🇪🇬)',
+      AE: 'الإمارات العربية المتحدة (وزارة التربية والتعليم 🇦🇪)',
+      KW: 'دولة الكويت (وزارة التربية 🇰🇼)',
+      JO: 'المملكة الأردنية الهاشمية (وزارة التربية 🇯🇴)',
+      OM: 'سلطنة عُمان (وزارة التربية والتعليم 🇴🇲)',
+      QA: 'دولة قطر (وزارة التربية والتعليم 🇶🇦)',
+      BH: 'مملكة البحرين (وزارة التربية 🇧🇭)',
+      INTL: 'المنهج الدولي والمعايير العامة 🌍'
+    },
+    curriculumAccreditation: 'المنهج الوزاري المعتمد رسمياً',
+    unitLabel: 'الوحدة الدراسية',
+    termLabel: 'الفصل الدراسي',
+    lessonNumberLabel: 'الدرس',
+
+    // Full Lesson Structure Components
+    learningOutcomesHeading: '🎯 نواتج التعلم ومؤشرات الأداء المستهدفة:',
+    warmupHookHeading: '🌱 التهيئة الذهنية وربط الدرس بالحياة اليومية:',
+    lessonIdeaHeading: '📖 فكرة الدرس والمفردات والمفاهيم الأساسية:',
+    vocabularyTerm: 'المصطلح أو المفهوم',
+    vocabularyDef: 'التعريف العلمي المعتمد',
+    detailedExplanationHeading: '📚 الشرح المفاهيمي المتعمق والقواعد الرسمية:',
+    formativeCheckHeading: '✍️ تحقق من فهمك (تطبيق تفاعلي فوري):',
+    formativeCheckSubtitle: 'اختبر استيعابك لهذه الفكرة قبل الانتقال للفقرة التالية',
+    checkAnswerBtn: 'تحقق من إجابتي',
+    showHintBtn: '💡 إظهار تلميح توجيهي',
+    correctFeedback: 'رائع! إجابة صحيحة ومتقنة 🌟',
+    incorrectFeedback: 'حاول مرة أخرى! راجع الشرح أعلاه أو استعن بالتلميح 🔄',
+    conceptMapHeading: '🗺️ خريطة المفاهيم وخلاصة الدرس:',
+    textbookExercisesHeading: '📝 تدريبات وأنشطة الكتاب المدرسي المقرر:',
+    viewSolutionBtn: 'عرض خطوات الحل الإرشادي',
+    hideSolutionBtn: 'إخفاء خطوات الحل',
+
     // Specializations
     specLabels: {
       STEM: 'علمي وتقني (STEM)',
@@ -225,7 +261,41 @@ export const translations = {
     highSchoolStage: 'High School',
     stageHintPrimary: 'Elementary School (Foundational skills & basic curriculum)',
     stageHintMiddle: 'Middle School (Unified basic curriculum, no track specialization)',
-    stageHintHigh: 'High School (Academic tracks for college prep)',
+    // Countries & Curricula
+    countrySelectLabel: 'Official State/National Curriculum',
+    countryLabels: {
+      SA: 'Saudi Arabia (Ministry of Education 🇸🇦)',
+      EG: 'Egypt (Ministry of Education 🇪🇬)',
+      AE: 'United Arab Emirates (MoE 🇦🇪)',
+      KW: 'Kuwait (Ministry of Education 🇰🇼)',
+      JO: 'Jordan (Ministry of Education 🇯🇴)',
+      OM: 'Oman (Ministry of Education 🇴🇲)',
+      QA: 'Qatar (Ministry of Education 🇶🇦)',
+      BH: 'Bahrain (Ministry of Education 🇧🇭)',
+      INTL: 'International / General Standards 🌍'
+    },
+    curriculumAccreditation: 'Officially Accredited National Curriculum',
+    unitLabel: 'Unit',
+    termLabel: 'Academic Term',
+    lessonNumberLabel: 'Lesson',
+
+    // Full Lesson Structure Components
+    learningOutcomesHeading: '🎯 Target Learning Outcomes & Competencies:',
+    warmupHookHeading: '🌱 Mental Warm-up & Real-World Connection:',
+    lessonIdeaHeading: '📖 Core Lesson Idea & Key Vocabulary:',
+    vocabularyTerm: 'Scientific / Linguistic Term',
+    vocabularyDef: 'Formal Curriculum Definition',
+    detailedExplanationHeading: '📚 In-depth Conceptual Explanation & Rules:',
+    formativeCheckHeading: '✍️ Check Your Understanding (Instant Practice):',
+    formativeCheckSubtitle: 'Test your grasp of this concept before continuing',
+    checkAnswerBtn: 'Check My Answer',
+    showHintBtn: '💡 Show Guiding Hint',
+    correctFeedback: 'Excellent! Correct and well understood! 🌟',
+    incorrectFeedback: 'Try again! Review the rules above or use the hint 🔄',
+    conceptMapHeading: '🗺️ Concept Map & Lesson Synthesis:',
+    textbookExercisesHeading: '📝 Prescribed Textbook Exercises & Practice:',
+    viewSolutionBtn: 'Show Step-by-Step Model Solution',
+    hideSolutionBtn: 'Hide Solution Steps',
 
     // Specializations
     specLabels: {

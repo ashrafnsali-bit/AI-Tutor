@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { GradeLevel, Language, Specialization, Subject, UserAccount } from '../types';
+import type { CountryCode, GradeLevel, Language, Specialization, Subject, UserAccount } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { registerUserAccount, loginUserAccount } from '../services/database';
 import { X, UserPlus, LogIn, Sparkles, AlertCircle, CheckCircle2, ShieldCheck, GraduationCap } from 'lucide-react';
@@ -27,6 +27,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
   const [regUsername, setRegUsername] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
+  const [regCountry, setRegCountry] = useState<CountryCode>('SA');
   const [regAge, setRegAge] = useState<number>(10);
   const [regGrade, setRegGrade] = useState<GradeLevel>('G4');
   const [regSpec, setRegSpec] = useState<Specialization>('GENERAL');
@@ -144,6 +145,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
         username: regUsername,
         email: regEmail || `${regUsername}@student.ai`,
         password: regPassword,
+        country: regCountry,
         age: regAge,
         gradeLevel: regGrade,
         specialization: regSpec,
@@ -319,6 +321,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
                   />
+                </div>
+
+                {/* Country & Official State Curriculum */}
+                <div className="form-group">
+                  <label className="form-label">{t.countrySelectLabel} *</label>
+                  <select
+                    className="form-select"
+                    value={regCountry}
+                    onChange={(e) => setRegCountry(e.target.value as CountryCode)}
+                    required
+                  >
+                    <option value="SA">{t.countryLabels.SA}</option>
+                    <option value="EG">{t.countryLabels.EG}</option>
+                    <option value="AE">{t.countryLabels.AE}</option>
+                    <option value="KW">{t.countryLabels.KW}</option>
+                    <option value="JO">{t.countryLabels.JO}</option>
+                    <option value="OM">{t.countryLabels.OM}</option>
+                    <option value="QA">{t.countryLabels.QA}</option>
+                    <option value="BH">{t.countryLabels.BH}</option>
+                    <option value="INTL">{t.countryLabels.INTL}</option>
+                  </select>
                 </div>
 
                 {/* Age */}

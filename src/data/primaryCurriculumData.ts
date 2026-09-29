@@ -15,6 +15,57 @@ export const PRIMARY_MATH_LECTURES: Lecture[] = [
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الرابع الابتدائي - التعليم الأساسي',
+    gradeLevelNameEn: 'Grade 4 Elementary - Primary Education',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: القيمة المنزلية والعمليات الحسابية',
+    unitTitleEn: 'Unit 1: Place Value & Arithmetic Operations',
+    lessonNumberAr: 'الدرس 1: القيمة المنزلية والجمع بإعادة التجميع',
+    lessonNumberEn: 'Lesson 1: Place Value & Addition with Regrouping',
+
+    // Real-world hook
+    warmupHookAr: 'تخيل أنك تساعد في إحصاء زوار جناح معرض الكتاب المدرسي؛ حيث بلغ عدد الزوار في اليوم الأول 24,530 زائر، وفي اليوم الثاني 18,745 زائر. كيف نستطيع قراءة هذه الأعداد الكبيرة وكتابتها، ومعرفة إجمالي الزوار بدقة دون أي خطأ؟ هنا تكمن قوة القيمة المنزلية وخوارزمية الجمع بإعادة التجميع!',
+    warmupHookEn: 'Imagine helping tally visitors at a book fair: Day 1 had 24,530 visitors and Day 2 had 18,745. How do we accurately read, write, and sum these large numbers without errors? This is where place value and regrouping come in!',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'تحديد القيمة المنزلية للأرقام ضمن مئات الألوف بدقة وتسمية منزلة كل رقم',
+      'قراءة الأعداد الكبيرة وكتابتها بالصيغ القياسية والتحليلية واللفظية',
+      'تنفيذ خوارزمية الجمع الرأسي للأعداد متعددة المنازل بإعادة التجميع (الحمل باليد)',
+      'التحقق من صحة ناتج الجمع باستخدام العملية العكسية (الطرح)'
+    ],
+    learningOutcomesEn: [
+      'Identify digit place value up to hundred thousands with precision',
+      'Read and write numbers in standard, expanded, and word forms',
+      'Execute vertical addition algorithm with regrouping / carrying',
+      'Verify addition results using inverse subtraction operations'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
+      {
+        termAr: 'القيمة المنزلية (Place Value)',
+        termEn: 'Place Value',
+        definitionAr: 'قيمة الرقم بحسب موقعه في منازل العدد (آحاد، عشرات، مئات، ألوف).',
+        definitionEn: 'The numerical value a digit holds based on its position in a number.'
+      },
+      {
+        termAr: 'إعادة التجميع (Regrouping)',
+        termEn: 'Regrouping',
+        definitionAr: 'استبدال 10 وحدات من خانة معينة بوحدة واحدة في الخانة الأعلى المجاورة لها مباشرة (الحمل).',
+        definitionEn: 'Exchanging ten units in one place-value column for one unit in the adjacent higher column.'
+      },
+      {
+        termAr: 'الصيغة التحليلية (Expanded Form)',
+        termEn: 'Expanded Form',
+        definitionAr: 'طريقة لكتابة العدد تُظهر مجموع القيم المنزلية لكل رقم من أرقامه (مثال: 5,000 + 400 + 20).',
+        definitionEn: 'Representing a number as the arithmetic sum of the values of each constituent digit.'
+      }
+    ],
+
     keyConceptsAr: [
       'تحديد القيمة المنزلية للأرقام (آحاد، عشرات، مئات، ألوف)',
       'الجمع الرأسي مع إعادة التجميع (الحمل باليد)',
@@ -27,13 +78,33 @@ export const PRIMARY_MATH_LECTURES: Lecture[] = [
       'Subtraction with Regrouping / Borrowing',
       'Verification via Inverse Subtraction'
     ],
-    summaryAr: 'في هذه المحاضرة نتدرج في فهم الأعداد، حيث تكتسب كل خانة وزناً مضاعفاً بعشر مرات عن الخانة السابقة؛ فـ 10 آحاد تصبح عشرة واحدة، و10 عشرات تصبح مئة واحدة.',
-    summaryEn: 'In this lecture, students grasp the decimal place-value system: each column is ten times greater than the column to its right.',
+    summaryAr: 'في هذه المحاضرة نتقن قراءة وكتابة الأعداد وتطبيق خوارزمية الجمع الرأسي؛ حيث تكتسب كل خانة وزناً مضاعفاً بعشر مرات عن الخانة السابقة، وإذا زاد المجموع عن 9 نحمل العشرات إلى اليسار فوراً.',
+    summaryEn: 'In this lecture, students grasp the decimal place-value system: each column is ten times greater than the column to its right, and carrying ensures precision.',
     sections: [
       {
-        titleAr: '1. كيف نجمع بإعادة التجميع؟',
-        titleEn: '1. Addition with Regrouping Step-by-Step',
-        contentAr: 'عندما نجمع أرقام خانة الآحاد ويكون الناتج 10 أو أكثر، نكتب رقم الآحاد في الأسفل ونرفع العشرات إلى الخانة التالية (الحمل فوق العشرات).',
+        titleAr: '1. جدول المنازل وقراءة الأعداد الكبيرة (دورة الآحاد ودورة الألوف)',
+        titleEn: '1. Place Value Chart & Reading Large Numbers',
+        contentAr: 'يتكون نظامنا العشري من دورات عددية منتظمة؛ كل دورة تضم ثلاثة منازل رئيسية: الآحاد، العشرات، والمئات. دورة الآحاد تشمل الأعداد الأساسية، وتليها إلى اليسار دورة الألوف (آحاد الألوف، عشرات الألوف، مئات الألوف). لقراءة أي عدد، نبدأ من اليسار بالدورة الكبرى ثم نقرأ الدورات الأصغر بالترتيب.',
+        contentEn: 'Our decimal system features structured periods of three digits each: units, tens, hundreds. Reading proceeds from the highest period on the left down to the units.',
+        formativeCheck: {
+          id: 'fc-pmath1-1',
+          questionAr: 'ما هي القيمة المنزلية للرقم 5 في العدد 35,420؟',
+          questionEn: 'What is the place value of digit 5 in the number 35,420?',
+          optionsAr: ['50', '500', '5,000', '50,000'],
+          optionsEn: ['50', '500', '5,000', '50,000'],
+          correctIndex: 2,
+          explanationAr: 'الرقم 5 يقع في خانة أحاد الألوف (دورة الألوف)، لذا قيمته هي 5 × 1,000 = 5,000.',
+          explanationEn: 'The digit 5 is in the thousands place, equal to 5,000.',
+          hintAr: 'احسب عدد المنازل التي تقع على يمين الرقم 5: هناك 3 أرقام (4، 2، 0).',
+          hintEn: 'Count the digits to the right of 5: three digits.'
+        },
+        tipsAr: ['ضع فاصلاً صغيراً بعد كل 3 أرقام بدءاً من اليمين لتسهيل قراءة الأعداد الكبيرة.'],
+        tipsEn: ['Place commas every three digits from the right to read large figures accurately.']
+      },
+      {
+        titleAr: '2. كيف نجمع بإعادة التجميع؟ (الحمل باليد)',
+        titleEn: '2. Addition with Regrouping Step-by-Step',
+        contentAr: 'عندما نجمع أرقام خانة الآحاد ويكون الناتج 10 أو أكثر، نكتب رقم الآحاد في الأسفل ونرفع العشرات إلى الخانة التالية (الحمل فوق العشرات). لا نضع أبداً رقمين في خانة واحدة.',
         contentEn: 'When the sum in the units place is 10 or higher, write down the unit digit and carry the ten to the next column.',
         interactiveExample: {
           titleAr: 'مثال تفاعلي: جمع 48 + 27',
@@ -48,8 +119,82 @@ export const PRIMARY_MATH_LECTURES: Lecture[] = [
           takeawayAr: 'لا نضع أبداً رقمين في خانة واحدة، إذا زاد المجموع عن 9 نحمل العشرات إلى اليسار فوراً.',
           takeawayEn: 'Never place two digits in one column. If sum > 9, carry the excess ten.'
         },
+        formativeCheck: {
+          id: 'fc-pmath1-2',
+          questionAr: 'عند جمع 67 + 25: نجمع 7 + 5 = 12. ماذا نفعل بالرقم 1 في العدد 12؟',
+          questionEn: 'When adding 67 + 25: 7 + 5 = 12. What do we do with the 1 in 12?',
+          optionsAr: ['نكتب 12 كاملة في خانة الآحاد', 'نحمل 1 كعشرة واحدة فوق خانة العشرات', 'نحذف الرقم 1 ونهمله', 'نطرح 1 من خانة العشرات'],
+          optionsEn: ['Write 12 in the units place', 'Carry 1 over to the tens place', 'Discard the 1', 'Subtract 1 from tens'],
+          correctIndex: 1,
+          explanationAr: 'لأن خانة الآحاد لا تتسع إلا لرقم واحد من 0 إلى 9؛ نكتب 2 في الآحاد ونحمل 1 عشرة فوق خانة العشرات لإضافته مع العشرات.',
+          explanationEn: 'Write 2 in units and carry 1 ten to the next column.',
+          hintAr: 'تذكر قاعدة إعادة التجميع: 10 آحاد تكوّن عشرة واحدة تضاف لخانة العشرات.',
+          hintEn: '10 units equal 1 ten carried over.'
+        },
         tipsAr: ['رتب الأرقام رأسياً: الآحاد تحت الآحاد والعشرات تحت العشرات بدقة.', 'ابدأ الجمع دائماً من اليمين (الآحاد) أولاً.'],
         tipsEn: ['Always align columns vertically.', 'Start calculation strictly from right to left.']
+      }
+    ],
+
+    // Concept Map
+    conceptMapAr: [
+      'دورة الآحاد: تتكون من (آحاد، عشرات، مئات)',
+      'دورة الألوف: تتكون من (أحاد الألوف، عشرات الألوف، مئات الألوف)',
+      'خوارزمية الجمع 1: رتب الأعداد رأسياً مع محاذاة المنازل بدقة',
+      'خوارزمية الجمع 2: ابدأ الجمع من اليمين (خانة الآحاد)',
+      'خوارزمية الجمع 3: إذا كان المجموع 10 أو أكثر، أعد التجميع بحمل العشرات للخانة التالية',
+      'خطوة التحقق: اطرح أحد العددين من المجموع للتأكد من صحة الحل'
+    ],
+    conceptMapEn: [
+      'Units Period: Units, Tens, Hundreds',
+      'Thousands Period: 1,000s, 10,000s, 100,000s',
+      'Rule 1: Align digits vertically by place value',
+      'Rule 2: Begin calculation from the rightmost column',
+      'Rule 3: Carry 10-unit multiples to the adjacent left column',
+      'Verification: Subtract one addend from the total to confirm'
+    ],
+
+    // Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-pmath1-1',
+        questionAr: 'أوجد ناتج الجمع رأسياً مع ذكر خطوات إعادة التجميع: 4,528 + 3,745',
+        questionEn: 'Calculate the vertical sum with regrouping: 4,528 + 3,745',
+        solutionStepsAr: [
+          'جمع الآحاد: 8 + 5 = 13 (نكتب 3 في الآحاد ونحمل 1 فوق العشرات)',
+          'جمع العشرات: 1 (محمول) + 2 + 4 = 7 عشرات',
+          'جمع المئات: 5 + 7 = 12 (نكتب 2 في المئات ونحمل 1 فوق الألوف)',
+          'جمع الألوف: 1 (محمول) + 4 + 3 = 8 ألوف'
+        ],
+        solutionStepsEn: [
+          'Add units: 8 + 5 = 13 (write 3, carry 1 to tens)',
+          'Add tens: 1 + 2 + 4 = 7 tens',
+          'Add hundreds: 5 + 7 = 12 (write 2, carry 1 to thousands)',
+          'Add thousands: 1 + 4 + 3 = 8 thousands'
+        ],
+        answerAr: 'الناتج النهائي المعتمد: 8,273',
+        answerEn: 'Total: 8,273'
+      },
+      {
+        id: 'ex-pmath1-2',
+        questionAr: 'مسألة تطبيقية من واقع الحياة: تبرعت مدرسة بـ 1,850 كتاباً لمكتبة الحي، وتبرعت مدرسة أخرى بـ 2,475 كتاباً. ما إجمالي عدد الكتب المتبرع بها؟',
+        questionEn: 'A school donated 1,850 books, and another donated 2,475 books. What is the total donated?',
+        solutionStepsAr: [
+          'كتابة جملة الجمع: 1,850 + 2,475',
+          'جمع الآحاد: 0 + 5 = 5',
+          'جمع العشرات: 5 + 7 = 12 (نكتب 2 ونحمل 1)',
+          'جمع المئات: 1 + 8 + 4 = 13 (نكتب 3 ونحمل 1)',
+          'جمع الألوف: 1 + 1 + 2 = 4'
+        ],
+        solutionStepsEn: [
+          'Set up equation: 1,850 + 2,475',
+          'Units: 0 + 5 = 5',
+          'Tens: 5 + 7 = 12 (write 2, carry 1)',
+          'Hundreds: 1 + 8 + 4 = 13 (write 3, carry 1)',
+          'Thousands: 1 + 1 + 2 = 4'
+        ],
+        answerAr: 'إجمالي الكتب المتبرع بها: 4,325 كتاباً',
+        answerEn: 'Total books: 4,325'
       }
     ],
     assessment: {
@@ -347,6 +492,57 @@ export const PRIMARY_ARABIC_LECTURES: Lecture[] = [
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الرابع الابتدائي - لغتي الجميلة',
+    gradeLevelNameEn: 'Grade 4 Elementary - Arabic Language',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: صحتي وبيئتي ولغتي الجميلة',
+    unitTitleEn: 'Unit 1: Health, Environment & Arabic Reading',
+    lessonNumberAr: 'الدرس 1: مهارات القراءة والتمييز بين اللامين',
+    lessonNumberEn: 'Lesson 1: Reading Skills & Definite Articles',
+
+    // Real-world hook
+    warmupHookAr: 'عندما نقرأ في الصباح الباكر: "أشرقتِ الشَّمْسُ، واختفى الْقَمَرُ"، نلاحظ نطقاً سحرياً ممتعاً في لساننا العربي؛ فكلمة (الْقَمَر) نطقنا لامها صريحة كالجرس الصافي، بينما كلمة (الشَّمْس) انزلقت شفاهنا مباشرة إلى الشين المشددة واختفى صوت اللام تماماً! لماذا حدث هذا العزف الصوتي الفريد؟ هذا هو سر اللام الشمسية واللام القمرية!',
+    warmupHookEn: 'Notice how when we say "Al-Qamar" the Lam is distinct and clear, but in "Ash-Shams" the Lam melts silently into the doubled letter Sh! This acoustic harmony is the foundation of Solar and Lunar letters.',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يميّز الطالب بدقة بين اللام الشمسية واللام القمرية نطقاً وكتابة',
+      'أن يستخرج الحروف القمرية الـ 14 من العبارة المأثورة (ابغِ حجك وخف عقيمه)',
+      'أن يقرأ الكلمات المبدوءة بـ (الـ) قراءة جهرية معبرة مراعياً الشدة والسكون',
+      'أن يكتب الكلمات الشمسية والقمرية غيباً دون خطأ إملائي'
+    ],
+    learningOutcomesEn: [
+      'Distinguish Solar and Lunar Lam in reading and writing with precision',
+      'Identify the 14 Lunar letters using standard grammatical mnemonics',
+      'Read words starting with the definite article with appropriate phonetics',
+      'Spell words containing Solar and Lunar articles accurately'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
+      {
+        termAr: 'اللام القمرية (Lunar Lam)',
+        termEn: 'Lunar Lam',
+        definitionAr: 'لام ساكنة تُكتب وتُنطق بوضوح عند دخولها على أحد الحروف القمرية الأربعة عشر (ابغِ حجك وخف عقيمه).',
+        definitionEn: 'Definite article Lam that is written and clearly pronounced with Sukun.'
+      },
+      {
+        termAr: 'اللام الشمسية (Solar Lam)',
+        termEn: 'Solar Lam',
+        definitionAr: 'لام تُكتب ولا تُنطق، ويُدغم صوتها في الحرف الشمسي التالي لها ويُوضع عليه شدّة.',
+        definitionEn: 'Definite article Lam that is written but assimilated into the subsequent consonant with Shaddah.'
+      },
+      {
+        termAr: 'الشَّدَّة (Shaddah)',
+        termEn: 'Shaddah',
+        definitionAr: 'علامة تدل على تكرار الحرف مرتين؛ الأول ساكن والثاني متحرك، فيدغمان معاً.',
+        definitionEn: 'Diacritical sign indicating a doubled/geminated consonant.'
+      }
+    ],
+
     keyConceptsAr: [
       'اللام القمرية: تُكتب وتُنطق وتكون ساكنة (الْـ)',
       'اللام الشمسية: تُكتب ولا تُنطق ويأتي الحرف بعدها مشدداً',
@@ -363,9 +559,9 @@ export const PRIMARY_ARABIC_LECTURES: Lecture[] = [
     summaryEn: 'The Arabic definite article behaves differently: Lunar Lam is voiced, while Solar Lam assimilates into the following consonant with a Shaddah.',
     sections: [
       {
-        titleAr: '1. كيف تميز فوراً بين اللامين؟',
+        titleAr: '1. كيف تميز فوراً بين اللامين؟ سر حركة اللسان والشدة',
         titleEn: '1. Immediate Identification Rule',
-        contentAr: 'أنصت لصوت اللسان عند القراءة: في اللام القمرية يلمس طرف لسانك سقف الحلق وتسمع صوت اللام نقياً (الْـ مَدْرَسَة). أما في الشمسية فيقفز لسانك مباشرة إلى الحرف التالي دون نطق اللام (الصَّـبَاح).',
+        contentAr: 'أنصت لصوت اللسان عند القراءة: في اللام القمرية يلمس طرف لسانك سقف الحلق وتسمع صوت اللام نقياً (الْـ مَدْرَسَة). أما في الشمسية فيقفز لسانك مباشرة إلى الحرف التالي دون نطق اللام (الصَّـبَاح). وعلامتها في الكتابة: وجود الشدة فوق الحرف الذي يلي اللام مباشرة.',
         contentEn: 'Listen to pronunciation: Lunar Lam sounds clearly (Al-Madrasah), while Solar Lam skips directly to the emphasized consonant (As-Sabah).',
         interactiveExample: {
           titleAr: 'مقارنة نطقية عملية',
@@ -378,8 +574,58 @@ export const PRIMARY_ARABIC_LECTURES: Lecture[] = [
           takeawayAr: 'السر الذكي: وجود الشدة بعد (الـ) يعني دائماً أنها لام شمسية!',
           takeawayEn: 'Presence of a Shaddah immediately after Al- indicates a Solar Lam.'
         },
+        formativeCheck: {
+          id: 'fc-parb1-1',
+          questionAr: 'أي من الكلمات التالية تحتوي على "لام شمسية"؟',
+          questionEn: 'Which of the following words contains a "Solar Lam"?',
+          optionsAr: ['الْمَدْرَسَة', 'الصِّدْق', 'الْكِتَاب', 'الْحَدِيقَة'],
+          optionsEn: ['Al-Madrasah', 'As-Sidq', 'Al-Kitab', 'Al-Hadeeqah'],
+          correctIndex: 1,
+          explanationAr: 'كلمة "الصِّدْق" لامها شمسية تُكتب ولا تُنطق، وحرف الصاد بعدها مشدد.',
+          explanationEn: 'As-Sidq has a silent Lam followed by a doubled Saad.',
+          hintAr: 'انتبه لوجود الشدة فوق الحرف الذي يلي اللام مباشرة.',
+          hintEn: 'Look for the Shaddah directly after the Lam.'
+        },
         tipsAr: ['احفظ الجملة السحرية لحروف القمرية: (ابغِ حجك وخف عقيمه).', 'اللام القمرية فوقها سكون دائري ظاهر دائماً في المصحف والكتب.'],
         tipsEn: ['Remember the lunar letters mnemonic.', 'Lunar Lam carries a visible Sukun.']
+      }
+    ],
+
+    // Concept Map
+    conceptMapAr: [
+      'اللام القمرية: تُكتب وتُنطق، وتتميز بسكون ظاهر (الْـ) فوق اللام',
+      'حروف اللام القمرية الـ 14: (ا، ب، غ، ح، ج، ك، و، خ، ف، ع، ق، ي، م، هـ)',
+      'اللام الشمسية: تُكتب ولا تُنطق، وتتميز بالشدة ( ّ ) على الحرف التالي',
+      'حروف اللام الشمسية الـ 14: (ت، ث، د، ذ، ر، ز، س، ش، ص، ض، ط، ظ، ل، ن)',
+      'القاعدة الذهبية: الشدة بعد اللام = شمسية فوراً'
+    ],
+    conceptMapEn: [
+      'Lunar Lam: Written and voiced, marked by Sukun',
+      '14 Lunar Consonants (Abghi Hajjaka wa Khaf Aqimah)',
+      'Solar Lam: Written and silent, followed by Shaddah',
+      '14 Solar Consonants (T, Th, D, Dh, R, Z, S, Sh, S, D, T, Z, L, N)'
+    ],
+
+    // Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-parb1-1',
+        questionAr: 'صنّف الكلمات التالية إلى (شمسية) و(قمرية) مع ذكر السبب: [الطَّالِب، الْقَلَم، النَّجْم، الْفَصْل]',
+        questionEn: 'Classify words into Solar and Lunar with explanation',
+        solutionStepsAr: [
+          'الطَّالِب: شمسية (اللام لا تُنطق، وحرف الطاء مشدد)',
+          'الْقَلَم: قمرية (اللام تُنطق وعليها سكون، وحرف القاف من حروف ابغ حجك وخف عقيمه)',
+          'النَّجْم: شمسية (اللام مدغمة لا تُنطق، والنون مشددة)',
+          'الْفَصْل: قمرية (اللام تُنطق وعليها سكون، والفاء حرف قمري)'
+        ],
+        solutionStepsEn: [
+          'At-Talib: Solar (silent Lam, Ta with Shaddah)',
+          'Al-Qalam: Lunar (voiced Lam with Sukun)',
+          'An-Najm: Solar (silent Lam, Noon with Shaddah)',
+          'Al-Fasl: Lunar (voiced Lam, Faa is lunar)'
+        ],
+        answerAr: 'الكلمات الشمسية: (الطالب، النجم) • الكلمات القمرية: (القلم، الفصل)',
+        answerEn: 'Solar: (At-Talib, An-Najm) • Lunar: (Al-Qalam, Al-Fasl)'
       }
     ],
     assessment: {
@@ -684,6 +930,57 @@ export const PRIMARY_SCIENCE_LECTURES: Lecture[] = [
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الرابع الابتدائي - العلوم والاستكشاف',
+    gradeLevelNameEn: 'Grade 4 Elementary - Science & Exploration',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: المخلوقات الحية وبيئاتها',
+    unitTitleEn: 'Unit 1: Living Organisms & Their Environments',
+    lessonNumberAr: 'الدرس 1: حاجات المخلوقات الحية وأجزاء النبات',
+    lessonNumberEn: 'Lesson 1: Needs of Living Things & Plant Anatomy',
+
+    // Real-world hook
+    warmupHookAr: 'انظر إلى حديقة منزلك أو أشجار النخيل الشامخة في شوارع مدينتك؛ كيف تبقى خضراء ومورقة تحت أشعة الشمس الحارة؟ ومن يطعمها ويسقيها كل يوم؟ إن النباتات كائنات حية بالغة الدقة؛ تمتلك مصانع خضراء صغيرة داخل كل ورقة من أوراقها، تصنع بها الغذاء لنفسها ولجميع الكائنات على كوكب الأرض!',
+    warmupHookEn: 'Look at the green trees around your neighborhood: how do they thrive under the sun? Plants are nature\'s self-sufficient food factories, producing nourishment within their leaves for themselves and all living creatures.',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يحدد الطالب الحاجات الأساسية الأربعة لبقاء المخلوقات الحية على قيد الحياة',
+      'أن يتعرف على الأجزاء الرئيسية للنبات (الجذور، الساق، الأوراق) ووظيفة كل جزء',
+      'أن يشرح دور الأوراق في صنع الغذاء عبر عملية البناء الضوئي المبسطة',
+      'أن يستنتج أهمية ضوء الشمس والماء من خلال الملاحظة والتجربة العلمية'
+    ],
+    learningOutcomesEn: [
+      'Identify the 4 fundamental survival needs of living organisms',
+      'Describe functions of main plant organs: roots, stems, and leaves',
+      'Explain how leaves manufacture plant food through sunlight',
+      'Deduce the critical role of light and water through experimental inquiry'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
+      {
+        termAr: 'البناء الضوئي (Photosynthesis)',
+        termEn: 'Photosynthesis',
+        definitionAr: 'العملية التي تصنع بها الأوراق الخضراء غذاء النبات باستخدام ضوء الشمس والماء وثاني أكسيد الكربون.',
+        definitionEn: 'Process by which plants convert sunlight, water, and CO2 into sugars.'
+      },
+      {
+        termAr: 'الجذور (Roots)',
+        termEn: 'Roots',
+        definitionAr: 'جزء النبات الذي ينمو تحت الأرض؛ يثبت النبتة في التربة ويمتص الماء والأملاح المعدنية.',
+        definitionEn: 'Underground plant organ absorbing water and anchoring the organism.'
+      },
+      {
+        termAr: 'الساق (Stem)',
+        termEn: 'Stem',
+        definitionAr: 'دعامة النبات التي تنقل الماء والغذاء بين الجذور والأوراق وتحمل الأغصان والأزهار.',
+        definitionEn: 'Plant axis providing structural support and vascular fluid transport.'
+      }
+    ],
+
     keyConceptsAr: [
       'حاجات الكائنات الحية الأساسية: الماء، الهواء، الغذاء، والمكان المناسب',
       'الجذور: تثبيت النبات في التربة وامتصاص الماء والأملاح',
@@ -700,9 +997,9 @@ export const PRIMARY_SCIENCE_LECTURES: Lecture[] = [
     summaryEn: 'Living organisms require energy to thrive. Plants serve as nature\'s self-sufficient food factories, synthesizing nutrients via leaves and roots.',
     sections: [
       {
-        titleAr: '1. مصنع النبات الصغير: كيف يتغذى؟',
-        titleEn: '1. The Plant Food Factory',
-        contentAr: 'تمتص الجذور الماء من التربة كالمصاصة، وينقله الساق إلى الأوراق الخضراء. تمتص الأوراق ضوء الشمس وغاز الهواء لتطبخ السكر الذي يغذي النبتة لتكبر وتزهر.',
+        titleAr: '1. مصنع النبات الصغير: كيف يتغذى؟ وأجزاء النبات',
+        titleEn: '1. The Plant Food Factory & Anatomy',
+        contentAr: 'تمتص الجذور الماء والأملاح من التربة كالمصاصة، وينقله الساق إلى الأوراق الخضراء. تمتص الأوراق ضوء الشمس وغاز الهواء لتطبخ السكر الذي يغذي النبتة لتكبر وتزهر.',
         contentEn: 'Roots absorb water, stems convey moisture upward, and green leaves trap solar energy to produce food.',
         interactiveExample: {
           titleAr: 'تجربة النبات المغطى',
@@ -716,8 +1013,57 @@ export const PRIMARY_SCIENCE_LECTURES: Lecture[] = [
           takeawayAr: 'ضوء الشمس ضروري جداً للنبات؛ بدونه لا يستطيع إنتاج غذائه ويموت.',
           takeawayEn: 'Sunlight is an indispensable requirement for plant photosynthesis and survival.'
         },
+        formativeCheck: {
+          id: 'fc-psci1-1',
+          questionAr: 'ما هو الجزء في النبات الذي يقوم بامتصاص الماء والأملاح المعدنية من التربة؟',
+          questionEn: 'Which plant part absorbs water and minerals from the soil?',
+          optionsAr: ['الأوراق', 'الأزهار', 'الجذور', 'الثمار'],
+          optionsEn: ['Leaves', 'Flowers', 'Roots', 'Fruits'],
+          correctIndex: 2,
+          explanationAr: 'الجذور هي المسؤولة عن امتصاص الماء والأملاح المعدنية من باطن التربة وتثبيت النبات.',
+          explanationEn: 'Roots anchor the plant and absorb moisture and soil nutrients.',
+          hintAr: 'الجزء الذي ينمو تحت سطح الأرض ولا نراه مباشرة.',
+          hintEn: 'The part that grows underground.'
+        },
         tipsAr: ['الجذور تنمو دائماً إلى الأسفل باتجاه الماء والجاذبية، بينما تنمو السيقان للأعلى نحو الضوء.'],
         tipsEn: ['Roots seek soil moisture downward; stems grow upward towards sunlight.']
+      }
+    ],
+
+    // Concept Map
+    conceptMapAr: [
+      'حاجات الكائن الحي: (الماء، الهواء، الغذاء، المكان والمأوى المناسب)',
+      'الجذور: تثبيت النبات في التربة + امتصاص الماء والأملاح من باطن الأرض',
+      'الساق: أنبوب لنقل الماء إلى الأوراق + دعامة تحمل الأغصان',
+      'الأوراق: مصنع السكر والغذاء للنبات باستخدام ضوء الشمس',
+      'الأزهار والثمار: المسؤولة عن التكاثر وإنتاج البذور للنبات الجديد'
+    ],
+    conceptMapEn: [
+      'Survival Needs: Water, Air, Food, Living Space',
+      'Roots: Soil Anchorage & Mineral/Moisture Absorption',
+      'Stem: Vascular Conduit & Structural Support',
+      'Leaves: Photosynthetic Food Production Site',
+      'Flowers & Fruits: Reproduction & Seed Propagation'
+    ],
+
+    // Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-psci1-1',
+        questionAr: 'ماذا تتوقع أن يحدث لنبتة خضراء سليمة إذا قمنا بتغطيتها بصندوق كرتوني يمنع عنها ضوء الشمس لمدة أسبوعين مع استمرار ريها بالماء؟ ولماذا؟',
+        questionEn: 'What happens to a healthy plant kept in darkness for 2 weeks with regular watering?',
+        solutionStepsAr: [
+          'الملاحظة العلمية: ستتحول الأوراق من اللون الأخضر إلى الأصفر وتذبل تدريجياً ثم تموت النبتة',
+          'التفسير العلمي: ضوء الشمس عنصر أساسي وحيوي لقيام الأوراق بصنع الغذاء (البناء الضوئي)',
+          'الاستنتاج: الماء وحده لا يكفي؛ فالنبات لا يستطيع العيش بدون مصدر ضوء لطبخ طعامه'
+        ],
+        solutionStepsEn: [
+          'Observation: Leaves will yellow and wilt',
+          'Scientific rationale: Sunlight is essential for photosynthetic food production',
+          'Conclusion: Water alone cannot sustain a plant without light'
+        ],
+        answerAr: 'تصفر أوراقها وتذبل وتموت، لأنها عجزت عن تصنيع غذائها بسبب حجب ضوء الشمس.',
+        answerEn: 'The plant wilts and dies because it cannot synthesize food without sunlight.'
       }
     ],
     assessment: {
@@ -1021,6 +1367,57 @@ export const ISLAMIC_STUDIES_LECTURES: Lecture[] = [
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الرابع الابتدائي - الدراسات الإسلامية',
+    gradeLevelNameEn: 'Grade 4 Elementary - Islamic Studies',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: العقيدة والتوحيد وأركان الإسلام',
+    unitTitleEn: 'Unit 1: Islamic Creed, Tawheed & Pillars',
+    lessonNumberAr: 'الدرس 1: أركان الإسلام الخمسة والشهادتان وفضل الصلاة',
+    lessonNumberEn: 'Lesson 1: The Five Pillars of Islam & Prayer',
+
+    // Real-world hook
+    warmupHookAr: 'قال رسول الله ﷺ: «بُنِيَ الإِسْلامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لا إِلَهَ إِلا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلاةِ، وَإِيتَاءِ الزَّكَاةِ، وَصَوْمِ رَمَضَانَ، وَحَجِّ الْبَيْتِ لِمَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلاً». تخيل قصراً منيعاً يستند على خمسة أعمدة قوية؛ إذا سقط عمود منها تداعى البناء. هكذا هو إسلامنا الحنيف الذي نعيش في ظلاله المباركة!',
+    warmupHookEn: 'Prophet Muhammad (PBUH) likened Islam to a noble fortress built upon five resilient pillars: the Shahada, Prayer, Zakat, Fasting Ramadan, and Hajj. Each pillar holds up the faithful life of a Muslim.',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يعدد الطالب أركان الإسلام الخمسة بالترتيب النبوي الصحيح',
+      'أن يشرح المعنى العظيم لكلمتي الشهادة (لا معبود بحق إلا الله)',
+      'أن يوضح منزلة الصلاة كعمود للدين وأوقات الصلوات الخمس المفروضة وركعاتها',
+      'أن يستشعر فضل الطهارة والوضوء في حياة المسلم اليومية'
+    ],
+    learningOutcomesEn: [
+      'Enumerate the five pillars of Islam in proper prophetic order',
+      'Explain the profound meaning of the Shahada (Tawheed and Prophethood)',
+      'Describe the status of the five daily obligatory prayers and their Rak\'ah counts',
+      'Appreciate the spiritual virtues of cleanliness and Wudu'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
+      {
+        termAr: 'التوحيد (Tawheed)',
+        termEn: 'Tawheed',
+        definitionAr: 'إفراد الله سبحانه وتعالى بالعبادة وحده لا شريك له، ونفي الشرك بجميع صوره.',
+        definitionEn: 'Directing all worship exclusively and sincerely to Allah alone.'
+      },
+      {
+        termAr: 'الشهادتان (Shahada)',
+        termEn: 'The Shahada',
+        definitionAr: 'شهادة أن لا إله إلا الله وأن محمداً رسول الله، وهي مفتاح الدخول في الإسلام.',
+        definitionEn: 'The core declaration of Islamic faith in Allah and His Messenger.'
+      },
+      {
+        termAr: 'إقامة الصلاة (Salah)',
+        termEn: 'Establishing Salah',
+        definitionAr: 'أداء الصلوات الخمس المفروضة في أوقاتها بشروطها وأركانها وخشوعها وطهارتها.',
+        definitionEn: 'Performing the five daily prayers at prescribed times with devotion.'
+      }
+    ],
+
     keyConceptsAr: [
       'حديث ابن عمر: بُني الإسلام على خمس',
       'الركن الأول: شهادة أن لا إله إلا الله وأن محمداً رسول الله',
@@ -1037,9 +1434,9 @@ export const ISLAMIC_STUDIES_LECTURES: Lecture[] = [
     summaryEn: 'Islam is founded upon five core pillars anchoring worship and spiritual discipline.',
     sections: [
       {
-        titleAr: '1. شجرة أركان الإسلام الخمسة',
+        titleAr: '1. شجرة أركان الإسلام الخمسة والصلوات المفروضة',
         titleEn: '1. The Tree of Islam\'s Five Pillars',
-        contentAr: 'الركن الأول هو بوابة الدخول في الإسلام: الشهادتان. يليه الركن العملي الأهم وهو الصلاة خمس مرات يومياً: الفجر، الظهر، العصر، المغرب، والعشاء، وهي صلة العبد بربه.',
+        contentAr: 'الركن الأول هو بوابة الدخول في الإسلام: الشهادتان. يليه الركن العملي الأهم وهو الصلاة خمس مرات يومياً: الفجر، الظهر، العصر، المغرب، والعشاء، وهي صلة العبد بربه ومصدر طمأنينة قلبه.',
         contentEn: 'The first pillar is the Shahada, followed by the five daily prayers connecting believer to Creator.',
         interactiveExample: {
           titleAr: 'ترتيب الصلوات الخمس وركعاتها',
@@ -1053,8 +1450,61 @@ export const ISLAMIC_STUDIES_LECTURES: Lecture[] = [
           takeawayAr: 'الصلاة عمود الدين، وهي أول ما يحاسب عليه العبد يوم القيامة.',
           takeawayEn: 'Prayer is the central pillar of religion and the soul\'s daily sanctuary.'
         },
+        formativeCheck: {
+          id: 'fc-pisl1-1',
+          questionAr: 'ما هو الركن الثاني من أركان الإسلام بعد الشهادتين؟',
+          questionEn: 'What is the second pillar of Islam following the Shahada?',
+          optionsAr: ['صوم رمضان', 'إقامة الصلاة', 'إيتاء الزكاة', 'حج بيت الله الحرام'],
+          optionsEn: ['Fasting Ramadan', 'Establishing Prayer (Salah)', 'Giving Zakat', 'Performing Hajj'],
+          correctIndex: 1,
+          explanationAr: 'الصلاة هي الركن الثاني وعمود الدين والصلة اليومية بين العبد وخالقه.',
+          explanationEn: 'Salah is the second pillar and the daily link between servant and Creator.',
+          hintAr: 'العبادة التي نؤديها 5 مرات في اليوم والليلة.',
+          hintEn: 'The worship performed 5 times daily.'
+        },
         tipsAr: ['احرص على إسباغ الوضوء وتوفير الماء وعدم الإسراف فيه.'],
         tipsEn: ['Perform wudu meticulously while conserving water.']
+      }
+    ],
+
+    // Concept Map
+    conceptMapAr: [
+      'الركن 1: شهادة أن لا إله إلا الله وأن محمداً رسول الله (مفتاح الإسلام)',
+      'الركن 2: إقامة الصلاة (صلة يومية بالله تعالى في 5 أوقات)',
+      'الركن 3: إيتاء الزكاة (تطهير للمال ومساعدة للفقراء والمحتاجين)',
+      'الركن 4: صوم رمضان (عبادة سنوية لتهذيب النفس والتقوى)',
+      'الركن 5: حج بيت الله الحرام (مرة في العمر لمن استطاع إليه سبيلاً)'
+    ],
+    conceptMapEn: [
+      'Pillar 1: Shahada - Monotheism and Prophethood',
+      'Pillar 2: Salah - 5 Daily Prayers',
+      'Pillar 3: Zakat - Obligatory Charity',
+      'Pillar 4: Sawm - Fasting Ramadan',
+      'Pillar 5: Hajj - Pilgrimage to Makkah once in a lifetime'
+    ],
+
+    // Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-pisl1-1',
+        questionAr: 'اذكر عدد الركعات المفروضة لكل صلاة من الصلوات الخمس في اليوم والليلة.',
+        questionEn: 'State the number of obligatory Rak\'ahs for each of the five daily prayers.',
+        solutionStepsAr: [
+          'صلاة الفجر: ركعتان (جهرية)',
+          'صلاة الظهر: أربع ركعات (سرية)',
+          'صلاة العصر: أربع ركعات (سرية)',
+          'صلاة المغرب: ثلاث ركعات (جهرية في الركعتين الأوليين)',
+          'صلاة العشاء: أربع ركعات (جهرية في الركعتين الأوليين)'
+        ],
+        solutionStepsEn: [
+          'Fajr: 2 Rak\'ahs',
+          'Dhuhr: 4 Rak\'ahs',
+          'Asr: 4 Rak\'ahs',
+          'Maghrib: 3 Rak\'ahs',
+          'Isha: 4 Rak\'ahs'
+        ],
+        answerAr: 'إجمالي الركعات المفروضة في اليوم والليلة هو 17 ركعة.',
+        answerEn: 'Total daily obligatory prayer units: 17 Rak\'ahs.'
       }
     ],
     assessment: {

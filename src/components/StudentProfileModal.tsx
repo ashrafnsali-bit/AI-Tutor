@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
+import type { CountryCode, GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { X, User, ShieldAlert, CheckCircle2, Users } from 'lucide-react';
 
@@ -252,6 +252,26 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 required
                 placeholder="Omar Al-Tamimi"
               />
+            </div>
+
+            {/* Official State / National Curriculum Country */}
+            <div className="form-group">
+              <label className="form-label">{t.countrySelectLabel}</label>
+              <select
+                className="form-select"
+                value={formData.country || 'SA'}
+                onChange={(e) => setFormData({ ...formData, country: e.target.value as CountryCode })}
+              >
+                <option value="SA">{t.countryLabels.SA}</option>
+                <option value="EG">{t.countryLabels.EG}</option>
+                <option value="AE">{t.countryLabels.AE}</option>
+                <option value="KW">{t.countryLabels.KW}</option>
+                <option value="JO">{t.countryLabels.JO}</option>
+                <option value="OM">{t.countryLabels.OM}</option>
+                <option value="QA">{t.countryLabels.QA}</option>
+                <option value="BH">{t.countryLabels.BH}</option>
+                <option value="INTL">{t.countryLabels.INTL}</option>
+              </select>
             </div>
 
             {/* Age */}

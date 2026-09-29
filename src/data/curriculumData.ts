@@ -28,6 +28,57 @@ export const MATH_LECTURES: Lecture[] = [
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول متوسط - المرحلة المتوسطة',
+    gradeLevelNameEn: 'Grade 7 / Intermediate - Middle School',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثالثة: الجبر والدوال والمعادلات الخطية',
+    unitTitleEn: 'Unit 3: Algebra, Functions & Linear Equations',
+    lessonNumberAr: 'الدرس 1: المعادلات وخصائص التوازن الجبري',
+    lessonNumberEn: 'Lesson 1: Equations & Balance Properties',
+
+    // Real-world hook
+    warmupHookAr: 'عندما تذهب إلى السوق وترى البائع يضع الأثقال الحديدية في كفة، ويضع الفاكهة في الكفة الأخرى حتى تستوي كفتا الميزان تماماً، فإنك تشاهد في الواقع معادلة جبرية حقيقية! إذا أضفت كيلوغراماً لكفة رجحت، ولإعادة التوازن يجب أن تضيف وزناً مكافئاً للكفة المقابلة. هذه هي خاصية التوازن الرياضي التي يقوم عليها علم الجبر بأكمله!',
+    warmupHookEn: 'An old balance scale mirrors an algebraic equation: add an apple to one side, and you must add equal weight to the other to restore equilibrium. This is the immutable balance property of algebra!',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يعرّف الطالب المعادلة الخطية ويميّز بين الثوابت والمتغيرات بدقة',
+      'أن يطبق خاصية الإضافة والطرح للمساواة لعزل المتغير الجبري',
+      'أن يطبق خاصية الضرب والقسمة للمساواة للتخلص من المعاملات العددية',
+      'أن يتحقق من صحة الحل الجبري بالتعويض المباشر في المعادلة الأصلية'
+    ],
+    learningOutcomesEn: [
+      'Define linear equations and distinguish constants from unknown variables',
+      'Apply addition and subtraction equality properties to isolate unknowns',
+      'Utilize multiplication and division equality properties to eliminate coefficients',
+      'Verify algebraic solutions via direct substitution'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
+      {
+        termAr: 'المعادلة الخطية (Linear Equation)',
+        termEn: 'Linear Equation',
+        definitionAr: 'جملة رياضية تؤكد تكافؤ عبارتين جبريتين تحتويان على متغير من الدرجة الأولى تفصل بينهما علامة المساواة (=).',
+        definitionEn: 'An algebraic statement asserting the equivalence of two expressions containing a first-degree variable.'
+      },
+      {
+        termAr: 'المتغير الجبري (Variable)',
+        termEn: 'Variable',
+        definitionAr: 'رمز يمثل كمية مجهولة نبحث عن قيمتها العددية التي تجعل المعادلة صحيحة.',
+        definitionEn: 'A symbol representing an unknown value that satisfies the equation.'
+      },
+      {
+        termAr: 'العمليات العكسية (Inverse Operations)',
+        termEn: 'Inverse Operations',
+        definitionAr: 'عمليات تلغي إحداهما الأخرى (الجمع يلغي الطرح، والضرب يلغي القسمة) وتستخدم لعزل المتغير.',
+        definitionEn: 'Operations that reverse each other used to isolate variables.'
+      }
+    ],
+
     keyConceptsAr: [
       'تعريف المعادلة الخطية والمتغير الجبري',
       'خاصية الإضافة والطرح للمساواة',
@@ -44,7 +95,7 @@ export const MATH_LECTURES: Lecture[] = [
     summaryEn: 'In this lecture, we establish the bedrock of algebra: treating equations as balanced scales where any arithmetic operation performed on one side must be mirrored on the other to preserve equality.',
     sections: [
       {
-        titleAr: '1. ما هي المعادلة الجبرية؟ كفة الميزان',
+        titleAr: '1. ما هي المعادلة الجبرية؟ كفة الميزان وخاصية الجمع والطرح',
         titleEn: '1. What is an Algebraic Equation? The Balance Scale',
         contentAr: 'المعادلة هي جملة رياضية تحتوي على علامة المساواة (=) وتؤكد أن المقدارين على جانبيها متكافئان في القيمة. نستخدم المتغير (مثل x) لتمثيل كمية مجهولة نبحث عن قيمتها التي تجعل الجملة صحيحة.',
         contentEn: 'An equation is a mathematical statement containing an equality symbol (=) asserting that expressions on both sides have identical values. We employ variables (such as x) to denote unknown quantities.',
@@ -60,6 +111,18 @@ export const MATH_LECTURES: Lecture[] = [
           ],
           takeawayAr: 'القاعدة الذهبية: لعزل المتغير، نطبق دائماً العملية العكسية على كلا الطرفين.',
           takeawayEn: 'Golden Rule: To isolate an unknown variable, always apply the inverse operation equally to both sides.'
+        },
+        formativeCheck: {
+          id: 'fc-math1-1',
+          questionAr: 'في المعادلة: x + 9 = 24، ما العملية العكسية الصحيحة لعزل المتغير x؟',
+          questionEn: 'In x + 9 = 24, which inverse operation isolates x?',
+          optionsAr: ['طرح 9 من كلا الطرفين', 'جمع 9 لكلا الطرفين', 'قسمة الطرفين على 9', 'ضرب الطرفين في 9'],
+          optionsEn: ['Subtract 9 from both sides', 'Add 9 to both sides', 'Divide both sides by 9', 'Multiply both sides by 9'],
+          correctIndex: 0,
+          explanationAr: 'بما أن العدد 9 مضاف (+)، فإن عكس الجمع هو الطرح (-)، فنطرح 9 من طرفي المساواة.',
+          explanationEn: 'Since 9 is added, the inverse operation is subtracting 9 from both sides.',
+          hintAr: 'ما هي العملية المعاكسة لعملية الجمع؟',
+          hintEn: 'What operation inverses addition?'
         },
         tipsAr: ['عكس الجمع هو الطرح دائماً.', 'علامة (=) تعني توازناً مطلقاً، لا تغير كفة دون الأخرى.'],
         tipsEn: ['The inverse of addition is always subtraction.', 'The equal sign represents an immutable scale: whatever is done to one side must be done to the other.']
@@ -81,8 +144,57 @@ export const MATH_LECTURES: Lecture[] = [
           takeawayAr: 'عند قسمة الطرفين، احرص على قسمة كامل المقدار في كل طرف.',
           takeawayEn: 'When dividing equations, ensure the entire expression across each side is divided.'
         },
+        formativeCheck: {
+          id: 'fc-math1-2',
+          questionAr: 'ما حل المعادلة الخطية التالية: 5y = 35؟',
+          questionEn: 'What is the solution to 5y = 35?',
+          optionsAr: ['y = 5', 'y = 7', 'y = 30', 'y = 40'],
+          optionsEn: ['y = 5', 'y = 7', 'y = 30', 'y = 40'],
+          correctIndex: 1,
+          explanationAr: 'نقسم طرفي المعادلة على معامل y وهو 5: 35 ÷ 5 = 7.',
+          explanationEn: 'Divide both sides by 5: 35 / 5 = 7.',
+          hintAr: 'اقسم 35 على 5.',
+          hintEn: 'Divide 35 by 5.'
+        },
         tipsAr: ['إذا كان المعامل كسراً (مثل ½x = 6)، اضرب في مقلوبه للتخلص منه بخطوة واحدة.'],
         tipsEn: ['If the coefficient is a fraction (e.g., ½x = 6), multiply by the reciprocal (2) to solve directly.']
+      }
+    ],
+
+    // Concept Map
+    conceptMapAr: [
+      'المعادلة كميزان ذي كفتين: ما يُجرى على اليمين يُجرى بدقة على اليسار',
+      'المتغير المجموع (+) -> نتخلص منه بالطرح (-) من الطرفين',
+      'المتغير المطروح (-) -> نتخلص منه بالجمع (+) للطرفين',
+      'المتغير المضروب (×) -> نتخلص منه بالقسمة (÷) على المعامل',
+      'خطوة التحقق الذهبية: عوّض بالناتج في المعادلة الأصلية للتأكد من صحة المساواة'
+    ],
+    conceptMapEn: [
+      'Equations operate as balanced scales',
+      'Addition inversed via subtraction',
+      'Subtraction inversed via addition',
+      'Multiplication inversed via division',
+      'Verification: Plug back into original equation'
+    ],
+
+    // Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-math1-1',
+        questionAr: 'حل المعادلة الخطية التالية خطوة بخطوة مع التحقق: 3x + 5 = 26',
+        questionEn: 'Solve and verify: 3x + 5 = 26',
+        solutionStepsAr: [
+          'الخطوة 1 (طرح الثابت): نطرح 5 من الطرفين: 3x = 26 - 5 = 21',
+          'الخطوة 2 (القسمة على المعامل): نقسم الطرفين على 3: x = 21 ÷ 3 = 7',
+          'الخطوة 3 (التحقق بالتعويض): 3 × 7 + 5 = 21 + 5 = 26 (صحيح 100%)'
+        ],
+        solutionStepsEn: [
+          'Subtract 5 from both sides: 3x = 21',
+          'Divide both sides by 3: x = 7',
+          'Verify: 3(7) + 5 = 26 (confirmed)'
+        ],
+        answerAr: 'قيمة المتغير: x = 7',
+        answerEn: 'Variable value: x = 7'
       }
     ],
     assessment: {
@@ -390,6 +502,57 @@ export const PHYSICS_LECTURES: Lecture[] = [
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول ثانوي - المرحلة الثانوية (مسار STEM)',
+    gradeLevelNameEn: 'Grade 10 / High School - STEM Specialization',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: مدخل إلى علم الفيزياء وحركة الأجسام',
+    unitTitleEn: 'Unit 1: Introduction to Physics & 1D Kinematics',
+    lessonNumberAr: 'الدرس 1: علم الحركة والسرعة المتجهة والتسارع',
+    lessonNumberEn: 'Lesson 1: Kinematics, Velocity Vectors & Acceleration',
+
+    // Real-world hook
+    warmupHookAr: 'عندما تشاهد انطلاق قطار الحرمين السريع بين مكة المكرمة والمدينة المنورة؛ يقطع مسافة 450 كم بسرعة تصل إلى 300 كم/ساعة. هل يستطيع مهندسو الملاحة الجوية والسكك الحديدية حساب زمن الرحلة بدقة دون تحديد اتجاه الحركة والتسارع عند المنعطفات؟ في الفيزياء، "المقدار" وحده لا يكفي؛ بل الاتجاه يصنع كل الفارق!',
+    warmupHookEn: 'When high-speed trains travel between cities at 300 km/h, engineers must factor in not just raw scalar speed, but vector directional displacement and acceleration forces. In physics, direction makes all the difference!',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يفرّق الطالب بدقة علمية بين الكميات الفيزيائية القياسية والكميات المتجهة',
+      'أن يحسب الإزاحة والسرعة المتجهة المتوسطة والتسارع لجسم يتحرك في خط مستقيم',
+      'أن يطبق معادلات الحركة الخطية بتسارع منتظم في حل المشكلات الهندسية والفيزيائية',
+      'أن يفسر الرسوم البيانية للعلاقة بين (الموقع والزمن) و(السرعة والزمن)'
+    ],
+    learningOutcomesEn: [
+      'Distinguish scalar physical quantities from vector quantities with scientific rigour',
+      'Calculate displacement, average velocity vectors, and linear acceleration',
+      'Apply constant-acceleration kinematic equations to solve engineering problems',
+      'Interpret position-time and velocity-time graphs accurately'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
+      {
+        termAr: 'الكمية المتجهة (Vector Quantity)',
+        termEn: 'Vector Quantity',
+        definitionAr: 'كمية فيزيائية تتحدد بالمقدار ووحدة القياس والاتجاه معاً (مثل: الإزاحة، والسرعة المتجهة، والتسارع).',
+        definitionEn: 'A physical quantity characterized by both numerical magnitude and spatial direction.'
+      },
+      {
+        termAr: 'الإزاحة (Displacement)',
+        termEn: 'Displacement',
+        definitionAr: 'كمية متجهة تمثل التغير في موقع الجسم، وتساوي أقصر مسار مستقيم موجه من نقطة البداية إلى نقطة النهاية (Δx = x_f - x_i).',
+        definitionEn: 'Vector change in position: shortest directed straight line from start to finish.'
+      },
+      {
+        termAr: 'التسارع (Acceleration)',
+        termEn: 'Acceleration',
+        definitionAr: 'المعدل الزمني لتغير السرعة المتجهة للجسم (a = Δv / Δt) ووحدته م/ث².',
+        definitionEn: 'The time rate of change of velocity: a = dv/dt in m/s².'
+      }
+    ],
+
     keyConceptsAr: ['الفرق بين الكميات القياسية والمتجهة', 'السرعة القياسية والسرعة المتجهة', 'التسارع الثابت ومعادلات الحركة', 'تفسير الرسوم البيانية للحركة'],
     keyConceptsEn: ['Scalar vs Vector Quantities', 'Speed vs Velocity Vectors', 'Constant Acceleration Kinematics', 'Graph Interpretation of Motion'],
     summaryAr: 'نستكشف في هذه المحاضرة أسس علم الحركة الكينماتيكا؛ كيف نصف حركة الأجسام عبر الزمان والمكان بدقة رياضية وفيزيائية فائقة.',
@@ -412,8 +575,58 @@ export const PHYSICS_LECTURES: Lecture[] = [
           takeawayAr: 'السرعة المتجهة تعتمد حصرياً على الإزاحة الصافية لا على طول المسار المقطوع.',
           takeawayEn: 'Average velocity depends purely on net displacement, not cumulative path distance.'
         },
+        formativeCheck: {
+          id: 'fc-phys1-1',
+          questionAr: 'تحركت دراجة نارية مسافة 100 متر نحو الشمال، ثم استدارت وعادت 40 متراً نحو الجنوب. ما مقدار الإزاحة الصافية للدراجة؟',
+          questionEn: 'A motorcycle travels 100m North, then reverses 40m South. What is its net displacement?',
+          optionsAr: ['140 متراً نحو الشمال', '60 متراً نحو الشمال', 'صفر متر', '40 متراً نحو الجنوب'],
+          optionsEn: ['140m North', '60m North', '0m', '40m South'],
+          correctIndex: 1,
+          explanationAr: 'الإزاحة متجهة: Δx = +100 - 40 = +60 متراً باتجاه الشمال.',
+          explanationEn: 'Net displacement is 100 - 40 = 60m North.',
+          hintAr: 'اطرح المسافة المعاكسة من المسافة الأصلية.',
+          hintEn: 'Subtract opposite displacement.'
+        },
         tipsAr: ['احرص دائماً على تحديد إشارة الاتجاه (الموجب والسالب) قبل كتابة المعادلة.'],
         tipsEn: ['Always define coordinate convention (positive/negative) before setting up equations.']
+      }
+    ],
+
+    // Concept Map
+    conceptMapAr: [
+      'الكميات القياسية: تتحدد بالمقدار والوحدة فقط (المسافة، الزمن، الكتلة)',
+      'الكميات المتجهة: تتحدد بالمقدار والوحدة والاتجاه (الإزاحة، السرعة المتجهة، القوة، التسارع)',
+      'معادلة الإزاحة: Δx = x_النهاية - x_البداية',
+      'معادلة السرعة المتجهة: v = Δx / Δt',
+      'معادلة التسارع المنتظم: a = (v_f - v_i) / Δt',
+      'قاعدة الاتزان: إذا عاد الجسم لنقطة البداية، فإن إزاحته = صفراً دائماً'
+    ],
+    conceptMapEn: [
+      'Scalar quantities: Magnitude only',
+      'Vector quantities: Magnitude + Direction',
+      'Displacement equation: Δx = x_f - x_i',
+      'Velocity vector: v = Δx / Δt',
+      'Constant acceleration: a = Δv / Δt'
+    ],
+
+    // Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-phys1-1',
+        questionAr: 'انطلقت سيارة سباق من السكون (v_i = 0) بتسارع منتظم مقداره 5 م/ث² لمدة 6 ثوانٍ. احسب سرعتها النهائية والمسافة المقطوعة.',
+        questionEn: 'A racecar accelerates from rest at 5 m/s² for 6s. Calculate final velocity and displacement.',
+        solutionStepsAr: [
+          'حساب السرعة النهائية: v_f = v_i + at = 0 + (5 × 6) = 30 م/ث',
+          'حساب المسافة المقطوعة: d = v_i*t + ½at² = 0 + ½(5)(36) = 90 متراً',
+          'التحقق بمعادلة بديلة: v_f² = 2ad -> (30)² = 2(5)(90) -> 900 = 900 (صحيح 100%)'
+        ],
+        solutionStepsEn: [
+          'Final velocity: v = 0 + (5)(6) = 30 m/s',
+          'Displacement: d = 0 + 0.5(5)(36) = 90 m',
+          'Verification: v² = 2ad confirms 900 = 900'
+        ],
+        answerAr: 'السرعة النهائية = 30 م/ث • المسافة المقطوعة = 90 متراً',
+        answerEn: 'Final velocity = 30 m/s • Displacement = 90m'
       }
     ],
     assessment: {
@@ -1509,6 +1722,7 @@ export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   nameEn: 'Omar Al-Tamimi',
   age: 16,
   dateOfBirth: '2010-04-15',
+  country: 'SA',
   specialization: 'STEM',
   subject: 'PHYSICS',
   gradeLevel: 'G12',

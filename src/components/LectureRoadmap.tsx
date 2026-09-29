@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown } from 'lucide-react';
+import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2 } from 'lucide-react';
 
 interface LectureRoadmapProps {
   lectures: Lecture[];
@@ -9,6 +9,7 @@ interface LectureRoadmapProps {
   lang: Language;
   profile: StudentProfile;
   onSelectLecture: (lectureId: string) => void;
+  onGenerateLecture?: () => void;
 }
 
 export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
@@ -16,7 +17,8 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   selectedLectureId,
   lang,
   profile,
-  onSelectLecture
+  onSelectLecture,
+  onGenerateLecture
 }) => {
   const t = getTranslations(lang);
   const isEn = lang === 'en';
@@ -35,8 +37,8 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeKey);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(gradeKey);
   const dynamicCourseName = (isPrimarySchool || isMiddleSchool)
-    ? `${courseSubject} • ${courseGrade}`
-    : `${courseSubject} • ${courseGrade} (${courseTrack})`;
+    ? `${courseSubject} â€¢ ${courseGrade}`
+    : `${courseSubject} â€¢ ${courseGrade} (${courseTrack})`;
 
   return (
     <aside className="roadmap-sidebar">
@@ -112,7 +114,7 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
                   <p className="card-lecture-desc">{subtitle}</p>
 
                   <div className="card-meta-row">
-                    <span className="meta-pill duration-pill">⏳ {lecture.durationMinutes} {t.minutesUnit}</span>
+                    <span className="meta-pill duration-pill">âڈ³ {lecture.durationMinutes} {t.minutesUnit}</span>
                     
                     {isLocked ? (
                       <span className="meta-pill locked-gate-pill">
@@ -146,6 +148,21 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
         })}
       </div>
 
+      {/* AI Generate New Curriculum Lecture Button */}
+      {onGenerateLecture && (
+        <div className="roadmap-generate-wrap">
+          <button
+            type="button"
+            id="btn-open-generate-lecture"
+            className="roadmap-generate-btn"
+            onClick={onGenerateLecture}
+            title={isEn ? "Generate a new lesson from the official national curriculum" : "توليد درس جديد من المنهج الرسمي"}
+          >
+            <Wand2 size={16} />
+            <span>{isEn ? "Generate New Lesson" : "توليد درس جديد من المنهج"}</span>
+          </button>
+        </div>
+      )}
       {/* Strict Requirement Notice Banner */}
       <div className="roadmap-footer-notice">
         <div className="notice-inner">
@@ -158,3 +175,4 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
     </aside>
   );
 };
+

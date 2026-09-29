@@ -63,6 +63,7 @@ export async function registerUserAccount(data: {
   username: string;
   email: string;
   password?: string;
+  country?: StudentProfile['country'];
   age: number;
   gradeLevel: StudentProfile['gradeLevel'];
   specialization: StudentProfile['specialization'];
@@ -83,6 +84,7 @@ export async function registerUserAccount(data: {
     email: cleanEmail,
     password: data.password || '',
     age: data.age,
+    country: data.country || 'SA',
     dateOfBirth: new Date(Date.now() - data.age * 365.25 * 24 * 3600 * 1000).toISOString().split('T')[0],
     specialization: data.specialization,
     subject: data.subject,

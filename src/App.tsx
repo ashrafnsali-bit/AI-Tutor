@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import type { AssessmentResult, Lecture, StudentProfile, Subject, UserAccount } from './types';
 import { BookOpen, Map } from 'lucide-react';
 import { 
@@ -22,6 +22,7 @@ import { StudentProfileModal } from './components/StudentProfileModal';
 import { ParentalModal } from './components/ParentalModal';
 import { ApiKeyModal } from './components/ApiKeyModal';
 import { AuthModal } from './components/AuthModal';
+import { GenerateLectureModal } from './components/GenerateLectureModal';
 
 export function App() {
   // Load saved state or default with consistency checks
@@ -106,6 +107,7 @@ export function App() {
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isGenerateLectureOpen, setIsGenerateLectureOpen] = useState(false);
 
   // User session state
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
@@ -146,7 +148,7 @@ export function App() {
     if (profile.language === 'ar') {
       htmlEl.setAttribute('dir', 'rtl');
       htmlEl.setAttribute('lang', 'ar');
-      document.title = 'منصة المعلم الذكي | منصة التعلم التكيفي المعززة بـ Gemini';
+      document.title = 'ظ…ظ†طµط© ط§ظ„ظ…ط¹ظ„ظ… ط§ظ„ط°ظƒظٹ | ظ…ظ†طµط© ط§ظ„طھط¹ظ„ظ… ط§ظ„طھظƒظٹظپظٹ ط§ظ„ظ…ط¹ط²ط²ط© ط¨ظ€ Gemini';
     } else {
       htmlEl.setAttribute('dir', 'ltr');
       htmlEl.setAttribute('lang', 'en');
@@ -294,6 +296,15 @@ export function App() {
     setSelectedLectureId(freshLecs[0]?.id || '');
   };
 
+  // Handle a newly AI-generated curriculum lecture added to roadmap
+  const handleLectureGenerated = (newLecture: Lecture) => {
+    setLectures((prev) => {
+      // Ensure the new lecture is unlocked and appended at the end
+      const updated = [...prev, { ...newLecture, isLocked: false, order: prev.length + 1 }];
+      return updated;
+    });
+    setSelectedLectureId(newLecture.id);
+  };
   return (
     <div className="app-root">
       {/* Top Navigation */}
@@ -318,7 +329,7 @@ export function App() {
           onClick={() => setMobileTab('lecture')}
         >
           <BookOpen size={16} />
-          <span>{profile.language === 'en' ? 'Active Lecture' : 'المحاضرة والشرح'}</span>
+          <span>{profile.language === 'en' ? 'Active Lecture' : 'ط§ظ„ظ…ط­ط§ط¶ط±ط© ظˆط§ظ„ط´ط±ط­'}</span>
         </button>
         <button
           type="button"
@@ -326,7 +337,7 @@ export function App() {
           onClick={() => setMobileTab('roadmap')}
         >
           <Map size={16} />
-          <span>{profile.language === 'en' ? 'Course Roadmap' : 'مسار المنهج (4)'}</span>
+          <span>{profile.language === 'en' ? 'Course Roadmap' : 'ظ…ط³ط§ط± ط§ظ„ظ…ظ†ظ‡ط¬ (4)'}</span>
         </button>
       </div>
 
@@ -338,6 +349,7 @@ export function App() {
           selectedLectureId={selectedLectureId}
           lang={profile.language}
           profile={profile}
+          onGenerateLecture={() => setIsGenerateLectureOpen(true)}
           onSelectLecture={(id) => {
             setSelectedLectureId(id);
             setMobileTab('lecture');
@@ -349,6 +361,7 @@ export function App() {
         <LectureViewer
           lecture={activeLecture}
           lang={profile.language}
+          profile={profile}
           onStartAssessment={() => setIsAssessmentOpen(true)}
           onOpenTutor={() => setIsChatOpen(true)}
           onNextLecture={() => {
@@ -418,3 +431,6 @@ export function App() {
 }
 
 export default App;
+
+
+

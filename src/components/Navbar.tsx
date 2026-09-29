@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
+import { getCountryInfo } from '../data/curriculumCountries';
 import { 
   GraduationCap, 
   Key, 
@@ -47,6 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const displayName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(profile.gradeLevel);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(profile.gradeLevel);
+  const countryInfo = getCountryInfo(profile.country);
 
   return (
     <header className="site-header">
@@ -76,6 +78,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="student-meta">
               <span className="student-name">{displayName}</span>
               <div className="student-tags">
+                <span className="tag-country-pill" title={isEn ? countryInfo.systemNameEn : countryInfo.systemNameAr}>
+                  {countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}
+                </span>
                 <span className="tag-spec">
                   {isPrimarySchool
                     ? t.primarySchoolStage
@@ -229,6 +234,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="mobile-student-info">
               <div className="mobile-student-name">{displayName}</div>
               <div className="mobile-student-stage">
+                <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
+                {' • '}
                 {isPrimarySchool
                   ? t.primarySchoolStage
                   : isMiddleSchool

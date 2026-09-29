@@ -21,6 +21,8 @@ export type GradeLevel =
 
 export type Language = 'ar' | 'en';
 
+export type CountryCode = 'SA' | 'EG' | 'AE' | 'KW' | 'JO' | 'OM' | 'QA' | 'BH' | 'INTL';
+
 export interface StudentProfile {
   id: string;
   name: string;
@@ -30,6 +32,7 @@ export interface StudentProfile {
   email?: string;
   age: number;
   dateOfBirth: string;
+  country: CountryCode;
   specialization: Specialization;
   subject: Subject;
   gradeLevel: GradeLevel;
@@ -103,6 +106,36 @@ export interface InteractiveExample {
   takeawayEn: string;
 }
 
+export interface FormativeCheck {
+  id: string;
+  questionAr: string;
+  questionEn: string;
+  optionsAr: string[];
+  optionsEn: string[];
+  correctIndex: number;
+  explanationAr: string;
+  explanationEn: string;
+  hintAr?: string;
+  hintEn?: string;
+}
+
+export interface VocabularyItem {
+  termAr: string;
+  termEn: string;
+  definitionAr: string;
+  definitionEn: string;
+}
+
+export interface TextbookExercise {
+  id: string;
+  questionAr: string;
+  questionEn: string;
+  solutionStepsAr: string[];
+  solutionStepsEn: string[];
+  answerAr: string;
+  answerEn: string;
+}
+
 export interface LectureSection {
   titleAr: string;
   titleEn: string;
@@ -111,6 +144,7 @@ export interface LectureSection {
   interactiveExample?: InteractiveExample;
   tipsAr: string[];
   tipsEn: string[];
+  formativeCheck?: FormativeCheck;
 }
 
 export interface Lecture {
@@ -127,11 +161,44 @@ export interface Lecture {
   prerequisiteLectureId?: string;
   prerequisiteTitleAr?: string;
   prerequisiteTitleEn?: string;
+
+  // Official National Curriculum Metadata
+  country?: CountryCode;
+  ministryAr?: string;
+  ministryEn?: string;
+  gradeLevelNameAr?: string;
+  gradeLevelNameEn?: string;
+  termAr?: string;
+  termEn?: string;
+  unitTitleAr?: string;
+  unitTitleEn?: string;
+  lessonNumberAr?: string;
+  lessonNumberEn?: string;
+
+  // Real-world warm-up & Hook
+  warmupHookAr?: string;
+  warmupHookEn?: string;
+
+  // Targeted Learning Outcomes
+  learningOutcomesAr?: string[];
+  learningOutcomesEn?: string[];
+
+  // Key Vocabulary
+  vocabulary?: VocabularyItem[];
+
   keyConceptsAr: string[];
   keyConceptsEn: string[];
   summaryAr: string;
   summaryEn: string;
   sections: LectureSection[];
+
+  // Concept Map / Golden takeaways
+  conceptMapAr?: string[];
+  conceptMapEn?: string[];
+
+  // Guided Textbook Exercises
+  textbookExercises?: TextbookExercise[];
+
   assessment: Assessment;
   lastAttempt?: AssessmentResult;
 }
