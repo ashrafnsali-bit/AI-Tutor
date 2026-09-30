@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import type { CountryCode, GradeLevel, Language, Specialization, Subject, UserAccount } from '../types';
+import React, { useState, useEffect } from 'react';
+import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Specialization, Subject, UserAccount } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { registerUserAccount, loginUserAccount } from '../services/database';
+import { detectStudentCountry } from '../services/geoService';
 import { X, UserPlus, LogIn, Sparkles, AlertCircle, CheckCircle2, ShieldCheck, GraduationCap } from 'lucide-react';
 
 interface AuthModalProps {
@@ -28,12 +29,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regCountry, setRegCountry] = useState<CountryCode>('SA');
+  const [regEducationType, setRegEducationType] = useState<EducationType>('PUBLIC');
+  const [regEducationTrack, setRegEducationTrack] = useState<EducationTrack>('GENERAL');
   const [regAge, setRegAge] = useState<number>(10);
   const [regGrade, setRegGrade] = useState<GradeLevel>('G4');
   const [regSpec, setRegSpec] = useState<Specialization>('GENERAL');
   const [regSubject, setRegSubject] = useState<Subject>('PRIMARY_MATH');
   const [regLanguage, setRegLanguage] = useState<Language>('ar');
   const [regParentEmail, setRegParentEmail] = useState('');
+
+  // Auto detect location on mount
+  useEffect(() => {
+    detectStudentCountry().then(geo => {
+      if (geo?.country) {
+        setRegCountry(geo.country);
+      }
+    }).catch(() => {});
+  }, []);
 
   const t = getTranslations(regLanguage);
   const isPrimary = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(regGrade);
@@ -146,6 +158,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
         email: regEmail || `${regUsername}@student.ai`,
         password: regPassword,
         country: regCountry,
+        educationType: regEducationType,
+        educationTrack: regEducationTrack,
         age: regAge,
         gradeLevel: regGrade,
         specialization: regSpec,
@@ -332,15 +346,34 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                     onChange={(e) => setRegCountry(e.target.value as CountryCode)}
                     required
                   >
-                    <option value="SA">{t.countryLabels.SA}</option>
-                    <option value="EG">{t.countryLabels.EG}</option>
-                    <option value="AE">{t.countryLabels.AE}</option>
-                    <option value="KW">{t.countryLabels.KW}</option>
-                    <option value="JO">{t.countryLabels.JO}</option>
-                    <option value="OM">{t.countryLabels.OM}</option>
-                    <option value="QA">{t.countryLabels.QA}</option>
-                    <option value="BH">{t.countryLabels.BH}</option>
-                    <option value="INTL">{t.countryLabels.INTL}</option>
+                    <option value="SA">🇸🇦 المملكة العربية السعودية (وزارة التعليم)</option>
+                    <option value="EG">🇪🇬 جمهورية مصر العربية (وزارة التربية والتعليم)</option>
+                    <option value="AE">🇦🇪 دولة الإمارات العربية المتحدة (مؤسسة الإمارات للتعليم)</option>
+                    <option value="KW">🇰🇼 دولة الكويت (وزارة التربية)</option>
+                    <option value="JO">🇯🇴 المملكة الأردنية الهاشمية (وزارة التربية والتعليم)</option>
+                    <option value="OM">🇴🇲 سلطنة عُمان (وزارة التربية والتعليم)</option>
+                    <option value="QA">🇶🇦 دولة قطر (وزارة التربية والتعليم والتعليم العالي)</option>
+                    <option value="BH">🇧🇭 مملكة البحرين (وزارة التربية والتعليم)</option>
+                    <option value="IQ">🇮🇶 جمهورية العراق (وزارة التربية)</option>
+                    <option value="MA">🇲🇦 المملكة المغربية (وزارة التربية الوطنية)</option>
+                    <option value="DZ">🇩🇿 الجمهورية الجزائرية (وزارة التربية الوطنية)</option>
+                    <option value="TN">🇹🇳 الجمهورية التونسية (وزارة التربية)</option>
+                    <option value="INTL">🌍 المنهج الدولي والمعايير العامة</option>
+                  </select>
+                </div>
+
+                {/* Education Type */}
+                <div className="form-group">
+                  <label className="form-label">{t.educationTypeLabel || 'نوع التعليم'} *</label>
+                  <select
+                    className="form-select"
+                    value={regEducationType}
+                    onChange={(e) => setRegEducationType(e.target.value as EducationType)}
+                  >
+                    <option value="PUBLIC">🏛️ تعليم حكومي معتمد</option>
+                    <option value="PRIVATE">🏫 تعليم أهلي / خاص</option>
+                    <option value="ISLAMIC">🕌 تعليم شرعي / أزهري</option>
+                    <option value="INTERNATIONAL">🌐 تعليم دولي / لغات ومسارات متقدمة</option>
                   </select>
                 </div>
 
@@ -407,7 +440,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                       </select>
                     </div>
                   ) : (
-                    <select className="form-select" value={regSpec} onChange={(e) => setRegSpec(e.target.value as Specialization)}>
+                    <select
+                      className="form-select"
+                      value={regSpec}
+                      onChange={(e) => {
+                        const val = e.target.value as Specialization;
+                        setRegSpec(val);
+                        if (val === 'STEM') setRegEducationTrack('CS_ENGINEERING');
+                        else if (val === 'HEALTH') setRegEducationTrack('HEALTH_LIFE');
+                        else if (val === 'HUMANITIES') setRegEducationTrack('SHARIA_HUMANITIES');
+                        else setRegEducationTrack('GENERAL');
+                      }}
+                    >
                       <option value="STEM">{t.specLabels.STEM}</option>
                       <option value="HUMANITIES">{t.specLabels.HUMANITIES}</option>
                       <option value="HEALTH">{t.specLabels.HEALTH}</option>

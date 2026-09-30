@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { getCountryInfo } from '../data/curriculumCountries';
+import { getCountryInfo, getNationalTextbookInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/curriculumCountries';
 import {
   BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
   GraduationCap, Calendar, Layers, Target,
   Sprout, BookMarked, FileCheck2, Eye, EyeOff, ChevronDown,
   ChevronUp, Play, SkipForward, Calculator,
-  PenTool, Star, Zap, ArrowRight, RefreshCw, X
+  PenTool, Star, Zap, ArrowRight, RefreshCw, X, ShieldCheck
 } from 'lucide-react';
 
 interface LectureViewerProps {
@@ -34,7 +34,15 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
   const t = getTranslations(lang);
   const isEn = lang === 'en';
-  const countryInfo = getCountryInfo(lecture.country || profile?.country || 'SA');
+  const effectiveCountry = profile?.country || lecture.country || 'SA';
+  const countryInfo = getCountryInfo(effectiveCountry);
+  const natTextbook = getNationalTextbookInfo(
+    effectiveCountry,
+    profile?.subject || 'PRIMARY_MATH',
+    profile?.gradeLevel || 'G4',
+    profile?.educationTrack || 'GENERAL',
+    lang
+  );
 
   useEffect(() => {
     setFormativeSelected({});
@@ -90,16 +98,32 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           </div>
         </div>
         <div className="curriculum-id-pills">
+          <span className="curr-pill curr-pill-book" title={natTextbook.textbookName}>
+            <BookOpen size={12} />
+            {natTextbook.textbookName}
+          </span>
+          {profile?.educationTrack && profile.educationTrack !== 'GENERAL' && (
+            <span className="curr-pill curr-pill-track">
+              <Compass size={12} />
+              {isEn ? TRACK_LABELS[profile.educationTrack].en : TRACK_LABELS[profile.educationTrack].ar}
+            </span>
+          )}
+          {profile?.educationType && profile.educationType !== 'PUBLIC' && (
+            <span className="curr-pill curr-pill-type">
+              <ShieldCheck size={12} />
+              {isEn ? EDUCATION_TYPE_LABELS[profile.educationType].en : EDUCATION_TYPE_LABELS[profile.educationType].ar}
+            </span>
+          )}
           {lecture.gradeLevelNameAr && (
             <span className="curr-pill curr-pill-grade">
               <GraduationCap size={12} />
               {isEn ? lecture.gradeLevelNameEn : lecture.gradeLevelNameAr}
             </span>
           )}
-          {lecture.termAr && (
+          {(lecture.termAr || natTextbook.semester) && (
             <span className="curr-pill curr-pill-term">
               <Calendar size={12} />
-              {isEn ? lecture.termEn : lecture.termAr}
+              {isEn ? (lecture.termEn || natTextbook.semester) : (lecture.termAr || natTextbook.semester)}
             </span>
           )}
           {lecture.unitTitleAr && (

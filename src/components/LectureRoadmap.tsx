@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2 } from 'lucide-react';
+import { getCountryInfo, getNationalTextbookInfo } from '../data/curriculumCountries';
+import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, ShieldCheck } from 'lucide-react';
 
 interface LectureRoadmapProps {
   lectures: Lecture[];
@@ -37,13 +38,32 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeKey);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(gradeKey);
   const dynamicCourseName = (isPrimarySchool || isMiddleSchool)
-    ? `${courseSubject} â€¢ ${courseGrade}`
-    : `${courseSubject} â€¢ ${courseGrade} (${courseTrack})`;
+    ? `${courseSubject} • ${courseGrade}`
+    : `${courseSubject} • ${courseGrade} (${courseTrack})`;
+
+  const cInfo = getCountryInfo(profile.country);
+  const natTextbook = getNationalTextbookInfo(profile.country, subjectKey, gradeKey, profile.educationTrack, lang);
 
   return (
     <aside className="roadmap-sidebar">
       {/* Course Header */}
       <div className="roadmap-header">
+        {/* National Curriculum Official Badge */}
+        <div className="roadmap-national-accreditation" title={natTextbook.ministry}>
+          <div className="rna-top">
+            <span className="rna-flag">{cInfo.flag}</span>
+            <span className="rna-country-name">{isEn ? cInfo.nameEn : cInfo.nameAr}</span>
+            <span className="rna-verified-badge">
+              <ShieldCheck size={12} />
+              <span>{isEn ? 'Verified' : 'معتمد'}</span>
+            </span>
+          </div>
+          <div className="rna-book-row">
+            <BookOpen size={13} className="rna-book-icon" />
+            <span className="rna-book-title">{natTextbook.textbookName}</span>
+          </div>
+        </div>
+
         <div className="roadmap-header-top">
           <BookOpen className="roadmap-icon" size={20} />
           <div>

@@ -5912,3 +5912,190 @@ input:checked + .slider.round:before {
   color: var(--text-secondary, #94a3b8);
 }
 
+/* ==========================================================================
+   DYNAMIC GEOLOCATION NOTIFICATION BANNER
+   ========================================================================== */
+
+.geo-location-notification-banner {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.18), rgba(6, 78, 59, 0.45));
+  border-bottom: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 0.65rem 1.25rem;
+  animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 40;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.gln-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gln-flag {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.gln-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ecfdf5;
+  flex: 1;
+}
+
+.gln-btn-manage {
+  background: rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34d399;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.gln-btn-manage:hover {
+  background: rgba(16, 185, 129, 0.4);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.gln-btn-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.gln-btn-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   ROADMAP NATIONAL CURRICULUM ACCREDITATION BADGE
+   ========================================================================== */
+
+.roadmap-national-accreditation {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.rna-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rna-flag {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.rna-country-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fff;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rna-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.66rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.rna-book-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.rna-book-icon {
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.rna-book-title {
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   AUTO-DETECT GEO BUTTON & PILLS
+   ========================================================================== */
+
+.btn-auto-detect-geo {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-auto-detect-geo:hover {
+  background: rgba(56, 189, 248, 0.25);
+  color: #fff;
+}
+
+.curr-pill-book {
+  background: rgba(56, 189, 248, 0.12) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+}
+
+.curr-pill-track {
+  background: rgba(168, 85, 247, 0.12) !important;
+  color: #c084fc !important;
+  border: 1px solid rgba(168, 85, 247, 0.3) !important;
+}
+
+.curr-pill-type {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+

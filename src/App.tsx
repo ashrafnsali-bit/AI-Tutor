@@ -6,6 +6,8 @@ import {
   loadSubjectLectures, 
   saveSubjectLectures 
 } from './data/curriculumData';
+import { getCountryInfo } from './data/curriculumCountries';
+import { detectStudentCountry, adaptProfileToCountry } from './services/geoService';
 import { 
   getActiveUserAccount, 
   updateUserAccount, 
@@ -110,11 +112,39 @@ export function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isGenerateLectureOpen, setIsGenerateLectureOpen] = useState(false);
   const [isProgressOpen, setIsProgressOpen] = useState(false);
+  const [geoNotice, setGeoNotice] = useState<{ show: boolean; countryName: string; flag: string; city?: string } | null>(null);
 
   // User session state
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return !!localStorage.getItem('TEACHER_AI_ACTIVE_USER');
   });
+
+  // Dynamic Geolocation Detection on startup
+  useEffect(() => {
+    const hasDetected = sessionStorage.getItem('TEACHER_AI_GEO_TOASTED');
+    if (!hasDetected) {
+      detectStudentCountry().then(geo => {
+        if (geo && geo.country) {
+          const cInfo = getCountryInfo(geo.country);
+          setProfile(prev => {
+            // Auto adapt profile country if it was default or untouched
+            if (!prev.isAutoDetectedCountry && prev.country === 'SA' && geo.country !== 'SA') {
+              return adaptProfileToCountry(prev, geo.country);
+            }
+            return prev;
+          });
+          setGeoNotice({
+            show: true,
+            countryName: cInfo.nameAr,
+            flag: cInfo.flag,
+            city: geo.city
+          });
+          sessionStorage.setItem('TEACHER_AI_GEO_TOASTED', 'true');
+          setTimeout(() => setGeoNotice(null), 9000);
+        }
+      }).catch(() => {});
+    }
+  }, []);
 
   // Check active user from database on startup
   useEffect(() => {
@@ -323,6 +353,34 @@ export function App() {
         onToggleLanguage={handleToggleLanguage}
         onOpenProgress={() => setIsProgressOpen(true)}
       />
+
+      {/* Dynamic Geolocation Country Notification Banner */}
+      {geoNotice && (
+        <div className="geo-location-notification-banner" dir={profile.language === 'en' ? 'ltr' : 'rtl'}>
+          <div className="gln-content">
+            <span className="gln-flag">{geoNotice.flag}</span>
+            <span className="gln-text">
+              {profile.language === 'en'
+                ? `📍 Detected location (${geoNotice.city || geoNotice.countryName}): National curriculum automatically adapted to ${geoNotice.countryName} official standards.`
+                : `📍 تم اكتشاف موقعك الجغرافي (${geoNotice.city || geoNotice.countryName}): تم ضبط المنهج الوطني تلقائياً وفق المعايير الرسمية لـ ${geoNotice.countryName}.`}
+            </span>
+            <button
+              type="button"
+              className="gln-btn-manage"
+              onClick={() => { setGeoNotice(null); setIsProfileOpen(true); }}
+            >
+              {profile.language === 'en' ? 'Customize' : 'تخصيص المسار'}
+            </button>
+            <button
+              type="button"
+              className="gln-btn-close"
+              onClick={() => setGeoNotice(null)}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Learning Hub Segmented Switcher */}
       <div className="mobile-workspace-tabs mobile-only">

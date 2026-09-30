@@ -1,4 +1,5 @@
 import type { ChatMessage, Lecture, Question, StudentProfile } from '../types';
+import { getCountryInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/curriculumCountries';
 
 export interface GeminiEvaluationResponse {
   score: number;
@@ -8,7 +9,7 @@ export interface GeminiEvaluationResponse {
 }
 
 /**
- * Ask Google Gemini in strict Socratic Tutor mode (Localized in Arabic or English)
+ * Ask Google Gemini in strict Socratic Tutor mode (Localized by Country & National Curriculum)
  */
 export async function askGeminiTutor(
   lecture: Lecture,
@@ -20,35 +21,49 @@ export async function askGeminiTutor(
   const activeKey = apiKey || (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_API_KEY;
   const isEn = profile.language === 'en';
 
+  const cInfo = getCountryInfo(profile.country);
+  const trackInfo = profile.educationTrack ? TRACK_LABELS[profile.educationTrack] : undefined;
+  const typeInfo = profile.educationType ? EDUCATION_TYPE_LABELS[profile.educationType] : undefined;
+
   const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
   const keyConcepts = isEn ? lecture.keyConceptsEn.join(', ') : lecture.keyConceptsAr.join('، ');
 
   const systemInstruction = isEn
     ? `
 You are the certified AI Socratic Tutor assigned to student: ${profile.name}.
-Grade: ${profile.gradeLevel} - Specialization: ${profile.specialization} - Subject: ${profile.subject}.
+Country & Ministry: ${cInfo.nameEn} (${cInfo.ministryEn}).
+National Standard: ${cInfo.systemNameEn}.
+Education Type: ${typeInfo ? typeInfo.en : 'National Public Standard'}.
+Track / Specialization: ${trackInfo ? trackInfo.en : profile.specialization}.
+Grade: ${profile.gradeLevel} - Subject: ${profile.subject}.
 Active Lecture being studied: "${lectureTitle}".
 Key Concepts: ${keyConcepts}.
 
 Strict Pedagogical Directives:
-1. NEVER PROVIDE DIRECT ANSWERS OR RAW FINAL VALUES to exercises, homework, or equations!
-2. Follow the Socratic Method: ask ONE guiding micro-question or provide ONE targeted conceptual hint per turn.
-3. Strictly confine discussions to this active lecture. If student asks off-topic or out-of-specialization questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
-4. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
-5. Always converse in English.
+1. Adhere strictly to the official educational standards, pedagogical terminologies, and textbook conventions of ${cInfo.nameEn}.
+2. NEVER PROVIDE DIRECT ANSWERS OR RAW FINAL VALUES to exercises, homework, or equations!
+3. Follow the Socratic Method: ask ONE guiding micro-question or provide ONE targeted conceptual hint per turn.
+4. Strictly confine discussions to this active lecture. If student asks off-topic questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
+5. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
+6. Always converse in English.
     `.trim()
     : `
 أنت "المعلم الذكي" (AI Socratic Tutor) المعتمد والمخصص لمساعدة الطالب: ${profile.name}.
-المرحلة الدراسية: ${profile.gradeLevel} - التخصص: ${profile.specialization} - المادة: ${profile.subject}.
+الدولة والوزارة المعنية: ${cInfo.nameAr} (${cInfo.ministryAr}).
+المنهج والمعيار الوطني: ${cInfo.systemNameAr}.
+نوع التعليم: ${typeInfo ? typeInfo.ar : 'تعليم حكومي معتمد'}.
+مسار التعليم والتخصص: ${trackInfo ? trackInfo.ar : profile.specialization}.
+المرحلة والصف الدراسي: ${profile.gradeLevel} - المادة: ${profile.subject}.
 المحاضرة الحالية التي يدرسها الطالب الآن: "${lectureTitle}".
 المفاهيم الأساسية للمحاضرة: ${keyConcepts}.
 
 القواعد التربوية الإلزامية الصارمة:
-1. ممنوع منعاً باتاً إعطاء الحلول المباشرة أو الأرقام النهائية للمسائل والواجبات!
-2. اتبع المنهج السقراطي: اسأل الطالب سؤالاً استرشادياً صغيراً واحداً في كل رد يقوده للتفكير.
-3. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية أو تخصصات أخرى، قل بلطف: "دعنا نركز أولاً على إتقان مفاهيم ${lectureTitle} لاجتياز اختبارها!".
-4. استخدم لغة عربية فصحى مشجعة، وضح الرموز الرياضية خطوة بخطوة.
-5. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
+1. التزم بالمصطلحات العلمية والرموز الرياضية والقواعد المعتمدة رسمياً في مناهج ${cInfo.nameAr}.
+2. ممنوع منعاً باتاً إعطاء الحلول المباشرة أو الأرقام النهائية للمسائل والواجبات!
+3. اتبع المنهج السقراطي: اسأل الطالب سؤالاً استرشادياً صغيراً واحداً في كل رد يقوده للتفكير الذاتي.
+4. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية، وجهه بلطف للتركيز على إتقان ${lectureTitle}.
+5. استخدم لغة عربية فصحى مشجعة، ووضح الرموز الرياضية خطوة بخطوة.
+6. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
     `.trim();
 
   // If API Key is present, call Gemini API

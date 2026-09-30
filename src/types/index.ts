@@ -1,5 +1,16 @@
 export type Specialization = 'STEM' | 'HUMANITIES' | 'GENERAL' | 'HEALTH' | 'VOCATIONAL';
 
+export type EducationType = 'PUBLIC' | 'PRIVATE' | 'ISLAMIC' | 'INTERNATIONAL';
+
+export type EducationTrack = 
+  | 'GENERAL' 
+  | 'CS_ENGINEERING' 
+  | 'HEALTH_LIFE' 
+  | 'BUSINESS' 
+  | 'SHARIA_HUMANITIES' 
+  | 'SCIENCE_MATH' 
+  | 'SCIENCE_BIO';
+
 export type Subject = 
   | 'PRIMARY_MATH'
   | 'PRIMARY_ARABIC'
@@ -21,7 +32,20 @@ export type GradeLevel =
 
 export type Language = 'ar' | 'en';
 
-export type CountryCode = 'SA' | 'EG' | 'AE' | 'KW' | 'JO' | 'OM' | 'QA' | 'BH' | 'INTL';
+export type CountryCode = 
+  | 'SA' 
+  | 'EG' 
+  | 'AE' 
+  | 'KW' 
+  | 'JO' 
+  | 'OM' 
+  | 'QA' 
+  | 'BH' 
+  | 'IQ' 
+  | 'MA' 
+  | 'DZ' 
+  | 'TN' 
+  | 'INTL';
 
 export interface StudentProfile {
   id: string;
@@ -33,6 +57,8 @@ export interface StudentProfile {
   age: number;
   dateOfBirth: string;
   country: CountryCode;
+  educationType?: EducationType;
+  educationTrack?: EducationTrack;
   specialization: Specialization;
   subject: Subject;
   gradeLevel: GradeLevel;
@@ -42,6 +68,9 @@ export interface StudentProfile {
   timeLimitMinutes: number;
   usedTodayMinutes: number;
   masteryPoints: number;
+  isAutoDetectedCountry?: boolean;
+  detectedCity?: string;
+  detectedIp?: string;
 }
 
 export interface UserAccount extends StudentProfile {

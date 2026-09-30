@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { CountryCode, GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
 import { getTranslations } from '../i18n/translations';
+import { detectStudentCountry } from '../services/geoService';
 import { X, User, ShieldAlert, CheckCircle2, Users } from 'lucide-react';
 
 interface StudentProfileModalProps {
@@ -19,6 +20,9 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   onClose
 }) => {
   if (!isOpen) return null;
+
+  const [isDetecting, setIsDetecting] = useState(false);
+  const [detectNotice, setDetectNotice] = useState<string | null>(null);
 
   const PRIMARY_SUBJECTS: Subject[] = ['PRIMARY_ARABIC', 'PRIMARY_MATH', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'];
   const MIDDLE_SUBJECTS: Subject[] = ['ARABIC_LANG', 'MATH', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'];
@@ -256,21 +260,71 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
             {/* Official State / National Curriculum Country */}
             <div className="form-group">
-              <label className="form-label">{t.countrySelectLabel}</label>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                <label className="form-label" style={{ margin: 0 }}>{t.countrySelectLabel}</label>
+                <button
+                  type="button"
+                  className="btn-auto-detect-geo"
+                  onClick={async () => {
+                    setIsDetecting(true);
+                    try {
+                      const res = await detectStudentCountry(true);
+                      setFormData(prev => ({
+                        ...prev,
+                        country: res.country,
+                        detectedCity: res.city,
+                        isAutoDetectedCountry: true
+                      }));
+                      setDetectNotice(`📍 تم اكتشاف موقعك (${res.city || res.countryName}) وضبط المنهج بنجاح!`);
+                    } catch {
+                      setDetectNotice('تعذر تحديد الموقع الجغرافي تلقائياً');
+                    } finally {
+                      setIsDetecting(false);
+                    }
+                  }}
+                  title="اكتشاف بلد الدخول تلقائياً بالذكاء الجغرافي"
+                >
+                  {isDetecting ? '⏳ جارٍ التحديد...' : '📍 تحديد تلقائي'}
+                </button>
+              </div>
               <select
                 className="form-select"
                 value={formData.country || 'SA'}
-                onChange={(e) => setFormData({ ...formData, country: e.target.value as CountryCode })}
+                onChange={(e) => setFormData({ ...formData, country: e.target.value as CountryCode, isAutoDetectedCountry: false })}
               >
-                <option value="SA">{t.countryLabels.SA}</option>
-                <option value="EG">{t.countryLabels.EG}</option>
-                <option value="AE">{t.countryLabels.AE}</option>
-                <option value="KW">{t.countryLabels.KW}</option>
-                <option value="JO">{t.countryLabels.JO}</option>
-                <option value="OM">{t.countryLabels.OM}</option>
-                <option value="QA">{t.countryLabels.QA}</option>
-                <option value="BH">{t.countryLabels.BH}</option>
-                <option value="INTL">{t.countryLabels.INTL}</option>
+                <option value="SA">🇸🇦 المملكة العربية السعودية (وزارة التعليم)</option>
+                <option value="EG">🇪🇬 جمهورية مصر العربية (وزارة التربية والتعليم)</option>
+                <option value="AE">🇦🇪 دولة الإمارات العربية المتحدة (مؤسسة الإمارات للتعليم)</option>
+                <option value="KW">🇰🇼 دولة الكويت (وزارة التربية)</option>
+                <option value="JO">🇯🇴 المملكة الأردنية الهاشمية (وزارة التربية والتعليم)</option>
+                <option value="OM">🇴🇲 سلطنة عُمان (وزارة التربية والتعليم)</option>
+                <option value="QA">🇶🇦 دولة قطر (وزارة التربية والتعليم والتعليم العالي)</option>
+                <option value="BH">🇧🇭 مملكة البحرين (وزارة التربية والتعليم)</option>
+                <option value="IQ">🇮🇶 جمهورية العراق (وزارة التربية)</option>
+                <option value="MA">🇲🇦 المملكة المغربية (وزارة التربية الوطنية)</option>
+                <option value="DZ">🇩🇿 الجمهورية الجزائرية (وزارة التربية الوطنية)</option>
+                <option value="TN">🇹🇳 الجمهورية التونسية (وزارة التربية)</option>
+                <option value="INTL">🌍 المنهج الدولي والمعايير العامة</option>
+              </select>
+              {detectNotice && (
+                <span className="geo-detect-toast" style={{ color: '#10b981', fontSize: '0.72rem', marginTop: '0.25rem', display: 'block' }}>
+                  {detectNotice}
+                </span>
+              )}
+            </div>
+
+            {/* Education Type (حكومي / أهلي / شرعي / دولي) */}
+            <div className="form-group">
+              <label className="form-label">{t.educationTypeLabel || 'نوع التعليم'}</label>
+              <select
+                className="form-select"
+                value={formData.educationType || 'PUBLIC'}
+                onChange={(e) => setFormData({ ...formData, educationType: e.target.value as any })}
+              >
+                <option value="PUBLIC">🏛️ تعليم حكومي / معتمد رسمي</option>
+                <option value="PRIVATE">🏫 تعليم أهلي / خاص</option>
+                <option value="ISLAMIC">🕌 تعليم شرعي / أزهري</option>
+                <option value="INTERNATIONAL">🌐 تعليم دولي / لغات ومسارات متقدمة</option>
               </select>
             </div>
 
