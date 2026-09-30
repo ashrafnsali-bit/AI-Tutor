@@ -319,25 +319,46 @@ export function getNationalTextbookInfo(
   const textbookMap: Record<string, string> = {
     // Saudi Arabia
     'SA_PRIMARY_MATH_G4': 'رياضيات الصف الرابع الابتدائي - الفصل الدراسي الثاني',
+    'SA_PRIMARY_MATH_G6': 'رياضيات الصف السادس الابتدائي - الفصل الدراسي الثاني',
     'SA_PRIMARY_ARABIC_G4': 'لغتي الجميلة - الصف الرابع الابتدائي',
+    'SA_PRIMARY_ARABIC_G6': 'لغتي الجميلة - الصف السادس الابتدائي',
     'SA_PRIMARY_SCIENCE_G4': 'العلوم - الصف الرابع الابتدائي (الفصل الثاني)',
+    'SA_PRIMARY_SCIENCE_G6': 'العلوم - الصف السادس الابتدائي',
     'SA_ISLAMIC_STUDIES_G4': 'الدراسات الإسلامية - الصف الرابع الابتدائي',
+    'SA_ISLAMIC_STUDIES_G6': 'الدراسات الإسلامية - الصف السادس الابتدائي',
+    'SA_ARABIC_LANG_G7': 'لغتي الخالدة - أول متوسط',
+    'SA_ARABIC_LANG_G8': 'لغتي الخالدة - ثاني متوسط',
+    'SA_ARABIC_LANG_G9': 'لغتي الخالدة - ثالث متوسط',
     'SA_MATH_G10': 'الرياضيات 1-2 (مسارات السنة الأولى المشتركة)',
     'SA_PHYSICS_G12': 'الفيزياء 3 (مسار علوم الحاسب والهندسة)',
     'SA_CHEMISTRY_G11': 'الكيمياء 2-1 (مسار الصحة والحياة)',
     'SA_BIOLOGY_G11': 'الأحياء 2-1 (مسار الصحة والحياة)',
     'SA_COMPUTER_SCIENCE_G11': 'التقنية الرقمية 2-1 (مسار علوم الحاسب والهندسة)',
     'SA_ARABIC_LIT_G12': 'الدراسات الأدبية واللغوية (المسار الشرعي والإنساني)',
-    // Egypt
-    'EG_PRIMARY_MATH_G4': 'الرياضيات - الصف الرابع الابتدائي (سلاح التلميذ والوزارة)',
-    'EG_PRIMARY_ARABIC_G4': 'اللغة العربية - الصف الرابع الابتدائي (الفصل الدراسي الثاني)',
-    'EG_PRIMARY_SCIENCE_G4': 'العلوم - الصف الرابع الابتدائي',
+    // Egypt (وزارة التربية والتعليم المصرية - التعليم 2.0 والثانوية العامة)
+    'EG_PRIMARY_MATH_G4': 'الرياضيات - الصف الرابع الابتدائي (كتاب الوزارة وسلاح التلميذ)',
+    'EG_PRIMARY_MATH_G6': 'الرياضيات - الصف السادس الابتدائي (منهج التعليم 2.0 المطور)',
+    'EG_PRIMARY_ARABIC_G4': 'اللغة العربية - الصف الرابع الابتدائي (كتاب التلميذ)',
+    'EG_PRIMARY_ARABIC_G6': 'اللغة العربية - الصف السادس الابتدائي (كتاب التلميذ - التعليم 2.0)',
+    'EG_PRIMARY_SCIENCE_G4': 'العلوم - الصف الرابع الابتدائي (التعليم 2.0)',
+    'EG_PRIMARY_SCIENCE_G6': 'العلوم - الصف السادس الابتدائي (التعليم 2.0 المطور)',
+    'EG_ISLAMIC_STUDIES_G4': 'التربية الدينية الإسلامية - الصف الرابع الابتدائي',
+    'EG_ISLAMIC_STUDIES_G6': 'التربية الدينية الإسلامية - الصف السادس الابتدائي',
+    'EG_ARABIC_LANG_G7': 'اللغة العربية - الصف الأول الإعدادي',
+    'EG_ARABIC_LANG_G8': 'اللغة العربية - الصف الثاني الإعدادي',
+    'EG_ARABIC_LANG_G9': 'اللغة العربية - الصف الثالث الإعدادي (الشهادة الإعدادية)',
+    'EG_GENERAL_SCIENCE_G7': 'العلوم - الصف الأول الإعدادي',
+    'EG_GENERAL_SCIENCE_G8': 'العلوم - الصف الثاني الإعدادي',
+    'EG_GENERAL_SCIENCE_G9': 'العلوم - الصف الثالث الإعدادي',
     'EG_MATH_G10': 'الرياضيات العامة - الصف الأول الثانوي',
     'EG_PHYSICS_G12': 'الفيزياء للثانوية العامة (القسم العلمي)',
     'EG_CHEMISTRY_G12': 'الكيمياء للثانوية العامة (شعبة علمي علوم وعلمي رياضة)',
     'EG_BIOLOGY_G12': 'الأحياء للثانوية العامة (شعبة علمي علوم)',
+    'EG_ARABIC_LIT_G12': 'اللغة العربية وقواعد النحو والأدب - الثانوية العامة',
     // UAE
     'AE_PRIMARY_MATH_G4': 'الرياضيات - الصف الرابع (مؤسسة الإمارات للتعليم المدرسي)',
+    'AE_PRIMARY_ARABIC_G4': 'اللغة العربية - الصف الرابع (الحلقة الأولى)',
+    'AE_PRIMARY_ARABIC_G6': 'اللغة العربية - الصف السادس (الحلقة الثانية)',
     'AE_PHYSICS_G12': 'الفيزياء المتقدمة - الصف الثاني عشر (المسار المتقدم)',
     'AE_COMPUTER_SCIENCE_G11': 'علوم الحاسوب والابتكار - مسار النخبة والمتقدم'
   };
@@ -352,3 +373,108 @@ export function getNationalTextbookInfo(
     semester: isEn ? cInfo.termDefaultEn : cInfo.termDefaultAr
   };
 }
+
+/**
+ * Returns accurately localized subject name adapted to the country's national education system
+ */
+export function getNationalSubjectLabel(
+  subject: Subject,
+  country: CountryCode = 'SA',
+  _gradeLevel?: GradeLevel,
+  lang: Language = 'ar'
+): string {
+  const isEn = lang === 'en';
+
+  if (country === 'EG') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return isEn ? 'Arabic Language (Student Book - Education 2.0)' : 'اللغة العربية (كتاب التلميذ - التعليم 2.0)';
+      case 'ARABIC_LANG':
+        return isEn ? 'Arabic Language (Preparatory / Middle School)' : 'اللغة العربية (المرحلة الإعدادية)';
+      case 'PRIMARY_MATH':
+        return isEn ? 'Mathematics & Arithmetic (Primary School)' : 'الرياضيات والحساب (المرحلة الابتدائية)';
+      case 'PRIMARY_SCIENCE':
+        return isEn ? 'Science (Education 2.0 Primary)' : 'العلوم (التعليم 2.0 - ابتدائي)';
+      case 'GENERAL_SCIENCE':
+        return isEn ? 'General Science (Preparatory School)' : 'العلوم (المرحلة الإعدادية)';
+      case 'ISLAMIC_STUDIES':
+        return isEn ? 'Islamic Religious Education' : 'التربية الدينية الإسلامية';
+      case 'MATH':
+        return isEn ? 'General Mathematics & Algebra' : 'الرياضيات العامة والجبر';
+      case 'PHYSICS':
+        return isEn ? 'Physics (General Secondary)' : 'الفيزياء (الثانوية العامة)';
+      case 'CHEMISTRY':
+        return isEn ? 'Chemistry (General Secondary)' : 'الكيمياء (الثانوية العامة)';
+      case 'BIOLOGY':
+        return isEn ? 'Biology & Geology (General Secondary)' : 'الأحياء والجيولوجيا (الثانوية العامة)';
+      case 'COMPUTER_SCIENCE':
+        return isEn ? 'Information Technology & Computer' : 'تكنولوجيا المعلومات والحاسب الآلي';
+      case 'ARABIC_LIT':
+        return isEn ? 'Arabic Grammar & Rhetoric (High School)' : 'اللغة العربية والنحو والبلاغة';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'SA') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return isEn ? 'Arabic Language (Lughati Al-Jameelah)' : 'اللغة العربية (لغتي الجميلة - ابتدائي)';
+      case 'ARABIC_LANG':
+        return isEn ? 'Arabic Language (Lughati Al-Khalidah - Middle)' : 'اللغة العربية (لغتي الخالدة - متوسط)';
+      case 'ISLAMIC_STUDIES':
+        return isEn ? 'Islamic Studies (Tawheed & Fiqh)' : 'الدراسات الإسلامية (ابتدائي)';
+      case 'PRIMARY_MATH':
+        return isEn ? 'Primary Mathematics' : 'الرياضيات (المرحلة الابتدائية)';
+      case 'PRIMARY_SCIENCE':
+        return isEn ? 'Primary Science' : 'العلوم (المرحلة الابتدائية)';
+      case 'GENERAL_SCIENCE':
+        return isEn ? 'Middle School Science' : 'العلوم (المرحلة المتوسطة)';
+      case 'MATH':
+        return isEn ? 'Mathematics (Masarat Track)' : 'الرياضيات (نظام المسارات)';
+      case 'PHYSICS':
+        return isEn ? 'Physics (Masarat Track)' : 'الفيزياء (مسار الهندسة والحاسب)';
+      case 'CHEMISTRY':
+        return isEn ? 'Chemistry (Masarat Track)' : 'الكيمياء (مسار الصحة والحياة)';
+      case 'BIOLOGY':
+        return isEn ? 'Biology (Masarat Track)' : 'الأحياء (مسار الصحة والحياة)';
+      case 'COMPUTER_SCIENCE':
+        return isEn ? 'Digital Technology (Masarat)' : 'التقنية الرقمية وعلوم الحاسب';
+      case 'ARABIC_LIT':
+        return isEn ? 'Literary Studies (Sharia Track)' : 'الدراسات الأدبية واللغوية (المسار الشرعي)';
+      default:
+        break;
+    }
+  }
+
+  // Standard / Universal Arab World Subject Names
+  switch (subject) {
+    case 'PRIMARY_ARABIC':
+      return isEn ? 'Arabic Language (Primary Stage)' : 'اللغة العربية (المرحلة الابتدائية)';
+    case 'ARABIC_LANG':
+      return isEn ? 'Arabic Language (Middle / Preparatory)' : 'اللغة العربية (المرحلة المتوسطة / الإعدادية)';
+    case 'PRIMARY_MATH':
+      return isEn ? 'Elementary Mathematics & Arithmetic' : 'الرياضيات والحساب (المرحلة الابتدائية)';
+    case 'PRIMARY_SCIENCE':
+      return isEn ? 'Elementary Science & Exploration' : 'العلوم والاستكشاف (المرحلة الابتدائية)';
+    case 'GENERAL_SCIENCE':
+      return isEn ? 'General Science (Middle School)' : 'العلوم العامة (المرحلة المتوسطة)';
+    case 'ISLAMIC_STUDIES':
+      return isEn ? 'Islamic Education & Ethics' : 'التربية الإسلامية والدراسات الدينية';
+    case 'MATH':
+      return isEn ? 'Mathematics (Algebra & Functions)' : 'الرياضيات (الجبر والدوال)';
+    case 'PHYSICS':
+      return isEn ? 'Physics' : 'الفيزياء';
+    case 'CHEMISTRY':
+      return isEn ? 'Chemistry' : 'الكيمياء';
+    case 'BIOLOGY':
+      return isEn ? 'Biology & Life Sciences' : 'علم الأحياء وعلوم الحياة';
+    case 'COMPUTER_SCIENCE':
+      return isEn ? 'Computer Science & AI' : 'علوم الحاسب والذكاء الاصطناعي';
+    case 'ARABIC_LIT':
+      return isEn ? 'Arabic Literature & Rhetoric' : 'اللغة العربية والبلاغة والأدب';
+    default:
+      return subject;
+  }
+}
+

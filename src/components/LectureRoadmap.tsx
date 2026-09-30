@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
+import { getNationalSubjectLabel } from '../data/curriculumCountries';
 import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock } from 'lucide-react';
 
 interface LectureRoadmapProps {
@@ -26,11 +27,12 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const completedCount = lectures.filter((l) => l.isCompleted).length;
   const progressPercent = Math.round((completedCount / lectures.length) * 100);
 
-  // Dynamic Course Header matching student's active track and grade
+  // Dynamic Course Header matching student's active track, country and grade
   const subjectKey = profile?.subject || 'MATH';
   const gradeKey = profile?.gradeLevel || 'G10';
   const specKey = profile?.specialization || 'STEM';
-  const courseSubject = t.subjectLabels[subjectKey] || subjectKey;
+  const countryKey = profile?.country || 'SA';
+  const courseSubject = getNationalSubjectLabel(subjectKey, countryKey, gradeKey, lang);
   const courseGrade = t.gradeLabels[gradeKey] || gradeKey;
   const courseTrack = t.specLabels[specKey] || specKey;
 

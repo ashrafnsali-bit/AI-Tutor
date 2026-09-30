@@ -494,12 +494,12 @@ export const PRIMARY_ARABIC_LECTURES: Lecture[] = [
     passingScoreRequired: 80,
 
     // Official Curriculum Metadata
-    gradeLevelNameAr: 'الصف الرابع الابتدائي - لغتي الجميلة',
-    gradeLevelNameEn: 'Grade 4 Elementary - Arabic Language',
+    gradeLevelNameAr: 'المرحلة الابتدائية - مهارات اللغة العربية',
+    gradeLevelNameEn: 'Elementary School - Arabic Language Skills',
     termAr: 'الفصل الدراسي الأول',
     termEn: 'First Semester / Term 1',
-    unitTitleAr: 'الوحدة الأولى: صحتي وبيئتي ولغتي الجميلة',
-    unitTitleEn: 'Unit 1: Health, Environment & Arabic Reading',
+    unitTitleAr: 'الوحدة الأولى: مهارات وقواعد اللغة العربية',
+    unitTitleEn: 'Unit 1: Arabic Grammar & Reading Foundations',
     lessonNumberAr: 'الدرس 1: مهارات القراءة والتمييز بين اللامين',
     lessonNumberEn: 'Lesson 1: Reading Skills & Definite Articles',
 

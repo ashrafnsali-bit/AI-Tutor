@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { CountryCode, GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { detectStudentCountry } from '../services/geoService';
+import { getNationalSubjectLabel } from '../data/curriculumCountries';
 import { X, User, ShieldAlert, CheckCircle2, Users } from 'lucide-react';
 
 interface StudentProfileModalProps {
@@ -431,37 +432,37 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
               >
                 {isPrimarySchool ? (
                   <optgroup label={formData.language === 'en' ? "Elementary Core Subjects" : "المواد الأساسية للمرحلة الابتدائية"}>
-                    <option value="PRIMARY_ARABIC">{t.subjectLabels.PRIMARY_ARABIC}</option>
-                    <option value="PRIMARY_MATH">{t.subjectLabels.PRIMARY_MATH}</option>
-                    <option value="PRIMARY_SCIENCE">{t.subjectLabels.PRIMARY_SCIENCE}</option>
-                    <option value="ISLAMIC_STUDIES">{t.subjectLabels.ISLAMIC_STUDIES}</option>
+                    <option value="PRIMARY_ARABIC">{getNationalSubjectLabel('PRIMARY_ARABIC', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="PRIMARY_MATH">{getNationalSubjectLabel('PRIMARY_MATH', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="PRIMARY_SCIENCE">{getNationalSubjectLabel('PRIMARY_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', formData.country, formData.gradeLevel, formData.language)}</option>
                   </optgroup>
                 ) : isMiddleSchool ? (
                   <optgroup label={formData.language === 'en' ? "Middle School Subjects" : "مواد المرحلة المتوسطة"}>
-                    <option value="ARABIC_LANG">{t.subjectLabels.ARABIC_LANG}</option>
-                    <option value="MATH">{t.subjectLabels.MATH}</option>
-                    <option value="GENERAL_SCIENCE">{t.subjectLabels.GENERAL_SCIENCE}</option>
-                    <option value="COMPUTER_SCIENCE">{t.subjectLabels.COMPUTER_SCIENCE}</option>
+                    <option value="ARABIC_LANG">{getNationalSubjectLabel('ARABIC_LANG', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="MATH">{getNationalSubjectLabel('MATH', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="GENERAL_SCIENCE">{getNationalSubjectLabel('GENERAL_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
                   </optgroup>
                 ) : formData.specialization === 'HUMANITIES' ? (
                   <optgroup label={t.specLabels.HUMANITIES}>
-                    <option value="ARABIC_LIT">{t.subjectLabels.ARABIC_LIT}</option>
+                    <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', formData.country, formData.gradeLevel, formData.language)}</option>
                   </optgroup>
                 ) : formData.specialization === 'HEALTH' ? (
                   <optgroup label={t.specLabels.HEALTH}>
-                    <option value="BIOLOGY">{t.subjectLabels.BIOLOGY}</option>
-                    <option value="CHEMISTRY">{t.subjectLabels.CHEMISTRY}</option>
-                    <option value="PHYSICS">{t.subjectLabels.PHYSICS}</option>
+                    <option value="BIOLOGY">{getNationalSubjectLabel('BIOLOGY', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="PHYSICS">{getNationalSubjectLabel('PHYSICS', formData.country, formData.gradeLevel, formData.language)}</option>
                   </optgroup>
                 ) : (
                   <optgroup label={formData.specialization === 'STEM' ? t.specLabels.STEM : t.labelSubject}>
-                    <option value="PHYSICS">{t.subjectLabels.PHYSICS}</option>
-                    <option value="MATH">{t.subjectLabels.MATH}</option>
-                    <option value="CHEMISTRY">{t.subjectLabels.CHEMISTRY}</option>
-                    <option value="BIOLOGY">{t.subjectLabels.BIOLOGY}</option>
-                    <option value="COMPUTER_SCIENCE">{t.subjectLabels.COMPUTER_SCIENCE}</option>
+                    <option value="PHYSICS">{getNationalSubjectLabel('PHYSICS', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="MATH">{getNationalSubjectLabel('MATH', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="BIOLOGY">{getNationalSubjectLabel('BIOLOGY', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
                     {formData.specialization === 'GENERAL' && (
-                      <option value="ARABIC_LIT">{t.subjectLabels.ARABIC_LIT}</option>
+                      <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', formData.country, formData.gradeLevel, formData.language)}</option>
                     )}
                   </optgroup>
                 )}

@@ -3,6 +3,7 @@ import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, 
 import { getTranslations } from '../i18n/translations';
 import { registerUserAccount, loginUserAccount } from '../services/database';
 import { detectStudentCountry } from '../services/geoService';
+import { getNationalSubjectLabel } from '../data/curriculumCountries';
 import { X, UserPlus, LogIn, Sparkles, AlertCircle, CheckCircle2, ShieldCheck, GraduationCap } from 'lucide-react';
 
 interface AuthModalProps {
@@ -470,26 +471,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                   >
                     {isPrimary ? (
                       <optgroup label={regLanguage === 'en' ? "Elementary Core Subjects" : "المواد الأساسية للمرحلة الابتدائية"}>
-                        <option value="PRIMARY_MATH">{t.subjectLabels.PRIMARY_MATH}</option>
-                        <option value="PRIMARY_ARABIC">{t.subjectLabels.PRIMARY_ARABIC}</option>
-                        <option value="PRIMARY_SCIENCE">{t.subjectLabels.PRIMARY_SCIENCE}</option>
-                        <option value="ISLAMIC_STUDIES">{t.subjectLabels.ISLAMIC_STUDIES}</option>
+                        <option value="PRIMARY_MATH">{getNationalSubjectLabel('PRIMARY_MATH', regCountry, regGrade, regLanguage)}</option>
+                        <option value="PRIMARY_ARABIC">{getNationalSubjectLabel('PRIMARY_ARABIC', regCountry, regGrade, regLanguage)}</option>
+                        <option value="PRIMARY_SCIENCE">{getNationalSubjectLabel('PRIMARY_SCIENCE', regCountry, regGrade, regLanguage)}</option>
+                        <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', regCountry, regGrade, regLanguage)}</option>
                       </optgroup>
                     ) : isMiddle ? (
                       <optgroup label={regLanguage === 'en' ? "Middle School Subjects" : "مواد المرحلة المتوسطة"}>
-                        <option value="ARABIC_LANG">{t.subjectLabels.ARABIC_LANG}</option>
-                        <option value="MATH">{t.subjectLabels.MATH}</option>
-                        <option value="GENERAL_SCIENCE">{t.subjectLabels.GENERAL_SCIENCE}</option>
-                        <option value="COMPUTER_SCIENCE">{t.subjectLabels.COMPUTER_SCIENCE}</option>
+                        <option value="ARABIC_LANG">{getNationalSubjectLabel('ARABIC_LANG', regCountry, regGrade, regLanguage)}</option>
+                        <option value="MATH">{getNationalSubjectLabel('MATH', regCountry, regGrade, regLanguage)}</option>
+                        <option value="GENERAL_SCIENCE">{getNationalSubjectLabel('GENERAL_SCIENCE', regCountry, regGrade, regLanguage)}</option>
+                        <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', regCountry, regGrade, regLanguage)}</option>
                       </optgroup>
                     ) : (
                       <optgroup label={regLanguage === 'en' ? "High School Subjects" : "مواد المرحلة الثانوية"}>
-                        <option value="PHYSICS">{t.subjectLabels.PHYSICS}</option>
-                        <option value="MATH">{t.subjectLabels.MATH}</option>
-                        <option value="CHEMISTRY">{t.subjectLabels.CHEMISTRY}</option>
-                        <option value="BIOLOGY">{t.subjectLabels.BIOLOGY}</option>
-                        <option value="ARABIC_LIT">{t.subjectLabels.ARABIC_LIT}</option>
-                        <option value="COMPUTER_SCIENCE">{t.subjectLabels.COMPUTER_SCIENCE}</option>
+                        <option value="PHYSICS">{getNationalSubjectLabel('PHYSICS', regCountry, regGrade, regLanguage)}</option>
+                        <option value="MATH">{getNationalSubjectLabel('MATH', regCountry, regGrade, regLanguage)}</option>
+                        <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', regCountry, regGrade, regLanguage)}</option>
+                        <option value="BIOLOGY">{getNationalSubjectLabel('BIOLOGY', regCountry, regGrade, regLanguage)}</option>
+                        <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', regCountry, regGrade, regLanguage)}</option>
+                        <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', regCountry, regGrade, regLanguage)}</option>
                       </optgroup>
                     )}
                   </select>
