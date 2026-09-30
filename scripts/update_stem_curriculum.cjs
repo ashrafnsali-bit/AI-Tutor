@@ -1,4 +1,9 @@
-import type { Lecture } from '../types';
+const fs = require('fs');
+const path = require('path');
+
+const targetPath = path.join(__dirname, '../src/data/stemCurriculumData.ts');
+
+const stemContent = `import type { Lecture } from '../types';
 
 // ============================================================================
 // 1. ADVANCED CHEMISTRY CURRICULUM — GRADE 12 STEM (كيمياء 3 مسارات)
@@ -179,7 +184,7 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     isCompleted: false,
     passingScoreRequired: 80,
     titleAr: 'المحاضرة 2: الاتزان الكيميائي ومبدأ لوتشاتلييه وثابت الاتزان Keq',
-    titleEn: 'Lecture 2: Chemical Equilibrium, Le Chatelier\'s Principle & Equilibrium Constant Keq',
+    titleEn: 'Lecture 2: Chemical Equilibrium, Le Chatelier\\\'s Principle & Equilibrium Constant Keq',
     subtitleAr: 'الاتزان الديناميكي، قانون الاتزان الكيميائي، والعوامل المؤثرة في إزاحة موضع الاتزان',
     subtitleEn: 'Master dynamic equilibrium, Keq expressions, reaction quotient Q, and Le Chatelier stress response.',
     durationMinutes: 35,
@@ -192,7 +197,7 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     lessonNumberAr: 'الدرس 2: الاتزان الكيميائي ومبدأ لوتشاتلييه',
     lessonNumberEn: 'Lesson 2: Chemical Equilibrium & Le Chatelier',
     warmupHookAr: 'في صناعة الأمونيا (طريقة هابر-بوش) التي تنتج الأسمدة المغذية لنصف سكان كوكب الأرض، يصل التفاعل إلى حالة اتزان تتساوى فيها سرعة التفاعل الأمامي مع العكسي. كيف استطاع الكيميائيون التلاعب بالضغط والحرارة لإجبار التفاعل على إنتاج المزيد من الأمونيا؟ إنه مبدأ لوتشاتلييه العبقري!',
-    warmupHookEn: 'The Haber-Bosch ammonia synthesis sustains billions via equilibrium manipulation. Le Chatelier\'s principle allows engineers to steer dynamic reversible reactions toward maximal product yield!',
+    warmupHookEn: 'The Haber-Bosch ammonia synthesis sustains billions via equilibrium manipulation. Le Chatelier\\\'s principle allows engineers to steer dynamic reversible reactions toward maximal product yield!',
     learningOutcomesAr: [
       'أن يعرف الطالب حالة الاتزان الكيميائي الديناميكي وتساوي سرعتي التفاعل الأمامي والعكسي',
       'أن يكتب تعبير ثابت الاتزان Keq للتفاعلات المتجانسة وغير المتجانسة',
@@ -202,7 +207,7 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     learningOutcomesEn: [
       'Define dynamic chemical equilibrium and equal forward/reverse reaction rates',
       'Write Keq equilibrium constant expressions for homogeneous/heterogeneous systems',
-      'Apply Le Chatelier\'s principle for stresses in concentration, pressure/volume, and temperature',
+      'Apply Le Chatelier\\\'s principle for stresses in concentration, pressure/volume, and temperature',
       'Compare reaction quotient Q with Keq to predict shift direction'
     ],
     vocabulary: [
@@ -213,20 +218,20 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         definitionEn: 'Dynamic state where forward and reverse reaction rates are equal and concentrations remain constant.'
       },
       {
-        termAr: 'مبدأ لوتشاتلييه (Le Chatelier\'s Principle)',
-        termEn: 'Le Chatelier\'s Principle',
+        termAr: 'مبدأ لوتشاتلييه (Le Chatelier\\\'s Principle)',
+        termEn: 'Le Chatelier\\\'s Principle',
         definitionAr: 'إذا بُذل جهد أو تغير على نظام في حالة اتزان (مثل تغير التركيز أو الضغط أو الحرارة)، فإن النظام يعدل نفسه في الاتجاه الذي يقلل من أثر هذا الجهد.',
         definitionEn: 'If a stress is applied to a system at equilibrium, the system shifts in the direction that relieves the stress.'
       }
     ],
     keyConceptsAr: ['الاتزان الديناميكي', 'تعبير ثابت الاتزان Keq', 'مبدأ لوتشاتلييه والعوامل المؤثرة', 'حاصل التفاعل Q'],
-    keyConceptsEn: ['Dynamic Equilibrium', 'Keq Constant Expression', 'Le Chatelier\'s Principle', 'Reaction Quotient Q'],
+    keyConceptsEn: ['Dynamic Equilibrium', 'Keq Constant Expression', 'Le Chatelier\\\'s Principle', 'Reaction Quotient Q'],
     summaryAr: 'الاتزان الكيميائي حالة ديناميكية مستقرة، وعند تعرض النظام لإجهاد (تغير حرارة أو ضغط أو تركيز) ينزاح موضع الاتزان لتخفيف الأثر واستعادة التوازن.',
-    summaryEn: 'Chemical equilibrium is dynamic. Systems perturbed by concentration, pressure, or temperature shifts respond per Le Chatelier\'s principle to restore equilibrium.',
+    summaryEn: 'Chemical equilibrium is dynamic. Systems perturbed by concentration, pressure, or temperature shifts respond per Le Chatelier\\\'s principle to restore equilibrium.',
     sections: [
       {
         titleAr: '1. مبدأ لوتشاتلييه وإزاحة موضع الاتزان',
-        titleEn: '1. Le Chatelier\'s Principle & Equilibrium Shifts',
+        titleEn: '1. Le Chatelier\\\'s Principle & Equilibrium Shifts',
         contentAr: 'قواعد لوتشاتلييه: 1) إضافة مادة متفاعلة ينزاح الاتزان نحو النواتج (يميناً). 2) زيادة الضغط (تقليل الحجم) ينزاح الاتزان نحو الطرف ذي عدد المولات الغازية الأقل. 3) رفع درجة الحرارة في تفاعل طارد للحرارة ينزاح نحو المتفاعلات (يساراً) وتقل قيمة Keq.',
         contentEn: 'Rules: Adding reactants shifts right; increasing pressure shifts toward fewer gas moles; heating exothermic reactions shifts left and lowers Keq.',
         interactiveExample: {
@@ -349,7 +354,7 @@ export const BIOLOGY_LECTURES: Lecture[] = [
     titleAr: 'المحاضرة 1: الوراثة الجزيئية وتركيب الحمض النووي DNA وتضاعفه شبه المحافظ',
     titleEn: 'Lecture 1: Molecular Genetics, DNA Structure & Semi-Conservative Replication',
     subtitleAr: 'نموذج واطسون وكريك، القواعد النيتروجينية وقاعدة تشارجاف، وإنزيمات تضاعف DNA',
-    subtitleEn: 'Master double helix structure, Chargaff\'s rules, helicase, DNA polymerase, and Okazaki fragments.',
+    subtitleEn: 'Master double helix structure, Chargaff\\\'s rules, helicase, DNA polymerase, and Okazaki fragments.',
     durationMinutes: 35,
     gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM)',
     gradeLevelNameEn: 'Grade 12 / High School - STEM Specialization',
@@ -369,7 +374,7 @@ export const BIOLOGY_LECTURES: Lecture[] = [
     ],
     learningOutcomesEn: [
       'Describe nucleotide composition and antiparallel double-helix DNA geometry',
-      'Apply Chargaff\'s complementary base pairing rules (A=T via 2 H-bonds, G=C via 3 H-bonds)',
+      'Apply Chargaff\\\'s complementary base pairing rules (A=T via 2 H-bonds, G=C via 3 H-bonds)',
       'Explain semi-conservative replication enzymes (Helicase, DNA Polymerase, Ligase)',
       'Differentiate leading strand continuous synthesis from lagging strand Okazaki fragments'
     ],
@@ -389,20 +394,20 @@ export const BIOLOGY_LECTURES: Lecture[] = [
       {
         termAr: 'إنزيم بلمرة DNA (DNA Polymerase)',
         termEn: 'DNA Polymerase',
-        definitionAr: 'الإنزيم المسؤول عن إضافة النيوكليوتيدات المتممة في الاتجاه من 5\' إلى 3\' والتدقيق اللغوي لتصحيح الأخطاء.',
-        definitionEn: 'Enzyme that synthesizes complementary DNA strands 5\'->3\' and performs proofreading.'
+        definitionAr: 'الإنزيم المسؤول عن إضافة النيوكليوتيدات المتممة في الاتجاه من 5\\\' إلى 3\\\' والتدقيق اللغوي لتصحيح الأخطاء.',
+        definitionEn: 'Enzyme that synthesizes complementary DNA strands 5\\\'->3\\\' and performs proofreading.'
       }
     ],
     keyConceptsAr: ['اللولب المزدوج وقاعدة تشارجاف', 'التضاعف شبه المحافظ', 'إنزيمات التضاعف (هيليكيز، بلمرة، ليجيز)', 'السلسلة الرائدة وقطع أوكازاكي'],
-    keyConceptsEn: ['Double Helix & Chargaff\'s Rules', 'Semi-Conservative Mechanism', 'Replication Enzymes', 'Leading/Lagging Strands & Okazaki Fragments'],
+    keyConceptsEn: ['Double Helix & Chargaff\\\'s Rules', 'Semi-Conservative Mechanism', 'Replication Enzymes', 'Leading/Lagging Strands & Okazaki Fragments'],
     summaryAr: 'DNA هو المخطط الوراثي للخلية. يتضاعف بفك اللولب بواسطة الهيليكيز وبناء أشرطة متممة جديدة بواسطة إنزيم البلمرة بدقة فائقة وفق آلية شبه محافظة.',
     summaryEn: 'DNA double helix carries genetic instructions, replicating semi-conservatively using helicase, polymerases, and ligase with high fidelity.',
     sections: [
       {
         titleAr: '1. قاعدة تشارجاف وتكامل القواعد النيتروجينية',
-        titleEn: '1. Chargaff\'s Rule & Complementary Base Pairing',
+        titleEn: '1. Chargaff\\\'s Rule & Complementary Base Pairing',
         contentAr: 'أثبت تشارجاف أن في أي عينة DNA: نسبة الأدنين تساوي دائماً نسبة الثايمين (%A = %T)، ونسبة الجوانين تساوي نسبة السايتوسين (%G = %C). يرتبط A مع T برابطتين هيدروجينيتين، ويرتبط G مع C بثلاث روابط هيدروجينية مما يجعله أكثر استقراراً حرارياً.',
-        contentEn: 'Chargaff\'s rules state %A = %T (2 H-bonds) and %G = %C (3 H-bonds). G-C rich regions exhibit higher thermal stability.',
+        contentEn: 'Chargaff\\\'s rules state %A = %T (2 H-bonds) and %G = %C (3 H-bonds). G-C rich regions exhibit higher thermal stability.',
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب نسب القواعد النيتروجينية',
           titleEn: 'Worked Example: Base Percentage Calculation',
@@ -453,13 +458,13 @@ export const BIOLOGY_LECTURES: Lecture[] = [
           id: 'qb1-2',
           textAr: 'الاتجاه الذي يبني فيه إنزيم بلمرة DNA السلسلة الجديدة دائماً هو:',
           textEn: 'DNA Polymerase synthesizes new strands exclusively in the direction:',
-          optionsAr: ['من 5\' إلى 3\'', 'من 3\' إلى 5\'', 'في الاتجاهين معاً عشوائياً', 'من المركز إلى الأطراف'],
-          optionsEn: ['5\' to 3\'', '3\' to 5\'', 'Bidirectional randomly', 'Center to ends'],
+          optionsAr: ['من 5\\\' إلى 3\\\'', 'من 3\\\' إلى 5\\\'', 'في الاتجاهين معاً عشوائياً', 'من المركز إلى الأطراف'],
+          optionsEn: ['5\\\' to 3\\\'', '3\\\' to 5\\\'', 'Bidirectional randomly', 'Center to ends'],
           correctIndex: 0,
           conceptTestedAr: 'اتجاه بلمرة DNA',
           conceptTestedEn: 'Polymerase Synthesis Direction',
-          explanationAr: 'يضيف إنزيم بلمرة DNA النيوكليوتيدات الجديدة إلى الطرف 3\' للهيدروكسيل، فيكون اتجاه البناء من 5\' إلى 3\'.',
-          explanationEn: 'New nucleotides are added to the 3\'-OH end, requiring 5\'->3\' synthesis.',
+          explanationAr: 'يضيف إنزيم بلمرة DNA النيوكليوتيدات الجديدة إلى الطرف 3\\\' للهيدروكسيل، فيكون اتجاه البناء من 5\\\' إلى 3\\\'.',
+          explanationEn: 'New nucleotides are added to the 3\\\'-OH end, requiring 5\\\'->3\\\' synthesis.',
           difficulty: 'medium'
         },
         {
@@ -555,7 +560,7 @@ export const BIOLOGY_LECTURES: Lecture[] = [
           titleAr: 'مثال تطبيقي: ترجمة شريط mRNA إلى بروتين',
           titleEn: 'Worked Example: mRNA to Polypeptide Translation',
           steps: [
-            { stepNumber: 1, textAr: 'شريط mRNA: 5\' - AUG - UUU - GGC - UAA - 3\'.', textEn: 'mRNA: 5\'- AUG - UUU - GGC - UAA - 3\'.' },
+            { stepNumber: 1, textAr: 'شريط mRNA: 5\\\' - AUG - UUU - GGC - UAA - 3\\\'.', textEn: 'mRNA: 5\\\'- AUG - UUU - GGC - UAA - 3\\\'.' },
             { stepNumber: 2, textAr: 'AUG = كودون البدء (ميثيونين Met). UUU = فينيل ألانين (Phe). GGC = جلايسين (Gly). UAA = كودون التوقف (Stop).', textEn: 'AUG = Met, UUU = Phe, GGC = Gly, UAA = Stop.' },
             { stepNumber: 3, textAr: 'سلسلة الببتيد الناتجة: [Met - Phe - Gly].', textEn: 'Resulting tripeptide: [Met - Phe - Gly].' }
           ],
@@ -599,15 +604,15 @@ export const BIOLOGY_LECTURES: Lecture[] = [
         },
         {
           id: 'qb2-2',
-          textAr: 'إذا كان تتابع القواعد في DNA هو 3\'- TAC - 5\'، فإن كودون mRNA المتمم له هو:',
-          textEn: 'If the DNA template sequence is 3\'- TAC - 5\', the complementary mRNA codon is:',
-          optionsAr: ['5\'- AUG - 3\'', '5\'- UAC - 3\'', '5\'- ATG - 3\'', '5\'- GUA - 3\''],
-          optionsEn: ['5\'- AUG - 3\'', '5\'- UAC - 3\'', '5\'- ATG - 3\'', '5\'- GUA - 3\''],
+          textAr: 'إذا كان تتابع القواعد في DNA هو 3\\\'- TAC - 5\\\'، فإن كودون mRNA المتمم له هو:',
+          textEn: 'If the DNA template sequence is 3\\\'- TAC - 5\\\', the complementary mRNA codon is:',
+          optionsAr: ['5\\\'- AUG - 3\\\'', '5\\\'- UAC - 3\\\'', '5\\\'- ATG - 3\\\'', '5\\\'- GUA - 3\\\''],
+          optionsEn: ['5\\\'- AUG - 3\\\'', '5\\\'- UAC - 3\\\'', '5\\\'- ATG - 3\\\'', '5\\\'- GUA - 3\\\''],
           correctIndex: 0,
           conceptTestedAr: 'تكامل قواعد النسخ',
           conceptTestedEn: 'Transcription Base Pairing',
           explanationAr: 'T يقابلها A، و A يقابلها U في RNA، و C يقابلها G. إذن الناتج هو AUG.',
-          explanationEn: 'T pairs with A, A with U, C with G => 5\'-AUG-3\'.',
+          explanationEn: 'T pairs with A, A with U, C with G => 5\\\'-AUG-3\\\'.',
           difficulty: 'medium'
         },
         {
@@ -751,7 +756,7 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
           optionsEn: [
             'Gradient Descent',
             'Binary Search',
-            'Dijkstra\'s Algorithm',
+            'Dijkstra\\\'s Algorithm',
             'Quick Sort'
           ],
           correctIndex: 0,
@@ -801,3 +806,7 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     }
   }
 ];
+`;
+
+fs.writeFileSync(targetPath, stemContent, 'utf8');
+console.log('Successfully updated stemCurriculumData.ts with authentic Saudi Grade 12 STEM Chemistry, Biology & Computer Science!');
