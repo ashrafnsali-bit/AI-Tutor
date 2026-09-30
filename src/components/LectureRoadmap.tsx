@@ -1,8 +1,7 @@
 import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { getCountryInfo, getNationalTextbookInfo } from '../data/curriculumCountries';
-import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, ShieldCheck } from 'lucide-react';
+import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock } from 'lucide-react';
 
 interface LectureRoadmapProps {
   lectures: Lecture[];
@@ -41,32 +40,15 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
     ? `${courseSubject} • ${courseGrade}`
     : `${courseSubject} • ${courseGrade} (${courseTrack})`;
 
-  const cInfo = getCountryInfo(profile.country);
-  const natTextbook = getNationalTextbookInfo(profile.country, subjectKey, gradeKey, profile.educationTrack, lang);
-
   return (
     <aside className="roadmap-sidebar">
       {/* Course Header */}
       <div className="roadmap-header">
-        {/* National Curriculum Official Badge */}
-        <div className="roadmap-national-accreditation" title={natTextbook.ministry}>
-          <div className="rna-top">
-            <span className="rna-flag">{cInfo.flag}</span>
-            <span className="rna-country-name">{isEn ? cInfo.nameEn : cInfo.nameAr}</span>
-            <span className="rna-verified-badge">
-              <ShieldCheck size={12} />
-              <span>{isEn ? 'Verified' : 'معتمد'}</span>
-            </span>
-          </div>
-          <div className="rna-book-row">
-            <BookOpen size={13} className="rna-book-icon" />
-            <span className="rna-book-title">{natTextbook.textbookName}</span>
-          </div>
-        </div>
-
         <div className="roadmap-header-top">
-          <BookOpen className="roadmap-icon" size={20} />
-          <div>
+          <div className="roadmap-header-icon-wrap">
+            <BookOpen className="roadmap-icon" size={20} />
+          </div>
+          <div className="roadmap-header-text">
             <h3 className="roadmap-title">{t.roadmapTitle}</h3>
             <span className="roadmap-course-name">{dynamicCourseName}</span>
           </div>
@@ -134,7 +116,10 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
                   <p className="card-lecture-desc">{subtitle}</p>
 
                   <div className="card-meta-row">
-                    <span className="meta-pill duration-pill">âڈ³ {lecture.durationMinutes} {t.minutesUnit}</span>
+                    <span className="meta-pill duration-pill">
+                      <Clock size={11} style={{ marginInlineEnd: '4px' }} />
+                      {lecture.durationMinutes} {t.minutesUnit}
+                    </span>
                     
                     {isLocked ? (
                       <span className="meta-pill locked-gate-pill">
@@ -195,4 +180,3 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
     </aside>
   );
 };
-

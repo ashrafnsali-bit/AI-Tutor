@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { getCountryInfo, getNationalTextbookInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/curriculumCountries';
 import {
   BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
-  GraduationCap, Calendar, Layers, Target,
-  Sprout, BookMarked, FileCheck2, Eye, EyeOff, ChevronDown,
+  Target, Sprout, BookMarked, FileCheck2, Eye, EyeOff, ChevronDown,
   ChevronUp, Play, SkipForward, Calculator,
-  PenTool, Star, Zap, ArrowRight, RefreshCw, X, ShieldCheck
+  PenTool, Star, Zap, ArrowRight, RefreshCw, X, Layers
 } from 'lucide-react';
 
 interface LectureViewerProps {
@@ -22,7 +20,7 @@ interface LectureViewerProps {
 }
 
 export const LectureViewer: React.FC<LectureViewerProps> = ({
-  lecture, lang, profile, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
+  lecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
@@ -34,15 +32,6 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
   const t = getTranslations(lang);
   const isEn = lang === 'en';
-  const effectiveCountry = profile?.country || lecture.country || 'SA';
-  const countryInfo = getCountryInfo(effectiveCountry);
-  const natTextbook = getNationalTextbookInfo(
-    effectiveCountry,
-    profile?.subject || 'PRIMARY_MATH',
-    profile?.gradeLevel || 'G4',
-    profile?.educationTrack || 'GENERAL',
-    lang
-  );
 
   useEffect(() => {
     setFormativeSelected({});
@@ -62,6 +51,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const outcomes   = (isEn ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || [];
   const vocab      = lecture.vocabulary || [];
   const warmup     = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || '';
+  const unitTitle  = (isEn ? lecture.unitTitleEn : lecture.unitTitleAr) || '';
 
   const handleSelectFormativeOption = (checkId: string, oIdx: number) => {
     if (!formativeChecked[checkId]) setFormativeSelected(p => ({ ...p, [checkId]: oIdx }));
@@ -83,64 +73,20 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
   return (
     <main className="lecture-viewer-root" dir={isEn ? 'ltr' : 'rtl'}>
-
-      {/* ═══ BAND 1 — CURRICULUM BANNER ═══ */}
-      <div className="curriculum-identity-band">
-        <div className="curriculum-id-left">
-          <span className="country-flag-badge">{countryInfo.flag}</span>
-          <div className="curriculum-id-text">
-            <span className="curriculum-ministry-label">
-              {isEn ? countryInfo.systemNameEn : countryInfo.systemNameAr}
-            </span>
-            <span className="curriculum-sub-label">
-              {isEn ? countryInfo.ministryEn : countryInfo.ministryAr}
-            </span>
-          </div>
-        </div>
-        <div className="curriculum-id-pills">
-          <span className="curr-pill curr-pill-book" title={natTextbook.textbookName}>
-            <BookOpen size={12} />
-            {natTextbook.textbookName}
-          </span>
-          {profile?.educationTrack && profile.educationTrack !== 'GENERAL' && (
-            <span className="curr-pill curr-pill-track">
-              <Compass size={12} />
-              {isEn ? TRACK_LABELS[profile.educationTrack].en : TRACK_LABELS[profile.educationTrack].ar}
-            </span>
-          )}
-          {profile?.educationType && profile.educationType !== 'PUBLIC' && (
-            <span className="curr-pill curr-pill-type">
-              <ShieldCheck size={12} />
-              {isEn ? EDUCATION_TYPE_LABELS[profile.educationType].en : EDUCATION_TYPE_LABELS[profile.educationType].ar}
-            </span>
-          )}
-          {lecture.gradeLevelNameAr && (
-            <span className="curr-pill curr-pill-grade">
-              <GraduationCap size={12} />
-              {isEn ? lecture.gradeLevelNameEn : lecture.gradeLevelNameAr}
-            </span>
-          )}
-          {(lecture.termAr || natTextbook.semester) && (
-            <span className="curr-pill curr-pill-term">
-              <Calendar size={12} />
-              {isEn ? (lecture.termEn || natTextbook.semester) : (lecture.termAr || natTextbook.semester)}
-            </span>
-          )}
-          {lecture.unitTitleAr && (
-            <span className="curr-pill curr-pill-unit">
-              <Layers size={12} />
-              {isEn ? lecture.unitTitleEn : lecture.unitTitleAr}
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* ═══ BAND 2 — LESSON TITLE HERO ═══ */}
+      {/* ═══ LESSON TITLE HERO ═══ */}
       <header className="lesson-hero-header">
         <div className="lesson-hero-left">
-          <div className="lesson-number-chip">
-            <BookMarked size={14} />
-            {isEn ? lecture.lessonNumberEn : lecture.lessonNumberAr}
+          <div className="lesson-chips-row">
+            <div className="lesson-number-chip">
+              <BookMarked size={14} />
+              <span>{isEn ? lecture.lessonNumberEn : lecture.lessonNumberAr}</span>
+            </div>
+            {unitTitle && (
+              <div className="lesson-unit-chip">
+                <Layers size={13} />
+                <span>{unitTitle}</span>
+              </div>
+            )}
           </div>
           <h1 className="lesson-hero-title">{title}</h1>
           <p className="lesson-hero-subtitle">{subtitle}</p>
