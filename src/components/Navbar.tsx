@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getCountryInfo } from '../data/curriculumCountries';
@@ -15,7 +15,9 @@ import {
   LogIn,
   Menu,
   X,
-  BarChart2
+  BarChart2,
+  ChevronDown,
+  BookOpen
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -46,6 +48,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenProgress
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const t = getTranslations(profile.language);
   const isEn = profile.language === 'en';
   const displayName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
@@ -53,166 +58,230 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(profile.gradeLevel);
   const countryInfo = getCountryInfo(profile.country);
 
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const stageLabel = isPrimarySchool
+    ? t.primarySchoolStage
+    : isMiddleSchool
+    ? t.middleSchoolStage
+    : (t.specLabels[profile.specialization] || profile.specialization);
+
+  const gradeLabel = t.gradeLabels[profile.gradeLevel] || profile.gradeLevel;
+
   return (
     <header className="site-header">
       <div className="header-container">
-        {/* Brand Logo */}
-        <div className="brand-group">
+        {/* 1. Brand Section */}
+        <div className="brand-group" onClick={onOpenProfile} style={{ cursor: 'pointer' }} title={t.brandSubtitle}>
           <div className="brand-icon-wrapper">
-            <GraduationCap className="brand-icon" size={26} />
+            <GraduationCap className="brand-icon" size={24} />
             <span className="brand-pulse"></span>
           </div>
           <div className="brand-text">
             <div className="brand-title-row">
-              <h1 className="brand-name">{t.brandName}</h1>
-              <span className="brand-tag">{t.brandTag}</span>
+              <span className="brand-name">{t.brandName}</span>
+              <span className="brand-tag">AI v3.5</span>
             </div>
-            <p className="brand-subtitle">{t.brandSubtitle}</p>
           </div>
         </div>
 
-        {/* Desktop Student Profile & Session Section */}
-        <div className="student-profile-wrapper desktop-only">
-          {/* Student Profile Badge Card */}
-          <div className="student-badge-card" onClick={onOpenProfile} title={t.editProfileTooltip}>
-            <div className="avatar-circle">
-              <User size={18} />
-            </div>
-            <div className="student-meta">
-              <span className="student-name">{displayName}</span>
-              <div className="student-tags">
-                <span className="tag-country-pill" title={isEn ? countryInfo.systemNameEn : countryInfo.systemNameAr}>
-                  {countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}
-                </span>
-                <span className="tag-spec">
-                  {isPrimarySchool
-                    ? t.primarySchoolStage
-                    : isMiddleSchool
-                    ? t.middleSchoolStage
-                    : (t.specLabels[profile.specialization] || profile.specialization)}
-                </span>
-                <span className="tag-grade">{t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}</span>
-              </div>
-            </div>
-            <div className="student-score" title={t.masteryPointsTooltip}>
-              <Award size={14} className="score-icon" />
-              <span>{profile.masteryPoints} {t.pointsShort}</span>
-            </div>
+        {/* 2. Center Info Pill: Active Academic Track & Score */}
+        <div className="header-center-pill desktop-only" onClick={onOpenProfile} title={t.editProfileTooltip}>
+          <span className="pill-country-badge">
+            <span className="pill-flag">{countryInfo.flag}</span>
+            <span className="pill-country-name">{isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
+          </span>
+          <span className="pill-divider">•</span>
+          <span className="pill-academic-track" title={`${stageLabel} - ${gradeLabel}`}>
+            {stageLabel}
+          </span>
+          <span className="pill-divider">•</span>
+          <div className="pill-score-badge" title={t.masteryPointsTooltip}>
+            <Award size={13} className="pill-score-icon" />
+            <span>{profile.masteryPoints} {t.pointsShort}</span>
           </div>
-
-          {/* User Session Controls */}
-          {isLoggedIn ? (
-            <div className="user-session-actions">
-              {onOpenProgress && (
-                <button
-                  type="button"
-                  className="btn-user-action btn-progress"
-                  onClick={onOpenProgress}
-                  title={profile.language === 'en' ? 'My Progress & Grades' : 'تقدمي ودرجاتي'}
-                >
-                  <BarChart2 size={14} />
-                  <span>{profile.language === 'en' ? 'My Grades' : 'درجاتي'}</span>
-                </button>
-              )}
-              {onOpenAuth && (
-                <button 
-                  type="button" 
-                  className="btn-user-action" 
-                  onClick={onOpenAuth}
-                  title={t.switchStudentTooltip}
-                >
-                  <Users size={14} />
-                  <span>{t.switchStudent}</span>
-                </button>
-              )}
-              {onLogout && (
-                <button 
-                  type="button" 
-                  className="btn-user-action btn-user-logout" 
-                  onClick={onLogout}
-                  title={t.logoutTooltip}
-                >
-                  <LogOut size={14} />
-                  <span>{t.logout}</span>
-                </button>
-              )}
-            </div>
-          ) : (
-            onOpenAuth && (
-              <button 
-                type="button" 
-                className="btn-user-action btn-user-login-cta" 
-                onClick={onOpenAuth}
-                title={t.loginOrRegister}
-              >
-                <LogIn size={14} />
-                <span>{t.loginOrRegister}</span>
-              </button>
-            )
-          )}
         </div>
 
-        {/* Desktop Action Controls */}
+        {/* 3. Action Hub */}
         <div className="header-actions desktop-only">
-          {/* Language Switcher */}
-          <div className="lang-pill-container" title={isEn ? "تبديل اللغة إلى العربية" : "Switch language to English"}>
-            <Globe size={15} className="lang-globe-icon" />
-            <div className="lang-segments-wrap">
-              <button 
-                type="button" 
-                className={`lang-segment-btn ${profile.language === 'ar' ? 'segment-active' : ''}`}
-                onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
-              >
-                العربية
-              </button>
-              <button 
-                type="button" 
-                className={`lang-segment-btn ${profile.language === 'en' ? 'segment-active' : ''}`}
-                onClick={() => { if (profile.language !== 'en') onToggleLanguage(); }}
-              >
-                English
-              </button>
-            </div>
-          </div>
-
-          {/* Quick Socratic Tutor Button */}
+          {/* Quick AI Tutor Trigger */}
           {onOpenTutor && (
             <button
               type="button"
-              className="btn-header btn-header-tutor"
+              className="btn-header-tutor-glow"
               onClick={onOpenTutor}
               title={t.floatingTutorBtn}
             >
-              <Sparkles size={16} className="header-sparkle-icon" />
+              <Sparkles size={15} className="tutor-sparkle-icon" />
               <span>{t.floatingTutorBtn}</span>
             </button>
           )}
 
-          {/* Gemini API Key Button */}
+          {/* Compact Language Toggle */}
           <button 
             type="button" 
-            className={`btn-header ${hasApiKey ? 'btn-gemini-active' : 'btn-gemini-pending'}`}
-            onClick={onOpenApiKey}
-            title={hasApiKey ? t.geminiActive : t.geminiPending}
+            className="btn-compact-lang"
+            onClick={onToggleLanguage}
+            title={isEn ? "التبديل إلى العربية" : "Switch to English"}
           >
-            <Key size={16} />
-            <span>{hasApiKey ? t.geminiActive : t.geminiPending}</span>
-            <span className={`status-dot ${hasApiKey ? 'dot-active' : 'dot-pending'}`}></span>
+            <Globe size={14} />
+            <span>{isEn ? 'العربية' : 'English'}</span>
           </button>
 
-          {/* Parental Control Button */}
-          <button 
-            type="button" 
-            className="btn-header btn-parental"
-            onClick={onOpenParental}
-            title={t.parentalBtn}
-          >
-            <ShieldCheck size={16} className="parental-icon" />
-            <span>{t.parentalBtn}</span>
-          </button>
+          {/* User Profile & Settings Menu Dropdown */}
+          <div className="user-dropdown-container" ref={dropdownRef}>
+            <button 
+              type="button" 
+              className={`user-menu-trigger ${isDropdownOpen ? 'active' : ''}`}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              aria-expanded={isDropdownOpen}
+              title={displayName}
+            >
+              <div className="user-avatar-small">
+                <User size={15} />
+              </div>
+              <span className="user-name-label">{displayName}</span>
+              <span className={`status-indicator-dot ${hasApiKey ? 'dot-active' : 'dot-pending'}`} title={hasApiKey ? t.geminiActive : t.geminiPending} />
+              <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
+            </button>
+
+            {/* Glassmorphic Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="user-dropdown-menu">
+                {/* Student Mini Profile Header */}
+                <div className="dropdown-profile-header" onClick={() => { setIsDropdownOpen(false); onOpenProfile(); }}>
+                  <div className="dropdown-avatar">
+                    <User size={18} />
+                  </div>
+                  <div className="dropdown-student-details">
+                    <div className="dropdown-name">{displayName}</div>
+                    <div className="dropdown-meta">
+                      {countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr} • {gradeLabel}
+                    </div>
+                  </div>
+                  <div className="dropdown-points-tag">
+                    <Award size={12} />
+                    <span>{profile.masteryPoints} {t.pointsShort}</span>
+                  </div>
+                </div>
+
+                <div className="dropdown-divider"></div>
+
+                {/* Menu Action Items */}
+                <div className="dropdown-menu-list">
+                  <button 
+                    type="button" 
+                    className="dropdown-item"
+                    onClick={() => { setIsDropdownOpen(false); onOpenProfile(); }}
+                  >
+                    <BookOpen size={16} className="item-icon item-icon-curriculum" />
+                    <div className="item-text">
+                      <span className="item-title">{isEn ? 'Curriculum & Specialization' : 'المنهج والتخصص الدراسي'}</span>
+                      <span className="item-subtitle">{stageLabel}</span>
+                    </div>
+                  </button>
+
+                  {onOpenProgress && (
+                    <button 
+                      type="button" 
+                      className="dropdown-item"
+                      onClick={() => { setIsDropdownOpen(false); onOpenProgress(); }}
+                    >
+                      <BarChart2 size={16} className="item-icon item-icon-progress" />
+                      <div className="item-text">
+                        <span className="item-title">{isEn ? 'My Grades & Progress' : 'درجاتي وسجل التقييمات'}</span>
+                        <span className="item-subtitle">{isEn ? 'Track completed tests' : 'متابعة نتائج الاختبارات'}</span>
+                      </div>
+                    </button>
+                  )}
+
+                  <button 
+                    type="button" 
+                    className="dropdown-item"
+                    onClick={() => { setIsDropdownOpen(false); onOpenApiKey(); }}
+                  >
+                    <Key size={16} className="item-icon item-icon-api" />
+                    <div className="item-text">
+                      <span className="item-title">{isEn ? 'Gemini AI Connection' : 'اتصال الذكاء الاصطناعي'}</span>
+                      <span className="item-subtitle">
+                        {hasApiKey 
+                          ? (isEn ? 'Active & connected' : 'متصل ونشط ⚡') 
+                          : (isEn ? 'API key required' : 'إعداد المفتاح الشخصي')}
+                      </span>
+                    </div>
+                    <span className={`status-badge-mini ${hasApiKey ? 'badge-connected' : 'badge-pending'}`}>
+                      {hasApiKey ? 'OK' : '!'}
+                    </span>
+                  </button>
+
+                  <button 
+                    type="button" 
+                    className="dropdown-item"
+                    onClick={() => { setIsDropdownOpen(false); onOpenParental(); }}
+                  >
+                    <ShieldCheck size={16} className="item-icon item-icon-parental" />
+                    <div className="item-text">
+                      <span className="item-title">{t.parentalBtn}</span>
+                      <span className="item-subtitle">{isEn ? 'Parent dashboard & limits' : 'لوحة متابعة ولي الأمر'}</span>
+                    </div>
+                  </button>
+                </div>
+
+                <div className="dropdown-divider"></div>
+
+                {/* Session Actions Footer */}
+                <div className="dropdown-footer">
+                  {isLoggedIn ? (
+                    <>
+                      {onOpenAuth && (
+                        <button 
+                          type="button" 
+                          className="dropdown-footer-btn"
+                          onClick={() => { setIsDropdownOpen(false); onOpenAuth(); }}
+                        >
+                          <Users size={14} />
+                          <span>{t.switchStudent}</span>
+                        </button>
+                      )}
+                      {onLogout && (
+                        <button 
+                          type="button" 
+                          className="dropdown-footer-btn btn-danger-action"
+                          onClick={() => { setIsDropdownOpen(false); onLogout(); }}
+                        >
+                          <LogOut size={14} />
+                          <span>{t.logout}</span>
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    onOpenAuth && (
+                      <button 
+                        type="button" 
+                        className="dropdown-login-btn"
+                        onClick={() => { setIsDropdownOpen(false); onOpenAuth(); }}
+                      >
+                        <LogIn size={15} />
+                        <span>{t.loginOrRegister}</span>
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Mobile Header Right Bar */}
+        {/* 4. Mobile Header Right Bar */}
         <div className="mobile-header-bar mobile-only">
           <button 
             type="button" 
@@ -250,13 +319,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="mobile-student-stage">
                 <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
                 {' • '}
-                {isPrimarySchool
-                  ? t.primarySchoolStage
-                  : isMiddleSchool
-                  ? t.middleSchoolStage
-                  : (t.specLabels[profile.specialization] || profile.specialization)}
+                {stageLabel}
                 {' • '}
-                {t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}
+                {gradeLabel}
               </div>
             </div>
             <div className="student-score">
@@ -265,20 +330,77 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
+          {/* Primary Quick Actions */}
+          <div className="mobile-tools-grid">
+            {onOpenTutor && (
+              <button
+                type="button"
+                className="btn-mobile-tool btn-mobile-tutor"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenTutor(); }}
+              >
+                <Sparkles size={18} />
+                <span>{t.floatingTutorBtn}</span>
+              </button>
+            )}
+
+            {onOpenProgress && (
+              <button
+                type="button"
+                className="btn-mobile-tool"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenProgress(); }}
+              >
+                <BarChart2 size={18} />
+                <span>{isEn ? 'My Grades' : 'درجاتي'}</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="btn-mobile-tool"
+              onClick={() => { setIsMobileMenuOpen(false); onOpenApiKey(); }}
+            >
+              <Key size={18} />
+              <span>{hasApiKey ? t.geminiActive : t.geminiPending}</span>
+            </button>
+
+            <button
+              type="button"
+              className="btn-mobile-tool"
+              onClick={() => { setIsMobileMenuOpen(false); onOpenParental(); }}
+            >
+              <ShieldCheck size={18} />
+              <span>{t.parentalBtn}</span>
+            </button>
+          </div>
+
+          {/* Language Toggle */}
+          <div className="mobile-drawer-lang">
+            <span className="drawer-section-title">
+              <Globe size={15} />
+              <span>{isEn ? "Language / اللغة" : "لغة الواجهة والتعلم"}</span>
+            </span>
+            <div className="mobile-lang-tabs">
+              <button
+                type="button"
+                className={`mobile-lang-tab ${profile.language === 'ar' ? 'active' : ''}`}
+                onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
+              >
+                العربية
+              </button>
+              <button
+                type="button"
+                className={`mobile-lang-tab ${profile.language === 'en' ? 'active' : ''}`}
+                onClick={() => { if (profile.language !== 'en') onToggleLanguage(); }}
+              >
+                English
+              </button>
+            </div>
+          </div>
+
           {/* Account Actions */}
           <div className="mobile-account-actions">
             {isLoggedIn ? (
               <>
-                {onOpenProgress && (
-                  <button
-                    type="button"
-                    className="btn-mobile-action btn-mobile-progress"
-                    onClick={() => { setIsMobileMenuOpen(false); onOpenProgress(); }}
-                  >
-                    <BarChart2 size={16} />
-                    <span>{profile.language === 'en' ? 'My Grades & Progress' : 'درجاتي والتقدم'}</span>
-                  </button>
-                )}
                 {onOpenAuth && (
                   <button
                     type="button"
@@ -313,66 +435,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               )
             )}
           </div>
-
-          {/* Language Toggle */}
-          <div className="mobile-drawer-lang">
-            <span className="drawer-section-title">
-              <Globe size={15} />
-              <span>{isEn ? "Language / اللغة" : "لغة الواجهة والتعلم"}</span>
-            </span>
-            <div className="mobile-lang-tabs">
-              <button
-                type="button"
-                className={`mobile-lang-tab ${profile.language === 'ar' ? 'active' : ''}`}
-                onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
-              >
-                العربية
-              </button>
-              <button
-                type="button"
-                className={`mobile-lang-tab ${profile.language === 'en' ? 'active' : ''}`}
-                onClick={() => { if (profile.language !== 'en') onToggleLanguage(); }}
-              >
-                English
-              </button>
-            </div>
-          </div>
-
-          {/* Primary Quick Actions */}
-          <div className="mobile-tools-grid">
-            {onOpenTutor && (
-              <button
-                type="button"
-                className="btn-mobile-tool btn-mobile-tutor"
-                onClick={() => { setIsMobileMenuOpen(false); onOpenTutor(); }}
-              >
-                <Sparkles size={18} />
-                <span>{t.floatingTutorBtn}</span>
-              </button>
-            )}
-
-            <button
-              type="button"
-              className="btn-mobile-tool"
-              onClick={() => { setIsMobileMenuOpen(false); onOpenApiKey(); }}
-            >
-              <Key size={18} />
-              <span>{hasApiKey ? t.geminiActive : t.geminiPending}</span>
-            </button>
-
-            <button
-              type="button"
-              className="btn-mobile-tool"
-              onClick={() => { setIsMobileMenuOpen(false); onOpenParental(); }}
-            >
-              <ShieldCheck size={18} />
-              <span>{t.parentalBtn}</span>
-            </button>
-          </div>
         </div>
       )}
     </header>
   );
 };
-
-
