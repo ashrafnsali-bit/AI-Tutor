@@ -220,3 +220,23 @@ export interface ParentalControlSettings {
   restrictedTopics: string[];
   consentStatus: 'VERIFIED' | 'PENDING' | 'EXEMPT';
 }
+
+// ─────────────────────────────────────────────
+// GRADE RECORD — stored in IndexedDB
+// ─────────────────────────────────────────────
+export interface GradeRecord {
+  id: string;
+  userId: string;
+  lectureId: string;
+  lectureTitle: string;
+  subject: Subject;
+  gradeLevel: string;
+  score: number;
+  passed: boolean;
+  correctCount: number;
+  totalQuestions: number;
+  attemptNumber: number;
+  timestamp: number;
+  feedback?: string;
+  conceptResults?: { concept: string; isCorrect: boolean; advice: string }[];
+}

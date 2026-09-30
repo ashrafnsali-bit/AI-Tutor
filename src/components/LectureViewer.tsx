@@ -1,13 +1,13 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getCountryInfo } from '../data/curriculumCountries';
 import {
   BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
-  GraduationCap, Building2, Calendar, Layers, Target,
+  GraduationCap, Calendar, Layers, Target,
   Sprout, BookMarked, FileCheck2, Eye, EyeOff, ChevronDown,
-  ChevronUp, Play, Pause, SkipForward, Calculator,
+  ChevronUp, Play, SkipForward, Calculator,
   PenTool, Star, Zap, ArrowRight, RefreshCw, X
 } from 'lucide-react';
 

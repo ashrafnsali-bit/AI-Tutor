@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { AssessmentResult, Lecture, StudentProfile, Subject, UserAccount } from './types';
 import { BookOpen, Map } from 'lucide-react';
 import { 
@@ -23,6 +23,7 @@ import { ParentalModal } from './components/ParentalModal';
 import { ApiKeyModal } from './components/ApiKeyModal';
 import { AuthModal } from './components/AuthModal';
 import { GenerateLectureModal } from './components/GenerateLectureModal';
+import { ProgressDashboard } from './components/ProgressDashboard';
 
 export function App() {
   // Load saved state or default with consistency checks
@@ -108,6 +109,7 @@ export function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isGenerateLectureOpen, setIsGenerateLectureOpen] = useState(false);
+  const [isProgressOpen, setIsProgressOpen] = useState(false);
 
   // User session state
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
@@ -319,6 +321,7 @@ export function App() {
         onOpenAuth={() => setIsAuthOpen(true)}
         onLogout={handleLogout}
         onToggleLanguage={handleToggleLanguage}
+        onOpenProgress={() => setIsProgressOpen(true)}
       />
 
       {/* Mobile Learning Hub Segmented Switcher */}
@@ -426,11 +429,34 @@ export function App() {
         onSuccess={handleAuthSuccess}
         onClose={() => setIsAuthOpen(false)}
       />
+
+      {/* Student Progress & Grades Dashboard */}
+      {isProgressOpen && (
+        <ProgressDashboard
+          profile={profile}
+          lang={profile.language}
+          onClose={() => setIsProgressOpen(false)}
+        />
+      )}
+
+      {/* AI Generate Lecture Modal */}
+      <GenerateLectureModal
+        isOpen={isGenerateLectureOpen}
+        profile={profile}
+        lang={profile.language}
+        apiKey={apiKey}
+        existingLectures={lectures}
+        onClose={() => setIsGenerateLectureOpen(false)}
+        onLectureGenerated={handleLectureGenerated}
+        onOpenApiKey={() => setIsApiKeyOpen(true)}
+      />
     </div>
   );
 }
 
 export default App;
+
+
 
 
 

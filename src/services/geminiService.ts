@@ -1,5 +1,4 @@
 import type { ChatMessage, Lecture, Question, StudentProfile } from '../types';
-import { getCountryInfo } from '../data/curriculumCountries';
 
 export interface GeminiEvaluationResponse {
   score: number;
@@ -20,7 +19,6 @@ export async function askGeminiTutor(
 ): Promise<{ text: string; scaffoldingType: 'hint' | 'socratic_question' | 'encouragement' }> {
   const activeKey = apiKey || (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_API_KEY;
   const isEn = profile.language === 'en';
-  const countryInfo = getCountryInfo(profile.country);
 
   const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
   const keyConcepts = isEn ? lecture.keyConceptsEn.join(', ') : lecture.keyConceptsAr.join('، ');
@@ -28,34 +26,26 @@ export async function askGeminiTutor(
   const systemInstruction = isEn
     ? `
 You are the certified AI Socratic Tutor assigned to student: ${profile.name}.
-Country & Ministry: ${countryInfo.nameEn} (${countryInfo.ministryEn}) - ${countryInfo.systemNameEn}.
 Grade: ${profile.gradeLevel} - Specialization: ${profile.specialization} - Subject: ${profile.subject}.
-Active Lesson being studied: "${lectureTitle}".
+Active Lecture being studied: "${lectureTitle}".
 Key Concepts: ${keyConcepts}.
 
 Strict Pedagogical Directives:
 1. NEVER PROVIDE DIRECT ANSWERS OR RAW FINAL VALUES to exercises, homework, or equations!
 2. Follow the Socratic Method: ask ONE guiding micro-question or provide ONE targeted conceptual hint per turn.
-3. Align terminology and standards strictly with the student's official national curriculum (${countryInfo.nameEn}).
-4. Strictly confine discussions to this active lecture. If student asks off-topic or out-of-specialization questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
-5. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
-6. Always converse in English.
+3. Strictly confine discussions to this active lecture. If student asks off-topic or out-of-specialization questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
+4. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
+5. Always converse in English.
     `.trim()
     : `
 أنت "المعلم الذكي" (AI Socratic Tutor) المعتمد والمخصص لمساعدة الطالب: ${profile.name}.
-دولة المنهج والوزارة: ${countryInfo.nameAr} (${countryInfo.ministryAr}) - ${countryInfo.systemNameAr}.
-المرحلة والصف الدراسي: ${profile.gradeLevel} - التخصص: ${profile.specialization} - المادة: ${profile.subject}.
-الدرس والمحاضرة الحالية المقررة: "${lectureTitle}".
-المفاهيم الأساسية للدرس: ${keyConcepts}.
+المرحلة الدراسية: ${profile.gradeLevel} - التخصص: ${profile.specialization} - المادة: ${profile.subject}.
+المحاضرة الحالية التي يدرسها الطالب الآن: "${lectureTitle}".
+المفاهيم الأساسية للمحاضرة: ${keyConcepts}.
 
 القواعد التربوية الإلزامية الصارمة:
 1. ممنوع منعاً باتاً إعطاء الحلول المباشرة أو الأرقام النهائية للمسائل والواجبات!
-2. التزم التزاماً كاملاً بنواتج التعلم ومصطلحات المنهج الدراسي المقرر في دولة الطالب (${countryInfo.nameAr}).
-3. اتبع المنهج السقراطي: اسأل الطالب سؤالاً استرشادياً صغيراً واحداً في كل رد يقوده للتفكير الذاتي.
-4. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية أو تخصصات أخرى، قل بلطف: "دعنا نركز أولاً على إتقان مفاهيم ${lectureTitle} لاجتياز اختبارها بنجاح!".
-5. استخدم لغة عربية فصحى مشجعة، ووضح الرموز الرياضية خطوة بخطوة.
-6. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
-    `.trim();� للتفكير.
+2. اتبع المنهج السقراطي: اسأل الطالب سؤالاً استرشادياً صغيراً واحداً في كل رد يقوده للتفكير.
 3. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية أو تخصصات أخرى، قل بلطف: "دعنا نركز أولاً على إتقان مفاهيم ${lectureTitle} لاجتياز اختبارها!".
 4. استخدم لغة عربية فصحى مشجعة، وضح الرموز الرياضية خطوة بخطوة.
 5. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
@@ -260,255 +250,145 @@ function generateSimulatedSocraticResponse(query: string, lecture: Lecture, isEn
   };
 }
 
-/**
- * ====================================================================
- * CURRICULUM-ALIGNED FULL LECTURE GENERATOR
- * Generates a complete lesson from the official national curriculum
- * for the student's registered grade, subject, and country.
- * ====================================================================
- */
-
-export interface CurriculumLectureGenerationParams {
+export interface GenerateCurriculumParams {
   profile: StudentProfile;
-  lectureNumber: number; // e.g. 1, 2, 3...
+  lectureNumber: number;
   unitTitle?: string;
-  lessonTopic?: string; // optional override; if blank, Gemini picks from curriculum
+  lessonTopic?: string;
   apiKey?: string;
 }
 
-export interface GeneratedLectureResult {
-  lecture: Lecture | null;
-  error?: string;
-}
-
-/** Map subject codes to readable names for the prompt */
-const SUBJECT_NAMES: Record<string, { ar: string; en: string }> = {
-  PRIMARY_MATH:      { ar: 'الرياضيات - المرحلة الابتدائية', en: 'Primary Mathematics' },
-  PRIMARY_ARABIC:    { ar: 'اللغة العربية - المرحلة الابتدائية', en: 'Primary Arabic Language' },
-  PRIMARY_SCIENCE:   { ar: 'العلوم - المرحلة الابتدائية', en: 'Primary Science' },
-  ISLAMIC_STUDIES:   { ar: 'التربية الإسلامية', en: 'Islamic Studies' },
-  MATH:              { ar: 'الرياضيات', en: 'Mathematics' },
-  PHYSICS:           { ar: 'الفيزياء', en: 'Physics' },
-  CHEMISTRY:         { ar: 'الكيمياء', en: 'Chemistry' },
-  BIOLOGY:           { ar: 'الأحياء', en: 'Biology' },
-  ARABIC_LIT:        { ar: 'الأدب العربي والبلاغة', en: 'Arabic Literature & Rhetoric' },
-  ARABIC_LANG:       { ar: 'اللغة العربية', en: 'Arabic Language' },
-  GENERAL_SCIENCE:   { ar: 'العلوم العامة', en: 'General Science' },
-  COMPUTER_SCIENCE:  { ar: 'الحاسب الآلي وتقنية المعلومات', en: 'Computer Science & IT' },
-};
-
-const GRADE_NAMES: Record<string, { ar: string; en: string }> = {
-  G1:  { ar: 'الصف الأول الابتدائي', en: 'Grade 1 - Primary' },
-  G2:  { ar: 'الصف الثاني الابتدائي', en: 'Grade 2 - Primary' },
-  G3:  { ar: 'الصف الثالث الابتدائي', en: 'Grade 3 - Primary' },
-  G4:  { ar: 'الصف الرابع الابتدائي', en: 'Grade 4 - Primary' },
-  G5:  { ar: 'الصف الخامس الابتدائي', en: 'Grade 5 - Primary' },
-  G6:  { ar: 'الصف السادس الابتدائي', en: 'Grade 6 - Primary' },
-  G7:  { ar: 'الصف الأول المتوسط', en: 'Grade 7 - Middle School' },
-  G8:  { ar: 'الصف الثاني المتوسط', en: 'Grade 8 - Middle School' },
-  G9:  { ar: 'الصف الثالث المتوسط', en: 'Grade 9 - Middle School' },
-  G10: { ar: 'الصف الأول الثانوي', en: 'Grade 10 - High School' },
-  G11: { ar: 'الصف الثاني الثانوي', en: 'Grade 11 - High School' },
-  G12: { ar: 'الصف الثالث الثانوي', en: 'Grade 12 - High School' },
-};
-
-/**
- * Generates a full curriculum-aligned lecture using Gemini API.
- * The lecture follows the official national curriculum of the student's registered country and grade.
- */
 export async function generateCurriculumLecture(
-  params: CurriculumLectureGenerationParams,
-  existingLectureTitles: string[] = []
-): Promise<GeneratedLectureResult> {
+  params: GenerateCurriculumParams,
+  existingTitles: string[] = []
+): Promise<{ lecture: Lecture | null; error?: string }> {
   const { profile, lectureNumber, unitTitle, lessonTopic, apiKey } = params;
   const activeKey = apiKey || (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_API_KEY;
 
   if (!activeKey || activeKey.trim() === '') {
-    return { lecture: null, error: 'NO_API_KEY' };
+    return { lecture: null, error: 'Gemini API key is required to generate curriculum lessons.' };
   }
 
-  const { getCountryInfo } = await import('../data/curriculumCountries');
-  const countryInfo = getCountryInfo(profile.country);
-
-  const subjectName = SUBJECT_NAMES[profile.subject] || { ar: profile.subject, en: profile.subject };
-  const gradeName = GRADE_NAMES[profile.gradeLevel] || { ar: profile.gradeLevel, en: profile.gradeLevel };
-
-  const existingTopicsNote = existingLectureTitles.length > 0
-    ? `\nAlready covered topics (do NOT repeat these):\n${existingLectureTitles.map((t, i) => `${i + 1}. ${t}`).join('\n')}`
-    : '';
-
-  const specificTopicNote = lessonTopic
-    ? `\nSpecific lesson topic requested: "${lessonTopic}". Use this exact topic.`
-    : `\nPick the most appropriate next sequential lesson from the official ${countryInfo.nameEn} ${gradeName.en} ${subjectName.en} curriculum.`;
-
-  const unitNote = unitTitle ? `\nUnit/Chapter: "${unitTitle}"` : '';
-
-  const prompt = `
-You are an expert curriculum designer for the ${countryInfo.nameEn} official national education system (${countryInfo.ministryEn}).
-
-Generate a COMPLETE, DETAILED, CURRICULUM-ALIGNED lecture for:
-- Country: ${countryInfo.nameEn} (${countryInfo.nameAr})
-- Ministry: ${countryInfo.ministryEn}
-- Grade: ${gradeName.en} (${gradeName.ar})
-- Subject: ${subjectName.en} (${subjectName.ar})
+  const prompt = `You are a Senior National Curriculum Author and Pedagogy Expert for ${profile.country}.
+Create a comprehensive, authentic, high-quality curriculum lesson for:
+- Country & Standard: ${profile.country}
+- Grade Level: ${profile.gradeLevel}
 - Specialization: ${profile.specialization}
-- Lecture Number in sequence: ${lectureNumber}
-${unitNote}
-${specificTopicNote}
-${existingTopicsNote}
+- Subject: ${profile.subject}
+- Lecture Sequence Number: ${lectureNumber}
+${unitTitle ? `- Unit: ${unitTitle}` : ''}
+${lessonTopic ? `- Focus Lesson Topic: ${lessonTopic}` : ''}
+${existingTitles.length > 0 ? `- Already covered lessons in syllabus (DO NOT duplicate): ${existingTitles.join(', ')}` : ''}
 
-STRICT REQUIREMENTS:
-1. The lecture content MUST align 100% with the ${countryInfo.nameEn} official national curriculum standards for ${gradeName.en}.
-2. Lesson depth and vocabulary must be appropriate for ${gradeName.en} students.
-3. All examples must use culturally relevant context from ${countryInfo.nameEn}.
-4. Include ALL sections: warm-up hook, learning outcomes, vocabulary, main content sections with examples, formative checks, textbook exercises, summary, concept map, and assessment questions.
-
-Respond ONLY with a valid JSON object (no markdown fences, no extra text) with this EXACT structure:
+CRITICAL: Return ONLY a valid JSON object strictly matching this schema with NO markdown wrapping, no extra comments:
 {
-  "titleAr": "عنوان الدرس بالعربية",
-  "titleEn": "Lesson Title in English",
-  "subtitleAr": "وصف موجز بالعربية",
-  "subtitleEn": "Brief subtitle in English",
-  "durationMinutes": 30,
-  "unitTitleAr": "اسم الوحدة بالعربية",
-  "unitTitleEn": "Unit Title in English",
-  "lessonNumberAr": "الدرس ${lectureNumber}: ...",
-  "lessonNumberEn": "Lesson ${lectureNumber}: ...",
-  "termAr": "الفصل الدراسي الأول",
-  "termEn": "First Semester / Term 1",
-  "gradeLevelNameAr": "${gradeName.ar}",
-  "gradeLevelNameEn": "${gradeName.en}",
-  "warmupHookAr": "سؤال تشويقي أو موقف من الحياة اليومية يربط الدرس بالواقع",
-  "warmupHookEn": "An engaging real-world hook or question that connects the lesson to daily life",
-  "learningOutcomesAr": ["بنهاية الدرس، سيكون الطالب قادراً على ...1", "...2", "...3", "...4"],
-  "learningOutcomesEn": ["By end of lesson, student will be able to ...1", "...2", "...3", "...4"],
-  "vocabulary": [
-    { "termAr": "مصطلح 1", "termEn": "Term 1", "definitionAr": "تعريف واضح بالعربية", "definitionEn": "Clear definition in English" },
-    { "termAr": "مصطلح 2", "termEn": "Term 2", "definitionAr": "تعريف واضح بالعربية", "definitionEn": "Clear definition in English" },
-    { "termAr": "مصطلح 3", "termEn": "Term 3", "definitionAr": "تعريف واضح بالعربية", "definitionEn": "Clear definition in English" }
-  ],
-  "keyConceptsAr": ["المفهوم الأول", "المفهوم الثاني", "المفهوم الثالث", "المفهوم الرابع"],
-  "keyConceptsEn": ["Concept 1", "Concept 2", "Concept 3", "Concept 4"],
-  "summaryAr": "ملخص شامل للدرس بالعربية في فقرة واحدة",
-  "summaryEn": "Comprehensive lesson summary in English in one paragraph",
-  "sections": [
-    {
-      "titleAr": "1. عنوان القسم الأول",
-      "titleEn": "1. First Section Title",
-      "contentAr": "شرح تفصيلي وافٍ للمحتوى بالعربية (3-4 فقرات على الأقل)...",
-      "contentEn": "Detailed comprehensive explanation of the content in English (3-4 paragraphs minimum)...",
-      "interactiveExample": {
-        "titleAr": "مثال محلول: ...",
-        "titleEn": "Worked Example: ...",
-        "equation": "optional: formula or equation string",
-        "steps": [
-          { "stepNumber": 1, "textAr": "الخطوة الأولى...", "textEn": "Step one..." },
-          { "stepNumber": 2, "textAr": "الخطوة الثانية...", "textEn": "Step two..." },
-          { "stepNumber": 3, "textAr": "الخطوة الثالثة...", "textEn": "Step three..." }
-        ],
-        "takeawayAr": "الخلاصة الرئيسية من هذا المثال",
-        "takeawayEn": "Key takeaway from this example"
+  "id": "gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}",
+  "order": ${lectureNumber},
+  "isLocked": false,
+  "isCompleted": false,
+  "passingScoreRequired": 80,
+  "unitNumber": 1,
+  "lessonNumberInUnit": ${lectureNumber},
+  "unitTitleAr": "string in Arabic",
+  "unitTitleEn": "string in English",
+  "titleAr": "string in Arabic",
+  "titleEn": "string in English",
+  "topicAr": "string in Arabic",
+  "topicEn": "string in English",
+  "durationMinutes": 45,
+  "keyConceptsAr": ["concept 1", "concept 2", "concept 3"],
+  "keyConceptsEn": ["concept 1", "concept 2", "concept 3"],
+  "learningObjectivesAr": ["objective 1", "objective 2", "objective 3"],
+  "learningObjectivesEn": ["objective 1", "objective 2", "objective 3"],
+  "summaryAr": "Comprehensive Arabic lesson introduction and summary",
+  "summaryEn": "Comprehensive English lesson introduction and summary",
+  "curriculumAlignment": {
+    "country": "${profile.country}",
+    "nationalStandardCode": "Standard Code",
+    "curriculumBookName": "Official Textbook Name",
+    "chapterNumber": 1,
+    "gradeLevel": "${profile.gradeLevel}",
+    "semester": "Semester 2"
+  },
+  "lectureContent": {
+    "sections": [
+      {
+        "id": "sec-1",
+        "titleAr": "تهيئة واستكشاف",
+        "titleEn": "Exploration & Hook",
+        "contentAr": "Rich markdown text with pedagogical explanation...",
+        "contentEn": "Rich markdown text with pedagogical explanation..."
       },
-      "tipsAr": ["نصيحة تعليمية مهمة 1", "نصيحة 2"],
-      "tipsEn": ["Important tip 1", "Tip 2"],
-      "formativeCheck": {
-        "id": "fc-gen-${lectureNumber}-1",
-        "questionAr": "سؤال تقييم مرحلي للتحقق من الفهم؟",
-        "questionEn": "Formative check question to verify understanding?",
-        "optionsAr": ["الخيار أ", "الخيار ب", "الخيار ج", "الخيار د"],
-        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0,
-        "explanationAr": "شرح سبب صحة الإجابة",
-        "explanationEn": "Explanation of why the answer is correct",
-        "hintAr": "تلميح للطالب إذا أخطأ",
-        "hintEn": "Hint for student if incorrect"
+      {
+        "id": "sec-2",
+        "titleAr": "الشرح النظري والمفاهيم",
+        "titleEn": "Core Theoretical Explanation",
+        "contentAr": "Detailed explanation with formulas and breakdown...",
+        "contentEn": "Detailed explanation with formulas and breakdown..."
+      },
+      {
+        "id": "sec-3",
+        "titleAr": "أمثلة محلولة خطوة بخطوة",
+        "titleEn": "Step-by-Step Solved Examples",
+        "contentAr": "Practical real-world examples with complete solutions...",
+        "contentEn": "Practical real-world examples with complete solutions..."
+      },
+      {
+        "id": "sec-4",
+        "titleAr": "تمارين تفاعلية وتأكيد الفهم",
+        "titleEn": "Guided Practice & Mastery Check",
+        "contentAr": "Exercises with hints for self-testing...",
+        "contentEn": "Exercises with hints for self-testing..."
       }
-    },
-    {
-      "titleAr": "2. عنوان القسم الثاني",
-      "titleEn": "2. Second Section Title",
-      "contentAr": "شرح تفصيلي للقسم الثاني...",
-      "contentEn": "Detailed explanation of second section...",
-      "tipsAr": ["نصيحة 1"],
-      "tipsEn": ["Tip 1"]
-    }
-  ],
-  "conceptMapAr": ["المفهوم الرئيسي → المفهوم الفرعي 1", "المفهوم الرئيسي → المفهوم الفرعي 2", "ربط المفاهيم 3"],
-  "conceptMapEn": ["Main Concept → Sub-concept 1", "Main Concept → Sub-concept 2", "Concept link 3"],
-  "textbookExercises": [
-    {
-      "id": "ex-gen-${lectureNumber}-1",
-      "questionAr": "تمرين من الكتاب المدرسي ...",
-      "questionEn": "Textbook exercise ...",
-      "solutionStepsAr": ["خطوة 1: ...", "خطوة 2: ...", "خطوة 3: ..."],
-      "solutionStepsEn": ["Step 1: ...", "Step 2: ...", "Step 3: ..."],
-      "answerAr": "الإجابة النهائية",
-      "answerEn": "Final answer"
-    },
-    {
-      "id": "ex-gen-${lectureNumber}-2",
-      "questionAr": "تمرين ثانٍ ...",
-      "questionEn": "Second exercise ...",
-      "solutionStepsAr": ["خطوة 1: ..."],
-      "solutionStepsEn": ["Step 1: ..."],
-      "answerAr": "الإجابة",
-      "answerEn": "Answer"
-    }
-  ],
+    ]
+  },
   "assessment": {
-    "id": "quiz-gen-${lectureNumber}",
-    "lectureId": "gen-lec-${lectureNumber}",
-    "titleAr": "تقييم الدرس ${lectureNumber}",
-    "titleEn": "Lecture ${lectureNumber} Assessment",
-    "passingScore": 80,
     "questions": [
       {
-        "id": "qg${lectureNumber}-1",
-        "textAr": "سؤال اختيار من متعدد 1 - يقيس الفهم العميق للمفهوم...",
-        "textEn": "MCQ 1 - measures deep understanding...",
-        "optionsAr": ["أ) ...", "ب) ...", "ج) ...", "د) ..."],
-        "optionsEn": ["A) ...", "B) ...", "C) ...", "D) ..."],
+        "id": "q1",
+        "questionAr": "Question 1 text in Arabic",
+        "questionEn": "Question 1 text in English",
+        "optionsAr": ["Option A", "Option B", "Option C", "Option D"],
+        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
         "correctIndex": 0,
-        "conceptTestedAr": "المفهوم المُقيَّم",
-        "conceptTestedEn": "Concept being tested",
-        "explanationAr": "شرح الإجابة الصحيحة",
-        "explanationEn": "Explanation of correct answer",
-        "difficulty": "medium"
+        "difficulty": "EASY",
+        "conceptAr": "Targeted Concept in Arabic",
+        "conceptEn": "Targeted Concept in English",
+        "explanationAr": "Detailed explanation of the correct answer in Arabic",
+        "explanationEn": "Detailed explanation of the correct answer in English"
       },
       {
-        "id": "qg${lectureNumber}-2",
-        "textAr": "سؤال اختيار من متعدد 2...",
-        "textEn": "MCQ 2...",
-        "optionsAr": ["أ) ...", "ب) ...", "ج) ...", "د) ..."],
-        "optionsEn": ["A) ...", "B) ...", "C) ...", "D) ..."],
+        "id": "q2",
+        "questionAr": "Question 2 text in Arabic",
+        "questionEn": "Question 2 text in English",
+        "optionsAr": ["Option A", "Option B", "Option C", "Option D"],
+        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
         "correctIndex": 1,
-        "conceptTestedAr": "مفهوم آخر",
-        "conceptTestedEn": "Another concept",
-        "explanationAr": "شرح الإجابة",
-        "explanationEn": "Answer explanation",
-        "difficulty": "easy"
+        "difficulty": "MEDIUM",
+        "conceptAr": "Targeted Concept in Arabic",
+        "conceptEn": "Targeted Concept in English",
+        "explanationAr": "Detailed explanation of the correct answer in Arabic",
+        "explanationEn": "Detailed explanation of the correct answer in English"
       },
       {
-        "id": "qg${lectureNumber}-3",
-        "textAr": "سؤال تطبيقي متقدم...",
-        "textEn": "Advanced application question...",
-        "optionsAr": ["أ) ...", "ب) ...", "ج) ...", "د) ..."],
-        "optionsEn": ["A) ...", "B) ...", "C) ...", "D) ..."],
+        "id": "q3",
+        "questionAr": "Question 3 text in Arabic",
+        "questionEn": "Question 3 text in English",
+        "optionsAr": ["Option A", "Option B", "Option C", "Option D"],
+        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
         "correctIndex": 2,
-        "conceptTestedAr": "التطبيق",
-        "conceptTestedEn": "Application",
-        "explanationAr": "شرح الإجابة",
-        "explanationEn": "Answer explanation",
-        "difficulty": "hard"
+        "difficulty": "HARD",
+        "conceptAr": "Targeted Concept in Arabic",
+        "conceptEn": "Targeted Concept in English",
+        "explanationAr": "Detailed explanation of the correct answer in Arabic",
+        "explanationEn": "Detailed explanation of the correct answer in English"
       }
     ]
   }
-}
-`.trim();
+}`;
 
   try {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey.trim()}`;
-
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -516,82 +396,30 @@ Respond ONLY with a valid JSON object (no markdown fences, no extra text) with t
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.4,
-          maxOutputTokens: 8192,
+          maxOutputTokens: 4096,
           responseMimeType: 'application/json'
         }
       })
     });
 
     if (!response.ok) {
-      const errBody = await response.text();
-      console.error('Gemini API error:', errBody);
-      return { lecture: null, error: `API_ERROR: ${response.status}` };
+      const errText = await response.text();
+      return { lecture: null, error: `Gemini API Error: ${response.status} - ${errText}` };
     }
 
     const data = await response.json();
     const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
     if (!rawText) {
-      return { lecture: null, error: 'EMPTY_RESPONSE' };
+      return { lecture: null, error: 'No content received from Gemini model.' };
     }
 
-    // Strip markdown fences if present
     const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
-    const parsed = JSON.parse(cleaned);
-
-    const lectureId = `gen-lec-${profile.country}-${profile.gradeLevel}-${profile.subject}-${lectureNumber}-${Date.now()}`;
-
-    const lecture: Lecture = {
-      id: lectureId,
-      order: lectureNumber,
-      titleAr: parsed.titleAr || `درس ${lectureNumber}`,
-      titleEn: parsed.titleEn || `Lesson ${lectureNumber}`,
-      subtitleAr: parsed.subtitleAr || '',
-      subtitleEn: parsed.subtitleEn || '',
-      durationMinutes: parsed.durationMinutes || 30,
-      isLocked: false,
-      isCompleted: false,
-      passingScoreRequired: 80,
-
-      // Curriculum metadata
-      country: profile.country,
-      ministryAr: countryInfo.ministryAr,
-      ministryEn: countryInfo.ministryEn,
-      gradeLevelNameAr: parsed.gradeLevelNameAr || gradeName.ar,
-      gradeLevelNameEn: parsed.gradeLevelNameEn || gradeName.en,
-      termAr: parsed.termAr || countryInfo.termDefaultAr,
-      termEn: parsed.termEn || countryInfo.termDefaultEn,
-      unitTitleAr: parsed.unitTitleAr || '',
-      unitTitleEn: parsed.unitTitleEn || '',
-      lessonNumberAr: parsed.lessonNumberAr || `الدرس ${lectureNumber}`,
-      lessonNumberEn: parsed.lessonNumberEn || `Lesson ${lectureNumber}`,
-
-      warmupHookAr: parsed.warmupHookAr || '',
-      warmupHookEn: parsed.warmupHookEn || '',
-      learningOutcomesAr: parsed.learningOutcomesAr || [],
-      learningOutcomesEn: parsed.learningOutcomesEn || [],
-      vocabulary: parsed.vocabulary || [],
-      keyConceptsAr: parsed.keyConceptsAr || [],
-      keyConceptsEn: parsed.keyConceptsEn || [],
-      summaryAr: parsed.summaryAr || '',
-      summaryEn: parsed.summaryEn || '',
-      sections: parsed.sections || [],
-      conceptMapAr: parsed.conceptMapAr || [],
-      conceptMapEn: parsed.conceptMapEn || [],
-      textbookExercises: parsed.textbookExercises || [],
-      assessment: parsed.assessment || {
-        id: `quiz-gen-${lectureNumber}`,
-        lectureId,
-        titleAr: `تقييم الدرس ${lectureNumber}`,
-        titleEn: `Lesson ${lectureNumber} Assessment`,
-        passingScore: 80,
-        questions: []
-      }
-    };
+    const lecture: Lecture = JSON.parse(cleaned);
 
     return { lecture };
   } catch (err) {
-    console.error('Error generating curriculum lecture:', err);
-    return { lecture: null, error: err instanceof Error ? err.message : 'PARSE_ERROR' };
+    const message = err instanceof Error ? err.message : 'Unknown generation error';
+    return { lecture: null, error: message };
   }
 }
+

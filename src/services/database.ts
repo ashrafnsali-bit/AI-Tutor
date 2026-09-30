@@ -1,23 +1,70 @@
-import type { Lecture, StudentProfile, Subject, UserAccount } from '../types';
+import type { AssessmentResult, Lecture, StudentProfile, Subject, UserAccount } from '../types';
 import { INITIAL_STUDENT_PROFILE } from '../data/curriculumData';
 
 const DB_NAME = 'TeacherAI_PlatformDB';
-const DB_VERSION = 1;
-const USERS_STORE = 'users';
+const DB_VERSION = 3; // Upgraded for grades + sessions stores
+const USERS_STORE    = 'users';
 const PROGRESS_STORE = 'progress';
-const SESSION_STORE = 'session';
+const SESSION_STORE  = 'session';
+const GRADES_STORE   = 'grades';    // NEW: per-student per-lecture grade history
+const SESSIONS_STORE = 'sessions';  // NEW: login/study session tracking
 
 let dbInstance: IDBDatabase | null = null;
 
-/**
- * Initialize IndexedDB Database
- */
+// ─────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────
+
+export interface GradeRecord {
+  id: string;               // `${userId}_${lectureId}_${attemptNumber}`
+  userId: string;
+  lectureId: string;
+  lectureTitle: string;
+  subject: Subject;
+  gradeLevel: string;
+  score: number;            // 0-100
+  passed: boolean;
+  correctCount: number;
+  totalQuestions: number;
+  attemptNumber: number;    // 1, 2, 3...
+  timestamp: number;        // Date.now()
+  feedback?: string;
+  conceptResults?: { concept: string; isCorrect: boolean; advice: string }[];
+}
+
+export interface StudySession {
+  id: string;               // `${userId}_${sessionStart}`
+  userId: string;
+  subject: Subject;
+  lectureId: string;
+  lectureTitle: string;
+  sessionStart: number;
+  sessionEnd?: number;
+  durationMinutes?: number;
+  action: 'start' | 'end' | 'assessment';
+}
+
+export interface StudentSummary {
+  totalGrades: number;
+  passedCount: number;
+  failedCount: number;
+  averageScore: number;
+  bestScore: number;
+  totalStudyMinutes: number;
+  subjectBreakdown: Record<string, { count: number; avgScore: number; passed: number }>;
+  recentGrades: GradeRecord[];
+}
+
+// ─────────────────────────────────────────────
+// DATABASE INIT
+// ─────────────────────────────────────────────
+
 export async function getDB(): Promise<IDBDatabase> {
   if (dbInstance) return dbInstance;
 
   return new Promise((resolve, reject) => {
     if (typeof window === 'undefined' || !window.indexedDB) {
-      reject(new Error('IndexedDB not supported in this environment'));
+      reject(new Error('IndexedDB not supported'));
       return;
     }
 
@@ -28,12 +75,12 @@ export async function getDB(): Promise<IDBDatabase> {
 
       // 1. Users Store
       if (!db.objectStoreNames.contains(USERS_STORE)) {
-        const userStore = db.createObjectStore(USERS_STORE, { keyPath: 'id' });
-        userStore.createIndex('username', 'username', { unique: true });
-        userStore.createIndex('email', 'email', { unique: false });
+        const us = db.createObjectStore(USERS_STORE, { keyPath: 'id' });
+        us.createIndex('username', 'username', { unique: true });
+        us.createIndex('email', 'email', { unique: false });
       }
 
-      // 2. Progress Store (userId + subject)
+      // 2. Progress Store
       if (!db.objectStoreNames.contains(PROGRESS_STORE)) {
         db.createObjectStore(PROGRESS_STORE, { keyPath: 'compositeKey' });
       }
@@ -42,6 +89,22 @@ export async function getDB(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains(SESSION_STORE)) {
         db.createObjectStore(SESSION_STORE, { keyPath: 'key' });
       }
+
+      // 4. Grades Store (NEW)
+      if (!db.objectStoreNames.contains(GRADES_STORE)) {
+        const gs = db.createObjectStore(GRADES_STORE, { keyPath: 'id' });
+        gs.createIndex('userId',    'userId',    { unique: false });
+        gs.createIndex('lectureId', 'lectureId', { unique: false });
+        gs.createIndex('subject',   'subject',   { unique: false });
+        gs.createIndex('timestamp', 'timestamp', { unique: false });
+      }
+
+      // 5. Sessions Store (NEW)
+      if (!db.objectStoreNames.contains(SESSIONS_STORE)) {
+        const ss = db.createObjectStore(SESSIONS_STORE, { keyPath: 'id' });
+        ss.createIndex('userId',  'userId',  { unique: false });
+        ss.createIndex('subject', 'subject', { unique: false });
+      }
     };
 
     request.onsuccess = () => {
@@ -49,52 +112,247 @@ export async function getDB(): Promise<IDBDatabase> {
       resolve(dbInstance);
     };
 
-    request.onerror = () => {
-      reject(request.error);
-    };
+    request.onerror = () => reject(request.error);
   });
 }
 
-/**
- * Register a new Student Account in Database
- */
-export async function registerUserAccount(data: {
-  name: string;
-  username: string;
-  email: string;
-  password?: string;
-  country?: StudentProfile['country'];
-  age: number;
-  gradeLevel: StudentProfile['gradeLevel'];
-  specialization: StudentProfile['specialization'];
-  subject: Subject;
-  language: StudentProfile['language'];
-  parentEmail?: string;
-}): Promise<UserAccount> {
-  const cleanUsername = data.username.trim().toLowerCase();
-  const cleanEmail = data.email.trim().toLowerCase();
+// ─────────────────────────────────────────────
+// GRADES — save, load, summary
+// ─────────────────────────────────────────────
 
-  // Create full UserAccount object
+/**
+ * Save a grade record after every assessment attempt
+ */
+export async function saveGrade(
+  userId: string,
+  lectureId: string,
+  lectureTitle: string,
+  subject: Subject,
+  gradeLevel: string,
+  result: AssessmentResult
+): Promise<GradeRecord> {
+  // Find current attempt number
+  const existing = await loadGradesByLecture(userId, lectureId);
+  const attemptNumber = existing.length + 1;
+
+  const record: GradeRecord = {
+    id: `${userId}_${lectureId}_${attemptNumber}_${Date.now()}`,
+    userId,
+    lectureId,
+    lectureTitle,
+    subject,
+    gradeLevel,
+    score: result.score,
+    passed: result.passed,
+    correctCount: result.correctCount,
+    totalQuestions: result.totalQuestions,
+    attemptNumber,
+    timestamp: Date.now(),
+    feedback: result.geminiFeedback,
+    conceptResults: result.conceptBreakdown
+  };
+
+  // Save to IndexedDB
+  try {
+    const db = await getDB();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(GRADES_STORE, 'readwrite');
+      tx.objectStore(GRADES_STORE).put(record);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  } catch {
+    // IndexedDB not available, save in localStorage
+  }
+
+  // Always save in localStorage as backup
+  const lsKey = `TEACHER_AI_GRADES_${userId}`;
+  try {
+    const existing = JSON.parse(localStorage.getItem(lsKey) || '[]') as GradeRecord[];
+    existing.push(record);
+    localStorage.setItem(lsKey, JSON.stringify(existing));
+  } catch { /* ignore */ }
+
+  return record;
+}
+
+/**
+ * Load all grades for a specific student
+ */
+export async function loadAllGrades(userId: string): Promise<GradeRecord[]> {
+  try {
+    const db = await getDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(GRADES_STORE, 'readonly');
+      const store = tx.objectStore(GRADES_STORE);
+      const idx = store.index('userId');
+      const req = idx.getAll(IDBKeyRange.only(userId));
+      req.onsuccess = () => resolve((req.result as GradeRecord[]).sort((a, b) => b.timestamp - a.timestamp));
+      req.onerror = () => resolve(loadGradesFromLocalStorage(userId));
+    });
+  } catch {
+    return loadGradesFromLocalStorage(userId);
+  }
+}
+
+/**
+ * Load grades for a specific lecture
+ */
+export async function loadGradesByLecture(userId: string, lectureId: string): Promise<GradeRecord[]> {
+  const all = await loadAllGrades(userId);
+  return all.filter(g => g.lectureId === lectureId).sort((a, b) => a.attemptNumber - b.attemptNumber);
+}
+
+/**
+ * Load grades grouped by subject
+ */
+export async function loadGradesBySubject(userId: string, subject: Subject): Promise<GradeRecord[]> {
+  const all = await loadAllGrades(userId);
+  return all.filter(g => g.subject === subject);
+}
+
+/**
+ * Get complete student performance summary
+ */
+export async function getStudentSummary(userId: string): Promise<StudentSummary> {
+  const grades = await loadAllGrades(userId);
+  const sessions = await loadAllSessions(userId);
+
+  const passedCount   = grades.filter(g => g.passed).length;
+  const failedCount   = grades.length - passedCount;
+  const scores        = grades.map(g => g.score);
+  const averageScore  = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+  const bestScore     = scores.length ? Math.max(...scores) : 0;
+
+  const totalStudyMinutes = sessions
+    .filter(s => s.durationMinutes)
+    .reduce((sum, s) => sum + (s.durationMinutes || 0), 0);
+
+  const subjectBreakdown: Record<string, { count: number; avgScore: number; passed: number }> = {};
+  for (const g of grades) {
+    if (!subjectBreakdown[g.subject]) {
+      subjectBreakdown[g.subject] = { count: 0, avgScore: 0, passed: 0 };
+    }
+    const sb = subjectBreakdown[g.subject];
+    sb.count++;
+    sb.avgScore = Math.round(((sb.avgScore * (sb.count - 1)) + g.score) / sb.count);
+    if (g.passed) sb.passed++;
+  }
+
+  return {
+    totalGrades: grades.length,
+    passedCount,
+    failedCount,
+    averageScore,
+    bestScore,
+    totalStudyMinutes,
+    subjectBreakdown,
+    recentGrades: grades.slice(0, 10)
+  };
+}
+
+// ─────────────────────────────────────────────
+// STUDY SESSIONS — tracking
+// ─────────────────────────────────────────────
+
+/**
+ * Record a study session event
+ */
+export async function recordSession(
+  userId: string,
+  subject: Subject,
+  lectureId: string,
+  lectureTitle: string,
+  action: StudySession['action'],
+  durationMinutes?: number
+): Promise<void> {
+  const session: StudySession = {
+    id: `${userId}_${Date.now()}`,
+    userId,
+    subject,
+    lectureId,
+    lectureTitle,
+    sessionStart: Date.now(),
+    sessionEnd: action === 'end' ? Date.now() : undefined,
+    durationMinutes,
+    action
+  };
+
+  try {
+    const db = await getDB();
+    await new Promise<void>((resolve) => {
+      const tx = db.transaction(SESSIONS_STORE, 'readwrite');
+      tx.objectStore(SESSIONS_STORE).put(session);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => resolve();
+    });
+  } catch { /* ignore */ }
+
+  // localStorage backup
+  try {
+    const lsKey = `TEACHER_AI_SESSIONS_${userId}`;
+    const existing = JSON.parse(localStorage.getItem(lsKey) || '[]') as StudySession[];
+    existing.push(session);
+    // Keep only last 500 sessions
+    if (existing.length > 500) existing.splice(0, existing.length - 500);
+    localStorage.setItem(lsKey, JSON.stringify(existing));
+  } catch { /* ignore */ }
+}
+
+/**
+ * Load all study sessions for a student
+ */
+export async function loadAllSessions(userId: string): Promise<StudySession[]> {
+  try {
+    const db = await getDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(SESSIONS_STORE, 'readonly');
+      const idx = tx.objectStore(SESSIONS_STORE).index('userId');
+      const req = idx.getAll(IDBKeyRange.only(userId));
+      req.onsuccess = () => resolve(req.result as StudySession[]);
+      req.onerror = () => resolve(loadSessionsFromLocalStorage(userId));
+    });
+  } catch {
+    return loadSessionsFromLocalStorage(userId);
+  }
+}
+
+// ─────────────────────────────────────────────
+// USER ACCOUNT MANAGEMENT
+// ─────────────────────────────────────────────
+
+export async function registerUserAccount(
+  usernameOrData: string | (Partial<StudentProfile> & { username: string; email?: string; password?: string }),
+  email?: string,
+  password?: string,
+  profileData?: Partial<StudentProfile>
+): Promise<UserAccount> {
+  let cleanUsername: string;
+  let cleanEmail: string;
+  let cleanPassword = '';
+  let studentData: Partial<StudentProfile> = {};
+
+  if (typeof usernameOrData === 'object') {
+    cleanUsername = (usernameOrData.username || '').trim().toLowerCase();
+    cleanEmail = (usernameOrData.email || `${cleanUsername}@student.ai`).trim().toLowerCase();
+    cleanPassword = usernameOrData.password || '';
+    const { username: _u, email: _e, password: _p, ...rest } = usernameOrData;
+    studentData = rest;
+  } else {
+    cleanUsername = usernameOrData.trim().toLowerCase();
+    cleanEmail = (email || '').trim().toLowerCase();
+    cleanPassword = password || '';
+    studentData = profileData || {};
+  }
+
   const newUser: UserAccount = {
-    id: `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    ...INITIAL_STUDENT_PROFILE,
+    ...studentData,
+    id: `usr-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     username: cleanUsername,
-    name: data.name.trim(),
-    nameAr: data.name.trim(),
-    nameEn: data.name.trim(),
     email: cleanEmail,
-    password: data.password || '',
-    age: data.age,
-    country: data.country || 'SA',
-    dateOfBirth: new Date(Date.now() - data.age * 365.25 * 24 * 3600 * 1000).toISOString().split('T')[0],
-    specialization: data.specialization,
-    subject: data.subject,
-    gradeLevel: data.gradeLevel,
-    language: data.language,
-    parentEmail: data.parentEmail || '',
-    isParentVerified: data.age < 13 ? !!data.parentEmail : true,
-    timeLimitMinutes: 60,
-    usedTodayMinutes: 0,
-    masteryPoints: 100, // Welcome bonus points
+    password: cleanPassword,
+    isParentVerified: studentData.age !== undefined && studentData.age >= 13,
     createdAt: Date.now(),
     lastLoginAt: Date.now()
   };
@@ -103,37 +361,27 @@ export async function registerUserAccount(data: {
     const db = await getDB();
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction([USERS_STORE, SESSION_STORE], 'readwrite');
-      const userStore = tx.objectStore(USERS_STORE);
-      const sessionStore = tx.objectStore(SESSION_STORE);
-
-      const addReq = userStore.add(newUser);
+      const addReq = tx.objectStore(USERS_STORE).add(newUser);
       addReq.onsuccess = () => {
-        sessionStore.put({ key: 'activeUserId', userId: newUser.id, user: newUser });
+        tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: newUser.id, user: newUser });
         resolve();
       };
-      addReq.onerror = () => {
-        reject(new Error('اسم المستخدم مسجل مسبقاً، يرجى اختيار اسم مستخدم آخر'));
-      };
+      addReq.onerror = () => reject(new Error('اسم المستخدم موجود بالفعل'));
     });
   } catch {
-    // LocalStorage Fallback
     const existing = getLocalUsers();
     if (existing.some(u => u.username === cleanUsername)) {
-      throw new Error('اسم المستخدم مسجل مسبقاً، يرجى اختيار اسم آخر');
+      throw new Error('اسم المستخدم موجود بالفعل');
     }
     existing.push(newUser);
     localStorage.setItem('TEACHER_AI_USERS_DB', JSON.stringify(existing));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(newUser));
   }
 
-  // Also sync current profile to local storage for backward compatibility
   localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(newUser));
   return newUser;
 }
 
-/**
- * Login User by username or email
- */
 export async function loginUserAccount(identifier: string, password?: string): Promise<UserAccount> {
   const cleanId = identifier.trim().toLowerCase();
 
@@ -141,25 +389,17 @@ export async function loginUserAccount(identifier: string, password?: string): P
     const db = await getDB();
     const allUsers = await new Promise<UserAccount[]>((resolve, reject) => {
       const tx = db.transaction(USERS_STORE, 'readonly');
-      const store = tx.objectStore(USERS_STORE);
-      const req = store.getAll();
+      const req = tx.objectStore(USERS_STORE).getAll();
       req.onsuccess = () => resolve(req.result as UserAccount[]);
       req.onerror = () => reject(req.error);
     });
 
-    const user = allUsers.find(
-      u => u.username.toLowerCase() === cleanId || u.email.toLowerCase() === cleanId
+    const user = allUsers.find(u =>
+      u.username.toLowerCase() === cleanId || u.email.toLowerCase() === cleanId
     );
+    if (!user) throw new Error('الحساب غير موجود');
+    if (password && user.password && user.password !== password) throw new Error('كلمة المرور غير صحيحة');
 
-    if (!user) {
-      throw new Error('اسم المستخدم أو البريد الإلكتروني غير مسجل');
-    }
-
-    if (password && user.password && user.password !== password) {
-      throw new Error('كلمة المرور غير صحيحة');
-    }
-
-    // Update lastLoginAt
     user.lastLoginAt = Date.now();
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction([USERS_STORE, SESSION_STORE], 'readwrite');
@@ -168,21 +408,15 @@ export async function loginUserAccount(identifier: string, password?: string): P
       tx.oncomplete = () => resolve();
       tx.onerror = () => reject(tx.error);
     });
-
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
     return user;
   } catch (err) {
-    // LocalStorage Fallback
     const existing = getLocalUsers();
-    const user = existing.find(
-      u => u.username.toLowerCase() === cleanId || u.email.toLowerCase() === cleanId
+    const user = existing.find(u =>
+      u.username.toLowerCase() === cleanId || u.email.toLowerCase() === cleanId
     );
-    if (!user) {
-      throw new Error((err as Error)?.message || 'المستخدم غير موجود');
-    }
-    if (password && user.password && user.password !== password) {
-      throw new Error('كلمة المرور غير صحيحة');
-    }
+    if (!user) throw new Error((err as Error)?.message || 'فشل تسجيل الدخول');
+    if (password && user.password && user.password !== password) throw new Error('كلمة المرور غير صحيحة');
     user.lastLoginAt = Date.now();
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
@@ -190,69 +424,44 @@ export async function loginUserAccount(identifier: string, password?: string): P
   }
 }
 
-/**
- * Get active student account from Database
- */
 export async function getActiveUserAccount(): Promise<UserAccount | null> {
   try {
     const db = await getDB();
-    const sessionRecord = await new Promise<{ key: string; userId: string; user: UserAccount } | null>((resolve) => {
+    const rec = await new Promise<{ key: string; userId: string; user: UserAccount } | null>((resolve) => {
       const tx = db.transaction(SESSION_STORE, 'readonly');
       const req = tx.objectStore(SESSION_STORE).get('activeUserId');
       req.onsuccess = () => resolve(req.result || null);
       req.onerror = () => resolve(null);
     });
+    if (rec?.user) return rec.user;
+  } catch { /* ignore */ }
 
-    if (sessionRecord?.user) {
-      return sessionRecord.user;
-    }
-  } catch {
-    // Ignore and fallback to local
-  }
-
-  // Fallback to localStorage active user or student profile
-  const storedActive = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
-  if (storedActive) {
-    try {
-      return JSON.parse(storedActive) as UserAccount;
-    } catch {
-      // Ignore
-    }
-  }
-
+  const stored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+  if (stored) { try { return JSON.parse(stored) as UserAccount; } catch { /* ignore */ } }
   return null;
 }
 
-/**
- * Update active student's profile in Database
- */
 export async function updateUserAccount(id: string, updates: Partial<UserAccount>): Promise<UserAccount> {
   try {
     const db = await getDB();
     const updated = await new Promise<UserAccount>((resolve, reject) => {
       const tx = db.transaction([USERS_STORE, SESSION_STORE], 'readwrite');
-      const userStore = tx.objectStore(USERS_STORE);
-      const req = userStore.get(id);
-
+      const store = tx.objectStore(USERS_STORE);
+      const req = store.get(id);
       req.onsuccess = () => {
         const user = req.result as UserAccount;
-        if (!user) {
-          reject(new Error('User not found in DB'));
-          return;
-        }
-        const merged: UserAccount = { ...user, ...updates };
-        userStore.put(merged);
+        if (!user) { reject(new Error('User not found')); return; }
+        const merged = { ...user, ...updates };
+        store.put(merged);
         tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: id, user: merged });
         resolve(merged);
       };
       req.onerror = () => reject(req.error);
     });
-
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(updated));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(updated));
     return updated;
   } catch {
-    // LocalStorage fallback
     const users = getLocalUsers();
     const idx = users.findIndex(u => u.id === id);
     let updated: UserAccount;
@@ -269,45 +478,25 @@ export async function updateUserAccount(id: string, updates: Partial<UserAccount
   }
 }
 
-/**
- * Logout / Clear Active Session
- */
 export async function logoutUserAccount(): Promise<void> {
   try {
     const db = await getDB();
     const tx = db.transaction(SESSION_STORE, 'readwrite');
     tx.objectStore(SESSION_STORE).delete('activeUserId');
-  } catch {
-    // Ignore
-  }
+  } catch { /* ignore */ }
   localStorage.removeItem('TEACHER_AI_ACTIVE_USER');
 }
 
-/**
- * Save user's lecture progress in Database
- */
 export async function saveUserSubjectLectures(userId: string, subject: Subject, lectures: Lecture[]): Promise<void> {
   const compositeKey = `${userId}_${subject}`;
   try {
     const db = await getDB();
     const tx = db.transaction(PROGRESS_STORE, 'readwrite');
-    tx.objectStore(PROGRESS_STORE).put({
-      compositeKey,
-      userId,
-      subject,
-      lectures,
-      updatedAt: Date.now()
-    });
-  } catch {
-    // Ignore
-  }
-  // Also save in localStorage
+    tx.objectStore(PROGRESS_STORE).put({ compositeKey, userId, subject, lectures, updatedAt: Date.now() });
+  } catch { /* ignore */ }
   localStorage.setItem(`TEACHER_AI_LECTURES_${subject}`, JSON.stringify(lectures));
 }
 
-/**
- * Load user's lecture progress from Database
- */
 export async function loadUserSubjectLectures(userId: string, subject: Subject): Promise<Lecture[] | null> {
   const compositeKey = `${userId}_${subject}`;
   try {
@@ -315,29 +504,27 @@ export async function loadUserSubjectLectures(userId: string, subject: Subject):
     return new Promise((resolve) => {
       const tx = db.transaction(PROGRESS_STORE, 'readonly');
       const req = tx.objectStore(PROGRESS_STORE).get(compositeKey);
-      req.onsuccess = () => {
-        if (req.result?.lectures) {
-          resolve(req.result.lectures as Lecture[]);
-        } else {
-          resolve(null);
-        }
-      };
+      req.onsuccess = () => resolve(req.result?.lectures as Lecture[] ?? null);
       req.onerror = () => resolve(null);
     });
-  } catch {
-    return null;
-  }
+  } catch { return null; }
 }
 
-// Internal Helper for LocalStorage
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
+
 function getLocalUsers(): UserAccount[] {
-  const raw = localStorage.getItem('TEACHER_AI_USERS_DB');
-  if (raw) {
-    try {
-      return JSON.parse(raw) as UserAccount[];
-    } catch {
-      return [];
-    }
-  }
-  return [];
+  try { return JSON.parse(localStorage.getItem('TEACHER_AI_USERS_DB') || '[]') as UserAccount[]; }
+  catch { return []; }
+}
+
+function loadGradesFromLocalStorage(userId: string): GradeRecord[] {
+  try { return JSON.parse(localStorage.getItem(`TEACHER_AI_GRADES_${userId}`) || '[]') as GradeRecord[]; }
+  catch { return []; }
+}
+
+function loadSessionsFromLocalStorage(userId: string): StudySession[] {
+  try { return JSON.parse(localStorage.getItem(`TEACHER_AI_SESSIONS_${userId}`) || '[]') as StudySession[]; }
+  catch { return []; }
 }

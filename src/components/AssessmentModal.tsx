@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { AssessmentResult, Lecture, StudentProfile } from '../types';
 import { evaluateAssessmentWithGemini } from '../services/geminiService';
+import { saveGrade, recordSession } from '../services/database';
 import { getTranslations } from '../i18n/translations';
 import confetti from 'canvas-confetti';
 import { 
@@ -90,6 +91,28 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
       };
 
       setResult(assessmentResult);
+
+      // ── Persist grade to IndexedDB + localStorage ──
+      try {
+        const lectureTitle = (profile.language === 'en' ? lecture.titleEn : lecture.titleAr) || lecture.titleAr || lecture.id;
+        await saveGrade(
+          profile.id,
+          lecture.id,
+          lectureTitle,
+          profile.subject,
+          (profile.language === 'en' ? lecture.gradeLevelNameEn : lecture.gradeLevelNameAr) || profile.gradeLevel,
+          assessmentResult
+        );
+        await recordSession(
+          profile.id,
+          profile.subject,
+          lecture.id,
+          lectureTitle,
+          'assessment'
+        );
+      } catch (dbErr) {
+        console.warn('Grade save error (non-critical):', dbErr);
+      }
 
       if (evaluation.passed) {
         // Trigger celebratory confetti

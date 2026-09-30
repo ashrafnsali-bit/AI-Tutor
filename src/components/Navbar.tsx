@@ -14,7 +14,8 @@ import {
   LogOut, 
   LogIn,
   Menu,
-  X
+  X,
+  BarChart2
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -28,6 +29,7 @@ interface NavbarProps {
   onOpenAuth?: () => void;
   onLogout?: () => void;
   onToggleLanguage: () => void;
+  onOpenProgress?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -40,7 +42,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenTutor,
   onOpenAuth,
   onLogout,
-  onToggleLanguage
+  onToggleLanguage,
+  onOpenProgress
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = getTranslations(profile.language);
@@ -100,6 +103,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* User Session Controls */}
           {isLoggedIn ? (
             <div className="user-session-actions">
+              {onOpenProgress && (
+                <button
+                  type="button"
+                  className="btn-user-action btn-progress"
+                  onClick={onOpenProgress}
+                  title={profile.language === 'en' ? 'My Progress & Grades' : 'تقدمي ودرجاتي'}
+                >
+                  <BarChart2 size={14} />
+                  <span>{profile.language === 'en' ? 'My Grades' : 'درجاتي'}</span>
+                </button>
+              )}
               {onOpenAuth && (
                 <button 
                   type="button" 
@@ -141,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Desktop Action Controls */}
         <div className="header-actions desktop-only">
           {/* Language Switcher */}
-          <div className="lang-pill-container" title={isEn ? "تبديل اللغة إلى العربية" : "Switch language to English"}>
+          <div className="lang-pill-container" title={isEn ? "طھط¨ط¯ظٹظ„ ط§ظ„ظ„ط؛ط© ط¥ظ„ظ‰ ط§ظ„ط¹ط±ط¨ظٹط©" : "Switch language to English"}>
             <Globe size={15} className="lang-globe-icon" />
             <div className="lang-segments-wrap">
               <button 
@@ -149,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`lang-segment-btn ${profile.language === 'ar' ? 'segment-active' : ''}`}
                 onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
               >
-                العربية
+                ط§ظ„ط¹ط±ط¨ظٹط©
               </button>
               <button 
                 type="button" 
@@ -216,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             className="btn-mobile-menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="القائمة"
+            aria-label="ط§ظ„ظ‚ط§ط¦ظ…ط©"
           >
             {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -235,13 +249,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="mobile-student-name">{displayName}</div>
               <div className="mobile-student-stage">
                 <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
-                {' • '}
+                {' â€¢ '}
                 {isPrimarySchool
                   ? t.primarySchoolStage
                   : isMiddleSchool
                   ? t.middleSchoolStage
                   : (t.specLabels[profile.specialization] || profile.specialization)}
-                {' • '}
+                {' â€¢ '}
                 {t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}
               </div>
             </div>
@@ -255,6 +269,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="mobile-account-actions">
             {isLoggedIn ? (
               <>
+                {onOpenProgress && (
+                  <button
+                    type="button"
+                    className="btn-mobile-action btn-mobile-progress"
+                    onClick={() => { setIsMobileMenuOpen(false); onOpenProgress(); }}
+                  >
+                    <BarChart2 size={16} />
+                    <span>{profile.language === 'en' ? 'My Grades & Progress' : 'درجاتي والتقدم'}</span>
+                  </button>
+                )}
                 {onOpenAuth && (
                   <button
                     type="button"
@@ -294,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="mobile-drawer-lang">
             <span className="drawer-section-title">
               <Globe size={15} />
-              <span>{isEn ? "Language / اللغة" : "لغة الواجهة والتعلم"}</span>
+              <span>{isEn ? "Language / ط§ظ„ظ„ط؛ط©" : "ظ„ط؛ط© ط§ظ„ظˆط§ط¬ظ‡ط© ظˆط§ظ„طھط¹ظ„ظ…"}</span>
             </span>
             <div className="mobile-lang-tabs">
               <button
@@ -302,7 +326,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`mobile-lang-tab ${profile.language === 'ar' ? 'active' : ''}`}
                 onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
               >
-                العربية
+                ط§ظ„ط¹ط±ط¨ظٹط©
               </button>
               <button
                 type="button"
@@ -350,4 +374,5 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+
 
