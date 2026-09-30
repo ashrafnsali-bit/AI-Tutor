@@ -507,8 +507,8 @@ export const PHYSICS_LECTURES: Lecture[] = [
     passingScoreRequired: 80,
 
     // Official Curriculum Metadata
-    gradeLevelNameAr: 'الصف الأول ثانوي - المرحلة الثانوية (مسار STEM)',
-    gradeLevelNameEn: 'Grade 10 / High School - STEM Specialization',
+    gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM)',
+    gradeLevelNameEn: 'Grade 12 / High School - STEM Specialization',
     termAr: 'الفصل الدراسي الأول',
     termEn: 'First Semester / Term 1',
     unitTitleAr: 'الوحدة الأولى: مدخل إلى علم الفيزياء وحركة الأجسام',
