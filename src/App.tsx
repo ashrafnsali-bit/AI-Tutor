@@ -180,7 +180,7 @@ export function App() {
     if (profile.language === 'ar') {
       htmlEl.setAttribute('dir', 'rtl');
       htmlEl.setAttribute('lang', 'ar');
-      document.title = 'ظ…ظ†طµط© ط§ظ„ظ…ط¹ظ„ظ… ط§ظ„ط°ظƒظٹ | ظ…ظ†طµط© ط§ظ„طھط¹ظ„ظ… ط§ظ„طھظƒظٹظپظٹ ط§ظ„ظ…ط¹ط²ط²ط© ط¨ظ€ Gemini';
+      document.title = 'منصة المعلم الذكي | منصة التعلم التكيفي المعززة بـ Gemini';
     } else {
       htmlEl.setAttribute('dir', 'ltr');
       htmlEl.setAttribute('lang', 'en');
@@ -390,7 +390,7 @@ export function App() {
           onClick={() => setMobileTab('lecture')}
         >
           <BookOpen size={16} />
-          <span>{profile.language === 'en' ? 'Active Lecture' : 'ط§ظ„ظ…ط­ط§ط¶ط±ط© ظˆط§ظ„ط´ط±ط­'}</span>
+          <span>{profile.language === 'en' ? 'Active Lecture' : 'المحاضرة والشرح'}</span>
         </button>
         <button
           type="button"
@@ -398,7 +398,7 @@ export function App() {
           onClick={() => setMobileTab('roadmap')}
         >
           <Map size={16} />
-          <span>{profile.language === 'en' ? 'Course Roadmap' : 'ظ…ط³ط§ط± ط§ظ„ظ…ظ†ظ‡ط¬ (4)'}</span>
+          <span>{profile.language === 'en' ? 'Course Roadmap' : 'خارطة المنهج'}</span>
         </button>
       </div>
 

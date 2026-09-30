@@ -155,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Desktop Action Controls */}
         <div className="header-actions desktop-only">
           {/* Language Switcher */}
-          <div className="lang-pill-container" title={isEn ? "طھط¨ط¯ظٹظ„ ط§ظ„ظ„ط؛ط© ط¥ظ„ظ‰ ط§ظ„ط¹ط±ط¨ظٹط©" : "Switch language to English"}>
+          <div className="lang-pill-container" title={isEn ? "تبديل اللغة إلى العربية" : "Switch language to English"}>
             <Globe size={15} className="lang-globe-icon" />
             <div className="lang-segments-wrap">
               <button 
@@ -163,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`lang-segment-btn ${profile.language === 'ar' ? 'segment-active' : ''}`}
                 onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
               >
-                ط§ظ„ط¹ط±ط¨ظٹط©
+                العربية
               </button>
               <button 
                 type="button" 
@@ -230,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             className="btn-mobile-menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="ط§ظ„ظ‚ط§ط¦ظ…ط©"
+            aria-label="القائمة"
           >
             {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -249,13 +249,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="mobile-student-name">{displayName}</div>
               <div className="mobile-student-stage">
                 <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
-                {' â€¢ '}
+                {' • '}
                 {isPrimarySchool
                   ? t.primarySchoolStage
                   : isMiddleSchool
                   ? t.middleSchoolStage
                   : (t.specLabels[profile.specialization] || profile.specialization)}
-                {' â€¢ '}
+                {' • '}
                 {t.gradeLabels[profile.gradeLevel] || profile.gradeLevel}
               </div>
             </div>
@@ -318,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="mobile-drawer-lang">
             <span className="drawer-section-title">
               <Globe size={15} />
-              <span>{isEn ? "Language / ط§ظ„ظ„ط؛ط©" : "ظ„ط؛ط© ط§ظ„ظˆط§ط¬ظ‡ط© ظˆط§ظ„طھط¹ظ„ظ…"}</span>
+              <span>{isEn ? "Language / اللغة" : "لغة الواجهة والتعلم"}</span>
             </span>
             <div className="mobile-lang-tabs">
               <button
@@ -326,7 +326,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`mobile-lang-tab ${profile.language === 'ar' ? 'active' : ''}`}
                 onClick={() => { if (profile.language !== 'ar') onToggleLanguage(); }}
               >
-                ط§ظ„ط¹ط±ط¨ظٹط©
+                العربية
               </button>
               <button
                 type="button"
