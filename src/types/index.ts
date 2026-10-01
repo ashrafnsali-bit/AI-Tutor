@@ -227,6 +227,8 @@ export interface LectureDiagram {
     | 'primary_water_cycle'
     | 'islamic_pillars'
     | 'kinematics_graph'
+    | 'atomic_structure'
+    | 'matter_states_compound'
     | 'polynomial_curve' 
     | 'apparatus' 
     | 'custom_svg';

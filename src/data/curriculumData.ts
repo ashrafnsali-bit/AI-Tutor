@@ -2397,56 +2397,483 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
     order: 1,
     titleAr: 'المحاضرة 1: طبيعة المادة والذرات والعناصر والمركبات',
     titleEn: 'Lecture 1: Nature of Matter: Atoms, Elements & Compounds',
-    subtitleAr: 'دراسة تركيب المادة وحالاتها الثلاث، ومكونات الذرة الأساسية (البروتونات والنيوترونات والإلكترونات)',
-    subtitleEn: 'Explore states of matter, atomic particles, elements and chemical compounds.',
-    durationMinutes: 25,
+    subtitleAr: 'دراسة تركيب المادة وحالاتها، وحساب الكثافة، وبنية الذرة والعدد الذري والكتلي، والتمييز بين العناصر والمركبات والمخاليط',
+    subtitleEn: 'Master matter states, density calculations, subatomic particle configurations, atomic numbers, elements, compounds, and mixtures.',
+    durationMinutes: 35,
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
-    keyConceptsAr: ['المادة وكل ما له كتلة ويشغل حيزاً', 'حالات المادة الثلاث: الصلبة والسائلة والغازية', 'بنية الذرة: النواة (بروتونات ونيوترونات) وسحابة الإلكترونات', 'الفرق بين العنصر النقي والمركب الكيميائي'],
-    keyConceptsEn: ['Definition of Matter', 'States of Matter', 'Atomic Structure: Protons, Neutrons, Electrons', 'Elements vs Compounds'],
-    summaryAr: 'كل شيء يحيط بنا في هذا الكون هو مادة؛ نتعلم في هذا الدرس اللبنات الذرية المتناهية في الصغر التي تبني كل المواد الصلبة والسائلة والغازية من حولنا.',
-    summaryEn: 'Discover the microscopic atomic constituents building our physical universe across all matter states.',
-    sections: [
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول متوسط (الصف السابع) - المرحلة المتوسطة',
+    gradeLevelNameEn: 'Grade 7 / Middle School - General Science',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: طبيعة المادة وخصائصها وبنيتها الذرية',
+    unitTitleEn: 'Unit 1: Nature of Matter, Properties & Atomic Structure',
+    lessonNumberAr: 'الدرس 1: المادة والذرات والعناصر والمركبات والمخاليط',
+    lessonNumberEn: 'Lesson 1: Matter, Atoms, Elements, Compounds & Mixtures',
+
+    // Real-world warm-up & Hook
+    warmupHookAr: 'هل تعلم أن قلم الرصاص الأسود الذي تكتب به (الجرافيت) وخاتم الألماس فائق الصلابة واللمعان يتكونان كلاهما من نفس نوع الذرات تماماً: ذرات الكربون (C)؟ كيف يمكن لذرات واحدة أن تصنع مادة لينة نكتب بها ومادة أخرى هي الأصلب على وجه الأرض؟ السر يكمن في البنية الذرية وطبيعة ترابط الذرات. كل شيء في هذا الكون الشاسع، من الهواء الذي نتنفسه إلى المياه والصخور، مبني من 118 عنصراً كيميائياً فقط!',
+    warmupHookEn: 'Soft pencil graphite and brilliant hard diamonds consist of identical carbon atoms. The difference lies in atomic arrangement and chemical bonding. Everything across the cosmos is assembled from just 118 elemental building blocks!',
+
+    // Targeted Learning Outcomes
+    learningOutcomesAr: [
+      'أن يعرّف الطالب المادة وحالاتها الفيزيائية الثلاث (صلبة، سائلة، غازية) بناءً على حركة الجسيمات وقوى التماسك',
+      'أن يحسب كثافة الأجسام الصلبة والسوائل رياضياً باستخدام قانون الكثافة D = m / V ويتنبأ بسلوك الطفو والانغمار',
+      'أن يحدد المكونات الثلاثة الأساسية لبنية الذرة (البروتونات p⁺، النيوترونات n⁰، والإلكترونات e⁻) ومواقعها وشحناتها',
+      'أن يستنتج العدد الذري (Z) والعدد الكتلي (A) ويحسب عدد النيوترونات في أي نواة بالقانون: N = A - Z',
+      'أن يفرّق بدقة علمية بين العنصر النقي، المركب الكيميائي المتحد بنسب ثابتة، والمخلوط القابل للفصل بالطرق الفيزيائية'
+    ],
+    learningOutcomesEn: [
+      'Define matter states based on particle kinetic energy and intermolecular attraction forces',
+      'Compute density using D = m / V and predict buoyancy floatation/sinking behavior',
+      'Identify subatomic particles: nuclear protons (+), neutrons (0), and orbiting electrons (-)',
+      'Calculate atomic number (Z), mass number (A), and neutron count via N = A - Z',
+      'Differentiate between pure elements, chemically bonded compounds, and physical mixtures'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
       {
-        titleAr: '1. مم تتكون الذرة؟',
-        titleEn: '1. What Makes Up an Atom?',
-        contentAr: 'الذرة هي أصغر جزء من العنصر يحتفظ بخصائصه الكيميائية. تتكون من نواة مركزية ثقيلة تحتوي على بروتونات موجبة (+) ونيوترونات متعادلة (0)، وتدور حولها إلكترونات سالبة خفيفة (-).',
-        contentEn: 'An atom comprises a heavy central nucleus of protons and neutrons orbited by negative electrons.',
-        interactiveExample: {
-          titleAr: 'تطبيق: شحنة الذرة المتعادلة',
-          titleEn: 'Worked Example: Neutral Atomic Charge',
-          equation: 'عدد البروتونات (+) = عدد الإلكترونات (-)',
-          steps: [
-            { stepNumber: 1, textAr: 'ذرة كربون تحتوي على 6 بروتونات موجبة داخل النواة (+6).', textEn: 'Carbon atom contains 6 positive protons (+6).' },
-            { stepNumber: 2, textAr: 'يدور حول النواة 6 إلكترونات سالبة الشحنة (-6).', textEn: '6 negative electrons orbit the nucleus (-6).' },
-            { stepNumber: 3, textAr: 'الشحنة الكلية الصافية = (+6) + (-6) = صفر (ذرة متعادلة كهربائياً).', textEn: 'Net electric charge = 0 (electrically neutral atom).' }
-          ],
-          takeawayAr: 'الذرة في حالتها الطبيعية تكون متعادلة الشحنة لأن عدد الشحنات الموجبة يساوي عدد الشحنات السالبة.',
-          takeawayEn: 'Atoms remain electrically neutral when proton and electron counts balance.'
-        },
-        tipsAr: ['العدد الذري للعنصر يمثل عدد البروتونات داخل نواته دائماً.'],
-        tipsEn: ['Atomic number strictly corresponds to the internal nuclear proton count.']
+        termAr: 'المادة (Matter)',
+        termEn: 'Matter',
+        definitionAr: 'كل شيء له كتلة ويشغل حيزاً من الفراغ (له حجم).',
+        definitionEn: 'Anything that possesses mass and occupies physical space (volume).'
+      },
+      {
+        termAr: 'الكثافة (Density)',
+        termEn: 'Density',
+        definitionAr: 'كتلة وحدة الحجوم من المادة، وتحسب بقسمة الكتلة على الحجم (D = m / V) بوحدة g/cm³ أو kg/m³.',
+        definitionEn: 'Mass per unit volume (D = m / V), measured in g/cm³ or kg/m³.'
+      },
+      {
+        termAr: 'الذرة (Atom)',
+        termEn: 'Atom',
+        definitionAr: 'أصغر وحدة بنائية للمادة تحتفظ بالخصائص الكيميائية والفيزيائية للعنصر.',
+        definitionEn: 'The basic building block of matter retaining elemental properties.'
+      },
+      {
+        termAr: 'العدد الذري (Atomic Number - Z)',
+        termEn: 'Atomic Number (Z)',
+        definitionAr: 'عدد البروتونات الموجبة داخل نواة الذرة، وهو يحدد هوية العنصر في الجدول الدوري ويساوي عدد الإلكترونات في الذرة المتعادلة.',
+        definitionEn: 'The number of protons in a nucleus, defining elemental identity.'
+      },
+      {
+        termAr: 'العدد الكتلي (Mass Number - A)',
+        termEn: 'Mass Number (A)',
+        definitionAr: 'مجموع عدد البروتونات والنيوترونات الموجودة داخل نواة الذرة (A = p⁺ + n⁰).',
+        definitionEn: 'Total count of nuclear nucleons: protons plus neutrons (A = Z + N).'
+      },
+      {
+        termAr: 'المركب (Compound)',
+        termEn: 'Compound',
+        definitionAr: 'مادة نقية تتكون من اتحاد عنصرين أو أكثر بنسب وزنية ثابتة بروابط كيميائية وتختلف خصائصها تماماً عن خصائص عناصرها المكونة لها.',
+        definitionEn: 'A pure substance formed by chemically bonded elements in fixed stoichiometric ratios.'
+      },
+      {
+        termAr: 'المخلوط (Mixture)',
+        termEn: 'Mixture',
+        definitionAr: 'مادتان أو أكثر ممتزجتان معاً دون اتحاد كيميائي، وتحتفظ كل مادة بخصائصها ويمكن فصلها بطرق فيزيائية بسيطة.',
+        definitionEn: 'Physical combination of substances retaining individual properties without chemical bonds.'
       }
     ],
+
+    keyConceptsAr: [
+      'حالات المادة الثلاث وقانون حساب الكثافة: D = m / V',
+      'بنية الذرة: نواة مركزية ثقيلة (بروتونات ونيوترونات) وسحابة إلكترونات',
+      'العدد الذري Z = عدد البروتونات | العدد الكتلي A = البروتونات + النيوترونات',
+      'قاعدة حساب النيوترونات: عدد النيوترونات N = A - Z',
+      'الفرق بين العنصر (ذرات متماثلة) والمركب (اتحاد كيميائي) والمخلوط (امتزاج فيزيائي)',
+      'طرق فصل المخاليط: الترشيح، التبخير، المغناطيسية، والتقطير'
+    ],
+    keyConceptsEn: [
+      'States of Matter & Density Equation: D = m / V',
+      'Atomic Anatomy: Nucleus (p+, n0) and Orbiting Electron Cloud (e-)',
+      'Atomic Number (Z) vs Mass Number (A = Z + N)',
+      'Neutron Calculation: N = A - Z',
+      'Elements vs Compounds vs Mixtures Classification',
+      'Physical Separation Techniques: Filtration, Evaporation, Magnetism, Distillation'
+    ],
+    summaryAr: 'في هذه المحاضرة الشاملة نتقن أسس علم الكيمياء والفيزياء العامة؛ بدءاً من قياس خواص المادة وحساب الكثافة، ثم النفاذ إلى أعماق الذرة وحساب البروتونات والنيوترونات والإلكترونات عبر العدد الذري والكتلي، وصولاً إلى التمييز الدقيق بين العناصر والمركبات والمخاليط وطرق فصلها.',
+    summaryEn: 'Master foundational chemistry and physics: matter states, density computation, atomic nuclear arithmetic (protons, neutrons, electrons), and the taxonomy of elements, compounds, and mixtures.',
+    
+    sections: [
+      {
+        titleAr: '1. حالات المادة وخصائصها وحساب الكثافة والطفو',
+        titleEn: '1. States of Matter, Physical Properties & Density Calculations',
+        contentAr: 'توجد المادة في ثلاث حالات رئيسية: الصلبة (شكل وحجم ثابتان، حركة اهتزازية مقيدة)، السائلة (حجم ثابت وشكل متغير يأخذ شكل الإناء)، والغازية (حجم وشكل غير ثابتين وجسيمات حرة الحركة متباعدة). الكثافة خاصية فيزيائية مميزة للمادة النقية، وتُحسب بقسمة الكتلة على الحجم: D = m / V. يطفو الجسم فوق السائل إذا كانت كثافته أقل من كثافة السائل، وينغمر إذا كانت كثافته أكبر.',
+        contentEn: 'Matter exists as solid, liquid, or gas depending on particle kinetic freedom. Density is an intrinsic physical metric: D = m / V. Objects float when their density is less than the supporting fluid.',
+        diagram: {
+          id: 'diag-sci1-matter-taxonomy',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'تصنيف المادة: العنصر النقي والمركب الكيميائي والمخلوط الفيزيائي',
+          titleEn: 'Taxonomy of Matter: Elements, Compounds & Physical Mixtures',
+          captionAr: 'يوضح الرسم الفروق الجوهرية على المستوى الجزيئي: العنصر يتكون من ذرات متماثلة (مثل النحاس)، والمركب ينتج عن اتحاد ذرات مختلفة بروابط كيميائية بنسب ثابتة (مثل الماء H₂O)، بينما المخلوط هو مزيج فيزيائي بدون روابط كيميائية يمكن فصله بسهولة.',
+          captionEn: 'Molecular comparison: Pure elements consist of identical atoms, compounds feature chemically bonded distinct atoms in fixed proportions (H₂O), and mixtures are physical blends separable by non-chemical means.',
+          diagramType: 'matter_states_compound',
+          takeawayFormulaAr: 'الكثافة D = الكتلة m ÷ الحجم V | يطفو إذا D_جسم < D_سائل',
+          takeawayFormulaEn: 'Density D = m / V | Floats if D_object < D_fluid',
+          keyLabels: [
+            { tagAr: 'عنصر نقي (Element)', tagEn: 'Pure Element', descAr: 'ذرات متطابقة لا يمكن تجزئتها كيميائياً', descEn: 'Identical atoms indivisible by chemical means' },
+            { tagAr: 'مركب كيميائي (Compound)', tagEn: 'Chemical Compound', descAr: 'ذرات مختلفة متحدة بروابط بنسب وزنية ثابتة', descEn: 'Distinct atoms bonded in stoichiometric ratios' },
+            { tagAr: 'مخلوط (Mixture)', tagEn: 'Physical Mixture', descAr: 'مزيج فيزيائي يحتفظ بخصائص مكوناته ويمكن فصله', descEn: 'Physical blend retaining individual component traits' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 1: حساب كثافة معدن مجهول وتحديد هل يطفو في الماء أم ينغمر',
+          titleEn: 'Worked Example 1: Density Calculation & Water Buoyancy Test',
+          equation: 'D = m / V',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'المعطيات: قطعة معدنية كتلتها m = 160 جراماً، وحجمها V = 20 سم³، وكثافة الماء النقي = 1.0 g/cm³.',
+              textEn: 'Given: Metal sample mass m = 160g, volume V = 20 cm³, water density = 1.0 g/cm³.',
+              noteAr: 'الكتلة والحجم معلومان'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الخطوة 1: نطبق قانون الكثافة: D = m ÷ V = 160 ÷ 20 = 8.0 g/cm³.',
+              textEn: 'Step 1: Compute density D = 160 / 20 = 8.0 g/cm³.',
+              noteAr: 'كثافة المعدن = 8.0 g/cm³ (معدن الحديد/الفولاذ)'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'الخطوة 2: نقارن كثافة المعدن (8.0 g/cm³) بكثافة الماء (1.0 g/cm³): بما أن 8.0 > 1.0، فإن القطعة ستنغمر (تغوص) في قاع الماء فوراً.',
+              textEn: 'Step 2: Compare: 8.0 > 1.0 g/cm³ => Object sinks immediately.',
+              noteAr: 'الحكم: تنغمر القطعة في الماء'
+            }
+          ],
+          takeawayAr: 'الكثافة خاصية ثابتة لكل مادة نقية عند نفس درجة الحرارة والضغط، وتحدد قابلية الطفو والانغمار بدقة.',
+          takeawayEn: 'Density is a unique fingerprint for every pure substance and dictates buoyancy.'
+        },
+        formativeCheck: {
+          id: 'fc-sci1-1',
+          questionAr: 'قطعة خشبية كتلتها 45 جراماً وحجمها 50 سم³. ما مقدار كثافتها، وهل تطفو على سطح الماء (كثافة الماء = 1 g/cm³)؟',
+          questionEn: 'A wood block has mass 45g and volume 50 cm³. What is its density and does it float in water?',
+          optionsAr: [
+            'كثافتها 0.9 g/cm³ وتطفو على سطح الماء',
+            'كثافتها 1.1 g/cm³ وتنغمر في الماء',
+            'كثافتها 2250 g/cm³ وتغوص في القاع',
+            'كثافتها 0.5 g/cm³ وتنغمر في الماء'
+          ],
+          optionsEn: [
+            'Density is 0.9 g/cm³ and it floats on water',
+            'Density is 1.1 g/cm³ and it sinks',
+            'Density is 2250 g/cm³ and it sinks',
+            'Density is 0.5 g/cm³ and it sinks'
+          ],
+          correctIndex: 0,
+          explanationAr: 'D = m / V = 45 ÷ 50 = 0.9 g/cm³. بما أن 0.9 < 1.0 (أقل من كثافة الماء) فإن الخشب يطفو على السطح.',
+          explanationEn: 'D = 45 / 50 = 0.9 g/cm³. Since 0.9 < 1.0 g/cm³, it floats.',
+          hintAr: 'اقسم الكتلة على الحجم، ثم قارن الناتج بالرقم 1.'
+        },
+        tipsAr: [
+          'احرص دائماً على تطابق الوحدات: جرام مع سم³ (g/cm³)، أو كيلوجرام مع متر مكعب (kg/m³).',
+          'الجليد يطفو فوق الماء السائل لأن كثافة الجليد (0.92 g/cm³) أقل من كثافة الماء السائل (1.0 g/cm³).'
+        ],
+        tipsEn: [
+          'Ensure consistent units: g/cm³ or kg/m³.',
+          'Ice floats on water because its crystalline structure lowers its density to 0.92 g/cm³.'
+        ]
+      },
+      {
+        titleAr: '2. بنية الذرة والجسيمات دون الذرية والعدد الذري والكتلي',
+        titleEn: '2. Atomic Anatomy, Subatomic Particles & Nuclear Arithmetic',
+        contentAr: 'تتكون كل ذرة في الكون من جزأين رئيسيين: 1) نواة مركزية موجبة الشحنة تتركز فيها 99.9% من كتلة الذرة وتحتوي على نوعين من الجسيمات: بروتونات موجبة (+p) ونيوترونات متعادلة الشحنة (0n). 2) سحابة إلكترونية خارجية تدور فيها إلكترونات سالبة الشحنة (-e) ذات كتلة متناهية في الصغر. في الذرة المتعادلة كهربائياً: عدد البروتونات = عدد الإلكترونات. العدد الذري (Z) هو عدد البروتونات فقط، والعدد الكتلي (A) هو مجموع البروتونات والنيوترونات: A = p⁺ + n⁰. ومنها نحسب عدد النيوترونات: N = A - Z.',
+        contentEn: 'Every atom contains a dense central nucleus of positive protons (p+) and neutral neutrons (n0), orbited by negative electrons (e-). Mass Number A = Z + N, where Z is the atomic number.',
+        diagram: {
+          id: 'diag-sci1-bohr-atom',
+          figureNumberAr: 'شكل (1-2)',
+          figureNumberEn: 'Figure (1-2)',
+          titleAr: 'النموذج الذري: النواة والجسيمات النووية ومستويات الطاقة للإلكترونات',
+          titleEn: 'Bohr Atomic Model: Nucleus, Nucleons & Electron Shells',
+          captionAr: 'تتركز كتلة الذرة داخل النواة التي تضم البروتونات الموجبة (+p) والنيوترونات المتعادلة (0n)، بينما تدور الإلكترونات سالبة الشحنة (-e) في مدارات طاقة خارجية محددة.',
+          captionEn: 'Atomic mass is packed within the nucleus containing positive protons and neutral neutrons, surrounded by quantized electron shells.',
+          diagramType: 'atomic_structure',
+          takeawayFormulaAr: 'العدد الكتلي A = Z + N  |  عدد النيوترونات N = A - Z  |  p⁺ = e⁻',
+          takeawayFormulaEn: 'Mass Number A = Z + N | Neutrons N = A - Z | p⁺ = e⁻',
+          keyLabels: [
+            { tagAr: 'البروتونات الموجبة (p⁺)', tagEn: 'Protons (p⁺)', descAr: 'جسيمات موجبة داخل النواة تحدد العدد الذري Z', descEn: 'Positive nucleons defining atomic number Z' },
+            { tagAr: 'النيوترونات المتعادلة (n⁰)', tagEn: 'Neutrons (n⁰)', descAr: 'جسيمات متعادلة الشحنة داخل النواة', descEn: 'Neutral nucleons contributing to nuclear mass' },
+            { tagAr: 'الإلكترونات السالبة (e⁻)', tagEn: 'Electrons (e⁻)', descAr: 'جسيمات سالبة تدور في مستويات الطاقة', descEn: 'Negative particles in orbital energy shells' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 2: استنتاج عدد البروتونات والنيوترونات والإلكترونات لذرة الصوديوم والألومنيوم',
+          titleEn: 'Worked Example 2: Deducing Protons, Neutrons & Electrons for Sodium & Aluminum',
+          equation: 'A = Z + N  -->  N = A - Z',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'المعطى الأول: رمز ذرة الصوديوم هو ₁₁²³Na (العدد الذري في الأسفل Z = 11، والعدد الكتلي في الأعلى A = 23).',
+              textEn: 'Given 1: Sodium ₁₁²³Na (Z = 11, A = 23).',
+              noteAr: 'رمز العنصر القياسي'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'حساب جسيمات الصوديوم: 1) عدد البروتونات p⁺ = Z = 11. 2) عدد الإلكترونات e⁻ = عدد البروتونات = 11. 3) عدد النيوترونات n⁰ = A - Z = 23 - 11 = 12 نيوتروناً.',
+              textEn: 'Sodium particles: Protons = 11, Electrons = 11, Neutrons = 23 - 11 = 12.',
+              noteAr: 'الصوديوم: 11 بروتون، 11 إلكترون، 12 نيوترون'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'المعطى الثاني: ذرة الألومنيوم ₁₃²⁷Al (Z = 13، A = 27). البروتونات = 13، الإلكترونات = 13، والنيوترونات = 27 - 13 = 14 نيوتروناً.',
+              textEn: 'Aluminum ₁₃²⁷Al: Protons = 13, Electrons = 13, Neutrons = 27 - 13 = 14.',
+              noteAr: 'الألومنيوم: 13 بروتون، 13 إلكترون، 14 نيوترون'
+            }
+          ],
+          takeawayAr: 'العدد الذري هو بطاقة الهوية الفريدة للعنصر؛ تغيير عدد البروتونات يغير نوع العنصر بالكامل، بينما تغيير النيوترونات ينتج النظائر.',
+          takeawayEn: 'Atomic number is the element identity fingerprint. Changing proton count alters the element entirely.'
+        },
+        formativeCheck: {
+          id: 'fc-sci1-2',
+          questionAr: 'ذرة عنصر تحتوي نواتها على 17 بروتوناً و18 نيوتروناً. ما هو العدد الذري والعدد الكتلي لهذه الذرة؟',
+          questionEn: 'An atom has 17 protons and 18 neutrons. What are its atomic number and mass number?',
+          optionsAr: [
+            'العدد الذري = 17، والعدد الكتلي = 35',
+            'العدد الذري = 18، والعدد الكتلي = 35',
+            'العدد الذري = 35، والعدد الكتلي = 17',
+            'العدد الذري = 17، والعدد الكتلي = 1'
+          ],
+          optionsEn: [
+            'Atomic number = 17, Mass number = 35',
+            'Atomic number = 18, Mass number = 35',
+            'Atomic number = 35, Mass number = 17',
+            'Atomic number = 17, Mass number = 1'
+          ],
+          correctIndex: 0,
+          explanationAr: 'العدد الذري Z = عدد البروتونات = 17. والعدد الكتلي A = البروتونات + النيوترونات = 17 + 18 = 35 (عنصر الكلور Cl-35).',
+          explanationEn: 'Atomic number Z = 17 (protons). Mass number A = 17 + 18 = 35 (Chlorine).',
+          hintAr: 'العدد الذري هو البروتونات فقط، والكتلي هو مجموع البروتونات والنيوترونات معاً.'
+        },
+        tipsAr: [
+          'تذكر دائماً أن الإلكترونات لا تدخل في حساب العدد الكتلي لأن كتلتها متناهية الصغر (1/1840 من كتلة البروتون).',
+          'في الجدول الدوري، يُكتب العدد الذري دائماً كعدد صحيح متسلسل (1, 2, 3...).'
+        ],
+        tipsEn: [
+          'Electrons do not contribute to mass number due to their negligible mass.',
+          'In the periodic table, atomic number increments sequentially by +1.'
+        ]
+      },
+      {
+        titleAr: '3. العناصر والمركبات والمخاليط وطرق الفصل الفيزيائية والكيميائية',
+        titleEn: '3. Elements, Compounds, Mixtures & Physical Separation Techniques',
+        contentAr: 'تنقسم المواد إلى نوعين كبيرين: 1) المواد النقية: وتشمل (العناصر) وهي مواد تتكون من نوع واحد فقط من الذرات مثل الأكسجين O₂ والحديد Fe، و(المركبات) وهي مواد ناتجة عن اتحاد كيميائي لعنصرين أو أكثر بنسب ثابتة مثل ملح الطعام NaCl وغاز ثاني أكسيد الكربون CO₂ ولا يمكن فصلها إلا بتفاعل كيميائي. 2) المخاليط: وهي مزيج فيزيائي لمادتين أو أكثر دون روابط كيميائية، وتنقسم إلى مخاليط متجانسة (محاليل مثل الماء والملح أو الهواء الجوي) ومخاليط غير متجانسة (مثل سلطة الخضار أو الرمل والماء). تُفصل المخاليط بطرق فيزيائية: الترشيح (للمواد الصلبة غير الذائبة)، التبخير (لفصل المواد الصلبة الذائبة)، الجذب المغناطيسي (لفصل المواد المغناطيسية كالحديد)، والتقطير (لفصل السوائل حسب درجات الغليان).',
+        contentEn: 'Matter is divided into Pure Substances (Elements and Compounds) and Mixtures (Homogeneous and Heterogeneous). Mixtures are separable by physical techniques like filtration, evaporation, magnetism, and distillation.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 3: خطة تجريبية لفصل مخلوط معقد من (برادة الحديد + الرمل + ملح الطعام)',
+          titleEn: 'Worked Example 3: Step-by-Step Separation of Iron Filings, Sand & Table Salt Mixture',
+          equation: 'مخلوط ثلاثي  -->  جذب مغناطيسي  -->  إذابة وترشيح  -->  تبخير',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'الخطوة 1 (فصل الحديد): نمرر مغناطيساً قوياً فوق المخلوط الجاف، فتنجذب برادة الحديد إلى المغناطيس ويبقى الرمل والملح.',
+              textEn: 'Step 1 (Iron extraction): Pass a magnet over the dry mixture to attract iron filings.',
+              noteAr: 'خاصية المغناطيسية'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الخطوة 2 (إذابة الملح): نضيف الماء إلى ما تبقى (الرمل والملح) ونحرك جيداً؛ يذوب الملح في الماء بينما يستقر الرمل دون ذوبان.',
+              textEn: 'Step 2 (Dissolving salt): Add water and stir; salt dissolves completely while sand settles.',
+              noteAr: 'خاصية الذائبية'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'الخطوة 3 (فصل الرمل): نسكب الخليط عبر ورقة ترشيح وقمع؛ يُحتجز الرمل الصلب فوق الورقة، وينزل المحلول الملحي الصافي في الكأس.',
+              textEn: 'Step 3 (Sand filtration): Pour through filter paper; sand is trapped while saltwater passes.',
+              noteAr: 'عملية الترشيح'
+            },
+            {
+              stepNumber: 4,
+              textAr: 'الخطوة 4 (استرجاع الملح): نسخن المحلول الملحي حتى يتبخر الماء بالكامل، فيتبقى بلورات ملح الطعام النقية في قاع الوعاء.',
+              textEn: 'Step 4 (Salt recovery): Evaporate the water via heating to obtain pure dry salt crystals.',
+              noteAr: 'عملية التبخير'
+            }
+          ],
+          takeawayAr: 'فصل المخاليط يعتمد على استغلال الفروق في الخصائص الفيزيائية للمكونات (المغناطيسية، الذائبية، حجم الحبيبات، ودرجة الغليان).',
+          takeawayEn: 'Separation exploits disparities in physical properties: magnetism, solubility, particle size, and boiling points.'
+        },
+        formativeCheck: {
+          id: 'fc-sci1-3',
+          questionAr: 'أي من المواد التالية يُعد "مركباً كيميائياً" نقياً؟',
+          questionEn: 'Which of the following substances represents a pure chemical compound?',
+          optionsAr: [
+            'الماء النقي (H₂O)',
+            'الهواء الجوي',
+            'عصير البرتقال',
+            'سبيكة الذهب والنحاس'
+          ],
+          optionsEn: [
+            'Pure Water (H₂O)',
+            'Atmospheric Air',
+            'Orange Juice',
+            'Gold-Copper Alloy'
+          ],
+          correctIndex: 0,
+          explanationAr: 'الماء (H₂O) مركب كيميائي ناتج عن اتحاد عنصري الهيدروجين والأكسجين بروابط كيميائية بنسبة ثابتة (2 ذرة هيدروجين إلى 1 ذرة أكسجين). أما الهواء والعصير والسبائك فهي مخاليط.',
+          explanationEn: 'Water (H₂O) is a chemical compound with fixed stoichiometric bonding. Air, juice, and alloys are mixtures.',
+          hintAr: 'ابحث عن المادة التي يعبر عنها بصيغة كيميائية بروابط محددة وثابتة.'
+        },
+        tipsAr: [
+          'المركب يفقد خصائص عناصره تماماً: فمثلاً الصوديوم فلز سام حارق وغاز الكلور سام خانق، لكن اتحادهما ينتج ملح الطعام المفيد NaCl!',
+          'المخلوط المتجانس يسمى (محلولاً) وتتوزع فيه الدقائق بانتظام فلا يمكن تمييز مكوناته بالعين المجردة.'
+        ],
+        tipsEn: [
+          'Compounds exhibit entirely new properties distinct from their constituent elements.',
+          'Homogeneous mixtures are uniform solutions where individual particles cannot be discerned by eye.'
+        ]
+      }
+    ],
+
+    // Concept Map / Golden takeaways
+    conceptMapAr: [
+      'تعريف المادة: كل ما له كتلة ويشغل حيزاً (حجم). وحالاتها: صلبة، سائلة، وغازية',
+      'معادلة الكثافة: D = m / V (الكتلة مقسومة على الحجم) | شرط الطفو: D_الجسم < D_السائل',
+      'بنية الذرة: النواة (بروتونات موجبة p⁺ + نيوترونات متعادلة n⁰) + إلكترونات سالبة e⁻ في مستويات الطاقة',
+      'العدد الذري (Z): عدد البروتونات = عدد الإلكترونات في الذرة المتعادلة',
+      'العدد الكتلي (A): مجموع البروتونات والنيوترونات (A = Z + N) | عدد النيوترونات N = A - Z',
+      'العنصر: ذرات متطابقة (O₂, Fe) | المركب: اتحاد كيميائي بنسب ثابتة (H₂O, NaCl) | المخلوط: مزيج فيزيائي (الهواء، الرمل والملح)',
+      'طرق الفصل: المغناطيس (للحديد)، الترشيح (لغير الذائب)، التبخير والتقطير (للسوائل والمحاليل)'
+    ],
+    conceptMapEn: [
+      'Matter definition: Has mass and volume (Solid, Liquid, Gas states)',
+      'Density formula: D = m / V | Floating criterion: D_object < D_fluid',
+      'Atom anatomy: Nucleus (p+, n0) + Energy shells (e-)',
+      'Atomic number Z = protons = electrons (neutral atom)',
+      'Mass number A = Z + N | Neutrons N = A - Z',
+      'Element (same atoms) vs Compound (chemically bonded) vs Mixture (physical blend)',
+      'Separation: Magnetism, Filtration, Evaporation, Distillation'
+    ],
+
+    // Guided Textbook Exercises
+    textbookExercises: [
+      {
+        id: 'ex-sci1-1',
+        questionAr: 'مكعب صلب كتلته 270 جراماً وطول ضلعه 5 سم. 1) احسب حجم المكعب. 2) احسب كثافته. 3) إذا وُضع المكعب في حوض ماء (كثافة الماء = 1 g/cm³)، فهل يطفو أم يغوص؟ مع التعليل العلمي.',
+        questionEn: 'A solid cube has mass 270g and edge length 5 cm. 1) Find volume. 2) Compute density. 3) Predict if it floats or sinks in water (density 1 g/cm³) with explanation.',
+        solutionStepsAr: [
+          'الخطوة 1: حساب حجم المكعب: V = طول الضلع × نفسه × نفسه = 5 × 5 × 5 = 125 سم³.',
+          'الخطوة 2: حساب الكثافة: D = m ÷ V = 270 ÷ 125 = 2.16 g/cm³.',
+          'الخطوة 3: المقارنة بالماء: بما أن كثافة المكعب (2.16 g/cm³) أكبر من كثافة الماء (1.0 g/cm³)، فإن المكعب سوف ينغمر (يغوص) في القاع.'
+        ],
+        solutionStepsEn: [
+          'Step 1: Volume V = 5 x 5 x 5 = 125 cm³.',
+          'Step 2: Density D = 270 / 125 = 2.16 g/cm³.',
+          'Step 3: Comparison: 2.16 > 1.0 g/cm³, so the cube sinks to the bottom.'
+        ],
+        answerAr: 'حجم المكعب = 125 سم³ • الكثافة = 2.16 g/cm³ • يغوص المكعب لأن كثافته أكبر من كثافة الماء.',
+        answerEn: 'Volume = 125 cm³ • Density = 2.16 g/cm³ • Sinks because its density exceeds water.'
+      },
+      {
+        id: 'ex-sci1-2',
+        questionAr: 'ذرة عنصر المغنيسيوم يُرمز لها بالرمز ₁₂²⁴Mg. 1) ما هو العدد الذري والعدد الكتلي؟ 2) احسب عدد كل من: البروتونات، الإلكترونات، والنيوترونات.',
+        questionEn: 'Magnesium atom is represented as ₁₂²⁴Mg. 1) State atomic and mass numbers. 2) Calculate protons, electrons, and neutrons.',
+        solutionStepsAr: [
+          'العدد الذري Z = 12 (الرقم السفلي)، والعدد الكتلي A = 24 (الرقم العلوي).',
+          'عدد البروتونات p⁺ = Z = 12 بروتوناً موجباً.',
+          'عدد الإلكترونات e⁻ = عدد البروتونات = 12 إلكتروناً سالباً (ذرة متعادلة).',
+          'عدد النيوترونات N = A - Z = 24 - 12 = 12 نيوتروناً متعادلاً.'
+        ],
+        solutionStepsEn: [
+          'Atomic number Z = 12, Mass number A = 24.',
+          'Protons = 12, Electrons = 12.',
+          'Neutrons N = 24 - 12 = 12.'
+        ],
+        answerAr: 'العدد الذري = 12، العدد الكتلي = 24 • البروتونات = 12، الإلكترونات = 12، النيوترونات = 12.',
+        answerEn: 'Atomic number = 12, Mass number = 24 • Protons = 12, Electrons = 12, Neutrons = 12.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-sci-1',
       lectureId: 'sci-1',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الأولى: الذرة والمادة',
-      titleEn: 'Lecture 1 Assessment: Matter & Atoms',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 1: طبيعة المادة والذرات والعناصر والمركبات',
+      titleEn: 'Comprehensive Mastery Assessment 1: Matter, Atoms & Compounds',
       passingScore: 80,
       questions: [
         {
           id: 'qsc1-1',
-          textAr: 'ما هي الجسيمات سالبة الشحنة التي تدور حول نواة الذرة؟',
-          textEn: 'Which negatively charged particles orbit the atomic nucleus?',
-          optionsAr: ['الإلكترونات', 'البروتونات', 'النيوترونات', 'الجزيئات'],
-          optionsEn: ['Electrons', 'Protons', 'Neutrons', 'Molecules'],
+          textAr: 'ما هي الجسيمات سالبة الشحنة التي تدور في مستويات طاقة حول نواة الذرة؟',
+          textEn: 'Which negatively charged particles orbit the atomic nucleus in energy shells?',
+          optionsAr: ['الإلكترونات (e⁻)', 'البروتونات (p⁺)', 'النيوترونات (n⁰)', 'الجزيئات'],
+          optionsEn: ['Electrons (e⁻)', 'Protons (p⁺)', 'Neutrons (n⁰)', 'Molecules'],
           correctIndex: 0,
-          conceptTestedAr: 'بنية الذرة وجسيماتها',
-          conceptTestedEn: 'Atomic Particle Charges',
-          explanationAr: 'الإلكترونات هي جسيمات سالبة الشحنة تدور في مستويات طاقة حول نواة الذرة.',
+          conceptTestedAr: 'بنية الذرة وجسيماتها دون الذرية',
+          conceptTestedEn: 'Subatomic Particle Charges & Locations',
+          explanationAr: 'الإلكترونات هي جسيمات سالبة الشحنة (-e) تدور في مدارات حول النواة، بينما البروتونات والنيوترونات توجد داخل النواة.',
           explanationEn: 'Electrons are the negative particles orbiting the atomic nucleus.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc1-2',
+          textAr: 'جسم كتلته 200 جرام وحجمه 40 سم³. ما هي كثافته، وماذا يحدث له عند وضعه في سائل كثافته 2.5 g/cm³؟',
+          textEn: 'An object has mass 200g and volume 40 cm³. What is its density, and how does it behave in a fluid with density 2.5 g/cm³?',
+          optionsAr: [
+            'كثافته 5.0 g/cm³ وينغمر في السائل',
+            'كثافته 5.0 g/cm³ ويطفو على السائل',
+            'كثافته 0.2 g/cm³ ويطفو على السائل',
+            'كثافته 8000 g/cm³ وينغمر في السائل'
+          ],
+          optionsEn: [
+            'Density is 5.0 g/cm³ and it sinks in the liquid',
+            'Density is 5.0 g/cm³ and it floats',
+            'Density is 0.2 g/cm³ and it floats',
+            'Density is 8000 g/cm³ and it sinks'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'حساب الكثافة ومقارنة الطفو والانغمار',
+          conceptTestedEn: 'Density Calculation & Fluid Buoyancy',
+          explanationAr: 'D = m / V = 200 ÷ 40 = 5.0 g/cm³. بما أن كثافة الجسم (5.0) أكبر من كثافة السائل (2.5)، فإنه ينغمر ويغوص في القاع.',
+          explanationEn: 'D = 200 / 40 = 5.0 g/cm³. Since 5.0 > 2.5 g/cm³, it sinks.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qsc1-3',
+          textAr: 'ذرة عنصر الفوسفور ₁₅³¹P تحتوي نواتها على:',
+          textEn: 'A Phosphorus atom ₁₅³¹P contains in its nucleus:',
+          optionsAr: [
+            '15 بروتوناً و 16 نيوتروناً',
+            '15 بروتوناً و 31 نيوتروناً',
+            '31 بروتوناً و 15 نيوتروناً',
+            '16 بروتوناً و 15 نيوتروناً'
+          ],
+          optionsEn: [
+            '15 protons and 16 neutrons',
+            '15 protons and 31 neutrons',
+            '31 protons and 15 neutrons',
+            '16 protons and 15 neutrons'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'حساب النيوترونات والبروتونات من الرمز الذري',
+          conceptTestedEn: 'Nuclear Particle Counting via A and Z',
+          explanationAr: 'العدد الذري Z = 15 (عدد البروتونات). العدد الكتلي A = 31. عدد النيوترونات N = A - Z = 31 - 15 = 16 نيوتروناً.',
+          explanationEn: 'Protons = Z = 15. Neutrons N = 31 - 15 = 16.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qsc1-4',
+          textAr: 'أي من الطرق التالية هي الطريقة الفيزيائية المناسبة لفصل ملح الطعام الذائب في الماء؟',
+          textEn: 'Which physical method is suitable to separate dissolved table salt from water?',
+          optionsAr: [
+            'التبخير (تسخين المحلول لتبخير الماء)',
+            'الترشيح بورقة الترشيح',
+            'الجذب المغناطيسي',
+            'استخدام الملقط والفرز اليدوي'
+          ],
+          optionsEn: [
+            'Evaporation (heating to vaporize water)',
+            'Paper filtration',
+            'Magnetic attraction',
+            'Manual sorting'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'طرق فصل المخاليط والمحاليل المتجانسة',
+          conceptTestedEn: 'Separation of Homogeneous Solutions',
+          explanationAr: 'الملح مادة صلبة ذائبة تماماً في الماء (مخلوط متجانس)، لذا لا تنفصل بالترشيح بل بالتبخير حيث يتبخر الماء وتبقى بلورات الملح.',
+          explanationEn: 'Dissolved salt passes through filter paper; evaporation boils off water leaving salt crystals behind.',
           difficulty: 'easy'
         }
       ]

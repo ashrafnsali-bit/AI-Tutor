@@ -631,30 +631,101 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
           </svg>
         );
 
-      case 'kinematics_graph':
+      case 'atomic_structure':
         return (
           <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
-            {/* Kinematics v-t Graph */}
-            <line x1="80" y1="260" x2="520" y2="260" stroke="#94a3b8" strokeWidth="2.5" />
-            <text x="535" y="265" fill="#fff" fontSize="14" fontWeight="bold">الزمن t (ث)</text>
-            <line x1="100" y1="280" x2="100" y2="40" stroke="#94a3b8" strokeWidth="2.5" />
-            <text x="95" y="30" fill="#fff" fontSize="14" fontWeight="bold">السرعة v (م/ث)</text>
+            {/* Bohr Atomic Model with Nucleus (Protons + Neutrons) and Electron Shells */}
+            {/* Outer Electron Shell (Level 2) */}
+            <circle cx="300" cy="160" r="120" fill="none" stroke="rgba(56, 189, 248, 0.25)" strokeWidth="2" strokeDasharray="6 6" />
+            {/* Inner Electron Shell (Level 1) */}
+            <circle cx="300" cy="160" r="70" fill="none" stroke="rgba(56, 189, 248, 0.4)" strokeWidth="2" strokeDasharray="5 5" />
 
-            {/* Constant Acceleration Line v = v0 + at */}
-            <line x1="100" y1="200" x2="460" y2="70" stroke="#10b981" strokeWidth="4" />
-            <circle cx="100" cy="200" r="6" fill="#fbbf24" />
-            <text x="75" y="205" fill="#fbbf24" fontSize="13" fontWeight="bold">v₀</text>
+            {/* Central Nucleus */}
+            <circle cx="300" cy="160" r="36" fill="rgba(15, 23, 42, 0.85)" stroke="#fbbf24" strokeWidth="2.5" />
+            
+            {/* Protons inside nucleus (Red +) */}
+            <circle cx="288" cy="150" r="10" fill="#ef4444" />
+            <text x="288" y="154" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">+</text>
+            <circle cx="312" cy="152" r="10" fill="#ef4444" />
+            <text x="312" y="156" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">+</text>
+            <circle cx="295" cy="170" r="10" fill="#ef4444" />
+            <text x="295" y="174" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">+</text>
 
-            <circle cx="460" cy="70" r="6" fill="#10b981" />
-            <text x="480" y="75" fill="#34d399" fontSize="13" fontWeight="bold">v_f</text>
+            {/* Neutrons inside nucleus (Grey 0) */}
+            <circle cx="305" cy="145" r="10" fill="#64748b" />
+            <text x="305" y="149" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">n⁰</text>
+            <circle cx="285" cy="165" r="10" fill="#64748b" />
+            <text x="285" y="169" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">n⁰</text>
+            <circle cx="312" cy="168" r="10" fill="#64748b" />
+            <text x="312" y="172" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">n⁰</text>
 
-            {/* Area under v-t curve = Displacement */}
-            <polygon points="100,260 100,200 460,70 460,260" fill="rgba(16, 185, 129, 0.15)" />
-            <text x="280" y="200" textAnchor="middle" fill="#34d399" fontSize="14" fontWeight="bold">المساحة تحت المنحنى = الإزاحة (Δx)</text>
+            {/* Nucleus Label */}
+            <text x="300" y="215" textAnchor="middle" fill="#fbbf24" fontSize="13" fontWeight="bold">النواة (بروتونات p⁺ و نيوترونات n⁰)</text>
 
-            {/* Slope = Acceleration Callout */}
-            <rect x="220" y="25" width="220" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#10b981" />
-            <text x="330" y="48" textAnchor="middle" fill="#34d399" fontSize="13" fontWeight="900">الميل = التسارع a = Δv / Δt</text>
+            {/* Electrons in Inner Shell (Level 1, e⁻) */}
+            <circle cx="300" cy="90" r="8" fill="#38bdf8" />
+            <text x="300" y="94" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
+            <circle cx="300" cy="230" r="8" fill="#38bdf8" />
+            <text x="300" y="234" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
+
+            {/* Electrons in Outer Shell (Level 2, e⁻) */}
+            <circle cx="180" cy="160" r="8" fill="#38bdf8" />
+            <text x="180" y="164" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
+            <circle cx="420" cy="160" r="8" fill="#38bdf8" />
+            <text x="420" y="164" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
+            <circle cx="215" cy="75" r="8" fill="#38bdf8" />
+            <text x="215" y="79" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
+            <circle cx="385" cy="245" r="8" fill="#38bdf8" />
+            <text x="385" y="249" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
+
+            {/* Formula Callout */}
+            <rect x="180" y="15" width="240" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" />
+            <text x="300" y="38" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="900">العدد الكتلي A = p⁺ + n⁰ | العدد الذري Z = p⁺</text>
+          </svg>
+        );
+
+      case 'matter_states_compound':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* 3 Categories: Element vs Compound vs Mixture */}
+            {/* 1. Element Box (Pure Identical Atoms) */}
+            <rect x="40" y="50" width="160" height="210" rx="12" fill="rgba(15, 23, 42, 0.7)" stroke="#38bdf8" strokeWidth="2" />
+            <text x="120" y="80" textAnchor="middle" fill="#38bdf8" fontSize="15" fontWeight="bold">عنصر نقي (Element)</text>
+            {/* 6 identical blue atoms */}
+            <circle cx="85" cy="120" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
+            <circle cx="155" cy="120" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
+            <circle cx="85" cy="165" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
+            <circle cx="155" cy="165" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
+            <circle cx="120" cy="210" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
+            <text x="120" y="245" textAnchor="middle" fill="#94a3b8" fontSize="12">ذرات متطابقة (نحاس Cu)</text>
+
+            {/* 2. Compound Box (Chemically bonded H2O molecules) */}
+            <rect x="220" y="50" width="160" height="210" rx="12" fill="rgba(15, 23, 42, 0.7)" stroke="#10b981" strokeWidth="2" />
+            <text x="300" y="80" textAnchor="middle" fill="#34d399" fontSize="15" fontWeight="bold">مركب كيميائي (Compound)</text>
+            {/* Molecule 1 H2O */}
+            <circle cx="300" cy="125" r="16" fill="#ef4444" />
+            <circle cx="282" cy="142" r="10" fill="#cbd5e1" />
+            <circle cx="318" cy="142" r="10" fill="#cbd5e1" />
+            {/* Molecule 2 H2O */}
+            <circle cx="300" cy="185" r="16" fill="#ef4444" />
+            <circle cx="282" cy="202" r="10" fill="#cbd5e1" />
+            <circle cx="318" cy="202" r="10" fill="#cbd5e1" />
+            <text x="300" y="245" textAnchor="middle" fill="#94a3b8" fontSize="12">نسب ثابتة وروابط (الماء H₂O)</text>
+
+            {/* 3. Mixture Box (Physical blend) */}
+            <rect x="400" y="50" width="160" height="210" rx="12" fill="rgba(15, 23, 42, 0.7)" stroke="#f59e0b" strokeWidth="2" />
+            <text x="480" y="80" textAnchor="middle" fill="#fbbf24" fontSize="15" fontWeight="bold">مخلوط (Mixture)</text>
+            {/* Mixed particles without bonding */}
+            <circle cx="445" cy="120" r="12" fill="#0284c7" />
+            <rect x="495" y="110" width="20" height="20" rx="4" fill="#a855f7" />
+            <circle cx="475" cy="155" r="14" fill="#ef4444" />
+            <polygon points="440,195 455,165 425,165" fill="#10b981" />
+            <circle cx="515" cy="180" r="12" fill="#fbbf24" />
+            <text x="480" y="245" textAnchor="middle" fill="#94a3b8" fontSize="12">خلط فيزيائي يمكن فصله</text>
+
+            {/* Footer Summary */}
+            <rect x="120" y="275" width="360" height="34" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#64748b" />
+            <text x="300" y="297" textAnchor="middle" fill="#cbd5e1" fontSize="13" fontWeight="bold">المركب يتحد كيميائياً بنسب ثابتة، بينما المخلوط يُفصل بطرق فيزيائية</text>
           </svg>
         );
 
