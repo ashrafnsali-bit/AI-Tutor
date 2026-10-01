@@ -1845,43 +1845,294 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
     order: 1,
     titleAr: 'المحاضرة 1: علم البيان: التشبيه وأركانه وأثره البلاغي في المعنى',
     titleEn: 'Lecture 1: Rhetoric & Imagery: Simile and Its Semantic Aesthetics',
-    subtitleAr: 'دراسة أركان التشبيه الأربعة والتمييز بين التشبيه المفرد والتشبيه التمثيلي والضمني',
+    subtitleAr: 'دراسة أركان التشبيه الأربعة والتمييز بين التشبيه المفرد والتشبيه البليغ والتمثيلي والضمني',
     subtitleEn: 'Explore the 4 components of similes, contrasting explicit, composite, and implied analogies.',
-    durationMinutes: 25,
+    durationMinutes: 35,
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
-    keyConceptsAr: ['أركان التشبيه الأربعة: المشبه والمشبه به والأداة ووجه الشبه', 'التشبيه المؤكد والمجمل والتشبيه البليغ', 'التشبيه التمثيلي والتشبيه الضمني', 'الأثر البلاغي والجمالي للتشبيه في إيصال المعنى'],
-    keyConceptsEn: ['Four Components of Simile', 'Confirmed, Concise & Eloquent Similes', 'Composite vs Implied Metaphors', 'Aesthetic and Semantic Impact'],
-    summaryAr: 'علم البيان هو بوابة تذوق سحر البيان العربي؛ نكتشف في هذا الدرس كيف يرتقي الكاتب بالمعنى عبر التشبيه البليغ الذي يجمع بين الدقة والجمال.',
-    summaryEn: 'Discover how classical Arabic rhetoric elevates prose and poetry through layered figurative similes.',
-    sections: [
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الثاني ثانوي - المرحلة الثانوية (مسار اللغة العربية والإنسانيات)',
+    gradeLevelNameEn: 'Grade 11 / High School - Arabic Literature & Rhetoric',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: علم البيان والتصوير الفني',
+    unitTitleEn: 'Unit 1: Imagery, Rhetoric & Artistic Expression',
+    lessonNumberAr: 'الدرس 1: التشبيه: أركانه، وأقسامه، وأسراره البلاغية',
+    lessonNumberEn: 'Lesson 1: The Simile: Structure, Types & Aesthetics',
+
+    // Real-world Rhetorical Hook
+    warmupHookAr: 'حين قال الشاعر يصف شجاعة البطل: "أنتَ كالشَّمْسِ فِي الضِّيَاءِ وَإِنْ جَاوَزْتَ كَيْوَانَ فِي عُلُوِّ المَكَانِ"، لم يكن يصف حقيقة فلكية، بل صاغ صورة بيانية تنقل الإحساس بعظمة الممدوح وضياء مكانته. التشبيه هو أقدم فنون التصوير البياني وأكثرها تأثيراً في النفس الإنسانية؛ كيف تفكك أي تشبيه بلاغي وتحدد أركانه الأربعة؟ وما السر الذي يجعل حذف بعض الأركان يرفع البلاغة إلى قمتها في "التشبيه البليغ"؟',
+    warmupHookEn: 'Similes elevate literal descriptions into immortal poetic imagery. Discover the 4 cardinal pillars of Arabic similes and why omitting explicit particles yields supreme rhetorical power.',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يحدد الطالب أركان التشبيه الأربعة (المشبه، المشبه به، أداة التشبيه، وجه الشبه) في شواهد شعرية ونثرية',
+      'أن يصنف الطالب أنواع التشبيه (مرسل، مؤكد، مجمل، مفصل، بليغ) بدقة',
+      'أن يميز الطالب بين التشبيه المفرد والتشبيه التمثيلي والتشبيه الضمني',
+      'أن يحلل الطالب الأثر البلاغي والجمالي للتشبيه في نقل المعنى وإثارة العاطفة'
+    ],
+    learningOutcomesEn: [
+      'Identify the 4 components of simile (Tenor, Vehicle, Particle, Ground) in classical poetry and prose',
+      'Classify simile categories (Mursal, Muakkad, Mujmal, Mufassal, Baleegh) accurately',
+      'Distinguish between simple, composite (Tamtheeli), and implied (Dhimni) similes',
+      'Analyze the aesthetic and emotional impact of rhetorical analogies on textual reception'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
       {
-        titleAr: '1. أركان التشبيه وأنواعه البلاغية',
-        titleEn: '1. Core Components and Classifications of Similes',
-        contentAr: 'يقوم التشبيه على عقد مماثلة بين شيئين اشتركا في صفة أو أكثر. أركانه هي: المشبه، والمشبه به (طرفا التشبيه الأساسيان)، وأداة التشبيه، ووجه الشبه.',
-        contentEn: 'A simile establishes an analogy between two entities sharing salient qualities, anchored by tenor, vehicle, connective particle, and ground.',
-        interactiveExample: {
-          titleAr: 'تطبيق بلاغي: تحليل التشبيه البليغ',
-          titleEn: 'Worked Analysis: Eloquent Simile Decomposition',
-          equation: 'المشبه + المشبه به (حذف الأداة ووجه الشبه)',
-          steps: [
-            { stepNumber: 1, textAr: 'تأمل قول الشاعر: "العلمُ نورٌ والجهلُ ظلامٌ".', textEn: 'Examine the phrase: "Knowledge is light, and ignorance is darkness."' },
-            { stepNumber: 2, textAr: 'المشبه: العلم. المشبه به: النور. حُذفت أداة التشبيه وحُذف وجه الشبه.', textEn: 'Tenor: Knowledge. Vehicle: Light. Connective particle and ground omitted.' },
-            { stepNumber: 3, textAr: 'هذا هو "التشبيه البليغ" وهو أعلى مراتب التشبيه لأنه يوحد بين المشبه والمشبه به.', textEn: 'This constitutes the Eloquent Simile, the pinnacle of analogy creating direct conceptual equivalence.' }
-          ],
-          takeawayAr: 'كلما قَلّت الأركان المذكورة صراحةً (بحذف الأداة ووجه الشبه)، قويت دلالة التشبيه وارتقت بلاغته.',
-          takeawayEn: 'Omitting explicit connective particles intensifies rhetorical immediacy and poetic power.'
-        },
-        tipsAr: ['طرفا التشبيه (المشبه والمشبه به) لا يمكن حذفهما معاً في التشبيه، فإن حُذف أحدهما تحول إلى استعارة.'],
-        tipsEn: ['If either the tenor or vehicle is completely omitted, the figure of speech transitions into a metaphor.']
+        termAr: 'علم البيان (Ilm Al-Bayan)',
+        termEn: 'Ilm Al-Bayan (Rhetoric / Imagery)',
+        definitionAr: 'علم يُعرف به إيراد المعنى الواحد بطرق مختلفة في وضوح الدلالة عليه (التشبيه، الاستعارة، الكناية، المجاز).',
+        definitionEn: 'The classical Arabic rhetorical discipline of expressing a single idea through diverse figurative modalities.'
+      },
+      {
+        termAr: 'المشبه والمشبه به (Tenor & Vehicle)',
+        termEn: 'Tenor and Vehicle',
+        definitionAr: 'طرفا التشبيه الأساسيان اللذان لا يقوم التشبيه إلا بهما؛ المشبه هو المراد إيضاحه، والمشبه به هو الطرف الأقوى في الصفة.',
+        definitionEn: 'The two indispensable pillars of comparison: the entity described and the illustrative analogue.'
+      },
+      {
+        termAr: 'وجه الشبه (Ground / Shared Quality)',
+        termEn: 'Wajh Ash-Shabah (Ground)',
+        definitionAr: 'الوصف أو الصفة المشتركة التي تجمع بين المشبه والمشبه به، ويكون في المشبه به أقوى وأظهر.',
+        definitionEn: 'The common attribute linking tenor and vehicle, predominantly manifested in the vehicle.'
+      },
+      {
+        termAr: 'التشبيه البليغ (Eloquent Simile)',
+        termEn: 'Eloquent Simile (Baleegh)',
+        definitionAr: 'تشبيه حُذفت منه أداة التشبيه ووجه الشبه معاً وبقي الطرفان فقط (مثل: العلمُ نورٌ)، وهو أعلى مراتب التشبيه.',
+        definitionEn: 'The pinnacle of simile where connective particle and ground are deleted, leaving direct identification.'
+      },
+      {
+        termAr: 'التشبيه التمثيلي (Composite Simile)',
+        termEn: 'Composite Simile (Tamtheeli)',
+        definitionAr: 'تشبيه تكون فيه صورة مركبة من عدة عناصر مشبهة بصورة مركبة أخرى منتزعة من متعدد.',
+        definitionEn: 'A holistic analogy comparing a complex multifaceted scene with another multi-element tableau.'
+      },
+      {
+        termAr: 'التشبيه الضمني (Implied Simile)',
+        termEn: 'Implied Simile (Dhimni)',
+        definitionAr: 'تشبيه لا يُصرّح فيه بأركان التشبيه في صورة تركيبية معتادة، بل يُلمح التشبيه من سياق المعنى ويؤتى بالشطر الثاني كبرهان.',
+        definitionEn: 'An analogy where comparison is subtly woven into context without formal syntactic markers.'
       }
     ],
+
+    keyConceptsAr: [
+      'أركان التشبيه الأربعة: المشبه، والمشبه به، والأداة، ووجه الشبه',
+      'أقسام التشبيه بحسب ذكر وحذف الأداة ووجه الشبه (التام، المؤكد، المجمل، البليغ)',
+      'التشبيه التمثيلي والتشبيه الضمني',
+      'الأسرار البلاغية والجمالية: التشخيص، والتجسيم، والتوضيح'
+    ],
+    keyConceptsEn: [
+      'Four Pillars of Simile: Tenor, Vehicle, Particle, Ground',
+      'Taxonomy by Omission: Complete, Confirmed, Concise, Eloquent',
+      'Composite vs Contextually Implied Analogies',
+      'Rhetorical Aesthetics: Personification, Concretization, Illumination'
+    ],
+    summaryAr: 'علم البيان هو بوابة تذوق سحر البيان العربي؛ نكتشف في هذا الدرس كيف يرتقي الكاتب بالمعنى عبر التشبيه البليغ الذي يجمع بين الدقة والجمال، ونفصل أركانه الأربعة وصوره التمثيلية والضمنية.',
+    summaryEn: 'Discover how classical Arabic rhetoric elevates prose and poetry through layered figurative similes, mastering the 4 pillars and advanced composite and implied forms.',
+
+    sections: [
+      {
+        titleAr: '1. أركان التشبيه الأربعة ومخطط شجرة البيان',
+        titleEn: '1. The Four Pillars of Simile & Rhetorical Schema',
+        contentAr: 'يقوم التشبيه على عقد مماثلة بين شيئين اشتركا في صفة أو أكثر. أركانه الأربعة هي:\n1. المشبه: الأمر الذي يراد إلحاقه بغيره لبيان صفته.\n2. المشبه به: الأمر الذي يُلحق به المشبه وتكون الصفة فيه أقوى وأجلى (وهما طرفا التشبيه الأساسيان).\n3. أداة التشبيه: اللفظ الدال على المماثلة، وتكون حرفاً (كـ، كأنَّ) أو اسماً (مثل، شبه) أو فعلاً (يشبه، يماثل).\n4. وجه الشبه: المعنى المشترك الجامع بين الطرفين (مثل: الشجاعة، الضياء، الكرم).',
+        contentEn: 'A simile establishes an analogy between two entities sharing salient qualities, anchored by tenor, vehicle, connective particle, and ground.',
+        diagram: {
+          id: 'diag-rhetoric-simile',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط أركان التشبيه البلاغي ومراتبه في علم البيان',
+          titleEn: 'Four Pillars of Simile & Taxonomy Spectrum',
+          captionAr: 'مخطط توضيحي يبين أركان التشبيه الأربعة (المشبه، الأداة، المشبه به، وجه الشبه) ويوضح درجات البلاغة عند حذف الأداة أو وجه الشبه وصولاً إلى التشبيه البليغ.',
+          captionEn: 'Structural hierarchy of simile components illustrating how progressive omissions yield the supreme Eloquent Simile.',
+          diagramType: 'rhetoric_simile_map',
+          takeawayFormulaAr: 'التشبيه البليغ = المشبه + المشبه به (حذف الأداة ووجه الشبه لتوحيد الطرفين)',
+          takeawayFormulaEn: 'Eloquent Simile = Tenor + Vehicle (Particle and Ground deleted)',
+          keyLabels: [
+            { tagAr: 'طرفا التشبيه', tagEn: 'Tenor & Vehicle', color: '#38bdf8' },
+            { tagAr: 'أداة التشبيه', tagEn: 'Connective Particle', color: '#f59e0b' },
+            { tagAr: 'وجه الشبه', tagEn: 'Shared Ground', color: '#ec4899' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (1-1): تفكيك أركان التشبيه في بيت شعر كلاسيكي',
+          titleEn: 'Worked Example (1-1): Deconstructing Simile Pillars in Classical Poetry',
+          equation: 'المشبه + الأداة + المشبه به + وجه الشبه',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'البيت الشعري: "أَنْتَ كَاللَّيْثِ فِي الشَّجَاعَةِ وَالإِقْدَامِ ... وَالسَّيْفِ فِي قِرَاعِ الخُطُوبِ".', 
+              textEn: 'Verse: "You are like the lion in courage and valor, and like the sword in overcoming calamities."' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'المشبه: الضمير "أنتَ" (الممدوح).', 
+              textEn: 'Tenor (المشبه): Pronoun "Anta" (the praised hero).' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'أداة التشبيه: حرف الكاف (كـ).', 
+              textEn: 'Connective Particle (الأداة): Letter Kaf (Like).' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'المشبه به: "اللَّيْثِ" (الأسد).', 
+              textEn: 'Vehicle (المشبه به): "Al-Layth" (The Lion).' 
+            },
+            { 
+              stepNumber: 5, 
+              textAr: 'وجه الشبه: "فِي الشَّجَاعَةِ وَالإِقْدَامِ" (الصفة المشتركة الأقوى في الأسد).', 
+              textEn: 'Ground (وجه الشبه): "Courage and bravery", most intensely manifested in the lion.' 
+            }
+          ],
+          takeawayAr: 'ذكر جميع الأركان الأربعة يسمى "تشبيهاً تاماً ومفصلاً ومرسلاً".',
+          takeawayEn: 'Explicit articulation of all four components constitutes a fully articulated complete simile.'
+        },
+        tipsAr: ['طرفا التشبيه لا يمكن حذفهما معاً في التشبيه، فإن حُذف أحدهما تحول الأسلوب إلى استعارة!']
+      },
+      {
+        titleAr: '2. مراتب التشبيه وأنواعه بحسب الحذف والذكر',
+        titleEn: '2. Simile Classifications by Structural Omission',
+        contentAr: 'تتفاوت بلاغة التشبيه بحسب ما يُذكر أو يُحذف من أركانه:\n\n1. التشبيه المرسل: ما ذُكرت فيه أداة التشبيه (مثل: كان خلقه كالنسيم).\n2. التشبيه المؤكد: ما حُذفت منه أداة التشبيه (مثل: أنت ليثٌ في الشجاعة).\n3. التشبيه المجمل: ما حُذف منه وجه الشبه (مثل: المعلمُ كالبحر).\n4. التشبيه المفصل: ما ذُكر فيه وجه الشبه صراحة (مثل: المعلم كالبحر في الكرم).\n5. التشبيه البليغ (ذروة البلاغة): ما حُذفت منه الأداة ووجه الشبه معاً، وبقي الطرفان فقط (مثل: "العلمُ نورٌ"، "الأمُّ مدرسةٌ")؛ وسر بلاغته أنه يدعي التطابق التام والاتحاد بين المشبه والمشبه به.',
+        contentEn: 'Simile taxonomy: Mursal (particle stated), Muakkad (particle omitted), Mujmal (ground omitted), Mufassal (ground stated), and Baleegh (both omitted, creating total identity).',
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (1-2): تحويل التشبيه التام إلى تشبيه بليغ راقٍ',
+          titleEn: 'Worked Example (1-2): Transforming an Explicit Simile into an Eloquent Simile',
+          equation: 'تشبيه مفصل مرسل -> حذف الأداة -> حذف وجه الشبه = تشبيه بليغ',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'الجملة الأصلية (تشبيه تام مفصل مرسل): "القُرْآنُ كَالنُّورِ فِي الهِدَايَةِ".', 
+              textEn: 'Base sentence: "The Quran is like the light in guidance."' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'الخطوة الأولى (حذف الأداة): "القُرْآنُ نُورٌ فِي الهِدَايَةِ" -> أصبح تشبيهاً مؤكداً.', 
+              textEn: 'Step 1 (Drop particle): "The Quran is light in guidance" -> Confirmed Simile.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'الخطوة الثانية (حذف وجه الشبه): "القُرْآنُ نُورٌ" -> أصبح تشبيهاً بليغاً في أعلى درجات الفصاحة والتأثير.', 
+              textEn: 'Step 2 (Drop ground): "The Quran is light" -> Eloquent Simile (Baleegh).' 
+            }
+          ],
+          takeawayAr: 'التشبيه البليغ يجعل المشبه عين المشبه به، مما يمنح المعنى قوة إيحائية مضاعفة.',
+          takeawayEn: 'The Baleegh simile directly identifies tenor with vehicle, maximizing poetic and emotional impact.'
+        },
+        tipsAr: ['صور التشبيه البليغ في اللغة: 1) المبتدأ والخبر (العلم نور)، 2) الحال وصاحبها (هجم الجندي أسداً)، 3) المفعول المطلق المبين للنوع (تفوق تفوق العباقرة)، 4) إضافة المشبه به للمشبه (نور العلم).']
+      },
+      {
+        titleAr: '3. التشبيه التمثيلي والتشبيه الضمني',
+        titleEn: '3. Composite (Tamtheeli) & Implied (Dhimni) Similes',
+        contentAr: 'حين يرتقي الأديب بالصورة من مقارنة مفردة إلى مشهد متكامل، نصل إلى:\n\nأولاً: التشبيه التمثيلي:\n- تشبيه صورة مركبة بصورة مركبة أخرى، ويكون وجه الشبه فيه منتزعاً من عدة أمور.\n- مثاله قوله تعالى: ﴿مَثَلُ الَّذِينَ يُنْفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنْبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنْبُلَةٍ مِائَةُ حَبَّةٍ﴾؛ حيث شُبهت هيئة النفقة المباركة وتضاعف أجرها بهيئة حبة قمح زُرعت في أرض طيبة فأثمرت سبعمائة حبة.\n\nثانياً: التشبيه الضمني:\n- تشبيه لا تظهر فيه أركان التشبيه بصورة صريحة، بل يُفهم ضمناً من سياق الكلام، ويكون الشطر الثاني حكماً وبرهاناً على الشطر الأول.\n- مثاله قول المتنبي:\n"مَنْ يَهُنْ يَسْهُلِ الهَوَانُ عَلَيْهِ ... مَا لِجُرْحٍ بِمَيِّتٍ إِيلَامُ"\nشبه الذي اعتاد الذل فلا يتألم به بالميت الذي لا يتألم بالجرح، دون استخدام أي أداة تشبيه!',
+        contentEn: 'Composite similes compare full multi-element tableaux (Tamtheeli), while Implied similes (Dhimni) weave the comparison subtly into thematic context without formal markers.',
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (1-3): تحليل تشبيه ضمني واستخراج وجه المقارنة',
+          titleEn: 'Worked Example (1-3): Deconstructing an Implied (Dhimni) Simile',
+          equation: 'القضية الأولى (الشطر الأول) + الدليل والبرهان البياني (الشطر الثاني)',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'تأمل قول أبي فراس الحمداني: "سَيَذْكُرُنِي قَوْمِي إِذَا جَدَّ جِدُّهُمْ ... وَفِي اللَّيْلَةِ الظَّلْمَاءِ يُفْتَقَدُ البَدْرُ".', 
+              textEn: 'Reflect on: "My people shall remember me in intense hardship, just as the full moon is missed in the darkest night."' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'المعنى الأول: تذكر قوم الشاعر له عند الشدائد وحاجتهم لفروسيته ورأيه.', 
+              textEn: 'First premise: The tribe seeking the poet in moments of dire adversity.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'المعنى الثاني (البرهان): حاجة الناس إلى البدر المنير في الليلة شديدة الظلام.', 
+              textEn: 'Second premise (Proof): The desperate longing for the radiant full moon in pitch-black night.' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'نوع التشبيه: تشبيه ضمني؛ لم يقل الشاعر "أنا كالبدر"، بل ألمح للمقارنة ببراعة وذكاء فني.', 
+              textEn: 'Simile Type: Implied Simile (Dhimni); subtle analogy without literal syntactic scaffolding.' 
+            }
+          ],
+          takeawayAr: 'التشبيه الضمني يأتي دائماً دليلاً وبرهاناً مقنعاً على القضية المطروحة في صدر البيت.',
+          takeawayEn: 'Implied similes serve as elegant intuitive proofs confirming the preceding assertion.'
+        },
+        tipsAr: ['التشبيه الضمني يخلو دائماً من أدوات التشبيه الصريحة، وتأتي جملته الثانية بمثابة مثل سائر.']
+      }
+    ],
+
+    conceptMapSummaryAr: 'أركان التشبيه 4: مشبه، مشبه به (طرفان أساسيان)، أداة تشبيه، وجه الشبه. مراتبه: تام (ذكر الكل)، مؤكد (حذف الأداة)، مجمل (حذف الوجه)، بليغ (حذف الأداة والوجه وهو أعلاها). وأنواعه المركبة: تمثيلي (صورة بصورة) وضمني (يُفهم من السياق).',
+    conceptMapSummaryEn: 'Simile Pillars: Tenor, Vehicle, Particle, Ground. Ranks: Complete, Confirmed, Concise, Eloquent. Composite Types: Tamtheeli (Scene vs Scene) and Dhimni (Contextually Implied).',
+
+    goldenRulesAr: [
+      'القاعدة 1: لا ينعقد التشبيه إلا بوجود طرفي التشبيه الأساسيين: المشبه والمشبه به.',
+      'القاعدة 2: إذا حُذف المشبه أو المشبه به خرج الأسلوب من التشبيه إلى "الاستعارة".',
+      'القاعدة 3: التشبيه المؤكد هو ما حُذفت منه الأداة، والمجمل ما حُذف منه وجه الشبه.',
+      'القاعدة 4: التشبيه البليغ يحذف الأداة ووجه الشبه معاً لإفادة التماهي والاتحاد التام.',
+      'القاعدة 5: التشبيه التمثيلي يقارن بين هيئة مركبة وهيئة مركبة أخرى منتزعة من متعدد.',
+      'القاعدة 6: التشبيه الضمني يلمح للمقارنة دون أدوات، ويكون الشطر الثاني برهاناً وحكمة.',
+      'القاعدة 7: أسرار جمال التشبيه تنحصر في: التشخيص (لغير العاقل)، والتجسيم (للمعنويات)، والتوضيح.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: A simile strictly requires both primary pillars: Tenor and Vehicle.',
+      'Rule 2: Deleting either tenor or vehicle transforms the figure into a Metaphor.',
+      'Rule 3: Confirmed similes omit particles; Concise similes omit grounds.',
+      'Rule 4: Eloquent similes (Baleegh) omit both particle and ground for complete identification.',
+      'Rule 5: Composite similes compare complex multi-faceted scenes.',
+      'Rule 6: Implied similes lack explicit particles and function as proverbial proofs.',
+      'Rule 7: Aesthetic aims of simile are Personification, Concretization, and Vivid Illumination.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lit-1-1',
+        questionAr: 'عين أركان التشبيه ونوعه في قول الشاعر: "وَالعِلْمُ مَالُ المُعْدَمِينَ إِذَا هُمُ ... خَرَجُوا إِلَى الدُّنْيَا بِغَيْرِ حُطَامِ".',
+        questionEn: 'Identify simile pillars and classification in the poetic verse on knowledge as wealth.',
+        solutionStepsAr: [
+          '1. المشبه: "العِلْمُ".',
+          '2. المشبه به: "مَالُ المُعْدَمِينَ".',
+          '3. أداة التشبيه: محذوفة.',
+          '4. وجه الشبه: محذوف (القيمة والغنى والاستغناء).',
+          '5. نوع التشبيه: تشبيه بليغ؛ لأنه جاء على صورة المبتدأ والخبر وحُذفت الأداة ووجه الشبه.'
+        ],
+        solutionStepsEn: [
+          '1. Tenor: "Knowledge".',
+          '2. Vehicle: "Wealth of the destitute".',
+          '3. Particle: Omitted.',
+          '4. Ground: Omitted (Value, enrichment).',
+          '5. Classification: Eloquent Simile (Baleegh).'
+        ],
+        answerAr: 'المشبه: العلم | المشبه به: مال المعدمين | نوعه: تشبيه بليغ.',
+        answerEn: 'Tenor: Knowledge | Vehicle: Wealth | Type: Eloquent Simile.'
+      },
+      {
+        id: 'ex-lit-1-2',
+        questionAr: 'بين نوع التشبيه في قول الشاعر: "تَرْجُو النَّجَاةَ وَلَمْ تَسْلُكْ مَسَالِكَهَا ... إِنَّ السَّفِينَةَ لَا تَجْرِي عَلَى اليَبَسِ".',
+        questionEn: 'Identify the simile type in the verse on seeking salvation without taking righteous paths.',
+        solutionStepsAr: [
+          '1. الشطر الأول يعبر عن استحالة نيل النجاة والفوز دون بذل الأسباب وسلوك طريقها.',
+          '2. الشطر الثاني يأتي بحقيقة واقعية ملموسة وهي أن السفينة يستحيل أن تبحر على الأرض اليابسة.',
+          '3. لم يستخدم الشاعر أداة تشبيه ولم يصرح بالمقارنة مباشرة، بل لُمح التشبيه ضمناً.',
+          '4. إذن نوع التشبيه: تشبيه ضمني رائع.'
+        ],
+        solutionStepsEn: [
+          '1. First half asserts the impossibility of salvation without pursuing its means.',
+          '2. Second half brings empirical proof: ships cannot sail on dry land.',
+          '3. No connective particle or direct explicit syntax used.',
+          '4. Classification: Implied Simile (Dhimni).'
+        ],
+        answerAr: 'تشبيه ضمني؛ لأن الشطر الثاني جاء دليلاً وبرهاناً وحكمة على المعنى في الشطر الأول.',
+        answerEn: 'Implied Simile (Dhimni), serving as proverbial verification.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lit-1',
       lectureId: 'lit-1',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الأولى: علم البيان والتشبيه',
-      titleEn: 'Lecture 1 Assessment: Classical Rhetoric & Similes',
+      titleAr: 'الاختبار الإلزامي للمحاضرة الأولى: علم البيان والتشبيه وأركانه',
+      titleEn: 'Lecture 1 Assessment: Classical Rhetoric & Similes Mastery',
       passingScore: 80,
       questions: [
         {
@@ -1889,9 +2140,9 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
           textAr: 'ما هو التشبيه البليغ في البلاغة العربية؟',
           textEn: 'What defines an Eloquent Simile in Arabic rhetoric?',
           optionsAr: [
-            'ما حُذفت منه أداة التشبيه ووجه الشبه وبقي الطرفان',
-            'ما ذُكرت فيه جميع أركان التشبيه الأربعة',
-            'ما حُذف منه المشبه به',
+            'ما حُذفت منه أداة التشبيه ووجه الشبه وبقي الطرفان الأساسيان فقط (مثل: العلمُ نورٌ)',
+            'ما ذُكرت فيه جميع أركان التشبيه الأربعة كاملة',
+            'ما حُذف منه المشبه به واستُعيرت لوازمه',
             'ما كان وجه الشبه فيه منفياً'
           ],
           optionsEn: [
@@ -1903,22 +2154,78 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
           correctIndex: 0,
           conceptTestedAr: 'تعريف التشبيه البليغ وأركانه المحذوفة',
           conceptTestedEn: 'Eloquent Simile Definition',
-          explanationAr: 'التشبيه البليغ هو ما حُذفت منه أداة التشبيه ووجه الشبه، مثل: "المعلمُ بحرٌ".',
+          explanationAr: 'التشبيه البليغ هو ما حُذفت منه أداة التشبيه ووجه الشبه، مثل: "المعلمُ بحرٌ" و"الصبرُ درعٌ".',
           explanationEn: 'The eloquent simile deletes the particle and ground, leaving tenor and vehicle directly identified.',
           difficulty: 'easy'
         },
         {
           id: 'ql1-2',
-          textAr: 'في قولنا: "الجندي كالأسد في الشجاعة"، ما هو "وجه الشبه"؟',
-          textEn: 'In "The soldier is like a lion in bravery", what is the ground (وجه الشبه)?',
-          optionsAr: ['الشجاعة', 'الجندي', 'الأسد', 'الكاف'],
-          optionsEn: ['Bravery', 'The soldier', 'The lion', 'Like (Kaf)'],
+          textAr: 'في قول الشاعر: "كَأَنَّ أَخْلَاقَكَ فِي لُطْفِهَا ... وَرِقَّةٍ فِيهَا نَسِيمُ الصَّبَاحِ"، ما نوع التشبيه من حيث الأركان؟',
+          textEn: 'In the verse comparing gentle morals to the morning breeze, what is the simile classification?',
+          optionsAr: [
+            'تشبيه تام مرسل مفصل (ذُكرت فيه الأركان الأربعة: الأداة كأن، والمشبه أخلاقك، والمشبه به نسيم الصباح، والوجه في لطفها)',
+            'تشبيه بليغ',
+            'تشبيه مؤكد مجمل',
+            'تشبيه ضمني'
+          ],
+          optionsEn: [
+            'Complete Mursal Mufassal Simile (all 4 components stated)',
+            'Eloquent Simile',
+            'Confirmed Concise Simile',
+            'Implied Simile'
+          ],
           correctIndex: 0,
-          conceptTestedAr: 'تحديد أركان التشبيه في الجملة',
-          conceptTestedEn: 'Identifying Simile Components',
-          explanationAr: 'وجه الشبه هو الصفة المشتركة التي تجمع بين المشبه والمشبه به، وهنا هي "الشجاعة".',
-          explanationEn: 'The ground is the shared property between tenor and vehicle, which is bravery.',
-          difficulty: 'easy'
+          conceptTestedAr: 'تحليل الأركان الكاملة للتشبيه المرسل المفصل',
+          conceptTestedEn: 'Full Pillar Simile Analysis',
+          explanationAr: 'ذُكرت الأركان الأربعة: الأداة (كأنَّ)، المشبه (أخلاقك)، المشبه به (نسيم الصباح)، ووجه الشبه (في لطفها ورقة فيها)، فهو تشبيه تام مفصل مرسل.',
+          explanationEn: 'All four components are explicitly present, categorizing it as a complete articulated simile.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'ql1-3',
+          textAr: 'ما الفرق الجوهري بين التشبيه التمثيلي والتشبيه الضمني؟',
+          textEn: 'What is the fundamental distinction between Composite and Implied Similes?',
+          optionsAr: [
+            'التمثيلي يشبه صورة مركبة بصورة مركبة مع وجود أداة، بينما الضمني يُلمح من السياق ويكون الشطر الثاني برهاناً دون أداة',
+            'التمثيلي يختص بالنثر والضمني بالشعر فقط',
+            'التمثيلي يحذف المشبه والضمني يحذف المشبه به',
+            'لا يوجد فرق بينهما كلاهما تشبيه بليغ'
+          ],
+          optionsEn: [
+            'Tamtheeli compares structured composite scenes often with particles; Dhimni is contextually inferred without particles serving as proof',
+            'Tamtheeli is prose-only, Dhimni poetry-only',
+            'Tamtheeli deletes tenor, Dhimni deletes vehicle',
+            'No difference'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'الفروق الدقيقة بين التشبيه التمثيلي والضمني',
+          conceptTestedEn: 'Composite vs Implied Analogy Distinction',
+          explanationAr: 'التشبيه التمثيلي تشبيه صورة بصورة مركبة وتكون فيه الأداة غالباً، بينما الضمني يُفهم من السياق ويكون الشطر الثاني بمثابة دليل وبرهان يثبت صحة الشطر الأول.',
+          explanationEn: 'Tamtheeli compares vivid multi-element tableaux; Dhimni is subtly implied as a contextual proof without explicit simile syntax.',
+          difficulty: 'hard'
+        },
+        {
+          id: 'ql1-4',
+          textAr: 'ما هو سر الجمال البلاغي في قولنا: "تَبَسَّمَتِ الحَيَاةُ لِلْمُجْتَهِدِينَ" أو "الْأَمَلُ يَمُدُّ يَدَهُ إِلَيْكَ"؟',
+          textEn: 'What is the rhetorical aesthetic effect in attributing smiles and outstretched hands to abstract life and hope?',
+          optionsAr: [
+            'التشخيص (منح المعنويات والجمادات صفات الأشخاص العاقلين لإضفاء حيوية وتأثير)',
+            'الجناس الصوتي',
+            'السجع النثري',
+            'الطباق السلبي'
+          ],
+          optionsEn: [
+            'Personification (Tashkhees, endowing abstract concepts with human vitality)',
+            'Phonetic Jinas',
+            'Prose Rhyme (Saj)',
+            'Negative Antithesis'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'أسرار الجمال البلاغي: التشخيص والتجسيم',
+          conceptTestedEn: 'Aesthetic Rhetorical Aims: Personification',
+          explanationAr: 'التشخيص هو بث الحياة الإنسانية في الجمادات والمعنويات بجعلها تتكلم أو تبتسم كالإنسان، مما يقرب المعنى ويثير العاطفة.',
+          explanationEn: 'Personification (التشخيص) animates inanimate and abstract concepts with human agency and traits.',
+          difficulty: 'medium'
         }
       ]
     }
@@ -2144,56 +2451,393 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
     order: 1,
     titleAr: 'المحاضرة 1: أقسام الكلمة (الاسم والفعل والحرف) وعلامات التمييز',
     titleEn: 'Lecture 1: Parts of Speech: Nouns, Verbs, Particles & Distinctions',
-    subtitleAr: 'التمييز بين أقسام الكلمة الثلاثة والتعرف على علامات الاسم الخاصة وعلامات الفعل',
-    subtitleEn: 'Master the three categories of Arabic words: Nouns, Verbs, and Particles.',
-    durationMinutes: 25,
+    subtitleAr: 'التمييز بين أقسام الكلمة الثلاثة والتعرف على علامات الاسم الخمس وعلامات أزمنة الفعل ودور الحروف',
+    subtitleEn: 'Master the three categories of Arabic words: Nouns, Verbs, and Particles with authoritative criteria.',
+    durationMinutes: 35,
     isLocked: false,
     isCompleted: false,
     passingScoreRequired: 80,
-    keyConceptsAr: ['أقسام الكلمة الثلاثة: اسم وفعل وحرف', 'علامات الاسم: التنوين، الجر، أل التعريف، النداء', 'علامات الفعل: تاء الفاعل، تاء التأنيث، سين الاستقبال', 'أهمية الحروف في ربط الكلمات وتحديد المعنى'],
-    keyConceptsEn: ['Three Parts of Speech: Noun, Verb, Particle', 'Noun Identification Markers', 'Verb Identification Markers', 'Function of Particles'],
-    summaryAr: 'الكلام في لغتنا العربية يتألف من ثلاث لبنات أساسية لا رابع لها: الاسم ويدل على معنى غير مقترن بزمن، والفعل ويدل على حدث مقترن بزمن، والحرف ويربط بين الكلمات.',
-    summaryEn: 'Arabic words comprise three foundational blocks: Nouns, Verbs, and Relational Particles.',
-    sections: [
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول متوسط - المرحلة المتوسطة (لغتي الخالدة)',
+    gradeLevelNameEn: 'Grade 7 / Middle School - Arabic Language Studies',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: القيم الإسلامية والهوية اللغوية',
+    unitTitleEn: 'Unit 1: Islamic Values & Linguistic Identity',
+    lessonNumberAr: 'الدرس 1: الصنف اللغوي: أقسام الكلمة وعلاماتها الفارقة',
+    lessonNumberEn: 'Lesson 1: Parts of Speech & Definitive Markers',
+
+    // Real-world Linguistic Hook
+    warmupHookAr: 'لغتنا العربية لغة بديعة تمتاز بدقة البناء والاشتقاق؛ فكل كلمة ننطق بها أو نكتبها في هذا الكون الفسيح، من كلام فصيح أو شعر بليغ أو محادثة يومية، تقع حتماً وبلا استثناء تحت ثلاثة أبواب لا رابع لها: اسم، أو فعل، أو حرف. كيف صاغ علماء النحو كابن مالك وابن هشام ضوابط دقيقة لا تخطئ للتمييز بين هذه الأقسام؟ وكيف يمكنك فحص أي كلمة في ثانية واحدة؟ لنكتشف ذلك معاً!',
+    warmupHookEn: 'Arabic words comprise three foundational blocks: Nouns, Verbs, and Relational Particles. Discover classical grammatical tests to classify any word instantaneously.',
+
+    // Target Learning Outcomes
+    learningOutcomesAr: [
+      'أن يصنف الطالب أي كلمة في اللغة العربية بدقة إلى (اسم أو فعل أو حرف)',
+      'أن يحدد الطالب علامات الاسم الخمس المشهورة (الجر، التنوين، النداء، أل التعريف، الإسناد)',
+      'أن يميز الطالب بين أزمنة الفعل الثلاثة (الماضي، المضارع، الأمر) مستخدماً علامة كل فعل',
+      'أن يوضح الطالب وظيفة الحرف في ربط أجزاء الكلام واستحالة استقلاله بالمعنى منفرداً',
+      'أن يحلل الطالب شواهد ونصوصاً فصيحة مستخرجاً أقسام الكلمة مع التعليل المنهجي'
+    ],
+    learningOutcomesEn: [
+      'Classify any Arabic word accurately into Noun, Verb, or Particle',
+      'Identify the 5 cardinal noun markers (Genitive, Nunation, Vocative, Definite Article, Attribution)',
+      'Distinguish the 3 verb tenses using dedicated test markers for each',
+      'Explain the connective role of particles and their contextual dependency',
+      'Analyze authentic Arabic texts extracting parts of speech with rigorous syntactic justification'
+    ],
+
+    // Key Vocabulary
+    vocabulary: [
       {
-        titleAr: '1. كيف نميز بين الاسم والفعل؟',
-        titleEn: '1. Distinguishing Nouns from Verbs',
-        contentAr: 'الاسم يقبل علامات لا يقبلها الفعل؛ فإذا أردت فحص كلمة ما جرب إدخال (أل التعريف) عليها مثل: (كتاب -> الكتاب) أو التنوين (كتابٌ)، فإن قبلتها فهي اسم.',
-        contentEn: 'Nouns accept markers rejected by verbs, such as the definite article (Al) and nunation (Tanween).',
-        interactiveExample: {
-          titleAr: 'تطبيق: اختبار نوع الكلمة',
-          titleEn: 'Worked Example: Word Category Testing',
-          equation: 'اختبار الكلمة + (أل التعريف) أو (التنوين)',
-          steps: [
-            { stepNumber: 1, textAr: 'فحص كلمة "يَكْتُبُ": هل يصح أن نقول "الْيَكْتُبُ"؟ كلا، إذن ليست اسماً بل فعل.', textEn: 'Test "Yaktub" (writes): Can we add Al-? No, thus it is a verb.' },
-            { stepNumber: 2, textAr: 'فحص كلمة "مَدْرَسَة": نقبل "الْمَدْرَسَة" و"مَدْرَسَةٌ"، إذن هي اسم.', textEn: 'Test "Madrasah": Accepts Al- and Tanween, confirmed as a noun.' }
-          ],
-          takeawayAr: 'العلامة التي تميز الاسم فوراً هي قبول (أل التعريف) أو (التنوين).',
-          takeawayEn: 'Definite article and nunation are immediate identifiers for Arabic nouns.'
-        },
-        tipsAr: ['الفعل الماضي يقبل تاء التأنيث الساكنة في آخره (كَتَبَتْ).'],
-        tipsEn: ['Past tense verbs uniquely accept feminine Taa (كتبت).']
+        termAr: 'الاسم (Noun)',
+        termEn: 'Ism (Noun)',
+        definitionAr: 'كلمة دلت على معنى في نفسها دون أن تقترن بزمن محدد (مثل: كتاب، شجرة، أحمد، عدل).',
+        definitionEn: 'A word denoting a substantive or abstract meaning in itself, unbound to temporal tense.'
+      },
+      {
+        termAr: 'الفعل (Verb)',
+        termEn: 'Fil (Verb)',
+        definitionAr: 'كلمة دلت على حدث مقترن بزمن محدد؛ فإن دلت على ما مضى فهو ماضٍ، وإن دلت على الحال والاستقبال فهو مضارع، وإن دلت على طلب فهو أمر.',
+        definitionEn: 'A word expressing an action intrinsically tethered to past, present, or future command time.'
+      },
+      {
+        termAr: 'الحرف (Particle)',
+        termEn: 'Harf (Particle)',
+        definitionAr: 'كلمة لا تدل على معنى مستقل بذاتها، وإنما يظهر معناها التام عند ضمها إلى غيرها في جملة مفيدة (مثل: من، إلى، ثم، هل).',
+        definitionEn: 'A connective particle with no standalone semantic meaning until paired with words in context.'
+      },
+      {
+        termAr: 'التنوين (Nunation)',
+        termEn: 'Tanween',
+        definitionAr: 'نون ساكنة زائدة تلحق آخر الأسماء المعربة لفظاً وتفارقها خطاً ووقفاً (مثل: قلمٌ، قلماً، قلمٍ)، وهي علامة فارقة للاسم.',
+        definitionEn: 'An unwritten doubled vocalic suffix (un, an, in) strictly unique to non-definite Arabic nouns.'
+      },
+      {
+        termAr: 'أل التعريف (Definite Article)',
+        termEn: 'Al-Taareef',
+        definitionAr: 'حرف تعريف يدخل على الأسماء النكرة ليكسبها التعيين والتعريف (مثل: علم -> العلم)، ولا يدخل مطلقاً على الأفعال أو الحروف.',
+        definitionEn: 'The definite prefix "Al-" transforming generic nouns into designated entities; rejected by verbs.'
+      },
+      {
+        termAr: 'تاء التأنيث الساكنة (Feminine Taa)',
+        termEn: 'Taat At-Taaneeth',
+        definitionAr: 'تاء ساكنة تلحق آخر الفعل الماضي فقط للدلالة على أن الفاعل مؤنث (مثل: كَتَبَتْ، نَجَحَتْ).',
+        definitionEn: 'Quiescent suffix Taa exclusively accepted by past-tense verbs when the agent is feminine.'
+      },
+      {
+        termAr: 'الإسناد (Attribution)',
+        termEn: 'Isnad',
+        definitionAr: 'أن يُسند إلى الكلمة حكم أو خبر يفيد المعنى (مثل: الصدقُ منجاةٌ، قمتُ)، وهو أعم علامات الاسم.',
+        definitionEn: 'Syntactic predication or attribution, constituting the most comprehensive noun identifier.'
       }
     ],
+
+    keyConceptsAr: [
+      'أقسام الكلمة الثلاثة: الاسم، الفعل، الحرف',
+      'علامات الاسم الخمس: (الجر، التنوين، النداء، أل، الإسناد)',
+      'علامات أزمنة الفعل: الماضي (تاء الفاعل وتاء التأنيث)، المضارع (لم، سين، سوف)، الأمر (دلالة الطلب مع ياء المخاطبة)',
+      'الحروف لا تقبل علامات الاسم ولا الفعل ووظيفتها الربط وتوجيه المعنى'
+    ],
+    keyConceptsEn: [
+      'Three Speech Categories: Noun, Verb, Particle',
+      'The 5 Cardinal Noun Markers',
+      'Tense-Specific Verb Identification Markers',
+      'Particle Functions in Sentence Cohesion'
+    ],
+    summaryAr: 'يتألف الكلام في اللغة العربية من ثلاثة أقسام حصرية: الاسم ويدل على معنى مجرد من الزمن وله علامات كالتنوين والجر وأل؛ والفعل ويدل على حدث وزمن وله علامات تختلف باختلاف ماضيه ومضارعه وأمره؛ والحرف ويربط بين أجزاء الجملة ولا يقبل علاماتهما.',
+    summaryEn: 'Arabic words comprise three foundational blocks: Nouns (atemporal concepts accepting Tanween and Al-), Verbs (actions with tense markers), and Particles (connective operators).',
+    
+    sections: [
+      {
+        titleAr: '1. الاسم ومفهومه وعلاماته الخمس الفارقة',
+        titleEn: '1. Nouns: Concept & Five Definitive Identification Markers',
+        contentAr: 'الاسم كلمة تدل على إنسان، أو حيوان، أو نبات، أو جماد، أو صفة، أو معنى مجرد دون ارتباط بزمن. وقد جمع الإمام ابن مالك علامات الاسم في بيته الشهير في الألفية:\n"بِالجَرِّ وَالتَّنْوِينِ وَالنِّدَا وَأَلْ ... وَمُسْنَدٍ لِلاِسْمِ تَمْيِيزٌ حَصَلْ"\nوعلامات الاسم هي:\n1. الجر: قبول حرف الجر أو الإضافة (مثل: في المدرسةِ).\n2. التنوين: قبول الضمتين أو الفتحتين أو الكسرتين (مثل: رجلٌ، قلماً).\n3. النداء: صحة دخول حرف النداء عليه (مثل: يا طالبُ، يا كريمُ).\n4. قبول أل التعريف: (مثل: كتاب -> الكتاب).\n5. الإسناد إليه: أن تخبر عنه بخبر (مثل: أنا قمتُ؛ حيث عُرفت اسمية الضمير "أنا" بقبول الإسناد).',
+        contentEn: 'Nouns express entities or abstract ideas devoid of temporal tense. Ibn Malik summarized their 5 signature tests: Genitive case, Nunation, Vocative call (Ya), Definite article (Al-), and Syntactic Attribution (Isnad).',
+        diagram: {
+          id: 'diag-arabic-speech-tree',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط شجرة أقسام الكلمة وعلاماتها في اللغة العربية',
+          titleEn: 'Arabic Parts of Speech & Cardinal Distinctions Tree',
+          captionAr: 'شجرة توضيحية تقارن بين الاسم والفعل والحرف مع أهم العلامات المميزة لكل صنف وأمثلتها النموذجية.',
+          captionEn: 'Comprehensive taxonomy contrasting Nouns, Verbs, and Particles with their distinctive tests.',
+          diagramType: 'arabic_parts_of_speech',
+          takeawayFormulaAr: 'الكلمة = اسم (يقبل التنوين وأل) | فعل (يقترن بزمن) | حرف (يربط بينهما)',
+          takeawayFormulaEn: 'Speech = Ism (accepts Al/Tanween) | Fil (tensed event) | Harf (connector)',
+          keyLabels: [
+            { tagAr: 'الاسم وعلاماته', tagEn: 'Noun Markers', color: '#38bdf8' },
+            { tagAr: 'الفعل وأزمنته', tagEn: 'Verb Tenses', color: '#10b981' },
+            { tagAr: 'الحرف ووظيفته', tagEn: 'Particle Role', color: '#f59e0b' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (1-1): فحص علامات الأسماء في جملة مركبة',
+          titleEn: 'Worked Example (1-1): Testing Noun Markers in a Compound Sentence',
+          equation: 'الكلمة المراد فحصها + اختبار العلامات (الجر / التنوين / أل)',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'الجملة: "حَرَصَ عُمَرُ عَلَى طَلَبِ العِلْمِ فِي صِغَرِهِ". نريد تحديد الأسماء في الجملة مع بيان العلامة.', 
+              textEn: 'Sentence: "Umar was eager for knowledge acquisition in his youth." Identify all nouns with their proof markers.' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'فحص "عُمَرُ": اسم علم يدل على إنسان ويقبل النداء ("يا عمرُ") والإسناد إليه، فهو اسم.', 
+              textEn: 'Analyze "Umar": Proper noun denoting human, accepts vocative (Ya Umar) and attribution -> Noun.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'فحص "طَلَبِ": سُبقت بحرف الجر (عَلَى) وجاءت مكسورة مجرورة ("على طلبِ")، والجر خاص بالأسماء -> إذن "طلب" اسم.', 
+              textEn: 'Analyze "Talab": Governed by genitive preposition (Ala) with kasrah -> strictly a Noun.' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'فحص "العِلْمِ": دخلت عليها (أل التعريف) وجاءت مضافة إليها -> إذن "العلم" اسم قطعي.', 
+              textEn: 'Analyze "Al-Ilm": Features definite article "Al-" -> Noun.' 
+            },
+            { 
+              stepNumber: 5, 
+              textAr: 'فحص "صِغَرِهِ": سُبقت بـ (فِي) وقبلت حرف الجر واتصل بها ضمير -> اسم.', 
+              textEn: 'Analyze "Sighar": Governed by preposition "Fi" and holds attached genitive pronoun -> Noun.' 
+            }
+          ],
+          takeawayAr: 'يكفي قبول علامة واحدة فقط من علامات الاسم الخمس للحكم على الكلمة بأنها اسم.',
+          takeawayEn: 'Accepting even a single noun marker definitively proves the word is a noun.'
+        },
+        tipsAr: ['لا يجتمع التنوين مع (أل التعريف) في كلمة واحدة أبداً؛ نقول: "كتابٌ" أو "الكتابُ".'],
+        tipsEn: ['Nunation and the definite article Al- are mutually exclusive and never coexist on the same word.']
+      },
+      {
+        titleAr: '2. الفعل وأقسامه الثلاثة وعلامات كل قسم',
+        titleEn: '2. Verbs: Three Tenses & Tense-Specific Verification Markers',
+        contentAr: 'الفعل يدل على حدوث عمل في زمن محدد، وينقسم حسب الزمن إلى ثلاثة أقسام لكل منها علامات فارقة:\n\n1. الفعل الماضي: ما دل على حدث وقع قبل زمن التكلم (مثل: كَتَبَ، فَهِمَ).\n   - علامته الفارقة: قبول تاء الفاعل المتحركة (كَتَبْتُ، كَتَبْتَ) أو قبول تاء التأنيث الساكنة (كَتَبَتْ).\n\n2. الفعل المضارع: ما دل على حدث يقع في زمن التكلم أو بعده (مثل: يَكْتُبُ، نَفْهَمُ).\n   - علامته الفارقة: قبول دخول جازم مثل (لَمْ يَكْتُبْ) أو ناصب مثل (لَنْ يَكْتُبَ) أو سين الاستقبال وسوف (سَيَكْتُبُ، سَوْفَ يَكْتُبُ). ولا بد أن يبدأ بأحد حروف المضارعة (أ، ن، ي، ت).\n\n3. فعل الأمر: ما دل على طلب حصول العمل في المستقبل بصيغة الطلب المباشر (مثل: اكْتُبْ، انْتَبِهْ).\n   - علامته الفارقة: أن يدل بنفسه على الطلب مع قبوله ياء المخاطبة المؤنثة (اكْتُبِي، انْتَبِهِي).',
+        contentEn: 'Verbs express actions across 3 tenses: Past (accepts Subject Taa / Feminine Taa), Present (accepts Lam / Seen / Saufa), and Command/Imperative (conveys request and accepts feminine Yaa).',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (1-2): التمييز بين أزمنة الفعل وتطبيق الاختبارات النحوية',
+          titleEn: 'Worked Example (1-2): Verb Tense Classification & Verification Tests',
+          equation: 'الفعل المعطى + علامة الاختبار الخاصة بكل زمن',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'الكلمات المعطاة: (انْطَلَقَ - يَسْتَمِعُ - احْفَظْ). نريد تحديد نوع كل فعل مع الدليل.', 
+              textEn: 'Analyze verbs: (Intalaqa, Yastamiu, Ihfadh) and prove tense classification with markers.' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'فحص "انْطَلَقَ": نقوم بتجربة تاء التأنيث: (انْطَلَقَتْ هِنْدٌ) -> قبل تاء التأنيث الساكنة ودل على مضى، إذن هو فعل ماضٍ مبني.', 
+              textEn: 'Test "Intalaqa": Accepts feminine Taa (Intalaqat) and denotes past event -> Past Tense Verb.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'فحص "يَسْتَمِعُ": يبدأ بالياء ويقبل أداة الجزم (لَمْ يَسْتَمِعْ) والسين (سَيَسْتَمِعُ) -> إذن هو فعل مضارع مرفوع.', 
+              textEn: 'Test "Yastamiu": Accepts Lam (Lam Yastamia) and future Seen (Sa-Yastamiu) -> Present Tense Verb.' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'فحص "احْفَظْ": يدل على طلب الحفظ في المستقبل ويقبل ياء المخاطبة المؤنثة (احْفَظِي) -> إذن هو فعل أمر مبني.', 
+              textEn: 'Test "Ihfadh": Conveys direct imperative command and accepts feminine Yaa (Ihfadhi) -> Imperative Verb.' 
+            }
+          ],
+          takeawayAr: 'لكل نوع من الأفعال علامة حصرية تكشفه فوراً: الماضي بالتاء، والمضارع بـ (لم والسين)، والأمر بالطلب مع ياء المخاطبة.',
+          takeawayEn: 'Each verb tense has an infallible exclusive test: Past accepts Taa, Present accepts Lam/Seen, Imperative conveys request + Yaa.'
+        },
+        tipsAr: ['الفعل المضارع يبدأ دائماً بأحد أحرف كلمة (نَأْتِي) أو (أَنَيْتُ).'],
+        tipsEn: ['Present tense verbs always commence with one of the 4 prefix letters from "Na-ati".']
+      },
+      {
+        titleAr: '3. الحرف: أنواعه ودوره في ربط المعاني وإعراب الجمل',
+        titleEn: '3. Particles: Types, Syntactic Roles & Semantic Modulation',
+        contentAr: 'الحرف هو القسم الثالث من أقسام الكلمة، وضابطه السلبي: أنه لا يقبل أياً من علامات الاسم ولا أياً من علامات الفعل. وضابطه الإيجابي: أنه يربط الكلمات داخل الجملة ليولد معاني جديدة لا تقوم بدونها، كالمكانية أو السببية أو التوكيد أو النفي أو الاستقبال.\n\nمن أشهر أقسام الحروف في اللغة العربية:\n1. حروف الجر: (مِنْ، إِلَى، عَنْ، عَلَى، فِي، الباء، الكاف، اللام) - وظيفتها جر الأسماء بعدها.\n2. حروف العطف: (الواو، الفاء، ثُمَّ، أَوْ، بَلْ، لا) - وظيفتها المشاركة والترتيب والتعقيب والتخيير.\n3. حروف النصب والجزم: (أَنْ، لَنْ، كَيْ، إِذَنْ) للنصب، و(لَمْ، لَمَّا، لا الناهية، لام الأمر) للجزم.\n4. حروف النداء والاستفهام والنفي: (يا، أيا - الهمزة، هل - ما، لا، ليس).',
+        contentEn: 'Particles accept neither noun nor verb markers. Their sole function is establishing relational and syntactic linkages (Genitive, Conjunction, Subjunctive, Jussive, Interrogative).',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (1-3): تحليل الأثر المعنوي والإعرابي للحروف في السياق',
+          titleEn: 'Worked Example (1-3): Analyzing Semantic Shift Induced by Particles',
+          equation: 'الجملة الأساسية + إدخال الحرف = تغير الدلالة والإعراب',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'قارن بين الجمل التالية: 1) "سَافَرَ سَعِيدٌ إِلَى الرِّيَاضِ" ، 2) "سَافَرَ سَعِيدٌ مِنْ الرِّيَاضِ" ، 3) "هَلْ سَافَرَ سَعِيدٌ؟" ، 4) "لَمْ يُسَافِرْ سَعِيدٌ".', 
+              textEn: 'Compare: 1) Traveled to Riyadh, 2) Traveled from Riyadh, 3) Did he travel?, 4) Did not travel.' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'في (1): الحرف "إِلَى" حرف جر أفاد "انتهاء الغاية المكانية" وجر الاسم بعده (الرياضِ).', 
+              textEn: 'In (1): "Ila" marks spatial destination and causes genitive inflection on the noun.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'في (2): الحرف "مِنْ" أفاد "ابتداء الغاية المكانية"؛ تغير المعنى كلياً بعكس الاتجاه بمجرد استبدال الحرف!', 
+              textEn: 'In (2): "Min" marks spatial origin; changing one particle inverted the entire movement direction.' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'في (3): "هَلْ" حرف استفهام حول الجملة من خبرية إلى إنشائية استفهامية.', 
+              textEn: 'In (3): "Hal" converts a declarative statement into an interrogative query.' 
+            },
+            { 
+              stepNumber: 5, 
+              textAr: 'في (4): "لَمْ" حرف نفي وجزم وقلب، نفى الحدث وجزم الفعل المضارع بالسكون وقلب زمنه إلى الماضي.', 
+              textEn: 'In (4): "Lam" negates the action, inflects the verb with Sukoon jussive, and shifts time to past.' 
+            }
+          ],
+          takeawayAr: 'الحرف وإن كان لا معنى له بمفرده، إلا أنه هو المحرك الأساسي لتوجيه دلالات المعاني وبناء الإعراب.',
+          takeawayEn: 'Though semantically incomplete in isolation, particles drive contextual meaning and syntactic inflection.'
+        },
+        tipsAr: ['الحروف كلها مبنية لا محل لها من الإعراب في لغة العرب.']
+      }
+    ],
+
+    conceptMapSummaryAr: 'تتفرع الكلمة إلى ثلاثة أقسام حصرية: 1) الاسم (يقبل أل، التنوين، الجر، النداء، الإسناد)، 2) الفعل (ماضٍ يقبل تاء الفاعل والتأنيث، ومضارع يقبل لم وسين، وأمر يدل على الطلب ويقبل ياء المخاطبة)، 3) الحرف (يربط أجزاء الكلام ولا يقبل علاماتهما وكل الحروف مبنية).',
+    conceptMapSummaryEn: 'Words split into: Nouns (accepting Al/Tanween/Genitive), Verbs (Past/Present/Imperative with dedicated markers), and Particles (connectors devoid of noun/verb markers).',
+
+    goldenRulesAr: [
+      'القاعدة 1: كل كلام في اللغة العربية ينحصر قطعاً في ثلاثة أصناف: اسم، فعل، حرف.',
+      'القاعدة 2: الاسم يدل على معنى في نفسه غير مقترن بزمن، ويكفيه قبول علامة واحدة من علاماته الخمس.',
+      'القاعدة 3: التنوين وأل التعريف علامتان خاصتان بالاسم لا تجتمعان في كلمة واحدة أبداً.',
+      'القاعدة 4: الفعل الماضي يختص بقبول تاء الفاعل (كتبتُ) وتاء التأنيث الساكنة (كتبتْ).',
+      'القاعدة 5: الفعل المضارع يختص بقبول أحرف الجزم والنصب والسين وسوف (سأكتب، لن أكتب).',
+      'القاعدة 6: فعل الأمر يجمع بين الدلالة على الطلب بالصيغة وقبول ياء المخاطبة المؤنثة (اقرئي).',
+      'القاعدة 7: الحرف كلمة لا معنى لها وحدها وتظهر فائدتها في تركيب الجملة، وجميع الحروف مبنية.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: All Arabic speech strictly subdivides into Noun, Verb, or Particle.',
+      'Rule 2: Nouns denote meaning independent of time; passing 1 of 5 tests suffices.',
+      'Rule 3: Nunation and Al- are exclusive to nouns and never coexist simultaneously.',
+      'Rule 4: Past tense verbs uniquely accept Subject Taa and quiescent Feminine Taa.',
+      'Rule 5: Present tense verbs uniquely accept particle operators (Lam, Lan, Seen, Saufa).',
+      'Rule 6: Imperative verbs combine direct request meaning with acceptance of feminine Yaa.',
+      'Rule 7: Particles hold contextual meaning only, orchestrate syntax, and are entirely indeclinable.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lang-1-1',
+        questionAr: 'صنف الكلمات التي تحتها خط في الآية الكريمة: ﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا﴾ إلى أقسامها الثلاثة مع ذكر علامة كل كلمة.',
+        questionEn: 'Classify the words in Quranic verse: "And say: My Lord, increase me in knowledge" specifying markers.',
+        solutionStepsAr: [
+          '1. "قُلْ": فعل أمر؛ لأنه يدل على الطلب ويقبل ياء المخاطبة المؤنثة (قُولِي).',
+          '2. "رَبِّ": اسم؛ لأنه أُضيف إليه ضمير المتكلم المحذوف وقَبِلَ حرف النداء التقديري (يا ربِّ).',
+          '3. "زِدْ": فعل أمر؛ دال على الدعاء والطلب ويقبل ياء المخاطبة (زِيدِي).',
+          '4. "عِلْمًا": اسم؛ دليله قبول التنوين (تنوين الفتح) وصحة دخول أل عليه (العلم).'
+        ],
+        solutionStepsEn: [
+          '1. "Qul": Imperative verb conveying command and accepting feminine Yaa (Qooli).',
+          '2. "Rabbi": Noun accepting implicit vocative call (Ya Rabbi).',
+          '3. "Zid": Imperative/supplicatory verb accepting feminine Yaa (Zeedi).',
+          '4. "Ilman": Noun accepting explicit Nunation (Tanween) and the definite article.'
+        ],
+        answerAr: 'قُل: فعل أمر | رَبّ: اسم منادى | زِدْ: فعل أمر | عِلماً: اسم منون.',
+        answerEn: 'Qul: Verb | Rabbi: Noun | Zid: Verb | Ilman: Noun.'
+      },
+      {
+        id: 'ex-lang-1-2',
+        questionAr: 'بين سبب امتناع دخول التنوين على الكلمات التالية: (يَشْرَبُ - فِي - القَلَمُ).',
+        questionEn: 'State why Nunation cannot be appended to: (Yashrabu, Fi, Al-Qalamu).',
+        solutionStepsAr: [
+          '1. كلمة "يَشْرَبُ": فعل مضارع، والتنوين من علامات الأسماء الخاصة التي يمتنع دخولها على الأفعال.',
+          '2. كلمة "فِي": حرف جر، والحروف مبنية ولا تقبل علامات الأسماء.',
+          '3. كلمة "القَلَمُ": اسم لكنه مقترن بـ (أل التعريف)، والتنوين وأل ضدان لا يجتمعان في كلمة واحدة.'
+        ],
+        solutionStepsEn: [
+          '1. "Yashrabu": Verb; verbs reject nominal nunation.',
+          '2. "Fi": Particle; indeclinable and rejects noun markers.',
+          '3. "Al-Qalamu": Noun with definite article "Al-"; Al- and Tanween are strictly mutually exclusive.'
+        ],
+        answerAr: 'يَشْرَبُ لأنه فعل | فِي لأنه حرف | القَلَمُ لاقترانه بأل التعريف المانعة للتنوين.',
+        answerEn: 'Yashrabu is a verb | Fi is a particle | Al-Qalamu carries the definite article.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lang-1',
       lectureId: 'lang-1',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الأولى: أقسام الكلمة',
-      titleEn: 'Lecture 1 Assessment: Parts of Speech',
+      titleAr: 'الاختبار الإلزامي للمحاضرة الأولى: أقسام الكلمة وعلامات التمييز',
+      titleEn: 'Lecture 1 Assessment: Parts of Speech & Definitive Markers',
       passingScore: 80,
       questions: [
         {
           id: 'qlg1-1',
-          textAr: 'أي من الكلمات التالية تُعد "اسماً" لأنها تقبل التنوين؟',
-          textEn: 'Which of the following is a noun accepting Tanween?',
+          textAr: 'أي من الكلمات التالية تُعد "اسماً" لأنها تقبل علامة التنوين ودخول أل التعريف؟',
+          textEn: 'Which of the following is a noun accepting Tanween and the definite article?',
           optionsAr: ['شَجَرَةٌ', 'يَذْهَبُ', 'عَلَى', 'انْطَلَقَ'],
           optionsEn: ['Shajarah (Tree)', 'Yadhhab (Goes)', 'Ala (On)', 'Intalaqa (Launched)'],
           correctIndex: 0,
-          conceptTestedAr: 'علامات الاسم',
-          conceptTestedEn: 'Noun Markers',
-          explanationAr: 'كلمة "شجرةٌ" اسم لأنها تقبل التنوين والتاء المربوطة وأل التعريف.',
-          explanationEn: 'Shajarah is a noun because it accepts tanween and the definite article.',
+          conceptTestedAr: 'علامات الاسم الفارقة (التنوين وأل)',
+          conceptTestedEn: 'Noun Identification Markers',
+          explanationAr: 'كلمة "شجرةٌ" اسم لأنها تقبل التنوين، وأل التعريف (الشجرة)، والتاء المربوطة، وحروف الجر (على شجرةٍ). أما يذهب وانطلق فهما فعلان، وعلى حرف.',
+          explanationEn: 'Shajarah is a noun because it readily accepts tanween, the definite article (Al-Shajarah), and prepositions.',
           difficulty: 'easy'
+        },
+        {
+          id: 'qlg1-2',
+          textAr: 'ما العلامة النحوية الفارقة التي يختص بها الفعل الماضي دون سائر الأفعال؟',
+          textEn: 'What grammatical marker is uniquely exclusive to past tense verbs?',
+          optionsAr: [
+            'قبول تاء التأنيث الساكنة وتاء الفاعل المتحركة في آخره (مثل: نَجَحَتْ / نَجَحْتُ)',
+            'قبول حرف الجزم "لَمْ" في أوله',
+            'قبول سين الاستقبال "سـ"',
+            'قبول دخول أل التعريف في أوله'
+          ],
+          optionsEn: [
+            'Accepting quiescent feminine Taa and subject Taa suffixes (e.g. نجحت)',
+            'Accepting jussive particle Lam prefix',
+            'Accepting future particle Seen prefix',
+            'Accepting definite article Al-'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'علامات الفعل الماضي الحصرية',
+          conceptTestedEn: 'Past Tense Verb Verification Markers',
+          explanationAr: 'الفعل الماضي يختص بقبول تاء التأنيث الساكنة (كتبَتْ) وتاء الفاعل المتحركة (كتبتُ). أما "لم" والسين فهما للمضارع، وأل للاسم.',
+          explanationEn: 'Past tense verbs uniquely accept quiescent feminine Taa and agent Taa suffixes.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qlg1-3',
+          textAr: 'عند فحص كلمة "اسْتَغْفَرَ"، كيف نثبت أنها فعل ماضٍ وليست اسماً ولا فعلاً مضارعاً؟',
+          textEn: 'How do we prove that "Istaghfara" is a past verb and not a noun or present verb?',
+          optionsAr: [
+            'لأنها تقبل تاء التأنيث الساكنة في آخرها: "اسْتَغْفَرَتْ" وتمتنع عن قبول التنوين و"لَمْ"',
+            'لأنها تبدأ بهمزة وصل فقط',
+            'لأنها تقبل التنوين: "استغفارٌ"',
+            'لأنها تقبل حرف الجر "في"'
+          ],
+          optionsEn: [
+            'Accepts feminine Taa "Istaghfarat" while rejecting Tanween and Lam',
+            'Because it begins with Hamzat Wasl',
+            'Accepts tanween',
+            'Accepts prepositions'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'التطبيق العملي لاختبارات أزمنة الأفعال',
+          conceptTestedEn: 'Applied Verb Tense Testing',
+          explanationAr: '"استغفر" فعل ماضٍ لأنه يقبل تاء التأنيث (استغفرَتْ) وتاء الفاعل (استغفرتُ)، ولا يقبل علامات الاسم (لا يصح الاستغفرَ) ولا علامات المضارع.',
+          explanationEn: 'Istaghfara accepts past-tense Taa suffixes (Istaghfarat) confirming past verb status.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qlg1-4',
+          textAr: 'ما الضابط النحوي الصحيح للحرف في اللغة العربية؟',
+          textEn: 'What is the precise grammatical definition of an Arabic particle (Harf)?',
+          optionsAr: [
+            'كلمة لا يقبل علامات الاسم ولا علامات الفعل، ولا يتضح معناه التام إلا مقترناً بغيره في جملة',
+            'كلمة تدل على حدث مقترن بزمن المستقبل',
+            'اسم مبني يقبل التنوين في الضرورة الشعرية',
+            'فعل ناقص لا يحتاج إلى فاعل'
+          ],
+          optionsEn: [
+            'Word rejecting noun and verb markers, revealing full meaning only when contextualized',
+            'Word denoting action in future tense',
+            'Declinable noun with poetical license',
+            'Defective verb requiring no agent'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'مفهوم الحرف وضابطه النحوي السلبي والإيجابي',
+          conceptTestedEn: 'Definition and Criteria of Particles',
+          explanationAr: 'الحرف هو ما لا يصلح معه دليل الاسم ولا دليل الفعل، ودوره ربط الكلمات لبناء معانٍ سياقية (كالظرفية والابتداء والانتهاء).',
+          explanationEn: 'A particle is identified by rejecting both noun and verb markers and functioning as a syntactic and semantic connector.',
+          difficulty: 'hard'
         }
       ]
     }
@@ -2203,60 +2847,309 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
     order: 2,
     titleAr: 'المحاضرة 2: الجملة الاسمية وركناها الأساسيان: المبتدأ والخبر',
     titleEn: 'Lecture 2: Nominal Sentences: Subject & Predicate Essentials',
-    subtitleAr: 'التعرف على المبتدأ المرفوع والخبر المتمم للمعنى، وعلامات الرفع الأصلية والفرعية',
-    subtitleEn: 'Identify subjects and predicates with nominative case inflections.',
-    durationMinutes: 30,
+    subtitleAr: 'التعرف على المبتدأ المرفوع والخبر المتمم للمعنى، وعلامات الرفع الأصلية والفرعية وصور الخبر',
+    subtitleEn: 'Master subject and predicate identification, nominative inflections, and diverse predicate structures.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'lang-1',
     prerequisiteTitleAr: 'المحاضرة 1: أقسام الكلمة (الاسم والفعل والحرف) وعلامات التمييز',
     prerequisiteTitleEn: 'Lecture 1: Parts of Speech: Nouns, Verbs, Particles & Distinctions',
-    keyConceptsAr: ['تعريف الجملة الاسمية (تبدأ باسم)', 'المبتدأ: الاسم المرفوع الذي نبدأ به الكلام', 'الخبر: الجزء الذي يتمم معنى الجملة مع المبتدأ', 'علامة الرفع الأصلية (الضمة) والفرعية (الألف والواو)'],
-    keyConceptsEn: ['Nominal Sentence Structure', 'Mubtada (Subject)', 'Khabar (Predicate)', 'Nominative Case Inflections'],
-    summaryAr: 'الجملة الاسمية هي كل جملة تبدأ باسم، وتتألف من ركنين رئيسين مرفوعين: المبتدأ وهو محور الحديث، والخبر وهو ما نخبر به عن المبتدأ لتكتمل الفائدة.',
-    summaryEn: 'Nominal sentences originate with a noun and require subject and predicate in nominative agreement.',
-    sections: [
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول متوسط - المرحلة المتوسطة (لغتي الخالدة)',
+    gradeLevelNameEn: 'Grade 7 / Middle School - Arabic Language Studies',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثانية: الأعلام والمجتمع',
+    unitTitleEn: 'Unit 2: Notable Figures & Society',
+    lessonNumberAr: 'الدرس 2: الوظيفة النحوية: المبتدأ والخبر وعلامات رفعهما',
+    lessonNumberEn: 'Lesson 2: Syntactic Roles: Subject, Predicate & Nominative Case',
+
+    warmupHookAr: 'عندما تريد التعبير عن حقيقة ثابتة كقولك: "الصِّدْقُ خُلُقٌ عَظِيمٌ" أو "السَّمَاءُ صَافِيَةٌ"، فإنك تبدأ جملتك باسم لتبني عليه حكماً واضحاً ومكتملاً. هذا التركيب الثنائي المتماسك هو "الجملة الاسمية". كيف نحدد المبتدأ والخبر مهما طالت الجملة؟ وما هي علامات رفعهما في المفرد والمثنى وجمع المذكر السالم والأسماء الخمسة؟',
+    warmupHookEn: 'Nominal sentences establish enduring truths by pairing a leading subject (Mubtada) with an informative predicate (Khabar). Master their syntactic agreement across singular, dual, and plural declensions.',
+
+    learningOutcomesAr: [
+      'أن يحدد الطالب ركني الجملة الاسمية (المبتدأ والخبر) في نصوص فصيحة',
+      'أن يطبق الطالب حكم الرفع الإعرابي على المبتدأ والخبر بالعلامات الأصلية والفرعية',
+      'أن يوضح الطالب صور الخبر المختلفة (مفرد، جملة فعلية، جملة اسمية، شبه جملة)',
+      'أن يضبط الطالب أواخر المبتدأ والخبر ضبطاً إعرابياً صحيحاً بالشكل'
+    ],
+    learningOutcomesEn: [
+      'Pinpoint Subject (Mubtada) and Predicate (Khabar) in authentic sentences',
+      'Apply primary and secondary nominative case inflections accurately',
+      'Distinguish predicate classifications: Single Word, Verbal Sentence, Nominal Sentence, Prepositional Phrase',
+      'Vocalize and vocal-mark sentence terminal vowels according to strict Arabic grammar'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. ركنا الجملة الاسمية',
-        titleEn: '1. Subject and Predicate Foundations',
-        contentAr: 'في جملة "السماءُ صافيةٌ"، بدأنا بكلمة "السماءُ" فهي مبتدأ مرفوع، وتم المعنى بكلمة "صافيةٌ" فهي خبر مرفوع.',
-        contentEn: 'In "The sky is clear", the first noun is the subject, completed by the predicate.',
-        interactiveExample: {
-          titleAr: 'تطبيق: تحديد المبتدأ والخبر',
-          titleEn: 'Worked Example: Identifying Subject and Predicate',
-          equation: 'المبتدأ (اسم البداية) + الخبر (المتمم للمعنى)',
-          steps: [
-            { stepNumber: 1, textAr: 'الجملة: "العِلْمُ نَافِعٌ لِلْبَشَرِيَّةِ".', textEn: 'Sentence: "Knowledge is beneficial to humanity."' },
-            { stepNumber: 2, textAr: 'المبتدأ هو "العِلْمُ" (مرفوع بالضمة الظاهرة).', textEn: 'Subject: "Knowledge" (Nominative with Dammah).' },
-            { stepNumber: 3, textAr: 'الخبر هو "نَافِعٌ" لأنه تمم المعنى الأساسي للمبتدأ.', textEn: 'Predicate: "Beneficial" because it completes the core meaning.' }
-          ],
-          takeawayAr: 'الخبر هو الكلمة التي تجيب عن سؤال: "ما به المبتدأ؟".',
-          takeawayEn: 'The predicate answers what is being predicated about the subject.'
-        },
-        tipsAr: ['المبتدأ والخبر مرفوعان دائماً ما لم يدخل عليهما ناسخ (كان أو إن).'],
-        tipsEn: ['Both subject and predicate remain nominative unless modified by particles.']
+        termAr: 'الجملة الاسمية (Nominal Sentence)',
+        termEn: 'Nominal Sentence',
+        definitionAr: 'كل جملة تبتدئ باسم في الأصل، وتتألف من ركنين أساسيين هما المبتدأ والخبر.',
+        definitionEn: 'A sentence commencing with a noun, fundamentally structured around Subject and Predicate.'
+      },
+      {
+        termAr: 'المبتدأ (Subject / Mubtada)',
+        termEn: 'Mubtada (Subject)',
+        definitionAr: 'اسم صريح أو مؤول مرفوع، مجرد عن العوامل اللفظية غير الزائدة، يقع في صدر الجملة غالباً ليكون محور الحديث.',
+        definitionEn: 'The primary nominative noun positioned as the thematic anchor of the nominal sentence.'
+      },
+      {
+        termAr: 'الخبر (Predicate / Khabar)',
+        termEn: 'Khabar (Predicate)',
+        definitionAr: 'الجزء المنتظم منه مع المبتدأ جملة مفيدة تُتمم المعنى وتخبر عن حال المبتدأ.',
+        definitionEn: 'The syntactically vital complement that completes the propositional meaning of the subject.'
+      },
+      {
+        termAr: 'علامات الرفع الأصلية والفرعية (Nominative Markers)',
+        termEn: 'Nominative Inflections',
+        definitionAr: 'الضمة (العلامة الأصلية للمفرد وجمع التكسير وجمع المؤنث السالم)، والألف (للمثنى)، والواو (لجمع المذكر السالم والأسماء الخمسة).',
+        definitionEn: 'Dammah (primary for singular/broken plural), Alif (for dual), and Waw (for sound masculine plural & five nouns).'
       }
     ],
+
+    keyConceptsAr: [
+      'تعريف الجملة الاسمية وركناها: المبتدأ والخبر',
+      'حكم المبتدأ والخبر: الرفع دائماً',
+      'علامات الرفع: الضمة (أصلية)، الألف (مثنى)، الواو (جمع مذكر سالم وأسماء خمسة)',
+      'أنواع الخبر: مفرد، جملة (فعلية/اسمية)، شبه جملة (جار ومجرور أو ظرف)'
+    ],
+    keyConceptsEn: [
+      'Nominal Sentence Architecture: Mubtada + Khabar',
+      'Nominative Agreement Rule',
+      'Primary vs Secondary Nominative Inflection Markers',
+      'Predicate Typology: Single, Verbal, Phrasal'
+    ],
+    summaryAr: 'الجملة الاسمية تبدأ باسم وتتألف من ركنين مرفوعين: المبتدأ وهو المتحدث عنه، والخبر وهو الجزء الذي يكمل المعنى ويحقق الفائدة التامة للمستمع.',
+    summaryEn: 'Nominal sentences unite a nominative subject and predicate to form a coherent statement carrying primary (Dammah) or secondary (Alif/Waw) inflections.',
+
+    sections: [
+      {
+        titleAr: '1. ركنا الجملة الاسمية وحكمهما الإعرابي',
+        titleEn: '1. Subject and Predicate Architecture & Invariant Nominative Rule',
+        contentAr: 'تتكون الجملة الاسمية من ركنين أساسيين متلازمين:\n1. المبتدأ: وهو الاسم المرفوع الذي نبدأ به الجملة ونريد الإخبار عنه.\n2. الخبر: وهو الكلمة أو التركيب الذي يتمم معنى الجملة مع المبتدأ؛ فإذا سألت بعد ذكر المبتدأ: "ما به؟" أو "ما شأنه؟"، فإن الجواب هو الخبر.\n\nحكم المبتدأ والخبر: مرفوعان دائماً ما لم يدخل عليهما ناسخ.\nوعلامات رفعهما:\n- الضمة الظاهرة: في الاسم المفرد (الطالبُ مجتهدٌ)، وجمع التكسير (العلماءُ مصابيحُ)، وجمع المؤنث السالم (المعلماتُ مخلصاتٌ).\n- الألف: في المثنى (الطالبانِ مجتهدانِ).\n- الواو: في جمع المذكر السالم (المعلمونَ مخلصونَ)، وفي الأسماء الخمسة (أبوك رجلٌ فاضلٌ).',
+        contentEn: 'Nominal sentences require two nominative pillars: Mubtada (subject) and Khabar (predicate). Inflections include Dammah (singular/broken plural), Alif (dual), and Waw (sound masculine plural and five nouns).',
+        diagram: {
+          id: 'diag-arabic-sentence-struct',
+          figureNumberAr: 'شكل (2-1)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'بنية الجملة الاسمية ومقارنتها بالجملة الفعلية',
+          titleEn: 'Nominal Sentence Architecture vs Verbal Structure',
+          captionAr: 'مخطط تفصيلي يوضح تركيب الجملة الاسمية (المبتدأ + الخبر) وحكمهما الإعرابي المرفوع، ومقارنتها بالجملة الفعلية.',
+          captionEn: 'Structural schema contrasting Nominal sentences (Subject + Predicate) with Verbal sentences (Verb + Agent + Object).',
+          diagramType: 'arabic_sentence_structure',
+          takeawayFormulaAr: 'الجملة الاسمية = مبتدأ (مرفوع) + خبر (مرفوع متمم للمعنى)',
+          takeawayFormulaEn: 'Nominal Sentence = Mubtada (Nominative) + Khabar (Nominative Complement)',
+          keyLabels: [
+            { tagAr: 'المبتدأ والخبر', tagEn: 'Subject & Predicate', color: '#818cf8' },
+            { tagAr: 'علامات الرفع', tagEn: 'Nominative Markers', color: '#38bdf8' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (2-1): تحديد المبتدأ والخبر وعلامات رفعهما الإعرابية',
+          titleEn: 'Worked Example (2-1): Identifying Subject, Predicate & Inflection Markers',
+          equation: 'المبتدأ المرفوع + الخبر المرفوع المتمم',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'الجملة الأولى: "المُعَلِّمُونَ صَانِعُو الأَجْيَالِ".', 
+              textEn: 'Sentence 1: "Teachers are the shapers of generations."' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'المبتدأ: "المُعَلِّمُونَ" -> مبتدأ مرفوع وعلامة رفعه الواو لأنه جمع مذكر سالم.', 
+              textEn: 'Subject: "Al-Muallimoona" -> Nominative with Waw (Sound Masculine Plural).' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'الخبر: "صَانِعُو" -> خبر مرفوع وعلامة رفعه الواو لأنه جمع مذكر سالم، وحُذفت نونه للإضافة (صانعو الأجيال).', 
+              textEn: 'Predicate: "Saaniou" -> Nominative with Waw; Nun dropped due to Idhafah annexation.' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'الجملة الثانية: "أَخُوكَ ذُو خُلُقٍ حَسَنٍ". المبتدأ "أَخُوكَ" مرفوع بالواو لأنه من الأسماء الخمسة، والخبر "ذُو" مرفوع بالواو لأنه من الأسماء الخمسة.', 
+              textEn: 'Sentence 2: "Akhooka dhoo khuluqin". Both subject and predicate are nominative with Waw (Five Nouns).' 
+            }
+          ],
+          takeawayAr: 'الخبر لا يشترط أن يأتي ملاصقاً للمبتدأ مباشرة، بل هو الكلمة التي يكتمل بها المعنى والفائدة.',
+          takeawayEn: 'The predicate need not strictly adjoin the subject; it is defined by completing the propositional assertion.'
+        },
+        tipsAr: ['إذا كان المبتدأ جمع تكسير لغير العاقل جاز الإخبار عنه بالمفرد المؤنث؛ نقول: "الجبالُ شاهقةٌ" أو "الجبالُ شاهقاتٌ".']
+      },
+      {
+        titleAr: '2. أنواع وصور الخبر في الجملة الاسمية',
+        titleEn: '2. Predicate Classifications: Single, Sentence & Phrasal Forms',
+        contentAr: 'الخبر ليس دائماً كلمة مفردة، بل يأتي على ثلاثة أقسام رئيسة:\n\n1. خبر مفرد: ما ليس جملة ولا شبه جملة، حتى لو كان مثنى أو جمعاً (مثل: الطالبُ نشيطٌ، الطلابُ نشيطونَ).\n2. خبر جملة:\n   - جملة فعلية: (مثل: الطالبُ يُذَاكِرُ دُرُوسَهُ)؛ حيث الجملة الفعلية "يذاكر" في محل رفع خبر.\n   - جملة اسمية: (مثل: الحديقةُ أَزْهَارُهَا جَمِيلَةٌ)؛ وتشتمل على ضمير (الهاء) يعود على المبتدأ الأول.\n3. خبر شبه جملة:\n   - جار ومجرور: (مثل: العُصْفُورُ عَلَى الشَّجَرَةِ).\n   - ظرف زمان أو مكان: (مثل: السَّفَرُ غَداً، القَائِدُ أَمَامَ الجُنُودِ).',
+        contentEn: 'Predicates present across 3 typologies: Single Word (Mufrad), Full Sentence (Verbal/Nominal requiring a linking pronoun), and Phrasal (Prepositional / Adverbial quasi-sentence).',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (2-2): تمييز أنواع الخبر المتعددة وإعرابها محلياً',
+          titleEn: 'Worked Example (2-2): Discriminating Predicate Typologies & Local Parsing',
+          equation: 'المبتدأ + [الخبر ونوعه: مفرد / جملة فعلية / جملة اسمية / شبه جملة]',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'النموذج 1: "المُسْلِمُ يُحِبُّ الخَيْرَ". المبتدأ: المسلمُ. الخبر: جملة "يُحِبُّ الخيرَ" (جملة فعلية في محل رفع خبر).', 
+              textEn: 'Model 1: "The Muslim loves goodness". Predicate: "Loves goodness" (Verbal sentence in nominative place).' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'النموذج 2: "المَدْرَسَةُ فِنَاؤُهَا وَاسِعٌ". المبتدأ الأول: المدرسة. الخبر: "فناؤها واسع" (جملة اسمية مركبة من مبتدأ ثانٍ وخبره في محل رفع خبر المبتدأ الأول).', 
+              textEn: 'Model 2: "The school, its courtyard is vast". Predicate: Embedded nominal sentence with linking pronoun.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'النموذج 3: "النَّصْرُ قَرِيبٌ". المبتدأ: النصر. الخبر: "قريب" (خبر مفرد مرفوع بالضمة).', 
+              textEn: 'Model 3: "Victory is near". Predicate: Single word nominative with Dammah.' 
+            }
+          ],
+          takeawayAr: 'خبر الجملة الاسمية أو الفعلية يكون دائماً "في محل رفع"، ولا بد أن يشتمل على رابط (ضمير) يربطه بالمبتدأ.',
+          takeawayEn: 'Sentence predicates occupy nominative syntactic place and require an explicit or implicit referencing pronoun.'
+        },
+        tipsAr: ['شبه الجملة (الجار والمجرور أو الظرف) متعلق بمحذوف تقديره "كائن" أو "مستقر".']
+      }
+    ],
+
+    conceptMapSummaryAr: 'الجملة الاسمية تبدأ باسم وتتكون من: مبتدأ (مرفوع) + خبر (مرفوع متمم للمعنى). علامات الرفع: الضمة (مفرد، جمع تكسير، مؤنث سالم)، الألف (مثنى)، الواو (مذكر سالم، أسماء خمسة). ويأتي الخبر: مفرداً، أو جملة اسمية/فعلية، أو شبه جملة.',
+    conceptMapSummaryEn: 'Nominal Sentence = Subject (Nominative) + Predicate (Nominative Complement). Inflections: Dammah, Alif, Waw. Predicate Forms: Single Word, Sentence, Prepositional/Adverbial Phrase.',
+
+    goldenRulesAr: [
+      'القاعدة 1: الجملة الاسمية تبدأ باسم وتتألف من ركنين متلازمين هما المبتدأ والخبر.',
+      'القاعدة 2: المبتدأ والخبر كلاهما مرفوع دائماً في أصل اللغة.',
+      'القاعدة 3: الضمة هي علامة الرفع الأصلية للمفرد وجمع التكسير وجمع المؤنث السالم.',
+      'القاعدة 4: الألف هي علامة رفع المثنى (الكتابان مفيدان).',
+      'القاعدة 5: الواو هي علامة رفع جمع المذكر السالم (المجتهدون فائزون) والأسماء الخمسة (أخوك ذو فضل).',
+      'القاعدة 6: الخبر هو الجزء المتمم للفائدة، ولا يشترط أن يلي المبتدأ مباشرة.',
+      'القاعدة 7: خبر الجملة (الفعلية أو الاسمية) وخبر شبه الجملة يكون في محل رفع.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Nominal sentences commence with a noun and require Subject + Predicate.',
+      'Rule 2: Subject and predicate are strictly nominative by default.',
+      'Rule 3: Dammah is the cardinal primary nominative marker.',
+      'Rule 4: Alif is the secondary nominative marker for dual nouns.',
+      'Rule 5: Waw is the secondary nominative marker for sound masculine plurals and Five Nouns.',
+      'Rule 6: Predicates are defined by informational completion rather than strict adjacent adjacency.',
+      'Rule 7: Sentential and phrasal predicates occupy nominative syntactic place (Fee Mahalli Raf).'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lang-2-1',
+        questionAr: 'أعرب الجملة التالية إعراباً تفصيلياً تاماً: "الطَّالِبَانِ المُجْتَهِدَانِ فَائِزَانِ بالجَائِزَةِ".',
+        questionEn: 'Fully parse the sentence: "The two diligent students are winners of the prize."',
+        solutionStepsAr: [
+          '1. "الطَّالِبَانِ": مبتدأ مرفوع وعلامة رفعه الألف لأنه مثنى، والنون عوض عن التنوين في الاسم المفرد.',
+          '2. "المُجْتَهِدَانِ": نعت (صفة) مرفوع وعلامة رفعه الألف لأنه مثنى (لم يتمم المعنى بل وصف المبتدأ).',
+          '3. "فَائِزَانِ": خبر المبتدأ مرفوع وعلامة رفعه الألف لأنه مثنى (تم به المعنى).',
+          '4. "بالجَائِزَةِ": الباء حرف جر، والجائزةِ اسم مجرور بالكسرة الظاهرة.'
+        ],
+        solutionStepsEn: [
+          '1. "Al-Talibani": Subject nominative with Alif (Dual).',
+          '2. "Al-Mujtahidani": Adjective nominative with Alif.',
+          '3. "Faaizani": Predicate nominative with Alif (Dual) completing propositional sense.',
+          '4. "Bil-Jaaizati": Preposition + Genitive Noun with Kasrah.'
+        ],
+        answerAr: 'الطالبان: مبتدأ مرفوع بالألف | المجتهدان: نعت مرفوع بالألف | فائزان: خبر مرفوع بالألف | بالجائزة: جار ومجرور.',
+        answerEn: 'Subject, Adjective, Predicate (all dual nominative with Alif), followed by prepositional phrase.'
+      },
+      {
+        id: 'ex-lang-2-2',
+        questionAr: 'عين الخبر ونوعه في الجملة التالية: ﴿وَاللهُ يَعْلَمُ وَأَنْتُمْ لَا تَعْلَمُونَ﴾.',
+        questionEn: 'Identify the predicate and its type in the verse: "And Allah knows while you do not know."',
+        solutionStepsAr: [
+          '1. المبتدأ هو لفظ الجلالة "اللهُ" (مبتدأ مرفوع بالضمة الظاهرة).',
+          '2. الكلمة التي أخبرت عن المبتدأ وتممت المعنى هي الفعل "يَعْلَمُ" مع فاعله المستتر (تقديره هو).',
+          '3. إذن نوع الخبر: جملة فعلية (جملة "يعلم" في محل رفع خبر المبتدأ).'
+        ],
+        solutionStepsEn: [
+          '1. Subject is the Divine Name "Allah" (Nominative with Dammah).',
+          '2. Complementing utterance is the verbal phrase "Yalamu" (knows) with implied pronoun.',
+          '3. Predicate Classification: Verbal Sentence in nominative place.'
+        ],
+        answerAr: 'الخبر هو الجملة الفعلية "يَعْلَمُ" (في محل رفع خبر).',
+        answerEn: 'Predicate: The verbal sentence "Yalamu" (in nominative place).'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lang-2',
       lectureId: 'lang-2',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الثانية: المبتدأ والخبر',
-      titleEn: 'Lecture 2 Assessment: Nominal Sentences',
+      titleAr: 'الاختبار الإلزامي للمحاضرة الثانية: المبتدأ والخبر وعلامات رفعهما',
+      titleEn: 'Lecture 2 Assessment: Nominal Sentences Mastery',
       passingScore: 80,
       questions: [
         {
           id: 'qlg2-1',
-          textAr: 'في جملة "الْمُؤْمِنُونَ صَادِقُونَ"، ما هي علامة رفع المبتدأ والخبر؟',
-          textEn: 'In "The believers are truthful", what is the nominative marker?',
-          optionsAr: ['الواو لأنه جمع مذكر سالم', 'الضمة الظاهرة', 'الألف لأنه مثنى', 'الفتحة'],
-          optionsEn: ['Waw (Sound Masculine Plural)', 'Dammah', 'Alif (Dual)', 'Fathah'],
+          textAr: 'في جملة "المُهَنْدِسُونَ البَارِعُونَ مُكَرَّمُونَ"، ما هي علامة رفع المبتدأ والخبر؟',
+          textEn: 'In "The ingenious engineers are honored", what is the nominative marker?',
+          optionsAr: ['الواو لأنه جمع مذكر سالم', 'الضمة الظاهرة', 'الألف لأنه مثنى', 'ثبوت النون'],
+          optionsEn: ['Waw (Sound Masculine Plural)', 'Dammah', 'Alif (Dual)', 'Retained Nun'],
           correctIndex: 0,
-          conceptTestedAr: 'علامات الرفع الفرعية',
-          conceptTestedEn: 'Secondary Nominative Markers',
-          explanationAr: 'جمع المذكر السالم يُرفع بالواو نيابة عن الضمة، فالمبتدأ والخبر هنا مرفوعان بالواو.',
-          explanationEn: 'Sound masculine plurals take Waw as the nominative inflection marker.',
+          conceptTestedAr: 'علامات الرفع الفرعية لجمع المذكر السالم',
+          conceptTestedEn: 'Secondary Nominative Markers for Plurals',
+          explanationAr: 'جمع المذكر السالم يُرفع بالواو نيابة عن الضمة، فالمبتدأ (المهندسون) والخبر (مكرمون) كلاهما مرفوع وعلامة رفعه الواو.',
+          explanationEn: 'Sound masculine plurals take Waw as their secondary nominative inflection marker.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qlg2-2',
+          textAr: 'ما نوع الخبر في جملة: "المُؤْمِنُ أَخْلَاقُهُ سَامِيَةٌ"؟',
+          textEn: 'What is the predicate type in: "The believer, his morals are sublime"?',
+          optionsAr: ['خبر جملة اسمية', 'خبر مفرد', 'خبر جملة فعلية', 'خبر شبه جملة'],
+          optionsEn: ['Nominal Sentence Predicate', 'Single Word Predicate', 'Verbal Sentence Predicate', 'Phrasal Predicate'],
+          correctIndex: 0,
+          conceptTestedAr: 'صور الخبر: الجملة الاسمية ورابط الضمير',
+          conceptTestedEn: 'Nominal Sentence Predicate Identification',
+          explanationAr: '"أخلاقه سامية" جملة اسمية مركبة من مبتدأ ثانٍ (أخلاق) متصل بضمير (الهاء) وخبر للمبتدأ الثاني (سامية)، والجملة الاسمية كلها في محل رفع خبر للمبتدأ الأول (المؤمن).',
+          explanationEn: 'The clause constitutes an embedded nominal sentence with a linking pronoun functioning as the primary predicate.',
           difficulty: 'medium'
+        },
+        {
+          id: 'qlg2-3',
+          textAr: 'في جملة "المُعَلِّمُ أَمَامَ التَّلَامِيذِ"، ما هو إعراب "أَمَامَ" وموقع شبه الجملة؟',
+          textEn: 'In "The teacher is in front of the students", what is the syntactic role of "Amama"?',
+          optionsAr: [
+            'ظرف مكان منصوب، وشبه الجملة متعلق بمحذوف خبر في محل رفع',
+            'مبتدأ ثانٍ مرفوع بالضمة',
+            'مفعول به منصوب للفعل المحذوف',
+            'نعت منصوب للمعلم'
+          ],
+          optionsEn: [
+            'Adverb of place (accusative), with the phrase functioning as predicate in nominative place',
+            'Second subject nominative with Dammah',
+            'Direct object accusative',
+            'Adjective'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'إعراب خبر شبه الجملة الظرفي',
+          conceptTestedEn: 'Adverbial Predicate Parsing',
+          explanationAr: '"أمامَ" ظرف مكان منصوب، وشبه الجملة الظرفية متعلق بمحذوف تقديره "كائن" أو "مستقر" في محل رفع خبر للمبتدأ "المعلم".',
+          explanationEn: 'Amama is an adverb of place forming a locative phrasal predicate in the nominative place.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qlg2-4',
+          textAr: 'أي من الجمل التالية كُتبت وضُبطت إعرابياً بشكل سليم وصحيح 100%؟',
+          textEn: 'Which sentence is 100% grammatically correct in nominative inflection?',
+          optionsAr: [
+            'أَبُوكَ ذُو عِلْمٍ وَفَضْلٍ',
+            'أَبَاكَ ذَا عِلْمٍ وَفَضْلٍ',
+            'أَبِيكَ ذِي عِلْمٍ وَفَضْلٍ',
+            'أَبُوكَ ذَا عِلْمٍ وَفَضْلٍ'
+          ],
+          optionsEn: [
+            'Abooka dhoo ilmin (Both with Waw)',
+            'Abaaka dhaa ilmin (Both with Alif)',
+            'Abeeka dhee ilmin (Both with Yaa)',
+            'Abooka dhaa ilmin'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'تطبيق علامات رفع الأسماء الخمسة في المبتدأ والخبر',
+          conceptTestedEn: 'Five Nouns Nominative Agreement in Subject & Predicate',
+          explanationAr: 'الأسماء الخمسة تُرفع بالواو؛ فالمبتدأ "أَبُوكَ" مرفوع بالواو، والخبر "ذُو" مرفوع بالواو أيضاً.',
+          explanationEn: 'Both subject and predicate from the Five Nouns take Waw in the nominative case (Abooka Dhoo).',
+          difficulty: 'hard'
         }
       ]
     }
@@ -2266,60 +3159,284 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
     order: 3,
     titleAr: 'المحاضرة 3: الجملة الفعلية: الفعل والفاعل وعلامات الإعراب',
     titleEn: 'Lecture 3: Verbal Sentences: Verb, Agent & Inflections',
-    subtitleAr: 'فهم أركان الجملة الفعلية، وأحكام الفاعل المرفوع وصوره المختلفة',
-    subtitleEn: 'Master verb types, explicit and implicit agents, and case markers.',
-    durationMinutes: 30,
+    subtitleAr: 'فهم أركان الجملة الفعلية، وأحكام الفاعل المرفوع وصوره المتعددة وعلامات إعرابه ومفهوم المفعول به',
+    subtitleEn: 'Master verb types, explicit, attached, and implicit agents, case markers, and transitivity.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'lang-2',
     prerequisiteTitleAr: 'المحاضرة 2: الجملة الاسمية وركناها الأساسيان: المبتدأ والخبر',
     prerequisiteTitleEn: 'Lecture 2: Nominal Sentences: Subject & Predicate Essentials',
-    keyConceptsAr: ['الجملة الفعلية تبدأ بفعل (ماضٍ أو مضارع أو أمر)', 'الفاعل: اسم مرفوع يدل على من قام بالفعل', 'صور الفاعل: اسم ظاهر أو ضمير متصل أو ضمير مستتر'],
-    keyConceptsEn: ['Verbal Sentence Structure', 'Faail (Agent / Doer)', 'Explicit vs Implicit Pronoun Agents'],
-    summaryAr: 'الجملة الفعلية تبدأ بفعل يعبر عن حدث، ولا بد لكل فعل من فاعل عاقل أو غير عاقل يحدثه؛ والفاعل دائماً مرفوع.',
-    summaryEn: 'Verbal sentences center on actions requiring an explicit or implicit agent in nominative case.',
-    sections: [
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول متوسط - المرحلة المتوسطة (لغتي الخالدة)',
+    gradeLevelNameEn: 'Grade 7 / Middle School - Arabic Language Studies',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثالثة: الوطن والعطاء',
+    unitTitleEn: 'Unit 3: Homeland & Dedication',
+    lessonNumberAr: 'الدرس 3: الوظيفة النحوية: الجملة الفعلية والفاعل وأنواعه',
+    lessonNumberEn: 'Lesson 3: Syntactic Roles: Verbal Sentences, Agents & Types',
+
+    warmupHookAr: 'إذا كانت الجملة الاسمية تعبر عن الثبوت والاستقرار، فإن "الجملة الفعلية" هي لغة الحركة والحدث والتجدد في العربية. لا يمكن لأي فعل في الكون أن يحدث من تلقاء نفسه؛ فلكل عمل فاعل أوجده! كيف نحدد الفاعل حين يختفي في ضمير مستتر أو يتصل كحرف واحد بالفعل؟ وكيف نميز بين الفاعل المرفوع والمفعول به المنصوب؟',
+    warmupHookEn: 'Verbal sentences bring movement and dynamism to language. Every action demands an agent (Faail). Master explicit, attached, and implicit pronoun agents with infallible precision.',
+
+    learningOutcomesAr: [
+      'أن يحدد الطالب ركني الجملة الفعلية الأساسيين (الفعل والفاعل) في شواهد متنوعة',
+      'أن يميز الطالب بين صور الفاعل الثلاث (اسم ظاهر، ضمير متصل، ضمير مستتر)',
+      'أن يضبط الطالب الفاعل بعلامة الرفع المناسبة (الضمة، الألف، الواو)',
+      'أن يفرق الطالب بين الفعل اللازم والفعل المتعدي الذي ينصب مفعولاً به'
+    ],
+    learningOutcomesEn: [
+      'Locate primary pillars of verbal sentences (Verb and Faail / Agent)',
+      'Distinguish 3 agent forms: Explicit Noun, Attached Pronoun, and Latent / Implicit Pronoun',
+      'Vocalize agents with correct nominative markers across all noun subclasses',
+      'Differentiate intransitive vs transitive verbs governing accusative objects'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. الفاعل وأشكاله',
-        titleEn: '1. Agent Forms and Rules',
-        contentAr: 'في جملة "حَفِظَ الطَّالِبُ القَصِيدَةَ"، الفعل هو "حَفِظَ" والفاعل هو "الطَّالِبُ" وهو اسم ظاهر مرفوع بالضمة.',
-        contentEn: 'The agent identifies who executes the verbal action.',
-        interactiveExample: {
-          titleAr: 'تطبيق: استخراج الفاعل',
-          titleEn: 'Worked Example: Locating the Agent',
-          equation: 'مَن فعل الفعل؟ = الفاعل المرفوع',
-          steps: [
-            { stepNumber: 1, textAr: 'الجملة: "انْتَصَرَ الْحَقُّ".', textEn: 'Sentence: "Truth prevailed."' },
-            { stepNumber: 2, textAr: 'نسأل: مَن الذي انتصر؟ الجواب: "الْحَقُّ".', textEn: 'Ask: Who prevailed? Answer: "Truth".' },
-            { stepNumber: 3, textAr: 'إذن "الْحَقُّ" فاعل مرفوع وعلامة رفعه الضمة الظاهرة.', textEn: 'Thus "Truth" is the agent (Faail) nominative with Dammah.' }
-          ],
-          takeawayAr: 'الفاعل يقع دائماً بعد الفعل، ولا يتقدم عليه أبداً في الإعراب.',
-          takeawayEn: 'In Arabic grammar syntax, the Faail strictly succeeds its governing verb.'
-        },
-        tipsAr: ['إذا تقدم الفاعل على الفعل تحولت الجملة من فعلية إلى اسمية.'],
-        tipsEn: ['If the doer precedes the verb, the sentence reclassifies as nominal.']
+        termAr: 'الجملة الفعلية (Verbal Sentence)',
+        termEn: 'Verbal Sentence',
+        definitionAr: 'كل جملة تبدأ بفعل تام (ماضٍ أو مضارع أو أمر)، وتتألف أساساً من فعل وفاعل.',
+        definitionEn: 'A sentence commencing with a finite verb and constituted fundamentally of Verb and Agent.'
+      },
+      {
+        termAr: 'الفاعل (Faail / Agent)',
+        termEn: 'Faail (Agent / Subject of Verb)',
+        definitionAr: 'اسم مرفوع أو في محل رفع، يقع بعد فعل تام مبني للمعلوم ويدل على من قام بالفعل أو اتصف به.',
+        definitionEn: 'The nominative entity succeeding an active verb, denoting the doer or bearer of the action.'
+      },
+      {
+        termAr: 'الضمير المتصل (Attached Pronoun Agent)',
+        termEn: 'Attached Pronoun',
+        definitionAr: 'ضمير يتصل بالفعل مباشرة ليكون في محل رفع فاعل (مثل تاء الفاعل، نا الفاعلين، واو الجماعة، ألف الاثنين، ياء المخاطبة، نون النسوة).',
+        definitionEn: 'Nominative pronoun suffixes directly fusing to verbs (Taa, Na, Waw of Plurality, Alif of Dual, Nun of Femininity).'
+      },
+      {
+        termAr: 'الضمير المستتر (Implicit / Latent Pronoun)',
+        termEn: 'Latent Pronoun',
+        definitionAr: 'ضمير غير منطوق ولا مكتوب يُقدر في الذهن ويكون في محل رفع فاعل (مثل: محمدٌ قَرَأَ [أي: هو]).',
+        definitionEn: 'An unpronounced, implicit subject pronoun mentally inferred from context (e.g. He/She/I).'
       }
     ],
+
+    keyConceptsAr: [
+      'أركان الجملة الفعلية: فعل تام + فاعل مرفوع',
+      'صور الفاعل: اسم ظاهر، ضمير متصل، ضمير مستتر',
+      'الفاعل يقع دائماً بعد الفعل ولا يتقدم عليه أبداً في الإعراب',
+      'الفعل اللازم يكتفي بفاعله، والمتعدي يتعدى لينصب مفعولاً به'
+    ],
+    keyConceptsEn: [
+      'Verbal Sentence Foundations: Finite Verb + Nominative Agent',
+      'Three Agent Typologies: Explicit, Attached, Latent',
+      'Syntactic Precedence Rule (Agent strictly follows verb)',
+      'Intransitive vs Transitive Verbal Complements'
+    ],
+    summaryAr: 'تبدأ الجملة الفعلية بفعل يعبر عن حدث مقترن بزمن، ويليه الفاعل المرفوع دائماً والذي قد يكون اسماً ظاهراً أو ضميراً متصلاً أو مستتراً، وقد يحتاج الفعل المتعدي إلى مفعول به منصوب لتتم الفائدة.',
+    summaryEn: 'Verbal sentences originate with an action verb followed by its nominative agent (explicit noun or pronoun), occasionally completed by an accusative object when transitive.',
+
+    sections: [
+      {
+        titleAr: '1. أركان الجملة الفعلية وأحكام الفاعل وصوره',
+        titleEn: '1. Verbal Sentence Pillars & Agent Typologies',
+        contentAr: 'تتألف الجملة الفعلية من ركنين رئيسين:\n1. الفعل: وهو اللبنة الأولى الدالة على الحدث والزمن.\n2. الفاعل: وهو الاسم المرفوع الذي يدل على من فعل الفعل أو اتصف به، وحكمه الإعرابي: الرَّفْعُ دائماً.\n\nيأتي الفاعل على ثلاث صور رئيسة:\n- أولاً: اسم ظاهر: (مثل: حَفِظَ الطَّالِبُ القُرْآنَ) -> الفاعل "الطالبُ" اسم مفرد مرفوع بالضمة.\n- ثانياً: ضمير متصل: (مثل: كَتَبْتُ الواجبَ - الطلابُ حَضَرُوا - الفتياتُ كَتَبْنَ) -> التاء، واو الجماعة، ونون النسوة ضمائر متصلة مبنية في محل رفع فاعل.\n- ثالثاً: ضمير مستتر: (مثل: الجنديُّ دَافَعَ عن الوطنِ -> أي دافع [هُوَ] - اكْتُبْ دَرْسَكَ -> أي اكتب [أَنْتَ]).',
+        contentEn: 'Verbal sentences feature Verb and Agent. The Agent is strictly nominative and manifests as an Explicit Noun, Attached Pronoun (e.g. Taa, Waw, Nun), or Latent Pronoun (Huwa, Anta, Ana).',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (3-1): تحديد صور الفاعل وإعرابه في شواهد متعددة',
+          titleEn: 'Worked Example (3-1): Identifying Agent Forms & Syntactic Parsing',
+          equation: 'الفعل + السؤال: (مَن فعل الحدث؟) = الفاعل وصورته',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'المثال 1: "انْتَصَرَ الحَقُّ". نسأل: من انتصر؟ الجواب: "الحَقُّ" -> فاعل اسم ظاهر مرفوع وعلامة رفعه الضمة الظاهرة.', 
+              textEn: 'Example 1: "Truth triumphed". Agent: "Al-Haqqu" (Explicit Noun nominative with Dammah).' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'المثال 2: "سَاعَدْتُ المُحْتَاجِينَ". نسأل: من ساعد؟ تاء المتكلم -> التاء ضمير متصل مبني على الضم في محل رفع فاعل.', 
+              textEn: 'Example 2: "I helped the needy". Agent: Attached Taa pronoun in nominative place.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'المثال 3: "خَالِدٌ قَرَأَ الكِتَابَ". الفعل "قَرَأَ" والفاعل ضمير مستتر جوازاً تقديره "هُوَ" يعود على خالد (ولا يجوز إعراب خالد فاعلاً لأنه تقدم على الفعل).', 
+              textEn: 'Example 3: "Khalid read the book". Agent is an implicit pronoun (Huwa); Khalid is the preceding subject.' 
+            }
+          ],
+          takeawayAr: 'الفاعل لا يتقدم على فعله أبداً؛ فإذا تقدم الاسم على الفعل أصبح "مبتدأ" والفاعل ضميراً مستتراً يعود عليه.',
+          takeawayEn: 'In Arabic grammar, the Agent never precedes the verb; if a noun precedes, it becomes a Subject (Mubtada).'
+        },
+        tipsAr: ['تاء التأنيث الساكنة (كَتَبَتْ) حرف لا محل له من الإعراب وليست فاعلاً؛ الفاعل بعدها مستتر (هي) أو اسم ظاهر (كتبت هندٌ).']
+      },
+      {
+        titleAr: '2. الفعل اللازم والمتعدي والمفعول به المنصوب',
+        titleEn: '2. Intransitive vs Transitive Verbs & Accusative Objects',
+        contentAr: 'ينقسم الفعل من حيث حاجته إلى مفعول به إلى نوعين:\n1. الفعل اللازم: هو الفعل الذي يكتفي بفاعله لإتمام معنى الجملة ولا ينصب مفعولاً به (مثل: نَامَ الطِّفْلُ، أَشْرَقَتِ الشَّمْسُ، جَلَسَ الضَّيْفُ).\n2. الفعل المتعدي: هو الفعل الذي لا يكتفي بفاعله، بل يحتاج إلى مفعول به واحد أو أكثر لإتمام معنى الجملة (مثل: كَرَّمَ المُعَلِّمُ المُتَفَوِّقِينَ).\n\nالمفعول به: اسم منصوب يدل على من وقع عليه فعل الفاعل.\nعلامات نصبه:\n- الفتحة: في المفرد وجمع التكسير (قرأتُ كتاباً / كتباً).\n- الياء: في المثنى وجمع المذكر السالم (كافأتُ الطالبَيْنِ / الفائزِينَ).\n- الكسرة نيابة عن الفتحة: في جمع المؤنث السالم (شكرتُ المعلماتِ).\n- الألف: في الأسماء الخمسة (أكرمتُ أباك).',
+        contentEn: 'Verbs are Intransitive (Lazim, satisfying meaning with Agent alone) or Transitive (Mutaaddi, governing accusative objects). Accusative markers include Fathah (singular), Yaa (dual/plural), Kasrah (sound feminine plural), and Alif (Five Nouns).',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (3-2): تمييز الفعل اللازم من المتعدي وإعراب المفعول به',
+          titleEn: 'Worked Example (3-2): Transitivity Testing & Direct Object Inflections',
+          equation: 'الفعل + (ماذا / هـ الغيبة) -> إن قبلها فهو متعدٍ',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'فحص "ذَهَبَ": هل يصح أن نقول "ماذا ذهب؟" أو "ذهبَه"؟ لا يصح -> إذن "ذهب" فعل لازم يكتفي بفاعله (ذهب الطالبُ إلى المدرسةِ).', 
+              textEn: 'Test "Dhahaba" (went): Cannot take direct object pronoun -> Intransitive.' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'فحص "شَرَحَ": يصح أن نقول "شَرَحَهُ المعلمُ" و"ماذا شرح؟ شرحَ الدرسَ" -> إذن "شرح" فعل متعدٍ.', 
+              textEn: 'Test "Sharaha" (explained): Readily accepts object pronoun (Sharahahu) -> Transitive.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'إعراب المفعول به في: "كَرَّمَتِ المَدْرَسَةُ الطَّالِبَاتِ المُتَفَوِّقَاتِ": "الطَّالِبَاتِ" مفعول به منصوب وعلامة نصبه الكسرة نيابة عن الفتحة لأنه جمع مؤنث سالم.', 
+              textEn: 'Parse: "Al-Talibati" is direct object accusative with Kasrah substituting for Fathah (Sound Feminine Plural).' 
+            }
+          ],
+          takeawayAr: 'علامة نصب جمع المؤنث السالم هي الكسرة نيابة عن الفتحة وهي من أهم مواضع الاختبارات النحوية.',
+          takeawayEn: 'Sound feminine plurals take Kasrah as an accusative substitution marker, a prime testing focal point.'
+        },
+        tipsAr: ['للتفريق السريع بين اللازم والمتعدي: صل بالفعل هاء الغيبة، فإن قبلها فهو متعدٍ (فَهِمَ -> فَهِمَهُ).']
+      }
+    ],
+
+    conceptMapSummaryAr: 'الجملة الفعلية = فعل تام + فاعل مرفوع (+ مفعول به منصوب إن كان الفعل متعدياً). صور الفاعل: اسم ظاهر، ضمير متصل (توانينا)، ضمير مستتر. علامات رفع الفاعل: الضمة، الألف، الواو. علامات نصب المفعول به: الفتحة، الياء، الكسرة، الألف.',
+    conceptMapSummaryEn: 'Verbal Sentence = Finite Verb + Nominative Agent (+ Accusative Object if transitive). Agent Forms: Explicit Noun, Attached Pronoun, Latent Pronoun. Nominative Markers: Dammah, Alif, Waw.',
+
+    goldenRulesAr: [
+      'القاعدة 1: الجملة الفعلية تبدأ بفعل تام، ولا بد لكل فعل من فاعل يقوم به.',
+      'القاعدة 2: الفاعل مرفوع دائماً، ولا يتقدم على فعله في الإعراب مطلقاً.',
+      'القاعدة 3: ضمائر الرفع المتصلة المجموعة في (تَوَانَيْنَا) تكون دائماً في محل رفع فاعل.',
+      'القاعدة 4: الضمير المستتر يقدر بـ (هو، هي، أنا، نحن، أنت) حسب سياق الفعل.',
+      'القاعدة 5: الفعل اللازم يكتفي بفاعله، بينما الفعل المتعدي يتعدى لنصب مفعول به.',
+      'القاعدة 6: المفعول به منصوب دائماً، وتكون علامة نصبه الكسرة في جمع المؤنث السالم والألف في الأسماء الخمسة.',
+      'القاعدة 7: تاء التأنيث الساكنة حرف لا محل له من الإعراب، بينما تاء الفاعل المتحركة ضمير في محل رفع فاعل.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Verbal sentences commence with a finite verb requiring an agent.',
+      'Rule 2: The Agent is strictly nominative and never precedes its governing verb in syntax.',
+      'Rule 3: Attached nominative pronouns (Tawanayna) occupy nominative Faail place.',
+      'Rule 4: Latent pronouns are inferred contextually (Huwa, Hiya, Ana, Nahnu, Anta).',
+      'Rule 5: Intransitive verbs suffice with an agent; transitive verbs govern accusative objects.',
+      'Rule 6: Direct objects are strictly accusative (taking Kasrah for feminine plurals and Alif for Five Nouns).',
+      'Rule 7: Quiescent feminine Taa is a mere letter, whereas mobile agent Taa is a full pronoun.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lang-3-1',
+        questionAr: 'استخرج الفاعل وبين نوعه وعلامة إعرابه في الجملة: ﴿إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ * وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا﴾.',
+        questionEn: 'Extract the agents, their types, and inflections in Surah An-Nasr.',
+        solutionStepsAr: [
+          '1. الفعل "جَاءَ": الفاعل هو "نَصْرُ" (نوعه: اسم ظاهر، مرفوع بالضمة الظاهرة).',
+          '2. الفعل "رَأَيْتَ": الفاعل هو "التاء" المتحركة (نوعه: ضمير متصل مبني في محل رفع فاعل).',
+          '3. الفعل "يَدْخُلُونَ": الفاعل هو "واو الجماعة" (نوعه: ضمير متصل مبني في محل رفع فاعل).'
+        ],
+        solutionStepsEn: [
+          '1. "Jaa-a": Agent is "Nasru" (Explicit Noun, nominative with Dammah).',
+          '2. "Ra-ayta": Agent is attached Taa pronoun in nominative place.',
+          '3. "Yadkhuloona": Agent is attached Waw of plurality in nominative place.'
+        ],
+        answerAr: '1) نَصْرُ: اسم ظاهر مرفوع بالضمة | 2) التاء في رأيت: ضمير متصل | 3) الواو في يدخلون: ضمير متصل.',
+        answerEn: '1) Nasru: Explicit Noun | 2) Taa: Attached Pronoun | 3) Waw: Attached Pronoun.'
+      },
+      {
+        id: 'ex-lang-3-2',
+        questionAr: 'أعرب ما تحته خط في الجملة: "شَكَرَ المُدِيرُ <u>المُعَلِّمَاتِ المُخْلِصَاتِ</u>".',
+        questionEn: 'Fully parse the underlined phrase: "The principal thanked the dedicated female teachers."',
+        solutionStepsAr: [
+          '1. "المُعَلِّمَاتِ": مفعول به منصوب وعلامة نصبه الكسرة الظاهرة نيابة عن الفتحة لأنه جمع مؤنث سالم.',
+          '2. "المُخْلِصَاتِ": نعت (صفة) منصوب وعلامة نصبه الكسرة الظاهرة لأنه يتبع المنعوت جمع المؤنث السالم في النصب.'
+        ],
+        solutionStepsEn: [
+          '1. "Al-Muallimati": Direct object accusative with Kasrah substituting for Fathah (Sound Feminine Plural).',
+          '2. "Al-Mukhlisati": Adjective accusative with Kasrah following its qualified noun.'
+        ],
+        answerAr: 'المعلماتِ: مفعول به منصوب بالكسرة نيابة عن الفتحة | المخلصاتِ: نعت منصوب بالكسرة.',
+        answerEn: 'Direct object and modifying adjective, both accusative with Kasrah.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lang-3',
       lectureId: 'lang-3',
       titleAr: 'الاختبار الإلزامي للمحاضرة الثالثة: الجملة الفعلية والفاعل',
-      titleEn: 'Lecture 3 Assessment: Verbal Sentences',
+      titleEn: 'Lecture 3 Assessment: Verbal Sentences Mastery',
       passingScore: 80,
       questions: [
         {
           id: 'qlg3-1',
-          textAr: 'في جملة "كَتَبْتُ الدَّرْسَ"، ما هو الفاعل؟',
-          textEn: 'In "I wrote the lesson", what serves as the agent?',
-          optionsAr: ['التاء المتحركة (تاء الفاعل) ضمير متصل', 'الدَّرْسَ', 'ضمير مستتر تقديره هو', 'الفعل كَتَبَ'],
-          optionsEn: ['The attached Taa pronoun', 'The lesson', 'Implicit pronoun (Huwa)', 'The verb itself'],
+          textAr: 'في جملة "كَتَبْتُ الوَاجِبَ"، ما هو الموقع الإعرابي لـ "التاء" المتحركة؟',
+          textEn: 'In "I wrote the homework", what is the syntactic role of the attached Taa?',
+          optionsAr: ['ضمير متصل مبني في محل رفع فاعل', 'تاء التأنيث لا محل لها من الإعراب', 'مفعول به مقدم', 'نعت للفعل'],
+          optionsEn: ['Attached pronoun in nominative place as Faail (Agent)', 'Quiescent feminine marker', 'Fronted object', 'Adjective'],
           correctIndex: 0,
-          conceptTestedAr: 'الفاعل ضميراً متصلاً',
-          conceptTestedEn: 'Attached Pronoun Agents',
-          explanationAr: 'التاء في "كتبتُ" هي تاء الفاعل، وهي ضمير متصل مبني في محل رفع فاعل.',
-          explanationEn: 'The attached Taa functions syntactically as the nominative pronoun agent.',
+          conceptTestedAr: 'إعراب تاء الفاعل كضمير متصل',
+          conceptTestedEn: 'Attached Pronoun Agent Parsing',
+          explanationAr: 'التاء المتحركة (كتبتُ / كتبتَ / كتبتِ) هي تاء الفاعل، وهي ضمير متصل مبني في محل رفع فاعل.',
+          explanationEn: 'The mobile Taa is the subject pronoun functioning syntactically as the nominative agent.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qlg3-2',
+          textAr: 'في جملة "المُعَلِّمُ شَرَحَ الدَّرْسَ"، أين يقع الفاعل للفعل "شَرَحَ"؟',
+          textEn: 'In "The teacher explained the lesson", where is the agent of "Sharaha"?',
+          optionsAr: [
+            'ضمير مستتر جوازاً تقديره (هُوَ) يعود على المعلم',
+            'كلمة (المعلم) المتقدمة في أول الجملة',
+            'كلمة (الدرس)',
+            'الفعل نفسه'
+          ],
+          optionsEn: [
+            'Implicit pronoun (Huwa) referring back to the teacher',
+            'The preceding word (Al-Muallim)',
+            'The word (Al-Dars)',
+            'The verb itself'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'الفاعل ضميراً مستتراً وعدم تقدم الفاعل على الفعل',
+          conceptTestedEn: 'Latent Pronoun Agent & Non-Precedence Rule',
+          explanationAr: 'الفاعل لا يتقدم على الفعل مطلقاً؛ لذا "المعلم" مبتدأ مرفوع، وفاعل "شرح" ضمير مستتر تقديره (هو) يعود على المعلم.',
+          explanationEn: 'The agent cannot precede its verb; thus "Al-Muallim" is the subject and the verb holds a latent pronoun agent (Huwa).',
           difficulty: 'medium'
+        },
+        {
+          id: 'qlg3-3',
+          textAr: 'ما هي علامة نصب المفعول به في جملة: "احْتَرَمْتُ ذَا الفَضْلِ وَالعِلْمِ"؟',
+          textEn: 'What is the accusative marker for the object in: "I respected the possessor of merit"?',
+          optionsAr: ['الألف لأنه من الأسماء الخمسة', 'الفتحة الظاهرة', 'الياء لأنه مثنى', 'الكسرة'],
+          optionsEn: ['Alif (Five Nouns)', 'Fathah', 'Yaa', 'Kasrah'],
+          correctIndex: 0,
+          conceptTestedAr: 'علامات نصب الأسماء الخمسة',
+          conceptTestedEn: 'Five Nouns Accusative Case Markers',
+          explanationAr: 'الأسماء الخمسة تُنصب بالألف نيابة عن الفتحة؛ فكلمة "ذَا" مفعول به منصوب وعلامة نصبه الألف لأنه من الأسماء الخمسة.',
+          explanationEn: 'The Five Nouns take Alif as the accusative inflection marker (Dhaa).',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qlg3-4',
+          textAr: 'أي من الجمل التالية تشتمل على "فعل متعدٍ" استوفى مفعوله المنصوب؟',
+          textEn: 'Which of the following sentences features a transitive verb with its object?',
+          optionsAr: [
+            'رَعَى الرَّاعِي المَاشِيَةَ فِي المَرْعَى',
+            'نَامَ الطِّفْلُ فِي سَرِيرِهِ هَادِئاً',
+            'جَلَسَ الشَّيْخُ تَحْتَ الشَّجَرَةِ',
+            'انْطَلَقَ القِطَارُ سَرِيعاً'
+          ],
+          optionsEn: [
+            'The shepherd tended the cattle in the pasture',
+            'The child slept peacefully in his bed',
+            'The elder sat under the tree',
+            'The train launched swiftly'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'التمييز بين الفعل اللازم والفعل المتعدي',
+          conceptTestedEn: 'Transitive vs Intransitive Sentence Identification',
+          explanationAr: 'الفعل "رَعَى" فعل متعدٍ نصب المفعول به "المَاشِيَةَ". أما الأفعال (نام، جلس، انطلق) فهي أفعال لازمة اكتفت بفاعلها.',
+          explanationEn: 'The verb "Raa" is transitive and governs the accusative object "Al-Maashiyah".',
+          difficulty: 'hard'
         }
       ]
     }
@@ -2329,59 +3446,301 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
     order: 4,
     titleAr: 'المحاضرة 4: مهارات الفهم القرائي واستخراج الأفكار الرئيسة والإملاء',
     titleEn: 'Lecture 4: Reading Comprehension, Main Ideas & Orthography',
-    subtitleAr: 'استراتيجيات استيعاب المقروء، والتمييز بين همزتي الوصل والقطع في الكتابة',
-    subtitleEn: 'Master textual comprehension, thematic extraction, and Hamzah orthography.',
-    durationMinutes: 30,
+    subtitleAr: 'استراتيجيات استيعاب المقروء، وتفكيك النصوص، والتمييز القطعي بين همزتي الوصل والقطع كتابةً ونطقاً',
+    subtitleEn: 'Master textual comprehension, thematic extraction, fact vs opinion, and Hamzat Al-Wasl vs Al-Qat orthography.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'lang-3',
     prerequisiteTitleAr: 'المحاضرة 3: الجملة الفعلية: الفعل والفاعل وعلامات الإعراب',
     prerequisiteTitleEn: 'Lecture 3: Verbal Sentences: Verb, Agent & Inflections',
-    keyConceptsAr: ['تحديد الفكرة الرئيسة والأفكار الفرعية للنص', 'التمييز بين الحقيقة والرأي في النصوص', 'قاعدة همزة الوصل وهمزة القطع وطريقة فحصها بحرف الواو'],
-    keyConceptsEn: ['Main vs Supporting Thematic Ideas', 'Fact vs Opinion Differentiation', 'Hamzat Al-Wasl vs Al-Qat Orthography'],
-    summaryAr: 'نختتم مهارات اللغة بتنمية مهارات الفهم القرائي المتقدم وتطبيق القواعد الإملائية السليمة في التفريق بين همزتي الوصل والقطع.',
-    summaryEn: 'Synthesize reading comprehension strategies with foundational Arabic orthography rules.',
-    sections: [
+
+    // Official Curriculum Metadata
+    gradeLevelNameAr: 'الصف الأول متوسط - المرحلة المتوسطة (لغتي الخالدة)',
+    gradeLevelNameEn: 'Grade 7 / Middle School - Arabic Language Studies',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الرابعة: التواصل والمهارات اللغوية والكتابية',
+    unitTitleEn: 'Unit 4: Communication & Writing Orthography',
+    lessonNumberAr: 'الدرس 4: الرسم الإملائي ومهارات الفهم القرائي والتحليل',
+    lessonNumberEn: 'Lesson 4: Arabic Orthography & Textual Deconstruction',
+
+    warmupHookAr: 'القراءة ليست مجرد فك لرموز الحروف، بل هي حوار فكري عميق بين القارئ والكاتب لاستخراج الدرر والتمييز بين الحقيقة المثبتة والرأي الذاتي. وبالمثل، فإن كتابة الهمزة في مطلع الكلمات (أ / إ / ا) هي ميزان الإتقان الإملائي الذي يُميز الكاتب الفصيح. كيف تستخرج الفكرة المحورية لأي نص في دقائق؟ وكيف تتقن كتابة همزتي الوصل والقطع باختبار سحري بسيط لا يخطئ؟',
+    warmupHookEn: 'Master reading comprehension frameworks to extract core thematic nodes and discern facts from opinions, alongside infallible orthographic rules for Hamzat Wasl and Qat.',
+
+    learningOutcomesAr: [
+      'أن يستخرج الطالب الفكرة الرئيسة والأفكار الداعمة من أي نص نثري معطى',
+      'أن يميز الطالب بدقة بين الحقيقة الموضوعية والرأي الشخصي للكاتب',
+      'أن يحدد الطالب مواضع همزة الوصل وهمزة القطع في الأسماء والأفعال والحروف',
+      'أن يطبق الطالب اختبار حرف الواو والفاء للتحقق الفوري من نوع الهمزة إملائياً'
+    ],
+    learningOutcomesEn: [
+      'Extract main and supporting ideas from structured prose passages',
+      'Distinguish objective facts from subjective authorial opinions',
+      'Identify orthographic positions of Hamzat Wasl and Hamzat Qat across Nouns, Verbs, and Particles',
+      'Apply the Waw/Faa phonetic test for instantaneous Hamzah verification'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. قاعدة همزة الوصل والقطع السريعة',
-        titleEn: '1. Hamzah Orthography Verification Test',
-        contentAr: 'للتمييز السريع بين همزة الوصل (ا) وهمزة القطع (أ / إ): ضع حرف الواو قبل الكلمة وانطقها؛ إذا سقطت الهمزة في النطق فهي وصل (وانْطَلَقَ)، وإذا ثبتت فهي قطع (وأَكْرَمَ).',
-        contentEn: 'Prefix the conjunction Waw: if the glottal stop drops in speech, it is Wasl; if preserved, it is Qat.',
-        interactiveExample: {
-          titleAr: 'تطبيق: اختبار الواو لهمزة الكلمة',
-          titleEn: 'Worked Example: Waw Prefix Test',
-          equation: 'حرف (و) + الكلمة المنطوقة',
-          steps: [
-            { stepNumber: 1, textAr: 'فحص "استغفار": نقول "وَاسْتَغْفَار" (الهمزة تسقط في النطق) -> همزة وصل تكتب (استغفار) دون رأس العين.', textEn: 'Test: "Wa-stighfar" drops glottal stop -> Wasl.' },
-            { stepNumber: 2, textAr: 'فحص "إحسان": نقول "وَإِحْسَان" (الهمزة تنطق بوضوح) -> همزة قطع تكتب (إحسان).', textEn: 'Test: "Wa-Ihsan" glottal stop pronounced -> Qat.' }
-          ],
-          takeawayAr: 'اختبار حرف الواو يكشف لك نوع الهمزة في ثانية واحدة دون لبس.',
-          takeawayEn: 'Prefixing Waw reliably reveals Hamzah classification instantaneously.'
-        },
-        tipsAr: ['جميع الأسماء همزتها قطع ما عدا عشرة أسماء مسموعة عن العرب (ابن، ابنة، اسم، امرؤ...).'],
-        tipsEn: ['All Arabic nouns take Hamzat Qat except the documented 10 classical exceptions.']
+        termAr: 'الفكرة الرئيسة (Main Idea)',
+        termEn: 'Main Idea',
+        definitionAr: 'المعنى العام والشامل الذي يدور حوله النص بأكمله وتنتظم تحته جميع الأفكار الفرعية.',
+        definitionEn: 'The central overarching proposition around which the entire text revolves.'
+      },
+      {
+        termAr: 'الحقيقة مقابل الرأي (Fact vs Opinion)',
+        termEn: 'Fact vs Opinion',
+        definitionAr: 'الحقيقة معلومة مثبتة بالدليل والواقع لا خلاف عليها، أما الرأي فهو وجهة نظر أو مشاعر شخصية تقبل الصواب والخطأ.',
+        definitionEn: 'A fact is an objectively verifiable truth; an opinion reflects personal subjective sentiment or evaluation.'
+      },
+      {
+        termAr: 'همزة الوصل (Hamzat Al-Wasl)',
+        termEn: 'Hamzat Al-Wasl',
+        definitionAr: 'همزة تُنطق في ابتداء الكلام وتسقط في دَرَجِهِ ووصله، وتُكتب ألفاً قائمة دون رأس عين (ا) مثل: انْطَلَقَ، اسْم.',
+        definitionEn: 'A glottal onset pronounced only at utterance beginning, dropping in connected speech, written as plain Alif (ا).'
+      },
+      {
+        termAr: 'همزة القطع (Hamzat Al-Qat)',
+        termEn: 'Hamzat Al-Qat',
+        definitionAr: 'همزة أصلية تثبت في النطق والكتابة دائماً سواء في أول الكلام أو في وسطه، وتكتب برأس عين (أَ / أُ / إِ) مثل: أَكْرَمَ، إِحْسَان.',
+        definitionEn: 'A stable phonemic glottal stop explicitly pronounced and orthographically marked with Hamzah head (أ/إ).'
       }
     ],
+
+    keyConceptsAr: [
+      'استراتيجيات الفهم القرائي وتحديد الفكرة المركزية',
+      'التمييز بين الحقائق العلمية والآراء الانطباعية',
+      'مواضع همزة الوصل في: أل التعريف، الأسماء العشرة، ماضي وأمر ومصدر الخماسي والسداسي، وأمر الثلاثي',
+      'مواضع همزة القطع في: جميع الحروف (ما عدا أل)، جميع الأسماء (ما عدا العشرة)، ماضي ومصدر الرباطي والثلاثي المبدوء بهمزة'
+    ],
+    keyConceptsEn: [
+      'Reading Comprehension & Central Thematic Extraction',
+      'Fact vs Opinion Epistemic Distinction',
+      'Hamzat Wasl Morphological Environments',
+      'Hamzat Qat Morphological Environments'
+    ],
+    summaryAr: 'نختتم مهارات اللغة العربية بالجمع بين كفاءة الفهم القرائي والتحليل الموضوعي للنصوص من جهة، والضبط الإملائي المتقن للهمزات (الوصل والقطع) من جهة أخرى لضمان الفصاحة قراءةً وكتابة.',
+    summaryEn: 'Synthesizing advanced reading comprehension and critical textual analysis with authoritative orthographic mastery of Hamzat Wasl and Qat.',
+
+    sections: [
+      {
+        titleAr: '1. مهارات الفهم القرائي واستخراج الأفكار ونقد النصوص',
+        titleEn: '1. Reading Comprehension, Thematic Deconstruction & Fact vs Opinion',
+        contentAr: 'لاستيعاب أي نص قرائي بمهارة واتقان، نتبع الخطوات المنهجية التالية:\n1. القراءة الاستكشافية السريعة لتحديد العنوان والجو العام.\n2. تحديد الفكرة الرئيسة: وهي الإجابة الشاملة عن سؤال: "عَمَّ يتحدث النص عموماً؟".\n3. استخراج الأفكار الفرعية: وهي المضامين الجزئية التي تشرح الفكرة الرئيسة في كل فقرة.\n4. التمييز بين الحقيقة والرأي:\n   - الحقيقة: جملة تعبر عن واقع مثبت بأرقام أو تجارب علمية (مثل: "تغلي المياه عند 100 درجة مئوية"، "الرياض عاصمة المملكة").\n   - الرأي: جملة تعبر عن مشاعر أو تفضيلات ذاتية (مثل: "فصل الشتاء أجمل فصول السنة"، "الرواية ممتعة للغاية").',
+        contentEn: 'Textual comprehension requires isolating the central premise, tracing subordinate supporting claims, and distinguishing objective facts from personal opinions.',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (4-1): تحليل نص واستخراج الفكرة المحورية والتمييز بين الحقيقة والرأي',
+          titleEn: 'Worked Example (4-1): Textual Analysis, Thematic Extraction & Fact vs Opinion',
+          equation: 'قراءة الفقرة -> استخلاص الفكرة المحورية + فحص العبارات (حقيقة أم رأي)',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'النص: "تُعد المملكة العربية السعودية أكبر مصدر للنفط في العالم، وهي تمتلك رؤية 2030 الطموحة التي تُعد أعظم خطة تنموية في العصر الحديث".', 
+              textEn: 'Passage: "Saudi Arabia is the world largest oil exporter and possesses Vision 2030, which is the greatest development plan in modern history."' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'استخراج الفكرة الرئيسة: المكانة الاقتصادية والتنموية الرائدة للمملكة ورؤية 2030.', 
+              textEn: 'Main Idea: The economic leadership and transformative development of Vision 2030.' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'فحص عبارة "أكبر مصدر للنفط": حقيقة موضوعية مثبتة بالبيانات والأرقام الاقتصادية العالمية.', 
+              textEn: 'Analyze "largest oil exporter": Verifiable objective Fact.' 
+            },
+            { 
+              stepNumber: 4, 
+              textAr: 'فحص عبارة "تُعد أعظم خطة تنموية": رأي وتقييم انطباعي يعبر عن وجهة نظر الكاتب واستحسانه.', 
+              textEn: 'Analyze "greatest plan": Evaluative Opinion.' 
+            }
+          ],
+          takeawayAr: 'الحقائق تُقبل أو تُرفض بالأدلة، بينما الآراء تُناقش وتُحترم كوجهات نظر شخصية.',
+          takeawayEn: 'Facts are evaluated through empirical evidence; opinions represent authorial perspectives.'
+        },
+        tipsAr: ['الكلمات التفضيلية مثل (أجمل، أعظم، أسوأ، أروع) تدل غالباً على أن العبارة "رأي" وليست حقيقة.']
+      },
+      {
+        titleAr: '2. قواعد همزة الوصل وهمزة القطع واختبار الفحص السريع',
+        titleEn: '2. Hamzat Wasl vs Qat: Morphological Rules & The Verification Test',
+        contentAr: 'للهمزة في أول الكلمة نوعان:\n\nأولاً: همزة الوصل (ا):\n- تنطق في أول الكلام وتسقط في وسطه، وتكتب ألفاً مجردة دون همزة.\n- مواضعها:\n  1. (أل) التعريف: (الكتاب، المدرسة).\n  2. الأسماء العشرة المسموعة: (اسم، ابن، ابنة، امرؤ، امرأة، اثنان، اثنتان، ايمن الله...).\n  3. أمر الفعل الثلاثي: (اكْتُبْ، اقْرَأْ، اسْمَعْ).\n  4. ماضي وأمر ومصدر الفعل الخماسي والسداسي: (انْطَلَقَ - انْطَلِقْ - انْطِلَاق / اسْتَغْفَرَ - اسْتَغْفِرْ - اسْتِغْفَار).\n\nثانياً: همزة القطع (أَ / أُ / إِ):\n- تنطق وتكتب دائماً أينما وقعت.\n- مواضعها:\n  1. جميع الحروف ما عدا أل: (إلى، أن، إن، أو، إذا).\n  2. جميع الأسماء ما عدا الأسماء العشرة: (أحمد، إبراهيم، أسد، أمل).\n  3. ماضي ومصدر الفعل الثلاثي المهموز: (أَخَذَ - أَخْذاً / أَكَلَ - أَكْلاً).\n  4. ماضي وأمر ومصدر الفعل الرباعي: (أَكْرَمَ - أَكْرِمْ - إِكْرَام / أَنْجَزَ - أَنْجِزْ - إِنْجَاز).\n  5. كل فعل مضارع مبدوء بهمزة المتكلم: (أَكْتُبُ، أَسْتَغْفِرُ).',
+        contentEn: 'Hamzat Wasl occurs in Al-, ten classical nouns, 5/6-letter verbs/nouns, and 3-letter imperatives. Hamzat Qat occurs in all particles, general nouns, 4-letter verb paradigms, and 1st-person present verbs.',
+        interactiveExample: {
+          titleAr: 'تطبيق منهجي (4-2): تطبيق اختبار الواو والفاء للتمييز الفوري بين الهمزتين',
+          titleEn: 'Worked Example (4-2): Applying the Waw/Faa Prefix Test for Rapid Hamzah Verification',
+          equation: 'حرف (و) أو (ف) + الكلمة المنطوقة بالسليقة',
+          steps: [
+            { 
+              stepNumber: 1, 
+              textAr: 'الكلمة الأولى: "استعانة". نضع واواً وننطق: "وَاسْتِعَانَة" (نلاحظ سقوط صوت الهمزة تماماً والانتقال من الواو إلى السين مباشرة) -> إذن هي همزة وصل وتكتب: (استعانة) دون همزة.', 
+              textEn: 'Test 1: "Istianah" -> "Wa-stianah" (glottal stop drops) -> Hamzat Wasl (استعانة).' 
+            },
+            { 
+              stepNumber: 2, 
+              textAr: 'الكلمة الثانية: "إكرام". نضع واواً وننطق: "وَإِكْرَام" (يستحيل إسقاط الهمزة في النطق الصحيح) -> إذن هي همزة قطع وتكتب بهمزة تحت الألف: (إكرام).', 
+              textEn: 'Test 2: "Ikram" -> "Wa-Ikram" (glottal stop strictly preserved) -> Hamzat Qat (إكرام).' 
+            },
+            { 
+              stepNumber: 3, 
+              textAr: 'الكلمة الثالثة: "اذهب". نضع فاء وننطق: "فَاذْهَبْ" (تسقط الهمزة) -> همزة وصل لأمر الثلاثي: (اذهب).', 
+              textEn: 'Test 3: "Idhhab" -> "Fa-dhhab" (drops) -> Hamzat Wasl (اذهب).' 
+            }
+          ],
+          takeawayAr: 'اختبار حرف الواو يكشف لك نوع الهمزة في ثانية واحدة بالسليقة اللغوية السليمة.',
+          takeawayEn: 'Prefixing Waw or Faa immediately reveals glottal retention (Qat) or phonetic dropping (Wasl).'
+        },
+        tipsAr: ['الهمزة في الفعل المضارع همزة قطع دائماً مهما كان عدد حروفه؛ نقول: (أَكْتُبُ، أَنْطَلِقُ، أَسْتَغْفِرُ).']
+      }
+    ],
+
+    conceptMapSummaryAr: 'الفهم القرائي يقوم على استخراج الفكرة الرئيسة وتمييز الحقيقة عن الرأي. الرسم الإملائي يفرق بين همزة الوصل (تسقط وصلاً وتكتب ا) وهمزة القطع (تثبت دائماً وتكتب أ/إ)، ويُكشف نوعها باختبار الواو والفاء.',
+    conceptMapSummaryEn: 'Reading Comprehension extracts central themes and separates facts from opinions. Orthography distinguishes Hamzat Wasl (dropped in speech, plain Alif) from Qat (persistent glottal stop with Hamzah head).',
+
+    goldenRulesAr: [
+      'القاعدة 1: الفكرة الرئيسة هي المظلة الشاملة لجميع أفكار النص وفقراته.',
+      'القاعدة 2: الحقيقة معلومة موضوعية مدعومة بالأدلة، بينما الرأي تعبير ذاتي عن مشاعر أو تفضيل.',
+      'القاعدة 3: همزة الوصل تنطق في أول الكلام وتسقط عند وصله بالواو أو الفاء.',
+      'القاعدة 4: همزة القطع تثبت نطقاً ورسماً في جميع الأحوال (أَ، أُ، إِ).',
+      'القاعدة 5: جميع الحروف في اللغة العربية همزتها قطع (إلى، إن، أن) ما عدا (أل) التعريف.',
+      'القاعدة 6: ماضي وأمر ومصدر الخماسي والسداسي همزته وصل دائماً (انطلاق، استخراج).',
+      'القاعدة 7: كل فعل مضارع مبدوء بهمزة المتكلم فهمزته همزة قطع دائماً (أستمعُ، أحفظُ).'
+    ],
+    goldenRulesEn: [
+      'Rule 1: The Main Idea represents the overarching thematic premise of the text.',
+      'Rule 2: Facts rely on empirical verification; opinions reflect subjective judgment.',
+      'Rule 3: Hamzat Wasl is vocalized in isolation but dropped in connected speech.',
+      'Rule 4: Hamzat Qat is orthographically written and vocalized in all contexts.',
+      'Rule 5: All Arabic particles take Hamzat Qat except the definite article Al-.',
+      'Rule 6: 5- and 6-letter verb forms and verbal nouns take Hamzat Wasl exclusively.',
+      'Rule 7: All 1st-person present tense verbs take Hamzat Qat unconditionally.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lang-4-1',
+        questionAr: 'بين نوع الهمزة مع ذكر السبب في الكلمات التالية: (إِحْسَان - انْتِصَار - اكْتُبْ - أَقْبَلَ).',
+        questionEn: 'Specify the Hamzah type and justification for: (Ihsan, Intisar, Uktub, Aqbala).',
+        solutionStepsAr: [
+          '1. "إِحْسَان": همزة قطع؛ لأنه مصدر لفعل رباعي (أَحْسَنَ).',
+          '2. "انْتِصَار": همزة وصل؛ لأنه مصدر لفعل خماسي (انْتَصَرَ).',
+          '3. "اكْتُبْ": همزة وصل؛ لأنه أمر لفعل ثلاثي (كَتَبَ).',
+          '4. "أَقْبَلَ": همزة قطع؛ لأنه فعل ماضٍ رباعي.'
+        ],
+        solutionStepsEn: [
+          '1. "Ihsan": Hamzat Qat (4-letter verbal noun).',
+          '2. "Intisar": Hamzat Wasl (5-letter verbal noun).',
+          '3. "Uktub": Hamzat Wasl (3-letter imperative).',
+          '4. "Aqbala": Hamzat Qat (4-letter past verb).'
+        ],
+        answerAr: 'إحسان: قطع (مصدر رباعي) | انتصار: وصل (مصدر خماسي) | اكتب: وصل (أمر ثلاثي) | أقبل: قطع (ماضٍ رباعي).',
+        answerEn: 'Ihsan: Qat | Intisar: Wasl | Uktub: Wasl | Aqbala: Qat.'
+      },
+      {
+        id: 'ex-lang-4-2',
+        questionAr: 'صنف العبارتين التاليتين إلى (حقيقة) أو (رأي): 1) "تبلغ مساحة المملكة 2 مليون كم² تقريباً"، 2) "اللغة العربية أجمل لغات الأرض وأعذبها".',
+        questionEn: 'Classify into Fact or Opinion: 1) Saudi area is ~2M km², 2) Arabic is the most beautiful language.',
+        solutionStepsAr: [
+          '1. العبارة الأولى: (حقيقة)؛ لأنها تستند إلى بيانات جغرافية ومساحية مثبتة علمياً.',
+          '2. العبارة الثانية: (رأي)؛ لأنها تعبر عن مشاعر محبة وتقدير جمالي ذوقي.'
+        ],
+        solutionStepsEn: [
+          '1. First statement: Fact based on geographical measurement.',
+          '2. Second statement: Opinion reflecting aesthetic appreciation.'
+        ],
+        answerAr: '1) حقيقة علمية جغرافية | 2) رأي وانطباع وجداني.',
+        answerEn: '1) Fact | 2) Opinion.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lang-4',
       lectureId: 'lang-4',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الرابعة: الفهم القرائي والإملاء',
-      titleEn: 'Lecture 4 Assessment: Comprehension & Orthography',
+      titleAr: 'الاختبار الإلزامي للمحاضرة الرابعة: الفهم القرائي والرسم الإملائي',
+      titleEn: 'Lecture 4 Assessment: Comprehension & Orthography Mastery',
       passingScore: 80,
       questions: [
         {
           id: 'qlg4-1',
-          textAr: 'أي من الكلمات التالية كُتبت بهمزة وصل صحيحة؟',
-          textEn: 'Which word features a correct Hamzat Wasl?',
+          textAr: 'أي من الكلمات التالية كُتبت بهمزة وصل صحيحة لأنها مصدر لفعل خماسي؟',
+          textEn: 'Which word features a correct Hamzat Wasl as a 5-letter verbal noun?',
           optionsAr: ['انْتِصَار', 'أَنْتِصَار', 'إِنْتِصَار', 'أَسْتَمِعُ'],
           optionsEn: ['Intisar (Victory)', 'Antisar', 'Intisar (with below Hamzah)', 'Astamio'],
           correctIndex: 0,
           conceptTestedAr: 'همزة الوصل في المصادر الخماسية',
-          conceptTestedEn: 'Hamzat Wasl in Pentaconsonantal Nouns',
-          explanationAr: '"انتصار" مصدر لفعل خماسي (انتصر)، وهمزته همزة وصل تسقط عند النطق بعد الواو: "وانْتصار".',
-          explanationEn: 'Intisar is a 5-letter verbal noun taking Hamzat Wasl.',
+          conceptTestedEn: 'Hamzat Wasl in 5-Letter Verbal Nouns',
+          explanationAr: '"انتصار" مصدر للفعل الخماسي (انتصر)، وهمزته همزة وصل تسقط وصلاً وتكتب ألفاً قائمة (انتصار) دون رسم رأس العين.',
+          explanationEn: 'Intisar is a 5-letter verbal noun taking Hamzat Wasl written as a plain Alif.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qlg4-2',
+          textAr: 'ما نوع الهمزة في كلمة "أَكْرَمَ" وما سبب كتابتها همزة قطع؟',
+          textEn: 'What type of Hamzah is in "Akrama" and why is it Hamzat Qat?',
+          optionsAr: [
+            'همزة قطع؛ لأنه فعل ماضٍ رباعي على وزن أَفْعَلَ',
+            'همزة وصل؛ لأنه فعل ثلاثي',
+            'همزة وصل؛ لأنه مصدر سداسي',
+            'همزة قطع؛ لأنه حرف من حروف الجر'
+          ],
+          optionsEn: [
+            'Hamzat Qat; because it is a 4-letter past tense verb',
+            'Hamzat Wasl; 3-letter verb',
+            'Hamzat Wasl; 6-letter verbal noun',
+            'Hamzat Qat; preposition'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'مواضع همزة القطع في الأفعال الرباعية',
+          conceptTestedEn: 'Hamzat Qat in 4-Letter Verb Paradigms',
+          explanationAr: 'الفعل الرباعي وماضيه وأمره ومصدره همزته قطع دائماً (أَكْرَمَ - أَكْرِمْ - إِكْرَام).',
+          explanationEn: '4-letter verbs, their commands, and verbal nouns strictly feature Hamzat Qat.',
           difficulty: 'medium'
+        },
+        {
+          id: 'qlg4-3',
+          textAr: 'أي من العبارات التالية تُمثل "حقيقة موضوعية" وليس رأياً شخصياً؟',
+          textEn: 'Which statement represents an objective fact rather than a subjective opinion?',
+          optionsAr: [
+            'يَدُورُ كَوْكَبُ الأَرْضِ حَوْلَ الشَّمْسِ فِي مَدَارٍ بَيْضَاوِيٍّ',
+            'القِرَاءَةُ فِي المَسَاءِ أَمْتَعُ مِنْ القِرَاءَةِ فِي الصَّبَاحِ',
+            'السَّفَرُ بِالطَّائِرَةِ أَفْضَلُ وَسِيلَةٍ لِلتَّنَقُّلِ',
+            'فَصْلُ الرَّبِيعِ يُعْطِي الإِنْسَانَ أَعْظَمَ شُعُورٍ بِالبَهْجَةِ'
+          ],
+          optionsEn: [
+            'Earth orbits the Sun in an elliptical path',
+            'Reading in the evening is more enjoyable than morning',
+            'Air travel is the best mode of transport',
+            'Spring provides the greatest sense of joy'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'التمييز بين الحقيقة العلمية والرأي الانطباعي',
+          conceptTestedEn: 'Fact vs Opinion Textual Evaluation',
+          explanationAr: 'دوران الأرض حول الشمس حقيقة فلكية علمية مثبتة بالبراهين والقياسات، بينما باقي العبارات تشتمل على ألفاظ تفضيل ذاتية تعبر عن آراء شخصية.',
+          explanationEn: 'Earth planetary orbit is an empirically established scientific fact, whereas the others convey subjective preferences.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qlg4-4',
+          textAr: 'إذا أردت فحص كلمة "استعلام" للتأكد من كتابة همزتها، ما هو التطبيق السليم لاختبار الواو؟',
+          textEn: 'What is the correct execution of the Waw prefix test on "Istilam"?',
+          optionsAr: [
+            'ننطق "وَاسْتِعْلَام" فنجد الهمزة تسقط في النطق وتتصل الواو بالسين؛ لذا تُكتب همزة وصل (استعلام) دون همزة',
+            'ننطق "وَإِسْتِعْلَام" ونثبت الهمزة قسراً فتكتب همزة قطع',
+            'الهمزة في أول الكلمات لا يمكن فحصها بالواو',
+            'تكتب همزة قطع لأنها تتكون من ستة أحرف'
+          ],
+          optionsEn: [
+            'Pronounce "Wa-stialam" where glottal stop drops naturally -> Hamzat Wasl (استعلام)',
+            'Force glottal pronunciation -> Hamzat Qat',
+            'Cannot be tested with Waw',
+            'Always Qat for 6 letters'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'التطبيق الصوتي الصحيح لاختبار فحص الهمزة بالواو',
+          conceptTestedEn: 'Phonetic Execution of the Waw Test',
+          explanationAr: 'عند نطق "واستعلام" بالسليقة الفصيحة تسقط همزة الوصل في دَرَج الكلام، مما يثبت أنها همزة وصل وتكتب ألفاً قائمة (استعلام).',
+          explanationEn: 'Prefixing Waw drops the glottal onset phonetically, definitively confirming Hamzat Wasl.',
+          difficulty: 'hard'
         }
       ]
     }

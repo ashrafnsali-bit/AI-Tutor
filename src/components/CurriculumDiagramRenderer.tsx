@@ -729,6 +729,201 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
           </svg>
         );
 
+      case 'arabic_parts_of_speech':
+        return (
+          <svg viewBox="0 0 600 340" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="arabicHeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#6366f1" />
+                <stop offset="100%" stopColor="#8b5cf6" />
+              </linearGradient>
+            </defs>
+            <rect width="600" height="340" fill="rgba(15, 23, 42, 0.95)" rx="16" />
+
+            {/* Top Root Node: الكلمة في اللغة العربية */}
+            <rect x="200" y="15" width="200" height="42" rx="10" fill="url(#arabicHeaderGrad)" stroke="#a78bfa" strokeWidth="2" />
+            <text x="300" y="42" textAnchor="middle" fill="#ffffff" fontSize="16" fontWeight="bold">أقسام الكلمة في اللغة العربية</text>
+
+            {/* Connecting Lines */}
+            <line x1="300" y1="57" x2="300" y2="75" stroke="#a78bfa" strokeWidth="2" />
+            <line x1="110" y1="75" x2="490" y2="75" stroke="#a78bfa" strokeWidth="2" />
+            <line x1="110" y1="75" x2="110" y2="95" stroke="#38bdf8" strokeWidth="2" />
+            <line x1="300" y1="75" x2="300" y2="95" stroke="#10b981" strokeWidth="2" />
+            <line x1="490" y1="75" x2="490" y2="95" stroke="#f59e0b" strokeWidth="2" />
+
+            {/* Column 1: الاسم (Noun) */}
+            <rect x="25" y="95" width="170" height="210" rx="10" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" strokeWidth="2" />
+            <rect x="35" y="105" width="150" height="30" rx="6" fill="#0284c7" />
+            <text x="110" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">1. الاسْمُ (Noun)</text>
+            <text x="110" y="150" textAnchor="middle" fill="#7dd3fc" fontSize="11" fontWeight="bold">يدل على معنى دون زمن</text>
+            <line x1="40" y1="160" x2="180" y2="160" stroke="rgba(56, 189, 248, 0.3)" />
+            <text x="175" y="180" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ التنوين (كتابٌ)</text>
+            <text x="175" y="202" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ أل التعريف (المدرسة)</text>
+            <text x="175" y="224" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ حرف الجر (في الفصلِ)</text>
+            <text x="175" y="246" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ النداء (يا طالبُ)</text>
+            <rect x="40" y="262" width="140" height="24" rx="4" fill="rgba(2, 132, 199, 0.3)" />
+            <text x="110" y="278" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">مثال: زَيْدٌ ، العِلْمُ</text>
+
+            {/* Column 2: الفعل (Verb) */}
+            <rect x="215" y="95" width="170" height="210" rx="10" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" strokeWidth="2" />
+            <rect x="225" y="105" width="150" height="30" rx="6" fill="#059669" />
+            <text x="300" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">2. الفِعْلُ (Verb)</text>
+            <text x="300" y="150" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="bold">يدل على حدث مقترن بزمن</text>
+            <line x1="230" y1="160" x2="370" y2="160" stroke="rgba(16, 185, 129, 0.3)" />
+            <text x="365" y="180" textAnchor="end" fill="#d1fae5" fontSize="11">✓ ماضٍ: قبول تاء الفاعل (كتبتُ)</text>
+            <text x="365" y="202" textAnchor="end" fill="#d1fae5" fontSize="11">✓ مضارع: قبول (لم / سين) (سيكتب)</text>
+            <text x="365" y="224" textAnchor="end" fill="#d1fae5" fontSize="11">✓ أمر: دلالة الطلب + ياء المخاطبة</text>
+            <text x="365" y="246" textAnchor="end" fill="#d1fae5" fontSize="11">✓ تاء التأنيث الساكنة (قامتْ)</text>
+            <rect x="230" y="262" width="140" height="24" rx="4" fill="rgba(5, 150, 105, 0.3)" />
+            <text x="300" y="278" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">مثال: قَرَأَ ، يَقْرَأُ ، اقْرَأْ</text>
+
+            {/* Column 3: الحرف (Particle) */}
+            <rect x="405" y="95" width="170" height="210" rx="10" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" strokeWidth="2" />
+            <rect x="415" y="105" width="150" height="30" rx="6" fill="#d97706" />
+            <text x="490" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">3. الحَرْفُ (Particle)</text>
+            <text x="490" y="150" textAnchor="middle" fill="#fde68a" fontSize="11" fontWeight="bold">لا يظهر معناه إلا مع غيره</text>
+            <line x1="420" y1="160" x2="560" y2="160" stroke="rgba(245, 158, 11, 0.3)" />
+            <text x="555" y="180" textAnchor="end" fill="#fef3c7" fontSize="11">✓ لا يقبل علامات الاسم</text>
+            <text x="555" y="202" textAnchor="end" fill="#fef3c7" fontSize="11">✓ لا يقبل علامات الفعل</text>
+            <text x="555" y="224" textAnchor="end" fill="#fef3c7" fontSize="11">✓ حروف الجر: (من، إلى، عن، في)</text>
+            <text x="555" y="246" textAnchor="end" fill="#fef3c7" fontSize="11">✓ حروف العطف: (الواو، الفاء، ثم)</text>
+            <rect x="420" y="262" width="140" height="24" rx="4" fill="rgba(217, 119, 6, 0.3)" />
+            <text x="490" y="278" textAnchor="middle" fill="#fbbf24" fontSize="11" fontWeight="bold">مثال: فِي ، إِلَى ، ثُمَّ</text>
+
+            {/* Bottom Insight Footer */}
+            <rect x="60" y="312" width="480" height="22" rx="6" fill="rgba(99, 102, 241, 0.2)" stroke="#6366f1" />
+            <text x="300" y="327" textAnchor="middle" fill="#c7d2fe" fontSize="11" fontWeight="bold">قاعدة ابن مالك: بالجر والتنوين والندا وأل ومسندٍ للاسم تمييزٌ حصل</text>
+          </svg>
+        );
+
+      case 'arabic_sentence_structure':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="rgba(15, 23, 42, 0.95)" rx="16" />
+
+            {/* Header: بنية الجملة العربية */}
+            <rect x="180" y="15" width="240" height="38" rx="8" fill="#4338ca" stroke="#818cf8" strokeWidth="2" />
+            <text x="300" y="40" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="bold">بنية الجملة العربية الأساسية</text>
+
+            {/* 2 Main Columns: Nominal vs Verbal */}
+            {/* 1. Nominal Sentence */}
+            <rect x="30" y="70" width="255" height="220" rx="12" fill="rgba(99, 102, 241, 0.1)" stroke="#818cf8" strokeWidth="2" />
+            <rect x="45" y="82" width="225" height="32" rx="6" fill="#4f46e5" />
+            <text x="157" y="103" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">الجملة الاسمية (تبدأ باسم)</text>
+            
+            {/* Mubtada Box */}
+            <rect x="45" y="125" width="105" height="70" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" />
+            <text x="97" y="148" textAnchor="middle" fill="#38bdf8" fontSize="12" fontWeight="bold">المُبْتَدَأُ</text>
+            <text x="97" y="168" textAnchor="middle" fill="#e0f2fe" fontSize="10">اسم مرفوع تبدأ</text>
+            <text x="97" y="183" textAnchor="middle" fill="#e0f2fe" fontSize="10">به الجملة غالباً</text>
+
+            {/* Plus sign */}
+            <text x="157" y="165" textAnchor="middle" fill="#818cf8" fontSize="20" fontWeight="bold">+</text>
+
+            {/* Khabar Box */}
+            <rect x="165" y="125" width="105" height="70" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" />
+            <text x="217" y="148" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">الخَبَرُ</text>
+            <text x="217" y="168" textAnchor="middle" fill="#d1fae5" fontSize="10">الجزء المتمم</text>
+            <text x="217" y="183" textAnchor="middle" fill="#d1fae5" fontSize="10">لفائدة المعنى</text>
+
+            {/* Example Box */}
+            <rect x="45" y="205" width="225" height="40" rx="6" fill="rgba(15, 23, 42, 0.8)" stroke="#64748b" />
+            <text x="157" y="223" textAnchor="middle" fill="#fbbf24" fontSize="12" fontWeight="bold">"العِلْمُ نُورٌ سَاطِعٌ"</text>
+            <text x="157" y="238" textAnchor="middle" fill="#94a3b8" fontSize="10">العلم: مبتدأ مرفوع | نور: خبر مرفوع</text>
+
+            <text x="157" y="272" textAnchor="middle" fill="#a5b4fc" fontSize="11" fontWeight="bold">حكمهما الإعرابي: الرَّفْعُ دائماً</text>
+
+            {/* 2. Verbal Sentence */}
+            <rect x="315" y="70" width="255" height="220" rx="12" fill="rgba(16, 185, 129, 0.1)" stroke="#34d399" strokeWidth="2" />
+            <rect x="330" y="82" width="225" height="32" rx="6" fill="#059669" />
+            <text x="442" y="103" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">الجملة الفعلية (تبدأ بفعل)</text>
+
+            {/* Verb Box */}
+            <rect x="330" y="125" width="70" height="70" rx="8" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" />
+            <text x="365" y="148" textAnchor="middle" fill="#fbbf24" fontSize="12" fontWeight="bold">الفِعْلُ</text>
+            <text x="365" y="168" textAnchor="middle" fill="#fef3c7" fontSize="10">الحدث والزمن</text>
+            <text x="365" y="183" textAnchor="middle" fill="#fef3c7" fontSize="10">(ماض/مضارع/أمر)</text>
+
+            {/* Plus sign */}
+            <text x="407" y="165" textAnchor="middle" fill="#34d399" fontSize="18" fontWeight="bold">+</text>
+
+            {/* Faail Box */}
+            <rect x="415" y="125" width="65" height="70" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" />
+            <text x="447" y="148" textAnchor="middle" fill="#38bdf8" fontSize="12" fontWeight="bold">الفَاعِلُ</text>
+            <text x="447" y="168" textAnchor="middle" fill="#e0f2fe" fontSize="10">من قام</text>
+            <text x="447" y="183" textAnchor="middle" fill="#e0f2fe" fontSize="10">بالفعل (مرفوع)</text>
+
+            {/* Plus sign */}
+            <text x="487" y="165" textAnchor="middle" fill="#34d399" fontSize="18" fontWeight="bold">+</text>
+
+            {/* Maf'ool Box */}
+            <rect x="495" y="125" width="60" height="70" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" />
+            <text x="525" y="148" textAnchor="middle" fill="#f87171" fontSize="11" fontWeight="bold">مَفْعُول بِهِ</text>
+            <text x="525" y="168" textAnchor="middle" fill="#fee2e2" fontSize="9">وقع عليه</text>
+            <text x="525" y="183" textAnchor="middle" fill="#fee2e2" fontSize="9">الفعل (منصوب)</text>
+
+            {/* Example Box */}
+            <rect x="330" y="205" width="225" height="40" rx="6" fill="rgba(15, 23, 42, 0.8)" stroke="#64748b" />
+            <text x="442" y="223" textAnchor="middle" fill="#fbbf24" fontSize="12" fontWeight="bold">"كَتَبَ الطَّالِبُ الدَّرْسَ"</text>
+            <text x="442" y="238" textAnchor="middle" fill="#94a3b8" fontSize="10">كتب: فعل | الطالبُ: فاعل | الدرسَ: مفعول به</text>
+
+            <text x="442" y="272" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="bold">الفاعل مرفوع دائماً | المفعول به منصوب</text>
+
+            {/* Bottom summary */}
+            <rect x="100" y="295" width="400" height="20" rx="5" fill="rgba(15, 23, 42, 0.9)" />
+            <text x="300" y="309" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontWeight="bold">الجملة الاسمية تفيد الثبوت والاستقرار، والجملة الفعلية تفيد التجدد والحدوث</text>
+          </svg>
+        );
+
+      case 'rhetoric_simile_map':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="rgba(15, 23, 42, 0.95)" rx="16" />
+
+            {/* Header: علم البيان: شجرة أركان التشبيه البلاغي */}
+            <rect x="170" y="15" width="260" height="38" rx="8" fill="#7c3aed" stroke="#c4b5fd" strokeWidth="2" />
+            <text x="300" y="40" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="bold">أركان التشبيه البلاغي الأربعة</text>
+
+            {/* 4 Pillars Grid */}
+            {/* 1. المشبه */}
+            <rect x="30" y="70" width="125" height="95" rx="10" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" strokeWidth="2" />
+            <text x="92" y="95" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="bold">1. المُشَبَّهُ</text>
+            <text x="92" y="118" textAnchor="middle" fill="#e0f2fe" fontSize="10">الطرف الأول المراد</text>
+            <text x="92" y="133" textAnchor="middle" fill="#e0f2fe" fontSize="10">إيضاح صفته</text>
+            <text x="92" y="152" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">(المعلمُ)</text>
+
+            {/* 2. أداة التشبيه */}
+            <rect x="170" y="70" width="125" height="95" rx="10" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" strokeWidth="2" />
+            <text x="232" y="95" textAnchor="middle" fill="#fbbf24" fontSize="13" fontWeight="bold">2. أداة التشبيه</text>
+            <text x="232" y="118" textAnchor="middle" fill="#fef3c7" fontSize="10">حرف (كـ ، كأن)</text>
+            <text x="232" y="133" textAnchor="middle" fill="#fef3c7" fontSize="10">أو اسم (مثل) أو فعل</text>
+            <text x="232" y="152" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">(كـ / مثل)</text>
+
+            {/* 3. المشبه به */}
+            <rect x="310" y="70" width="125" height="95" rx="10" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" strokeWidth="2" />
+            <text x="372" y="95" textAnchor="middle" fill="#34d399" fontSize="13" fontWeight="bold">3. المُشَبَّهُ بِهِ</text>
+            <text x="372" y="118" textAnchor="middle" fill="#d1fae5" fontSize="10">الطرف الأقوى في</text>
+            <text x="372" y="133" textAnchor="middle" fill="#d1fae5" fontSize="10">الصفة المشتركة</text>
+            <text x="372" y="152" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">(البَحْرِ)</text>
+
+            {/* 4. وجه الشبه */}
+            <rect x="450" y="70" width="125" height="95" rx="10" fill="rgba(236, 72, 153, 0.15)" stroke="#ec4899" strokeWidth="2" />
+            <text x="512" y="95" textAnchor="middle" fill="#f472b6" fontSize="13" fontWeight="bold">4. وَجْهُ الشَّبَهِ</text>
+            <text x="512" y="118" textAnchor="middle" fill="#fce7f3" fontSize="10">الصفة المشتركة</text>
+            <text x="512" y="133" textAnchor="middle" fill="#fce7f3" fontSize="10">بين الطرفين</text>
+            <text x="512" y="152" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">(في الجُودِ)</text>
+
+            {/* Bottom: Classification & Types of Simile */}
+            <rect x="30" y="180" width="545" height="125" rx="10" fill="rgba(30, 41, 59, 0.7)" stroke="#64748b" />
+            <text x="300" y="202" textAnchor="middle" fill="#c4b5fd" fontSize="13" fontWeight="bold">مراتب التشبيه وأنواعه حسب الحذف والذكر:</text>
+            
+            <text x="560" y="228" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#38bdf8">التشبيه التام (المفصل المرسل):</tspan> ذُكرت فيه الأركان الأربعة ("المعلم كالبحر في العطاء")</text>
+            <text x="560" y="250" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#f59e0b">التشبيه المؤكد:</tspan> حُذفت منه الأداة فقط ("المعلم بحر في العطاء")</text>
+            <text x="560" y="272" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#34d399">التشبيه المجمل:</tspan> حُذف منه وجه الشبه فقط ("المعلم كالبحر")</text>
+            <text x="560" y="294" textAnchor="end" fill="#e2e8f0" fontSize="11">👑 <tspan fontWeight="bold" fill="#ec4899">التشبيه البليغ (أعلى المراتب):</tspan> حُذفت الأداة ووجه الشبه معاً وبقي الطرفان ("المعلمُ بحرٌ")</text>
+          </svg>
+        );
+
       default:
         return (
           <svg viewBox="0 0 600 300" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">

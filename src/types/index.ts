@@ -229,6 +229,9 @@ export interface LectureDiagram {
     | 'kinematics_graph'
     | 'atomic_structure'
     | 'matter_states_compound'
+    | 'arabic_parts_of_speech'
+    | 'arabic_sentence_structure'
+    | 'rhetoric_simile_map'
     | 'polynomial_curve' 
     | 'apparatus' 
     | 'custom_svg';
@@ -246,8 +249,8 @@ export interface LectureSection {
   contentEn: string;
   diagram?: LectureDiagram;
   interactiveExample?: InteractiveExample;
-  tipsAr: string[];
-  tipsEn: string[];
+  tipsAr?: string[];
+  tipsEn?: string[];
   formativeCheck?: FormativeCheck;
 }
 
@@ -299,6 +302,10 @@ export interface Lecture {
   // Concept Map / Golden takeaways
   conceptMapAr?: string[];
   conceptMapEn?: string[];
+  conceptMapSummaryAr?: string;
+  conceptMapSummaryEn?: string;
+  goldenRulesAr?: string[];
+  goldenRulesEn?: string[];
 
   // Guided Textbook Exercises
   textbookExercises?: TextbookExercise[];
