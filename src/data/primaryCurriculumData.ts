@@ -86,6 +86,23 @@ export const PRIMARY_MATH_LECTURES: Lecture[] = [
         titleEn: '1. Place Value Chart & Reading Large Numbers',
         contentAr: 'يتكون نظامنا العشري من دورات عددية منتظمة؛ كل دورة تضم ثلاثة منازل رئيسية: الآحاد، العشرات، والمئات. دورة الآحاد تشمل الأعداد الأساسية، وتليها إلى اليسار دورة الألوف (آحاد الألوف، عشرات الألوف، مئات الألوف). لقراءة أي عدد، نبدأ من اليسار بالدورة الكبرى ثم نقرأ الدورات الأصغر بالترتيب.',
         contentEn: 'Our decimal system features structured periods of three digits each: units, tens, hundreds. Reading proceeds from the highest period on the left down to the units.',
+        diagram: {
+          id: 'diag-pmath1-fractions-placevalue',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'النماذج البصرية لتمثيل الأجزاء والكسور والقيمة المكانية للأعداد',
+          titleEn: 'Visual Models for Fractions & Place Value Proportions',
+          captionAr: 'توضح الدوائر والأشرطة الملونة كيفية تقسيم الكل إلى أجزاء متساوية (النصف، الربع، وثلاثة أرباع)، وكيف تتضاعف قيمة كل خانة عددية بـ 10 أضعاف الخانة السابقة.',
+          captionEn: 'Visual fraction circles and bar arrays illustrate dividing wholes into equal fractional components alongside decimal place value scaling.',
+          diagramType: 'primary_fractions',
+          takeawayFormulaAr: 'الكسر = الجزء / الكل | 1 = 2/2 = 4/4',
+          takeawayFormulaEn: 'Fraction = Part / Whole | 1 = 2/2 = 4/4',
+          keyLabels: [
+            { tagAr: 'نموذج النصف (1/2)', tagEn: 'Half Model (1/2)', descAr: 'جزء واحد من جزأين متساويين', descEn: 'One part of two equal halves' },
+            { tagAr: 'نموذج ثلاثة أرباع (3/4)', tagEn: 'Three Quarters (3/4)', descAr: 'ثلاثة أجزاء مظللة من أربعة', descEn: 'Three shaded parts out of four' },
+            { tagAr: 'شريط الأجزاء المتساوية', tagEn: 'Fraction Bar Model', descAr: 'المقارنة الخطية بين الأجزاء والكل', descEn: 'Linear part-to-whole visual reference' }
+          ]
+        },
         formativeCheck: {
           id: 'fc-pmath1-1',
           questionAr: 'ما هي القيمة المنزلية للرقم 5 في العدد 35,420؟',
@@ -1001,6 +1018,23 @@ export const PRIMARY_SCIENCE_LECTURES: Lecture[] = [
         titleEn: '1. The Plant Food Factory & Anatomy',
         contentAr: 'تمتص الجذور الماء والأملاح من التربة كالمصاصة، وينقله الساق إلى الأوراق الخضراء. تمتص الأوراق ضوء الشمس وغاز الهواء لتطبخ السكر الذي يغذي النبتة لتكبر وتزهر.',
         contentEn: 'Roots absorb water, stems convey moisture upward, and green leaves trap solar energy to produce food.',
+        diagram: {
+          id: 'diag-psci1-watercycle-plant',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'دورة الماء في الطبيعة واحتياجات نمو النبات والكائنات الحية',
+          titleEn: 'Natural Water Cycle & Living Things Ecosystem',
+          captionAr: 'يوضح النموذج العلمي التوضيحي مراحل دورة الماء الأساسية: تبخر المياه بتأثير حرارة الشمس، تكثف البخار وتكون السحب، ثم هطول الأمطار لتغذي التربة والنباتات والبحار.',
+          captionEn: 'The scientific diagram illustrates the natural hydrological cycle: solar evaporation, cloud condensation, and rainfall nourishing soil, flora, and aquatic ecosystems.',
+          diagramType: 'primary_water_cycle',
+          takeawayFormulaAr: 'تبخر ↑  -->  تكثف ☁️  -->  هطول 🌧️  -->  تجمع 🌊',
+          takeawayFormulaEn: 'Evaporation ↑  -->  Condensation ☁️  -->  Precipitation 🌧️  -->  Collection 🌊',
+          keyLabels: [
+            { tagAr: 'الشمس والتبخر (حرارة)', tagEn: 'Solar Evaporation', descAr: 'تسخين المياه وتحويلها لبخار صاعد', descEn: 'Solar heat drives moisture upward' },
+            { tagAr: 'التكثف والسحب الركامية', tagEn: 'Cloud Condensation', descAr: 'تبرد قطرات الماء وتتجمع في السماء', descEn: 'Cooling moisture forms clouds' },
+            { tagAr: 'هطول الأمطار وتغذية النبات', tagEn: 'Precipitation & Infiltration', descAr: 'سقوط المطر لترتوي الجذور والأشجار', descEn: 'Rain replenishes groundwater and plants' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'تجربة النبات المغطى',
           titleEn: 'The Covered Plant Experiment',
@@ -1438,6 +1472,23 @@ export const ISLAMIC_STUDIES_LECTURES: Lecture[] = [
         titleEn: '1. The Tree of Islam\'s Five Pillars',
         contentAr: 'الركن الأول هو بوابة الدخول في الإسلام: الشهادتان. يليه الركن العملي الأهم وهو الصلاة خمس مرات يومياً: الفجر، الظهر، العصر، المغرب، والعشاء، وهي صلة العبد بربه ومصدر طمأنينة قلبه.',
         contentEn: 'The first pillar is the Shahada, followed by the five daily prayers connecting believer to Creator.',
+        diagram: {
+          id: 'diag-islamic1-pillars',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'صرح أركان الإسلام الخمسة والصلوات المفروضة',
+          titleEn: 'The Five Pillars of Islam Architectural Monument',
+          captionAr: 'يوضح النموذج المعماري التوضيحي أركان الإسلام الخمسة التي يقوم عليها صرح الدين المتين: الشهادتان، إقامة الصلاة، إيتاء الزكاة، صوم رمضان، وحج البيت الحرام.',
+          captionEn: 'The architectural diagram illustrates the five pillars upholding the edifice of Islam: Shahadah, Salah, Zakat, Sawm, and Hajj.',
+          diagramType: 'islamic_pillars',
+          takeawayFormulaAr: 'بُني الإسلام على خمس: الشهادتان، الصلاة، الزكاة، الصوم، الحج',
+          takeawayFormulaEn: '5 Pillars: Shahadah, Salah, Zakat, Sawm, Hajj',
+          keyLabels: [
+            { tagAr: 'الركن الأول: الشهادتان', tagEn: '1st Pillar: Shahadah', descAr: 'شهادة التوحيد ونبوة محمد ﷺ', descEn: 'Declaration of monotheism and prophethood' },
+            { tagAr: 'الركن الثاني: إقامة الصلاة', tagEn: '2nd Pillar: Salah', descAr: 'الصلوات الخمس المفروضة يومياً (17 ركعة)', descEn: 'Five daily prayers (17 Rak\'ahs total)' },
+            { tagAr: 'الزكاة والصوم والحج', tagEn: 'Zakat, Sawm & Hajj', descAr: 'أركان التكافل والطهارة والاجتماع الإسلامي', descEn: 'Solidarity, fasting, and pilgrimage' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'ترتيب الصلوات الخمس وركعاتها',
           titleEn: 'Five Daily Prayers & Rak\'ah Counts',

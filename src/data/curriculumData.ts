@@ -94,6 +94,23 @@ export const MATH_LECTURES: Lecture[] = [
         titleEn: '1. Continuity Conditions & Discontinuity Classification',
         contentAr: 'تكون الدالة متصلة عند x = c إذا وفقط إذا تحققت الشروط الثلاثة معاً: 1) f(c) معرفة، 2) نهاية الدالة عند x -> c موجودة، 3) قيمة النهاية تساوي f(c). إذا فشل شرط، نصنف عدم الاتصال: إذا كانت النهاية موجودة لكن f(c) غير معرفة أو مختلفة فهو (قابل للإزالة / نقطي)، وإذا اختلفت النهاية اليمنى عن اليسرى فهو (قفزي)، وإذا اقتربت الدالة من موجب أو سالب لانهاية فهو (لانهائي).',
         contentEn: 'A function is continuous at x = c iff: 1) f(c) is defined, 2) lim_{x -> c} f(x) exists, 3) lim_{x -> c} f(x) = f(c). Failures yield removable, jump, or infinite discontinuities.',
+        diagram: {
+          id: 'diag-math1-continuity',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'اختبارات اتصال الدوال وأنواع نقاط عدم الاتصال',
+          titleEn: 'Function Continuity Tests & Discontinuity Classification',
+          captionAr: 'يوضح الرسم البياني الفروق الجوهرية بين عدم الاتصال القابل للإزالة (فجوة نقطية)، وعدم الاتصال القفزي (اختلاف النهايتين اليمنى واليسرى)، وعدم الاتصال اللانهائي (خط التقارب الرأسي).',
+          captionEn: 'The visual chart illustrates point/removable discontinuity (hole), jump discontinuity (differing one-sided limits), and infinite vertical asymptotic behavior.',
+          diagramType: 'discontinuity_graph',
+          takeawayFormulaAr: 'lim_{x → c} f(x) = f(c)',
+          takeawayFormulaEn: 'lim_{x → c} f(x) = f(c)',
+          keyLabels: [
+            { tagAr: 'عدم اتصال نقطي (فجوة)', tagEn: 'Removable Hole', descAr: 'النهاية موجودة لكن النقطة غير معرفة', descEn: 'Limit exists but point undefined' },
+            { tagAr: 'عدم اتصال قفزي', tagEn: 'Jump Discontinuity', descAr: 'النهاية اليمنى تختلف عن اليسرى', descEn: 'Left and right limits differ' },
+            { tagAr: 'خط تقارب رأسي', tagEn: 'Vertical Asymptote', descAr: 'الدالة تقترب من اللانهاية', descEn: 'Function approaches infinity' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: اختبار اتصال دالة متعددة التعريف',
           titleEn: 'Worked Example: Testing Piecewise Function Continuity',
@@ -340,6 +357,23 @@ export const MATH_LECTURES: Lecture[] = [
         titleEn: '1. Dot Product & Angle Between Vectors',
         contentAr: 'إذا كان u = <u1, u2> و v = <v1, v2>، فإن الضرب الداخلي هو u . v = u1*v1 + u2*v2. الزاوية θ بين المتجهين تعطى بالعلاقة: cos(θ) = (u . v) / (|u| * |v|). ويكون المتجهان متعامدين (Orthogonal) إذا وفقط إذا كان u . v = 0.',
         contentEn: 'Dot product is u . v = u1*v1 + u2*v2. The angle satisfies cos θ = (u . v)/(|u||v|). Vectors are orthogonal iff u . v = 0.',
+        diagram: {
+          id: 'diag-math2-unitcircle',
+          figureNumberAr: 'شكل (2-1)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'دائرة الوحدة والنسب المثلثية وتحليل المتجهات',
+          titleEn: 'Unit Circle Trigonometry & Vector Resolution',
+          captionAr: 'تحدد دائرة الوحدة إحداثيات أي نقطة بـ (cos θ, sin θ)، مما يتيح تحليل أي متجه إلى مركبتين متعامدتين أفقية ورأسية وحساب الزاوية والضرب الداخلي.',
+          captionEn: 'The unit circle coordinates (cos θ, sin θ) provide the mathematical basis for orthogonal vector decomposition and directional dot product.',
+          diagramType: 'unit_circle_trig',
+          takeawayFormulaAr: 'u · v = |u| |v| cos(θ) | sin²θ + cos²θ = 1',
+          takeawayFormulaEn: 'u · v = |u| |v| cos(θ) | sin²θ + cos²θ = 1',
+          keyLabels: [
+            { tagAr: 'متجه الموضع (cos θ, sin θ)', tagEn: 'Position Vector', descAr: 'إحداثيات النقطة على محيط دائرة الوحدة', descEn: 'Coordinates on unit circle perimeter' },
+            { tagAr: 'المركبة الأفقية (cos θ)', tagEn: 'Horizontal Component', descAr: 'المسقط الأفقي على محور x', descEn: 'Projection on x-axis' },
+            { tagAr: 'المركبة الرأسية (sin θ)', tagEn: 'Vertical Component', descAr: 'المسقط الرأسي على محور y', descEn: 'Projection on y-axis' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: إيجاد الزاوية بين متجهين واختبار التعامد',
           titleEn: 'Worked Example: Angle Between Vectors and Orthogonality',
@@ -1033,6 +1067,23 @@ export const MATH_LECTURES: Lecture[] = [
         titleEn: '1. Bounded Area Computation',
         contentAr: 'إذا كانت f(x) ≥ g(x) على الفترة [a, b]، فإن المساحة A المحصورة بينهما تعطى بالتكامل: A = ∫_a^b [f(x) - g(x)] dx. لإيجاد حدود التكامل a و b، نساوي الدالتين f(x) = g(x) لحل المعادلة وتحديد نقاط التقاطع.',
         contentEn: 'If f(x) ≥ g(x) on [a, b], area A = ∫_a^b [f(x) - g(x)] dx. Boundaries are found by solving f(x) = g(x).',
+        diagram: {
+          id: 'diag-math5-revolution',
+          figureNumberAr: 'شكل (5-1)',
+          figureNumberEn: 'Figure (5-1)',
+          titleAr: 'المجسمات الدورانية وحساب الحجوم بطريقة الأقراص الدائرية',
+          titleEn: 'Solids of Revolution & Disk Integration Method',
+          captionAr: 'عند تدوير منحنى الدالة y = f(x) حول محور السينات دورة كاملة 360 درجة، يتولد مجسم دوراني يُحسب حجمه الكلي بتجميع شرائح أسطوانية تفاضلية نصف قطرها r = f(x) وسمكها dx.',
+          captionEn: 'Revolving curve y = f(x) by 360° around x-axis creates a solid whose total volume is computed by integrating infinitesimal cylindrical disks with radius r = f(x) and thickness dx.',
+          diagramType: 'solid_revolution',
+          takeawayFormulaAr: 'V = π ∫_a^b [f(x)]² dx',
+          takeawayFormulaEn: 'V = π ∫_a^b [f(x)]² dx',
+          keyLabels: [
+            { tagAr: 'منحنى الدالة المولدة f(x)', tagEn: 'Generating Curve', descAr: 'المنحنى الذي يحدد سطح المجسم الدوراني', descEn: 'Boundary curve defining the 3D surface' },
+            { tagAr: 'نصف قطر القرص r = f(x)', tagEn: 'Disk Radius', descAr: 'المسافة من محور الدوران إلى المنحنى', descEn: 'Distance from revolution axis to curve' },
+            { tagAr: 'سمك الشريحة الأسطوانية dx', tagEn: 'Disk Thickness dx', descAr: 'الارتفاع التفاضلي للقرص الأسطواني', descEn: 'Differential height of cylinder' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: مساحة المنطقة بين f(x) = x و g(x) = x²',
           titleEn: 'Worked Example: Area between y = x and y = x²',

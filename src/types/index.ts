@@ -209,7 +209,27 @@ export interface LectureDiagram {
   titleEn: string;
   captionAr: string;
   captionEn: string;
-  diagramType: 'electric_field' | 'circuit' | 'vector_3d' | 'pv_carnot' | 'faraday_induction' | 'calculus_integral' | 'derivative_slope' | 'polynomial_curve' | 'apparatus' | 'custom_svg';
+  diagramType: 
+    | 'electric_field' 
+    | 'circuit' 
+    | 'vector_3d' 
+    | 'pv_carnot' 
+    | 'faraday_induction' 
+    | 'calculus_integral' 
+    | 'derivative_slope' 
+    | 'discontinuity_graph'
+    | 'unit_circle_trig'
+    | 'solid_revolution'
+    | 'chemical_kinetics'
+    | 'dna_cell_biology'
+    | 'binary_tree_cs'
+    | 'primary_fractions'
+    | 'primary_water_cycle'
+    | 'islamic_pillars'
+    | 'kinematics_graph'
+    | 'polynomial_curve' 
+    | 'apparatus' 
+    | 'custom_svg';
   imageUrl?: string;
   svgContent?: string;
   keyLabels?: DiagramKeyLabel[];

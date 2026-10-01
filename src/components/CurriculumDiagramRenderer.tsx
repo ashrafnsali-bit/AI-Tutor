@@ -335,6 +335,329 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
           </svg>
         );
 
+      case 'discontinuity_graph':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Coordinate Axes */}
+            <line x1="60" y1="260" x2="540" y2="260" stroke="#94a3b8" strokeWidth="2" />
+            <text x="550" y="265" fill="#fff" fontSize="13" fontWeight="bold">x</text>
+            <line x1="80" y1="280" x2="80" y2="30" stroke="#94a3b8" strokeWidth="2" />
+            <text x="75" y="25" fill="#fff" fontSize="13" fontWeight="bold">y</text>
+
+            {/* 1. Removable Discontinuity at x = 2 */}
+            <path d="M 80 220 Q 130 180, 180 140" stroke="#38bdf8" strokeWidth="3" fill="none" />
+            <path d="M 180 140 Q 210 120, 240 100" stroke="#38bdf8" strokeWidth="3" fill="none" />
+            <circle cx="180" cy="140" r="6" fill="#0f172a" stroke="#38bdf8" strokeWidth="3" />
+            <text x="180" y="280" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="bold">x = a (فجوة نقطية)</text>
+            <text x="180" y="115" textAnchor="middle" fill="#38bdf8" fontSize="11">عدم اتصال قابل للإزالة</text>
+
+            {/* 2. Jump Discontinuity at x = 4 */}
+            <line x1="280" y1="200" x2="360" y2="170" stroke="#10b981" strokeWidth="3" />
+            <circle cx="360" cy="170" r="5" fill="#10b981" />
+            <line x1="360" y1="100" x2="440" y2="70" stroke="#10b981" strokeWidth="3" />
+            <circle cx="360" cy="100" r="5" fill="#0f172a" stroke="#10b981" strokeWidth="3" />
+            <line x1="360" y1="170" x2="360" y2="100" stroke="#fbbf24" strokeWidth="1.5" strokeDasharray="3 3" />
+            <text x="360" y="280" textAnchor="middle" fill="#10b981" fontSize="13" fontWeight="bold">x = b (قفزة)</text>
+            <text x="360" y="55" textAnchor="middle" fill="#10b981" fontSize="11">عدم اتصال قفزي</text>
+
+            {/* 3. Infinite Asymptote at x = c */}
+            <line x1="480" y1="30" x2="480" y2="270" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 4" />
+            <path d="M 450 240 Q 470 200, 475 50" stroke="#f87171" strokeWidth="3" fill="none" />
+            <path d="M 485 270 Q 490 120, 530 100" stroke="#f87171" strokeWidth="3" fill="none" />
+            <text x="480" y="295" textAnchor="middle" fill="#f87171" fontSize="12" fontWeight="bold">خط تقارب رأسي</text>
+          </svg>
+        );
+
+      case 'unit_circle_trig':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Unit Circle Trigonometry */}
+            <circle cx="300" cy="160" r="110" fill="rgba(56, 189, 248, 0.05)" stroke="#38bdf8" strokeWidth="2.5" />
+            
+            {/* Coordinate Axes */}
+            <line x1="150" y1="160" x2="450" y2="160" stroke="#94a3b8" strokeWidth="2" />
+            <text x="465" y="165" fill="#fff" fontSize="14" fontWeight="bold">x (cos θ)</text>
+            <line x1="300" y1="280" x2="300" y2="40" stroke="#94a3b8" strokeWidth="2" />
+            <text x="300" y="30" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">y (sin θ)</text>
+
+            {/* Radius vector to (cos θ, sin θ) at 45 deg (pi/4) */}
+            <line x1="300" y1="160" x2="378" y2="82" stroke="#ef4444" strokeWidth="3" />
+            <circle cx="378" cy="82" r="6" fill="#fbbf24" stroke="#fff" strokeWidth="1.5" />
+            <text x="390" y="75" fill="#fbbf24" fontSize="13" fontWeight="bold">P(cos θ, sin θ)</text>
+
+            {/* Triangle components */}
+            <line x1="300" y1="160" x2="378" y2="160" stroke="#10b981" strokeWidth="2.5" />
+            <text x="339" y="180" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">cos θ</text>
+            <line x1="378" y1="160" x2="378" y2="82" stroke="#60a5fa" strokeWidth="2.5" strokeDasharray="3 3" />
+            <text x="395" y="125" fill="#93c5fd" fontSize="12" fontWeight="bold">sin θ</text>
+
+            {/* Angle arc θ */}
+            <path d="M 335 160 A 35 35 0 0 0 325 135" fill="none" stroke="#fbbf24" strokeWidth="2" />
+            <text x="340" y="145" fill="#fbbf24" fontSize="12" fontWeight="bold">θ</text>
+
+            {/* Pythagorean Identity Box */}
+            <rect x="50" y="60" width="170" height="40" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" />
+            <text x="135" y="85" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="900">sin²θ + cos²θ = 1</text>
+          </svg>
+        );
+
+      case 'solid_revolution':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Volume of Revolution: Disk Method 3D Cylinder Slices */}
+            <line x1="80" y1="160" x2="520" y2="160" stroke="#94a3b8" strokeWidth="2.5" />
+            <text x="535" y="165" fill="#fff" fontSize="14" fontWeight="bold">x</text>
+            <line x1="120" y1="280" x2="120" y2="40" stroke="#94a3b8" strokeWidth="2" />
+            <text x="120" y="30" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">y = f(x)</text>
+
+            {/* Parabolic Profile Top & Bottom Reflection */}
+            <path d="M 160 160 Q 300 60, 440 40" stroke="#38bdf8" strokeWidth="3" fill="none" />
+            <path d="M 160 160 Q 300 260, 440 280" stroke="#38bdf8" strokeWidth="2" strokeDasharray="4 4" fill="none" />
+
+            {/* 3D Circular Revolution Rings */}
+            <ellipse cx="440" cy="160" rx="20" ry="120" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" strokeWidth="2.5" />
+            <ellipse cx="320" cy="160" rx="16" ry="85" fill="rgba(245, 158, 11, 0.3)" stroke="#f59e0b" strokeWidth="2" />
+            <ellipse cx="336" cy="160" rx="16" ry="85" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 3" />
+
+            {/* Sample Disk Slice Callout */}
+            <line x1="320" y1="160" x2="320" y2="75" stroke="#ef4444" strokeWidth="2.5" />
+            <text x="330" y="120" fill="#fca5a5" fontSize="12" fontWeight="bold">نصف القطر r = f(x)</text>
+            <text x="328" y="260" textAnchor="middle" fill="#fde68a" fontSize="12" fontWeight="bold">شريحة أسطوانية (dx)</text>
+
+            {/* Rotation Arrow */}
+            <path d="M 480 140 A 25 25 0 1 1 480 180" fill="none" stroke="#fbbf24" strokeWidth="2" markerEnd="url(#arrowRed)" />
+            <text x="515" y="165" fill="#fbbf24" fontSize="11" fontWeight="bold">دوران 360°</text>
+
+            {/* Disk Formula Box */}
+            <rect x="180" y="15" width="240" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#0284c7" />
+            <text x="300" y="38" textAnchor="middle" fill="#38bdf8" fontSize="14" fontWeight="900">V = π ∫ₐᵇ [f(x)]² dx</text>
+          </svg>
+        );
+
+      case 'chemical_kinetics':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Reaction Coordinate & Activation Energy */}
+            <line x1="80" y1="270" x2="520" y2="270" stroke="#94a3b8" strokeWidth="2" />
+            <text x="300" y="295" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="bold">سير التفاعل (Reaction Coordinate)</text>
+            <line x1="90" y1="280" x2="90" y2="40" stroke="#94a3b8" strokeWidth="2" />
+            <text x="85" y="30" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="bold">طاقة الوضع (kJ/mol)</text>
+
+            {/* Reactants plateau */}
+            <line x1="90" y1="200" x2="160" y2="200" stroke="#60a5fa" strokeWidth="3" />
+            <text x="125" y="190" textAnchor="middle" fill="#93c5fd" fontSize="13" fontWeight="bold">المتفاعلات</text>
+
+            {/* Uncatalyzed Energy Peak (Red) */}
+            <path d="M 160 200 C 240 20, 280 20, 360 230" stroke="#ef4444" strokeWidth="3.5" fill="none" />
+            <circle cx="250" cy="55" r="6" fill="#ef4444" />
+            <text x="250" y="45" textAnchor="middle" fill="#fca5a5" fontSize="12" fontWeight="bold">المعقد المنشط (بدون محفز)</text>
+
+            {/* Catalyzed Energy Peak (Green) */}
+            <path d="M 160 200 C 240 100, 280 100, 360 230" stroke="#10b981" strokeWidth="3" strokeDasharray="5 5" fill="none" />
+            <circle cx="250" cy="120" r="5" fill="#10b981" />
+            <text x="250" y="140" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">طاقة التنشيط مع المحفز</text>
+
+            {/* Products plateau */}
+            <line x1="360" y1="230" x2="480" y2="230" stroke="#a855f7" strokeWidth="3" />
+            <text x="420" y="220" textAnchor="middle" fill="#c084fc" fontSize="13" fontWeight="bold">النواتج</text>
+
+            {/* Enthalpy delta H */}
+            <line x1="470" y1="200" x2="470" y2="230" stroke="#fbbf24" strokeWidth="2" markerEnd="url(#arrowRed)" />
+            <text x="515" y="218" fill="#fbbf24" fontSize="12" fontWeight="bold">ΔH (طارد)</text>
+          </svg>
+        );
+
+      case 'dna_cell_biology':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* DNA Double Helix Structure */}
+            {/* Strand 1 Sine wave (Cyan) */}
+            <path d="M 80 160 Q 140 60, 200 160 T 320 160 T 440 160 T 540 160" fill="none" stroke="#38bdf8" strokeWidth="4" />
+            {/* Strand 2 Cosine wave (Purple) */}
+            <path d="M 80 160 Q 140 260, 200 160 T 320 160 T 440 160 T 540 160" fill="none" stroke="#a855f7" strokeWidth="4" />
+
+            {/* Hydrogen Bonds / Base Pairs */}
+            <line x1="140" y1="85" x2="140" y2="235" stroke="#ef4444" strokeWidth="3" strokeDasharray="4 2" />
+            <text x="140" y="150" textAnchor="middle" fill="#fca5a5" fontSize="11" fontWeight="bold">A = T</text>
+
+            <line x1="260" y1="85" x2="260" y2="235" stroke="#10b981" strokeWidth="3" strokeDasharray="4 2" />
+            <text x="260" y="150" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">G ≡ C</text>
+
+            <line x1="380" y1="85" x2="380" y2="235" stroke="#ef4444" strokeWidth="3" strokeDasharray="4 2" />
+            <text x="380" y="150" textAnchor="middle" fill="#fca5a5" fontSize="11" fontWeight="bold">T = A</text>
+
+            <line x1="500" y1="85" x2="500" y2="235" stroke="#10b981" strokeWidth="3" strokeDasharray="4 2" />
+            <text x="500" y="150" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">C ≡ G</text>
+
+            {/* Labels Header */}
+            <rect x="170" y="20" width="260" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#a855f7" />
+            <text x="300" y="42" textAnchor="middle" fill="#e879f9" fontSize="13" fontWeight="bold">اللولب المزدوج والقواعد النيتروجينية</text>
+          </svg>
+        );
+
+      case 'binary_tree_cs':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Binary Search Tree (BST) Node Graph */}
+            {/* Edges */}
+            <line x1="300" y1="60" x2="200" y2="130" stroke="#64748b" strokeWidth="2.5" />
+            <line x1="300" y1="60" x2="400" y2="130" stroke="#64748b" strokeWidth="2.5" />
+            <line x1="200" y1="130" x2="140" y2="210" stroke="#64748b" strokeWidth="2.5" />
+            <line x1="200" y1="130" x2="250" y2="210" stroke="#64748b" strokeWidth="2.5" />
+            <line x1="400" y1="130" x2="350" y2="210" stroke="#64748b" strokeWidth="2.5" />
+            <line x1="400" y1="130" x2="460" y2="210" stroke="#64748b" strokeWidth="2.5" />
+
+            {/* Root Node (50) */}
+            <circle cx="300" cy="60" r="22" fill="#0284c7" stroke="#38bdf8" strokeWidth="3" />
+            <text x="300" y="66" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">50</text>
+            <text x="300" y="25" textAnchor="middle" fill="#38bdf8" fontSize="12" fontWeight="bold">الجذر (Root)</text>
+
+            {/* Left Child (30) */}
+            <circle cx="200" cy="130" r="18" fill="#10b981" stroke="#34d399" strokeWidth="2.5" />
+            <text x="200" y="135" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="bold">30</text>
+
+            {/* Right Child (70) */}
+            <circle cx="400" cy="130" r="18" fill="#10b981" stroke="#34d399" strokeWidth="2.5" />
+            <text x="400" y="135" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="bold">70</text>
+
+            {/* Leaves */}
+            <circle cx="140" cy="210" r="16" fill="#6366f1" stroke="#818cf8" strokeWidth="2" />
+            <text x="140" y="215" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">20</text>
+
+            <circle cx="250" cy="210" r="16" fill="#6366f1" stroke="#818cf8" strokeWidth="2" />
+            <text x="250" y="215" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">40</text>
+
+            <circle cx="350" cy="210" r="16" fill="#6366f1" stroke="#818cf8" strokeWidth="2" />
+            <text x="350" y="215" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">60</text>
+
+            <circle cx="460" cy="210" r="16" fill="#6366f1" stroke="#818cf8" strokeWidth="2" />
+            <text x="460" y="215" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">80</text>
+
+            {/* BST Rule callout */}
+            <rect x="150" y="265" width="300" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#10b981" />
+            <text x="300" y="287" textAnchor="middle" fill="#34d399" fontSize="13" fontWeight="bold">قاعدة BST: الأيسر &lt; الجذر &lt; الأيمن | O(log n)</text>
+          </svg>
+        );
+
+      case 'primary_fractions':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Visual Fraction Models for Primary */}
+            {/* 1. Half Fraction Circle */}
+            <circle cx="160" cy="130" r="65" fill="#1e293b" stroke="#38bdf8" strokeWidth="3" />
+            <path d="M 160 65 A 65 65 0 0 1 160 195 Z" fill="#0284c7" />
+            <text x="160" y="225" textAnchor="middle" fill="#38bdf8" fontSize="16" fontWeight="bold">النصف (1/2)</text>
+
+            {/* 2. Quarter Fraction Circle (3/4 shaded) */}
+            <circle cx="440" cy="130" r="65" fill="#1e293b" stroke="#10b981" strokeWidth="3" />
+            <path d="M 440 65 A 65 65 0 1 1 375 130 L 440 130 Z" fill="#059669" />
+            <text x="440" y="225" textAnchor="middle" fill="#34d399" fontSize="16" fontWeight="bold">ثلاثة أرباع (3/4)</text>
+
+            {/* Fraction Bar Model in Bottom */}
+            <rect x="100" y="255" width="400" height="40" rx="8" fill="#1e293b" stroke="#f59e0b" strokeWidth="2" />
+            <rect x="100" y="255" width="100" height="40" rx="4" fill="#f59e0b" />
+            <rect x="200" y="255" width="100" height="40" rx="4" fill="#fbbf24" opacity="0.8" />
+            <rect x="300" y="255" width="100" height="40" rx="4" fill="#fde68a" opacity="0.6" />
+            <text x="300" y="280" textAnchor="middle" fill="#0f172a" fontSize="14" fontWeight="bold">تمثيل الأجزاء المتساوية من الكل</text>
+          </svg>
+        );
+
+      case 'primary_water_cycle':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Water Cycle Illustration */}
+            {/* Sun */}
+            <circle cx="100" cy="70" r="30" fill="#fbbf24" stroke="#f59e0b" strokeWidth="3" />
+            <text x="100" y="75" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">الشمس</text>
+
+            {/* Clouds (Condensation) */}
+            <ellipse cx="300" cy="70" rx="55" ry="25" fill="#cbd5e1" />
+            <ellipse cx="340" cy="65" rx="40" ry="20" fill="#e2e8f0" />
+            <text x="320" y="75" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">تكثف (سحب)</text>
+
+            {/* Rain (Precipitation) */}
+            <line x1="310" y1="105" x2="300" y2="140" stroke="#38bdf8" strokeWidth="2.5" strokeDasharray="4 4" />
+            <line x1="330" y1="105" x2="320" y2="140" stroke="#38bdf8" strokeWidth="2.5" strokeDasharray="4 4" />
+            <line x1="350" y1="105" x2="340" y2="140" stroke="#38bdf8" strokeWidth="2.5" strokeDasharray="4 4" />
+            <text x="370" y="130" fill="#38bdf8" fontSize="12" fontWeight="bold">هطول الأمطار</text>
+
+            {/* Mountain & Land */}
+            <polygon points="400,280 500,120 600,280" fill="#475569" />
+            <polygon points="470,120 500,120 520,150 460,150" fill="#e2e8f0" />
+
+            {/* Ocean / Lake (Collection) */}
+            <rect x="0" y="240" width="450" height="80" fill="#0284c7" />
+            <text x="200" y="275" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">تجمع المياه (البحار والمحيطات)</text>
+
+            {/* Evaporation Wavy Arrows */}
+            <path d="M 170 230 C 160 190, 180 160, 170 120" fill="none" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrowRed)" />
+            <text x="130" y="170" fill="#fbbf24" fontSize="12" fontWeight="bold">تبخر ↑</text>
+          </svg>
+        );
+
+      case 'islamic_pillars':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Islamic 5 Pillars Architecture */}
+            {/* Dome on top */}
+            <path d="M 200 110 Q 300 20, 400 110 Z" fill="#047857" stroke="#10b981" strokeWidth="3" />
+            <circle cx="300" cy="30" r="8" fill="#fbbf24" />
+            <text x="300" y="90" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="bold">أركان الإسلام الخمسة</text>
+
+            {/* 5 Pillars */}
+            {/* Pillar 1: Shahada */}
+            <rect x="70" y="110" width="70" height="150" rx="6" fill="#065f46" stroke="#34d399" strokeWidth="2" />
+            <text x="105" y="180" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">الشهادتان</text>
+
+            {/* Pillar 2: Salah */}
+            <rect x="170" y="110" width="70" height="150" rx="6" fill="#065f46" stroke="#34d399" strokeWidth="2" />
+            <text x="205" y="180" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">الصلاة</text>
+
+            {/* Pillar 3: Zakat */}
+            <rect x="270" y="110" width="70" height="150" rx="6" fill="#065f46" stroke="#34d399" strokeWidth="2" />
+            <text x="305" y="180" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">الزكاة</text>
+
+            {/* Pillar 4: Sawm */}
+            <rect x="370" y="110" width="70" height="150" rx="6" fill="#065f46" stroke="#34d399" strokeWidth="2" />
+            <text x="405" y="180" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">الصوم</text>
+
+            {/* Pillar 5: Hajj */}
+            <rect x="470" y="110" width="70" height="150" rx="6" fill="#065f46" stroke="#34d399" strokeWidth="2" />
+            <text x="505" y="180" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">الحج</text>
+
+            {/* Foundation Base */}
+            <rect x="40" y="260" width="520" height="35" rx="8" fill="#047857" stroke="#10b981" strokeWidth="2" />
+            <text x="300" y="283" textAnchor="middle" fill="#fde68a" fontSize="13" fontWeight="bold">بُني الإسلام على خمس — صدق رسول الله ﷺ</text>
+          </svg>
+        );
+
+      case 'kinematics_graph':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Kinematics v-t Graph */}
+            <line x1="80" y1="260" x2="520" y2="260" stroke="#94a3b8" strokeWidth="2.5" />
+            <text x="535" y="265" fill="#fff" fontSize="14" fontWeight="bold">الزمن t (ث)</text>
+            <line x1="100" y1="280" x2="100" y2="40" stroke="#94a3b8" strokeWidth="2.5" />
+            <text x="95" y="30" fill="#fff" fontSize="14" fontWeight="bold">السرعة v (م/ث)</text>
+
+            {/* Constant Acceleration Line v = v0 + at */}
+            <line x1="100" y1="200" x2="460" y2="70" stroke="#10b981" strokeWidth="4" />
+            <circle cx="100" cy="200" r="6" fill="#fbbf24" />
+            <text x="75" y="205" fill="#fbbf24" fontSize="13" fontWeight="bold">v₀</text>
+
+            <circle cx="460" cy="70" r="6" fill="#10b981" />
+            <text x="480" y="75" fill="#34d399" fontSize="13" fontWeight="bold">v_f</text>
+
+            {/* Area under v-t curve = Displacement */}
+            <polygon points="100,260 100,200 460,70 460,260" fill="rgba(16, 185, 129, 0.15)" />
+            <text x="280" y="200" textAnchor="middle" fill="#34d399" fontSize="14" fontWeight="bold">المساحة تحت المنحنى = الإزاحة (Δx)</text>
+
+            {/* Slope = Acceleration Callout */}
+            <rect x="220" y="25" width="220" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#10b981" />
+            <text x="330" y="48" textAnchor="middle" fill="#34d399" fontSize="13" fontWeight="900">الميل = التسارع a = Δv / Δt</text>
+          </svg>
+        );
+
       default:
         return (
           <svg viewBox="0 0 600 300" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">

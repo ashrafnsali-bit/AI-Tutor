@@ -67,6 +67,23 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         titleEn: '1. Effective Collisions & Activation Energy',
         contentAr: 'لكي يكون التصادم بين جزيئات المواد المتفاعلة تصادماً منتجاً (فعّالاً)، يجب تحقق شرطين أساسيين: 1) الاتجاه الفراغي الصحيح للجزيئات المتصادمة، 2) امتلاك الجزيئات طاقة حركة كافية تساوي طاقة التنشيط Ea على الأقل لتكوين المعقد المنشط (حالة انتقالية غير مستقرة ذات طاقة عالية).',
         contentEn: 'An effective collision requires correct geometric orientation and sufficient kinetic energy >= activation energy (Ea) to form the high-energy activated complex.',
+        diagram: {
+          id: 'diag-chem1-kinetics',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'منحنى طاقة التنشيط وتأثير المحفز الكيميائي على سير التفاعل',
+          titleEn: 'Activation Energy Profile & Catalyst Effect on Reaction Coordinate',
+          captionAr: 'يوضح المنحنى كيف يوفر المحفز مساراً بديلاً للتفاعل بطاقة تنشيط أقل (Ea محفز)، مما يزيد من سرعة التفاعل بشكل هائل دون التأثير على المحتوى الحراري الصافي ΔH.',
+          captionEn: 'The energy profile demonstrates how a catalyst provides an alternative pathway with lower activation energy (Ea), drastically multiplying rate without changing net enthalpy ΔH.',
+          diagramType: 'chemical_kinetics',
+          takeawayFormulaAr: 'Rate = k [A]ᵐ [B]ⁿ | k = A · e^(-Ea / RT)',
+          takeawayFormulaEn: 'Rate = k [A]ᵐ [B]ⁿ | k = A · e^(-Ea / RT)',
+          keyLabels: [
+            { tagAr: 'طاقة التنشيط Ea', tagEn: 'Activation Energy Ea', descAr: 'حاجز الطاقة المطلوب لتكوين المعقد المنشط', descEn: 'Energy barrier to form activated complex' },
+            { tagAr: 'تأثير المحفز (مسار أخضر)', tagEn: 'Catalyzed Pathway', descAr: 'خفض طاقة التنشيط وتسريع التفاعل', descEn: 'Lower activation barrier' },
+            { tagAr: 'التغير في المحتوى الحراري (ΔH)', tagEn: 'Enthalpy Change ΔH', descAr: 'الفرق بين طاقة النواتج والمتفاعلات', descEn: 'Energy difference between products and reactants' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: تأثير المحفز على طاقة التنشيط',
           titleEn: 'Worked Example: Catalyst Effect on Activation Energy',
@@ -403,6 +420,23 @@ export const BIOLOGY_LECTURES: Lecture[] = [
         titleEn: '1. Chargaff\'s Rule & Complementary Base Pairing',
         contentAr: 'أثبت تشارجاف أن في أي عينة DNA: نسبة الأدنين تساوي دائماً نسبة الثايمين (%A = %T)، ونسبة الجوانين تساوي نسبة السايتوسين (%G = %C). يرتبط A مع T برابطتين هيدروجينيتين، ويرتبط G مع C بثلاث روابط هيدروجينية مما يجعله أكثر استقراراً حرارياً.',
         contentEn: 'Chargaff\'s rules state %A = %T (2 H-bonds) and %G = %C (3 H-bonds). G-C rich regions exhibit higher thermal stability.',
+        diagram: {
+          id: 'diag-bio1-dna',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'اللولب المزدوج للحمض النووي وتكامل القواعد النيتروجينية (قاعدة تشارجاف)',
+          titleEn: 'DNA Double Helix Structure & Complementary Base Pairing (Chargaff)',
+          captionAr: 'يتكون شريط DNA من سلسلتين لولبيتين متعاكستين ترتبطان بروابط هيدروجينية بين أزواج القواعد النيتروجينية المتكاملة: الأدنين مع الثايمين (A=T) برابطتين، والجوانين مع السايتوسين (G≡C) بثلاث روابط.',
+          captionEn: 'The DNA double helix pairs complementary bases across antiparallel strands: Adenine with Thymine (A=T via 2 H-bonds) and Guanine with Cytosine (G≡C via 3 H-bonds).',
+          diagramType: 'dna_cell_biology',
+          takeawayFormulaAr: '%A = %T | %G = %C | (A + G) = (T + C) = 50%',
+          takeawayFormulaEn: '%A = %T | %G = %C | (A + G) = (T + C) = 50%',
+          keyLabels: [
+            { tagAr: 'الأدنين والثايمين (A = T)', tagEn: 'Adenine-Thymine (A = T)', descAr: 'رابطتان هيدروجينيتان', descEn: '2 Hydrogen bonds' },
+            { tagAr: 'الجوانين والسايتوسين (G ≡ C)', tagEn: 'Guanine-Cytosine (G ≡ C)', descAr: 'ثلاث روابط هيدروجينية (أعلى ثباتاً)', descEn: '3 Hydrogen bonds (higher thermal stability)' },
+            { tagAr: 'هيكل السكر والفوسفات', tagEn: 'Sugar-Phosphate Backbone', descAr: 'العمود الفقري للشريطين المتعاكسين', descEn: 'Antiparallel structural backbone' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب نسب القواعد النيتروجينية',
           titleEn: 'Worked Example: Base Percentage Calculation',
@@ -695,6 +729,23 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         titleEn: '1. Artificial Neuron Architecture & Activations',
         contentAr: 'يحسب العصبون الاصطناعي المجموع الموزون للمدخلات: z = (w1*x1 + w2*x2 + ... + wn*xn) + b، ثم يمرر الناتج z إلى دالة تنشيط غير خطية f(z) مثل دالة ReLU: f(z) = max(0, z) لتحديد الإشارة الخارجة.',
         contentEn: 'An artificial neuron computes weighted sum z = Σ(wi xi) + b and passes it through an activation function like ReLU: f(z) = max(0, z).',
+        diagram: {
+          id: 'diag-cs1-bst-nn',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'هياكل البيانات الشجرية وخوارزميات البحث الثنائي والشبكات العصبية',
+          titleEn: 'Binary Search Tree Data Structures & Neural Hierarchy',
+          captionAr: 'تعتمد خوارزميات الحوسبة المتقدمة والذكاء الاصطناعي على الهياكل الشجرية المتوازنة وشبكات العقد المتصلة، حيث يتيح التنظيم الهرمي كفاءة بحث وزمن تنفيذ O(log n).',
+          captionEn: 'Advanced computational algorithms and neural network architectures rely on hierarchical tree-based structures to achieve efficient O(log n) search complexity.',
+          diagramType: 'binary_tree_cs',
+          takeawayFormulaAr: 'Time Complexity: O(log n) | z = Σ(wᵢ · xᵢ) + b',
+          takeawayFormulaEn: 'Time Complexity: O(log n) | z = Σ(wᵢ · xᵢ) + b',
+          keyLabels: [
+            { tagAr: 'العقدة الجذرية (Root)', tagEn: 'Root Node', descAr: 'نقطة الانطلاق في الشجرة الهرمية', descEn: 'Top-level entry node' },
+            { tagAr: 'الشجرة الفرعية اليسرى', tagEn: 'Left Subtree (< Root)', descAr: 'قيم أصغر من العقدة الحالية', descEn: 'Values smaller than parent node' },
+            { tagAr: 'الشجرة الفرعية اليمنى', tagEn: 'Right Subtree (> Root)', descAr: 'قيم أكبر من العقدة الحالية', descEn: 'Values greater than parent node' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب مخرجات عصبون اصطناعي',
           titleEn: 'Worked Example: Single Neuron Computation',
