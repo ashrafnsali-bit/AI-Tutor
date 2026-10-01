@@ -213,31 +213,38 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                 className={`section-accordion-header ${isOpen ? 'accordion-open' : ''}`}
                 onClick={() => toggleSection(secIdx)}
               >
-                <div className="section-header-left">
-                  <span className="section-number-badge">{secIdx + 1}</span>
-                  <span className="section-title-text">{secTitle}</span>
+                <div className="section-header-main">
+                  <div className="section-header-left">
+                    <span className="section-number-badge">{secIdx + 1}</span>
+                    <span className="section-title-text">{secTitle}</span>
+                  </div>
+                  <div className="section-header-toggle-icon">
+                    {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </div>
                 </div>
-                <div className="section-header-right">
-                  {sec.diagram && (
-                    <span className="section-has-diagram-badge">
-                      <Layers size={12} />
-                      {isEn ? 'Diagram' : 'رسم توضيحي'}
-                    </span>
-                  )}
-                  {check && (
-                    <span className="section-has-check-badge">
-                      <CheckCircle size={12} />
-                      {isEn ? 'Quiz' : 'تحقق'}
-                    </span>
-                  )}
-                  {ex && (
-                    <span className="section-has-example-badge">
-                      <Calculator size={12} />
-                      {isEn ? 'Example' : 'مثال'}
-                    </span>
-                  )}
-                  {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                </div>
+
+                {(sec.diagram || check || ex) && (
+                  <div className="section-header-badges-row">
+                    {sec.diagram && (
+                      <span className="section-has-diagram-badge">
+                        <Layers size={12} />
+                        <span>{isEn ? 'Diagram' : 'رسم توضيحي'}</span>
+                      </span>
+                    )}
+                    {check && (
+                      <span className="section-has-check-badge">
+                        <CheckCircle size={12} />
+                        <span>{isEn ? 'Quiz' : 'تحقق'}</span>
+                      </span>
+                    )}
+                    {ex && (
+                      <span className="section-has-example-badge">
+                        <Calculator size={12} />
+                        <span>{isEn ? 'Example' : 'مثال'}</span>
+                      </span>
+                    )}
+                  </div>
+                )}
               </button>
 
               {isOpen && (
