@@ -32,6 +32,7 @@ interface NavbarProps {
   onLogout?: () => void;
   onToggleLanguage: () => void;
   onOpenProgress?: () => void;
+  onOpenAdmin?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -45,7 +46,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAuth,
   onLogout,
   onToggleLanguage,
-  onOpenProgress
+  onOpenProgress,
+  onOpenAdmin
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -126,6 +128,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
+          {/* Quick Admin Dashboard Trigger */}
+          {onOpenAdmin && (
+            <button
+              type="button"
+              className="btn-header-admin-glow"
+              onClick={onOpenAdmin}
+              title={isEn ? "Admin Dashboard (Students, Progress & Supervision)" : "لوحة تحكم المشرف والأدمن (متابعة الطلاب، اجتياز المحاضرات والرقابة الأبوية)"}
+            >
+              <ShieldCheck size={15} className="admin-glow-icon" />
+              <span>{isEn ? 'Admin' : 'لوحة المشرف'}</span>
+            </button>
+          )}
+
           {/* Compact Language Toggle */}
           <button 
             type="button" 
@@ -178,6 +193,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                 {/* Menu Action Items */}
                 <div className="dropdown-menu-list">
+                  {onOpenAdmin && (
+                    <button 
+                      type="button" 
+                      className="dropdown-item dropdown-item-admin"
+                      onClick={() => { setIsDropdownOpen(false); onOpenAdmin(); }}
+                    >
+                      <Users size={16} className="item-icon item-icon-admin text-cyan-400" />
+                      <div className="item-text">
+                        <span className="item-title">{isEn ? 'Admin & Supervision Dashboard' : 'لوحة تحكم المشرف والأدمن'}</span>
+                        <span className="item-subtitle">{isEn ? 'Students, progress & parent controls' : 'إيميلات المسجلين، تقدم المحاضرات والرقابة'}</span>
+                      </div>
+                      <span className="status-badge-mini badge-admin">VIP</span>
+                    </button>
+                  )}
+
                   <button 
                     type="button" 
                     className="dropdown-item"
@@ -371,6 +401,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ShieldCheck size={18} />
               <span>{t.parentalBtn}</span>
             </button>
+
+            {onOpenAdmin && (
+              <button
+                type="button"
+                className="btn-mobile-tool btn-mobile-admin"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenAdmin(); }}
+              >
+                <Users size={18} />
+                <span>{isEn ? 'Admin' : 'لوحة المشرف'}</span>
+              </button>
+            )}
           </div>
 
           {/* Language Toggle */}

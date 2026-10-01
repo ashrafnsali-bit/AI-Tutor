@@ -27,6 +27,7 @@ import { ApiKeyModal } from './components/ApiKeyModal';
 import { AuthModal } from './components/AuthModal';
 import { GenerateLectureModal } from './components/GenerateLectureModal';
 import { ProgressDashboard } from './components/ProgressDashboard';
+import { AdminDashboard } from './components/AdminDashboard';
 
 export function App() {
   // Load saved state or default with consistency checks
@@ -113,6 +114,7 @@ export function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isGenerateLectureOpen, setIsGenerateLectureOpen] = useState(false);
   const [isProgressOpen, setIsProgressOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [geoNotice, setGeoNotice] = useState<{ show: boolean; countryName: string; flag: string; city?: string } | null>(null);
 
   // User session state
@@ -365,6 +367,7 @@ export function App() {
         onLogout={handleLogout}
         onToggleLanguage={handleToggleLanguage}
         onOpenProgress={() => setIsProgressOpen(true)}
+        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       {/* Dynamic Geolocation Country Notification Banner */}
@@ -520,6 +523,13 @@ export function App() {
         onClose={() => setIsGenerateLectureOpen(false)}
         onLectureGenerated={handleLectureGenerated}
         onOpenApiKey={() => setIsApiKeyOpen(true)}
+      />
+
+      {/* Comprehensive Admin Dashboard & Supervision Modal */}
+      <AdminDashboard
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        language={profile.language}
       />
     </div>
   );

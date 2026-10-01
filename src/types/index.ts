@@ -63,8 +63,11 @@ export interface StudentProfile {
   subject: Subject;
   gradeLevel: GradeLevel;
   language: Language;
+  parentName?: string;
   parentEmail?: string;
+  parentPhone?: string;
   isParentVerified: boolean;
+  parentalSettings?: ParentalControlSettings;
   timeLimitMinutes: number;
   usedTodayMinutes: number;
   masteryPoints: number;
@@ -79,6 +82,31 @@ export interface UserAccount extends StudentProfile {
   password?: string;
   createdAt: number;
   lastLoginAt: number;
+}
+
+export interface AdminStudentView extends UserAccount {
+  currentLectureTitle: string;
+  currentLectureOrder: number;
+  completedLecturesCount: number;
+  totalLecturesCount: number;
+  progressPercentage: number;
+  averageScore: number;
+  bestScore: number;
+  totalAssessmentsPassed: number;
+  totalAssessmentsFailed: number;
+  totalStudyMinutes: number;
+  lastActiveDate: string;
+  recentScores: number[];
+  lecturesStatus: {
+    lectureId: string;
+    order: number;
+    title: string;
+    isCompleted: boolean;
+    isLocked: boolean;
+    score?: number;
+    passed?: boolean;
+    attemptCount?: number;
+  }[];
 }
 
 export interface Question {
