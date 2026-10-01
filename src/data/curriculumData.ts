@@ -207,6 +207,136 @@ export const MATH_LECTURES: Lecture[] = [
           explanationEn: 'f(0) = 0, f(2) = 8 - 4 = 4. Average rate of change = (4 - 0)/(2 - 0) = 2.',
           hintAr: 'احسب f(2) و f(0) ثم اقسم الفرق في القيم على (2 - 0).'
         }
+      },
+      {
+        titleAr: '3. النموذج الثالث: سلوك طرفي التمثيل البياني والنهايات عند اللانهاية',
+        titleEn: '3. Model 3: End Behavior & Asymptotic Limits at Infinity',
+        contentAr: 'يصف سلوك الطرفين اتجاه قيم f(x) عندما تتزايد x بلا حدود (x -> ∞) أو تتناقص بلا حدود (x -> -∞). في كثيرات الحدود، يحدد الحد الرئيسي (الحد ذو الدرجة الأعلى ومعامله) سلوك الطرفين؛ بينما في الدوال النسبية يحدد وجود خط التقارب الأفقي y = L.',
+        contentEn: 'End behavior describes f(x) as x approaches +/- infinity, determined by the leading term degree and sign.',
+        diagram: {
+          id: 'diag-math1-endbehavior',
+          figureNumberAr: 'شكل (1-3)',
+          figureNumberEn: 'Figure (1-3)',
+          titleAr: 'سلوك طرفي التمثيل البياني ونقاط التحول لكثيرات الحدود',
+          titleEn: 'Polynomial End Behavior & Critical Inflection Analysis',
+          captionAr: 'يوضح المنحنى البياني السلوك المقارب لطرفي الدالة عند ±∞ مع تمييز نقاط التحول والقمم والقيعان المحلية.',
+          captionEn: 'Illustrates polynomial asymptotic end behavior towards +/- infinity along with local extrema and turning points.',
+          diagramType: 'polynomial_curve',
+          takeawayFormulaAr: 'lim_{x → ±∞} f(x) = aₙ · xⁿ | Horizontal Asymptote: y = L',
+          takeawayFormulaEn: 'lim_{x → ±∞} f(x) = aₙ · xⁿ | Horizontal Asymptote: y = L',
+          keyLabels: [
+            { tagAr: 'الطرف الأيمن (x → +∞)', tagEn: 'Right End (x → +∞)', descAr: 'اتجاه الدالة عند تزايد x', descEn: 'Behavior as x grows positively' },
+            { tagAr: 'الطرف الأيسر (x → -∞)', tagEn: 'Left End (x → -∞)', descAr: 'اتجاه الدالة عند تناقص x', descEn: 'Behavior as x drops negatively' },
+            { tagAr: 'خط تقارب أفقي', tagEn: 'Horizontal Asymptote', descAr: 'قيمة الاستقرار عند اللانهاية', descEn: 'Asymptotic limit y = L' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: تحديد سلوك طرفي دالة كثيرة حدود',
+          titleEn: 'Worked Example: Determining Leading Term End Behavior',
+          equation: 'f(x) = -3x⁴ + 5x² - 2',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'الخطوة 1: نحدد الحد الرئيسي: الدرجة زوجية (n = 4) والمعامل الرئيسي سالب (a = -3 < 0).',
+              textEn: 'Step 1: Leading term -3x^4 has even degree (4) and negative coefficient (-3).'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الخطوة 2: بما أن الدرجة زوجية والمعامل سالب، فإن كلا طرفي الدالة يهبطان إلى الأسفل.',
+              textEn: 'Step 2: Even degree + negative coefficient implies both ends point downwards.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'الخطوة 3: التعبير الرياضي للنهايات: lim_{x -> ∞} f(x) = -∞  و  lim_{x -> -∞} f(x) = -∞.',
+              textEn: 'Step 3: Limits: lim_{x -> ∞} f(x) = -∞ and lim_{x -> -∞} f(x) = -∞.'
+            }
+          ],
+          takeawayAr: 'الحد ذو الأس الأعلى يطغى تماماً على باقي الحدود عند القيم الكبيرة جداً لـ x.',
+          takeawayEn: 'The highest-degree leading term completely dominates polynomial behavior at extreme values of x.'
+        },
+        tipsAr: ['إذا كانت الدرجة فردية فالطرفان متعاكسان، وإذا كانت زوجية فالطرفان في نفس الاتجاه'],
+        tipsEn: ['Odd degree polynomials have opposite end directions; even degree have matching end directions'],
+        formativeCheck: {
+          id: 'fc-math1-3',
+          questionAr: 'ما هو سلوك طرفي الدالة f(x) = 2x³ - 5x + 1 عندما x -> ∞ و x -> -∞؟',
+          questionEn: 'What is the end behavior of f(x) = 2x³ - 5x + 1 as x -> ∞ and x -> -∞?',
+          optionsAr: [
+            'الطرف الأيمن يصعد للأعلى (+∞) والأيسر يهبط للأسفل (-∞)',
+            'كلا الطرفين يصعدان للأعلى (+∞)',
+            'كلا الطرفين يهبطان للأسفل (-∞)',
+            'الطرف الأيمن يهبط (-∞) والأيسر يصعد (+∞)'
+          ],
+          optionsEn: [
+            'Right end rises to +∞, Left end falls to -∞',
+            'Both ends rise to +∞',
+            'Both ends fall to -∞',
+            'Right end falls to -∞, Left end rises to +∞'
+          ],
+          correctIndex: 0,
+          explanationAr: 'الدرجة فردية (3) والمعامل موجب (2 > 0)، إذن يصعد يميناً ويهبط يساراً.',
+          explanationEn: 'Odd degree with positive leading coefficient rises to the right and falls to the left.',
+          hintAr: 'تذكر قاعدة كثيرة الحدود التكعيبية الموجبة.'
+        }
+      },
+      {
+        titleAr: '4. النموذج الرابع: القيم القصوى المحلية والمطلقة ونقاط التحول',
+        titleEn: '4. Model 4: Local/Absolute Extrema & Critical Turning Points',
+        contentAr: 'تحدث القيمة العظمى المحلية عندما يتغير سلوك الدالة من التزايد إلى التناقص، وتحدث الصغرى المحلية عندما يتغير من التناقص إلى التزايد. تكون النقطة حرجة عندما يكون المماس أفقياً (المشتقة = 0) أو غير موجود، ويمكن أن تحتوي كثيرة الحدود من الدرجة n على (n - 1) نقطة تحول كحد أقصى.',
+        contentEn: 'Local extrema occur where monotonic behavior switches direction. Critical points arise where the tangent is horizontal (slope = 0) or undefined.',
+        diagram: {
+          id: 'diag-math1-extrema',
+          figureNumberAr: 'شكل (1-4)',
+          figureNumberEn: 'Figure (1-4)',
+          titleAr: 'القيم العظمى والصغرى ونقاط التحول للمنحنى',
+          titleEn: 'Local/Global Extrema & Critical Tangent Slope',
+          captionAr: 'يوضح المخطط كيفية تغير إشارة ميل المماس من الموجب إلى السالب عند القمة العظمى، ومن السالب إلى الموجب عند القاع الأصغر.',
+          captionEn: 'Visualizes slope sign changes from positive to negative at local maxima, and negative to positive at local minima.',
+          diagramType: 'derivative_slope',
+          takeawayFormulaAr: 'Critical Points: f\'(x) = 0 | Max Turning: (+) → (-)',
+          takeawayFormulaEn: 'Critical Points: f\'(x) = 0 | Max Turning: (+) → (-)',
+          keyLabels: [
+            { tagAr: 'قيمة عظمى محلية (Peak)', tagEn: 'Local Maximum', descAr: 'انتقال من تزايد إلى تناقص (ميل = 0)', descEn: 'Monotonic switch (+ to -)' },
+            { tagAr: 'قيمة صغرى محلية (Valley)', tagEn: 'Local Minimum', descAr: 'انتقال من تناقص إلى تزايد (ميل = 0)', descEn: 'Monotonic switch (- to +)' },
+            { tagAr: 'مماس أفقي', tagEn: 'Horizontal Tangent', descAr: 'ميل المماس يساوي صفراً', descEn: 'Zero slope tangent line' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: تحديد النقاط الحرجة ونوعها',
+          titleEn: 'Worked Example: Classifying Local Extrema from Function Plot',
+          equation: 'f(x) = x³ - 3x',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'الخطوة 1: عند x = -1 تكون قيمة f(-1) = 2، والميل قبلها موجب وبعدها سالب، إذن (-1, 2) عظمى محلية.',
+              textEn: 'Step 1: At x = -1, f(-1) = 2 with slope changing from + to -, indicating a local maximum.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الخطوة 2: عند x = 1 تكون قيمة f(1) = -2، والميل قبلها سالب وبعدها موجب، إذن (1, -2) صغرى محلية.',
+              textEn: 'Step 2: At x = 1, f(1) = -2 with slope changing from - to +, indicating a local minimum.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'الخطوة 3: عدد نقاط التحول = 2 وهو أقل من أو يساوي (3 - 1 = 2).',
+              textEn: 'Step 3: Exactly 2 turning points for a degree 3 cubic polynomial.'
+            }
+          ],
+          takeawayAr: 'نقاط التحول والقيم القصوى هي النقاط التي يتغير عندها اتجاه حركة المنحنى الرياضي.',
+          takeawayEn: 'Turning points mark the exact domain coordinates where the function reverses its direction.'
+        },
+        tipsAr: ['كثيرة الحدود من الدرجة n لها على الأكثر (n - 1) نقطة تحول'],
+        tipsEn: ['A polynomial of degree n has at most (n - 1) turning points'],
+        formativeCheck: {
+          id: 'fc-math1-4',
+          questionAr: 'كم عدد نقاط التحول كحد أقصى لدالة كثيرة حدود من الدرجة الخامسة (Degree 5)؟',
+          questionEn: 'What is the maximum number of turning points for a degree 5 polynomial?',
+          optionsAr: ['4 نقاط تحول كحد أقصى', '5 نقاط تحول', '3 نقاط تحول', '6 نقاط تحول'],
+          optionsEn: ['At most 4 turning points', '5 turning points', '3 turning points', '6 turning points'],
+          correctIndex: 0,
+          explanationAr: 'الحد الأقصى لعدد نقاط التحول في أي كثيرة حدود هو n - 1 = 5 - 1 = 4 نقاط.',
+          explanationEn: 'Maximum turning points = degree - 1 = 5 - 1 = 4.',
+          hintAr: 'اطرح 1 من درجة كثيرة الحدود.'
+        }
       }
     ],
 

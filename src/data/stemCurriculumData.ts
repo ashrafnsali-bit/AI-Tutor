@@ -14,7 +14,7 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     titleEn: 'Lecture 1: Collision Theory, Reaction Rates & Activation Energy',
     subtitleAr: 'شروط التصادم الفعّال، حساب متوسط سرعة التفاعل، والعوامل المؤثرة وطاقة التنشيط',
     subtitleEn: 'Understand effective collision conditions, reaction rate laws, catalysts, and activation energy.',
-    durationMinutes: 35,
+    durationMinutes: 45,
     gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM)',
     gradeLevelNameEn: 'Grade 12 / High School - STEM Specialization',
     termAr: 'الفصل الدراسي الأول',
@@ -28,13 +28,13 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     learningOutcomesAr: [
       'أن يوضح الطالب فروض نظرية التصادم وشروط حدوث التصادم المثمر (الفعّال)',
       'أن يعرف طاقة التنشيط (Ea) والمعقد المنشط ويفسر منحنيات الطاقة للتفاعلات الماصة والطاردة',
-      'أن يحدد العوامل الخمسة المؤثرة في سرعة التفاعل (التركيز، درجة الحرارة، مساحة السطح، طبيعة المواد، المحفزات)',
+      'أن يحلل منحنى ماكسويل-بولتزمان لتوزيع الطاقة الحركية وتأثير درجة الحرارة',
       'أن يكتب قانون سرعة التفاعل العام R = k [A]^m [B]^n ويحدد رتبة التفاعل الكلية'
     ],
     learningOutcomesEn: [
       'Explain collision theory postulates and conditions for effective collisions',
       'Define activation energy (Ea) and activated complex for endo/exothermic profiles',
-      'Analyze 5 factors affecting reaction rates (concentration, temp, surface area, nature, catalysts)',
+      'Analyze Maxwell-Boltzmann kinetic energy distributions and temperature effects',
       'Formulate the rate law R = k [A]^m [B]^n and calculate overall reaction order'
     ],
     vocabulary: [
@@ -63,14 +63,14 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         definitionEn: 'A substance that accelerates reaction rate by lowering activation energy without being consumed.'
       }
     ],
-    keyConceptsAr: ['شروط التصادم الفعّال', 'طاقة التنشيط والمعقد المنشط', 'العوامل المؤثرة في سرعة التفاعل', 'قانون سرعة التفاعل ورتبة التفاعل'],
-    keyConceptsEn: ['Effective Collisions', 'Activation Energy & Activated Complex', 'Rate Factors', 'Rate Law & Reaction Orders'],
+    keyConceptsAr: ['شروط التصادم الفعّال', 'طاقة التنشيط والمعقد المنشط', 'توزيع ماكسويل-بولتزمان', 'قانون سرعة التفاعل ورتبة التفاعل'],
+    keyConceptsEn: ['Effective Collisions', 'Activation Energy & Activated Complex', 'Maxwell-Boltzmann Distribution', 'Rate Law & Reaction Orders'],
     summaryAr: 'تتحكم نظرية التصادم في سرعة تحول المواد المتفاعلة إلى نواتج؛ حيث تزيد زيادة الحرارة والتركيز ومساحة السطح من عدد التصادمات الفعالة، بينما تخفض المحفزات حاجز طاقة التنشيط.',
     summaryEn: 'Collision theory governs chemical kinetics: temperature, concentration, and surface area increase effective collisions, while catalysts lower the activation energy barrier.',
     goldenRulesAr: [
       'الشرطان الأساسيان للتصادم الفعّال: الاتجاه الفراغي الصحيح + طاقة حركية تفوق أو تساوي طاقة التنشيط Ea.',
       'المعقد المنشط يتواجد دائماً عند قمة منحنى الطاقة وتكون طاقة وضعه أعلى ما يمكن وزمن بقائه في غاية القصر.',
-      'زيادة درجة الحرارة بمقدار 10 درجات مئوية يضاعف تقريباً سرعة التفاعل لمضاعفة عدد الجزيئات الممتلكة لطاقة التنشيط.',
+      'منحنى ماكسويل-بولتزمان يوضح أن رفع درجة الحرارة يزحف بالقمة لليمين والأسفل، مما يضاعف عدد الجزيئات التي تمتلك طاقة >= Ea.',
       'المحفز يقلل طاقة التنشيط للتفاعل الأمامي والعكسي بنفس المقدار ولا يغير حرارة التفاعل الصافية ΔH.',
       'المواد الصلبة ذات المساحة السطحية الأكبر تتفاعل أسرع بكثير لأن مساحة التماس المعرضة للتصادمات أكبر.',
       'رتبة التفاعل m و n لا تُستنتج من معاملات المعادلة الموزونة بل تُحدد عملياً وتجريبياً فقط.',
@@ -79,7 +79,7 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     goldenRulesEn: [
       'Effective collision criteria: correct spatial geometry + kinetic energy >= Ea.',
       'Activated complex resides at the peak of the potential energy curve with maximum instability.',
-      'A 10°C temperature increase roughly doubles reaction rate by multiplying particles with energy >= Ea.',
+      'Maxwell-Boltzmann distributions show higher temperature flattens and shifts right, multiplying reacting particles.',
       'Catalysts lower Ea for both forward and reverse paths identically, leaving net enthalpy ΔH unchanged.',
       'Greater solid surface area exposes more collision sites, accelerating heterogeneous reactions.',
       'Reaction orders m and n must be determined experimentally and cannot be inferred from stoichiometry.',
@@ -125,8 +125,8 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
     ],
     sections: [
       {
-        titleAr: '1. شروط التصادم الفعّال وطاقة التنشيط وتأثير المحفزات',
-        titleEn: '1. Effective Collisions, Activation Energy & Catalysts',
+        titleAr: '1. النموذج الأول: شروط التصادم الفعّال وطاقة التنشيط والمعقد المنشط',
+        titleEn: '1. Model 1: Effective Collisions, Activation Energy & Transition State',
         contentAr: 'لكي يكون التصادم بين جزيئات المواد المتفاعلة تصادماً منتجاً (فعّالاً)، يجب تحقق شرطين أساسيين: 1) الاتجاه الفراغي الصحيح للجزيئات المتصادمة، 2) امتلاك الجزيئات طاقة حركة كافية تساوي طاقة التنشيط Ea على الأقل لتكوين المعقد المنشط (حالة انتقالية غير مستقرة ذات طاقة عالية). يعمل المحفز الكيميائي على توفير مسار بديل للتفاعل بحاجز طاقة تنشيط أقل بكثير، مما يضاعف عدد التصادمات الفعالة في الثانية الواحدة دون استهلاك المحفز.',
         contentEn: 'An effective collision requires correct geometric orientation and sufficient kinetic energy >= activation energy (Ea) to form the high-energy activated complex. A catalyst introduces an alternative mechanism with a lower activation barrier.',
         diagram: {
@@ -182,8 +182,65 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         }
       },
       {
-        titleAr: '2. قانون سرعة التفاعل الكيميائي وحساب الرتبة وثابت السرعة',
-        titleEn: '2. Reaction Rate Law, Reaction Orders & Rate Constant k',
+        titleAr: '2. النموذج الثاني: منحنى ماكسويل-بولتزمان وتأثير درجة الحرارة على طاقة التنشيط',
+        titleEn: '2. Model 2: Maxwell-Boltzmann Kinetic Energy Distribution & Temperature Shift',
+        contentAr: 'يوضح منحنى ماكسويل-بولتزمان توزيع الطاقة الحركية لجزيئات الغاز أو المحلول عند درجات حرارة مختلفة. عند رفع درجة الحرارة من T1 إلى T2، يمتد المنحنى نحو اليمين ويزداد عدد الجزيئات التي تمتلك طاقة حركة أكبر من أو تساوي طاقة التنشيط Ea، مما يفسر الزيادة الهائلة في سرعة التفاعل.',
+        contentEn: 'The Maxwell-Boltzmann distribution illustrates molecular kinetic energy spreads. Elevating temperature shifts the curve rightwards, multiplying particles with energy >= Ea.',
+        diagram: {
+          id: 'diag-chem1-maxwell',
+          figureNumberAr: 'شكل (1-2)',
+          figureNumberEn: 'Figure (1-2)',
+          titleAr: 'توزيع ماكسويل-بولتزمان الحركي وتأثير درجة الحرارة على طاقة التنشيط',
+          titleEn: 'Maxwell-Boltzmann Distribution & Temperature Effect on Activation Energy',
+          captionAr: 'توضح المساحة المظللة تحت المنحنى بعد خط طاقة التنشيط Ea تضاعف عدد الجزيئات القادرة على التفاعل عند رفع درجة الحرارة من T1 إلى T2.',
+          captionEn: 'Shaded area past activation threshold Ea demonstrates how temperature rise drastically increases reacting particles.',
+          diagramType: 'maxwell_boltzmann_chem',
+          takeawayFormulaAr: 'Fraction with E ≥ Ea ∝ e^(-Ea / RT)',
+          takeawayFormulaEn: 'Fraction with E ≥ Ea ∝ e^(-Ea / RT)',
+          keyLabels: [
+            { tagAr: 'المنحنى T1 (بارد)', tagEn: 'T1 Distribution (Cold)', descAr: 'طاقة حركية متوسطة منخفضة', descEn: 'Lower average kinetic energy' },
+            { tagAr: 'المنحنى T2 (ساخن)', tagEn: 'T2 Distribution (Hot)', descAr: 'قمة منبسطة ومزاحة لليمين', descEn: 'Shifted right and flattened' },
+            { tagAr: 'حاجز طاقة التنشيط Ea', tagEn: 'Ea Threshold', descAr: 'الحد الأدنى للطاقة المطلوبة للتفاعل', descEn: 'Minimum kinetic energy threshold' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: تفسير مضاعفة السرعة عند رفع 10 درجات مئوية',
+          titleEn: 'Worked Example: 10°C Temperature Rise Rate Doubling',
+          steps: [
+            { stepNumber: 1, textAr: 'عند درجة 298 K، يمتلك جزء ضئيل جداً من الجزيئات طاقة حركة تفوق Ea.', textEn: 'At 298 K, only a small fraction of molecules exceed Ea.' },
+            { stepNumber: 2, textAr: 'رفع الحرارة إلى 308 K (+10 K) يوسع المساحة تحت منحنى ماكسويل-بولتزمان بعد Ea بمقدار الضعف تقريباً.', textEn: 'Raising to 308 K (+10 K) approximately doubles the shaded area exceeding Ea.' },
+            { stepNumber: 3, textAr: 'النتيجة: تتضاعف سرعة التفاعل الكيميائي بمقدار مرتين تقريباً.', textEn: 'Result: reaction rate approximately doubles.' }
+          ],
+          takeawayAr: 'زيادة درجة الحرارة تزيد سرعة التفاعل ليس فقط لزيادة عدد التصادمات، بل لزيادة نسبة التصادمات الفعالة الممتلكة لطاقة التنشيط.',
+          takeawayEn: 'Temperature increases rate predominantly by increasing the fraction of collisions possessing Ea.'
+        },
+        tipsAr: ['طاقة التنشيط Ea نفسها لا تتغير بتغير درجة الحرارة، بل تتغير نسبة الجزيئات الممتلكة لهذه الطاقة'],
+        tipsEn: ['Ea itself is constant with temperature; the proportion of molecules exceeding Ea changes'],
+        formativeCheck: {
+          id: 'fc-chem1-2',
+          questionAr: 'ما التغير الذي يطرأ على منحنى ماكسويل-بولتزمان عند رفع درجة حرارة الغاز؟',
+          questionEn: 'What happens to the Maxwell-Boltzmann curve when temperature increases?',
+          optionsAr: [
+            'ينزاح رأس المنحنى نحو اليمين والأسفل وتزداد المساحة بعد Ea',
+            'ينزاح رأس المنحنى نحو اليسار والأعلى',
+            'تنخفض قيمة طاقة التنشيط Ea إلى النصف',
+            'لا يتغير شكل المنحنى على الإطلاق'
+          ],
+          optionsEn: [
+            'Peak shifts right and flattens, increasing area past Ea',
+            'Peak shifts left and rises higher',
+            'Activation energy Ea is cut in half',
+            'Curve shape remains completely unchanged'
+          ],
+          correctIndex: 0,
+          explanationAr: 'ارتفاع الحرارة يزيد متوسط الطاقة الحركية، فينفرش المنحنى لليمين والأسفل وتزداد الجزيئات المتفاعلة.',
+          explanationEn: 'Higher thermal energy flattens the peak and spreads it rightwards.',
+          hintAr: 'تذكر أن متوسط الطاقة الحركية يزداد مع الحرارة.'
+        }
+      },
+      {
+        titleAr: '3. النموذج الثالث: قانون سرعة التفاعل الكيميائي وحساب الرتبة وثابت السرعة',
+        titleEn: '3. Model 3: Reaction Rate Law, Reaction Orders & Rate Constant k',
         contentAr: 'يعبر قانون سرعة التفاعل عن العلاقة الرياضية بين سرعة التفاعل وتراكيز المواد المتفاعلة: Rate = k [A]^m [B]^n. يمثل k ثابت سرعة التفاعل النوعي الذي يتأثر بدرجة الحرارة فقط، بينما تمثل m و n رتب التفاعل بالنسبة لكل مادة ويتم إيجادها تجريبياً.',
         contentEn: 'The rate law mathematically models reaction speed relative to reactant concentrations: Rate = k [A]^m [B]^n. The constant k depends strictly on temperature, while orders m and n are found experimentally.',
         interactiveExample: {
@@ -200,7 +257,7 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         tipsAr: ['رتب التفاعل لا ترتبط بالمعاملات في المعادلة الموزونة بل تُستنتج من التجارب فقط'],
         tipsEn: ['Reaction orders are purely empirical and unrelated to stoichiometric coefficients'],
         formativeCheck: {
-          id: 'fc-chem1-2',
+          id: 'fc-chem1-3',
           questionAr: 'إذا كانت رتبة تفاعل كيميائي كلية تساوي صفراً (Zero order)، فماذا يحدث للسرعة عند مضاعفة تركيز المتفاعلات؟',
           questionEn: 'If a reaction is zero order overall, what happens to rate when reactant concentration is doubled?',
           optionsAr: [
@@ -219,6 +276,46 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
           explanationAr: 'في تفاعلات الرتبة الصفرية: Rate = k [A]⁰ = k، وبالتالي السرعة ثابتة ومستقلة عن التركيز.',
           explanationEn: 'In zero-order kinetics, Rate = k[A]^0 = k, independent of concentration.',
           hintAr: 'أي عدد مرفوع للقوة صفر يساوي 1.'
+        }
+      },
+      {
+        titleAr: '4. النموذج الرابع: العوامل الخمسة المؤثرة في سرعة التفاعل وآلية عملها',
+        titleEn: '4. Model 4: The 5 Factors Influencing Reaction Rates & Mechanisms',
+        contentAr: 'تتأثر سرعة التفاعل بخمسة عوامل رئيسية: 1) طبيعة المواد المتفاعلة (نشاط الفلزات وقوة الروابط)، 2) التركيز (زيادة عدد الجسيمات في وحدة الحجم)، 3) مساحة السطح (للمواد الصلبة)، 4) درجة الحرارة (زيادة الطاقة الحركية والتصادمات الفعالة)، 5) المحفزات والمثبطات.',
+        contentEn: 'Reaction rates depend on: 1) Nature of reactants, 2) Concentration, 3) Surface area, 4) Temperature, and 5) Catalysts and inhibitors.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: مقارنة تفاعل الخارصين مع حمض الهيدروكلوريك ككتلة مقابل مسحوق',
+          titleEn: 'Worked Example: Zinc Chunk vs Powder in HCl',
+          steps: [
+            { stepNumber: 1, textAr: 'كتلة خارصين 5g في 1M HCl: مساحة السطح صغيرة، التفاعل بطيء ويتصاعد الهيدروجين ببطء.', textEn: '5g Zn chunk in 1M HCl: small surface area, slow H2 bubbling.' },
+            { stepNumber: 2, textAr: 'مسحوق خارصين 5g في 1M HCl: مساحة سطح شاسعة ملايين الجزيئات ملامسة للحمض في نفس اللحظة.', textEn: '5g Zn powder: immense surface area exposes millions of atoms simultaneously.' },
+            { stepNumber: 3, textAr: 'النتيجة: ينتهي تفاعل المسحوق في 20 ثانية بينما يستغرق الجذع 10 دقائق.', textEn: 'Result: powder reacts in 20s vs 10 mins for solid chunk.' }
+          ],
+          takeawayAr: 'زيادة مساحة السطح تزيد عدد التصادمات الكلية في وحدة الزمن مما يرفع سرعة التفاعل بشكل هائل.',
+          takeawayEn: 'Greater surface area multiplies total collision frequency per second, drastically accelerating the reaction.'
+        },
+        tipsAr: ['المثبطات (Inhibitors) هي مواد تبطئ سرعة التفاعل أو تمنعه وتستخدم كمواد حافظة للأغذية'],
+        tipsEn: ['Inhibitors slow down reaction rates and are widely used as food preservatives'],
+        formativeCheck: {
+          id: 'fc-chem1-4',
+          questionAr: 'لماذا تتفاعل نترات الفضة المائية مع كلوريد الصوديوم المائي لحظياً بينما يستغرق صدأ الحديد أشهراً؟',
+          questionEn: 'Why do aqueous ionic solutions react instantaneously while iron rusting takes months?',
+          optionsAr: [
+            'لأن الأيونات في المحلول المائي حرة الحركة وتتصادم فوراً دون الحاجة لتكسير روابط تساهمية قوية',
+            'لأن درجة الحرارة في المحاليل أعلى دائماً',
+            'لأن صدأ الحديد تفاعل غير تلقائي',
+            'لأن الماء يعمل كمثبط لتفاعل الحديد'
+          ],
+          optionsEn: [
+            'Free aqueous ions collide instantly without breaking strong covalent lattices',
+            'Aqueous solutions always have higher temperature',
+            'Rusting is non-spontaneous',
+            'Water acts as an inhibitor for iron'
+          ],
+          correctIndex: 0,
+          explanationAr: 'طبيعة المواد المتفاعلة الأيونية في المحاليل تتيح تلامساً حراً وفورياً بين الأيونات لتكوين الراسب.',
+          explanationEn: 'Aqueous ions possess extreme mobility, facilitating immediate precipitation upon collision.',
+          hintAr: 'فكر في حرية حركة الأيونات في المحاليل المائية.'
         }
       }
     ],
@@ -313,291 +410,6 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         }
       ]
     }
-  },
-  {
-    id: 'chem-2',
-    order: 2,
-    isLocked: true,
-    isCompleted: false,
-    passingScoreRequired: 80,
-    titleAr: 'المحاضرة 2: الاتزان الكيميائي ومبدأ لوتشاتلييه وثابت الاتزان Keq',
-    titleEn: 'Lecture 2: Chemical Equilibrium, Le Chatelier\'s Principle & Equilibrium Constant Keq',
-    subtitleAr: 'الاتزان الديناميكي، قانون الاتزان الكيميائي، والعوامل المؤثرة في إزاحة موضع الاتزان',
-    subtitleEn: 'Master dynamic equilibrium, Keq expressions, reaction quotient Q, and Le Chatelier stress response.',
-    durationMinutes: 35,
-    gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM)',
-    gradeLevelNameEn: 'Grade 12 / High School - STEM Specialization',
-    termAr: 'الفصل الدراسي الأول',
-    termEn: 'First Semester / Term 1',
-    unitTitleAr: 'الوحدة الثانية: الاتزان الكيميائي والذائبية',
-    unitTitleEn: 'Unit 2: Chemical Equilibrium & Solubility',
-    lessonNumberAr: 'الدرس 2: الاتزان الكيميائي ومبدأ لوتشاتلييه',
-    lessonNumberEn: 'Lesson 2: Chemical Equilibrium & Le Chatelier',
-    warmupHookAr: 'في صناعة الأمونيا (طريقة هابر-بوش) التي تنتج الأسمدة المغذية لنصف سكان كوكب الأرض، يصل التفاعل إلى حالة اتزان تتساوى فيها سرعة التفاعل الأمامي مع العكسي. كيف استطاع الكيميائيون التلاعب بالضغط والحرارة لإجبار التفاعل على إنتاج المزيد من الأمونيا؟ إنه مبدأ لوتشاتلييه العبقري!',
-    warmupHookEn: 'The Haber-Bosch ammonia synthesis sustains billions via equilibrium manipulation. Le Chatelier\'s principle allows engineers to steer dynamic reversible reactions toward maximal product yield!',
-    learningOutcomesAr: [
-      'أن يعرف الطالب حالة الاتزان الكيميائي الديناميكي وتساوي سرعتي التفاعل الأمامي والعكسي',
-      'أن يكتب تعبير ثابت الاتزان Keq للتفاعلات المتجانسة وغير المتجانسة',
-      'أن يطبق مبدأ لوتشاتلييه لتوقع اتجاه إزاحة الاتزان عند تغير (التركيز، الضغط/الحجم، درجة الحرارة)',
-      'أن يقارن بين حاصل التفاعل Q وثابت الاتزان Keq لتحديد اتجاه سير التفاعل التلقائي'
-    ],
-    learningOutcomesEn: [
-      'Define dynamic chemical equilibrium and equal forward/reverse reaction rates',
-      'Write Keq equilibrium constant expressions for homogeneous/heterogeneous systems',
-      'Apply Le Chatelier\'s principle for stresses in concentration, pressure/volume, and temperature',
-      'Compare reaction quotient Q with Keq to predict shift direction'
-    ],
-    vocabulary: [
-      {
-        termAr: 'الاتزان الكيميائي (Chemical Equilibrium)',
-        termEn: 'Chemical Equilibrium',
-        definitionAr: 'حالة ديناميكية في التفاعل العكسي تتساوى فيها سرعة التفاعل الأمامي مع سرعة التفاعل العكسي وتثبت فيها تراكيز المواد المتفاعلة والناتجة.',
-        definitionEn: 'Dynamic state where forward and reverse reaction rates are equal and concentrations remain constant.'
-      },
-      {
-        termAr: 'مبدأ لوتشاتلييه (Le Chatelier\'s Principle)',
-        termEn: 'Le Chatelier\'s Principle',
-        definitionAr: 'إذا بُذل جهد أو تغير على نظام في حالة اتزان (مثل تغير التركيز أو الضغط أو الحرارة)، فإن النظام يعدل نفسه في الاتجاه الذي يقلل من أثر هذا الجهد.',
-        definitionEn: 'If a stress is applied to a system at equilibrium, the system shifts in the direction that relieves the stress.'
-      },
-      {
-        termAr: 'حاصل التفاعل (Reaction Quotient - Q)',
-        termEn: 'Reaction Quotient (Q)',
-        definitionAr: 'قيمة عددية لنسبة تراكيز النواتج إلى المتفاعلات في أي لحظة زمنية غير حالة الاتزان لتحديد اتجاه الوصول للاتزان.',
-        definitionEn: 'Numerical ratio of product concentrations to reactant concentrations at any given non-equilibrium point.'
-      }
-    ],
-    keyConceptsAr: ['الاتزان الديناميكي', 'تعبير ثابت الاتزان Keq', 'مبدأ لوتشاتلييه والعوامل المؤثرة', 'حاصل التفاعل Q'],
-    keyConceptsEn: ['Dynamic Equilibrium', 'Keq Constant Expression', 'Le Chatelier\'s Principle', 'Reaction Quotient Q'],
-    summaryAr: 'الاتزان الكيميائي حالة ديناميكية مستقرة، وعند تعرض النظام لإجهاد (تغير حرارة أو ضغط أو تركيز) ينزاح موضع الاتزان لتخفيف الأثر واستعادة التوازن.',
-    summaryEn: 'Chemical equilibrium is dynamic. Systems perturbed by concentration, pressure, or temperature shifts respond per Le Chatelier\'s principle to restore equilibrium.',
-    goldenRulesAr: [
-      'عند الاتزان: سرعة التفاعل الأمامي = سرعة التفاعل العكسي وتراكيز المواد تثبت ولا يشترط أن تتساوى.',
-      'المواد الصلبة النقية (s) والسوائل النقية (l) كالمذيبات تحذف من تعبير Keq لأن تركيزها ثابت.',
-      'درجة الحرارة هي العامل الوحيد الذي يغير من القيمة العددية لثابت الاتزان Keq.',
-      'زيادة الضغط (تقليل الحجم) تزيح موضع الاتزان نحو الطرف ذي عدد المولات الغازية الأقل.',
-      'إضافة مادة متفاعلة تزيح الاتزان للأمام (يميناً)، وسحب ناتج يزيح الاتزان أيضاً للأمام.',
-      'إذا كانت Q < Keq ينزاح التفاعل يميناً؛ وإذا كانت Q > Keq ينزاح يساراً؛ وإذا كانت Q = Keq فالنظام متزن.',
-      'إضافة غاز خامل عند حجم ثابت لا يؤثر إطلاقاً على موضع الاتزان لأن الضغوط الجزئية للمتفاعلات لا تتغير.'
-    ],
-    goldenRulesEn: [
-      'At equilibrium: forward rate equals reverse rate; concentrations remain constant but not necessarily equal.',
-      'Pure solids (s) and pure liquids (l) are omitted from Keq expressions due to constant densities.',
-      'Temperature is the ONLY environmental factor that changes the numerical value of Keq.',
-      'Increasing pressure shifts equilibrium toward the side with fewer moles of gas.',
-      'Adding reactant or removing product drives equilibrium toward products (right).',
-      'Q < Keq drives forward shift; Q > Keq drives reverse shift; Q = Keq indicates dynamic equilibrium.',
-      'Adding inert gas at constant volume has zero effect on equilibrium position.'
-    ],
-    textbookExercises: [
-      {
-        id: 'tb-chem2-1',
-        questionAr: 'للتفاعل المتزن: N2(g) + 3H2(g) ⇌ 2NH3(g) + 92 kJ، كيف توجه التفاعل لزيادة إنتاج غاز NH3 باستخدام 3 طرق مختلفة؟',
-        questionEn: 'For N2(g) + 3H2(g) <=> 2NH3(g) + 92 kJ, list 3 distinct methods to maximize NH3 yield.',
-        solutionStepsAr: [
-          '1. زيادة الضغط الكلي: التفاعل الأمامي ينتج 2 مول غاز بينما المتفاعلات 4 مول، فينزاح الاتزان يميناً نحو 2NH3.',
-          '2. خفض درجة الحرارة: التفاعل طارد للحرارة (حرارة ناتجة)، فتخفيض الحرارة يسحب الحرارة ويوجه التفاعل يميناً.',
-          '3. السحب المستمر لغاز الأمونيا NH3 المتكون أو الضخ المستمر لغازي N2 و H2.'
-        ],
-        solutionStepsEn: [
-          '1. Increase total pressure (shifts toward 2 moles gas on right).',
-          '2. Lower reaction temperature (exothermic reaction favors products when cooled).',
-          '3. Continuously condense/remove NH3 product or supply excess N2/H2.'
-        ],
-        answerAr: '1) زيادة الضغط، 2) تبريد وسط التفاعل، 3) سحب الأمونيا باستمرار',
-        answerEn: '1) Increase pressure, 2) Lower temperature, 3) Continuously remove NH3'
-      },
-      {
-        id: 'tb-chem2-2',
-        questionAr: 'في وعاء حجمه 1 L عند الاتزان: [H2]=0.2 M, [I2]=0.2 M, [HI]=1.6 M للتفاعل H2(g) + I2(g) ⇌ 2HI(g). احسب قيمة Keq.',
-        questionEn: 'In a 1L vessel at equilibrium: [H2]=0.2M, [I2]=0.2M, [HI]=1.6M for H2 + I2 <=> 2HI. Calculate Keq.',
-        solutionStepsAr: [
-          '1. كتابة قانون ثابت الاتزان: Keq = [HI]² / ([H2] · [I2]).',
-          '2. التعويض بالقيم: Keq = (1.6)² / (0.2 · 0.2) = 2.56 / 0.04.',
-          '3. الناتج الحسابي: Keq = 64 (قيمة أكبر من 1 بكثير مما يدل على رجحان تكوين النواتج).'
-        ],
-        solutionStepsEn: [
-          '1. Equilibrium expression: Keq = [HI]^2 / ([H2][I2]).',
-          '2. Substitute values: Keq = (1.6)^2 / (0.2 * 0.2) = 2.56 / 0.04.',
-          '3. Calculation: Keq = 64 (product-favored system).'
-        ],
-        answerAr: 'Keq = 64 (بدون وحدة)',
-        answerEn: 'Keq = 64 (dimensionless)'
-      }
-    ],
-    sections: [
-      {
-        titleAr: '1. مبدأ لوتشاتلييه وإزاحة موضع الاتزان',
-        titleEn: '1. Le Chatelier\'s Principle & Equilibrium Shifts',
-        contentAr: 'قواعد لوتشاتلييه: 1) إضافة مادة متفاعلة ينزاح الاتزان نحو النواتج (يميناً). 2) زيادة الضغط (تقليل الحجم) ينزاح الاتزان نحو الطرف ذي عدد المولات الغازية الأقل. 3) رفع درجة الحرارة في تفاعل طارد للحرارة ينزاح نحو المتفاعلات (يساراً) وتقل قيمة Keq.',
-        contentEn: 'Rules: Adding reactants shifts right; increasing pressure shifts toward fewer gas moles; heating exothermic reactions shifts left and lowers Keq.',
-        interactiveExample: {
-          titleAr: 'مثال تطبيقي: تفاعل هابر لإنتاج الأمونيا',
-          titleEn: 'Worked Example: Haber Ammonia Synthesis',
-          steps: [
-            { stepNumber: 1, textAr: 'التفاعل: N₂(g) + 3H₂(g) ⇌ 2NH₃(g) + حرارة (تفاعل طارد، 4 مولات غاز يساراً و 2 مول يميناً).', textEn: 'Reaction: N2 + 3H2 <=> 2NH3 + Heat (exothermic, 4 gas moles left vs 2 right).' },
-            { stepNumber: 2, textAr: 'زيادة الضغط: ينزاح التفاعل نحو اليمين (عدد المولات الأقل = 2NH₃) ليزداد إنتاج الأمونيا.', textEn: 'Increasing pressure shifts toward fewer moles (right), producing more NH3.' },
-            { stepNumber: 3, textAr: 'إزالة الأمونيا المستمرة: ينزاح التفاعل يميناً لتعويض النقص باستمرار.', textEn: 'Continuous NH3 removal continuously pulls equilibrium forward.' }
-          ],
-          takeawayAr: 'العامل الوحيد الذي يغير قيمة الثابت Keq هو درجة الحرارة فقط، بينما التغيرات الأخرى تغير موضع الاتزان فقط.',
-          takeawayEn: 'Temperature is the only factor that alters the numerical value of Keq; other stresses shift positions.'
-        },
-        tipsAr: ['المواد الصلبة النقية (s) والسائلة النقية (l) لا تكتب في تعبير Keq لأن تراكيزها ثابتة'],
-        tipsEn: ['Pure solids (s) and pure liquids (l) are omitted from Keq expressions'],
-        formativeCheck: {
-          id: 'fc-chem2-1',
-          questionAr: 'في التفاعل الطارد للحرارة: A(g) + B(g) ⇌ C(g) + حرارة، ماذا يحدث عند رفع درجة الحرارة؟',
-          questionEn: 'In exothermic A(g) + B(g) <=> C(g) + heat, what happens upon heating?',
-          optionsAr: [
-            'ينزاح الاتزان نحو اليسار (المتفاعلات) وتقل قيمة Keq',
-            'ينزاح الاتزان نحو اليمين (النواتج) وتزداد قيمة Keq',
-            'لا يتأثر موضع الاتزان',
-            'ينزاح الاتزان نحو اليمين وتبقى Keq ثابتة'
-          ],
-          optionsEn: [
-            'Shifts left (reactants) and Keq decreases',
-            'Shifts right (products) and Keq increases',
-            'No shift occurs',
-            'Shifts right with constant Keq'
-          ],
-          correctIndex: 0,
-          explanationAr: 'في التفاعل الطارد، الحرارة ناتج، فرفعها يجبر النظام على استهلاك الحرارة الزائدة بالانزياح نحو اليسار وخفض Keq.',
-          explanationEn: 'Heat is a product in exothermic reactions; adding heat shifts equilibrium left, reducing Keq.',
-          hintAr: 'عامل الحرارة كأحد النواتج في التفاعل الطارد للحرارة.'
-        }
-      },
-      {
-        titleAr: '2. حساب حاصل التفاعل Q وتوقع اتجاه التفاعل التلقائي',
-        titleEn: '2. Reaction Quotient Q & Predicting Shift Direction',
-        contentAr: 'حاصل التفاعل Q يُحسب بنفس معادلة Keq ولكن باستخدام التراكيز اللحظية في أي وقت: 1) إذا كان Q < Keq، فالتفاعل ينزاح للأمام (يميناً) لإنتاج المزيد من النواتج. 2) إذا كان Q > Keq، ينزاح للخلف (يساراً). 3) إذا كان Q = Keq، فالنظام في حالة اتزان ديناميكي تام.',
-        contentEn: 'Q is calculated identical to Keq using instantaneous concentrations. If Q < Keq, shifts right; if Q > Keq, shifts left; if Q = Keq, system is at equilibrium.',
-        interactiveExample: {
-          titleAr: 'مثال تطبيقي: مقارنة Q مع Keq',
-          titleEn: 'Worked Example: Comparing Q with Keq',
-          steps: [
-            { stepNumber: 1, textAr: 'لتفاعل Keq = 50. كانت التراكيز اللحظية: [A] = 0.5 M, [B] = 0.1 M للتفاعل A ⇌ B.', textEn: 'For A <=> B, Keq = 50. Instantaneous [A]=0.5M, [B]=0.1M.' },
-            { stepNumber: 2, textAr: 'حساب حاصل التفاعل: Q = [B] / [A] = 0.1 / 0.5 = 0.2.', textEn: 'Calculate Q = [B]/[A] = 0.1 / 0.5 = 0.2.' },
-            { stepNumber: 3, textAr: 'بما أن Q (0.2) < Keq (50)، سينزاح التفاعل نحو اليمين لتحويل A إلى B حتى يصل إلى 50.', textEn: 'Since Q (0.2) < Keq (50), the system shifts right toward products.' }
-          ],
-          takeawayAr: 'عندما تكون Q أصغر من Keq، يحتاج النظام إلى تكوين المزيد من النواتج ليصل لحالة الاتزان.',
-          takeawayEn: 'When Q < Keq, forward reaction predominates until equilibrium is reached.'
-        },
-        tipsAr: ['تذكر دائماً أن حاصل التفاعل Q هو صورة لحظية لنسبة النواتج إلى المتفاعلات'],
-        tipsEn: ['Reaction quotient Q represents an instantaneous snapshot ratio of products to reactants'],
-        formativeCheck: {
-          id: 'fc-chem2-2',
-          questionAr: 'إذا كانت قيمة حاصل التفاعل Q = 100 وقيمة Keq = 20، ففي أي اتجاه سيسير التفاعل للوصول إلى الاتزان؟',
-          questionEn: 'If Q = 100 and Keq = 20, which direction will the reaction proceed to reach equilibrium?',
-          optionsAr: [
-            'ينزاح التفاعل نحو اليسار (نحو المتفاعلات)',
-            'ينزاح التفاعل نحو اليمين (نحو النواتج)',
-            'التفاعل متزن بالفعل ولا يتحرك',
-            'يتوقف التفاعل تماماً عن الحدوث'
-          ],
-          optionsEn: [
-            'Shifts left toward reactants',
-            'Shifts right toward products',
-            'Already at equilibrium',
-            'Stops completely'
-          ],
-          correctIndex: 0,
-          explanationAr: 'بما أن Q > Keq، فهناك فائض في النواتج ويجب أن ينزاح التفاعل نحو اليسار لإنتاج المتفاعلات حتى تصبح Q مساوية لـ Keq.',
-          explanationEn: 'When Q > Keq, product concentration exceeds equilibrium level, driving a left shift.',
-          hintAr: 'قارن بين البسط في Q والقيمة المطلوبة عند الاتزان.'
-        }
-      }
-    ],
-    assessment: {
-      id: 'quiz-chem-2',
-      lectureId: 'chem-2',
-      titleAr: 'الاختبار الإتقاني للمحاضرة 2: الاتزان الكيميائي (3 ثانوي STEM)',
-      titleEn: 'Mastery Quiz 2: Chemical Equilibrium (Grade 12 STEM)',
-      passingScore: 80,
-      questions: [
-        {
-          id: 'qc2-1',
-          textAr: 'تعبير ثابت الاتزان Keq للتفاعل: CaCO₃(s) ⇌ CaO(s) + CO₂(g) هو:',
-          textEn: 'The equilibrium expression Keq for CaCO3(s) <=> CaO(s) + CO2(g) is:',
-          optionsAr: ['Keq = [CO₂]', 'Keq = [CaO][CO₂] / [CaCO₃]', 'Keq = [CO₂] / [CaCO₃]', 'Keq = [CaO][CO₂]'],
-          optionsEn: ['Keq = [CO2]', 'Keq = [CaO][CO2] / [CaCO3]', 'Keq = [CO2] / [CaCO3]', 'Keq = [CaO][CO2]'],
-          correctIndex: 0,
-          conceptTestedAr: 'تعبير ثابت الاتزان غير المتجانس',
-          conceptTestedEn: 'Heterogeneous Equilibrium Expression',
-          explanationAr: 'المواد الصلبة CaCO3 و CaO تحذف من تعبير الاتزان لأن تركيزها ثابت، فيتبقى فقط [CO2].',
-          explanationEn: 'Pure solids are omitted from Keq, leaving Keq = [CO2].',
-          difficulty: 'easy'
-        },
-        {
-          id: 'qc2-2',
-          textAr: 'إذا كانت قيمة Keq = 1.5 x 10^4 (قيمة كبيرة جداً أكبر من 1 بكثير)، فهذا يعني أن:',
-          textEn: 'If Keq = 1.5 x 10^4 (Keq >> 1), this indicates:',
-          optionsAr: [
-            'النواتج تسود وتركيزها أعلى بكثير من المتفاعلات عند الاتزان',
-            'المتفاعلات تسود والتفاعل بالكاد يحدث',
-            'تراكيز النواتج والمتفاعلات متساوية تماماً',
-            'التفاعل لا يصل إلى الاتزان'
-          ],
-          optionsEn: [
-            'Products predominate over reactants at equilibrium',
-            'Reactants predominate and reaction barely proceeds',
-            'Reactant and product concentrations are identical',
-            'Reaction never reaches equilibrium'
-          ],
-          correctIndex: 0,
-          conceptTestedAr: 'دلالة قيمة ثابت الاتزان Keq',
-          conceptTestedEn: 'Keq Magnitude Interpretation',
-          explanationAr: 'Keq > 1 تعني أن البسط (النواتج) أكبر بكثير من المقام (المتفاعلات).',
-          explanationEn: 'Keq >> 1 signifies product-favored equilibrium.',
-          difficulty: 'easy'
-        },
-        {
-          id: 'qc2-3',
-          textAr: 'إذا كان حاصل التفاعل Q < Keq، فإن التفاعل يسير نحو:',
-          textEn: 'If reaction quotient Q < Keq, the reaction shifts toward:',
-          optionsAr: [
-            'اليمين (تكوين المزيد من النواتج)',
-            'اليسار (تكوين المزيد من المتفاعلات)',
-            'حالة الاتزان ولا يتحرك',
-            'التفكك التام'
-          ],
-          optionsEn: [
-            'Right (forming more products)',
-            'Left (forming more reactants)',
-            'Already at equilibrium',
-            'Complete dissociation'
-          ],
-          correctIndex: 0,
-          conceptTestedAr: 'مقارنة Q مع Keq',
-          conceptTestedEn: 'Reaction Quotient vs Keq',
-          explanationAr: 'عندما تكون Q < Keq، فإن النواتج أقل من حالة الاتزان، فينحاز التفاعل نحو اليمين لزيادة النواتج حتى تصبح Q = Keq.',
-          explanationEn: 'Q < Keq means insufficient products, so system shifts right to reach equilibrium.',
-          difficulty: 'medium'
-        },
-        {
-          id: 'qc2-4',
-          textAr: 'أي من التغيرات التالية يغير من القيمة العددية لثابت الاتزان Keq فقط؟',
-          textEn: 'Which of the following changes strictly alters the numerical value of Keq?',
-          optionsAr: [
-            'تغيير درجة الحرارة',
-            'تغيير الضغط الكلي للنظام',
-            'إضافة عامل محفز (Catalyst)',
-            'زيادة تركيز المواد المتفاعلة'
-          ],
-          optionsEn: [
-            'Changing the temperature',
-            'Changing total system pressure',
-            'Adding a catalyst',
-            'Increasing reactant concentration'
-          ],
-          correctIndex: 0,
-          conceptTestedAr: 'العوامل المؤثرة في قيمة Keq',
-          conceptTestedEn: 'Factors Altering Numerical Keq',
-          explanationAr: 'درجة الحرارة هي العامل الوحيد الذي يغير قيمة Keq، بينما المحفز والضغط والتركيز تغير فقط موضع الاتزان.',
-          explanationEn: 'Temperature uniquely modifies Keq; pressure, concentration, and catalysts only shift positions or rates.',
-          difficulty: 'medium'
-        }
-      ]
-    }
   }
 ];
 
@@ -615,7 +427,7 @@ export const BIOLOGY_LECTURES: Lecture[] = [
     titleEn: 'Lecture 1: Molecular Genetics, DNA Structure & Semi-Conservative Replication',
     subtitleAr: 'نموذج واطسون وكريك، القواعد النيتروجينية وقاعدة تشارجاف، وإنزيمات تضاعف DNA',
     subtitleEn: 'Master double helix structure, Chargaff\'s rules, helicase, DNA polymerase, and Okazaki fragments.',
-    durationMinutes: 35,
+    durationMinutes: 45,
     gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM)',
     gradeLevelNameEn: 'Grade 12 / High School - STEM Specialization',
     termAr: 'الفصل الدراسي الأول',
@@ -629,13 +441,13 @@ export const BIOLOGY_LECTURES: Lecture[] = [
     learningOutcomesAr: [
       'أن يصف الطالب التركيب الكيميائي للنيوكليوتيدة وشريط DNA اللولبي المزدوج المتعاكس',
       'أن يطبق قاعدة تشارجاف لتكامل القواعد النيتروجينية (A=T برابطتين، G≡C بثلاث روابط هيدروجينية)',
-      'أن يشرح آلية التضاعف شبه المحافظ ودور الإنزيمات (الهيليكيز، بلمرة DNA، الليجيز)',
-      'أن يقارن بين بناء السلسلة الرائدة والسلسلة المتأخرة وقطع أوكازاكي'
+      'أن يشرح آلية شوكة التضاعف ودور إنزيمات الهيليكيز وبلمرة DNA والليجيز',
+      'أن يقارن بين بناء السلسلة الرائدة والسلسلة المتأخرة وتكوين قطع أوكازاكي'
     ],
     learningOutcomesEn: [
       'Describe nucleotide composition and antiparallel double-helix DNA geometry',
       'Apply Chargaff\'s complementary base pairing rules (A=T via 2 H-bonds, G=C via 3 H-bonds)',
-      'Explain semi-conservative replication enzymes (Helicase, DNA Polymerase, Ligase)',
+      'Explain replication fork machinery: Helicase, DNA Polymerase, and Ligase',
       'Differentiate leading strand continuous synthesis from lagging strand Okazaki fragments'
     ],
     vocabulary: [
@@ -664,8 +476,8 @@ export const BIOLOGY_LECTURES: Lecture[] = [
         definitionEn: 'Short segments of synthesized DNA on the lagging strand, joined together by DNA ligase.'
       }
     ],
-    keyConceptsAr: ['اللولب المزدوج وقاعدة تشارجاف', 'التضاعف شبه المحافظ', 'إنزيمات التضاعف (هيليكيز، بلمرة، ليجيز)', 'السلسلة الرائدة وقطع أوكازاكي'],
-    keyConceptsEn: ['Double Helix & Chargaff\'s Rules', 'Semi-Conservative Mechanism', 'Replication Enzymes', 'Leading/Lagging Strands & Okazaki Fragments'],
+    keyConceptsAr: ['اللولب المزدوج وقاعدة تشارجاف', 'التضاعف شبه المحافظ', 'شوكة التضاعف والإنزيمات', 'السلسلة الرائدة وقطع أوكازاكي'],
+    keyConceptsEn: ['Double Helix & Chargaff\'s Rules', 'Semi-Conservative Mechanism', 'Replication Fork & Enzymes', 'Leading/Lagging Strands & Okazaki Fragments'],
     summaryAr: 'DNA هو المخطط الوراثي للخلية. يتضاعف بفك اللولب بواسطة الهيليكيز وبناء أشرطة متممة جديدة بواسطة إنزيم البلمرة بدقة فائقة وفق آلية شبه محافظة.',
     summaryEn: 'DNA double helix carries genetic instructions, replicating semi-conservatively using helicase, polymerases, and ligase with high fidelity.',
     goldenRulesAr: [
@@ -728,8 +540,8 @@ export const BIOLOGY_LECTURES: Lecture[] = [
     ],
     sections: [
       {
-        titleAr: '1. قاعدة تشارجاف وتكامل القواعد النيتروجينية',
-        titleEn: '1. Chargaff\'s Rule & Complementary Base Pairing',
+        titleAr: '1. النموذج الأول: اللولب المزدوج للحمض النووي وتكامل القواعد (قاعدة تشارجاف)',
+        titleEn: '1. Model 1: DNA Double Helix & Chargaff Complementary Pairing',
         contentAr: 'أثبت تشارجاف أن في أي عينة DNA: نسبة الأدنين تساوي دائماً نسبة الثايمين (%A = %T)، ونسبة الجوانين تساوي نسبة السايتوسين (%G = %C). يرتبط A مع T برابطتين هيدروجينيتين، ويرتبط G مع C بثلاث روابط هيدروجينية مما يجعله أكثر استقراراً حرارياً.',
         contentEn: 'Chargaff\'s rules state %A = %T (2 H-bonds) and %G = %C (3 H-bonds). G-C rich regions exhibit higher thermal stability.',
         diagram: {
@@ -775,10 +587,27 @@ export const BIOLOGY_LECTURES: Lecture[] = [
         }
       },
       {
-        titleAr: '2. إنزيمات تضاعف DNA وتكوين قطع أوكازاكي',
-        titleEn: '2. DNA Replication Enzymes & Okazaki Synthesis',
+        titleAr: '2. النموذج الثاني: شوكة التضاعف والإنزيمات المشتركة (Replication Fork)',
+        titleEn: '2. Model 2: The Replication Fork Architecture & Enzyme Machinery',
         contentAr: 'تتطلب عملية التضاعف تعاوناً دقيقاً بين عدة إنزيمات: 1) Helicase يفك اللولب، 2) RNA Primase يضع بادئات RNA، 3) DNA Polymerase يضيف النيوكليوتيدات ويصحح الأخطاء، 4) DNA Ligase يربط قطع أوكازاكي على السلسلة المتأخرة لتشكيل شريط متصل.',
         contentEn: 'Replication coordinates Helicase (unwinding), Primase (RNA primers), DNA Polymerase (5\'->3\' synthesis & proofreading), and DNA Ligase (Okazaki fragment sealing).',
+        diagram: {
+          id: 'diag-bio1-fork',
+          figureNumberAr: 'شكل (1-2)',
+          figureNumberEn: 'Figure (1-2)',
+          titleAr: 'شوكة تضاعف DNA والإنزيمات المشتركة (Replication Fork Machinery)',
+          titleEn: 'Replication Fork & Polymerase/Helicase Machinery',
+          captionAr: 'يوضح المخطط كيفية عمل الهيليكيز لفك شريطي DNA، وبناء السلسلة الرائدة بشكل متصل والسلسلة المتأخرة على هيئة قطع أوكازاكي يربطها إنزيم الليجيز.',
+          captionEn: 'Illustrates Helicase unzipping parental DNA, continuous leading strand synthesis, and discontinuous Okazaki fragment lagging strand synthesis.',
+          diagramType: 'dna_replication_fork',
+          takeawayFormulaAr: 'Synthesis Direction: 5\' → 3\' | Helicase + Primase + DNA Pol III + Ligase',
+          takeawayFormulaEn: 'Synthesis Direction: 5\' → 3\' | Helicase + Primase + DNA Pol III + Ligase',
+          keyLabels: [
+            { tagAr: 'الهيليكيز (Helicase)', tagEn: 'Helicase Enzyme', descAr: 'فك الروابط الهيدروجينية وشوكة التضاعف', descEn: 'Unwinds parental double helix' },
+            { tagAr: 'السلسلة الرائدة (Leading)', tagEn: 'Leading Strand', descAr: 'بناء متصل باتجاه الشوكة (5\' -> 3\')', descEn: 'Continuous synthesis toward fork' },
+            { tagAr: 'قطع أوكازاكي (Lagging)', tagEn: 'Okazaki Fragments', descAr: 'بناء متقطع بعيداً عن الشوكة', descEn: 'Discontinuous lagging strand' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: تتبع خطوات بناء السلسلة المتأخرة',
           titleEn: 'Worked Example: Lagging Strand Synthesis Flow',
@@ -812,6 +641,85 @@ export const BIOLOGY_LECTURES: Lecture[] = [
           explanationAr: 'يقوم إنزيم الليجيز بربط الفجوات بين قطع أوكازاكي ليكوّن شريطاً متصلاً كاملاً.',
           explanationEn: 'Ligase catalyzes phosphodiester bond formation between adjacent Okazaki fragments.',
           hintAr: 'تذكر وظيفة "الصمغ الحيوي" لربط القطع المتقطعة.'
+        }
+      },
+      {
+        titleAr: '3. النموذج الثالث: اتجاهية البلمرة (5\' إلى 3\') وفروق السلسلتين',
+        titleEn: '3. Model 3: Polymerization Polarity (5\' to 3\') & Strand Asymmetry',
+        contentAr: 'نظراً لأن إنزيم بلمرة DNA لا يستطيع إضافة النيوكليوتيدات إلا إلى مجموعة الهيدروكسيل الحرة عند الطرف 3\' (3\'-OH)، فإن اتجاه بناء الشريط الجديد يكون دائماً 5\' -> 3\'. يؤدي تعاكس شريطي القالب إلى بناء أحدهما باتجاه الشوكة (السلسلة الرائدة المتصلة) والآخر بعيداً عنها (السلسلة المتأخرة المتقطعة).',
+        contentEn: 'DNA Polymerase strictly adds nucleotides to 3\'-OH ends, dictating continuous leading strand synthesis toward the fork and fragmented lagging synthesis away from it.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: تحديد السلسلة الرائدة والمتأخرة من اتجاه القالب',
+          titleEn: 'Worked Example: Identifying Leading vs Lagging Strands',
+          steps: [
+            { stepNumber: 1, textAr: 'شريط القالب 1 يتجه 3\' -> 5\' باتجاه الشوكة: يبنى شريطه المتمم 5\' -> 3\' متصلاً (السلسلة الرائدة).', textEn: 'Template 3\'->5\' toward fork produces continuous 5\'->3\' leading strand.' },
+            { stepNumber: 2, textAr: 'شريط القالب 2 يتجه 5\' -> 3\' باتجاه الشوكة: لا يمكن بناؤه باتجاه الشوكة، فيبنى على دفعات متقطعة 5\' -> 3\' للخلف (السلسلة المتأخرة).', textEn: 'Template 5\'->3\' forces discontinuous Okazaki fragments built backwards away from fork.' }
+          ],
+          takeawayAr: 'التعاكس القطبي لشريطي DNA هو السبب البيولوجي الوحيد لوجود قطع أوكازاكي والسلسلة المتأخرة.',
+          takeawayEn: 'Antiparallel strand architecture is the fundamental biological reason for Okazaki fragment generation.'
+        },
+        tipsAr: ['كل قطعة أوكازاكي تحتاج إلى بادئة RNA Primase خاصة بها قبل أن يبدأ إنزيم البلمرة في بنائها'],
+        tipsEn: ['Each Okazaki fragment strictly requires its own RNA primer before polymerase extension'],
+        formativeCheck: {
+          id: 'fc-bio1-3',
+          questionAr: 'لماذا تبنى السلسلة المتأخرة على هيئة قطع أوكازاكي متقطعة؟',
+          questionEn: 'Why is the lagging strand synthesized as discontinuous Okazaki fragments?',
+          optionsAr: [
+            'لأن إنزيم بلمرة DNA يبني فقط في الاتجاه من 5\' إلى 3\' بينما شوكة التضاعف تفتح في الاتجاه المعاكس',
+            'لأن السلسلة المتأخرة لا تحتوي على قواعد نيتروجينية كافية',
+            'لأن إنزيم الهيليكيز يعمل بشكل متقطع',
+            'لأن الخلية تفضل إبطاء التضاعف'
+          ],
+          optionsEn: [
+            'Because polymerase synthesizes strictly 5\'->3\' while the fork unzips in the opposite direction',
+            'Because lagging strand lacks nitrogenous bases',
+            'Because helicase works intermittently',
+            'Because the cell prefers slow replication'
+          ],
+          correctIndex: 0,
+          explanationAr: 'اتجاه البلمرة الإجباري 5\' إلى 3\' يفرض البناء بعيداً عن الشوكة في السلسلة المتأخرة.',
+          explanationEn: 'The 5\'->3\' enzymatic constraint mandates backwards discontinuous synthesis on the antiparallel template.',
+          hintAr: 'تذكر اتجاه عمل إنزيم بلمرة DNA.'
+        }
+      },
+      {
+        titleAr: '4. النموذج الرابع: التدقيق اللغوي الخلوي وإصلاح أخطاء DNA',
+        titleEn: '4. Model 4: Proofreading Fidelity & DNA Mismatch Repair',
+        contentAr: 'يمتلك إنزيم DNA Polymerase نشاط تفكيك النيوكليوتيدات من الطرف 3\' إلى 5\' (Exonuclease Proofreading). فإذا أضاف قاعدة غير متطابقة عن طريق الخطأ، يتوقف فوراً، ويزيل النيوكليوتيدة الخاطئة، ثم يستبدلها بالقاعدة المتممة الصحيحة قبل مواصلة البناء.',
+        contentEn: 'DNA Polymerase possesses 3\'->5\' exonuclease proofreading capability to detect, excise, and replace mismatched nucleotides instantly during replication.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: حساب دقة تضاعف DNA بفضل التدقيق اللغوي',
+          titleEn: 'Worked Example: Replication Fidelity Metrics',
+          steps: [
+            { stepNumber: 1, textAr: 'معدل الخطأ الأولي للبلمرة بدون تدقيق: خطأ واحد لكل 100,000 قاعدة (1 في 10⁵).', textEn: 'Initial error rate without proofreading: 1 in 10^5 bases.' },
+            { stepNumber: 2, textAr: 'بفضل نشاط التدقيق Exonuclease: ينخفض معدل الخطأ إلى خطأ واحد لكل مليار قاعدة (1 في 10⁹).', textEn: 'With 3\'->5\' exonuclease proofreading: error rate drops to 1 in 10^9 bases.' },
+            { stepNumber: 3, textAr: 'النتيجة: ينسخ الجينوم البشري الكامل (3 مليارات قاعدة) بأقل من 3 أخطاء طفرية لكل انقسام خلوي!', textEn: 'Result: the entire 3-billion-base human genome is replicated with fewer than 3 errors per division!' }
+          ],
+          takeawayAr: 'التدقيق اللغوي الخلوي يحفظ الثبات الوراثي ويحمي الكائنات الحية من الطفرات القاتلة والأورام السرطانية.',
+          takeawayEn: 'Proofreading preserves genetic stability and prevents malignant oncogenic mutations.'
+        },
+        tipsAr: ['فشل آليات إصلاح DNA وتدقيقه يؤدي إلى تراكم الطفرات وقد يسبب أمراضاً وراثية أو سرطانية'],
+        tipsEn: ['Defects in mismatch repair enzymes lead to hereditary cancer syndromes like Lynch syndrome'],
+        formativeCheck: {
+          id: 'fc-bio1-4',
+          questionAr: 'ما الخاصية التي تسمح لإنزيم بلمرة DNA بإصلاح القواعد غير المتطابقة لحظياً أثناء التضاعف؟',
+          questionEn: 'Which enzymatic activity enables DNA Polymerase to correct mismatched bases on the fly?',
+          optionsAr: [
+            'خاصية التدقيق اللغوي والقص الخارجي من 3\' إلى 5\' (3\'->5\' Exonuclease activity)',
+            'خاصية الترجمة الريبوسومية',
+            'خاصية تحويل القواعد إلى يوراسيل',
+            'خاصية فك الالتواء السريع'
+          ],
+          optionsEn: [
+            '3\'->5\' Exonuclease proofreading activity',
+            'Ribosomal translation activity',
+            'Uracil conversion activity',
+            'Fast helicase unwinding'
+          ],
+          correctIndex: 0,
+          explanationAr: 'نشاط 3\'->5\' Exonuclease يتيح للإنزيم الرجوع خطوة للخلف وقص النيوكليوتيدة الخاطئة وتصحيحها.',
+          explanationEn: '3\'->5\' exonuclease activity acts as an immediate backspace key to excise mismatched bases.',
+          hintAr: 'ابحث عن نشاط التدقيق وقص النيوكليوتيدات الخاطئة.'
         }
       }
     ],
@@ -896,257 +804,6 @@ export const BIOLOGY_LECTURES: Lecture[] = [
         }
       ]
     }
-  },
-  {
-    id: 'bio-2',
-    order: 2,
-    isLocked: true,
-    isCompleted: false,
-    passingScoreRequired: 80,
-    titleAr: 'المحاضرة 2: التعبير الجيني وبناء البروتين (النسخ والترجمة والشيفرة الوراثية)',
-    titleEn: 'Lecture 2: Gene Expression & Protein Synthesis (Transcription & Translation)',
-    subtitleAr: 'أنواع RNA، عملية النسخ في النواة، الشيفرة الوراثية والكودونات، وآلية الترجمة في الريبوسوم',
-    subtitleEn: 'Master mRNA, tRNA, rRNA, transcription, codon triplets, ribosomal translation, and polypeptide folding.',
-    durationMinutes: 40,
-    gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM)',
-    gradeLevelNameEn: 'Grade 12 / High School - STEM Specialization',
-    termAr: 'الفصل الدراسي الأول',
-    termEn: 'First Semester / Term 1',
-    unitTitleAr: 'الوحدة الأولى: الوراثة الجزيئية والبيولوجيا الجزيئية',
-    unitTitleEn: 'Unit 1: Molecular Genetics & Biotechnology',
-    lessonNumberAr: 'الدرس 2: التعبير الجيني وتصنيع البروتين',
-    lessonNumberEn: 'Lesson 2: Transcription & Translation',
-    warmupHookAr: 'كل وظيفة حيوية في جسمك — من هضم السكر بالأنسولين، إلى نقل الأكسجين بالهيموجلوبين، وحتى محاربة الفيروسات بالأجسام المضادة — يقوم بها "بروتين" محدد. كيف تترجم الخلية حروف DNA الأربعة (A, T, C, G) إلى 20 حمضاً أمينياً لبناء هذه البروتينات المعقدة؟ إنها العقيدة المركزية للبيولوجيا الجزيئية: DNA -> RNA -> Protein!',
-    warmupHookEn: 'From insulin to hemoglobin and antibodies, proteins drive cellular life. The Central Dogma of Molecular Biology reveals how 4 nucleotide letters translate into 20 amino acid polymers via the universal genetic code!',
-    learningOutcomesAr: [
-      'أن يوضح الطالب العقيدة المركزية لعلم الأحياء الجزيئي (DNA -> RNA -> Protein)',
-      'أن يقارن بين أنواع RNA الثلاثة (mRNA الرسول، tRNA الناقل، rRNA الريبوسومي)',
-      'أن يشرح خطوات النسخ (Transcription) في النواة وتعديل mRNA الأولي',
-      'أن يترجم كودونات mRNA إلى تسلسل أحماض أمينية باستخدام جدول الشيفرة الوراثية'
-    ],
-    learningOutcomesEn: [
-      'State the Central Dogma of Molecular Biology (DNA -> RNA -> Protein)',
-      'Compare 3 RNA types: mRNA (messenger), tRNA (transfer), rRNA (ribosomal)',
-      'Explain nuclear transcription and pre-mRNA post-transcriptional processing',
-      'Translate mRNA triplet codons into amino acid sequences using the genetic code table'
-    ],
-    vocabulary: [
-      {
-        termAr: 'الكودون (Codon)',
-        termEn: 'Codon',
-        definitionAr: 'تتابع من ثلاث نيوكليوتيدات على شريط mRNA يشفر حمضاً أمينياً واحداً أو إشارة بدء/توقف.',
-        definitionEn: 'A triplet of mRNA nucleotides specifying an amino acid or start/stop signal.'
-      },
-      {
-        termAr: 'النسخ (Transcription)',
-        termEn: 'Transcription',
-        definitionAr: 'عملية بناء جزيء mRNA متمم لشريط DNA القالب بواسطة إنزيم بلمرة RNA داخل النواة.',
-        definitionEn: 'Synthesis of mRNA from a DNA template by RNA polymerase in the nucleus.'
-      },
-      {
-        termAr: 'الترجمة (Translation)',
-        termEn: 'Translation',
-        definitionAr: 'عملية قراءة كودونات mRNA في الريبوسوم بمساعدة tRNA لربط الأحماض الأمينية وتكوين سلسلة عديد الببتيد.',
-        definitionEn: 'Ribosomal decoding of mRNA into an amino acid polypeptide sequence via tRNA.'
-      }
-    ],
-    keyConceptsAr: ['العقيدة المركزية', 'النسخ وتعديل mRNA', 'الكودونات والشيفرة الوراثية', 'مراحل الترجمة في الريبوسوم'],
-    keyConceptsEn: ['Central Dogma', 'Transcription & mRNA Processing', 'Codons & Genetic Code', 'Ribosomal Translation Stages'],
-    summaryAr: 'يتحول المخطط الجيني في DNA إلى بروتينات وظيفية عبر مرحلتين: النسخ (إنتاج mRNA في النواة) والترجمة (قراءة الكودونات في الريبوسوم وربط الأحماض الأمينية).',
-    summaryEn: 'Gene expression converts genetic code into proteins via nuclear transcription to mRNA followed by ribosomal translation into functional polypeptides.',
-    goldenRulesAr: [
-      'العقيدة المركزية للبيولوجيا الجزيئية: تتدفق المعلومات الوراثية من DNA إلى RNA ثم إلى البروتين.',
-      'في RNA يُستبدل الثايمين (T) بقاعدة اليوراسيل (U)، لذلك يقابل A في DNA قاعدة U في mRNA.',
-      'كودون البدء العالمي هو AUG ويشفر دائماً للحمض الأميني ميثيونين (Methionine).',
-      'كودونات التوقف الثلاثة (UAA, UAG, UGA) لا تشفر لأي حمض أميني بل ترتبط بعامل إنهاء.',
-      'الشيفرة الوراثية فائضة ومتكررة (Degenerate): 64 كودون تشفر 20 حمضاً أمينياً، مما يعني أن الحمض الواحد قد يمتلك عدة كودونات.',
-      'معالجة mRNA في حقيقيات النوى تشمل: إضافة القبعة 5\' Cap، ذيل عديد الأدنين Poly-A tail، وإزالة الإنترونات وربط الإكسونات.',
-      'يحتوي جزيء tRNA على مضاد الكودون (Anticodon) الذي يتطابق بالتكامل مع كودون mRNA داخل الريبوسوم.'
-    ],
-    goldenRulesEn: [
-      'Central Dogma: Genetic information flows from DNA -> RNA -> Protein.',
-      'RNA incorporates Uracil (U) instead of Thymine (T); DNA Adenine pairs with mRNA Uracil.',
-      'AUG is the universal start codon encoding Methionine.',
-      'Three stop codons (UAA, UAG, UGA) terminate translation without coding for amino acids.',
-      'The genetic code is degenerate: 64 triplet codons code for 20 amino acids.',
-      'Eukaryotic pre-mRNA processing includes 5\' cap, 3\' poly-A tail, and intron splicing.',
-      'tRNA carries the complementary anticodon matching the mRNA triplet inside the ribosome.'
-    ],
-    textbookExercises: [
-      {
-        id: 'tb-bio2-1',
-        questionAr: 'إذا كان تتابع القواعد في شريط DNA القالب هو: 3\'- TAC - CGA - TTT - ACT - 5\'. اكتب تتابع mRNA المنسوخ، ثم حدد الأحماض الأمينية المترجمة.',
-        questionEn: 'Given DNA template: 3\'- TAC - CGA - TTT - ACT - 5\'. Transcribe mRNA sequence and determine translated peptide.',
-        solutionStepsAr: [
-          '1. النسخ إلى mRNA: 3\'- TAC -> 5\'- AUG (بدء/ميثيونين).',
-          '2. CGA -> GCU (ألانين Ala).',
-          '3. TTT -> AAA (لايسين Lys).',
-          '4. ACT -> UGA (كودون توقف Stop).',
-          '5. شريط mRNA النهائي: 5\'- AUG - GCU - AAA - UGA - 3\'.',
-          '6. سلسلة الببتيد: [Met - Ala - Lys].'
-        ],
-        solutionStepsEn: [
-          '1. Transcribe TAC -> AUG (Start/Met).',
-          '2. CGA -> GCU (Alanine).',
-          '3. TTT -> AAA (Lysine).',
-          '4. ACT -> UGA (Stop).',
-          '5. Resulting mRNA: 5\'- AUG - GCU - AAA - UGA - 3\'.',
-          '6. Polypeptide sequence: [Met - Ala - Lys].'
-        ],
-        answerAr: 'mRNA: 5\'- AUG-GCU-AAA-UGA -3\' والببتيد: [Met - Ala - Lys]',
-        answerEn: 'mRNA: 5\'- AUG-GCU-AAA-UGA -3\', Peptide: [Met - Ala - Lys]'
-      },
-      {
-        id: 'tb-bio2-2',
-        questionAr: 'كم عدد الكودونات وكم عدد الأحماض الأمينية الناتجة من شريط mRNA يتكون من 300 نيوكليوتيدة بما فيها كودون البدء وكودون توقف أخير؟',
-        questionEn: 'How many codons and amino acids result from an mRNA transcript of 300 nucleotides (including start and terminal stop codons)?',
-        solutionStepsAr: [
-          '1. عدد الكودونات الكلي = 300 ÷ 3 = 100 كودون.',
-          '2. كودون التوقف الأخير لا يترجم إلى حمض أميني.',
-          '3. عدد الأحماض الأمينية في السلسلة = 100 - 1 = 99 حمضاً أمينياً.'
-        ],
-        solutionStepsEn: [
-          '1. Total codons = 300 / 3 = 100 codons.',
-          '2. Terminal stop codon does not encode an amino acid.',
-          '3. Amino acid count = 100 - 1 = 99 amino acids.'
-        ],
-        answerAr: '100 كودون و 99 حمضاً أمينياً',
-        answerEn: '100 codons and 99 amino acids'
-      }
-    ],
-    sections: [
-      {
-        titleAr: '1. الشيفرة الوراثية وترجمة الكودونات',
-        titleEn: '1. The Genetic Code & Codon Translation',
-        contentAr: 'الشيفرة الوراثية ثلاثية (تتكون من 3 أحماض نووية لكل كودون). كودون البدء هو AUG ويشفر الحمض الأميني ميثيونين (Methionine). وتوجد ثلاثة كودونات توقف (UAA, UAG, UGA) تنهي عملية الترجمة.',
-        contentEn: 'The genetic code is a triplet code. AUG is the universal start codon (Methionine). UAA, UAG, and UGA are stop codons.',
-        interactiveExample: {
-          titleAr: 'مثال تطبيقي: ترجمة شريط mRNA إلى بروتين',
-          titleEn: 'Worked Example: mRNA to Polypeptide Translation',
-          steps: [
-            { stepNumber: 1, textAr: 'شريط mRNA: 5\' - AUG - UUU - GGC - UAA - 3\'.', textEn: 'mRNA: 5\'- AUG - UUU - GGC - UAA - 3\'.' },
-            { stepNumber: 2, textAr: 'AUG = كودون البدء (ميثيونين Met). UUU = فينيل ألانين (Phe). GGC = جلايسين (Gly). UAA = كودون التوقف (Stop).', textEn: 'AUG = Met, UUU = Phe, GGC = Gly, UAA = Stop.' },
-            { stepNumber: 3, textAr: 'سلسلة الببتيد الناتجة: [Met - Phe - Gly].', textEn: 'Resulting tripeptide: [Met - Phe - Gly].' }
-          ],
-          takeawayAr: 'الشيفرة الوراثية عالمية وشاملة لجميع الكائنات الحية من البكتيريا إلى الإنسان.',
-          takeawayEn: 'The genetic code is nearly universal across all domains of terrestrial life.'
-        },
-        tipsAr: ['في RNA يتم استبدال الثايمين (T) باليوراسيل (U)'],
-        tipsEn: ['RNA incorporates Uracil (U) instead of Thymine (T)'],
-        formativeCheck: {
-          id: 'fc-bio2-1',
-          questionAr: 'ما هو كودون البدء العالمي وما الحمض الأميني الذي يشفر له؟',
-          questionEn: 'What is the universal start codon and its encoded amino acid?',
-          optionsAr: ['AUG ويشفر للميثيونين (Met)', 'UAA ويشفر للفالين', 'UAG ويشفر للجلايسين', 'CCC ويشفر للبرولين'],
-          optionsEn: ['AUG (Methionine)', 'UAA (Valine)', 'UAG (Glycine)', 'CCC (Proline)'],
-          correctIndex: 0,
-          explanationAr: 'AUG هو كودون البدء في جميع حقيقيات النوى ويشفر للحمض الأميني ميثيونين.',
-          explanationEn: 'AUG serves as the universal translation initiation codon encoding Methionine.',
-          hintAr: 'ابحث عن الكودون الذي يبدأ بحرف A ويشفر أول حمض أميني في البروتين.'
-        }
-      },
-      {
-        titleAr: '2. خطوات تصنيع البروتين في الريبوسوم وتطابق tRNA',
-        titleEn: '2. Ribosomal Translation Stages & tRNA Matching',
-        contentAr: 'تحدث الترجمة في 3 مراحل: 1) البدء (Initiation) حيث يرتبط الريبوسوم مع mRNA عند AUG. 2) الاستطالة (Elongation) حيث ينقل tRNA الأحماض الأمينية وترتبط بروابط ببتيدية. 3) الإنهاء (Termination) عند الوصول لأحد كودونات التوقف، فينفصل البروتين المكتمل.',
-        contentEn: 'Translation proceeds in 3 steps: Initiation at AUG, Elongation with peptide bonds via tRNA matching, and Termination at a stop codon.',
-        interactiveExample: {
-          titleAr: 'مثال تطبيقي: وظيفة مضاد الكودون في tRNA',
-          titleEn: 'Worked Example: tRNA Anticodon Binding',
-          steps: [
-            { stepNumber: 1, textAr: 'كودون mRNA هو: 5\'- GAG - 3\' (يشفر لحمض الجلوتاميك).', textEn: 'mRNA codon: 5\'- GAG - 3\' (Glutamic acid).' },
-            { stepNumber: 2, textAr: 'مضاد الكودون المتمم على جزيء tRNA هو: 3\'- CUC - 5\'.', textEn: 'Matching tRNA anticodon: 3\'- CUC - 5\'.' },
-            { stepNumber: 3, textAr: 'يرتبط tRNA بالريبوسوم في الموقع A ويفرغ حمض الجلوتاميك ليضاف لسلسلة الببتيد.', textEn: 'tRNA binds site A, delivering Glu into the growing peptide chain.' }
-          ],
-          takeawayAr: 'تكامل مضاد الكودون مع كودون mRNA يضمن دقة الترتيب الخطي للأحماض الأمينية في البروتين.',
-          takeawayEn: 'Codon-anticodon complementarity guarantees precise amino acid sequence assembly.'
-        },
-        tipsAr: ['الريبوسوم يتكون من وحدتين بنائيتين (وحدة كبرى ووحدة صغرى) تلتفان حول شريط mRNA'],
-        tipsEn: ['The ribosome consists of large and small subunits that clamp around mRNA'],
-        formativeCheck: {
-          id: 'fc-bio2-2',
-          questionAr: 'أي من الكودونات التالية يعتبر كودون توقف (Stop Codon) ينهي عملية الترجمة؟',
-          questionEn: 'Which of the following serves as a translation termination (Stop) codon?',
-          optionsAr: ['UAA', 'AUG', 'UGG', 'CCG'],
-          optionsEn: ['UAA', 'AUG', 'UGG', 'CCG'],
-          correctIndex: 0,
-          explanationAr: 'كودونات التوقف الثلاثة هي UAA, UAG, UGA ولا تشفر لأي حمض أميني.',
-          explanationEn: 'The three stop codons are UAA, UAG, and UGA.',
-          hintAr: 'تذكر كودونات الإنهاء التي تبدأ بحرف U.'
-        }
-      }
-    ],
-    assessment: {
-      id: 'quiz-bio-2',
-      lectureId: 'bio-2',
-      titleAr: 'الاختبار الإتقاني للمحاضرة 2: التعبير الجيني وبناء البروتين (3 ثانوي STEM)',
-      titleEn: 'Mastery Quiz 2: Gene Expression & Translation (Grade 12 STEM)',
-      passingScore: 80,
-      questions: [
-        {
-          id: 'qb2-1',
-          textAr: 'الإنزيم المسؤول عن بناء شريط mRNA أثناء عملية النسخ هو:',
-          textEn: 'The enzyme that synthesizes mRNA during transcription is:',
-          optionsAr: ['إنزيم بلمرة RNA (RNA Polymerase)', 'إنزيم بلمرة DNA', 'إنزيم الهيليكيز', 'إنزيم الليجيز'],
-          optionsEn: ['RNA Polymerase', 'DNA Polymerase', 'Helicase', 'DNA Ligase'],
-          correctIndex: 0,
-          conceptTestedAr: 'إنزيم النسخ الأساسي',
-          conceptTestedEn: 'Transcription Enzyme',
-          explanationAr: 'يقوم RNA Polymerase بقراءة شريط DNA القالب وبناء شريط mRNA متمم له.',
-          explanationEn: 'RNA Polymerase reads template DNA and synthesizes complementary mRNA.',
-          difficulty: 'easy'
-        },
-        {
-          id: 'qb2-2',
-          textAr: 'إذا كان تتابع القواعد في DNA هو 3\'- TAC - 5\'، فإن كودون mRNA المتمم له هو:',
-          textEn: 'If the DNA template sequence is 3\'- TAC - 5\', the complementary mRNA codon is:',
-          optionsAr: ['5\'- AUG - 3\'', '5\'- UAC - 3\'', '5\'- ATG - 3\'', '5\'- GUA - 3\''],
-          optionsEn: ['5\'- AUG - 3\'', '5\'- UAC - 3\'', '5\'- ATG - 3\'', '5\'- GUA - 3\''],
-          correctIndex: 0,
-          conceptTestedAr: 'تكامل قواعد النسخ',
-          conceptTestedEn: 'Transcription Base Pairing',
-          explanationAr: 'T يقابلها A، و A يقابلها U في RNA، و C يقابلها G. إذن الناتج هو AUG.',
-          explanationEn: 'T pairs with A, A with U, C with G => 5\'-AUG-3\'.',
-          difficulty: 'medium'
-        },
-        {
-          id: 'qb2-3',
-          textAr: 'جزيء RNA الذي يحمل الحمض الأميني المناسب إلى الريبوسوم أثناء الترجمة هو:',
-          textEn: 'The RNA molecule that carries the specific amino acid to the ribosome is:',
-          optionsAr: ['tRNA (الناقل)', 'mRNA (الرسول)', 'rRNA (الريبوسومي)', 'snRNA'],
-          optionsEn: ['tRNA (Transfer)', 'mRNA (Messenger)', 'rRNA (Ribosomal)', 'snRNA'],
-          correctIndex: 0,
-          conceptTestedAr: 'وظيفة tRNA الناقل',
-          conceptTestedEn: 'tRNA Function',
-          explanationAr: 'tRNA يحتوي على مضاد الكودون ويحمل الحمض الأميني المطابق لربطه في سلسلة البروتين.',
-          explanationEn: 'tRNA pairs its anticodon with the mRNA codon and delivers the corresponding amino acid.',
-          difficulty: 'easy'
-        },
-        {
-          id: 'qb2-4',
-          textAr: 'ما التعديل الذي يطرأ على جزيء pre-mRNA الأولي قبل خروجه من النواة في حقيقيات النوى؟',
-          textEn: 'What modification occurs on eukaryotic pre-mRNA before nuclear export?',
-          optionsAr: [
-            'إضافة قبعة 5\' Cap وذيل Poly-A وإزالة الإنترونات غير المشفرة',
-            'تحويل جميع القواعد إلى ثايمين T',
-            'تضاعف الشريط ليصبح مزدوجاً مثل DNA',
-            'إزالة الإكسونات والاحتفاظ بالإنترونات فقط'
-          ],
-          optionsEn: [
-            'Adding 5\' Cap, Poly-A tail, and splicing non-coding introns',
-            'Converting all bases to Thymine',
-            'Replicating into double strands',
-            'Removing exons and keeping introns only'
-          ],
-          correctIndex: 0,
-          conceptTestedAr: 'معالجة mRNA بعد النسخ',
-          conceptTestedEn: 'Post-Transcriptional Processing',
-          explanationAr: 'تتضمن المعالجة إضافة القبعة والذيل وقص الإنترونات وربط الإكسونات لتكوين mRNA ناضج.',
-          explanationEn: 'Capping, polyadenylation, and splicing of introns produce mature functional mRNA.',
-          difficulty: 'medium'
-        }
-      ]
-    }
   }
 ];
 
@@ -1179,13 +836,13 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
       'أن يميز الطالب بين فروع الذكاء الاصطناعي: التعلم الموجه (Supervised)، غير الموجه (Unsupervised)، وتعلم التعزيز (Reinforcement)',
       'أن يشرح بنية العصبون الاصطناعي والشبكات العصبية العميقة (المدخلات X، الأوزان W، الانحياز b، ودوال التنشيط ReLU / Sigmoid / Softmax)',
       'أن يوضح دور دالة الخسارة (Loss Function) وخوارزمية التدرج الهابط (Gradient Descent) والتمرير الخلفي (Backpropagation) في تحسين الأوزان',
-      'أن يقيم أداء نموذج التعلم باستخدام مصفوفة الالتباس ومقاييس الدقة (Accuracy, Precision, Recall, F1-Score)'
+      'أن يقيم أداء نموذج التعلم باستخدام مصفوفة الالتباس ومقاييس الدقة (Accuracy, Precision, Recall, F1-Score) وأشجار القرار'
     ],
     learningOutcomesEn: [
       'Distinguish AI paradigms: Supervised, Unsupervised, and Reinforcement Learning',
       'Analyze artificial neuron architecture: inputs X, weights W, bias b, and activation functions (ReLU, Sigmoid, Softmax)',
       'Explain loss functions, Gradient Descent optimization, and Backpropagation weight updates',
-      'Evaluate model performance using Confusion Matrix metrics: Accuracy, Precision, Recall, and F1-score'
+      'Evaluate model performance using Confusion Matrix metrics and Decision Tree classifiers'
     ],
     vocabulary: [
       {
@@ -1219,8 +876,8 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         definitionEn: 'Table evaluating classification models by tabulating True Positives, True Negatives, False Positives, and False Negatives.'
       }
     ],
-    keyConceptsAr: ['أنواع تعلم الآلة الثلاثة', 'بنية العصبون والشبكات العصبية العميقة', 'دوال التنشيط والتمرير الأمامي', 'التدرج الهابط ومصفوفة الالتباس'],
-    keyConceptsEn: ['Machine Learning Paradigms', 'Deep Neural Network Architecture', 'Activation Functions & Forward Pass', 'Gradient Descent & Confusion Matrix Metrics'],
+    keyConceptsAr: ['أنواع تعلم الآلة الثلاثة', 'بنية العصبون والشبكات العصبية العميقة', 'دوال التنشيط والتمرير الأمامي', 'التدرج الهابط ومصفوفة الالتباس وأشجار القرار'],
+    keyConceptsEn: ['Machine Learning Paradigms', 'Deep Neural Network Architecture', 'Activation Functions & Forward Pass', 'Gradient Descent, Confusion Matrix & Decision Trees'],
     summaryAr: 'الذكاء الاصطناعي يعتمد على تدريب الشبكات العصبية عبر التمرير الأمامي لحساب التوقعات، ومقارنتها بالحقيقة لحساب الخسارة، ثم تعديل الأوزان بالتمرير الخلفي والتدرج الهابط للوصول إلى أعلى دقة تصنيف ممكنة.',
     summaryEn: 'Modern AI trains deep neural networks via forward propagation to compute predictions, loss calculation against ground truth, and backpropagation with gradient descent to minimize errors.',
     goldenRulesAr: [
@@ -1230,7 +887,7 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
       'التعلم الموجه يتطلب بيانات موسومة (Labeled)، والتعلم غير الموجه يكتشف الأنماط في بيانات غير موسومة، والتعلم المعزز يعتمد على المكافأة والعقاب.',
       'معدل التعلم Learning Rate (η): إذا كان كبيراً جداً يفشل النموذج في التقارب، وإذا كان صغيراً جداً يستغرق وقتاً طويلاً للتدريب.',
       'قوانين مصفوفة الالتباس: Accuracy = (TP+TN)/Total | Precision = TP/(TP+FP) | Recall = TP/(TP+FN).',
-      'التمرير الخلفي (Backpropagation) يطبق قاعدة السلسلة في التفاضل (Chain Rule) لحساب مشتقة الخطأ لكل وزن وتحديثه.'
+      'أشجار القرار تقسم البيانات باستخدام مقياس عدم النقاء (Gini Impurity) أو الإنتروبيا (Entropy) للوصول إلى أوراق تصنيف نقية.'
     ],
     goldenRulesEn: [
       'Neuron activation equation: z = Σ(wᵢ · xᵢ) + b followed by non-linear activation a = f(z).',
@@ -1239,12 +896,12 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
       'Supervised ML uses labeled data, Unsupervised ML discovers clusters, Reinforcement ML learns via reward policies.',
       'Learning rate (η) controls gradient step size: too large causes divergence, too small stalls convergence.',
       'Confusion matrix formulas: Accuracy=(TP+TN)/Total | Precision=TP/(TP+FP) | Recall=TP/(TP+FN).',
-      'Backpropagation leverages the calculus Chain Rule to compute partial loss gradients for weight updates.'
+      'Decision Trees partition data using Gini Impurity or Information Gain Entropy toward pure leaves.'
     ],
     textbookExercises: [
       {
         id: 'tb-cs1-1',
-        questionAr: 'عصبون اصطناعي يستقبل مدخلين: x1 = 4, x2 = -2 بالأوزان w1 = 0.5, w2 = 1.5 وقيمة الانحياز b = 0.5. احسب المجموع الموزون z، ثم احسب مخرج العصبون a باستخدام دالة ReLU ودالة الخطوة الثنائية (Step Function حيث إذا z >= 0 الناتج 1 وإلا 0).',
+        questionAr: 'عصبون اصطناعي يستقبل مدخلين: x1 = 4, x2 = -2 بالأوزان w1 = 0.5, w2 = 1.5 وقيمة الانحياز b = 0.5. احسب المجموع الموزون z، ثم احسب مخرج العصبون a باستخدام دالة ReLU ودالة الخطوة الثنائية.',
         questionEn: 'A neuron receives x1=4, x2=-2 with weights w1=0.5, w2=1.5 and bias b=0.5. Calculate weighted sum z, then output a using ReLU and Binary Step.',
         solutionStepsAr: [
           '1. حساب المجموع الموزون: z = (x1 · w1) + (x2 · w2) + b = (4 · 0.5) + (-2 · 1.5) + 0.5.',
@@ -1282,8 +939,8 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     ],
     sections: [
       {
-        titleAr: '1. معمارية الشبكات العصبية العميقة والتمرير الأمامي ودوال التنشيط',
-        titleEn: '1. Deep Neural Network Architecture, Forward Pass & Activation Functions',
+        titleAr: '1. النموذج الأول: معمارية الشبكات العصبية العميقة وتدفق التمرير الأمامي والخلفي',
+        titleEn: '1. Model 1: Deep Neural Network Architecture, Forward Pass & Backprop',
         contentAr: 'تتكون الشبكة العصبية العميقة (Deep Neural Network) من طبقة مدخلات (Input Layer)، وعدة طبقات مخفية (Hidden Layers)، وطبقة مخرجات (Output Layer). في كل عصبون، يتم حساب المجموع الموزون z = Σ(wᵢxᵢ) + b ثم تمريره إلى دالة تنشيط غير خطية مثل ReLU: f(z) = max(0, z) في الطبقات المخفية لتمكين الشبكة من التقاط العلاقات غير الخطية المعقدة في البيانات، ودالة Sigmoid أو Softmax في طبقة المخرجات.',
         contentEn: 'A Deep Neural Network comprises Input, Multiple Hidden, and Output layers. Each artificial neuron computes the linear combination z = Σ(wi xi) + b and passes it through an activation function like ReLU f(z) = max(0, z) or Softmax.',
         diagram: {
@@ -1330,8 +987,8 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         }
       },
       {
-        titleAr: '2. دورة حياة تعلم الآلة وخوارزمية التدرج الهابط ومصفوفة الالتباس',
-        titleEn: '2. Machine Learning Lifecycle, Gradient Descent & Confusion Matrix Evaluation',
+        titleAr: '2. النموذج الثاني: دورة حياة تعلم الآلة وخوارزمية التدرج الهابط ومصفوفة الالتباس',
+        titleEn: '2. Model 2: Machine Learning Lifecycle, Gradient Descent & Confusion Matrix Evaluation',
         contentAr: 'تتضمن دورة تعلم الآلة: جمع البيانات، هندسة الخصائص، تدريب النموذج بالتدرج الهابط (Gradient Descent) لتحديث الأوزان w := w - η · (∂Loss/∂w)، ثم تقييم النموذج باستخدام مصفوفة الالتباس (Confusion Matrix) لحساب مقاييس الدقة والإحكام (Precision) والاسترجاع (Recall).',
         contentEn: 'The ML lifecycle spans data preparation, model training via Gradient Descent weight updates w := w - η · (∂L/∂w), and evaluation via Confusion Matrix metrics.',
         diagram: {
@@ -1385,6 +1042,100 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
           explanationAr: 'اكتشاف التجمعات والأنماط في بيانات غير موسومة هو جوهر التعلم غير الموجه (Clustering).',
           explanationEn: 'Clustering unlabeled behavioral patterns is the hallmark of unsupervised learning.',
           hintAr: 'البيانات غير موسومة ولا تحتوي على إجابات سابقة محددة.'
+        }
+      },
+      {
+        titleAr: '3. النموذج الثالث: دوال التنشيط غير الخطية (ReLU, Sigmoid, Softmax) والرياضيات الكامنة',
+        titleEn: '3. Model 3: Non-Linear Activation Functions (ReLU, Sigmoid, Softmax) & Mathematics',
+        contentAr: 'تقوم دوال التنشيط بنقل الإشارات الرياضية من المجال الخطي إلى المجال غير الخطي. دالة Sigmoid تنتج قيماً بين (0, 1) وتستخدم للتصنيف الثنائي، بينما دالة Softmax تأخذ متجه مخرجات غير معيارية وتحوله إلى توزيع احتمالي مجموع عناصره يساوي 1.0 للتصنيف متعدد الفئات، ودالة ReLU توفر أداء حسابياً خارقاً وتمنع تلاشي التدرجات.',
+        contentEn: 'Activation functions introduce non-linearity. Sigmoid maps inputs to (0, 1) for binary decisions; Softmax normalizes logits into a valid probability distribution summing to 1.0 for multi-class classification; ReLU accelerates convergence.',
+        diagram: {
+          id: 'diag-cs1-activations',
+          figureNumberAr: 'شكل (1-3)',
+          figureNumberEn: 'Figure (1-3)',
+          titleAr: 'مقارنة المنحنيات الرياضية لدوال التنشيط (ReLU vs Sigmoid vs Softmax)',
+          titleEn: 'Mathematical Function Curves: ReLU, Sigmoid & Softmax',
+          captionAr: 'يقارن الرسم بين المنحنيات ومجالات القيم ومخرجات الاحتمالات لدوال التنشيط الثلاث الأكثر استخداماً في هندسة الذكاء الاصطناعي.',
+          captionEn: 'Compares mathematical shapes, domains, and probabilistic properties of ReLU, Sigmoid, and Softmax.',
+          diagramType: 'activation_functions_ai',
+          takeawayFormulaAr: 'σ(z) = 1/(1+e⁻ᶻ) | Softmax(zᵢ) = eᶻⁱ / Σ eᶻʲ | ReLU(z) = max(0, z)',
+          takeawayFormulaEn: 'σ(z) = 1/(1+e⁻ᶻ) | Softmax(zᵢ) = eᶻⁱ / Σ eᶻʲ | ReLU(z) = max(0, z)',
+          keyLabels: [
+            { tagAr: 'دالة ReLU', tagEn: 'ReLU Function', descAr: 'الأسرع والأوسع استخداماً في الطبقات المخفية', descEn: 'Fastest hidden layer default' },
+            { tagAr: 'دالة Sigmoid', tagEn: 'Sigmoid Function', descAr: 'تصنيف ثنائي واحتمالات بين 0 و 1', descEn: 'Binary probability mapping' },
+            { tagAr: 'دالة Softmax', tagEn: 'Softmax Function', descAr: 'توزيع احتمالي متعدد الفئات مجموعه = 1', descEn: 'Multi-class probability distribution' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: حساب دالة Softmax لتصنيف صورة إلى (قط، كلب، طائر)',
+          titleEn: 'Worked Example: Softmax Multi-Class Probability Calculation',
+          steps: [
+            { stepNumber: 1, textAr: 'القيم الخام (Logits): z_cat = 2.0, z_dog = 1.0, z_bird = 0.0.', textEn: 'Raw logits: z_cat=2.0, z_dog=1.0, z_bird=0.0.' },
+            { stepNumber: 2, textAr: 'حساب الأس الطبيعي: e² ≈ 7.39, e¹ ≈ 2.72, e⁰ = 1.00. المجموع Σ = 7.39 + 2.72 + 1.00 = 11.11.', textEn: 'Exponentials: e^2=7.39, e^1=2.72, e^0=1.0. Sum=11.11.' },
+            { stepNumber: 3, textAr: 'احتمال قط = 7.39 / 11.11 ≈ 66.5%. احتمال كلب = 2.72 / 11.11 ≈ 24.5%. احتمال طائر = 1.00 / 11.11 ≈ 9.0%.', textEn: 'P(cat)=66.5%, P(dog)=24.5%, P(bird)=9.0% (Sum = 100%).' }
+          ],
+          takeawayAr: 'دالة Softmax تحول أي قيم عددية إلى احتمالات مئوية متسقة تمكن النموذج من اتخاذ قرار التصنيف النهائي بثقة.',
+          takeawayEn: 'Softmax standardizes arbitrary scores into interpretable percentage probabilities summing to 1.0.'
+        },
+        tipsAr: ['في طبقة المخرجات للشبكات العصبية التي تصنف آلاف الكلمات (مثل نماذج اللغات LLM)، دالة Softmax هي المستخدمة حصرياً'],
+        tipsEn: ['Softmax is universally utilized in the output vocabulary layer of Large Language Models (LLMs)'],
+        formativeCheck: {
+          id: 'fc-cs1-3',
+          questionAr: 'ما هو مجموع جميع الاحتمالات الناتجة من دالة Softmax لجميع الفئات الممكنة؟',
+          questionEn: 'What is the exact sum of all probabilities produced by Softmax across all classes?',
+          optionsAr: ['1.0 (أو 100% دائماً)', 'تتراوح بين 0 و 10', 'تعتمد على عدد العصبونات', 'صفر دائماً'],
+          optionsEn: ['1.0 (always 100%)', 'Ranges between 0 and 10', 'Depends on neuron count', 'Always 0'],
+          correctIndex: 0,
+          explanationAr: 'دالة Softmax تقوم بتقسيم كل قيمة على المجموع الكلي، مما يضمن أن مجموع الاحتمالات = 1.0 تماماً.',
+          explanationEn: 'By dividing each exponent by the total sum, Softmax guarantees the sum of probabilities is identically 1.0.',
+          hintAr: 'تذكر شروط التوزيع الاحتمالي الصحيح.'
+        }
+      },
+      {
+        titleAr: '4. النموذج الرابع: خوارزميات التصنيف التفرعي وأشجار القرار ومقياس جيني',
+        titleEn: '4. Model 4: Decision Tree Classifiers, Entropy & Gini Impurity',
+        contentAr: 'تعتبر أشجار القرار (Decision Trees) من أقوى خوارزميات التعلم الموجه القابلة للتفسير البشري. تبدأ بعقدة الجذر (Root Node)، وتختبر الخصائص لتقسيم البيانات إلى فروع داخلية وصولاً إلى العقد الورقية (Leaf Nodes). يتم اختيار أفضل تقسيم باستخدام مقياس شوائب جيني (Gini Impurity) أو كسب المعلومات والإنتروبيا (Information Gain).',
+        contentEn: 'Decision Trees construct hierarchical if-else decision boundaries. Optimal splits are chosen by minimizing Gini Impurity = 1 - Σ(pi)² or maximizing Information Gain via Entropy.',
+        diagram: {
+          id: 'diag-cs1-decision-tree',
+          figureNumberAr: 'شكل (1-4)',
+          figureNumberEn: 'Figure (1-4)',
+          titleAr: 'هيكل شجرة القرار ومعايير قياس نقاء التقسيم (Decision Tree & Gini Impurity)',
+          titleEn: 'Decision Tree Architecture & Gini Impurity Split Criteria',
+          captionAr: 'يوضح المخطط كيفية تقسيم العقدة الجذرية إلى فروع فرعية وفق شروط منطقية حتى الوصول إلى أوراق تصنيف نقية (Gini = 0.0).',
+          captionEn: 'Demonstrates hierarchical tree splitting from root decision rule to pure classification leaf nodes.',
+          diagramType: 'decision_tree_ml',
+          takeawayFormulaAr: 'Gini = 1 - Σ (pᵢ)² | Entropy = - Σ pᵢ · log₂(pᵢ)',
+          takeawayFormulaEn: 'Gini = 1 - Σ (pᵢ)² | Entropy = - Σ pᵢ · log₂(pᵢ)',
+          keyLabels: [
+            { tagAr: 'عقدة الجذر (Root)', tagEn: 'Root Decision Node', descAr: 'الخاصية الأكثر تأثيراً ونقاءً في التقسيم', descEn: 'Most informative top-level feature' },
+            { tagAr: 'العقد الداخلية (Splits)', tagEn: 'Internal Split Nodes', descAr: 'شروط منطقية فرعية', descEn: 'Sub-branch decision rules' },
+            { tagAr: 'العقد الورقية (Leaves)', tagEn: 'Leaf Output Nodes', descAr: 'القرار النهائي أو فئة التصنيف', descEn: 'Final class label or prediction' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: حساب شوائب جيني (Gini Impurity) لعقدة تصنيف',
+          titleEn: 'Worked Example: Gini Impurity Calculation for a Split',
+          steps: [
+            { stepNumber: 1, textAr: 'عقدة تحتوي على 10 عينات: 8 تنتمي للفئة A و 2 تنتمي للفئة B.', textEn: 'Node with 10 samples: 8 class A, 2 class B.' },
+            { stepNumber: 2, textAr: 'حساب الاحتمالات: p(A) = 8/10 = 0.8، p(B) = 2/10 = 0.2.', textEn: 'Probabilities: p(A) = 0.8, p(B) = 0.2.' },
+            { stepNumber: 3, textAr: 'حساب مقياس جيني: Gini = 1 - [(0.8)² + (0.2)²] = 1 - [0.64 + 0.04] = 1 - 0.68 = 0.32.', textEn: 'Gini = 1 - (0.64 + 0.04) = 1 - 0.68 = 0.32.' }
+          ],
+          takeawayAr: 'عندما تكون جميع العينات في العقدة من فئة واحدة فقط (نقاء 100%)، تكون قيمة Gini = 0.0 وتتوقف الشجرة عن التقسيم.',
+          takeawayEn: 'A completely pure leaf with only one class achieves Gini = 0.0, terminating tree splitting.'
+        },
+        tipsAr: ['تجميع مئات أشجار القرار معاً يشكل خوارزمية "الغابات العشوائية" (Random Forest) التي تعتبر من أدق خوارزميات تعلم الآلة'],
+        tipsEn: ['Ensembling hundreds of decision trees creates Random Forests, one of the most robust ML algorithms'],
+        formativeCheck: {
+          id: 'fc-cs1-4',
+          questionAr: 'ما قيمة مقياس شوائب جيني (Gini Impurity) لعقدة ورقية تحتوي على عينات تنتمي جميعها بنسبة 100% لنفس الفئة؟',
+          questionEn: 'What is the Gini Impurity of a pure leaf node containing 100% samples of the same single class?',
+          optionsAr: ['0.0 (نقاء تام)', '1.0', '0.5', '100'],
+          optionsEn: ['0.0 (Pure Node)', '1.0', '0.5', '100'],
+          correctIndex: 0,
+          explanationAr: 'عندما تنتمي كل العينات لفئة واحدة: Gini = 1 - (1.0)² = 0.0 مما يعني النقاء الكامل.',
+          explanationEn: 'Gini = 1 - (1)^2 = 0.0, indicating zero impurity / pure classification.',
+          hintAr: 'تذكر أن 1 ناقص 1 تربيع يساوي صفراً.'
         }
       }
     ],
@@ -1480,7 +1231,7 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     titleEn: 'Lecture 2: Advanced Data Structures, Binary Search Trees & Big-O Complexity',
     subtitleAr: 'أشجار البحث الثنائية (BST)، الطوابير والمداخن، وتحليل الخوارزميات Big-O Notation',
     subtitleEn: 'Master Binary Search Trees, traversal algorithms, stacks, queues, and asymptotic Big-O runtime analysis.',
-    durationMinutes: 40,
+    durationMinutes: 45,
     gradeLevelNameAr: 'الصف الثالث ثانوي - المرحلة الثانوية (مسار STEM والتقنية)',
     gradeLevelNameEn: 'Grade 12 / High School - STEM & Digital Technology',
     termAr: 'الفصل الدراسي الأول',
@@ -1495,13 +1246,13 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
       'أن يشرح الطالب خاصية شجرة البحث الثنائية (BST): الابن الأيسر أصغر من الجذر، والأيمن أكبر منه',
       'أن يطبق خوارزميات المرور على الشجرة (In-order, Pre-order, Post-order)',
       'أن يحلل التعقيد الزمني للخوارزميات باستخدام ترميز Big-O (O(1), O(log n), O(n), O(n log n), O(n²))',
-      'أن يقارن بين هياكل البيانات الخطية (المصفوفات، القوائم، المداخن، الطوابير) والهياكل غير الخطية'
+      'أن يقارن بين هياكل البيانات الخطية (المصفوفات، القوائم، المداخن Stack، الطوابير Queue) وتطبيقاتها'
     ],
     learningOutcomesEn: [
       'Explain Binary Search Tree properties: left subtree < root < right subtree',
       'Perform tree traversals: In-order, Pre-order, Post-order',
       'Analyze algorithmic runtime using Big-O notation across standard complexities',
-      'Compare linear data structures (arrays, lists, stacks, queues) with hierarchical tree structures'
+      'Compare linear data structures (arrays, lists, stacks, queues) and practical use cases'
     ],
     vocabulary: [
       {
@@ -1517,14 +1268,20 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         definitionEn: 'Mathematical notation describing the asymptotic upper bound of execution time or memory as input size n grows.'
       },
       {
-        termAr: 'المرور المتسلسل (In-Order Traversal)',
-        termEn: 'In-Order Traversal',
-        definitionAr: 'طريقة للمرور على الشجرة تزور: الابن الأيسر ثم العقدة الحالية ثم الابن الأيمن، وتنتج العناصر مرتبة تصاعدياً في BST.',
-        definitionEn: 'Tree traversal visiting Left subtree -> Root -> Right subtree, producing sorted ascending order for BST.'
+        termAr: 'المكدس (Stack)',
+        termEn: 'Stack',
+        definitionAr: 'هيكل بيانات خطي يعمل بمبدأ (الداخل آخراً يخرج أولاً LIFO) عبر عمليتي الإيداع Push والسحب Pop.',
+        definitionEn: 'Linear data structure operating under Last-In First-Out (LIFO) via push and pop operations.'
+      },
+      {
+        termAr: 'الطابور (Queue)',
+        termEn: 'Queue',
+        definitionAr: 'هيكل بيانات خطي يعمل بمبدأ (الداخل أولاً يخرج أولاً FIFO) عبر عمليتي الإضافة Enqueue والحذف Dequeue.',
+        definitionEn: 'Linear data structure operating under First-In First-Out (FIFO) via enqueue and dequeue.'
       }
     ],
-    keyConceptsAr: ['خصائص شجرة البحث الثنائية BST', 'خوارزميات المرور على الأشجار', 'تحليل التعقيد الزمني Big-O', 'مقارنة هياكل البيانات'],
-    keyConceptsEn: ['BST Properties', 'Tree Traversal Techniques', 'Big-O Asymptotic Analysis', 'Data Structure Trade-offs'],
+    keyConceptsAr: ['خصائص شجرة البحث الثنائية BST', 'منحنيات وتحليل التعقيد الزمني Big-O', 'المكدس Stack والطابور Queue', 'خوارزميات الفرز والبحث'],
+    keyConceptsEn: ['BST Properties', 'Big-O Complexity Curves', 'Stack & Queue Structures', 'Sorting & Search Algorithms'],
     summaryAr: 'شجرة البحث الثنائية توفر سرعة بحث وإدراج O(log n)، بينما يمنح ترميز Big-O المطورين معياراً دقيقاً لتقييم كفاءة الخوارزميات واختيار أنسب هيكل بيانات للمسألة.',
     summaryEn: 'Binary Search Trees enable O(log n) search and insertion, while Big-O notation provides the analytical foundation for measuring algorithmic performance.',
     goldenRulesAr: [
@@ -1586,8 +1343,8 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     ],
     sections: [
       {
-        titleAr: '1. أشجار البحث الثنائية (BST) وخوارزميات المرور',
-        titleEn: '1. Binary Search Trees (BST) & Traversal Algorithms',
+        titleAr: '1. النموذج الأول: أشجار البحث الثنائية (BST) وخوارزميات المرور',
+        titleEn: '1. Model 1: Binary Search Trees (BST) & Traversal Algorithms',
         contentAr: 'شجرة البحث الثنائية (BST) هي هيكل بيانات هرمي يتميز بأن كل عقدة لها ابنان كحد أقصى، وتكون جميع العناصر في الشجرة الفرعية اليسرى أصغر من العقدة، وفي اليمنى أكبر منها. يتيح هذا التنظيم إنجاز عمليات البحث والإدراج في زمن O(log n).',
         contentEn: 'A Binary Search Tree (BST) maintains the invariant that left child < parent < right child, enabling O(log n) average search and insertion.',
         diagram: {
@@ -1633,10 +1390,27 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         }
       },
       {
-        titleAr: '2. تحليل تعقيد الخوارزميات وترميز Big-O Notation',
-        titleEn: '2. Algorithmic Complexity Analysis & Big-O Notation',
+        titleAr: '2. النموذج الثاني: تحليل تعقيد الخوارزميات وترميز Big-O Notation',
+        titleEn: '2. Model 2: Algorithmic Complexity Analysis & Big-O Curves',
         contentAr: 'يستخدم ترميز Big-O لوصف كفاءة الخوارزميات وتحديد كيفية زيادة زمن التنفيذ أو استهلاك الذاكرة مع زيادة حجم المدخلات n. تتدرج الكفاءة من الزمن الثابت O(1)، إلى اللوغاريتمي O(log n)، الخطي O(n)، شبه الخطي O(n log n)، والتربيعي O(n²).',
         contentEn: 'Big-O notation classifies algorithm efficiency as input size n grows, ranking from O(1) constant, O(log n) logarithmic, O(n) linear, to O(n^2) quadratic.',
+        diagram: {
+          id: 'diag-cs2-bigo',
+          figureNumberAr: 'شكل (2-2)',
+          figureNumberEn: 'Figure (2-2)',
+          titleAr: 'مقارنة منحنيات التعقيد الزمني للخوارزميات (Big-O Complexity Curves)',
+          titleEn: 'Big-O Complexity Growth Comparison Curves',
+          captionAr: 'يقارن المنحنى البياني بين مختلف فئات التعقيد الزمني ويوضح الفارق الهائل بين التعقيدات اللوغاريتمية O(log n) والتربيعية O(n²).',
+          captionEn: 'Visual comparison of asymptotic growth rates demonstrating why logarithmic and linearithmic algorithms scale superiorly.',
+          diagramType: 'algorithm_complexity_big_o',
+          takeawayFormulaAr: 'O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)',
+          takeawayFormulaEn: 'O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)',
+          keyLabels: [
+            { tagAr: 'زمن ثابت O(1)', tagEn: 'Constant O(1)', descAr: 'الأسرع (فهرسة المصفوفات والجداول)', descEn: 'Direct hash / index lookup' },
+            { tagAr: 'زمن لوغاريتمي O(log n)', tagEn: 'Logarithmic O(log n)', descAr: 'البحث الثنائي وأشجار BST', descEn: 'Binary search & balanced BST' },
+            { tagAr: 'زمن تربيعي O(n²)', tagEn: 'Quadratic O(n²)', descAr: 'الحلقات المتداخلة والفرز الفقاعي', descEn: 'Nested loops & Bubble Sort' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: مقارنة زمن البحث الخطي بالبحث الثنائي لمليون عنصر',
           titleEn: 'Worked Example: Linear vs Binary Search for 1,000,000 Items',
@@ -1660,6 +1434,82 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
           explanationAr: 'الوصول المباشر بواسطة الفهرس يحسب عنوان الذاكرة مباشرة في خطوة واحدة ثابتة O(1).',
           explanationEn: 'Direct index access uses pointer arithmetic to access memory in constant O(1) time.',
           hintAr: 'هل يتغير زمن الوصول إذا كانت المصفوفة تحتوي على 10 عناصر أو 10 ملايين عنصر؟'
+        }
+      },
+      {
+        titleAr: '3. النموذج الثالث: هياكل البيانات الخطية: المكدس (Stack) والطابور (Queue)',
+        titleEn: '3. Model 3: Linear Data Structures: Stack (LIFO) & Queue (FIFO)',
+        contentAr: 'المكدس (Stack) هيكل بيانات يعتمد سياسة LIFO (الداخل آخراً يخرج أولاً)، ويستخدم في إدارة استدعاء الدوال (Call Stack) وخاصية التراجع (Undo). أما الطابور (Queue) فيعتمد سياسة FIFO (الداخل أولاً يخرج أولاً)، ويستخدم في طوابير الطباعة وجدولة المهام في أنظمة التشغيل.',
+        contentEn: 'A Stack utilizes Last-In First-Out (LIFO) for function call management and undo operations. A Queue employs First-In First-Out (FIFO) for printer buffers and CPU task scheduling.',
+        diagram: {
+          id: 'diag-cs2-stack-queue',
+          figureNumberAr: 'شكل (2-3)',
+          figureNumberEn: 'Figure (2-3)',
+          titleAr: 'مقارنة هياكل البيانات: المكدس (Stack) والطابور (Queue)',
+          titleEn: 'Stack (LIFO) vs Queue (FIFO) Structural Operations',
+          captionAr: 'يوضح المخطط عمليات Push/Pop على قمة المكدس (Top)، وعمليات Enqueue من الخلف (Rear) و Dequeue من الأمام (Front) في الطابور.',
+          captionEn: 'Side-by-side visualization of stack LIFO push/pop mechanics and queue FIFO enqueue/dequeue pipelines.',
+          diagramType: 'stack_queue_cs',
+          takeawayFormulaAr: 'Stack: LIFO (Push / Pop) | Queue: FIFO (Enqueue / Dequeue)',
+          takeawayFormulaEn: 'Stack: LIFO (Push / Pop) | Queue: FIFO (Enqueue / Dequeue)',
+          keyLabels: [
+            { tagAr: 'المكدس Stack (LIFO)', tagEn: 'Stack (LIFO)', descAr: 'إضافة وحذف من القمة Top فقط', descEn: 'Top-only push and pop' },
+            { tagAr: 'الطابور Queue (FIFO)', tagEn: 'Queue (FIFO)', descAr: 'إضافة من Rear وحذف من Front', descEn: 'Enqueue at rear, dequeue at front' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: محاكاة عمليات المكدس في متصفح الويب (Back Button)',
+          titleEn: 'Worked Example: Browser History Stack Simulation',
+          steps: [
+            { stepNumber: 1, textAr: 'زيارة موقع Google ثم YouTube: Stack = [Google, YouTube] (قمة المكدس = YouTube).', textEn: 'Visit Google then YouTube: Stack = [Google, YouTube] (Top = YouTube).' },
+            { stepNumber: 2, textAr: 'زيارة موقع Wikipedia: Stack = [Google, YouTube, Wikipedia].', textEn: 'Visit Wikipedia: Stack = [Google, YouTube, Wikipedia].' },
+            { stepNumber: 3, textAr: 'الضغط على زر الرجوع (Back): تنفيذ Pop() فيخرج Wikipedia ويعود المتصفح إلى YouTube.', textEn: 'Press Back: Pop() removes Wikipedia, returning to YouTube.' }
+          ],
+          takeawayAr: 'المكدس هو الهيكل المثالي لتتبع السجلات والمسارات القابلة للتراجع خطوة بخطوة.',
+          takeawayEn: 'Stacks are the fundamental structure for reversible traversal histories and compiler call frames.'
+        },
+        tipsAr: ['جميع عمليات Push و Pop في المكدس، و Enqueue و Dequeue في الطابور تستغرق زمناً ثابتاً O(1)'],
+        tipsEn: ['Push/Pop and Enqueue/Dequeue operations execute in strictly constant time O(1)'],
+        formativeCheck: {
+          id: 'fc-cs2-3',
+          questionAr: 'ما هو هيكل البيانات المناسب لتنظيم إرسال المستندات إلى طابعة مكتبية بحيث يُطبع المستند الأسبق في الإرسال أولاً؟',
+          questionEn: 'Which data structure appropriately manages printing documents in order of submission?',
+          optionsAr: ['الطابور (Queue)', 'المكدس (Stack)', 'الشجرة الثنائية', 'الرسم البياني'],
+          optionsEn: ['Queue (FIFO)', 'Stack (LIFO)', 'Binary Tree', 'Graph'],
+          correctIndex: 0,
+          explanationAr: 'الطابعة تعمل بمبدأ الأسبقية FIFO (First In First Out) وهو مبدأ الطابور Queue.',
+          explanationEn: 'Print spoolers strictly enforce First-In First-Out FIFO processing via Queues.',
+          hintAr: 'المستند الذي دخل أولاً يُطبع أولاً.'
+        }
+      },
+      {
+        titleAr: '4. النموذج الرابع: خوارزميات الفرز المتقدمة ومبدأ فرق تسد (Divide & Conquer)',
+        titleEn: '4. Model 4: Advanced Sorting Algorithms & Divide and Conquer (Merge / Quick Sort)',
+        contentAr: 'تعتمد خوارزميات الفرز المتقدمة مثل Merge Sort و Quick Sort على استراتيجية "فرّق تسُد" (Divide and Conquer): حيث تُقسم المصفوفة الكبيرة إلى مصفوفات فرعية أصغر، وتُفرز كل مصفوفة على حدة، ثم تُدمج في زمن كلي فائق الكفاءة O(n log n) بدلاً من خوارزميات الفرز البطيئة O(n²).',
+        contentEn: 'Merge Sort and QuickSort employ Divide and Conquer, recursively splitting lists and merging sorted partitions in optimal O(n log n) time.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي: فرز مصفوفة من 8 عناصر باستخدام Merge Sort',
+          titleEn: 'Worked Example: 8-Element Merge Sort Recursion',
+          steps: [
+            { stepNumber: 1, textAr: 'التقسيم: تقسيم 8 عناصر إلى 4 ثم إلى 2 ثم إلى عناصر مفردة (عمق الشجرة = log₂ 8 = 3 مستويات).', textEn: 'Divide: 8 items split to 4, 2, then 1-item sublists (tree depth = log2(8) = 3 levels).' },
+            { stepNumber: 2, textAr: 'الدمج: في كل مستوى يستغرق دمج العناصر المفروزة زمناً خطياً O(n).', textEn: 'Merge: merging at each level takes linear O(n) work.' },
+            { stepNumber: 3, textAr: 'الزمن الإجمالي: 3 مستويات × n = n log₂ n = 8 × 3 = 24 عملية مقارنة فقط بدلاً من 64 في الفرز الفقاعي!', textEn: 'Total time: n * log(n) = 8 * 3 = 24 operations vs 64 in Bubble Sort!' }
+          ],
+          takeawayAr: 'استراتيجية فرق تسد تخفض التعقيد الحسابي من الدرجة التربيعية إلى شبه الخطية O(n log n).',
+          takeawayEn: 'Divide and conquer dramatically reduces computational complexity from quadratic to linearithmic.'
+        },
+        tipsAr: ['خوارزمية Merge Sort مستقرة ومضمونة الأداء في أسوأ الحالات O(n log n) لكنها تستهلك ذاكرة إضافية O(n)'],
+        tipsEn: ['Merge Sort guarantees O(n log n) worst-case time with O(n) auxiliary memory requirement'],
+        formativeCheck: {
+          id: 'fc-cs2-4',
+          questionAr: 'ما هو التعقيد الزمني في أسوأ الحالات لخوارزمية الفرز بالدمج (Merge Sort)؟',
+          questionEn: 'What is the worst-case time complexity of Merge Sort?',
+          optionsAr: ['O(n log n)', 'O(n²)', 'O(n)', 'O(1)'],
+          optionsEn: ['O(n log n)', 'O(n²)', 'O(n)', 'O(1)'],
+          correctIndex: 0,
+          explanationAr: 'خوارزمية الفرز بالدمج تضمن زمناً مقداره O(n log n) في جميع الحالات (الأفضل والمتوسط والأسوأ).',
+          explanationEn: 'Merge Sort rigorously maintains O(n log n) complexity in best, average, and worst cases.',
+          hintAr: 'ابحث عن التعقيد شبه الخطي الشائع في الخوارزميات المقسمة.'
         }
       }
     ],

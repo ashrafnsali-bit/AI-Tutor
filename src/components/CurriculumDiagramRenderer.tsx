@@ -1441,6 +1441,311 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             <text x="560" y="304" textAnchor="end" fill="#e2e8f0" fontSize="11">4. تحديث الأوزان بمعدل التعلم Learning Rate (η) حتى يصل النموذج إلى أدنى قيمة خطأ ممكنة (Global Minimum).</text>
           </svg>
         );
+
+      case 'activation_functions_ai':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="150" y="10" width="300" height="28" rx="6" fill="rgba(99, 102, 241, 0.2)" stroke="#6366f1" />
+            <text x="300" y="29" textAnchor="middle" fill="#818cf8" fontSize="12" fontWeight="bold">مقارنة دوال التنشيط غير الخطية (Activation Functions)</text>
+
+            {/* ReLU */}
+            <g transform="translate(30, 50)">
+              <rect width="165" height="240" rx="8" fill="rgba(30, 41, 59, 0.7)" stroke="#10b981" strokeWidth="1.5" />
+              <rect x="10" y="10" width="145" height="22" rx="4" fill="#059669" />
+              <text x="82" y="25" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">1. دالة ReLU</text>
+              {/* Axes */}
+              <line x1="20" y1="130" x2="145" y2="130" stroke="#64748b" strokeWidth="1" />
+              <line x1="82" y1="55" x2="82" y2="180" stroke="#64748b" strokeWidth="1" />
+              {/* Curve */}
+              <path d="M 25 130 L 82 130 L 140 70" fill="none" stroke="#34d399" strokeWidth="3" />
+              <text x="82" y="200" textAnchor="middle" fill="#a7f3d0" fontSize="10" fontWeight="bold">f(z) = max(0, z)</text>
+              <text x="82" y="220" textAnchor="middle" fill="#94a3b8" fontSize="9">المجال: [0, +∞)</text>
+              <text x="82" y="234" textAnchor="middle" fill="#6ee7b7" fontSize="8.5">• الأسرع في الشبكات العميقة</text>
+            </g>
+
+            {/* Sigmoid */}
+            <g transform="translate(217, 50)">
+              <rect width="165" height="240" rx="8" fill="rgba(30, 41, 59, 0.7)" stroke="#38bdf8" strokeWidth="1.5" />
+              <rect x="10" y="10" width="145" height="22" rx="4" fill="#0284c7" />
+              <text x="82" y="25" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">2. دالة Sigmoid (σ)</text>
+              {/* Axes */}
+              <line x1="20" y1="130" x2="145" y2="130" stroke="#64748b" strokeWidth="1" />
+              <line x1="82" y1="55" x2="82" y2="180" stroke="#64748b" strokeWidth="1" />
+              {/* S-Curve */}
+              <path d="M 25 170 C 60 170, 70 130, 82 130 C 94 130, 105 80, 140 80" fill="none" stroke="#38bdf8" strokeWidth="3" />
+              <text x="82" y="200" textAnchor="middle" fill="#bae6fd" fontSize="10" fontWeight="bold">σ(z) = 1 / (1 + e⁻ᶻ)</text>
+              <text x="82" y="220" textAnchor="middle" fill="#94a3b8" fontSize="9">المجال: (0, 1)</text>
+              <text x="82" y="234" textAnchor="middle" fill="#7dd3fc" fontSize="8.5">• التصنيف الثنائي والاحتمالات</text>
+            </g>
+
+            {/* Softmax */}
+            <g transform="translate(405, 50)">
+              <rect width="165" height="240" rx="8" fill="rgba(30, 41, 59, 0.7)" stroke="#ec4899" strokeWidth="1.5" />
+              <rect x="10" y="10" width="145" height="22" rx="4" fill="#db2777" />
+              <text x="82" y="25" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">3. دالة Softmax</text>
+              {/* Bars representing normalized probabilities */}
+              <rect x="35" y="130" width="25" height="45" rx="3" fill="#ec4899" />
+              <text x="47" y="125" textAnchor="middle" fill="#fbcfe8" fontSize="9">0.65</text>
+              <rect x="70" y="150" width="25" height="25" rx="3" fill="#f472b6" />
+              <text x="82" y="145" textAnchor="middle" fill="#fbcfe8" fontSize="9">0.25</text>
+              <rect x="105" y="165" width="25" height="10" rx="3" fill="#f9a8d4" />
+              <text x="117" y="160" textAnchor="middle" fill="#fbcfe8" fontSize="9">0.10</text>
+              <text x="82" y="200" textAnchor="middle" fill="#fbcfe8" fontSize="9.5" fontWeight="bold">eᶻⁱ / Σ eᶻʲ</text>
+              <text x="82" y="220" textAnchor="middle" fill="#94a3b8" fontSize="9">المجموع = 1.0 (100%)</text>
+              <text x="82" y="234" textAnchor="middle" fill="#f472b6" fontSize="8.5">• التصنيف متعدد الفئات</text>
+            </g>
+          </svg>
+        );
+
+      case 'decision_tree_ml':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="130" y="10" width="340" height="28" rx="6" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" />
+            <text x="300" y="29" textAnchor="middle" fill="#6ee7b7" fontSize="12" fontWeight="bold">شجرة القرار وخوارزميات التصنيف (Decision Tree Model)</text>
+
+            {/* Root Node */}
+            <rect x="220" y="55" width="160" height="42" rx="8" fill="#1e293b" stroke="#38bdf8" strokeWidth="2" />
+            <text x="300" y="73" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">شرط الجذر (العمر &lt; 30؟)</text>
+            <text x="300" y="88" textAnchor="middle" fill="#94a3b8" fontSize="9">Root Decision Node</text>
+
+            {/* Connectors */}
+            <line x1="260" y1="97" x2="160" y2="145" stroke="#ef4444" strokeWidth="2" />
+            <text x="195" y="118" fill="#ef4444" fontSize="10" fontWeight="bold">نعم (Yes)</text>
+
+            <line x1="340" y1="97" x2="440" y2="145" stroke="#10b981" strokeWidth="2" />
+            <text x="405" y="118" fill="#10b981" fontSize="10" fontWeight="bold">لا (No)</text>
+
+            {/* Level 1 Nodes */}
+            <rect x="80" y="145" width="160" height="42" rx="8" fill="#1e293b" stroke="#f59e0b" strokeWidth="2" />
+            <text x="160" y="163" textAnchor="middle" fill="#f59e0b" fontSize="10.5" fontWeight="bold">الدخل &gt; 50,000 ريال؟</text>
+            <text x="160" y="178" textAnchor="middle" fill="#94a3b8" fontSize="8.5">Internal Split Node</text>
+
+            <rect x="360" y="145" width="160" height="42" rx="8" fill="#065f46" stroke="#10b981" strokeWidth="2" />
+            <text x="440" y="163" textAnchor="middle" fill="#a7f3d0" fontSize="11" fontWeight="bold">الفئة: مؤهل (Eligible)</text>
+            <text x="440" y="178" textAnchor="middle" fill="#6ee7b7" fontSize="9">Leaf Node (نقاء 96%)</text>
+
+            {/* Connectors Level 2 */}
+            <line x1="120" y1="187" x2="60" y2="235" stroke="#10b981" strokeWidth="2" />
+            <text x="80" y="210" fill="#10b981" fontSize="9" fontWeight="bold">نعم</text>
+
+            <line x1="200" y1="187" x2="260" y2="235" stroke="#ef4444" strokeWidth="2" />
+            <text x="235" y="210" fill="#ef4444" fontSize="9" fontWeight="bold">لا</text>
+
+            {/* Leaves */}
+            <rect x="10" y="235" width="110" height="38" rx="6" fill="#065f46" stroke="#10b981" />
+            <text x="65" y="252" textAnchor="middle" fill="#6ee7b7" fontSize="10" fontWeight="bold">مؤهل (Approved)</text>
+            <text x="65" y="265" textAnchor="middle" fill="#d1fae5" fontSize="8">Gini = 0.0</text>
+
+            <rect x="200" y="235" width="120" height="38" rx="6" fill="#881337" stroke="#f43f5e" />
+            <text x="260" y="252" textAnchor="middle" fill="#fca5a5" fontSize="10" fontWeight="bold">غير مؤهل (Rejected)</text>
+            <text x="260" y="265" textAnchor="middle" fill="#fee2e2" fontSize="8">Entropy = 0.0</text>
+
+            {/* Formula box */}
+            <rect x="360" y="225" width="220" height="75" rx="8" fill="rgba(30, 41, 59, 0.85)" stroke="#64748b" />
+            <text x="470" y="247" textAnchor="middle" fill="#fcd34d" fontSize="10.5" fontWeight="bold">معيار قياس نقاء التقسيم (Gini / Entropy)</text>
+            <text x="470" y="268" textAnchor="middle" fill="#38bdf8" fontSize="10">Gini = 1 - Σ (pᵢ)²</text>
+            <text x="470" y="288" textAnchor="middle" fill="#ec4899" fontSize="10">Entropy = - Σ pᵢ · log₂(pᵢ)</text>
+          </svg>
+        );
+
+      case 'algorithm_complexity_big_o':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="140" y="10" width="320" height="28" rx="6" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" />
+            <text x="300" y="29" textAnchor="middle" fill="#fda4af" fontSize="12" fontWeight="bold">منحنيات التعقيد الزمني وتحليل الخوارزميات (Big-O)</text>
+
+            {/* Axes */}
+            <line x1="70" y1="270" x2="550" y2="270" stroke="#64748b" strokeWidth="2" />
+            <text x="540" y="290" fill="#94a3b8" fontSize="11" fontWeight="bold">حجم المدخلات (n)</text>
+            <line x1="70" y1="270" x2="70" y2="50" stroke="#64748b" strokeWidth="2" />
+            <text x="40" y="65" fill="#94a3b8" fontSize="11" fontWeight="bold">الزمن (t)</text>
+
+            {/* O(1) Green Line */}
+            <line x1="70" y1="255" x2="540" y2="255" stroke="#10b981" strokeWidth="2.5" />
+            <text x="545" y="258" fill="#10b981" fontSize="10" fontWeight="bold">O(1) ثابت</text>
+
+            {/* O(log n) Cyan Line */}
+            <path d="M 70 270 Q 150 240, 540 220" fill="none" stroke="#38bdf8" strokeWidth="2.5" />
+            <text x="545" y="223" fill="#38bdf8" fontSize="10" fontWeight="bold">O(log n) لوغاريتمي</text>
+
+            {/* O(n) Yellow Line */}
+            <line x1="70" y1="270" x2="540" y2="160" stroke="#f59e0b" strokeWidth="2.5" />
+            <text x="545" y="163" fill="#f59e0b" fontSize="10" fontWeight="bold">O(n) خطي</text>
+
+            {/* O(n log n) Orange Line */}
+            <path d="M 70 270 Q 250 200, 500 100" fill="none" stroke="#f97316" strokeWidth="2.5" />
+            <text x="505" y="98" fill="#f97316" fontSize="10" fontWeight="bold">O(n log n)</text>
+
+            {/* O(n^2) Red Curve */}
+            <path d="M 70 270 Q 140 240, 240 60" fill="none" stroke="#ef4444" strokeWidth="3" />
+            <text x="245" y="60" fill="#ef4444" fontSize="10" fontWeight="bold">O(n²) تربيعي</text>
+
+            {/* O(2^n) Magenta Curve */}
+            <path d="M 70 270 Q 100 240, 140 60" fill="none" stroke="#ec4899" strokeWidth="3" />
+            <text x="145" y="55" fill="#ec4899" fontSize="10" fontWeight="bold">O(2ⁿ) أسي</text>
+          </svg>
+        );
+
+      case 'stack_queue_cs':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="140" y="10" width="320" height="28" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" />
+            <text x="300" y="29" textAnchor="middle" fill="#7dd3fc" fontSize="12" fontWeight="bold">مقارنة هياكل البيانات: المكدس (Stack) والطابور (Queue)</text>
+
+            {/* Stack Box */}
+            <g transform="translate(40, 55)">
+              <rect width="240" height="240" rx="8" fill="rgba(30, 41, 59, 0.7)" stroke="#38bdf8" strokeWidth="1.5" />
+              <rect x="20" y="10" width="200" height="24" rx="4" fill="#0284c7" />
+              <text x="120" y="26" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">المكدس: LIFO (Last-In First-Out)</text>
+
+              {/* Stack U container */}
+              <path d="M 60 60 L 60 210 L 180 210 L 180 60" fill="none" stroke="#64748b" strokeWidth="3" />
+              <rect x="70" y="170" width="100" height="30" rx="4" fill="#0369a1" />
+              <text x="120" y="190" textAnchor="middle" fill="#fff" fontSize="10">العنصر 1 (القاع)</text>
+              <rect x="70" y="135" width="100" height="30" rx="4" fill="#0284c7" />
+              <text x="120" y="155" textAnchor="middle" fill="#fff" fontSize="10">العنصر 2</text>
+              <rect x="70" y="100" width="100" height="30" rx="4" fill="#38bdf8" />
+              <text x="120" y="120" textAnchor="middle" fill="#0f172a" fontSize="10" fontWeight="bold">العنصر 3 (القمة Top)</text>
+
+              <text x="120" y="230" textAnchor="middle" fill="#94a3b8" fontSize="9">العمليات: Push() للإضافة | Pop() للحذف</text>
+            </g>
+
+            {/* Queue Box */}
+            <g transform="translate(320, 55)">
+              <rect width="240" height="240" rx="8" fill="rgba(30, 41, 59, 0.7)" stroke="#10b981" strokeWidth="1.5" />
+              <rect x="20" y="10" width="200" height="24" rx="4" fill="#059669" />
+              <text x="120" y="26" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">الطابور: FIFO (First-In First-Out)</text>
+
+              {/* Queue pipe */}
+              <line x1="20" y1="100" x2="220" y2="100" stroke="#64748b" strokeWidth="3" />
+              <line x1="20" y1="160" x2="220" y2="160" stroke="#64748b" strokeWidth="3" />
+
+              {/* Items in pipe */}
+              <rect x="40" y="110" width="45" height="40" rx="4" fill="#10b981" />
+              <text x="62" y="135" textAnchor="middle" fill="#fff" fontSize="10">Front 1</text>
+              <rect x="95" y="110" width="45" height="40" rx="4" fill="#34d399" />
+              <text x="117" y="135" textAnchor="middle" fill="#0f172a" fontSize="10">Item 2</text>
+              <rect x="150" y="110" width="45" height="40" rx="4" fill="#6ee7b7" />
+              <text x="172" y="135" textAnchor="middle" fill="#0f172a" fontSize="10">Rear 3</text>
+
+              <text x="25" y="90" fill="#ef4444" fontSize="9" fontWeight="bold">← خروج Dequeue</text>
+              <text x="155" y="90" fill="#10b981" fontSize="9" fontWeight="bold">دخول Enqueue ←</text>
+              <text x="120" y="230" textAnchor="middle" fill="#94a3b8" fontSize="9">العمليات: Enqueue(Rear) | Dequeue(Front)</text>
+            </g>
+          </svg>
+        );
+
+      case 'maxwell_boltzmann_chem':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="130" y="10" width="340" height="28" rx="6" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" />
+            <text x="300" y="29" textAnchor="middle" fill="#fde68a" fontSize="12" fontWeight="bold">توزيع ماكسويل-بولتزمان الحركي وتأثير درجة الحرارة على Ea</text>
+
+            {/* Axes */}
+            <line x1="70" y1="270" x2="550" y2="270" stroke="#64748b" strokeWidth="2" />
+            <text x="520" y="290" fill="#94a3b8" fontSize="11" fontWeight="bold">طاقة الحركة (Kinetic Energy)</text>
+            <line x1="70" y1="270" x2="70" y2="50" stroke="#64748b" strokeWidth="2" />
+            <text x="30" y="65" fill="#94a3b8" fontSize="10" fontWeight="bold">عدد الجزيئات</text>
+
+            {/* T1 Curve (Cold - Blue) */}
+            <path d="M 70 270 Q 150 50, 230 180 T 520 270" fill="none" stroke="#38bdf8" strokeWidth="2.5" />
+            <text x="190" y="110" fill="#38bdf8" fontSize="11" fontWeight="bold">T₁ (درجة حرارة منخفضة)</text>
+
+            {/* T2 Curve (Hot - Orange) */}
+            <path d="M 70 270 Q 190 120, 290 190 T 540 270" fill="none" stroke="#f97316" strokeWidth="2.5" />
+            <text x="320" y="160" fill="#f97316" fontSize="11" fontWeight="bold">T₂ (درجة حرارة مرتفعة T₂ &gt; T₁)</text>
+
+            {/* Ea Activation Energy Vertical Barrier */}
+            <line x1="390" y1="60" x2="390" y2="270" stroke="#ef4444" strokeWidth="2" strokeDasharray="5,5" />
+            <rect x="340" y="65" width="100" height="22" rx="4" fill="#dc2626" />
+            <text x="390" y="80" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">طاقة التنشيط Ea</text>
+
+            {/* Shaded Area under T2 past Ea */}
+            <path d="M 390 220 Q 450 250, 540 270 L 390 270 Z" fill="rgba(249, 115, 22, 0.4)" />
+            <text x="470" y="240" fill="#fdba74" fontSize="9.5" fontWeight="bold">جزيئات تتفاعل عند T₂ (أضعاف مضاعفة)</text>
+          </svg>
+        );
+
+      case 'dna_replication_fork':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="140" y="10" width="320" height="28" rx="6" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" />
+            <text x="300" y="29" textAnchor="middle" fill="#6ee7b7" fontSize="12" fontWeight="bold">شوكة تضاعف DNA والإنزيمات المشتركة (Replication Fork)</text>
+
+            {/* Template Double Helix on left splitting */}
+            <path d="M 50 140 Q 150 140, 240 90 L 520 90" fill="none" stroke="#38bdf8" strokeWidth="3" />
+            <text x="530" y="95" fill="#38bdf8" fontSize="10" fontWeight="bold">3' قالب</text>
+
+            <path d="M 50 180 Q 150 180, 240 230 L 520 230" fill="none" stroke="#38bdf8" strokeWidth="3" />
+            <text x="530" y="235" fill="#38bdf8" fontSize="10" fontWeight="bold">5' قالب</text>
+
+            {/* Helicase Enzyme */}
+            <polygon points="210,130 250,160 210,190" fill="#f59e0b" stroke="#fbbf24" strokeWidth="2" />
+            <text x="210" y="120" textAnchor="middle" fill="#fde68a" fontSize="10" fontWeight="bold">Helicase (فك اللولب)</text>
+
+            {/* Leading Strand (Continuous green) */}
+            <line x1="250" y1="105" x2="500" y2="105" stroke="#10b981" strokeWidth="3" />
+            <polygon points="245,105 255,100 255,110" fill="#10b981" />
+            <text x="380" y="122" fill="#6ee7b7" fontSize="10" fontWeight="bold">السلسلة الرائدة 5' → 3' (متصلة)</text>
+
+            {/* DNA Polymerase Top */}
+            <circle cx="340" cy="98" r="14" fill="#8b5cf6" stroke="#c4b5fd" />
+            <text x="340" y="102" textAnchor="middle" fill="#fff" fontSize="8" fontWeight="bold">Pol</text>
+
+            {/* Lagging Strand (Okazaki fragments) */}
+            <line x1="300" y1="215" x2="360" y2="215" stroke="#ec4899" strokeWidth="3" />
+            <line x1="380" y1="215" x2="440" y2="215" stroke="#ec4899" strokeWidth="3" />
+            <line x1="460" y1="215" x2="510" y2="215" stroke="#ec4899" strokeWidth="3" />
+            <text x="400" y="255" fill="#f472b6" fontSize="10" fontWeight="bold">قطع أوكازاكي (السلسلة المتأخرة غير المتصلة)</text>
+
+            {/* DNA Ligase */}
+            <circle cx="450" cy="215" r="12" fill="#ef4444" stroke="#fca5a5" />
+            <text x="450" y="219" textAnchor="middle" fill="#fff" fontSize="7" fontWeight="bold">Ligase</text>
+          </svg>
+        );
+
+      case 'arabic_inna_kana_map':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="320" fill="#0f172a" rx="10" />
+            <rect x="130" y="10" width="340" height="28" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" />
+            <text x="300" y="29" textAnchor="middle" fill="#d8b4fe" fontSize="12" fontWeight="bold">خريطة نواسخ الابتداء: كان وأخواتها وإن وأخواتها</text>
+
+            {/* Kana Box */}
+            <g transform="translate(30, 50)">
+              <rect width="250" height="245" rx="8" fill="rgba(30, 41, 59, 0.85)" stroke="#38bdf8" strokeWidth="1.8" />
+              <rect x="15" y="10" width="220" height="25" rx="4" fill="#0284c7" />
+              <text x="125" y="27" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">1. الأفعال الناسخة (كان وأخواتها)</text>
+              <text x="235" y="60" textAnchor="end" fill="#93c5fd" fontSize="10">• كان، أصبح، أضحى، أمسى، ظل، بات، صار، ليس</text>
+              <rect x="15" y="75" width="220" height="50" rx="6" fill="rgba(2, 132, 199, 0.15)" stroke="#38bdf8" />
+              <text x="125" y="95" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">الأثر الإعرابي:</text>
+              <text x="125" y="115" textAnchor="middle" fill="#e2e8f0" fontSize="10">ترفع المبتدأ (اسمها) + تنصب الخبر (خبرها)</text>
+              <text x="235" y="150" textAnchor="end" fill="#a7f3d0" fontSize="10">مثال: كانَ <u>العِلْمُ</u> <u>نُوراً</u></text>
+              <text x="235" y="170" textAnchor="end" fill="#94a3b8" fontSize="9">العلمُ: اسم كان مرفوع بالضمة</text>
+              <text x="235" y="188" textAnchor="end" fill="#94a3b8" fontSize="9">نوراً: خبر كان منصوب بالفتحة</text>
+            </g>
+
+            {/* Inna Box */}
+            <g transform="translate(320, 50)">
+              <rect width="250" height="245" rx="8" fill="rgba(30, 41, 59, 0.85)" stroke="#ec4899" strokeWidth="1.8" />
+              <rect x="15" y="10" width="220" height="25" rx="4" fill="#db2777" />
+              <text x="125" y="27" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">2. الحروف الناسخة (إن وأخواتها)</text>
+              <text x="235" y="60" textAnchor="end" fill="#fbcfe8" fontSize="10">• إنَّ، أنَّ، كأنَّ، لكنَّ، ليتَ، لعلَّ</text>
+              <rect x="15" y="75" width="220" height="50" rx="6" fill="rgba(219, 39, 119, 0.15)" stroke="#ec4899" />
+              <text x="125" y="95" textAnchor="middle" fill="#f472b6" fontSize="11" fontWeight="bold">الأثر الإعرابي:</text>
+              <text x="125" y="115" textAnchor="middle" fill="#e2e8f0" fontSize="10">تنصب المبتدأ (اسمها) + ترفع الخبر (خبرها)</text>
+              <text x="235" y="150" textAnchor="end" fill="#fde68a" fontSize="10">مثال: إنَّ <u>العِلْمَ</u> <u>نُورٌ</u></text>
+              <text x="235" y="170" textAnchor="end" fill="#94a3b8" fontSize="9">العلمَ: اسم إنّ منصوب بالفتحة</text>
+              <text x="235" y="188" textAnchor="end" fill="#94a3b8" fontSize="9">نورٌ: خبر إنّ مرفوع بالضمة</text>
+            </g>
+          </svg>
+        );
     }
   };
 
