@@ -2118,15 +2118,40 @@ export function getCurriculumForSubject(subject: Subject): Lecture[] {
   return SUBJECT_CURRICULA[subject] || MATH_LECTURES;
 }
 
-export function loadSubjectLectures(subject: Subject): Lecture[] {
+export function loadSubjectLectures(subject: Subject, country: string = 'SA', gradeLevel?: string): Lecture[] {
   const masterCurriculum = getCurriculumForSubject(subject);
+  
+  // Retrieve any community / AI-generated shared lectures for this subject and country
+  const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel || ''}`;
+  const generalKey = `TEACHER_AI_SHARED_LECS_${subject}`;
+  let sharedLecs: Lecture[] = [];
+  try {
+    const list1 = JSON.parse(localStorage.getItem(countryKey) || '[]') as Lecture[];
+    const list2 = JSON.parse(localStorage.getItem(generalKey) || '[]') as Lecture[];
+    const map = new Map<string, Lecture>();
+    [...list1, ...list2].forEach(l => { if (l && l.id) map.set(l.id, l); });
+    sharedLecs = Array.from(map.values());
+  } catch {
+    sharedLecs = [];
+  }
+
+  const combined = [...masterCurriculum];
+  sharedLecs.forEach(sh => {
+    if (!combined.some(c => c.id === sh.id)) {
+      combined.push({
+        ...sh,
+        order: combined.length + 1
+      });
+    }
+  });
+
   const storageKey = `TEACHER_AI_LECTURES_${subject}`;
   const saved = localStorage.getItem(storageKey);
   if (saved) {
     try {
       const parsed = JSON.parse(saved) as Lecture[];
       if (Array.isArray(parsed)) {
-        return masterCurriculum.map((freshLec) => {
+        const result = combined.map((freshLec) => {
           const found = parsed.find((p) => p.id === freshLec.id);
           if (found) {
             return {
@@ -2138,12 +2163,21 @@ export function loadSubjectLectures(subject: Subject): Lecture[] {
           }
           return freshLec;
         });
+
+        // Also preserve any newly generated lectures saved in user session
+        parsed.forEach(p => {
+          if (!result.some(r => r.id === p.id)) {
+            result.push(p);
+          }
+        });
+
+        return result;
       }
     } catch (e) {
       console.error(e);
     }
   }
-  return masterCurriculum;
+  return combined;
 }
 
 export function saveSubjectLectures(subject: Subject, lectures: Lecture[]): void {

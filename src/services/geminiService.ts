@@ -284,119 +284,174 @@ export async function generateCurriculumLecture(
     return { lecture: null, error: 'Gemini API key is required to generate curriculum lessons.' };
   }
 
-  const prompt = `You are a Senior National Curriculum Author and Pedagogy Expert for ${profile.country}.
-Create a comprehensive, authentic, high-quality curriculum lesson for:
-- Country & Standard: ${profile.country}
+  const cInfo = getCountryInfo(profile.country);
+  const prompt = `You are a Senior National Curriculum Author, Pedagogical Expert, and Textbook Lead for ${cInfo.nameAr} (${cInfo.ministryAr}).
+Generate an authentic, high-caliber, comprehensive academic lesson strictly aligned with national standards for:
+- Country & Standard: ${cInfo.nameAr} (${cInfo.systemNameAr}) [Country Code: ${profile.country}]
 - Grade Level: ${profile.gradeLevel}
-- Specialization: ${profile.specialization}
+- Educational Track / Specialization: ${profile.educationTrack || profile.specialization}
 - Subject: ${profile.subject}
-- Lecture Sequence Number: ${lectureNumber}
+- Sequence Order / Lecture Number: ${lectureNumber}
 ${unitTitle ? `- Unit: ${unitTitle}` : ''}
-${lessonTopic ? `- Focus Lesson Topic: ${lessonTopic}` : ''}
-${existingTitles.length > 0 ? `- Already covered lessons in syllabus (DO NOT duplicate): ${existingTitles.join(', ')}` : ''}
+${lessonTopic ? `- Focus Topic: ${lessonTopic}` : ''}
+${existingTitles.length > 0 ? `- Already covered topics (DO NOT duplicate): ${existingTitles.join(' | ')}` : ''}
 
-CRITICAL: Return ONLY a valid JSON object strictly matching this schema with NO markdown wrapping, no extra comments:
+CRITICAL RULES:
+1. Adhere strictly to the official educational guidelines, scientific terms, and symbols of ${cInfo.nameAr}.
+2. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, in-depth explanation sections with formative checks and step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
+3. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
+
 {
   "id": "gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}",
   "order": ${lectureNumber},
-  "isLocked": false,
+  "titleAr": "المحاضرة ${lectureNumber}: عنوان الدرس الدقيق بالعربية",
+  "titleEn": "Lecture ${lectureNumber}: Exact Lesson Title in English",
+  "subtitleAr": "وصف مفاهيمي موجز وواضح للدرس بالعربية",
+  "subtitleEn": "Concise pedagogical subtitle in English",
+  "durationMinutes": 30,
+  "isLocked": ${lectureNumber > 1 ? 'true' : 'false'},
   "isCompleted": false,
   "passingScoreRequired": 80,
-  "unitNumber": 1,
-  "lessonNumberInUnit": ${lectureNumber},
-  "unitTitleAr": "string in Arabic",
-  "unitTitleEn": "string in English",
-  "titleAr": "string in Arabic",
-  "titleEn": "string in English",
-  "topicAr": "string in Arabic",
-  "topicEn": "string in English",
-  "durationMinutes": 45,
-  "keyConceptsAr": ["concept 1", "concept 2", "concept 3"],
-  "keyConceptsEn": ["concept 1", "concept 2", "concept 3"],
-  "learningObjectivesAr": ["objective 1", "objective 2", "objective 3"],
-  "learningObjectivesEn": ["objective 1", "objective 2", "objective 3"],
-  "summaryAr": "Comprehensive Arabic lesson introduction and summary",
-  "summaryEn": "Comprehensive English lesson introduction and summary",
-  "curriculumAlignment": {
-    "country": "${profile.country}",
-    "nationalStandardCode": "Standard Code",
-    "curriculumBookName": "Official Textbook Name",
-    "chapterNumber": 1,
-    "gradeLevel": "${profile.gradeLevel}",
-    "semester": "Semester 2"
-  },
-  "lectureContent": {
-    "sections": [
-      {
-        "id": "sec-1",
-        "titleAr": "تهيئة واستكشاف",
-        "titleEn": "Exploration & Hook",
-        "contentAr": "Rich markdown text with pedagogical explanation...",
-        "contentEn": "Rich markdown text with pedagogical explanation..."
+  "country": "${profile.country}",
+  "ministryAr": "${cInfo.ministryAr}",
+  "ministryEn": "${cInfo.ministryEn}",
+  "gradeLevelNameAr": "المرحلة التعليمية - ${profile.gradeLevel}",
+  "gradeLevelNameEn": "Grade ${profile.gradeLevel}",
+  "termAr": "${cInfo.termDefaultAr}",
+  "termEn": "${cInfo.termDefaultEn}",
+  "unitTitleAr": "${unitTitle ? unitTitle : 'الوحدة الدراسية المقررة'}",
+  "unitTitleEn": "${unitTitle ? unitTitle : 'Curriculum Unit'}",
+  "lessonNumberAr": "الدرس ${lectureNumber}",
+  "lessonNumberEn": "Lesson ${lectureNumber}",
+  "warmupHookAr": "فقرة تهيئة ذهنية مشوقة تربط مفهوم الدرس بالحياة اليومية والتطبيقات العملية المعاصرة (3-4 أسطر)",
+  "warmupHookEn": "Engaging real-world connection and hook (3-4 lines)",
+  "learningOutcomesAr": [
+    "أن يتعرف الطالب على...",
+    "أن يطبق القواعد في حل...",
+    "أن يستنتج العلاقة بين..."
+  ],
+  "learningOutcomesEn": [
+    "Identify core principles of...",
+    "Apply equations and rules to solve...",
+    "Analyze the relationships between..."
+  ],
+  "vocabulary": [
+    {
+      "termAr": "المصطلح 1 (بالعربية)",
+      "termEn": "Term 1 (English)",
+      "definitionAr": "التعريف العلمي الدقيق للمصطلح بالعربية",
+      "definitionEn": "Precise scientific definition in English"
+    },
+    {
+      "termAr": "المصطلح 2",
+      "termEn": "Term 2",
+      "definitionAr": "التعريف العلمي",
+      "definitionEn": "Scientific definition"
+    }
+  ],
+  "keyConceptsAr": ["المفهوم الرئيسي 1", "المفهوم الرئيسي 2", "المفهوم الرئيسي 3"],
+  "keyConceptsEn": ["Key Concept 1", "Key Concept 2", "Key Concept 3"],
+  "summaryAr": "ملخص مفاهيمي شامل وشائق لأبرز ما تم تعمله في المحاضرة",
+  "summaryEn": "Comprehensive pedagogical summary of the lecture",
+  "sections": [
+    {
+      "titleAr": "1. الشرح المفاهيمي والأساس العلمي",
+      "titleEn": "1. Conceptual Explanation & Principles",
+      "contentAr": "شرح تفصيلي متعمق مدعم بالقوانين والخطوات التوضيحية باللغة العربية الفصحى...",
+      "contentEn": "Detailed in-depth conceptual explanation in English...",
+      "interactiveExample": {
+        "titleAr": "تطبيق عملي محلول خطوة بخطوة",
+        "titleEn": "Step-by-Step Interactive Example",
+        "equation": "المعادلة أو المسألة الرئيسية",
+        "steps": [
+          { "stepNumber": 1, "textAr": "الخطوة الأولى للحل", "textEn": "Step 1 of solution", "noteAr": "ملاحظة توضيحية", "noteEn": "Explanation note" },
+          { "stepNumber": 2, "textAr": "الخطوة الثانية", "textEn": "Step 2", "noteAr": "ملاحظة", "noteEn": "Note" }
+        ],
+        "takeawayAr": "الفائدة الذهبية المستخلصة من المثال",
+        "takeawayEn": "Key takeaway from this example"
       },
-      {
-        "id": "sec-2",
-        "titleAr": "الشرح النظري والمفاهيم",
-        "titleEn": "Core Theoretical Explanation",
-        "contentAr": "Detailed explanation with formulas and breakdown...",
-        "contentEn": "Detailed explanation with formulas and breakdown..."
+      "formativeCheck": {
+        "id": "fc-gen-${lectureNumber}-1",
+        "questionAr": "سؤال تحقق فوري من فهم الفكرة؟",
+        "questionEn": "Instant formative check question?",
+        "optionsAr": ["الخيار أ", "الخيار ب (الصحيح)", "الخيار ج", "الخيار د"],
+        "optionsEn": ["Option A", "Option B (Correct)", "Option C", "Option D"],
+        "correctIndex": 1,
+        "explanationAr": "تفسير تربوي علمي واضح لسبب صحة الخيار",
+        "explanationEn": "Clear explanation of the correct choice",
+        "hintAr": "تلميح استرشادي يساعد الطالب على التفكير",
+        "hintEn": "Guiding hint for student reflection"
       },
-      {
-        "id": "sec-3",
-        "titleAr": "أمثلة محلولة خطوة بخطوة",
-        "titleEn": "Step-by-Step Solved Examples",
-        "contentAr": "Practical real-world examples with complete solutions...",
-        "contentEn": "Practical real-world examples with complete solutions..."
-      },
-      {
-        "id": "sec-4",
-        "titleAr": "تمارين تفاعلية وتأكيد الفهم",
-        "titleEn": "Guided Practice & Mastery Check",
-        "contentAr": "Exercises with hints for self-testing...",
-        "contentEn": "Exercises with hints for self-testing..."
-      }
-    ]
-  },
+      "tipsAr": ["نصيحة ذهبية لتجنب الأخطاء الشائعة"],
+      "tipsEn": ["Pro tip to avoid common pitfalls"]
+    }
+  ],
+  "conceptMapAr": [
+    "الركيزة 1: القاعدة الأساسية وتطبيقها",
+    "الركيزة 2: الشروط والخصائص الرياضية/العلمية",
+    "الركيزة 3: خطوة التحقق والتأكد من صحة النتائج"
+  ],
+  "conceptMapEn": [
+    "Pillar 1: Core rule & application",
+    "Pillar 2: Conditions and mathematical properties",
+    "Pillar 3: Verification & error checking"
+  ],
+  "textbookExercises": [
+    {
+      "id": "ex-gen-${lectureNumber}-1",
+      "questionAr": "مسألة تدريبية من أنشطة الكتاب الوزاري المقرر:",
+      "questionEn": "Official textbook practice problem:",
+      "solutionStepsAr": ["الخطوة الأولى: تحديد المعطيات", "الخطوة الثانية: تطبيق القانون", "الخطوة الثالثة: الناتج النهائي"],
+      "solutionStepsEn": ["Step 1: Identify given parameters", "Step 2: Apply formula", "Step 3: Final verified result"],
+      "answerAr": "الناتج المعتمد النهائي",
+      "answerEn": "Final confirmed answer"
+    }
+  ],
   "assessment": {
+    "id": "quiz-gen-${lectureNumber}",
+    "lectureId": "gen-${profile.subject.toLowerCase()}-${lectureNumber}",
+    "titleAr": "الاختبار الإلزامي: تقييم إتقان المحاضرة",
+    "titleEn": "Mandatory Assessment: Lecture Mastery",
+    "passingScore": 80,
     "questions": [
       {
         "id": "q1",
-        "questionAr": "Question 1 text in Arabic",
-        "questionEn": "Question 1 text in English",
-        "optionsAr": ["Option A", "Option B", "Option C", "Option D"],
-        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
+        "textAr": "السؤال الأول (مستوى سهل إلى متوسط)",
+        "textEn": "Question 1 in English",
+        "optionsAr": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
+        "optionsEn": ["Option 1", "Option 2", "Option 3", "Option 4"],
         "correctIndex": 0,
-        "difficulty": "EASY",
-        "conceptAr": "Targeted Concept in Arabic",
-        "conceptEn": "Targeted Concept in English",
-        "explanationAr": "Detailed explanation of the correct answer in Arabic",
-        "explanationEn": "Detailed explanation of the correct answer in English"
+        "conceptTestedAr": "المفهوم المختبر",
+        "conceptTestedEn": "Concept tested",
+        "explanationAr": "توضيح الإجابة الصحيحة",
+        "explanationEn": "Explanation of correct answer",
+        "difficulty": "easy"
       },
       {
         "id": "q2",
-        "questionAr": "Question 2 text in Arabic",
-        "questionEn": "Question 2 text in English",
-        "optionsAr": ["Option A", "Option B", "Option C", "Option D"],
-        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
+        "textAr": "السؤال الثاني (مستوى متوسط إلى متقدم)",
+        "textEn": "Question 2 in English",
+        "optionsAr": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
+        "optionsEn": ["Option 1", "Option 2", "Option 3", "Option 4"],
         "correctIndex": 1,
-        "difficulty": "MEDIUM",
-        "conceptAr": "Targeted Concept in Arabic",
-        "conceptEn": "Targeted Concept in English",
-        "explanationAr": "Detailed explanation of the correct answer in Arabic",
-        "explanationEn": "Detailed explanation of the correct answer in English"
+        "conceptTestedAr": "المفهوم المختبر",
+        "conceptTestedEn": "Concept tested",
+        "explanationAr": "توضيح الإجابة الصحيحة",
+        "explanationEn": "Explanation of correct answer",
+        "difficulty": "medium"
       },
       {
         "id": "q3",
-        "questionAr": "Question 3 text in Arabic",
-        "questionEn": "Question 3 text in English",
-        "optionsAr": ["Option A", "Option B", "Option C", "Option D"],
-        "optionsEn": ["Option A", "Option B", "Option C", "Option D"],
+        "textAr": "السؤال الثالث (مسألة تطبيقية)",
+        "textEn": "Question 3 in English",
+        "optionsAr": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
+        "optionsEn": ["Option 1", "Option 2", "Option 3", "Option 4"],
         "correctIndex": 2,
-        "difficulty": "HARD",
-        "conceptAr": "Targeted Concept in Arabic",
-        "conceptEn": "Targeted Concept in English",
-        "explanationAr": "Detailed explanation of the correct answer in Arabic",
-        "explanationEn": "Detailed explanation of the correct answer in English"
+        "conceptTestedAr": "المفهوم المختبر",
+        "conceptTestedEn": "Concept tested",
+        "explanationAr": "توضيح الإجابة الصحيحة",
+        "explanationEn": "Explanation of correct answer",
+        "difficulty": "hard"
       }
     ]
   }
@@ -410,8 +465,8 @@ CRITICAL: Return ONLY a valid JSON object strictly matching this schema with NO 
       body: JSON.stringify({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.4,
-          maxOutputTokens: 4096,
+          temperature: 0.35,
+          maxOutputTokens: 5000,
           responseMimeType: 'application/json'
         }
       })
@@ -429,7 +484,65 @@ CRITICAL: Return ONLY a valid JSON object strictly matching this schema with NO 
     }
 
     const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
-    const lecture: Lecture = JSON.parse(cleaned);
+    const rawParsed = JSON.parse(cleaned);
+
+    // Normalize and strictly guarantee all required schema fields
+    const lecture: Lecture = {
+      id: rawParsed.id || `gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}`,
+      order: lectureNumber,
+      titleAr: rawParsed.titleAr || `المحاضرة ${lectureNumber}: درس جديد`,
+      titleEn: rawParsed.titleEn || `Lecture ${lectureNumber}: New Curriculum Topic`,
+      subtitleAr: rawParsed.subtitleAr || rawParsed.titleAr || '',
+      subtitleEn: rawParsed.subtitleEn || rawParsed.titleEn || '',
+      durationMinutes: Number(rawParsed.durationMinutes) || 30,
+      isLocked: lectureNumber > 1 ? (rawParsed.isLocked ?? true) : false,
+      isCompleted: false,
+      passingScoreRequired: 80,
+      country: profile.country,
+      ministryAr: cInfo.ministryAr,
+      ministryEn: cInfo.ministryEn,
+      gradeLevelNameAr: rawParsed.gradeLevelNameAr || `المرحلة التعليمية - ${profile.gradeLevel}`,
+      gradeLevelNameEn: rawParsed.gradeLevelNameEn || `Grade ${profile.gradeLevel}`,
+      termAr: cInfo.termDefaultAr,
+      termEn: cInfo.termDefaultEn,
+      unitTitleAr: rawParsed.unitTitleAr || unitTitle || 'الوحدة الدراسية المقررة',
+      unitTitleEn: rawParsed.unitTitleEn || unitTitle || 'Curriculum Unit',
+      lessonNumberAr: rawParsed.lessonNumberAr || `الدرس ${lectureNumber}`,
+      lessonNumberEn: rawParsed.lessonNumberEn || `Lesson ${lectureNumber}`,
+      warmupHookAr: rawParsed.warmupHookAr || '',
+      warmupHookEn: rawParsed.warmupHookEn || '',
+      learningOutcomesAr: rawParsed.learningOutcomesAr || rawParsed.learningObjectivesAr || [],
+      learningOutcomesEn: rawParsed.learningOutcomesEn || rawParsed.learningObjectivesEn || [],
+      vocabulary: Array.isArray(rawParsed.vocabulary) ? rawParsed.vocabulary : [],
+      keyConceptsAr: Array.isArray(rawParsed.keyConceptsAr) ? rawParsed.keyConceptsAr : [],
+      keyConceptsEn: Array.isArray(rawParsed.keyConceptsEn) ? rawParsed.keyConceptsEn : [],
+      summaryAr: rawParsed.summaryAr || '',
+      summaryEn: rawParsed.summaryEn || '',
+      sections: Array.isArray(rawParsed.sections) ? rawParsed.sections : [],
+      conceptMapAr: Array.isArray(rawParsed.conceptMapAr) ? rawParsed.conceptMapAr : [],
+      conceptMapEn: Array.isArray(rawParsed.conceptMapEn) ? rawParsed.conceptMapEn : [],
+      textbookExercises: Array.isArray(rawParsed.textbookExercises) ? rawParsed.textbookExercises : [],
+      assessment: {
+        id: rawParsed.assessment?.id || `quiz-gen-${lectureNumber}`,
+        lectureId: rawParsed.id || `gen-${profile.subject.toLowerCase()}-${lectureNumber}`,
+        titleAr: rawParsed.assessment?.titleAr || 'الاختبار الإلزامي: تقييم إتقان المحاضرة',
+        titleEn: rawParsed.assessment?.titleEn || 'Mandatory Assessment: Lecture Mastery',
+        passingScore: 80,
+        questions: Array.isArray(rawParsed.assessment?.questions) ? rawParsed.assessment.questions.map((q: any, i: number) => ({
+          id: q.id || `q-${i + 1}`,
+          textAr: q.textAr || q.questionAr || '',
+          textEn: q.textEn || q.questionEn || '',
+          optionsAr: Array.isArray(q.optionsAr) ? q.optionsAr : [],
+          optionsEn: Array.isArray(q.optionsEn) ? q.optionsEn : [],
+          correctIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
+          conceptTestedAr: q.conceptTestedAr || q.conceptAr || 'المفهوم الأساسي',
+          conceptTestedEn: q.conceptTestedEn || q.conceptEn || 'Core Concept',
+          explanationAr: q.explanationAr || '',
+          explanationEn: q.explanationEn || '',
+          difficulty: (['easy', 'medium', 'hard'].includes(q.difficulty?.toLowerCase()) ? q.difficulty.toLowerCase() : 'medium') as 'easy' | 'medium' | 'hard'
+        })) : []
+      }
+    };
 
     return { lecture };
   } catch (err) {
@@ -437,4 +550,5 @@ CRITICAL: Return ONLY a valid JSON object strictly matching this schema with NO 
     return { lecture: null, error: message };
   }
 }
+
 

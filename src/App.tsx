@@ -13,6 +13,7 @@ import {
   updateUserAccount, 
   saveUserSubjectLectures, 
   loadUserSubjectLectures,
+  saveSharedCurriculumLecture,
   logoutUserAccount
 } from './services/database';
 import { Navbar } from './components/Navbar';
@@ -330,12 +331,24 @@ export function App() {
 
   // Handle a newly AI-generated curriculum lecture added to roadmap
   const handleLectureGenerated = (newLecture: Lecture) => {
+    const formattedLec: Lecture = {
+      ...newLecture,
+      country: profile.country,
+      isLocked: false,
+      order: lectures.length + 1
+    };
+
     setLectures((prev) => {
       // Ensure the new lecture is unlocked and appended at the end
-      const updated = [...prev, { ...newLecture, isLocked: false, order: prev.length + 1 }];
+      const updated = [...prev, formattedLec];
       return updated;
     });
-    setSelectedLectureId(newLecture.id);
+    setSelectedLectureId(formattedLec.id);
+
+    // Persist in shared community curriculum store so all visitors and students in the same country/subject/grade benefit
+    saveSharedCurriculumLecture(formattedLec, profile.country, profile.subject, profile.gradeLevel).catch((err) => {
+      console.warn('Could not save to shared curriculum store:', err);
+    });
   };
   return (
     <div className="app-root">
