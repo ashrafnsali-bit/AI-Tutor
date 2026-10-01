@@ -9334,6 +9334,230 @@ input:checked + .slider.round:before {
   transform: none;
 }
 
+/* ==========================================================================
+   MOBILE RESPONSIVE ENHANCEMENTS & SAFE CLEARANCE (الجوال والشاشات الصغيرة)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Safe bottom clearance so content never collides with floating buttons */
+  .lecture-viewer-root,
+  .learning-workspace,
+  .curriculum-view-root,
+  .main-content-layout {
+    padding-bottom: 6.5rem !important;
+  }
+
+  /* 2. Floating Contact Button on Mobile: Compact Round Glowing Icon */
+  .floating-contact-wrapper {
+    bottom: 18px !important;
+    left: 16px !important;
+    z-index: 950 !important;
+  }
+
+  [dir="ltr"] .floating-contact-wrapper {
+    left: auto !important;
+    right: 16px !important;
+  }
+
+  .floating-contact-btn {
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    justify-content: center !important;
+    box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.6), 0 0 16px rgba(79, 70, 229, 0.5) !important;
+  }
+
+  .floating-contact-label {
+    display: none !important;
+  }
+
+  .floating-contact-icon-box {
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+  }
+
+  /* 3. Mobile Workspace Tabs Switcher */
+  .mobile-workspace-tabs {
+    display: flex !important;
+    gap: 0.4rem !important;
+    padding: 0.35rem 0.5rem !important;
+    margin: 0.5rem 0.75rem 0.75rem !important;
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(12px) !important;
+  }
+
+  .mobile-tab-btn {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.45rem !important;
+    padding: 0.65rem 0.5rem !important;
+    border-radius: 10px !important;
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+    color: #94a3b8 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .mobile-tab-btn.tab-active {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35) !important;
+  }
+
+  /* 4. Lesson Hero Header on Mobile */
+  .lesson-hero-header {
+    padding: 1.15rem 1rem !important;
+    border-radius: 14px !important;
+    gap: 0.75rem !important;
+  }
+
+  .lesson-hero-title {
+    font-size: clamp(1.2rem, 5.5vw, 1.55rem) !important;
+    line-height: 1.35 !important;
+  }
+
+  .lesson-hero-subtitle {
+    font-size: 0.84rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .lesson-chips-row {
+    gap: 0.35rem !important;
+  }
+
+  .lesson-number-chip, 
+  .lesson-unit-chip {
+    font-size: 0.72rem !important;
+    padding: 0.2rem 0.55rem !important;
+  }
+
+  .lesson-hero-meta {
+    gap: 0.35rem !important;
+    margin-top: 0.35rem !important;
+  }
+
+  .lesson-meta-badge {
+    font-size: 0.74rem !important;
+    padding: 0.25rem 0.6rem !important;
+  }
+
+  /* 5. Lesson Sections & Cards on Mobile */
+  .lesson-section {
+    padding: 1rem 0.85rem !important;
+    border-radius: 14px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .warmup-bubble {
+    padding: 0.85rem 1rem !important;
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+    border-radius: 12px !important;
+  }
+
+  .outcomes-checklist {
+    gap: 0.6rem !important;
+  }
+
+  .outcome-item {
+    font-size: 0.84rem !important;
+    line-height: 1.5 !important;
+    gap: 0.5rem !important;
+  }
+
+  .vocab-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .vocab-card {
+    padding: 0.85rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* 6. Solved Models & Textbook Exercises on Mobile */
+  .exercise-v2-card {
+    padding: 0.9rem 0.85rem !important;
+    border-radius: 12px !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .ex-v2-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.4rem !important;
+  }
+
+  .ex-v2-num-badge {
+    font-size: 0.75rem !important;
+    padding: 0.2rem 0.55rem !important;
+  }
+
+  .ex-v2-question {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .ex-v2-toggle-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .ex-solution-step-row {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+    gap: 0.5rem !important;
+  }
+
+  .ex-final-answer {
+    font-size: 0.84rem !important;
+    padding: 0.5rem 0.75rem !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* 7. Diagrams & Interactive SVGs on Mobile */
+  .interactive-diagram-container {
+    padding: 0.65rem 0.5rem !important;
+    border-radius: 12px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .scientific-svg {
+    width: 100% !important;
+    min-width: 320px !important;
+    height: auto !important;
+    max-height: 380px !important;
+  }
+
+  .diagram-formula-badge {
+    font-size: 0.76rem !important;
+    padding: 0.3rem 0.65rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-hero-title {
+    font-size: 1.25rem !important;
+  }
+  
+  .lecture-viewer-root {
+    padding: 0.85rem 0.65rem 6.5rem !important;
+  }
+}
+
+
 
 
 

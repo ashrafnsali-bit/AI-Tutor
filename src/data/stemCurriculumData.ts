@@ -121,6 +121,40 @@ export const CHEMISTRY_LECTURES: Lecture[] = [
         ],
         answerAr: 'Ea = 80 kJ/mol | ΔH = -30 kJ/mol (تفاعل طارد للحرارة)',
         answerEn: 'Ea = 80 kJ/mol | ΔH = -30 kJ/mol (Exothermic reaction)'
+      },
+      {
+        id: 'tb-chem1-3',
+        questionAr: 'النموذج 3: لتفاعل كيميائي من الرتبة الأولى A -> Products، إذا كان ثابت سرعة التفاعل k = 0.0231 min⁻¹ عند درجة حرارة 25°C، احسب عمر النصف t½ لهذا التفاعل والزمن اللازم لتفكك 75% من المادة المتفاعلة.',
+        questionEn: 'Model 3: For a 1st-order reaction A -> Products with k = 0.0231 min⁻¹, calculate half-life t1/2 and time required for 75% decomposition.',
+        solutionStepsAr: [
+          '1. قانون عمر النصف لتفاعل الرتبة الأولى: t½ = ln(2) / k = 0.693 / 0.0231 = 30 دقيقة.',
+          '2. تفكك 75% يعني بقاء 25% من المادة المتفاعلة، وهو ما يعادل مروري فترتي عمر نصف (100% -> 50% -> 25%).',
+          '3. الزمن الكلي = 2 × t½ = 2 × 30 = 60 دقيقة (ساعة واحدة).'
+        ],
+        solutionStepsEn: [
+          '1. Half-life: t1/2 = 0.693 / k = 0.693 / 0.0231 = 30 minutes.',
+          '2. 75% consumed means 25% remaining, requiring 2 half-lives.',
+          '3. Total elapsed time = 2 × 30 = 60 minutes (1 hour).'
+        ],
+        answerAr: 'عمر النصف t½ = 30 دقيقة | زمن تفكك 75% = 60 دقيقة',
+        answerEn: 'Half-life = 30 min | Time for 75% reaction = 60 min'
+      },
+      {
+        id: 'tb-chem1-4',
+        questionAr: 'النموذج 4: فسر على ضوء نظرية التصادم ومنحنى ماكسويل-بولتزمان لماذا يؤدي رفع درجة حرارة التفاعل بمقدار 10°C فقط إلى مضاعفة سرعة التفاعل الكيميائي تقريباً.',
+        questionEn: 'Model 4: Explain via collision theory and Maxwell-Boltzmann curves why a 10°C rise roughly doubles reaction rate.',
+        solutionStepsAr: [
+          '1. زيادة درجة الحرارة تزيد متوسط الطاقة الحركية للجزيئات وتسطح منحنى ماكسويل-بولتزمان مع إزاحته نحو اليمين.',
+          '2. النتيجة الحاسمة: المساحة تحت المنحنى للجزيئات التي تمتلك طاقة حركية >= طاقة التنشيط Ea تتضاعف تقريباً.',
+          '3. يؤدي ذلك إلى مضاعفة عدد التصادمات الفعالة المنتجة في وحدة الزمن، وبالتالي تتضاعف سرعة التفاعل دون تغيير قيمة Ea.'
+        ],
+        solutionStepsEn: [
+          '1. Temperature increase raises mean kinetic energy and broadens Maxwell-Boltzmann curve rightward.',
+          '2. The fraction of molecules with kinetic energy >= Ea roughly doubles.',
+          '3. Collision frequency possessing sufficient threshold energy doubles, doubling net rate.'
+        ],
+        answerAr: 'تضاعف عدد الجزيئات الممتلكة لطاقة التنشيط (E >= Ea) ومضاعفة التصادمات الفعالة في الثانية',
+        answerEn: 'Fraction of molecules with E >= Ea doubles, multiplying effective collision rate'
       }
     ],
     sections: [
@@ -536,6 +570,40 @@ export const BIOLOGY_LECTURES: Lecture[] = [
         ],
         answerAr: '3\'- TACGGTTA -5\' (أو 5\'- ATTGGCAT -3\')',
         answerEn: '3\'- TACGGTTA -5\' (or 5\'- ATTGGCAT -3\')'
+      },
+      {
+        id: 'tb-bio1-3',
+        questionAr: 'النموذج 3: قارن بين إنزيم بلمرة DNA (DNA Polymerase) وإنزيم الربط (DNA Ligase) من حيث الوظيفة ودور كل منهما في بناء الشريطين الرائد والمتلكئ أثناء تضاعف DNA.',
+        questionEn: 'Model 3: Compare DNA Polymerase vs DNA Ligase in function and role during leading and lagging strand synthesis.',
+        solutionStepsAr: [
+          '1. إنزيم DNA Polymerase: يبني نيوكليوتيدات جديدة بالاتجاه 5\' -> 3\' حصرياً، ويبني الشريط الرائد بشكل متصل والشريط المتلكئ بشكل متقطع.',
+          '2. إنزيم DNA Ligase: يقوم بربط الفجوات (Nicks) بين قطع أوكازاكي على الشريط المتلكئ عبر تكوين روابط فوسفاتية ثنائية الإستر.',
+          '3. الخلاصة: البلمرة تصنع السلسلة والربط يختم ويكمل القطع المنفصلة لتكوين شريط مستمر.'
+        ],
+        solutionStepsEn: [
+          '1. DNA Polymerase: Synthesizes new nucleotides 5\'->3\' continuously on leading and discontinuously on lagging strand.',
+          '2. DNA Ligase: Seals phosphodiester nicks between Okazaki fragments on the lagging strand.',
+          '3. Summary: Polymerase extends, ligase welds fragments into a continuous duplex.'
+        ],
+        answerAr: 'DNA Polymerase يبني النيوكليوتيدات | DNA Ligase يربط قطع أوكازاكي بروابط فوسفاتية',
+        answerEn: 'DNA Polymerase extends strands | DNA Ligase seals Okazaki fragments'
+      },
+      {
+        id: 'tb-bio1-4',
+        questionAr: 'النموذج 4: لماذا تظهر قطع أوكازاكي (Okazaki Fragments) على أحد شريطي DNA المتضاعف دون الآخر؟ وما الخاصية التركيبية لإنزيم DNA Polymerase المسؤولة عن ذلك؟',
+        questionEn: 'Model 4: Why are Okazaki fragments formed on only one strand during replication, and which enzymatic property dictates this?',
+        solutionStepsAr: [
+          '1. الشريطان متعاكسان في التوازي (5\'->3\' مقابل 3\'->5\').',
+          '2. إنزيم DNA Polymerase يستطيع فقط إضافة النيوكليوتيدات إلى الطرف 3\'-OH الحر (اتجاه البناء 5\' -> 3\' فقط).',
+          '3. عند فتح شوكة التضاعف، ينمو أحد الشريطين نحو الشوكة متصلاً (الشريط الرائد)، بينما يضطر الشريط الآخر للنمو بعيداً عن الشوكة في صورة قطع منفصلة (قطع أوكازاكي).'
+        ],
+        solutionStepsEn: [
+          '1. Strands are antiparallel (5\'->3\' vs 3\'->5\').',
+          '2. DNA Polymerase can only extend by adding to 3\'-OH (5\'->3\' synthesis only).',
+          '3. Lagging strand must be synthesized discontinuously away from the replication fork as Okazaki fragments.'
+        ],
+        answerAr: 'بسبب توازي الشريطين المتعاكس وقيد إنزيم البلمرة الذي يبني فقط بالاتجاه 5\' إلى 3\'',
+        answerEn: 'Due to antiparallel orientation and unidirectional 5\'->3\' polymerase activity'
       }
     ],
     sections: [
@@ -935,6 +1003,42 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         ],
         answerAr: 'الدقة = 85% | الإحكام = 88.89% | الحساسية = 80%',
         answerEn: 'Accuracy = 85% | Precision = 88.89% | Recall = 80%'
+      },
+      {
+        id: 'tb-cs1-3',
+        questionAr: 'النموذج 3: في خوارزمية التدرج الهابط (Gradient Descent)، إذا كانت قيمة الوزن الحالية w = 2.4، ومعدل التعلم η = 0.1، وقيمة مشتقة دالة الخسارة بالنسبة للوزن ∂Loss/∂w = 3.0، احسب القيمة المحدثة للوزن بعد خطوة تدريب واحدة.',
+        questionEn: 'Model 3: In Gradient Descent with w = 2.4, learning rate η = 0.1, and gradient ∂Loss/∂w = 3.0, calculate the updated weight w_new.',
+        solutionStepsAr: [
+          '1. قانون تحديث الأوزان في التدرج الهابط: w_new = w_old - η · (∂Loss/∂w).',
+          '2. حساب مقدار التعديل: Δw = 0.1 × 3.0 = 0.3.',
+          '3. الوزن المحدث: w_new = 2.4 - 0.3 = 2.1.',
+          '4. الاستنتاج: الحركة باتجاه عكس المشتقة تقلل من قيمة دالة الخسارة مقتربة من النقطة الصغرى (Global Minimum).'
+        ],
+        solutionStepsEn: [
+          '1. Gradient descent update rule: w_new = w_old - η * (∂Loss/∂w).',
+          '2. Step increment: Δw = 0.1 * 3.0 = 0.3.',
+          '3. New weight: w_new = 2.4 - 0.3 = 2.1.',
+          '4. Moving opposite the gradient reduces loss toward the minimum.'
+        ],
+        answerAr: 'الوزن المحدث w_new = 2.1',
+        answerEn: 'Updated weight w_new = 2.1'
+      },
+      {
+        id: 'tb-cs1-4',
+        questionAr: 'النموذج 4: قارن بين دالة التنشيط ReLU ودالة Sigmoid في تدريب الشبكات العصبية العميقة، موضحاً لماذا يفضل مهندسو الذكاء الاصطناعي ReLU في الطبقات المخفية.',
+        questionEn: 'Model 4: Compare ReLU vs Sigmoid in deep neural network training and explain why ReLU is preferred for hidden layers.',
+        solutionStepsAr: [
+          '1. دالة Sigmoid [σ(z) = 1/(1+e⁻ᶻ)]: مشتقتها تصبح قريبة جداً من الصفر عند القيم الكبيرة أو الصغيرة لـ z، مما يؤدي لمشكلة تلاشي التدرج (Vanishing Gradient) وتوقف تدريب الطبقات العميقة.',
+          '2. دالة ReLU [f(z) = max(0, z)]: مشتقتها تساوي 1 دائماً لكل z > 0، مما يحافظ على تدفق التدرج قوياً دون تلاشٍ عبر عشرات الطبقات.',
+          '3. الكفاءة الحسابية: حساب max(0, z) أسرع بمئات المرات مقارنة بحساب الدوال الأسية e⁻ᶻ.'
+        ],
+        solutionStepsEn: [
+          '1. Sigmoid saturates at extremes, causing its derivative to near zero (Vanishing Gradient Problem).',
+          '2. ReLU maintains a constant gradient of 1.0 for all z > 0, sustaining backpropagation flow.',
+          '3. Computational speed: max(0, z) is far faster to compute than exponential math.'
+        ],
+        answerAr: 'ReLU تمنع تلاشي التدرج (Vanishing Gradient) وتوفر سرعة حسابية فائقة في الطبقات العميقة',
+        answerEn: 'ReLU prevents vanishing gradient and provides superior computational throughput'
       }
     ],
     sections: [
@@ -1339,6 +1443,47 @@ export const COMPUTER_SCIENCE_LECTURES: Lecture[] = [
         ],
         answerAr: 'التعقيد الزمني: O(n²) | عدد العمليات = 1,000,000 عملية',
         answerEn: 'Time Complexity: O(n^2) | Operations for n=1000: 1,000,000'
+      },
+      {
+        id: 'tb-cs2-3',
+        questionAr: 'النموذج 3: تم تنفيذ سلسلة العمليات التالية على مكدس فارغ (Stack): Push(10) -> Push(20) -> Pop() -> Push(30) -> Push(40) -> Pop() -> Push(50). ما هو العنصر الموجود في قمة المكدس (Top)، وما هي العناصر المتبقية بداخله من القاع إلى القمة؟',
+        questionEn: 'Model 3: Sequence on empty Stack: Push(10), Push(20), Pop(), Push(30), Push(40), Pop(), Push(50). What is Top and stack contents bottom-to-top?',
+        solutionStepsAr: [
+          '1. Push(10) -> [10]',
+          '2. Push(20) -> [10, 20]',
+          '3. Pop() -> يخرج 20 -> يتبقى [10]',
+          '4. Push(30) -> [10, 30] ثم Push(40) -> [10, 30, 40]',
+          '5. Pop() -> يخرج 40 -> يتبقى [10, 30]',
+          '6. Push(50) -> [10, 30, 50].',
+          '7. قمة المكدس (Top) هي 50، ومحتويات المكدس من القاع للقمة هي: [10, 30, 50].'
+        ],
+        solutionStepsEn: [
+          '1. Push(10) => [10].',
+          '2. Push(20) => [10, 20].',
+          '3. Pop() => 20 out => [10].',
+          '4. Push(30), Push(40) => [10, 30, 40].',
+          '5. Pop() => 40 out => [10, 30].',
+          '6. Push(50) => [10, 30, 50]. Top is 50.'
+        ],
+        answerAr: 'قمة المكدس Top = 50 | محتويات المكدس من القاع للقمة: [10, 30, 50]',
+        answerEn: 'Stack Top = 50 | Contents from bottom to top: [10, 30, 50]'
+      },
+      {
+        id: 'tb-cs2-4',
+        questionAr: 'النموذج 4: قارن بين خوارزمية البحث الثنائي (Binary Search) والبحث الخطي (Linear Search) من حيث التعقيد الزمني في أفضل وأسوأ الحالات والشرط المسبق لتطبيق البحث الثنائي.',
+        questionEn: 'Model 4: Compare Binary Search vs Linear Search in Best/Worst Big-O and state prerequisite condition for Binary Search.',
+        solutionStepsAr: [
+          '1. الشرط المسبق الأساسي: يجب أن تكون المصفوفة مرتبة مسبقاً (Sorted Array) لتطبيق البحث الثنائي.',
+          '2. البحث الخطي (Linear Search): أفضل حالة O(1) عند وجود العنصر في أول موضع، وأسوأ حالة O(n) عند وجوده في النهاية أو عدم وجوده.',
+          '3. البحث الثنائي (Binary Search): أفضل حالة O(1) عند وجود العنصر في المنتصف تماماً، وأسوأ حالة O(log n) لأنه ينصف فضاء البحث في كل خطوة.'
+        ],
+        solutionStepsEn: [
+          '1. Prerequisite: Array must be sorted in order to use Binary Search.',
+          '2. Linear Search: Best O(1), Worst O(n).',
+          '3. Binary Search: Best O(1), Worst O(log n) by halving search space per step.'
+        ],
+        answerAr: 'البحث الثنائي أسوأ حالة O(log n) ويتطلب مصفوفة مرتبة | البحث الخطي أسوأ حالة O(n)',
+        answerEn: 'Binary Search: Worst O(log n) requires sorted array | Linear Search: Worst O(n)'
       }
     ],
     sections: [

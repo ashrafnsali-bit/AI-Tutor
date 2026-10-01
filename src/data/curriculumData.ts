@@ -1465,24 +1465,79 @@ export const PHYSICS_LECTURES: Lecture[] = [
       'Constant acceleration: a = Δv / Δt'
     ],
 
-    // Textbook Exercises
+    // Textbook Exercises (نماذج وتدريبات محلولة شاملة)
     textbookExercises: [
       {
         id: 'ex-phys1-1',
-        questionAr: 'انطلقت سيارة سباق من السكون (v_i = 0) بتسارع منتظم مقداره 5 م/ث² لمدة 6 ثوانٍ. احسب سرعتها النهائية والمسافة المقطوعة.',
-        questionEn: 'A racecar accelerates from rest at 5 m/s² for 6s. Calculate final velocity and displacement.',
+        questionAr: 'النموذج 1: انطلقت سيارة سباق من السكون (v_i = 0) بتسارع منتظم مقداره 5 م/ث² لمدة 6 ثوانٍ. احسب سرعتها النهائية والمسافة المقطوعة.',
+        questionEn: 'Model 1: A racecar accelerates from rest (v_i = 0) at 5 m/s² for 6s. Calculate final velocity and displacement.',
         solutionStepsAr: [
-          'حساب السرعة النهائية: v_f = v_i + at = 0 + (5 × 6) = 30 م/ث',
-          'حساب المسافة المقطوعة: d = v_i*t + ½at² = 0 + ½(5)(36) = 90 متراً',
-          'التحقق بمعادلة بديلة: v_f² = 2ad -> (30)² = 2(5)(90) -> 900 = 900 (صحيح 100%)'
+          '1. حساب السرعة النهائية بالمعادلة الأولى: v_f = v_i + a · t = 0 + (5 × 6) = 30 م/ث.',
+          '2. حساب المسافة المقطوعة بالمعادلة الثانية: d = v_i · t + ½ · a · t² = 0 + ½(5)(36) = 90 متراً.',
+          '3. التحقق بالمعادلة الثالثة: v_f² = v_i² + 2·a·d → (30)² = 0 + 2(5)(90) → 900 = 900 (مطابق 100%).'
         ],
         solutionStepsEn: [
-          'Final velocity: v = 0 + (5)(6) = 30 m/s',
-          'Displacement: d = 0 + 0.5(5)(36) = 90 m',
-          'Verification: v² = 2ad confirms 900 = 900'
+          '1. Final velocity: v_f = v_i + at = 0 + (5 × 6) = 30 m/s.',
+          '2. Displacement: d = v_i t + 0.5 a t² = 0 + 0.5(5)(36) = 90 meters.',
+          '3. Verification: v_f² = 2ad confirms 900 = 900.'
         ],
         answerAr: 'السرعة النهائية = 30 م/ث • المسافة المقطوعة = 90 متراً',
         answerEn: 'Final velocity = 30 m/s • Displacement = 90m'
+      },
+      {
+        id: 'ex-phys1-2',
+        questionAr: 'النموذج 2: قُذفت كرة رأسياً إلى أعلى بسرعة ابتدائية 29.4 م/ث من سطح الأرض (بإهمال مقاومة الهواء، وتسارع الجاذبية g = 9.8 م/ث²). احسب أقصى ارتفاع تصله وزمن التحليق الكلي حتى عودتها.',
+        questionEn: 'Model 2: A ball is thrown vertically upward with initial speed 29.4 m/s (g = 9.8 m/s²). Find maximum height and total flight time.',
+        solutionStepsAr: [
+          '1. عند أقصى ارتفاع، تكون السرعة اللحظية v_f = 0.',
+          '2. زمن الصعود لأقصى ارتفاع: t_up = (v_f - v_i) / (-g) = (0 - 29.4) / (-9.8) = 3 ثوانٍ.',
+          '3. أقصى ارتفاع: h_max = (v_f² - v_i²) / (-2g) = (0 - 29.4²) / (-19.6) = 864.36 / 19.6 = 44.1 متراً.',
+          '4. زمن التحليق الكلي (صعود وهبوط): t_total = 2 × t_up = 2 × 3 = 6 ثوانٍ.'
+        ],
+        solutionStepsEn: [
+          '1. At peak height, instantaneous velocity v_f = 0.',
+          '2. Time to peak: t_up = 29.4 / 9.8 = 3.0 seconds.',
+          '3. Maximum height: h_max = (29.4)² / (2 × 9.8) = 44.1 meters.',
+          '4. Total flight time: t_total = 2 × t_up = 6.0 seconds.'
+        ],
+        answerAr: 'أقصى ارتفاع = 44.1 متراً • زمن التحليق الكلي = 6 ثوانٍ',
+        answerEn: 'Maximum height = 44.1m • Total flight time = 6.0s'
+      },
+      {
+        id: 'ex-phys1-3',
+        questionAr: 'النموذج 3: كان قطار فائق السرعة يسير بسرعة 72 م/ث (حوالي 260 كم/ساعة)، ثم استخدم السائق المكابح بتسارع تباطؤ منتظم مقداره -4 م/ث² حتى توقف تماماً. احسب المسافة اللازمة للتوقف وزمن التوقف.',
+        questionEn: 'Model 3: A high-speed train traveling at 72 m/s applies brakes with uniform deceleration of -4 m/s² until coming to rest. Find stopping distance and time.',
+        solutionStepsAr: [
+          '1. المعطيات: v_i = 72 م/ث، v_f = 0 م/ث، a = -4 م/ث².',
+          '2. حساب مسافة التوقف: v_f² = v_i² + 2·a·d → 0 = (72)² + 2(-4)·d → 8d = 5184 → d = 648 متراً.',
+          '3. حساب زمن التوقف: v_f = v_i + a·t → 0 = 72 - 4t → 4t = 72 → t = 18 ثانية.'
+        ],
+        solutionStepsEn: [
+          '1. Given: v_i = 72 m/s, v_f = 0 m/s, a = -4 m/s².',
+          '2. Stopping distance: 0 = 72² + 2(-4)d => 8d = 5184 => d = 648 meters.',
+          '3. Stopping time: 0 = 72 - 4t => 4t = 72 => t = 18 seconds.'
+        ],
+        answerAr: 'مسافة التوقف = 648 متراً • زمن التوقف = 18 ثانية',
+        answerEn: 'Stopping distance = 648m • Stopping time = 18s'
+      },
+      {
+        id: 'ex-phys1-4',
+        questionAr: 'النموذج 4: انطلق عداء من نقطة الأصل وتحرك 120 متراً نحو الشرق، ثم انعطف شمالاً وقطع مسافة 90 متراً خلال زمن كلي قدره 25 ثانية. احسب: 1) المسافة الكلية، 2) مقدار الإزاحة الصافية، 3) السرعة القياسية المتوسطة، 4) السرعة المتجهة المتوسطة.',
+        questionEn: 'Model 4: A runner moves 120m East then 90m North in 25s. Calculate: total distance, net displacement magnitude, average speed, and average velocity magnitude.',
+        solutionStepsAr: [
+          '1. المسافة الكلية (كمية قياسية): d_total = 120 + 90 = 210 أمتار.',
+          '2. الإزاحة الصافية (متجه محصل بنظرية فيثاغورس): |Δr| = √(120² + 90²) = √(14400 + 8100) = √22500 = 150 متراً باتجاه شمال الشرق (θ = tan⁻¹(90/120) = 36.87°).',
+          '3. السرعة القياسية المتوسطة: v_avg = المسافة الكلية ÷ الزمن = 210 ÷ 25 = 8.4 م/ث.',
+          '4. مقدار السرعة المتجهة المتوسطة: |v⃗_avg| = الإزاحة الصافية ÷ الزمن = 150 ÷ 25 = 6.0 م/ث.'
+        ],
+        solutionStepsEn: [
+          '1. Total distance: d = 120 + 90 = 210m.',
+          '2. Net displacement: |Δr| = √(120² + 90²) = 150m (direction: 36.9° North of East).',
+          '3. Average speed: 210 / 25 = 8.4 m/s.',
+          '4. Average velocity magnitude: 150 / 25 = 6.0 m/s.'
+        ],
+        answerAr: 'المسافة = 210م • الإزاحة = 150م • السرعة القياسية = 8.4 م/ث • السرعة المتجهة = 6.0 م/ث',
+        answerEn: 'Distance = 210m • Displacement = 150m • Avg Speed = 8.4 m/s • Avg Velocity = 6.0 m/s'
       }
     ],
     assessment: {
@@ -1578,6 +1633,81 @@ export const PHYSICS_LECTURES: Lecture[] = [
         tipsEn: ['Always sketch a Free Body Diagram to resolve orthogonal forces.']
       }
     ],
+    // Textbook Exercises (نماذج وتدريبات محلولة شاملة)
+    textbookExercises: [
+      {
+        id: 'ex-phys2-1',
+        questionAr: 'النموذج 1: صندوق كتلته 20 كجم موضوع على سطح أفقي خشن. إذا سُحب الصندوق بقوة أفقية مقدارها 100 نيوتن وكان معامل الاحتكاك الحركي μ_k = 0.25 (مع g = 9.8 م/ث²)، احسب: 1) القوة العمودية، 2) قوة الاحتكاك الحركي، 3) القوة المحصلة والتسارع الناتج.',
+        questionEn: 'Model 1: A 20kg box on a rough surface is pulled horizontally with 100N (μ_k = 0.25, g = 9.8 m/s²). Find: normal force, kinetic friction force, net force, and acceleration.',
+        solutionStepsAr: [
+          '1. القوة العمودية (اتزان رأسي): F_N = m · g = 20 × 9.8 = 196 نيوتن.',
+          '2. قوة الاحتكاك الحركي: f_k = μ_k · F_N = 0.25 × 196 = 49 نيوتن عكس اتجاه الحركة.',
+          '3. القوة المحصلة الأفقية: ΣF_x = F_pull - f_k = 100 - 49 = 51 نيوتن.',
+          '4. التسارع الناتج بقانون نيوتن الثاني: a = ΣF_x / m = 51 / 20 = 2.55 م/ث² في اتجاه السحب.'
+        ],
+        solutionStepsEn: [
+          '1. Normal force: F_N = m g = 20 × 9.8 = 196 N.',
+          '2. Friction force: f_k = μ_k F_N = 0.25 × 196 = 49 N.',
+          '3. Net horizontal force: ΣF = 100 - 49 = 51 N.',
+          '4. Acceleration: a = 51 / 20 = 2.55 m/s².'
+        ],
+        answerAr: 'القوة العمودية = 196N • قوة الاحتكاك = 49N • التسارع = 2.55 م/ث²',
+        answerEn: 'Normal Force = 196N • Friction = 49N • Acceleration = 2.55 m/s²'
+      },
+      {
+        id: 'ex-phys2-2',
+        questionAr: 'النموذج 2: يقف رائد فضاء كتلته 70 كجم على ميزان داخل مصعد (مع g = 9.8 م/ث²). احسب قراءة الميزان (الوزن الظاهري F_N) في الحالات التالية: 1) المصعد ساكن أو يتحرك بسرعة منتظمة، 2) المصعد يتسارع لأعلى بمقدار 2 م/ث²، 3) المصعد يتسارع لأسفل بمقدار 2 م/ث².',
+        questionEn: 'Model 2: A 70kg person stands on a scale in an elevator (g = 9.8 m/s²). Compute apparent weight F_N when: 1) at rest / const velocity, 2) accelerating up at 2 m/s², 3) accelerating down at 2 m/s².',
+        solutionStepsAr: [
+          '1. في حالة السكون أو السرعة الثابتة (a = 0): F_N = mg = 70 × 9.8 = 686 نيوتن (الوزن الحقيقي).',
+          '2. عند التسارع لأعلى (+a): F_N - mg = m·a → F_N = m(g + a) = 70 × (9.8 + 2) = 70 × 11.8 = 826 نيوتن (يشعر بزيادة وزنه).',
+          '3. عند التسارع لأسفل (-a): mg - F_N = m·a → F_N = m(g - a) = 70 × (9.8 - 2) = 70 × 7.8 = 546 نيوتن (يشعر بخفة وزنه).'
+        ],
+        solutionStepsEn: [
+          '1. Constant velocity (a = 0): F_N = 70 × 9.8 = 686 N (True weight).',
+          '2. Accelerating up (+2 m/s²): F_N = 70 × (9.8 + 2) = 826 N.',
+          '3. Accelerating down (-2 m/s²): F_N = 70 × (9.8 - 2) = 546 N.'
+        ],
+        answerAr: '1) بسرعة ثابتة = 686N • 2) بتسارع لأعلى = 826N • 3) بتسارع لأسفل = 546N',
+        answerEn: '1) Const velocity = 686N • 2) Accel up = 826N • 3) Accel down = 546N'
+      },
+      {
+        id: 'ex-phys2-3',
+        questionAr: 'النموذج 3: جسمان كتلتاهما m₁ = 6 كجم و m₂ = 4 كجم معلقان بحبل مهمل الكتلة يمر على بكرة ملساء خفيفة (آلة آتوود، مع g = 9.8 م/ث²). احسب: 1) تسارع حركة الكتلتين a، 2) قوة الشد T في الحبل.',
+        questionEn: 'Model 3: Two masses m₁ = 6kg and m₂ = 4kg are connected by a light string over a frictionless pulley (Atwood machine, g = 9.8 m/s²). Find system acceleration a and string tension T.',
+        solutionStepsAr: [
+          '1. قانون التسارع لآلة آتوود: a = [(m₁ - m₂) / (m₁ + m₂)] · g = [(6 - 4) / (6 + 4)] × 9.8 = (2 / 10) × 9.8 = 1.96 م/ث².',
+          '2. حساب قوة الشد من معادلة حركة الكتلة الأولى (تهبط لأسفل): m₁g - T = m₁a → T = m₁(g - a) = 6 × (9.8 - 1.96) = 6 × 7.84 = 47.04 نيوتن.',
+          '3. التحقق بالكتلة الثانية (تصعد لأعلى): T - m₂g = m₂a → T = m₂(g + a) = 4 × (9.8 + 1.96) = 4 × 11.76 = 47.04 نيوتن (تطابق تام).'
+        ],
+        solutionStepsEn: [
+          '1. Acceleration: a = [(6 - 4) / (6 + 4)] × 9.8 = 0.2 × 9.8 = 1.96 m/s².',
+          '2. Tension: T = m₁(g - a) = 6 × (9.8 - 1.96) = 47.04 N.',
+          '3. Verification with m₂: T = 4 × (9.8 + 1.96) = 47.04 N (exact match).'
+        ],
+        answerAr: 'تسارع المنظومة = 1.96 م/ث² • قوة الشد في الحبل = 47.04 نيوتن',
+        answerEn: 'Acceleration = 1.96 m/s² • String Tension = 47.04 N'
+      },
+      {
+        id: 'ex-phys2-4',
+        questionAr: 'النموذج 4: جسم كتلته 10 كجم موضوع على مستوى مائل أملس يميل بزاوية θ = 30° عن الأفق (g = 9.8 م/ث²). احسب: 1) المركبة العمودية لوزن الجسم والقوة العمودية F_N، 2) المركبة الموازية للسطح، 3) تسارع انزلاق الجسم على المستوى.',
+        questionEn: 'Model 4: A 10kg mass rests on a frictionless ramp inclined at θ = 30° (g = 9.8 m/s²). Calculate normal force F_N, parallel force component, and sliding acceleration.',
+        solutionStepsAr: [
+          '1. وزن الجسم الكلي: W = m · g = 10 × 9.8 = 98 نيوتن.',
+          '2. المركبة العمودية للوزن (تتزن مع القوة العمودية): F_N = W · cos(30°) = 98 × 0.866 = 84.87 نيوتن.',
+          '3. المركبة الموازية للسطح (المسببة للانزلاق): F_parallel = W · sin(30°) = 98 × 0.5 = 49 نيوتن.',
+          '4. تسارع الانزلاق (بما أن السطح أملس): a = F_parallel / m = g · sin(30°) = 9.8 × 0.5 = 4.9 م/ث².'
+        ],
+        solutionStepsEn: [
+          '1. Total weight: W = 10 × 9.8 = 98 N.',
+          '2. Normal force: F_N = W cos(30°) = 98 × 0.866 = 84.87 N.',
+          '3. Parallel driving force: F_p = W sin(30°) = 98 × 0.5 = 49 N.',
+          '4. Down-ramp acceleration: a = g sin(30°) = 9.8 × 0.5 = 4.9 m/s².'
+        ],
+        answerAr: 'القوة العمودية = 84.87N • القوة المحركة = 49N • تسارع الانزلاق = 4.9 م/ث²',
+        answerEn: 'Normal Force = 84.87N • Parallel Force = 49N • Acceleration = 4.9 m/s²'
+      }
+    ],
     assessment: {
       id: 'quiz-phys-2',
       lectureId: 'phys-2',
@@ -1658,6 +1788,79 @@ export const PHYSICS_LECTURES: Lecture[] = [
         tipsEn: ['If force acts perpendicular to displacement (cos 90° = 0), zero work is done.']
       }
     ],
+    // Textbook Exercises (نماذج وتدريبات محلولة شاملة)
+    textbookExercises: [
+      {
+        id: 'ex-phys3-1',
+        questionAr: 'النموذج 1: سُحبت عربة أطفال بقوة مقدارها 150 نيوتن تميل بزاوية θ = 60° فوق الأفق، وتحركت العربة أفقياً مسافة 20 متراً. احسب الشغل المبذول بواسطة قوة السحب.',
+        questionEn: 'Model 1: A stroller is pulled with 150N force at θ = 60° above horizontal, moving 20m horizontally. Calculate work done by the pull force.',
+        solutionStepsAr: [
+          '1. قانون الشغل: W = F · d · cos(θ).',
+          '2. التعويض بالمعطيات: F = 150 N، d = 20 m، cos(60°) = 0.5.',
+          '3. حساب الشغل: W = 150 × 20 × 0.5 = 1500 جول.',
+          '4. الاستنتاج: المركبة الرأسية للقوة F·sin(60°) لا تبذل أي شغل لأن الحركة أفقية بحتة.'
+        ],
+        solutionStepsEn: [
+          '1. Work formula: W = F d cos(θ).',
+          '2. Inputs: F = 150N, d = 20m, cos 60° = 0.5.',
+          '3. Compute: W = 150 × 20 × 0.5 = 1500 Joules.',
+          '4. Insight: Vertical force component does zero work on horizontal displacement.'
+        ],
+        answerAr: 'الشغل المبذول = 1500 جول (1.5 kJ)',
+        answerEn: 'Work done = 1500 Joules (1.5 kJ)'
+      },
+      {
+        id: 'ex-phys3-2',
+        questionAr: 'النموذج 2: سيارة كتلتها 1200 كجم زادت سرعتها من 10 م/ث (36 كم/ساعة) إلى 25 م/ث (90 كم/ساعة). احسب: 1) طاقة الحركة الابتدائية، 2) طاقة الحركة النهائية، 3) الشغل الصافي الكلي المبذول على السيارة وفق مبرهنة (الشغل - الطاقة).',
+        questionEn: 'Model 2: A 1200kg car accelerates from 10 m/s to 25 m/s. Calculate initial KE, final KE, and net work done using Work-Energy Theorem.',
+        solutionStepsAr: [
+          '1. طاقة الحركة الابتدائية: KE_i = ½ · m · v_i² = 0.5 × 1200 × (10)² = 600 × 100 = 60,000 جول (60 kJ).',
+          '2. طاقة الحركة النهائية: KE_f = ½ · m · v_f² = 0.5 × 1200 × (25)² = 600 × 625 = 375,000 جول (375 kJ).',
+          '3. الشغل الصافي المبذول (مبرهنة الشغل والطاقة): W_net = ΔKE = KE_f - KE_i = 375,000 - 60,000 = 315,000 جول (315 kJ).'
+        ],
+        solutionStepsEn: [
+          '1. Initial KE: KE_i = 0.5 × 1200 × 10² = 60,000 J (60 kJ).',
+          '2. Final KE: KE_f = 0.5 × 1200 × 25² = 375,000 J (375 kJ).',
+          '3. Net work (W_net = ΔKE): 375,000 - 60,000 = 315,000 J (315 kJ).'
+        ],
+        answerAr: 'KE_i = 60 kJ • KE_f = 375 kJ • الشغل الصافي W_net = 315 kJ',
+        answerEn: 'KE_i = 60 kJ • KE_f = 375 kJ • Net Work W_net = 315 kJ'
+      },
+      {
+        id: 'ex-phys3-3',
+        questionAr: 'النموذج 3: قطار ملاهي أفعواني كتلته 400 كجم ينطلق من السكون (v₁ = 0) من أعلى قمة بارتفاع h₁ = 40 متراً عن سطح الأرض. بإهمال الاحتكاك ومقاومة الهواء (g = 9.8 م/ث²)، احسب سرعة القطار: 1) عند وصوله لأسفل مسار عند h₂ = 0، 2) عند وصوله لقمة تل تالٍ بارتفاع h₃ = 25 متراً.',
+        questionEn: 'Model 3: A 400kg roller coaster starts from rest at h₁ = 40m (frictionless, g = 9.8 m/s²). Calculate its velocity: 1) at bottom h₂ = 0, 2) at a subsequent crest h₃ = 25m.',
+        solutionStepsAr: [
+          '1. بتطبيق مبدأ حفظ الطاقة الميكانيكية: E_total = mgh₁ = 400 × 9.8 × 40 = 156,800 جول.',
+          '2. عند h₂ = 0: كل طاقة الوضع تتحول لطاقة حركة → ½mv₂² = mgh₁ → v₂ = √(2gh₁) = √(2 × 9.8 × 40) = √784 = 28 م/ث.',
+          '3. عند h₃ = 25م: mgh₁ = ½mv₃² + mgh₃ → v₃ = √(2g(h₁ - h₃)) = √(2 × 9.8 × 15) = √294 ≈ 17.15 م/ث.'
+        ],
+        solutionStepsEn: [
+          '1. Total mechanical energy conserved: E = mgh₁ = 156,800 J.',
+          '2. At h₂ = 0: v₂ = √(2gh₁) = √(2 × 9.8 × 40) = 28 m/s.',
+          '3. At h₃ = 25m: v₃ = √(2g(40 - 25)) = √(294) ≈ 17.15 m/s.'
+        ],
+        answerAr: 'السرعة عند القاع = 28 م/ث • السرعة عند تل 25م = 17.15 م/ث',
+        answerEn: 'Speed at bottom = 28 m/s • Speed at 25m crest = 17.15 m/s'
+      },
+      {
+        id: 'ex-phys3-4',
+        questionAr: 'النموذج 4: تم ضغط نابض مرن ثابت صلابته k = 600 N/m مسافة x = 0.12 متر. وضعت أمامه كرة صغيرة كتلتها m = 0.15 كجم على سطح أفقي أملس ثم أُفلت النابض. احسب: 1) طاقة الوضع المرونية المخزونة في النابض، 2) السرعة التي تنطلق بها الكرة بعد انفصالها تماماً عن النابض.',
+        questionEn: 'Model 4: A spring (k = 600 N/m) is compressed by x = 0.12m against a 0.15kg ball on a frictionless surface and released. Find stored elastic potential energy and launch velocity.',
+        solutionStepsAr: [
+          '1. طاقة الوضع المرونية للنابض: PE_s = ½ · k · x² = 0.5 × 600 × (0.12)² = 300 × 0.0144 = 4.32 جول.',
+          '2. بموجب حفظ الطاقة الميكانيكية، تتحول كل طاقة الوضع المرونية إلى طاقة حركة للكرة: KE = PE_s = 4.32 جول.',
+          '3. حساب سرعة الانطلاق: ½ · m · v² = 4.32 → v² = (2 × 4.32) / 0.15 = 8.64 / 0.15 = 57.6 → v = √57.6 ≈ 7.59 م/ث.'
+        ],
+        solutionStepsEn: [
+          '1. Elastic potential energy: PE_s = 0.5 × 600 × (0.12)² = 4.32 Joules.',
+          '2. Kinetic energy conversion: KE = PE_s = 4.32 J.',
+          '3. Launch velocity: v = √(2 × 4.32 / 0.15) = √57.6 ≈ 7.59 m/s.'
+        ],
+        answerAr: 'طاقة الوضع المرونية = 4.32 جول • سرعة انطلاق الكرة = 7.59 م/ث',
+        answerEn: 'Elastic PE = 4.32 Joules • Launch Speed = 7.59 m/s'
+      }
+    ],
     assessment: {
       id: 'quiz-phys-3',
       lectureId: 'phys-3',
@@ -1736,6 +1939,81 @@ export const PHYSICS_LECTURES: Lecture[] = [
         },
         tipsAr: ['انتبه لإشارة الشغل: الشغل المبذول بواسطة النظام موجب، والشغل المبذول عليه سالب.'],
         tipsEn: ['Work done by the system is positive; work done on the system is negative.']
+      }
+    ],
+    // Textbook Exercises (نماذج وتدريبات محلولة شاملة)
+    textbookExercises: [
+      {
+        id: 'ex-phys4-1',
+        questionAr: 'النموذج 1: غاز محبوس في أسطوانة ذات مكبس امتص كمية حرارة Q = 1500 جول، وخلال عملية التمدد بذل الغاز شغلاً مقداره W = 650 جول على المكبس. احسب التغير في الطاقة الداخلية للغاز ΔU، وهل ارتفعت درجة حرارته أم انخفضت؟',
+        questionEn: 'Model 1: A gas absorbs Q = 1500 J of heat and does W = 650 J of work during expansion. Find change in internal energy ΔU and state whether temperature rose or fell.',
+        solutionStepsAr: [
+          '1. القانون الأول للديناميكا الحرارية: ΔU = Q - W.',
+          '2. تحديد الإشارات: الحرارة ممتصة (Q = +1500 جول)، الشغل مبذول بواسطة الغاز (W = +650 جول).',
+          '3. حساب التغير في الطاقة الداخلية: ΔU = 1500 - 650 = +850 جول.',
+          '4. بما أن ΔU موجبة (> 0)، فإن الطاقة الحركية لجزيئات الغاز ازدادت، وبالتالي ارتفعت درجة حرارته.'
+        ],
+        solutionStepsEn: [
+          '1. First Law: ΔU = Q - W.',
+          '2. Signs: Q = +1500 J, W = +650 J.',
+          '3. Internal energy change: ΔU = 1500 - 650 = +850 J.',
+          '4. Positive ΔU confirms increased molecular kinetic energy and temperature rise.'
+        ],
+        answerAr: 'ΔU = +850 جول (وارتفعت درجة حرارة الغاز)',
+        answerEn: 'ΔU = +850 Joules (Gas temperature increased)'
+      },
+      {
+        id: 'ex-phys4-2',
+        questionAr: 'النموذج 2: محرك كارنو الحراري المثالي يعمل بين مستودع ساخن عند T_H = 600 كلفن ومستودع بارد عند T_C = 300 كلفن. إذا امتص المحرك 4000 جول من الحرارة في كل دورة، احسب: 1) الكفاءة الحرارية القصوى للمحرك η، 2) الشغل الميكانيكي الناتج W_net، 3) كمية الحرارة المطرودة للمستودع البارد Q_C.',
+        questionEn: 'Model 2: An ideal Carnot heat engine operates between T_H = 600K and T_C = 300K, absorbing 4000J per cycle. Find maximum thermal efficiency η, net work W, and expelled heat Q_C.',
+        solutionStepsAr: [
+          '1. كفاءة محرك كارنو القصوى: η = 1 - (T_C / T_H) = 1 - (300 / 600) = 1 - 0.50 = 0.50 (أي 50%).',
+          '2. حساب الشغل الناتج: W_net = η · Q_H = 0.50 × 4000 = 2000 جول.',
+          '3. كمية الحرارة المطرودة: Q_C = Q_H - W_net = 4000 - 2000 = 2000 جول.'
+        ],
+        solutionStepsEn: [
+          '1. Carnot efficiency: η = 1 - (300 / 600) = 0.50 (50%).',
+          '2. Net work output: W = 0.50 × 4000 = 2000 Joules.',
+          '3. Heat rejected: Q_C = 4000 - 2000 = 2000 Joules.'
+        ],
+        answerAr: 'الكفاءة = 50% • الشغل الناتج = 2000 جول • الحرارة المطرودة = 2000 جول',
+        answerEn: 'Efficiency = 50% • Net Work = 2000 J • Rejected Heat = 2000 J'
+      },
+      {
+        id: 'ex-phys4-3',
+        questionAr: 'النموذج 3: يتمدد غاز مثالي تحت ضغط ثابت مقداره P = 2.0 × 10⁵ باسكال (200 kPa) من حجم ابتدائي V₁ = 0.015 م³ إلى حجم نهائي V₂ = 0.040 م³. احسب الشغل المبذول بواسطة الغاز خلال هذا التمدد الإيزوباري.',
+        questionEn: 'Model 3: An ideal gas expands isobarically at constant pressure P = 2.0 × 10⁵ Pa from V₁ = 0.015 m³ to V₂ = 0.040 m³. Compute work done by the gas.',
+        solutionStepsAr: [
+          '1. قانون الشغل عند ثبوت الضغط (العملية الإيزوبارية): W = P · ΔV = P · (V₂ - V₁).',
+          '2. حساب التغير في الحجم: ΔV = 0.040 - 0.015 = 0.025 م³.',
+          '3. حساب الشغل المبذول: W = (2.0 × 10⁵) × 0.025 = 5000 جول (5.0 kJ).'
+        ],
+        solutionStepsEn: [
+          '1. Isobaric work formula: W = P ΔV = P (V₂ - V₁).',
+          '2. Volume change: ΔV = 0.040 - 0.015 = 0.025 m³.',
+          '3. Compute work: W = (2.0 × 10⁵) × 0.025 = 5000 J (5.0 kJ).'
+        ],
+        answerAr: 'الشغل المبذول = 5000 جول (5 kJ)',
+        answerEn: 'Work done = 5000 Joules (5 kJ)'
+      },
+      {
+        id: 'ex-phys4-4',
+        questionAr: 'النموذج 4: تنتقل حرارة مقدارها Q = 3000 جول تلقائياً من خزان حراري ساخن عند T_H = 600K إلى خزان بارد عند T_C = 300K. احسب: 1) التغير في إنتروبيا الخزان الساخن ΔS_H، 2) التغير في إنتروبيا الخزان البارد ΔS_C، 3) التغير الكلي في إنتروبيا الكون ΔS_total وما يؤكده ذلك بشأن القانون الثاني للديناميكا الحرارية.',
+        questionEn: 'Model 4: 3000 J of heat transfers spontaneously from a 600K reservoir to a 300K reservoir. Compute ΔS_H, ΔS_C, net universe entropy ΔS_total, and explain the Second Law implication.',
+        solutionStepsAr: [
+          '1. التغير في إنتروبيا الخزان الساخن (فقد حرارة): ΔS_H = -Q / T_H = -3000 / 600 = -5.0 جول/كلفن (J/K).',
+          '2. التغير في إنتروبيا الخزان البارد (اكتسب حرارة): ΔS_C = +Q / T_C = +3000 / 300 = +10.0 جول/كلفن (J/K).',
+          '3. التغير الإجمالي لإنتروبيا الكون: ΔS_total = ΔS_H + ΔS_C = -5.0 + 10.0 = +5.0 جول/كلفن (J/K).',
+          '4. النتيجة: ΔS_total > 0 يؤكد القانون الثاني للديناميكا الحرارية بأن العمليات التلقائية تزيد دائماً من إنتروبيا الكون الكلية.'
+        ],
+        solutionStepsEn: [
+          '1. Hot reservoir entropy change: ΔS_H = -3000 / 600 = -5.0 J/K.',
+          '2. Cold reservoir entropy change: ΔS_C = +3000 / 300 = +10.0 J/K.',
+          '3. Total entropy change: ΔS_total = -5.0 + 10.0 = +5.0 J/K.',
+          '4. Conclusion: ΔS_total > 0 obeys the Second Law: spontaneous processes generate net universal entropy.'
+        ],
+        answerAr: 'ΔS_H = -5 J/K • ΔS_C = +10 J/K • الإنتروبيا الكلية ΔS_total = +5.0 J/K (تزايد مستمر)',
+        answerEn: 'ΔS_H = -5 J/K • ΔS_C = +10 J/K • Net Universe ΔS = +5.0 J/K'
       }
     ],
     assessment: {
@@ -1894,25 +2172,81 @@ export const PHYSICS_LECTURES: Lecture[] = [
       'Lenz\'s Law: Induced polarity opposes flux change',
       'Transformers: Vs / Vp = Ns / Np'
     ],
+    // Textbook Exercises (نماذج وتدريبات محلولة شاملة)
     textbookExercises: [
       {
         id: 'ex-phys5-1',
-        questionAr: 'محول كهربائي مثالي يحتوي ملفه الابتدائي على 400 لفة وملفه الثانوي على 2000 لفة. إذا وُصل بجهد ابتدائي 220V، فما جهد الملف الثانوي ونوع المحول؟',
-        questionEn: 'An ideal transformer has Np = 400 turns and Ns = 2000 turns. Connected to Vp = 220V, find Vs and type.',
+        questionAr: 'النموذج 1: محول كهربائي مثالي يحتوي ملفه الابتدائي على N_p = 400 لفة وملفه الثانوي على N_s = 2000 لفة. وُصل ملفه الابتدائي بمصدر تيار متردد جهده V_p = 220 فولت ويسحب تياراً I_p = 5 أمبير. احسب: 1) جهد الملف الثانوي V_s، 2) تيار الملف الثانوي I_s، 3) القدرة الكهربائية المنقولة P، 4) نوع المحول.',
+        questionEn: 'Model 1: An ideal transformer has N_p = 400 turns, N_s = 2000 turns, V_p = 220V, and primary current I_p = 5A. Calculate: secondary voltage V_s, secondary current I_s, power P, and transformer type.',
         solutionStepsAr: [
-          'تطبيق معادلة المحول: Vs / Vp = Ns / Np',
-          'التعويض: Vs / 220 = 2000 / 400 = 5',
-          'حساب الجهد الثانوي: Vs = 220 × 5 = 1100 فولت',
-          'نوع المحول: محول رافع للجهد (Step-up Transformer) لأن Ns > Np'
+          '1. نسبة التحويل: N_s / N_p = 2000 / 400 = 5.',
+          '2. حساب جهد الملف الثانوي: V_s = V_p × (N_s / N_p) = 220 × 5 = 1100 فولت.',
+          '3. حساب تيار الملف الثانوي (حفظ القدرة V_p·I_p = V_s·I_s): I_s = I_p × (N_p / N_s) = 5 ÷ 5 = 1.0 أمبير.',
+          '4. القدرة الكهربائية: P = V_p × I_p = 220 × 5 = 1100 واط (1.1 kW).',
+          '5. نوع المحول: محول رافع للجهد (Step-up Transformer) لأن V_s > V_p و N_s > N_p.'
         ],
         solutionStepsEn: [
-          'Transformer equation: Vs / Vp = Ns / Np',
-          'Substitute: Vs / 220 = 2000 / 400 = 5',
-          'Calculate secondary voltage: Vs = 220 × 5 = 1100 Volts',
-          'Type: Step-up transformer since Ns > Np'
+          '1. Turns ratio: N_s / N_p = 2000 / 400 = 5.',
+          '2. Secondary voltage: V_s = 220 × 5 = 1100 Volts.',
+          '3. Secondary current: I_s = 5 / 5 = 1.0 Ampere.',
+          '4. Power transferred: P = 220 × 5 = 1100 Watts (1.1 kW).',
+          '5. Type: Step-up transformer.'
         ],
-        answerAr: 'جهد الملف الثانوي = 1100V، والمحول رافع للجهد.',
-        answerEn: 'Secondary voltage = 1100V (Step-up transformer).'
+        answerAr: 'V_s = 1100V • I_s = 1.0A • القدرة P = 1100W (محول رافع للجهد)',
+        answerEn: 'V_s = 1100V • I_s = 1.0A • Power = 1100W (Step-up transformer)'
+      },
+      {
+        id: 'ex-phys5-2',
+        questionAr: 'النموذج 2: شحنتان نقطيتان q₁ = +3.0 μC و q₂ = -5.0 μC موضوعتان في الهواء (k = 9.0 × 10⁹ N·m²/C²) على مسافة r = 0.30 متر من بعضهما. احسب مقدار القوة الكهروستاتيكية المتبادلة بينهما وحدد نوعها (تجاذب أم تنافر).',
+        questionEn: 'Model 2: Two point charges q₁ = +3.0 μC and q₂ = -5.0 μC are separated by r = 0.30m in air (k = 9.0 × 10⁹ N m²/C²). Find electrostatic force magnitude and type.',
+        solutionStepsAr: [
+          '1. تحويل الشحنات للوحدة الدولية: q₁ = 3.0 × 10⁻⁶ C، q₂ = 5.0 × 10⁻⁶ C.',
+          '2. تطبيق قانون كولوم: F = k · (|q₁| · |q₂|) / r².',
+          '3. التعويض: F = (9.0 × 10⁹ × 3.0 × 10⁻⁶ × 5.0 × 10⁻⁶) / (0.30)² = (135 × 10⁻³) / 0.09 = 0.135 / 0.09 = 1.5 نيوتن.',
+          '4. بما أن الشحنتين مختلفتان في الإشارة (موجبة وسالبة)، فالقوة قوة تجاذب متبادلة.'
+        ],
+        solutionStepsEn: [
+          '1. Convert units: q₁ = 3.0 × 10⁻⁶ C, q₂ = 5.0 × 10⁻⁶ C.',
+          '2. Coulomb\'s Law: F = k |q₁ q₂| / r².',
+          '3. Compute: F = (9.0 × 10⁹ × 15 × 10⁻¹²) / 0.09 = 1.5 N.',
+          '4. Opposite charges attract, so it is an attractive force.'
+        ],
+        answerAr: 'القوة الكهروستاتيكية = 1.5 نيوتن (قوة تجاذب)',
+        answerEn: 'Electrostatic Force = 1.5 N (Attractive)'
+      },
+      {
+        id: 'ex-phys5-3',
+        questionAr: 'النموذج 3: يدخل بروتون (شحنته q = 1.6 × 10⁻¹⁹ C وكتلته m = 1.67 × 10⁻²⁷ kg) عمودياً بسرعة v = 2.0 × 10⁶ م/ث داخل مجال مغناطيسي منتظم شدته B = 0.50 تسلا. احسب: 1) مقدار القوة المغناطيسية المؤثرة فيه F_B، 2) نصف قطر المسار الدائري r الذي يسلكه البروتون.',
+        questionEn: 'Model 3: A proton (q = 1.6 × 10⁻¹⁹ C, m = 1.67 × 10⁻²⁷ kg) enters perpendicular at v = 2.0 × 10⁶ m/s into B = 0.50 T. Calculate magnetic Lorentz force F_B and circular orbit radius r.',
+        solutionStepsAr: [
+          '1. القوة المغناطيسية (قوة لورنتز مع θ = 90°): F_B = q · v · B · sin(90°) = (1.6 × 10⁻¹⁹) × (2.0 × 10⁶) × 0.50 × 1 = 1.6 × 10⁻¹³ نيوتن.',
+          '2. القوة المغناطيسية تعمل كقوة جذب مركزية: F_B = m · v² / r → r = (m · v) / (q · B).',
+          '3. حساب نصف القطر: r = (1.67 × 10⁻²⁷ × 2.0 × 10⁶) / (1.6 × 10⁻¹⁹ × 0.50) = (3.34 × 10⁻²¹) / (0.80 × 10⁻¹⁹) = 0.04175 متراً ≈ 4.18 سم.'
+        ],
+        solutionStepsEn: [
+          '1. Magnetic force: F_B = q v B = (1.6 × 10⁻¹⁹) × (2.0 × 10⁶) × 0.50 = 1.6 × 10⁻¹³ N.',
+          '2. Orbit radius formula: r = mv / (qB).',
+          '3. Compute: r = (1.67 × 10⁻²⁷ × 2.0 × 10⁶) / (0.80 × 10⁻¹⁹) ≈ 0.0418 m (4.18 cm).'
+        ],
+        answerAr: 'القوة المغناطيسية = 1.6 × 10⁻¹³ N • نصف قطر المسار = 4.18 سم',
+        answerEn: 'Magnetic Force = 1.6 × 10⁻¹³ N • Orbit Radius = 4.18 cm'
+      },
+      {
+        id: 'ex-phys5-4',
+        questionAr: 'النموذج 4: ملف لولبي مسطح يتكون من N = 100 لفة ومساحة مقطعه A = 0.020 م² موضوع عمودياً في مجال مغناطيسي منتظم. إذا تناقصت شدة المجال المغناطيسي بانتظام من B₁ = 0.80 تسلا إلى B₂ = 0.20 تسلا خلال زمن قدره Δt = 0.04 ثانية، احسب القوة الدافعة الكهربائية الحثية المتولدة ε وحدد اتجاه التيار الحثي بقانون لنز.',
+        questionEn: 'Model 4: A 100-turn flat coil of area A = 0.020 m² is perpendicular to B. If B decreases uniformly from 0.80 T to 0.20 T in 0.04s, find induced EMF ε and explain current direction by Lenz\'s Law.',
+        solutionStepsAr: [
+          '1. التغير في التدفق المغناطيسي: ΔΦ = ΔB · A = (B₂ - B₁) × A = (0.20 - 0.80) × 0.020 = -0.60 × 0.020 = -0.012 ويبر (Wb).',
+          '2. تطبيق قانون فاراداي للحث: ε = -N · (ΔΦ / Δt) = -100 × (-0.012 / 0.04) = -100 × (-0.30) = +30 فولت.',
+          '3. تطبيق قانون لنز: بما أن المجال المغناطيسي الأصلي يتناقص، فإن التيار الحثي يولد مجالاً مغناطيسياً حثياً في نفس اتجاه المجال الأصلي لتعويض النقص ومقاومة التلاشي.'
+        ],
+        solutionStepsEn: [
+          '1. Magnetic flux change: ΔΦ = (0.20 - 0.80) × 0.020 = -0.012 Wb.',
+          '2. Faraday\'s Law: ε = -N (ΔΦ / Δt) = -100 × (-0.012 / 0.04) = +30 Volts.',
+          '3. Lenz\'s Law: Since original flux is decreasing, induced current creates an auxiliary magnetic field in the same direction to oppose the flux loss.'
+        ],
+        answerAr: 'القوة الدافعة الحثية ε = 30 فولت (تيار حثي يعوض نقص المجال الأصلي)',
+        answerEn: 'Induced EMF ε = +30 Volts (Induces reinforcing field by Lenz\'s Law)'
       }
     ],
     assessment: {
