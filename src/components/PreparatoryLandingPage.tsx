@@ -292,7 +292,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         <div className="prep-header-inner">
           <div className="prep-brand">
             <div className="prep-brand-icon">
-              <GraduationCap size={24} />
+              <GraduationCap size={22} />
             </div>
             <div className="prep-brand-text">
               <span className="prep-brand-title">{isEn ? 'Smart AI Tutor' : 'منصة المعلم الذكي'}</span>
@@ -301,6 +301,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           </div>
 
           <div className="prep-header-actions">
+            {/* Language Switcher */}
             <button 
               type="button" 
               className="btn-prep-action" 
@@ -311,9 +312,10 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               <span>{isEn ? 'العربية' : 'English'}</span>
             </button>
 
+            {/* Desktop Only Tools */}
             <button 
               type="button" 
-              className="btn-prep-action" 
+              className="btn-prep-action desktop-only" 
               onClick={onOpenContact}
             >
               <Mail size={15} className="text-cyan-400" />
@@ -322,7 +324,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
 
             <button 
               type="button" 
-              className="btn-prep-action" 
+              className="btn-prep-action desktop-only" 
               onClick={onOpenApiKey}
               title={isEn ? "Configure Gemini AI Key" : "إعداد مفتاح الذكاء الاصطناعي"}
             >
@@ -332,20 +334,21 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
 
             <button 
               type="button" 
-              className="btn-prep-action btn-prep-admin" 
+              className="btn-prep-action btn-prep-admin desktop-only" 
               onClick={onOpenAdmin}
             >
               <ShieldCheck size={15} />
               <span>{isEn ? 'Admin' : 'لوحة المشرف'}</span>
             </button>
 
+            {/* Account / Login Button */}
             <button 
               type="button" 
               className="btn-prep-login" 
               onClick={onOpenAuth}
             >
               <Users size={15} />
-              <span>{isLoggedIn ? (isEn ? 'My Account' : 'حسابي') : (isEn ? 'Log In / Register' : 'تسجيل الدخول')}</span>
+              <span>{isLoggedIn ? (isEn ? 'Account' : 'حسابي') : (isEn ? 'Log In' : 'دخول')}</span>
             </button>
           </div>
         </div>
@@ -370,6 +373,36 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               ? 'Welcome! AI Tutor adapts dynamically to your pace. Explore the stages roadmap below, choose your national curriculum and subject, then launch your interactive learning journey.'
               : 'أهلاً بك! منصة تعليمية ذكية تحاورك بأسلوب سقراطي تفاعلي، تشرح المفاهيم بـ 4 نماذج تطبيقية ورسوم علمية دقيقة، وتختبر إتقانك عبر بوابات تقييم ذكية. اختر مرحلتك ومادتك للبدء فوراً.'}
           </p>
+
+          {/* Mobile Quick Action Strip */}
+          <div className="prep-mobile-tools-strip mobile-only">
+            <button 
+              type="button" 
+              className="prep-mobile-tool-btn" 
+              onClick={onOpenContact}
+            >
+              <Mail size={14} className="text-cyan-400" />
+              <span>{isEn ? 'Contact' : 'تواصل معنا'}</span>
+            </button>
+
+            <button 
+              type="button" 
+              className="prep-mobile-tool-btn" 
+              onClick={onOpenApiKey}
+            >
+              <Key size={14} className={hasApiKey ? "text-emerald-400" : "text-amber-400"} />
+              <span>{hasApiKey ? (isEn ? 'AI Active' : 'AI نشط') : (isEn ? 'API Key' : 'مفتاح AI')}</span>
+            </button>
+
+            <button 
+              type="button" 
+              className="prep-mobile-tool-btn prep-mobile-tool-admin" 
+              onClick={onOpenAdmin}
+            >
+              <ShieldCheck size={14} />
+              <span>{isEn ? 'Admin' : 'المشرف'}</span>
+            </button>
+          </div>
 
           {/* Quick Platform Pillars */}
           <div className="prep-pillars-row">
