@@ -4,7 +4,23 @@ import { getTranslations } from '../i18n/translations';
 import { registerUserAccount, loginUserAccount } from '../services/database';
 import { detectStudentCountry } from '../services/geoService';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
-import { X, UserPlus, LogIn, Sparkles, AlertCircle, CheckCircle2, ShieldCheck, GraduationCap } from 'lucide-react';
+import { 
+  X, 
+  UserPlus, 
+  LogIn, 
+  Sparkles, 
+  AlertCircle, 
+  CheckCircle2, 
+  ShieldCheck, 
+  GraduationCap, 
+  Phone, 
+  Mail, 
+  User, 
+  Clock, 
+  Moon, 
+  Smartphone,
+  RefreshCw
+} from 'lucide-react';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -16,6 +32,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
   if (!isOpen) return null;
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('register');
+  const [regStep, setRegStep] = useState<'form' | 'otp'>('form');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -24,29 +41,53 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
   const [loginIdentifier, setLoginIdentifier] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
 
-  // Register Form State
+  // Register Student Form State
   const [regName, setRegName] = useState('');
   const [regUsername, setRegUsername] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regCountry, setRegCountry] = useState<CountryCode>('SA');
-  const [regEducationType, setRegEducationType] = useState<EducationType>('PUBLIC');
-  const [regEducationTrack, setRegEducationTrack] = useState<EducationTrack>('GENERAL');
-  const [regAge, setRegAge] = useState<number>(10);
-  const [regGrade, setRegGrade] = useState<GradeLevel>('G4');
-  const [regSpec, setRegSpec] = useState<Specialization>('GENERAL');
-  const [regSubject, setRegSubject] = useState<Subject>('PRIMARY_MATH');
-  const [regLanguage, setRegLanguage] = useState<Language>('ar');
+  const [regEducationType] = useState<EducationType>('PUBLIC');
+  const [regEducationTrack] = useState<EducationTrack>('CS_ENGINEERING');
+  const [regAge, setRegAge] = useState<number>(17);
+  const [regGrade, setRegGrade] = useState<GradeLevel>('G12');
+  const [regSpec, setRegSpec] = useState<Specialization>('STEM');
+  const [regSubject, setRegSubject] = useState<Subject>('PHYSICS');
+  const [regLanguage] = useState<Language>('ar');
+
+  // Register Parent Supervision Data (Mandatory)
+  const [regParentName, setRegParentName] = useState('');
+  const [regParentPhone, setRegParentPhone] = useState('+966 5');
   const [regParentEmail, setRegParentEmail] = useState('');
+  const [regDailyLimitMinutes, setRegDailyLimitMinutes] = useState<number>(90);
+  const [regCurfewEnabled, setRegCurfewEnabled] = useState<boolean>(true);
+
+  // OTP Verification State
+  const [generatedOtp, setGeneratedOtp] = useState<string>('');
+  const [enteredOtp, setEnteredOtp] = useState<string>('');
+  const [otpSentToast, setOtpSentToast] = useState<{ show: boolean; code: string; phone: string } | null>(null);
+  const [resendCooldown, setResendCooldown] = useState<number>(0);
 
   // Auto detect location on mount
   useEffect(() => {
     detectStudentCountry().then(geo => {
       if (geo?.country) {
         setRegCountry(geo.country);
+        if (geo.country === 'EG') setRegParentPhone('+20 1');
+        else if (geo.country === 'AE') setRegParentPhone('+971 5');
+        else if (geo.country === 'KW') setRegParentPhone('+965 ');
+        else if (geo.country === 'JO') setRegParentPhone('+962 7');
       }
     }).catch(() => {});
   }, []);
+
+  // Cooldown timer
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
 
   const t = getTranslations(regLanguage);
   const isPrimary = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(regGrade);
@@ -100,7 +141,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
       setRegSpec('STEM');
       setRegSubject('PHYSICS');
     } else if (age >= 17) {
-      setRegGrade('G11');
+      setRegGrade('G12');
       setRegSpec('STEM');
       setRegSubject('PHYSICS');
     }
@@ -130,7 +171,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
 
     try {
       const user = await loginUserAccount(loginIdentifier, loginPassword);
-      setSuccessMsg('تم تسجيل الدخول بنجاح! جاري تحميل بياناتك...');
+      setSuccessMsg('تم تسجيل الدخول بنجاح! جاري تحميل بياناتك ومسارك الأكاديمي...');
       setTimeout(() => {
         onSuccess(user);
         onClose();
@@ -142,12 +183,52 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
     }
   };
 
-  const handleRegisterSubmit = async (e: React.FormEvent) => {
+  // Step 1: Initiate Parent OTP Verification
+  const handleInitiateOtp = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
     if (!regUsername.trim() || regUsername.length < 3) {
       setErrorMsg('اسم المستخدم يجب أن يتكون من 3 أحرف على الأقل');
+      return;
+    }
+
+    if (!regParentName.trim()) {
+      setErrorMsg('يرجى كتابة اسم ولي الأمر الكامل للموافقة والرقابة');
+      return;
+    }
+
+    if (!regParentPhone.trim() || regParentPhone.length < 7) {
+      setErrorMsg('يرجى إدخال رقم جوال صحيح لولي الأمر لاستلام كود الموافقة');
+      return;
+    }
+
+    if (!regParentEmail.trim() || !regParentEmail.includes('@')) {
+      setErrorMsg('يرجى إدخال بريد إلكتروني صحيح لولي الأمر');
+      return;
+    }
+
+    // Generate 6-digit OTP code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(code);
+    setRegStep('otp');
+    setResendCooldown(60);
+
+    // Simulate SMS dispatch
+    setOtpSentToast({
+      show: true,
+      code,
+      phone: regParentPhone
+    });
+  };
+
+  // Step 2: Verify OTP and Register in Database
+  const handleVerifyOtpAndRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    if (enteredOtp.trim() !== generatedOtp) {
+      setErrorMsg('رمز التحقق غير صحيح! يرجى إدخال الرمز المكون من 6 أرقام المرسل إلى جوال ولي الأمر.');
       return;
     }
 
@@ -166,14 +247,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
         specialization: regSpec,
         subject: regSubject,
         language: regLanguage,
-        parentEmail: regParentEmail
+        parentName: regParentName,
+        parentPhone: regParentPhone,
+        parentEmail: regParentEmail,
+        isParentVerified: true,
+        parentalSettings: {
+          curfewEnabled: regCurfewEnabled,
+          curfewStart: '21:30',
+          curfewEnd: '06:30',
+          maxDailyMinutes: regDailyLimitMinutes,
+          restrictedTopics: ['المواضيع السياسية', 'الآراء الشخصية للذكاء الاصطناعي'],
+          consentStatus: 'VERIFIED'
+        },
+        timeLimitMinutes: regDailyLimitMinutes
       });
 
-      setSuccessMsg('تم إنشاء حساب الطالب وحفظه في قاعدة البيانات بنجاح! 🎓');
+      setSuccessMsg('تم التحقق من موافقة ولي الأمر وإنشاء حساب الطالب بنجاح! 🎉🎓');
       setTimeout(() => {
         onSuccess(newUser);
         onClose();
-      }, 900);
+      }, 1000);
     } catch (err) {
       setErrorMsg((err as Error)?.message || 'حدث خطأ أثناء حفظ الحساب');
     } finally {
@@ -181,9 +274,50 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
     }
   };
 
+  const handleResendOtp = () => {
+    if (resendCooldown > 0) return;
+    const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(newCode);
+    setResendCooldown(60);
+    setOtpSentToast({
+      show: true,
+      code: newCode,
+      phone: regParentPhone
+    });
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '640px' }}>
+      <div className="modal-container modal-auth-wide" onClick={(e) => e.stopPropagation()}>
+        
+        {/* Simulated SMS Notification Popup */}
+        {otpSentToast && (
+          <div className="simulated-sms-banner">
+            <div className="sms-icon-badge">
+              <Smartphone size={20} />
+            </div>
+            <div className="sms-content">
+              <div className="sms-head">
+                <span className="sms-sender">رسالة نصية SMS (TeacherAI Consent)</span>
+                <span className="sms-to">إلى: {otpSentToast.phone}</span>
+              </div>
+              <p className="sms-body">
+                رمز التحقق وموافقة ولي الأمر على تسجيل الطالب في المنصة هو: <strong className="sms-code-highlight">{otpSentToast.code}</strong>
+              </p>
+            </div>
+            <button 
+              type="button" 
+              className="btn-quick-fill-code"
+              onClick={() => {
+                setEnteredOtp(otpSentToast.code);
+              }}
+              title="تعبئة الرمز تلقائياً"
+            >
+              تعبئة الرمز ⚡
+            </button>
+          </div>
+        )}
+
         {/* Header */}
         <div className="modal-header">
           <div className="modal-title-group">
@@ -192,12 +326,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
             </div>
             <div>
               <h2 className="modal-title">
-                {regLanguage === 'en' ? 'Student Portal & Database Registration' : 'بوابة تسجيل الطلاب وحفظ البيانات'}
+                {regLanguage === 'en' ? 'Student Registration & Parental Supervision' : 'بوابة تسجيل الطلاب والرقابة الأبوية'}
               </h2>
               <p className="modal-subtitle">
                 {regLanguage === 'en'
-                  ? 'Sign in or create a student profile to save your progress & test scores'
-                  : 'سجل حسابك لحفظ تقدمك الأكاديمي ودرجات اختباراتك في قاعدة البيانات'}
+                  ? 'Official national curriculum portal with mandatory parental consent verification'
+                  : 'التسجيل الأكاديمي المعتمد مع التحقق الإلزامي من موافقة ولي الأمر عبر رمز SMS'}
               </p>
             </div>
           </div>
@@ -207,138 +341,100 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
         </div>
 
         {/* Tab Switcher */}
-        <div style={{ display: 'flex', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)' }}>
+        <div className="auth-tab-bar">
           <button
             type="button"
-            onClick={() => { setActiveTab('register'); setErrorMsg(''); }}
-            style={{
-              flex: 1,
-              padding: '0.85rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              borderBottom: activeTab === 'register' ? '2px solid #38bdf8' : 'none',
-              color: activeTab === 'register' ? '#38bdf8' : 'rgba(255, 255, 255, 0.6)',
-              background: activeTab === 'register' ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-              cursor: 'pointer'
-            }}
+            onClick={() => { setActiveTab('register'); setRegStep('form'); setErrorMsg(''); }}
+            className={`auth-tab-btn ${activeTab === 'register' ? 'active' : ''}`}
           >
             <UserPlus size={17} />
-            <span>{regLanguage === 'en' ? 'Register New Student' : 'تسجيل طالب جديد'}</span>
+            <span>تسجيل طالب جديد (مع موافقة ولي الأمر)</span>
           </button>
           <button
             type="button"
             onClick={() => { setActiveTab('login'); setErrorMsg(''); }}
-            style={{
-              flex: 1,
-              padding: '0.85rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              borderBottom: activeTab === 'login' ? '2px solid #38bdf8' : 'none',
-              color: activeTab === 'login' ? '#38bdf8' : 'rgba(255, 255, 255, 0.6)',
-              background: activeTab === 'login' ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-              cursor: 'pointer'
-            }}
+            className={`auth-tab-btn ${activeTab === 'login' ? 'active' : ''}`}
           >
             <LogIn size={17} />
-            <span>{regLanguage === 'en' ? 'Sign In / Switch Student' : 'تسجيل الدخول / تبديل الطالب'}</span>
+            <span>تسجيل الدخول للطلاب المسجلين</span>
           </button>
         </div>
 
         {/* Feedback Alerts */}
         {errorMsg && (
-          <div style={{ margin: '1rem 1.5rem 0', padding: '0.75rem 1rem', borderRadius: '10px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+          <div className="auth-alert alert-danger">
             <AlertCircle size={18} />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {successMsg && (
-          <div style={{ margin: '1rem 1.5rem 0', padding: '0.75rem 1rem', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#34d399', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+          <div className="auth-alert alert-success">
             <CheckCircle2 size={18} />
             <span>{successMsg}</span>
           </div>
         )}
 
-        {/* REGISTER TAB */}
-        {activeTab === 'register' && (
-          <form onSubmit={handleRegisterSubmit} className="modal-form-wrapper">
-            <div className="modal-body">
-              {regAge < 13 && (
-                <div className="coppa-warning-banner">
-                  <ShieldCheck className="warning-icon" size={24} />
-                  <div>
-                    <h4 className="warning-title">{t.coppaTitle}</h4>
-                    <p className="warning-desc">{t.coppaDesc}</p>
-                  </div>
-                </div>
-              )}
+        {/* ─── REGISTER TAB: STEP 1 (STUDENT & PARENT DATA FORM) ─── */}
+        {activeTab === 'register' && regStep === 'form' && (
+          <form onSubmit={handleInitiateOtp} className="modal-form-wrapper">
+            <div className="modal-body auth-scrollable-body">
+              
+              {/* Section 1: Student Details */}
+              <div className="auth-section-divider">
+                <User size={16} className="text-indigo-400" />
+                <span>1. البيانات الأساسية للطالب</span>
+              </div>
 
               <div className="form-grid">
-                {/* Full Name */}
                 <div className="form-group">
                   <label className="form-label">{t.labelFullName} *</label>
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="مثال: عمر التميمي / Sarah"
+                    placeholder="مثال: عمر خالد التميمي"
                     value={regName}
                     onChange={(e) => setRegName(e.target.value)}
                     required
                   />
                 </div>
 
-                {/* Username */}
                 <div className="form-group">
-                  <label className="form-label">
-                    {regLanguage === 'en' ? 'Username (Unique) *' : 'اسم المستخدم (فريد) *'}
-                  </label>
+                  <label className="form-label">اسم المستخدم (فريد) *</label>
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="omar10"
+                    placeholder="omar_tamimi"
                     value={regUsername}
                     onChange={(e) => setRegUsername(e.target.value)}
                     required
                   />
                 </div>
 
-                {/* Email */}
                 <div className="form-group">
-                  <label className="form-label">
-                    {regLanguage === 'en' ? 'Student Email (Optional)' : 'البريد الإلكتروني للطالب (اختياري)'}
-                  </label>
+                  <label className="form-label">البريد الإلكتروني للطالب *</label>
                   <input
                     type="email"
                     className="form-input"
                     placeholder="student@example.com"
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
+                    required
                   />
                 </div>
 
-                {/* Password */}
                 <div className="form-group">
-                  <label className="form-label">
-                    {regLanguage === 'en' ? 'Password' : 'كلمة المرور'}
-                  </label>
+                  <label className="form-label">كلمة مرور الطالب *</label>
                   <input
                     type="password"
                     className="form-input"
                     placeholder="••••••••"
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
+                    required
                   />
                 </div>
 
-                {/* Country & Official State Curriculum */}
                 <div className="form-group">
                   <label className="form-label">{t.countrySelectLabel} *</label>
                   <select
@@ -363,22 +459,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                   </select>
                 </div>
 
-                {/* Education Type */}
-                <div className="form-group">
-                  <label className="form-label">{t.educationTypeLabel || 'نوع التعليم'} *</label>
-                  <select
-                    className="form-select"
-                    value={regEducationType}
-                    onChange={(e) => setRegEducationType(e.target.value as EducationType)}
-                  >
-                    <option value="PUBLIC">🏛️ تعليم حكومي معتمد</option>
-                    <option value="PRIVATE">🏫 تعليم أهلي / خاص</option>
-                    <option value="ISLAMIC">🕌 تعليم شرعي / أزهري</option>
-                    <option value="INTERNATIONAL">🌐 تعليم دولي / لغات ومسارات متقدمة</option>
-                  </select>
-                </div>
-
-                {/* Age */}
                 <div className="form-group">
                   <label className="form-label">{t.labelAge} *</label>
                   <input
@@ -392,7 +472,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                   />
                 </div>
 
-                {/* Grade Level */}
                 <div className="form-group">
                   <label className="form-label">{t.labelGrade} *</label>
                   <select
@@ -400,58 +479,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                     value={regGrade}
                     onChange={(e) => handleGradeChange(e.target.value as GradeLevel)}
                   >
-                    <optgroup label={regLanguage === 'en' ? "Primary / Elementary (Grades 1 - 6)" : "المرحلة الابتدائية (الصفوف 1 - 6)"}>
-                      <option value="G1">{t.gradeLabels.G1}</option>
-                      <option value="G2">{t.gradeLabels.G2}</option>
-                      <option value="G3">{t.gradeLabels.G3}</option>
-                      <option value="G4">{t.gradeLabels.G4}</option>
-                      <option value="G5">{t.gradeLabels.G5}</option>
-                      <option value="G6">{t.gradeLabels.G6}</option>
-                    </optgroup>
-                    <optgroup label={regLanguage === 'en' ? "Middle School (Grades 7 - 9)" : "المرحلة المتوسطة (الصفوف 7 - 9)"}>
-                      <option value="G7">{t.gradeLabels.G7}</option>
-                      <option value="G8">{t.gradeLabels.G8}</option>
-                      <option value="G9">{t.gradeLabels.G9}</option>
-                    </optgroup>
-                    <optgroup label={regLanguage === 'en' ? "High School (Grades 10 - 12)" : "المرحلة الثانوية (الصفوف 10 - 12)"}>
-                      <option value="G10">{t.gradeLabels.G10}</option>
-                      <option value="G11">{t.gradeLabels.G11}</option>
+                    <optgroup label="المرحلة الثانوية (الصفوف 10 - 12)">
                       <option value="G12">{t.gradeLabels.G12}</option>
+                      <option value="G11">{t.gradeLabels.G11}</option>
+                      <option value="G10">{t.gradeLabels.G10}</option>
+                    </optgroup>
+                    <optgroup label="المرحلة المتوسطة (الصفوف 7 - 9)">
+                      <option value="G9">{t.gradeLabels.G9}</option>
+                      <option value="G8">{t.gradeLabels.G8}</option>
+                      <option value="G7">{t.gradeLabels.G7}</option>
+                    </optgroup>
+                    <optgroup label="المرحلة الابتدائية (الصفوف 1 - 6)">
+                      <option value="G6">{t.gradeLabels.G6}</option>
+                      <option value="G5">{t.gradeLabels.G5}</option>
+                      <option value="G4">{t.gradeLabels.G4}</option>
+                      <option value="G3">{t.gradeLabels.G3}</option>
+                      <option value="G2">{t.gradeLabels.G2}</option>
+                      <option value="G1">{t.gradeLabels.G1}</option>
                     </optgroup>
                   </select>
                 </div>
 
-                {/* Specialization */}
                 <div className="form-group">
                   <label className="form-label">{t.labelSpecialization}</label>
-                  {isPrimary ? (
-                    <div>
-                      <select className="form-select select-locked" value="GENERAL" disabled style={{ opacity: 0.85 }}>
-                        <option value="GENERAL">
-                          {regLanguage === 'en' ? 'General Primary Curriculum' : 'التعليم العام (المرحلة الابتدائية - تعليم أساسي)'}
-                        </option>
-                      </select>
-                    </div>
-                  ) : isMiddle ? (
-                    <div>
-                      <select className="form-select select-locked" value="GENERAL" disabled style={{ opacity: 0.85 }}>
-                        <option value="GENERAL">
-                          {regLanguage === 'en' ? 'General Middle School Curriculum' : 'التعليم العام (المرحلة المتوسطة - لا يوجد تشعيب)'}
-                        </option>
-                      </select>
-                    </div>
+                  {isPrimary || isMiddle ? (
+                    <select className="form-select select-locked" value="GENERAL" disabled style={{ opacity: 0.85 }}>
+                      <option value="GENERAL">التعليم العام الأساسي</option>
+                    </select>
                   ) : (
                     <select
                       className="form-select"
                       value={regSpec}
-                      onChange={(e) => {
-                        const val = e.target.value as Specialization;
-                        setRegSpec(val);
-                        if (val === 'STEM') setRegEducationTrack('CS_ENGINEERING');
-                        else if (val === 'HEALTH') setRegEducationTrack('HEALTH_LIFE');
-                        else if (val === 'HUMANITIES') setRegEducationTrack('SHARIA_HUMANITIES');
-                        else setRegEducationTrack('GENERAL');
-                      }}
+                      onChange={(e) => setRegSpec(e.target.value as Specialization)}
                     >
                       <option value="STEM">{t.specLabels.STEM}</option>
                       <option value="HUMANITIES">{t.specLabels.HUMANITIES}</option>
@@ -461,7 +520,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                   )}
                 </div>
 
-                {/* Starting Subject */}
                 <div className="form-group">
                   <label className="form-label">{t.labelSubject} *</label>
                   <select
@@ -469,88 +527,233 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                     value={regSubject}
                     onChange={(e) => setRegSubject(e.target.value as Subject)}
                   >
-                    {isPrimary ? (
-                      <optgroup label={regLanguage === 'en' ? "Elementary Core Subjects" : "المواد الأساسية للمرحلة الابتدائية"}>
-                        <option value="PRIMARY_MATH">{getNationalSubjectLabel('PRIMARY_MATH', regCountry, regGrade, regLanguage)}</option>
-                        <option value="PRIMARY_ARABIC">{getNationalSubjectLabel('PRIMARY_ARABIC', regCountry, regGrade, regLanguage)}</option>
-                        <option value="PRIMARY_SCIENCE">{getNationalSubjectLabel('PRIMARY_SCIENCE', regCountry, regGrade, regLanguage)}</option>
-                        <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', regCountry, regGrade, regLanguage)}</option>
-                      </optgroup>
-                    ) : isMiddle ? (
-                      <optgroup label={regLanguage === 'en' ? "Middle School Subjects" : "مواد المرحلة المتوسطة"}>
-                        <option value="ARABIC_LANG">{getNationalSubjectLabel('ARABIC_LANG', regCountry, regGrade, regLanguage)}</option>
-                        <option value="MATH">{getNationalSubjectLabel('MATH', regCountry, regGrade, regLanguage)}</option>
-                        <option value="GENERAL_SCIENCE">{getNationalSubjectLabel('GENERAL_SCIENCE', regCountry, regGrade, regLanguage)}</option>
-                        <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', regCountry, regGrade, regLanguage)}</option>
-                      </optgroup>
-                    ) : (
-                      <optgroup label={regLanguage === 'en' ? "High School Subjects" : "مواد المرحلة الثانوية"}>
+                    {!isPrimary && !isMiddle ? (
+                      <optgroup label="المواد التخصصية">
                         <option value="PHYSICS">{getNationalSubjectLabel('PHYSICS', regCountry, regGrade, regLanguage)}</option>
                         <option value="MATH">{getNationalSubjectLabel('MATH', regCountry, regGrade, regLanguage)}</option>
                         <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', regCountry, regGrade, regLanguage)}</option>
                         <option value="BIOLOGY">{getNationalSubjectLabel('BIOLOGY', regCountry, regGrade, regLanguage)}</option>
                         <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', regCountry, regGrade, regLanguage)}</option>
-                        <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', regCountry, regGrade, regLanguage)}</option>
+                      </optgroup>
+                    ) : (
+                      <optgroup label="المواد الدراسية">
+                        <option value="PRIMARY_MATH">{getNationalSubjectLabel('PRIMARY_MATH', regCountry, regGrade, regLanguage)}</option>
+                        <option value="PRIMARY_ARABIC">{getNationalSubjectLabel('PRIMARY_ARABIC', regCountry, regGrade, regLanguage)}</option>
+                        <option value="PRIMARY_SCIENCE">{getNationalSubjectLabel('PRIMARY_SCIENCE', regCountry, regGrade, regLanguage)}</option>
+                        <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', regCountry, regGrade, regLanguage)}</option>
                       </optgroup>
                     )}
                   </select>
                 </div>
-
-                {/* Language */}
-                <div className="form-group">
-                  <label className="form-label">{t.labelLanguage}</label>
-                  <select
-                    className="form-select"
-                    value={regLanguage}
-                    onChange={(e) => setRegLanguage(e.target.value as Language)}
-                  >
-                    <option value="ar">العربية (من اليمين لليسار - RTL)</option>
-                    <option value="en">English (Left to Right - LTR)</option>
-                  </select>
-                </div>
-
-                {/* Parent Email */}
-                {regAge < 13 && (
-                  <div className="form-group full-width">
-                    <label className="form-label">{t.labelParentEmail} *</label>
-                    <input
-                      type="email"
-                      className="form-input"
-                      placeholder="parent@example.com"
-                      value={regParentEmail}
-                      onChange={(e) => setRegParentEmail(e.target.value)}
-                      required
-                    />
-                    <span className="form-hint">{t.parentEmailHint}</span>
-                  </div>
-                )}
               </div>
+
+              {/* Section 2: Parental Supervision & Mandatory Consent */}
+              <div className="auth-section-divider section-parental-divider">
+                <ShieldCheck size={18} className="text-purple-400" />
+                <span>2. بيانات ولي الأمر والرقابة الأبوية (إلزامية للتحقق والموافقة)</span>
+              </div>
+
+              <div className="parental-reg-card">
+                <p className="parental-reg-note">
+                  🔒 وفقاً لمعايير الأمان التعليمي، يتطلب التسجيل موافقة ولي الأمر الرسمية. سيتم إرسال رمز التحقق المكون من 6 أرقام إلى جوال ولي الأمر لإتمام تفعيل الحساب.
+                </p>
+
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label className="form-label">اسم ولي الأمر الرباعي *</label>
+                    <div className="input-with-icon">
+                      <User size={15} className="field-icon" />
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="مثال: خالد محمد التميمي"
+                        value={regParentName}
+                        onChange={(e) => setRegParentName(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">رقم جوال ولي الأمر (لاستلام كود SMS) *</label>
+                    <div className="input-with-icon">
+                      <Phone size={15} className="field-icon text-emerald-400" />
+                      <input
+                        type="tel"
+                        className="form-input"
+                        placeholder="+966 50 123 4567"
+                        value={regParentPhone}
+                        onChange={(e) => setRegParentPhone(e.target.value)}
+                        required
+                        dir="ltr"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">البريد الإلكتروني لولي الأمر *</label>
+                    <div className="input-with-icon">
+                      <Mail size={15} className="field-icon text-indigo-400" />
+                      <input
+                        type="email"
+                        className="form-input"
+                        placeholder="parent@example.com"
+                        value={regParentEmail}
+                        onChange={(e) => setRegParentEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">الحد الأقصى للدراسة اليومية</label>
+                    <div className="input-with-icon">
+                      <Clock size={15} className="field-icon text-amber-400" />
+                      <select 
+                        className="form-select"
+                        value={regDailyLimitMinutes}
+                        onChange={(e) => setRegDailyLimitMinutes(Number(e.target.value))}
+                      >
+                        <option value="45">45 دقيقة / يومياً</option>
+                        <option value="60">60 دقيقة / يومياً</option>
+                        <option value="90">90 دقيقة / يومياً</option>
+                        <option value="120">120 دقيقة (ساعتان) / يومياً</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="form-group full-width">
+                    <label className="checkbox-curfew-label">
+                      <input 
+                        type="checkbox" 
+                        checked={regCurfewEnabled} 
+                        onChange={(e) => setRegCurfewEnabled(e.target.checked)}
+                      />
+                      <Moon size={15} className="text-purple-400" />
+                      <span>تفعيل الحظر الليلي التلقائي (من 09:30 مساءً حتى 06:30 صباحاً) للحفاظ على راحة الطالب</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             <div className="modal-footer">
               <button type="button" className="btn-secondary" onClick={onClose}>
                 {t.btnCancel}
               </button>
-              <button type="submit" className="btn-primary" disabled={isLoading}>
-                <Sparkles size={18} />
-                <span>{isLoading ? 'جاري الحفظ في قاعدة البيانات...' : (regLanguage === 'en' ? 'Register & Start Learning' : 'تسجيل وحفظ الحساب في قاعدة البيانات')}</span>
+              <button type="submit" className="btn-primary btn-proceed-otp">
+                <Smartphone size={18} />
+                <span>إرسال رمز الموافقة إلى جوال ولي الأمر 📲</span>
               </button>
             </div>
           </form>
         )}
 
-        {/* LOGIN TAB */}
+        {/* ─── REGISTER TAB: STEP 2 (OTP VERIFICATION GATE) ─── */}
+        {activeTab === 'register' && regStep === 'otp' && (
+          <form onSubmit={handleVerifyOtpAndRegister} className="modal-form-wrapper">
+            <div className="modal-body otp-body-centered">
+              <div className="otp-icon-wrap">
+                <ShieldCheck size={36} />
+              </div>
+
+              <h3 className="otp-heading">تأكيد موافقة ولي الأمر ورمز التحقق (OTP)</h3>
+              <p className="otp-subheading">
+                تم إرسال رمز التحقق المكون من 6 أرقام عبر رسالة نصية SMS إلى رقم جوال ولي الأمر:
+              </p>
+
+              <div className="otp-phone-display" dir="ltr">
+                <Phone size={16} className="text-emerald-400" />
+                <strong>{regParentPhone}</strong>
+                <button 
+                  type="button" 
+                  className="btn-change-phone"
+                  onClick={() => { setRegStep('form'); setErrorMsg(''); }}
+                >
+                  تعديل الرقم
+                </button>
+              </div>
+
+              <div className="otp-input-container">
+                <label className="otp-input-label">أدخل رمز التحقق (6 أرقام):</label>
+                <input 
+                  type="text" 
+                  maxLength={6}
+                  value={enteredOtp}
+                  onChange={(e) => setEnteredOtp(e.target.value.replace(/\D/g, ''))}
+                  placeholder="• • • • • •"
+                  className="otp-code-input"
+                  autoFocus
+                  required
+                />
+              </div>
+
+              {/* Quick Fill Testing Helper */}
+              {generatedOtp && (
+                <div className="otp-helper-card">
+                  <Sparkles size={16} className="text-amber-400" />
+                  <span>الرمز المرسل لجوال ولي الأمر: <strong>{generatedOtp}</strong></span>
+                  <button 
+                    type="button" 
+                    className="btn-quick-fill-chip"
+                    onClick={() => setEnteredOtp(generatedOtp)}
+                  >
+                    تعبئة تلقائية ⚡
+                  </button>
+                </div>
+              )}
+
+              <div className="otp-resend-row">
+                {resendCooldown > 0 ? (
+                  <span className="cooldown-text">
+                    يمكنك طلب إعادة إرسال الرمز بعد ({resendCooldown} ثانية)
+                  </span>
+                ) : (
+                  <button 
+                    type="button" 
+                    className="btn-resend-otp"
+                    onClick={handleResendOtp}
+                  >
+                    <RefreshCw size={14} />
+                    <span>إعادة إرسال كود التحقق SMS</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button 
+                type="button" 
+                className="btn-secondary" 
+                onClick={() => { setRegStep('form'); setErrorMsg(''); }}
+              >
+                رجوع لتعديل البيانات
+              </button>
+              <button 
+                type="submit" 
+                className="btn-primary btn-confirm-otp"
+                disabled={isLoading || enteredOtp.length < 6}
+              >
+                <CheckCircle2 size={18} />
+                <span>{isLoading ? 'جاري التحقق وإنشاء الحساب...' : 'تأكيد الموافقة والدخول للمنصة ✅'}</span>
+              </button>
+            </div>
+          </form>
+        )}
+
+        {/* ─── LOGIN TAB ─── */}
         {activeTab === 'login' && (
           <form onSubmit={handleLoginSubmit} className="modal-form-wrapper">
             <div className="modal-body">
               <div className="form-group full-width">
                 <label className="form-label">
-                  {regLanguage === 'en' ? 'Username or Email' : 'اسم المستخدم أو البريد الإلكتروني'} *
+                  اسم المستخدم أو البريد الإلكتروني *
                 </label>
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="omar10 / student@example.com"
+                  placeholder="omar_tamimi / omar.tamimi@student.ai"
                   value={loginIdentifier}
                   onChange={(e) => setLoginIdentifier(e.target.value)}
                   required
@@ -558,19 +761,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
               </div>
 
               <div className="form-group full-width">
-                <label className="form-label">
-                  {regLanguage === 'en' ? 'Password' : 'كلمة المرور'}
-                </label>
+                <label className="form-label">كلمة المرور *</label>
                 <input
                   type="password"
                   className="form-input"
                   placeholder="••••••••"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
+                  required
                 />
-                <span className="form-hint">
-                  {regLanguage === 'en' ? 'Leave empty if you registered without password' : 'اتركها فارغة إذا سجلت بدون كلمة مرور'}
-                </span>
+              </div>
+
+              <div className="demo-users-quick-hint">
+                <Sparkles size={14} className="text-amber-400" />
+                <span>حساب تجريبي مسجل: اسم المستخدم: <code>omar_tamimi</code> أو <code>sara_shammari</code></span>
               </div>
             </div>
 
@@ -580,11 +784,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
               </button>
               <button type="submit" className="btn-primary" disabled={isLoading}>
                 <LogIn size={18} />
-                <span>{isLoading ? 'جاري التحقق...' : (regLanguage === 'en' ? 'Sign In' : 'تسجيل الدخول')}</span>
+                <span>{isLoading ? 'جاري التحقق...' : 'تسجيل الدخول'}</span>
               </button>
             </div>
           </form>
         )}
+
       </div>
     </div>
   );

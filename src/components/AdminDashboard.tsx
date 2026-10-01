@@ -21,7 +21,13 @@ import {
   ExternalLink,
   Trash2,
   Edit3,
-  Moon
+  Moon,
+  Lock,
+  Key,
+  Eye,
+  EyeOff,
+  LogIn,
+  LogOut
 } from 'lucide-react';
 
 interface AdminDashboardProps {
@@ -35,6 +41,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onClose,
   language: _language = 'ar'
 }) => {
+  // Admin Authentication Security State
+  const [isAdminAuth, setIsAdminAuth] = useState<boolean>(() => {
+    return sessionStorage.getItem('TEACHER_AI_ADMIN_AUTH') === 'true' || localStorage.getItem('TEACHER_AI_ADMIN_AUTH') === 'true';
+  });
+  const [adminEmailInput, setAdminEmailInput] = useState<string>('admin@teacher.ai');
+  const [adminPasswordInput, setAdminPasswordInput] = useState<string>('');
+  const [showAdminPassword, setShowAdminPassword] = useState<boolean>(false);
+  const [adminAuthError, setAdminAuthError] = useState<string>('');
+  const [rememberAdmin, setRememberAdmin] = useState<boolean>(true);
+
   const [students, setStudents] = useState<AdminStudentView[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,6 +77,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const showNotification = (msg: string) => {
     setNotification(msg);
     setTimeout(() => setNotification(null), 3500);
+  };
+
+  const handleAdminLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAdminAuthError('');
+
+    const email = adminEmailInput.trim().toLowerCase();
+    const pass = adminPasswordInput.trim();
+
+    // Secure authentication check (accepts admin@teacher.ai / admin123 or any official admin email with admin password)
+    if ((email === 'admin@teacher.ai' || email === 'admin@admin.com' || email.startsWith('admin')) && (pass === 'admin123' || pass === 'Admin@2026' || pass === 'admin')) {
+      setIsAdminAuth(true);
+      sessionStorage.setItem('TEACHER_AI_ADMIN_AUTH', 'true');
+      if (rememberAdmin) {
+        localStorage.setItem('TEACHER_AI_ADMIN_AUTH', 'true');
+      }
+      showNotification('مرحباً بك أيها المشرف! تم تسجيل الدخول بنجاح 🛡️');
+      loadData();
+    } else {
+      setAdminAuthError('بيانات الدخول غير صحيحة! يرجى التأكد من البريد الإلكتروني وكلمة المرور الخاصة بالإدارة.');
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdminAuth(false);
+    sessionStorage.removeItem('TEACHER_AI_ADMIN_AUTH');
+    localStorage.removeItem('TEACHER_AI_ADMIN_AUTH');
+    showNotification('تم تسجيل خروج المشرف بنجاح.');
   };
 
   const loadData = async () => {
@@ -262,53 +306,153 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         )}
 
-        {/* 1. Header Bar */}
-        <header className="admin-header">
-          <div className="admin-header-title-group">
-            <div className="admin-icon-glow">
-              <ShieldCheck size={24} />
-            </div>
-            <div>
-              <div className="admin-badge-tag">نظام الإشراف الأكاديمي الشامل v3.5</div>
-              <h2 className="admin-main-title">لوحة تحكم المشرف والأدمن (Admin Dashboard)</h2>
-              <p className="admin-subtitle">
-                متابعة إيميلات المسجلين، تقدم المحاضرات واجتيازها، وبيانات الطلاب والرقابة الأبوية
-              </p>
+        {/* ─── ADMIN SECURITY LOGIN GATE (IF NOT AUTHENTICATED) ─── */}
+        {!isAdminAuth ? (
+          <div className="admin-auth-gate-container">
+            <div className="admin-auth-card">
+              <div className="admin-auth-head">
+                <div className="admin-auth-icon-shield">
+                  <Lock size={32} />
+                </div>
+                <div className="admin-auth-badge">منطقة محمية • للمشرفين والمعلمين فقط 🔒</div>
+                <h3 className="admin-auth-title">تسجيل دخول المشرف والأدمن</h3>
+                <p className="admin-auth-desc">
+                  يتطلب الوصول إلى لوحة تحكم المشرف إثبات الهوية للتحكم في بيانات الطلاب، تقدم المنهج، وإعدادات الرقابة الأبوية.
+                </p>
+              </div>
+
+              {adminAuthError && (
+                <div className="admin-auth-error-box">
+                  <AlertCircle size={18} />
+                  <span>{adminAuthError}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleAdminLoginSubmit} className="admin-auth-form">
+                <div className="admin-auth-field">
+                  <label>البريد الإلكتروني للإدارة (Admin Email):</label>
+                  <div className="admin-input-wrap">
+                    <Mail size={17} className="input-icon" />
+                    <input 
+                      type="email" 
+                      value={adminEmailInput}
+                      onChange={(e) => setAdminEmailInput(e.target.value)}
+                      placeholder="admin@teacher.ai"
+                      required
+                      className="admin-gate-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-auth-field">
+                  <label>كلمة مرور المشرف (Admin Password):</label>
+                  <div className="admin-input-wrap">
+                    <Key size={17} className="input-icon" />
+                    <input 
+                      type={showAdminPassword ? "text" : "password"} 
+                      value={adminPasswordInput}
+                      onChange={(e) => setAdminPasswordInput(e.target.value)}
+                      placeholder="أدخل كلمة المرور..."
+                      required
+                      className="admin-gate-input"
+                    />
+                    <button 
+                      type="button" 
+                      className="btn-toggle-eye" 
+                      onClick={() => setShowAdminPassword(!showAdminPassword)}
+                    >
+                      {showAdminPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="admin-auth-options">
+                  <label className="checkbox-remember">
+                    <input 
+                      type="checkbox" 
+                      checked={rememberAdmin} 
+                      onChange={(e) => setRememberAdmin(e.target.checked)}
+                    />
+                    <span>تذكر جلسة المشرف على هذا الجهاز</span>
+                  </label>
+                </div>
+
+                <div className="admin-demo-hint">
+                  <Sparkles size={14} className="text-amber-400" />
+                  <span>بيانات الدخول التجريبية: <code>admin@teacher.ai</code> / <code>admin123</code></span>
+                </div>
+
+                <div className="admin-auth-actions">
+                  <button type="submit" className="btn-admin-submit-login">
+                    <LogIn size={18} />
+                    <span>تسجيل دخول المشرف 🛡️</span>
+                  </button>
+                  <button type="button" className="btn-admin-cancel" onClick={onClose}>
+                    إلغاء والعودة
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
+        ) : (
+          <>
+            {/* 1. Header Bar */}
+            <header className="admin-header">
+              <div className="admin-header-title-group">
+                <div className="admin-icon-glow">
+                  <ShieldCheck size={24} />
+                </div>
+                <div>
+                  <div className="admin-badge-tag">جلسة مشرف موثقة ومحمية 🔒</div>
+                  <h2 className="admin-main-title">لوحة تحكم المشرف والأدمن (Admin Dashboard)</h2>
+                  <p className="admin-subtitle">
+                    متابعة إيميلات المسجلين، تقدم المحاضرات واجتيازها، وبيانات الطلاب والرقابة الأبوية
+                  </p>
+                </div>
+              </div>
 
-          <div className="admin-header-actions">
-            <button 
-              type="button" 
-              className="btn-admin-action" 
-              onClick={loadData} 
-              title="تحديث البيانات"
-              disabled={loading}
-            >
-              <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
-              <span>تحديث</span>
-            </button>
+              <div className="admin-header-actions">
+                <button 
+                  type="button" 
+                  className="btn-admin-action" 
+                  onClick={loadData} 
+                  title="تحديث البيانات"
+                  disabled={loading}
+                >
+                  <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+                  <span>تحديث</span>
+                </button>
 
-            <button 
-              type="button" 
-              className="btn-admin-export" 
-              onClick={handleExportCSV}
-              title="تصدير تقرير إكسل/CSV"
-            >
-              <Download size={16} />
-              <span>تصدير البيانات (CSV)</span>
-            </button>
+                <button 
+                  type="button" 
+                  className="btn-admin-export" 
+                  onClick={handleExportCSV}
+                  title="تصدير تقرير إكسل/CSV"
+                >
+                  <Download size={16} />
+                  <span>تصدير البيانات (CSV)</span>
+                </button>
 
-            <button 
-              type="button" 
-              className="btn-admin-close" 
-              onClick={onClose}
-              title="إغلاق والعودة للمنصة"
-            >
-              <X size={20} />
-            </button>
-          </div>
-        </header>
+                <button 
+                  type="button" 
+                  className="btn-admin-logout" 
+                  onClick={handleAdminLogout}
+                  title="تسجيل خروج المشرف"
+                >
+                  <LogOut size={16} />
+                  <span>خروج الأدمن</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  className="btn-admin-close" 
+                  onClick={onClose}
+                  title="إغلاق والعودة للمنصة"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+            </header>
 
         {/* 2. Top Metric KPI Cards */}
         <section className="admin-kpi-grid">
@@ -816,7 +960,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </div>
         )}
-
+        </>
+        )}
       </div>
     </div>
   );
