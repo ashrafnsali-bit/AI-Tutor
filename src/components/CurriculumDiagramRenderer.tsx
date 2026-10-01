@@ -1289,6 +1289,158 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             <text x="300" y="308" textAnchor="middle" fill="#94a3b8" fontSize="10">الطاقة الكلية = طاقة الوضع + طاقة الحركة + الطاقة الحرارية = مقدار ثابت دائماً</text>
           </svg>
         );
+      case 'neural_network_ai':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="neuronGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#38bdf8" />
+                <stop offset="100%" stopColor="#6366f1" />
+              </linearGradient>
+              <linearGradient id="hiddenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#ec4899" />
+              </linearGradient>
+              <marker id="arrowPurple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc" />
+              </marker>
+            </defs>
+
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.75)" rx="12" stroke="#334155" />
+
+            {/* Title */}
+            <rect x="130" y="10" width="340" height="30" rx="8" fill="rgba(99, 102, 241, 0.2)" stroke="#6366f1" />
+            <text x="300" y="30" textAnchor="middle" fill="#c7d2fe" fontSize="13" fontWeight="bold">بنية الشبكة العصبية الاصطناعية (Deep Neural Network)</text>
+
+            {/* Interconnection Synapses (Weights w_ij) */}
+            {/* Input to Hidden 1 */}
+            <line x1="90" y1="90" x2="230" y2="70" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="90" x2="230" y2="120" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="90" x2="230" y2="170" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="140" x2="230" y2="70" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="140" x2="230" y2="120" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="140" x2="230" y2="170" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="190" x2="230" y2="70" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="190" x2="230" y2="120" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+            <line x1="90" y1="190" x2="230" y2="170" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1.5" />
+
+            {/* Hidden 1 to Hidden 2 */}
+            <line x1="230" y1="70" x2="370" y2="85" stroke="rgba(168, 85, 247, 0.35)" strokeWidth="1.5" />
+            <line x1="230" y1="70" x2="370" y2="155" stroke="rgba(168, 85, 247, 0.35)" strokeWidth="1.5" />
+            <line x1="230" y1="120" x2="370" y2="85" stroke="rgba(168, 85, 247, 0.35)" strokeWidth="1.5" />
+            <line x1="230" y1="120" x2="370" y2="155" stroke="rgba(168, 85, 247, 0.35)" strokeWidth="1.5" />
+            <line x1="230" y1="170" x2="370" y2="85" stroke="rgba(168, 85, 247, 0.35)" strokeWidth="1.5" />
+            <line x1="230" y1="170" x2="370" y2="155" stroke="rgba(168, 85, 247, 0.35)" strokeWidth="1.5" />
+
+            {/* Hidden 2 to Output */}
+            <line x1="370" y1="85" x2="510" y2="110" stroke="rgba(236, 72, 153, 0.4)" strokeWidth="2" />
+            <line x1="370" y1="85" x2="510" y2="170" stroke="rgba(236, 72, 153, 0.4)" strokeWidth="2" />
+            <line x1="370" y1="155" x2="510" y2="110" stroke="rgba(236, 72, 153, 0.4)" strokeWidth="2" />
+            <line x1="370" y1="155" x2="510" y2="170" stroke="rgba(236, 72, 153, 0.4)" strokeWidth="2" />
+
+            {/* Input Nodes (X1, X2, X3) */}
+            <circle cx="90" cy="90" r="18" fill="url(#neuronGrad)" stroke="#38bdf8" strokeWidth="2" />
+            <text x="90" y="95" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">x₁</text>
+            <circle cx="90" cy="140" r="18" fill="url(#neuronGrad)" stroke="#38bdf8" strokeWidth="2" />
+            <text x="90" y="145" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">x₂</text>
+            <circle cx="90" cy="190" r="18" fill="url(#neuronGrad)" stroke="#38bdf8" strokeWidth="2" />
+            <text x="90" y="195" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">x₃</text>
+            <text x="90" y="224" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">طبقة المدخلات</text>
+            <text x="90" y="238" textAnchor="middle" fill="#94a3b8" fontSize="9">Input Features</text>
+
+            {/* Hidden Layer 1 Nodes */}
+            <circle cx="230" cy="70" r="17" fill="url(#hiddenGrad)" stroke="#a855f7" strokeWidth="2" />
+            <text x="230" y="74" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">h₁¹</text>
+            <circle cx="230" cy="120" r="17" fill="url(#hiddenGrad)" stroke="#a855f7" strokeWidth="2" />
+            <text x="230" y="124" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">h₂¹</text>
+            <circle cx="230" cy="170" r="17" fill="url(#hiddenGrad)" stroke="#a855f7" strokeWidth="2" />
+            <text x="230" y="174" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">h₃¹</text>
+            <text x="230" y="204" textAnchor="middle" fill="#c084fc" fontSize="11" fontWeight="bold">الطبقة الخفية 1</text>
+            <text x="230" y="218" textAnchor="middle" fill="#94a3b8" fontSize="9">z = Σwᵢxᵢ + b</text>
+
+            {/* Hidden Layer 2 Nodes */}
+            <circle cx="370" cy="85" r="17" fill="url(#hiddenGrad)" stroke="#ec4899" strokeWidth="2" />
+            <text x="370" y="89" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">h₁²</text>
+            <circle cx="370" cy="155" r="17" fill="url(#hiddenGrad)" stroke="#ec4899" strokeWidth="2" />
+            <text x="370" y="159" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">h₂²</text>
+            <text x="370" y="204" textAnchor="middle" fill="#f472b6" fontSize="11" fontWeight="bold">الطبقة الخفية 2</text>
+            <text x="370" y="218" textAnchor="middle" fill="#94a3b8" fontSize="9">a = ReLU(z)</text>
+
+            {/* Output Nodes (y1, y2) */}
+            <circle cx="510" cy="110" r="18" fill="#059669" stroke="#34d399" strokeWidth="2" />
+            <text x="510" y="115" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">ŷ₁</text>
+            <circle cx="510" cy="170" r="18" fill="#059669" stroke="#34d399" strokeWidth="2" />
+            <text x="510" y="175" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">ŷ₂</text>
+            <text x="510" y="204" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">طبقة المخرجات</text>
+            <text x="510" y="218" textAnchor="middle" fill="#94a3b8" fontSize="9">Softmax / Sigmoid</text>
+
+            {/* Backpropagation feedback loop */}
+            <path d="M 485 60 C 370 35, 230 35, 115 60" fill="none" stroke="#c084fc" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowPurple)" />
+            <rect x="220" y="38" width="160" height="20" rx="4" fill="rgba(15, 23, 42, 0.9)" stroke="#c084fc" />
+            <text x="300" y="52" textAnchor="middle" fill="#e9d5ff" fontSize="10" fontWeight="bold">الانتشار الخلفي (Backpropagation)</text>
+
+            {/* Bottom: Computational Breakdown */}
+            <rect x="25" y="248" width="550" height="72" rx="8" fill="rgba(30, 41, 59, 0.9)" stroke="#64748b" />
+            <text x="560" y="268" textAnchor="end" fill="#e2e8f0" fontSize="11">⚡ <tspan fontWeight="bold" fill="#38bdf8">التمرير الأمامي (Forward Pass):</tspan> حساب المجموع الموزون z = Σ(wᵢ · xᵢ) + b وتطبيق دالة التنشيط f(z) لتوليد التنبؤ ŷ.</text>
+            <text x="560" y="288" textAnchor="end" fill="#e2e8f0" fontSize="11">🔄 <tspan fontWeight="bold" fill="#c084fc">الانتشار الخلفي والتدرج الهابط:</tspan> حساب مشتقة دالة الخسارة ∇Loss بالنسبة للأوزان وتعديلها: w ← w - η · (∂Loss/∂w).</text>
+            <text x="560" y="308" textAnchor="end" fill="#e2e8f0" fontSize="10">🎯 <tspan fontWeight="bold" fill="#34d399">دالة ReLU:</tspan> f(z) = max(0, z) تحل مشكلة تلاشي التدرج (Vanishing Gradient) وتسرع تدريب النماذج العميقة.</text>
+          </svg>
+        );
+
+      case 'ml_pipeline_model':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowCyan2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+              </marker>
+            </defs>
+
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.75)" rx="12" stroke="#334155" />
+
+            {/* Title */}
+            <rect x="140" y="10" width="320" height="30" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" />
+            <text x="300" y="30" textAnchor="middle" fill="#7dd3fc" fontSize="13" fontWeight="bold">دورة حياة وتصنيف خوارزميات تعلم الآلة (ML Pipeline)</text>
+
+            {/* 3 Main Paradigms Comparison (Top Row) */}
+            {/* Supervised */}
+            <rect x="25" y="55" width="170" height="100" rx="8" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" strokeWidth="1.8" />
+            <rect x="35" y="65" width="150" height="22" rx="4" fill="#0284c7" />
+            <text x="110" y="80" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">1. التعلم الموجه (Supervised)</text>
+            <text x="110" y="104" textAnchor="middle" fill="#bae6fd" fontSize="10">بيانات موسومة (Labeled Data)</text>
+            <text x="110" y="122" textAnchor="middle" fill="#e2e8f0" fontSize="9">• تصنيف (Classification)</text>
+            <text x="110" y="138" textAnchor="middle" fill="#e2e8f0" fontSize="9">• انحدار خطي (Regression)</text>
+
+            {/* Unsupervised */}
+            <rect x="215" y="55" width="170" height="100" rx="8" fill="rgba(168, 85, 247, 0.12)" stroke="#a855f7" strokeWidth="1.8" />
+            <rect x="225" y="65" width="150" height="22" rx="4" fill="#7e22ce" />
+            <text x="300" y="80" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">2. غير الموجه (Unsupervised)</text>
+            <text x="300" y="104" textAnchor="middle" fill="#e9d5ff" fontSize="10">بيانات غير موسومة (Unlabeled)</text>
+            <text x="300" y="122" textAnchor="middle" fill="#e2e8f0" fontSize="9">• التجميع والتكتل (Clustering)</text>
+            <text x="300" y="138" textAnchor="middle" fill="#e2e8f0" fontSize="9">• تقليل الأبعاد (PCA / t-SNE)</text>
+
+            {/* Reinforcement */}
+            <rect x="405" y="55" width="170" height="100" rx="8" fill="rgba(245, 158, 11, 0.12)" stroke="#f59e0b" strokeWidth="1.8" />
+            <rect x="415" y="65" width="150" height="22" rx="4" fill="#d97706" />
+            <text x="490" y="80" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">3. التعزيزي (Reinforcement)</text>
+            <text x="490" y="104" textAnchor="middle" fill="#fde68a" fontSize="10">بيئة تفاعلية ومكافآت (Agent)</text>
+            <text x="490" y="122" textAnchor="middle" fill="#e2e8f0" fontSize="9">• اتخاذ القرارات والسياسات</text>
+            <text x="490" y="138" textAnchor="middle" fill="#e2e8f0" fontSize="9">• ألعاب الروبوتات والمركبات</text>
+
+            {/* Model Evaluation Metrics Row (Middle) */}
+            <rect x="25" y="165" width="550" height="65" rx="8" fill="rgba(30, 41, 59, 0.85)" stroke="#64748b" />
+            <text x="300" y="185" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">معايير تقييم نماذج التصنيف (Confusion Matrix Metrics)</text>
+            <text x="100" y="210" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">Accuracy = (TP+TN) / Total</text>
+            <text x="300" y="210" textAnchor="middle" fill="#f59e0b" fontSize="11" fontWeight="bold">Precision = TP / (TP + FP)</text>
+            <text x="500" y="210" textAnchor="middle" fill="#ec4899" fontSize="11" fontWeight="bold">Recall = TP / (TP + FN)</text>
+
+            {/* Bottom: Gradient Descent Optimization Loop */}
+            <rect x="25" y="240" width="550" height="80" rx="8" fill="rgba(15, 23, 42, 0.95)" stroke="#6366f1" strokeWidth="1.8" />
+            <text x="300" y="260" textAnchor="middle" fill="#818cf8" fontSize="12" fontWeight="bold">🔄 حلقة التدريب والتحسين: خوارزمية التدرج الهابط (Gradient Descent)</text>
+            <text x="560" y="282" textAnchor="end" fill="#e2e8f0" fontSize="11">1. إدخال البيانات المجهزة ← 2. حساب المخرجات ودالة الخسارة Loss(y, ŷ) ← 3. حساب مشتقات التدرج</text>
+            <text x="560" y="304" textAnchor="end" fill="#e2e8f0" fontSize="11">4. تحديث الأوزان بمعدل التعلم Learning Rate (η) حتى يصل النموذج إلى أدنى قيمة خطأ ممكنة (Global Minimum).</text>
+          </svg>
+        );
     }
   };
 

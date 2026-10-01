@@ -238,6 +238,8 @@ export interface LectureDiagram {
     | 'plant_animal_cell'
     | 'forces_motion_vector'
     | 'energy_transformation_chain'
+    | 'neural_network_ai'
+    | 'ml_pipeline_model'
     | 'polynomial_curve' 
     | 'apparatus' 
     | 'custom_svg';
