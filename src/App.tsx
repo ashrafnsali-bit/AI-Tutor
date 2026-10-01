@@ -29,6 +29,7 @@ import { GenerateLectureModal } from './components/GenerateLectureModal';
 import { ProgressDashboard } from './components/ProgressDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
 import { ContactModal, FloatingContactButton } from './components/ContactModal';
+import { WelcomeOnboardingModal } from './components/WelcomeOnboardingModal';
 
 export function App() {
   // Load saved state or default with consistency checks
@@ -117,6 +118,9 @@ export function App() {
   const [isProgressOpen, setIsProgressOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(() => {
+    return !localStorage.getItem('TEACHER_AI_ONBOARDING_SEEN');
+  });
   const [geoNotice, setGeoNotice] = useState<{ show: boolean; countryName: string; flag: string; city?: string } | null>(null);
 
   // User session state
@@ -371,6 +375,7 @@ export function App() {
         onOpenProgress={() => setIsProgressOpen(true)}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenContact={() => setIsContactOpen(true)}
+        onOpenOnboarding={() => setIsOnboardingOpen(true)}
       />
 
       {/* Dynamic Geolocation Country Notification Banner */}
@@ -547,6 +552,21 @@ export function App() {
         onClose={() => setIsContactOpen(false)}
         language={profile.language}
         currentLecture={activeLecture}
+      />
+
+      {/* First-Time Welcome & Learning Roadmap Onboarding Modal */}
+      <WelcomeOnboardingModal
+        isOpen={isOnboardingOpen}
+        profile={profile}
+        onFinish={(updatedProfile) => {
+          handleSaveProfile(updatedProfile);
+          localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
+          setIsOnboardingOpen(false);
+        }}
+        onClose={() => {
+          localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
+          setIsOnboardingOpen(false);
+        }}
       />
     </div>
   );

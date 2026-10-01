@@ -18,7 +18,8 @@ import {
   BarChart2,
   ChevronDown,
   BookOpen,
-  Mail
+  Mail,
+  Compass
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -35,6 +36,7 @@ interface NavbarProps {
   onOpenProgress?: () => void;
   onOpenAdmin?: () => void;
   onOpenContact?: () => void;
+  onOpenOnboarding?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -50,7 +52,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleLanguage,
   onOpenProgress,
   onOpenAdmin,
-  onOpenContact
+  onOpenContact,
+  onOpenOnboarding
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -131,6 +134,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
+          {/* Quick Platform Guide & Roadmap Trigger */}
+          {onOpenOnboarding && (
+            <button
+              type="button"
+              className="btn-header-guide-glow"
+              onClick={onOpenOnboarding}
+              title={isEn ? "Platform Guide & Learning Roadmap" : "دليل المنصة وخريطة المراحل التعليمية"}
+            >
+              <Compass size={15} className="guide-compass-icon" />
+              <span>{isEn ? 'Guide' : 'دليل المنصة'}</span>
+            </button>
+          )}
+
           {/* Quick Admin Dashboard Trigger */}
           {onOpenAdmin && (
             <button
@@ -208,6 +224,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <span className="item-subtitle">{isEn ? 'Students, progress & parent controls' : 'إيميلات المسجلين، تقدم المحاضرات والرقابة'}</span>
                       </div>
                       <span className="status-badge-mini badge-admin">VIP</span>
+                    </button>
+                  )}
+
+                  {onOpenOnboarding && (
+                    <button 
+                      type="button" 
+                      className="dropdown-item"
+                      onClick={() => { setIsDropdownOpen(false); onOpenOnboarding(); }}
+                    >
+                      <Compass size={16} className="item-icon text-amber-400" />
+                      <div className="item-text">
+                        <span className="item-title">{isEn ? 'Platform Guide & Roadmap' : 'دليل المنصة وخريطة المراحل'}</span>
+                        <span className="item-subtitle">{isEn ? 'Explore stages & subjects' : 'شرح المنصة واختيار المسارات'}</span>
+                      </div>
                     </button>
                   )}
 
@@ -387,6 +417,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Sparkles size={18} />
                 <span>{t.floatingTutorBtn}</span>
+              </button>
+            )}
+
+            {onOpenOnboarding && (
+              <button
+                type="button"
+                className="btn-mobile-tool btn-mobile-guide"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenOnboarding(); }}
+              >
+                <Compass size={18} className="text-amber-400" />
+                <span>{isEn ? 'Platform Guide' : 'دليل المنصة'}</span>
               </button>
             )}
 
