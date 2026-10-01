@@ -1379,11 +1379,30 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             <rect x="220" y="38" width="160" height="20" rx="4" fill="rgba(15, 23, 42, 0.9)" stroke="#c084fc" />
             <text x="300" y="52" textAnchor="middle" fill="#e9d5ff" fontSize="10" fontWeight="bold">الانتشار الخلفي (Backpropagation)</text>
 
-            {/* Bottom: Computational Breakdown */}
-            <rect x="25" y="248" width="550" height="72" rx="8" fill="rgba(30, 41, 59, 0.9)" stroke="#64748b" />
-            <text x="560" y="268" textAnchor="end" fill="#e2e8f0" fontSize="11">⚡ <tspan fontWeight="bold" fill="#38bdf8">التمرير الأمامي (Forward Pass):</tspan> حساب المجموع الموزون z = Σ(wᵢ · xᵢ) + b وتطبيق دالة التنشيط f(z) لتوليد التنبؤ ŷ.</text>
-            <text x="560" y="288" textAnchor="end" fill="#e2e8f0" fontSize="11">🔄 <tspan fontWeight="bold" fill="#c084fc">الانتشار الخلفي والتدرج الهابط:</tspan> حساب مشتقة دالة الخسارة ∇Loss بالنسبة للأوزان وتعديلها: w ← w - η · (∂Loss/∂w).</text>
-            <text x="560" y="308" textAnchor="end" fill="#e2e8f0" fontSize="10">🎯 <tspan fontWeight="bold" fill="#34d399">دالة ReLU:</tspan> f(z) = max(0, z) تحل مشكلة تلاشي التدرج (Vanishing Gradient) وتسرع تدريب النماذج العميقة.</text>
+            {/* Bottom: 3 Modular Structured Information Cards */}
+            {/* Card 1: Forward Pass */}
+            <g transform="translate(20, 245)">
+              <rect width="176" height="66" rx="8" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" strokeWidth="1.2" />
+              <text x="88" y="20" textAnchor="middle" fill="#7dd3fc" fontSize="10.5" fontWeight="bold">⚡ التمرير الأمامي (Forward)</text>
+              <text x="88" y="38" textAnchor="middle" fill="#e2e8f0" fontSize="9.5">z = Σ(wᵢ · xᵢ) + b</text>
+              <text x="88" y="54" textAnchor="middle" fill="#38bdf8" fontSize="9">حساب التنبؤ ŷ = f(z)</text>
+            </g>
+
+            {/* Card 2: ReLU Activation */}
+            <g transform="translate(212, 245)">
+              <rect width="176" height="66" rx="8" fill="rgba(52, 211, 153, 0.12)" stroke="#34d399" strokeWidth="1.2" />
+              <text x="88" y="20" textAnchor="middle" fill="#6ee7b7" fontSize="10.5" fontWeight="bold">🎯 دالة التنشيط (ReLU)</text>
+              <text x="88" y="38" textAnchor="middle" fill="#e2e8f0" fontSize="9.5">a = max(0, z)</text>
+              <text x="88" y="54" textAnchor="middle" fill="#34d399" fontSize="9">تفادي تلاشي التدرج</text>
+            </g>
+
+            {/* Card 3: Backpropagation */}
+            <g transform="translate(404, 245)">
+              <rect width="176" height="66" rx="8" fill="rgba(192, 132, 252, 0.12)" stroke="#c084fc" strokeWidth="1.2" />
+              <text x="88" y="20" textAnchor="middle" fill="#e9d5ff" fontSize="10.5" fontWeight="bold">🔄 التمرير الخلفي (Backprop)</text>
+              <text x="88" y="38" textAnchor="middle" fill="#e2e8f0" fontSize="9.5">w ← w − η · (∂L/∂w)</text>
+              <text x="88" y="54" textAnchor="middle" fill="#c084fc" fontSize="9">تحديث الأوزان وتقليل الخطأ</text>
+            </g>
           </svg>
         );
 
@@ -1437,8 +1456,8 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             {/* Bottom: Gradient Descent Optimization Loop */}
             <rect x="25" y="240" width="550" height="80" rx="8" fill="rgba(15, 23, 42, 0.95)" stroke="#6366f1" strokeWidth="1.8" />
             <text x="300" y="260" textAnchor="middle" fill="#818cf8" fontSize="12" fontWeight="bold">🔄 حلقة التدريب والتحسين: خوارزمية التدرج الهابط (Gradient Descent)</text>
-            <text x="560" y="282" textAnchor="end" fill="#e2e8f0" fontSize="11">1. إدخال البيانات المجهزة ← 2. حساب المخرجات ودالة الخسارة Loss(y, ŷ) ← 3. حساب مشتقات التدرج</text>
-            <text x="560" y="304" textAnchor="end" fill="#e2e8f0" fontSize="11">4. تحديث الأوزان بمعدل التعلم Learning Rate (η) حتى يصل النموذج إلى أدنى قيمة خطأ ممكنة (Global Minimum).</text>
+            <text x="300" y="282" textAnchor="middle" fill="#e2e8f0" fontSize="10.5">1. إدخال البيانات المجهزة ← 2. حساب المخرجات ودالة الخسارة Loss(y, ŷ) ← 3. حساب مشتقات التدرج</text>
+            <text x="300" y="304" textAnchor="middle" fill="#cbd5e1" fontSize="10">4. تحديث الأوزان بمعدل التعلم Learning Rate (η) للوصول لأدنى قيمة خطأ (Global Minimum)</text>
           </svg>
         );
 
