@@ -69,7 +69,7 @@ Strict Pedagogical Directives:
   // If API Key is present, call Gemini API
   if (activeKey && activeKey.trim() !== '') {
     try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey.trim()}`;
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey.trim()}`;
 
       const contents = [
         {
@@ -155,7 +155,7 @@ export async function evaluateAssessmentWithGemini(
 
   if (activeKey && activeKey.trim() !== '') {
     try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey.trim()}`;
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey.trim()}`;
 
       const prompt = isEn
         ? `
@@ -457,31 +457,43 @@ CRITICAL RULES:
   }
 }`;
 
+  const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest', 'gemini-2.5-pro'];
+  let rawText: string | null = null;
+  let lastError = '';
+
+  for (const modelName of candidateModels) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey.trim()}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.35,
+            maxOutputTokens: 5000,
+            responseMimeType: 'application/json'
+          }
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (rawText) break;
+      } else {
+        lastError = await response.text();
+      }
+    } catch (e) {
+      lastError = e instanceof Error ? e.message : 'Network error';
+    }
+  }
+
+  if (!rawText) {
+    return { lecture: null, error: `Gemini API Error: ${lastError || 'Could not generate lesson.'}` };
+  }
+
   try {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey.trim()}`;
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.35,
-          maxOutputTokens: 5000,
-          responseMimeType: 'application/json'
-        }
-      })
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      return { lecture: null, error: `Gemini API Error: ${response.status} - ${errText}` };
-    }
-
-    const data = await response.json();
-    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!rawText) {
-      return { lecture: null, error: 'No content received from Gemini model.' };
-    }
 
     const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
     const rawParsed = JSON.parse(cleaned);
