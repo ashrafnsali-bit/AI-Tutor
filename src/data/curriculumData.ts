@@ -560,6 +560,23 @@ export const MATH_LECTURES: Lecture[] = [
         titleEn: '2. Power Rule & Tangent Line Equation',
         contentAr: 'قاعدة القوة: مشتقة x^n هي n * x^(n-1). مشتقة الثابت = 0. ميل المماس m لمنحنى الدالة f(x) عند النقطة (x1, y1) هو m = f\'(x1). معادلة المماس هي y - y1 = m(x - x1).',
         contentEn: 'Power rule: d/dx(x^n) = n x^(n-1). Derivative of constant is 0. Tangent slope is m = f\'(x1). Tangent line is y - y1 = m(x - x1).',
+        diagram: {
+          id: 'diag-math3-tangent',
+          figureNumberAr: 'شكل (3-1)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'ميل مماس المنحنى والمشتقة الأولى كمعامل حدّي',
+          titleEn: 'Tangent Slope & First Derivative as Limit of Secant Slopes',
+          captionAr: 'يمثل خط المماس باللون الأزرق الميل اللحظي للمنحنى f(x) عند نقطة التماس (x₀, y₀)، حيث يقترب ميل القاطع Δy/Δx من قيمة المشتقة f\'(x₀) عندما تقترب Δx من الصفر.',
+          captionEn: 'The tangent line (blue) illustrates the instantaneous rate of change at point (x₀, y₀), where secant slope Δy/Δx converges to derivative f\'(x₀) as Δx → 0.',
+          diagramType: 'derivative_slope',
+          takeawayFormulaAr: "f'(x) = lim_{Δx → 0} [f(x + Δx) - f(x)] / Δx",
+          takeawayFormulaEn: "f'(x) = lim_{Δx → 0} [f(x + Δx) - f(x)] / Δx",
+          keyLabels: [
+            { tagAr: 'خط المماس (Tangent)', tagEn: 'Tangent Line', descAr: 'المستقيم الذي يمس المنحنى عند نقطة التماس', descEn: 'Line touching the curve at the point of tangency' },
+            { tagAr: 'نقطة التماس (x₀, y₀)', tagEn: 'Point of Tangency', descAr: 'نقطة التماس المحددة للمنحنى', descEn: 'Coordinates where derivative is evaluated' },
+            { tagAr: 'المشتقة f\'(x₀)', tagEn: "Derivative f'(x₀)", descAr: 'ميل خط المماس المحسوب بالقواعد', descEn: 'Exact slope value derived analytically' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: إيجاد معادلة مماس المنحنى',
           titleEn: 'Worked Example: Finding Tangent Line Equation',
@@ -806,6 +823,23 @@ export const MATH_LECTURES: Lecture[] = [
         titleEn: '2. Definite Integrals & Area Calculation',
         contentAr: 'لحساب التكامل المحدود ∫_a^b f(x) dx: 1) نوجد الدالة الأصلية F(x)، 2) نعوض بالحد العلوي b ثم نطرح منه التعويض بالحد السفلي a: F(b) - F(a). المساحة المحصورة تحت المنحنى ومحور السينات حيث f(x) >= 0 تساوي هذا التكامل المحدود تماماً.',
         contentEn: 'To evaluate definite integral ∫_a^b f(x) dx, find antiderivative F(x) and compute F(b) - F(a). This computes the exact bounded area.',
+        diagram: {
+          id: 'diag-math4-integral',
+          figureNumberAr: 'شكل (4-1)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'المساحة تحت المنحنى والتكامل المحدد كعتبة لمجاميع ريمان',
+          titleEn: 'Area Under Curve & Definite Integral as Riemann Limit',
+          captionAr: 'توضح المنطقة المظللة بالأزرق التكامل المحدود ∫_a^b f(x) dx؛ وهو يمثل المساحة الهندسية التراكمية المحصورة بين منحنى الدالة ومحور السينات على الفترة [a, b] عبر تقسيمها لشرائح بعرض dx.',
+          captionEn: 'The shaded region demonstrates the definite integral ∫_a^b f(x) dx, representing the exact geometric area under f(x) over [a, b] as strip width dx → 0.',
+          diagramType: 'calculus_integral',
+          takeawayFormulaAr: 'A = ∫_a^b f(x) dx = F(b) - F(a)',
+          takeawayFormulaEn: 'A = ∫_a^b f(x) dx = F(b) - F(a)',
+          keyLabels: [
+            { tagAr: 'منحنى الدالة f(x)', tagEn: 'Function Curve f(x)', descAr: 'الدالة المراد مكاملتها', descEn: 'Integrand function curve' },
+            { tagAr: 'حدود التكامل [a, b]', tagEn: 'Integration Bounds [a, b]', descAr: 'فترة التكامل على محور السينات', descEn: 'Interval along x-axis' },
+            { tagAr: 'شريحة ريمان dx', tagEn: 'Riemann Strip dx', descAr: 'عرض الشريحة التفاضلية', descEn: 'Differential width element' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب تكامل محدود ومساحة محصورة',
           titleEn: 'Worked Example: Definite Integral & Bounded Area',
@@ -1187,6 +1221,23 @@ export const PHYSICS_LECTURES: Lecture[] = [
         titleEn: '1. Displacement & Velocity: Direction Matters',
         contentAr: 'المسافة هي طول المسار الفعلي الذي يقطعه الجسم وهي كمية قياسية، بينما الإزاحة هي أقصر خط مستقيم موجه من نقطة البداية إلى النهاية وهي كمية متجهة.',
         contentEn: 'Distance is the total path length traveled (scalar), while displacement is the net directed straight line from start to finish (vector).',
+        diagram: {
+          id: 'diag-phys1-efield',
+          figureNumberAr: 'شكل (1-1)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'خطوط المجال الكهربائي الثنائي بين شحنتين نقطيتين (+q و -q)',
+          titleEn: 'Electric Field Lines of an Electric Dipole (+q and -q)',
+          captionAr: 'تخرج خطوط المجال الكهربائي عمودياً من الشحنة الموجبة (+q) وتتجه نحو الشحنة السالبة (-q). تعبر كثافة الخطوط في أي منطقة عن شدة المجال الكهربائي E في تلك النقطة.',
+          captionEn: 'Electric field lines emanate radially outward from positive charge (+q) and terminate on negative charge (-q). Line density reflects local field intensity E.',
+          diagramType: 'electric_field',
+          takeawayFormulaAr: 'E = k · |q| / r²',
+          takeawayFormulaEn: 'E = k · |q| / r²',
+          keyLabels: [
+            { tagAr: 'الشحنة الموجبة (+q)', tagEn: 'Positive Charge (+q)', descAr: 'مصدر خطوط المجال الخارجة', descEn: 'Source of outgoing electric field lines' },
+            { tagAr: 'الشحنة السالبة (-q)', tagEn: 'Negative Charge (-q)', descAr: 'مصب خطوط المجال الداخلة', descEn: 'Sink for incoming field lines' },
+            { tagAr: 'متجه شدة المجال (E)', tagEn: 'Electric Field Vector (E)', descAr: 'المماس لخط المجال عند أي نقطة', descEn: 'Tangent to field line at any point' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب الإزاحة والسرعة المتجهة',
           titleEn: 'Worked Example: Displacement Calculation',
@@ -1313,6 +1364,23 @@ export const PHYSICS_LECTURES: Lecture[] = [
         titleEn: "1. Newton's 2nd Law: Force, Mass & Acceleration",
         contentAr: 'ينص قانون نيوتن الثاني على أن تسارع الجسم يتناسب طردياً مع محصلة القوى المؤثرة عليه وعكسياً مع كتلته: ΣF = ma.',
         contentEn: "Newton's second law states that acceleration is directly proportional to net force and inversely proportional to mass: ΣF = ma.",
+        diagram: {
+          id: 'diag-phys2-capacitor',
+          figureNumberAr: 'شكل (2-1)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'تركيب المكثف ذي اللوحين المتوازيين وتأثير المادة العازلة',
+          titleEn: 'Parallel Plate Capacitor & Dielectric Slab',
+          captionAr: 'يتكون المكثف من لوحين موصلين متوازيين تفصل بينهما مسافة d ومادة عازلة بثابت κ. يؤدي وضع المادة العازلة إلى مضاعفة السعة الكهربائية C = κ·ε₀·A/d وتقليل شدة المجال الكهربائي بين اللوحين.',
+          captionEn: 'The parallel plate capacitor separates charge ±Q across distance d. Inserting dielectric κ increases capacitance C = κ·ε₀·A/d while reducing interior electric field.',
+          diagramType: 'circuit',
+          takeawayFormulaAr: 'C = κ · ε₀ · A / d',
+          takeawayFormulaEn: 'C = κ · ε₀ · A / d',
+          keyLabels: [
+            { tagAr: 'اللوح الموجب (+Q)', tagEn: 'Positive Plate (+Q)', descAr: 'يحمل الشحنة الموجبة وفرق جهد أعلى', descEn: 'Carries positive charge +Q' },
+            { tagAr: 'اللوح السالب (-Q)', tagEn: 'Negative Plate (-Q)', descAr: 'يحمل الشحنة السالبة وفرق جهد أقل', descEn: 'Carries negative charge -Q' },
+            { tagAr: 'المادة العازلة (κ)', tagEn: 'Dielectric Slab (κ)', descAr: 'تزيد من سعة تخزين الشحنات', descEn: 'Dielectric medium augmenting capacitance' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب القوة المحصلة والتسارع',
           titleEn: 'Worked Example: Net Force Acceleration',
@@ -1376,6 +1444,23 @@ export const PHYSICS_LECTURES: Lecture[] = [
         titleEn: '1. Work-Energy Theorem',
         contentAr: 'الشغل هو حاصل ضرب القوة المؤثرة في المسافة المقطوعة في اتجاه القوة. الشغل الكلي المبذول على جسم يساوي التغير في طاقته الحركية: W_net = ΔKE.',
         contentEn: 'Net work performed on an object equals its change in kinetic energy: W_net = ΔKE.',
+        diagram: {
+          id: 'diag-phys3-lorentz',
+          figureNumberAr: 'شكل (3-1)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'القوة المغناطيسية المؤثرة في شحنة وقاعدة اليد اليمنى',
+          titleEn: 'Magnetic Force (Lorentz Force) & Right-Hand Rule in 3D',
+          captionAr: 'عند حركة شحنة موجبة بسرعة v داخل مجال مغناطيسي B، تتأثر بقوة مغناطيسية F_B = q(v × B) تكون عمودية تماماً على المستوي الذي يضم متجهي السرعة والمجال وفق قاعدة اليد اليمنى.',
+          captionEn: 'A positive charge moving with velocity v in magnetic field B experiences perpendicular force F_B = q(v × B) governed by the right-hand rule orthogonal cross product.',
+          diagramType: 'vector_3d',
+          takeawayFormulaAr: 'F_B = q · v · B · sin(θ)',
+          takeawayFormulaEn: 'F_B = q · v · B · sin(θ)',
+          keyLabels: [
+            { tagAr: 'متجه السرعة (v)', tagEn: 'Velocity Vector (v)', descAr: 'اتجاه حركة الشحنة (الإبهام)', descEn: 'Thumb points along velocity vector' },
+            { tagAr: 'المجال المغناطيسي (B)', tagEn: 'Magnetic Field (B)', descAr: 'اتجاه خطوط المجال (السبابة)', descEn: 'Fingers align with magnetic field' },
+            { tagAr: 'القوة المغناطيسية (F_B)', tagEn: 'Magnetic Force (F_B)', descAr: 'القوة العمودية الصادرة من راحة اليد', descEn: 'Force normal to palm for positive charge' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حفظ الطاقة لجسم ساقط',
           titleEn: 'Worked Example: Freefall Energy Exchange',
@@ -1439,6 +1524,23 @@ export const PHYSICS_LECTURES: Lecture[] = [
         titleEn: '1. First Law of Thermodynamics',
         contentAr: 'التغير في الطاقة الداخلية لنظام فيزيائي مغلق يساوي كمية الحرارة المضافة إليه مطروحاً منها الشغل الذي يبذله النظام: ΔU = Q - W.',
         contentEn: 'Internal energy changes equal added heat minus work done by the system: ΔU = Q - W.',
+        diagram: {
+          id: 'diag-phys4-carnot',
+          figureNumberAr: 'شكل (4-1)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'مخطط الضغط والحجم (P-V) لدورة كارنو الحرارية الانعكاسية',
+          titleEn: 'Pressure-Volume (P-V) Diagram of the Ideal Carnot Thermodynamic Cycle',
+          captionAr: 'يمثل المخطط المراحل الأربع لدورة كارنو: تمدد ثبوت حرارة (A→B)، تمدد كظومي (B→C)، انضغاط ثبوت حرارة (C→D)، وانضغاط كظومي (D→A). المساحة المغلقة داخل المنحنى تساوي الشغل الصافي W_net.',
+          captionEn: 'Carnot cycle stages on P-V coordinates: isothermal expansion (A→B), adiabatic expansion (B→C), isothermal compression (C→D), and adiabatic compression (D→A). Enclosed area equals net work W_net.',
+          diagramType: 'pv_carnot',
+          takeawayFormulaAr: 'W_net = ∮ P dV = Q_H - Q_C | η = 1 - (T_C / T_H)',
+          takeawayFormulaEn: 'W_net = ∮ P dV = Q_H - Q_C | η = 1 - (T_C / T_H)',
+          keyLabels: [
+            { tagAr: 'تمدد إيزوثيرمي (A→B)', tagEn: 'Isothermal Expansion (A→B)', descAr: 'امتصاص حرارة Q_H عند درجة حرارة ثابتة T_H', descEn: 'Heat intake Q_H at constant high temp T_H' },
+            { tagAr: 'انضغاط إيزوثيرمي (C→D)', tagEn: 'Isothermal Compression (C→D)', descAr: 'طرد حرارة Q_C للمستودع البارد T_C', descEn: 'Heat expulsion Q_C to cold reservoir T_C' },
+            { tagAr: 'الشغل الصافي (W_net)', tagEn: 'Net Work Area (W_net)', descAr: 'المساحة المحصورة داخل دورة P-V', descEn: 'Area enclosed by cyclic trajectory' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: التمدد الحراري للغاز',
           titleEn: 'Worked Example: Thermal Gas Expansion',
@@ -1553,6 +1655,23 @@ export const PHYSICS_LECTURES: Lecture[] = [
         titleEn: '1. Magnetic Flux & Faraday\'s Induction Law',
         contentAr: 'يعتمد التدفق المغناطيسي Φ على شدة المجال B، ومساحة السطح A، والزاوية θ بين خطوط المجال والعمودي على السطح: Φ = B · A · cos(θ). ينص قانون فاراداي على أن مقدار القوة الدافعة الحثية ε المتولدة في ملف عدد لفاته N يتناسب طردياً مع المعدل الزمني لتغير التدفق المغناطيسي: ε = -N · (ΔΦ / Δt).',
         contentEn: 'Magnetic flux Φ = B A cos(θ). Faraday\'s Law states that induced electromotive force ε in an N-turn coil is proportional to the time rate of flux change: ε = -N (ΔΦ/Δt).',
+        diagram: {
+          id: 'diag-phys5-faraday',
+          figureNumberAr: 'شكل (5-1)',
+          figureNumberEn: 'Figure (5-1)',
+          titleAr: 'الحث الكهرومغناطيسي والمحول الكهربائي (نسبة الجهد وعدد اللفات)',
+          titleEn: 'Electromagnetic Induction & Transformer Voltage-Turns Ratio',
+          captionAr: 'ينقل المحول الكهربائي الطاقة عبر القلب الحديدي المغلق بواسطة التدفق المغناطيسي المتغير Φ_B. تتناسب نسبة جهد الملف الثانوي للابتدائي طردياً مع نسبة عدد اللفات: V_s / V_p = N_s / N_p.',
+          captionEn: 'The transformer transfers energy via mutual magnetic flux Φ_B through the soft iron core. The secondary-to-primary voltage ratio matches the turns ratio: V_s / V_p = N_s / N_p.',
+          diagramType: 'faraday_induction',
+          takeawayFormulaAr: 'ε = -N · (ΔΦ / Δt) | V_s / V_p = N_s / N_p',
+          takeawayFormulaEn: 'ε = -N · (ΔΦ / Δt) | V_s / V_p = N_s / N_p',
+          keyLabels: [
+            { tagAr: 'الملف الابتدائي (N_p)', tagEn: 'Primary Coil (N_p)', descAr: 'المتصل بمصدر الجهد المتناوب V_p', descEn: 'Input AC supply coil' },
+            { tagAr: 'الملف الثانوي (N_s)', tagEn: 'Secondary Coil (N_s)', descAr: 'المتصل بالحمل أو المستهلك V_s', descEn: 'Output load supply coil' },
+            { tagAr: 'التدفق المغناطيسي (Φ_B)', tagEn: 'Magnetic Flux (Φ_B)', descAr: 'خطوط المجال الموجهة داخل القلب الحديدي', descEn: 'Dynamic flux circulating in iron core' }
+          ]
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي: حساب القوة الدافعة الحثية (EMF)',
           titleEn: 'Worked Example: Induced EMF Calculation',

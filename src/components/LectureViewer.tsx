@@ -8,6 +8,7 @@ import {
   ChevronUp, Play, SkipForward, Calculator,
   PenTool, Star, Zap, ArrowRight, RefreshCw, X, Layers
 } from 'lucide-react';
+import { CurriculumDiagramRenderer } from './CurriculumDiagramRenderer';
 
 interface LectureViewerProps {
   lecture: Lecture;
@@ -217,6 +218,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   <span className="section-title-text">{secTitle}</span>
                 </div>
                 <div className="section-header-right">
+                  {sec.diagram && (
+                    <span className="section-has-diagram-badge">
+                      <Layers size={12} />
+                      {isEn ? 'Diagram' : 'رسم توضيحي'}
+                    </span>
+                  )}
                   {check && (
                     <span className="section-has-check-badge">
                       <CheckCircle size={12} />
@@ -242,6 +249,11 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                       <p key={pi} className="section-para">{para}</p>
                     ))}
                   </div>
+
+                  {/* ── CURRICULUM ILLUSTRATION & SCIENTIFIC DIAGRAM ── */}
+                  {sec.diagram && (
+                    <CurriculumDiagramRenderer diagram={sec.diagram} lang={lang} />
+                  )}
 
                   {/* ── INTERACTIVE WORKED EXAMPLE (Step-by-Step) ── */}
                   {ex && (

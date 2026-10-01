@@ -193,11 +193,36 @@ export interface TextbookExercise {
   answerEn: string;
 }
 
+export interface DiagramKeyLabel {
+  tagAr: string;
+  tagEn: string;
+  descAr?: string;
+  descEn?: string;
+  color?: string;
+}
+
+export interface LectureDiagram {
+  id: string;
+  figureNumberAr: string; // e.g. "شكل (1-3)"
+  figureNumberEn: string; // e.g. "Figure (1-3)"
+  titleAr: string;
+  titleEn: string;
+  captionAr: string;
+  captionEn: string;
+  diagramType: 'electric_field' | 'circuit' | 'vector_3d' | 'pv_carnot' | 'faraday_induction' | 'calculus_integral' | 'derivative_slope' | 'polynomial_curve' | 'apparatus' | 'custom_svg';
+  imageUrl?: string;
+  svgContent?: string;
+  keyLabels?: DiagramKeyLabel[];
+  takeawayFormulaAr?: string;
+  takeawayFormulaEn?: string;
+}
+
 export interface LectureSection {
   titleAr: string;
   titleEn: string;
   contentAr: string;
   contentEn: string;
+  diagram?: LectureDiagram;
   interactiveExample?: InteractiveExample;
   tipsAr: string[];
   tipsEn: string[];
