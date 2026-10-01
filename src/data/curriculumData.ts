@@ -5343,6 +5343,68 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
           'Compounds exhibit entirely new properties distinct from their constituent elements.',
           'Homogeneous mixtures are uniform solutions where individual particles cannot be discerned by eye.'
         ]
+      },
+      {
+        titleAr: '4. التغيرات الفيزيائية والكيميائية وقانون حفظ الكتلة',
+        titleEn: '4. Physical vs Chemical Changes & Law of Conservation of Mass',
+        contentAr: 'التغير الفيزيائي يغير في الشكل أو المظهر الخارجي أو الحالة فقط دون تغيير هوية المادة (مثل انصهار الجليد، تمزيق الورق، ذوبان السكر). أما التغير الكيميائي فينتج عنه مواد جديدة تماماً بخصائص مختلفة عبر تكسير روابط وتكوين روابط جديدة (مثل صدأ الحديد، احتراق الخشب، تخمر العجين). وينص قانون حفظ الكتلة على أن: "المادة لا تفنى ولا تستحدث من العدم، ومجموع كتل المواد المتفاعلة يساوي دائماً مجموع كتل المواد الناتجة في أي نظام مغلق".',
+        contentEn: 'Physical changes alter form or state without changing chemical identity (melting, tearing, dissolving). Chemical changes forge entirely new substances via chemical reactions (rusting, burning, fermentation). The Law of Conservation of Mass states that mass is neither created nor destroyed: Total Reactant Mass = Total Product Mass.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 4: تطبيق قانون حفظ الكتلة في تفاعل كيميائي مغلق وحساب كتلة الغاز الناتج',
+          titleEn: 'Worked Example 4: Applying Law of Conservation of Mass in Chemical Reaction',
+          equation: 'مجموع كتل المتفاعلات = مجموع كتل النواتج  |  m_متفاعلات = m_نواتج',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'المعطيات: تفاعل 10 جرامات من مسحوق الخل والبيكربونات في دورق مغلق يحتوي على 50 جراماً من الخل. كتلة المتفاعلات الكلية = 10 + 50 = 60 جراماً.',
+              textEn: 'Given: 10g baking soda reacts with 50g vinegar in a closed flask. Total reactants mass = 60g.',
+              noteAr: 'حساب كتل المتفاعلات الكلية'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الخطوة 1: بعد انتهاء الفوران وتصاعد غاز ثاني أكسيد الكربون داخل الدورق المحكم، وُجد أن كتلة السائل المتبقي = 55.6 جراماً.',
+              textEn: 'Step 1: After reaction in closed system, remaining liquid mass = 55.6g.',
+              noteAr: 'كتلة النواتج السائلة'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'الخطوة 2 (تطبيق قانون حفظ الكتلة): كتلة المتفاعلات (60g) = كتلة السائل الناتج (55.6g) + كتلة غاز CO₂ المحبوس. إذن: كتلة الغاز = 60 - 55.6 = 4.4 جرامات.',
+              textEn: 'Step 2: Total Reactants (60g) = Liquid Product (55.6g) + Trapped Gas. Gas mass = 60 - 55.6 = 4.4g.',
+              noteAr: 'كتلة الغاز المتصاعد = 4.4g'
+            }
+          ],
+          takeawayAr: 'في أي تفاعل كيميائي، تظل كتلة الذرات محفوظة تماماً ولا تضيع، بل يعاد ترتيب ارتباطها فقط.',
+          takeawayEn: 'In any chemical reaction, atomic mass is strictly conserved; atoms are simply rearranged.'
+        },
+        formativeCheck: {
+          id: 'fc-sci1-4',
+          questionAr: 'أي من التغيرات التالية يُعتبر "تغيراً كيميائياً" ينتج عنه مادة جديدة؟',
+          questionEn: 'Which of the following processes represents a chemical change forming new substances?',
+          optionsAr: [
+            'صدأ مسمار من الحديد عند تعرضه للهواء والرطوبة',
+            'ذوبان ملح الطعام في كأس ماء دافئ',
+            'انصهار قالب من الشمع بالتسخين',
+            'تقطيع لوح من الخشب إلى قطع صغيرة'
+          ],
+          optionsEn: [
+            'Rusting of an iron nail exposed to moist air',
+            'Dissolving table salt in warm water',
+            'Melting a wax candle with heat',
+            'Cutting a wooden plank into small pieces'
+          ],
+          correctIndex: 0,
+          explanationAr: 'صدأ الحديد ينتج مادة جديدة تماماً هي (أكسيد الحديد Fe₂O₃) تختلف جذرياً في خواصها ولونها عن فلز الحديد الأصلي، بينما الباقي تغيرات فيزيائية فقط.',
+          explanationEn: 'Rusting forms a new compound (Iron Oxide Fe₂O₃) with completely new properties. The others are purely physical alterations.',
+          hintAr: 'ابحث عن العملية التي تؤدي لتكوين مركب جديد بروابط كيميائية لا يمكن عكسها بسهولة.'
+        },
+        tipsAr: [
+          'من أهم دلائل حدوث التغير الكيميائي: تصاعد غاز، تغير اللون، انبعاث ضوء أو حرارة، وتكون راسب صلب.',
+          'الكتلة لا تتغير في الأنظمة المغلقة، وإذا بدا أن الكتلة نقصت في نظام مفتوح فالسبب هو تسرب غاز متصاعد للجو.'
+        ],
+        tipsEn: [
+          'Evidence of chemical change: gas evolution, color change, heat/light release, precipitate formation.',
+          'Apparent mass loss in open systems is typically due to escaped gaseous products.'
+        ]
       }
     ],
 
@@ -5354,7 +5416,8 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
       'العدد الذري (Z): عدد البروتونات = عدد الإلكترونات في الذرة المتعادلة',
       'العدد الكتلي (A): مجموع البروتونات والنيوترونات (A = Z + N) | عدد النيوترونات N = A - Z',
       'العنصر: ذرات متطابقة (O₂, Fe) | المركب: اتحاد كيميائي بنسب ثابتة (H₂O, NaCl) | المخلوط: مزيج فيزيائي (الهواء، الرمل والملح)',
-      'طرق الفصل: المغناطيس (للحديد)، الترشيح (لغير الذائب)، التبخير والتقطير (للسوائل والمحاليل)'
+      'طرق الفصل: المغناطيس (للحديد)، الترشيح (لغير الذائب)، التبخير والتقطير (للسوائل والمحاليل)',
+      'التغيرات وقانون حفظ الكتلة: التغير الكيميائي يكوّن روابط ومواد جديدة، والكتلة الكلية للمتفاعلات تساوي كتلة النواتج دائماً'
     ],
     conceptMapEn: [
       'Matter definition: Has mass and volume (Solid, Liquid, Gas states)',
@@ -5363,10 +5426,11 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
       'Atomic number Z = protons = electrons (neutral atom)',
       'Mass number A = Z + N | Neutrons N = A - Z',
       'Element (same atoms) vs Compound (chemically bonded) vs Mixture (physical blend)',
-      'Separation: Magnetism, Filtration, Evaporation, Distillation'
+      'Separation: Magnetism, Filtration, Evaporation, Distillation',
+      'Conservation of Mass: Chemical changes create new substances, total reactant mass equals product mass'
     ],
 
-    // Guided Textbook Exercises
+    // Guided Textbook Exercises (4 Complete Worked Models)
     textbookExercises: [
       {
         id: 'ex-sci1-1',
@@ -5402,6 +5466,41 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
         ],
         answerAr: 'العدد الذري = 12، العدد الكتلي = 24 • البروتونات = 12، الإلكترونات = 12، النيوترونات = 12.',
         answerEn: 'Atomic number = 12, Mass number = 24 • Protons = 12, Electrons = 12, Neutrons = 12.'
+      },
+      {
+        id: 'ex-sci1-3',
+        questionAr: 'لديك عينة من سائل مجهول حجمها 40 mL وكتلتها 32 g. احسب كثافة هذا السائل، وهل سيطفو فوق الماء أم ينغمر فيه؟',
+        questionEn: 'An unknown liquid has volume 40 mL and mass 32 g. Calculate its density and determine if it floats on water.',
+        solutionStepsAr: [
+          'الخطوة 1: قانون الكثافة D = الكتلة m ÷ الحجم V = 32 ÷ 40 = 0.8 g/mL (أو g/cm³).',
+          'الخطوة 2: مقارنة الكثافة بالماء: بما أن كثافة السائل (0.8 g/cm³) أقل من كثافة الماء (1.0 g/cm³)، فإن السائل سوف يطفو فوق سطح الماء مشكلاً طبقة عليا (مثل الزيوت أو الكحول).'
+        ],
+        solutionStepsEn: [
+          'Step 1: Density D = 32 / 40 = 0.8 g/cm³.',
+          'Step 2: Since 0.8 < 1.0 g/cm³, the liquid floats on water.'
+        ],
+        answerAr: 'كثافة السائل = 0.8 g/cm³ • يطفو السائل فوق الماء لأن كثافته أقل من كثافة الماء.',
+        answerEn: 'Density = 0.8 g/cm³ • Floats on water because its density is less than water.'
+      },
+      {
+        id: 'ex-sci1-4',
+        questionAr: 'ذرة عنصر الكلور ₁₇³⁷Cl: احسب عدد البروتونات والنيوترونات والإلكترونات. وما وجه الشبه والاختلاف بينها وبين ذرة الكلور ₁₇³⁵Cl (نظائر الكلور)؟',
+        questionEn: 'For Chlorine ₁₇³⁷Cl: Compute protons, neutrons, electrons, and compare with Chlorine-35 isotope.',
+        solutionStepsAr: [
+          'البروتونات p⁺ = Z = 17، الإلكترونات e⁻ = 17.',
+          'النيوترونات n⁰ في الكلور-37 = A - Z = 37 - 17 = 20 نيوتروناً.',
+          'في الكلور-35: النيوترونات = 35 - 17 = 18 نيوتروناً.',
+          'وجه الشبه: متماثلان في العدد الذري وعدد البروتونات والإلكترونات والخواص الكيميائية.',
+          'وجه الاختلاف: يختلفان في العدد الكتلي وعدد النيوترونات (20 نيوترون مقابل 18 نيوترون).'
+        ],
+        solutionStepsEn: [
+          'Protons = 17, Electrons = 17. Neutrons in Cl-37 = 37 - 17 = 20.',
+          'Neutrons in Cl-35 = 35 - 17 = 18.',
+          'Similarity: Same atomic number and chemical behavior.',
+          'Difference: Distinct mass numbers and neutron counts.'
+        ],
+        answerAr: 'البروتونات = 17، الإلكترونات = 17، النيوترونات = 20 • يتشابه النظيران في البروتونات ويختلفان في عدد النيوترونات والكتلة.',
+        answerEn: 'Protons = 17, Electrons = 17, Neutrons = 20 • Isotopes share proton count but differ in neutron count.'
       }
     ],
 
