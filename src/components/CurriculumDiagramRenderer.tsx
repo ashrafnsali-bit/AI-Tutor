@@ -924,13 +924,369 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
           </svg>
         );
 
-      default:
+      case 'rhetoric_metaphor_map':
         return (
-          <svg viewBox="0 0 600 300" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
-            <rect width="600" height="300" fill="rgba(30, 41, 59, 0.5)" rx="16" />
-            <circle cx="300" cy="140" r="60" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" strokeWidth="2" />
-            <text x="300" y="145" textAnchor="middle" fill="#38bdf8" fontSize="16" fontWeight="bold">نموذج علمي معتمد</text>
-            <text x="300" y="220" textAnchor="middle" fill="#94a3b8" fontSize="13">رسم بياني توضيحي مطابق لمعايير الكتاب المدرسي المقرّر</text>
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            {/* Background Grid */}
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.7)" rx="12" stroke="#334155" />
+
+            {/* Header */}
+            <rect x="160" y="12" width="280" height="32" rx="8" fill="rgba(139, 92, 246, 0.2)" stroke="#8b5cf6" />
+            <text x="300" y="33" textAnchor="middle" fill="#c4b5fd" fontSize="13" fontWeight="bold">شجرة الاستعارة البلاغية (تشبيه حُذف أحد طرفيه)</text>
+
+            {/* Two Main Branches: Makniyyah vs Tasrihiyyah */}
+            {/* Branch 1: الاستعارة المكنية */}
+            <rect x="25" y="58" width="260" height="155" rx="10" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" strokeWidth="1.8" />
+            <rect x="40" y="70" width="230" height="26" rx="6" fill="#0284c7" />
+            <text x="155" y="87" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">1. الاستعارة المَكْنِيَّة (Makniyyah)</text>
+            
+            <text x="270" y="118" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#38bdf8">المشبه:</tspan> مَذْكُور ومصرح به</text>
+            <text x="270" y="138" textAnchor="end" fill="#fca5a5" fontSize="11">❌ <tspan fontWeight="bold" fill="#ef4444">المشبه به:</tspan> مَحْذُوف مع بقاء لوازمه</text>
+            <text x="270" y="158" textAnchor="end" fill="#fde047" fontSize="11">💡 <tspan fontWeight="bold" fill="#eab308">القرينة:</tspan> إثبات صفة خاصة بالمحذوف</text>
+            <rect x="40" y="172" width="230" height="30" rx="6" fill="rgba(15, 23, 42, 0.8)" stroke="#38bdf8" strokeDasharray="3 3" />
+            <text x="155" y="191" textAnchor="middle" fill="#7dd3fc" fontSize="11" fontWeight="bold">مثال: "بَكَتِ السَّمَاءُ" (شُبّهت بإنسان)</text>
+
+            {/* Branch 2: الاستعارة التصريحية */}
+            <rect x="315" y="58" width="260" height="155" rx="10" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" strokeWidth="1.8" />
+            <rect x="330" y="70" width="230" height="26" rx="6" fill="#059669" />
+            <text x="445" y="87" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">2. الاستعارة التَّصْرِيحِيَّة (Tasrihiyyah)</text>
+            
+            <text x="560" y="118" textAnchor="end" fill="#fca5a5" fontSize="11">❌ <tspan fontWeight="bold" fill="#ef4444">المشبه:</tspan> مَحْذُوف من السياق</text>
+            <text x="560" y="138" textAnchor="end" fill="#34d399" fontSize="11">🔹 <tspan fontWeight="bold" fill="#10b981">المشبه به:</tspan> مُصَرَّحٌ بلفظه مباشرة</text>
+            <text x="560" y="158" textAnchor="end" fill="#fde047" fontSize="11">💡 <tspan fontWeight="bold" fill="#eab308">القرينة:</tspan> تمنع إرادة المعنى الحقيقي</text>
+            <rect x="330" y="172" width="230" height="30" rx="6" fill="rgba(15, 23, 42, 0.8)" stroke="#10b981" strokeDasharray="3 3" />
+            <text x="445" y="191" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="bold">مثال: "وَاعْتَصِمُوا بِحَبْلِ اللَّهِ" (أي دينه)</text>
+
+            {/* Bottom: Aesthetic Aims (أسرار الجمال البلاغي) */}
+            <rect x="25" y="225" width="550" height="92" rx="10" fill="rgba(30, 41, 59, 0.85)" stroke="#64748b" />
+            <text x="300" y="247" textAnchor="middle" fill="#f472b6" fontSize="12" fontWeight="bold">أسرار الجمال والأثر البلاغي للاستعارة في المعنى:</text>
+            
+            <text x="560" y="272" textAnchor="end" fill="#e2e8f0" fontSize="11">👤 <tspan fontWeight="bold" fill="#38bdf8">التشخيص:</tspan> منح الجمادات والمعنويات صفات الأشخاص العاقلين ("تحدث التاريخ")</text>
+            <text x="560" y="292" textAnchor="end" fill="#e2e8f0" fontSize="11">🧱 <tspan fontWeight="bold" fill="#f59e0b">التجسيم:</tspan> تحويل المعنويات المجردة إلى صور مادية ملموسة ("افترس اليأس قلبه")</text>
+            <text x="560" y="310" textAnchor="end" fill="#e2e8f0" fontSize="11">✨ <tspan fontWeight="bold" fill="#34d399">التوضيح:</tspan> إبراز المعنى الحقيقي في صورة جلية تزيد الفكرة رسوخاً وإقناعاً</text>
+          </svg>
+        );
+
+      case 'rhetoric_badi_map':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.7)" rx="12" stroke="#334155" />
+
+            {/* Title */}
+            <rect x="170" y="12" width="260" height="32" rx="8" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" />
+            <text x="300" y="33" textAnchor="middle" fill="#fde68a" fontSize="13" fontWeight="bold">خريطة علم البديع: المحسنات اللفظية والمعنوية</text>
+
+            {/* Left Box: المحسنات اللفظية */}
+            <rect x="25" y="58" width="265" height="255" rx="10" fill="rgba(56, 189, 248, 0.08)" stroke="#38bdf8" strokeWidth="1.8" />
+            <rect x="40" y="70" width="235" height="26" rx="6" fill="#0284c7" />
+            <text x="157" y="87" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">1. المحسنات اللفظية (تضفي جرساً موسيقياً)</text>
+
+            {/* Jinas */}
+            <rect x="40" y="105" width="235" height="60" rx="6" fill="rgba(15, 23, 42, 0.7)" stroke="#38bdf8" strokeDasharray="2 2" />
+            <text x="265" y="123" textAnchor="end" fill="#38bdf8" fontSize="11" fontWeight="bold">🔹 الجناس (تشابه اللفظ واختلاف المعنى):</text>
+            <text x="265" y="141" textAnchor="end" fill="#cbd5e1" fontSize="10">• تام: "يوم تقوم الساعة يقسم المجرمون ما لبثوا غير ساعة"</text>
+            <text x="265" y="157" textAnchor="end" fill="#cbd5e1" fontSize="10">• ناقص: "عَبْرَة للمعتبر، وعِبْرَة في العين"</text>
+
+            {/* Saj */}
+            <rect x="40" y="173" width="235" height="60" rx="6" fill="rgba(15, 23, 42, 0.7)" stroke="#38bdf8" strokeDasharray="2 2" />
+            <text x="265" y="191" textAnchor="end" fill="#38bdf8" fontSize="11" fontWeight="bold">🔹 السجع (توافق فواصل النثر في الحرف الأخير):</text>
+            <text x="265" y="211" textAnchor="end" fill="#cbd5e1" fontSize="10">• "الصومُ حِرمانٌ مشروع، وتأديبٌ بالْجُوع، وخُشوعٌ لِلرَّبِّ الْمَتْبُوع"</text>
+
+            {/* Tasree */}
+            <rect x="40" y="241" width="235" height="60" rx="6" fill="rgba(15, 23, 42, 0.7)" stroke="#38bdf8" strokeDasharray="2 2" />
+            <text x="265" y="259" textAnchor="end" fill="#38bdf8" fontSize="11" fontWeight="bold">🔹 التصريع (اتفاق قافيتي شطري البيت الأول):</text>
+            <text x="265" y="279" textAnchor="end" fill="#cbd5e1" fontSize="10">• "قِفَا نَبْكِ مِنْ ذِكْرَى حَبِيبٍ وَمَنْزِلِ ... بِسِقْطِ اللِّوَى بَيْنَ الدَّخُولِ فَحَوْمَلِ"</text>
+
+            {/* Right Box: المحسنات المعنوية */}
+            <rect x="310" y="58" width="265" height="255" rx="10" fill="rgba(236, 72, 153, 0.08)" stroke="#ec4899" strokeWidth="1.8" />
+            <rect x="325" y="70" width="235" height="26" rx="6" fill="#be185d" />
+            <text x="442" y="87" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">2. المحسنات المعنوية (تعمق وتوضح المعنى)</text>
+
+            {/* Tibaq */}
+            <rect x="325" y="105" width="235" height="60" rx="6" fill="rgba(15, 23, 42, 0.7)" stroke="#ec4899" strokeDasharray="2 2" />
+            <text x="550" y="123" textAnchor="end" fill="#f472b6" fontSize="11" fontWeight="bold">🔸 الطباق (تضاد بين كلمتين منفردتين):</text>
+            <text x="550" y="141" textAnchor="end" fill="#cbd5e1" fontSize="10">• إيجاب: "يُحْيِي وَيُمِيتُ" / "الليل والنهار"</text>
+            <text x="550" y="157" textAnchor="end" fill="#cbd5e1" fontSize="10">• سلب: "يَعْلَمُونَ وَلَا يَعْلَمُونَ"</text>
+
+            {/* Muqabalah */}
+            <rect x="325" y="173" width="235" height="60" rx="6" fill="rgba(15, 23, 42, 0.7)" stroke="#ec4899" strokeDasharray="2 2" />
+            <text x="550" y="191" textAnchor="end" fill="#f472b6" fontSize="11" fontWeight="bold">🔸 المقابلة (تضاد تركيبي متعدد على الترتيب):</text>
+            <text x="550" y="211" textAnchor="end" fill="#cbd5e1" fontSize="10">• "يُحِلُّ لَهُمُ الطَّيِّبَاتِ وَيُحَرِّمُ عَلَيْهِمُ الْخَبَائِثَ"</text>
+            <text x="550" y="226" textAnchor="end" fill="#cbd5e1" fontSize="9">(يحل ضد يحرم، الطيبات ضد الخبائث)</text>
+
+            {/* Tawriyah */}
+            <rect x="325" y="241" width="235" height="60" rx="6" fill="rgba(15, 23, 42, 0.7)" stroke="#ec4899" strokeDasharray="2 2" />
+            <text x="550" y="259" textAnchor="end" fill="#f472b6" fontSize="11" fontWeight="bold">🔸 التورية (لفظ له معنيان قريب وبعيد مقصود):</text>
+            <text x="550" y="279" textAnchor="end" fill="#cbd5e1" fontSize="10">• "والنَّهْرُ يُشْبِهُ مِبْرَداً ... فَلأَجْلِ ذَا يَجْلُو الصَّدَى"</text>
+            <text x="550" y="294" textAnchor="end" fill="#cbd5e1" fontSize="9">(الصدى القريب: صدأ الحديد، والبعيد المراد: العطش)</text>
+          </svg>
+        );
+
+      case 'literary_criticism_map':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.7)" rx="12" stroke="#334155" />
+
+            {/* Header */}
+            <rect x="150" y="12" width="300" height="32" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" />
+            <text x="300" y="33" textAnchor="middle" fill="#6ee7b7" fontSize="13" fontWeight="bold">أركان النقد والتحليل الأدبي للنصوص</text>
+
+            {/* 4 Cardinal Pillars of Literary Work */}
+            {/* 1. Emotion */}
+            <rect x="25" y="58" width="125" height="135" rx="10" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" strokeWidth="1.8" />
+            <rect x="35" y="68" width="105" height="24" rx="5" fill="#dc2626" />
+            <text x="87" y="84" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">1. العاطفة والشعور</text>
+            <text x="87" y="110" textAnchor="middle" fill="#fca5a5" fontSize="10">صدق الإحساس</text>
+            <text x="87" y="128" textAnchor="middle" fill="#fca5a5" fontSize="10">قوة التأثير والحرارة</text>
+            <text x="87" y="146" textAnchor="middle" fill="#fca5a5" fontSize="10">الثبات والانسجام</text>
+            <text x="87" y="175" textAnchor="middle" fill="#fbbf24" fontSize="9" fontWeight="bold">(المحرك الوجداني)</text>
+
+            {/* 2. Idea */}
+            <rect x="165" y="58" width="125" height="135" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" strokeWidth="1.8" />
+            <rect x="175" y="68" width="105" height="24" rx="5" fill="#0284c7" />
+            <text x="227" y="84" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">2. الفكرة والمعنى</text>
+            <text x="227" y="110" textAnchor="middle" fill="#bae6fd" fontSize="10">العمق والأصالة</text>
+            <text x="227" y="128" textAnchor="middle" fill="#bae6fd" fontSize="10">الصحة والملاءمة</text>
+            <text x="227" y="146" textAnchor="middle" fill="#bae6fd" fontSize="10">الترابط المنطقي</text>
+            <text x="227" y="175" textAnchor="middle" fill="#fbbf24" fontSize="9" fontWeight="bold">(الجوهر الفكري)</text>
+
+            {/* 3. Imagery */}
+            <rect x="305" y="58" width="125" height="135" rx="10" fill="rgba(168, 85, 247, 0.12)" stroke="#a855f7" strokeWidth="1.8" />
+            <rect x="315" y="68" width="105" height="24" rx="5" fill="#7e22ce" />
+            <text x="367" y="84" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">3. الخيال والتصوير</text>
+            <text x="367" y="110" textAnchor="middle" fill="#e9d5ff" fontSize="10">التشبيه والاستعارة</text>
+            <text x="367" y="128" textAnchor="middle" fill="#e9d5ff" fontSize="10">التشخيص والتجسيم</text>
+            <text x="367" y="146" textAnchor="middle" fill="#e9d5ff" fontSize="10">ابتكار الصور الحية</text>
+            <text x="367" y="175" textAnchor="middle" fill="#fbbf24" fontSize="9" fontWeight="bold">(الرداء الجمالي)</text>
+
+            {/* 4. Style */}
+            <rect x="445" y="58" width="125" height="135" rx="10" fill="rgba(245, 158, 11, 0.12)" stroke="#f59e0b" strokeWidth="1.8" />
+            <rect x="455" y="68" width="105" height="24" rx="5" fill="#d97706" />
+            <text x="507" y="84" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold">4. الأسلوب والإيقاع</text>
+            <text x="507" y="110" textAnchor="middle" fill="#fde68a" fontSize="10">فصاحة الألفاظ</text>
+            <text x="507" y="128" textAnchor="middle" fill="#fde68a" fontSize="10">الموسيقى والوزن</text>
+            <text x="507" y="146" textAnchor="middle" fill="#fde68a" fontSize="10">مطابقة مقتضى الحال</text>
+            <text x="507" y="175" textAnchor="middle" fill="#fbbf24" fontSize="9" fontWeight="bold">(البناء اللغوي)</text>
+
+            {/* Bottom: Organic Unity (الوحدة العضوية والموضوعية) */}
+            <rect x="25" y="208" width="545" height="110" rx="10" fill="rgba(30, 41, 59, 0.85)" stroke="#38bdf8" />
+            <text x="300" y="230" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="bold">💎 غاية النقد: تقييم "الوحدة العضوية" والتكامل الفني للنص</text>
+            <text x="550" y="255" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#34d399">وحدة الموضوع:</tspan> دوران النص حول قضية أو تجربة إنسانية واحدة دون تشتت</text>
+            <text x="550" y="277" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#f472b6">وحدة الجو النفسي:</tspan> سيطرة عاطفة منسجمة تتدرج طبيعياً من مطلع النص إلى ختامه</text>
+            <text x="550" y="299" textAnchor="end" fill="#e2e8f0" fontSize="11">🔹 <tspan fontWeight="bold" fill="#fde047">ترابط الأفكار:</tspan> تسلسل منطقي وشعوري محكم يجعل كل بيت أو فقرة جزءاً حياً لا يتجزأ</text>
+          </svg>
+        );
+
+      case 'plant_animal_cell':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.7)" rx="12" stroke="#334155" />
+
+            {/* Title */}
+            <rect x="150" y="10" width="300" height="30" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" />
+            <text x="300" y="30" textAnchor="middle" fill="#6ee7b7" fontSize="13" fontWeight="bold">المقارنة الدقيقة بين الخلية النباتية والخلية الحيوانية</text>
+
+            {/* Left: Plant Cell (Green Hexagonal) */}
+            <g transform="translate(10, 50)">
+              {/* Outer Cell Wall */}
+              <polygon points="50,15 200,15 240,110 200,205 50,205 10,110" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" strokeWidth="4" />
+              {/* Inner Cell Membrane */}
+              <polygon points="55,23 195,23 232,110 195,197 55,197 18,110" fill="rgba(6, 78, 59, 0.3)" stroke="#34d399" strokeWidth="2" />
+              
+              {/* Large Central Vacuole */}
+              <ellipse cx="110" cy="110" rx="48" ry="55" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" strokeWidth="2" />
+              <text x="110" y="114" textAnchor="middle" fill="#bae6fd" fontSize="10" fontWeight="bold">فجوة عصارية كبيرة</text>
+
+              {/* Chloroplasts */}
+              <ellipse cx="185" cy="70" rx="16" ry="10" fill="#15803d" stroke="#22c55e" strokeWidth="1.5" />
+              <ellipse cx="180" cy="155" rx="16" ry="10" fill="#15803d" stroke="#22c55e" strokeWidth="1.5" />
+              <text x="182" y="180" textAnchor="middle" fill="#4ade80" fontSize="9" fontWeight="bold">بلاستيدة خضراء</text>
+
+              {/* Plant Nucleus */}
+              <circle cx="65" cy="65" r="18" fill="#a855f7" stroke="#c084fc" strokeWidth="1.5" />
+              <text x="65" y="69" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="bold">النواة</text>
+
+              <text x="125" y="222" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">الخلية النباتية (Plant Cell)</text>
+              <text x="125" y="238" textAnchor="middle" fill="#94a3b8" fontSize="9">جدار خلوي + بلاستيدات + فجوة ضخمة</text>
+            </g>
+
+            {/* Right: Animal Cell (Blue/Purple Rounded) */}
+            <g transform="translate(340, 50)">
+              {/* Flexible Cell Membrane */}
+              <ellipse cx="125" cy="110" rx="110" ry="95" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="3" />
+
+              {/* Animal Nucleus (Center) */}
+              <circle cx="125" cy="110" r="28" fill="#a855f7" stroke="#c084fc" strokeWidth="2" />
+              <circle cx="125" cy="110" r="10" fill="#6b21a8" />
+              <text x="125" y="114" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">النواة + DNA</text>
+
+              {/* Mitochondria */}
+              <ellipse cx="65" cy="70" rx="16" ry="9" fill="#ef4444" stroke="#f87171" strokeWidth="1.5" />
+              <text x="65" y="93" textAnchor="middle" fill="#fca5a5" fontSize="8" fontWeight="bold">ميتوكوندريا</text>
+
+              {/* Small Vacuoles */}
+              <circle cx="190" cy="80" r="9" fill="rgba(56, 189, 248, 0.4)" stroke="#38bdf8" />
+              <circle cx="180" cy="150" r="8" fill="rgba(56, 189, 248, 0.4)" stroke="#38bdf8" />
+              <text x="185" y="172" textAnchor="middle" fill="#bae6fd" fontSize="8">فجوات صغيرة</text>
+
+              {/* Centrosome */}
+              <rect x="60" y="145" width="12" height="12" fill="#f59e0b" />
+              <rect x="75" y="145" width="12" height="12" fill="#f59e0b" />
+              <text x="73" y="170" textAnchor="middle" fill="#fbbf24" fontSize="8">جسم مركزي</text>
+
+              <text x="125" y="222" textAnchor="middle" fill="#60a5fa" fontSize="12" fontWeight="bold">الخلية الحيوانية (Animal Cell)</text>
+              <text x="125" y="238" textAnchor="middle" fill="#94a3b8" fontSize="9">غشاء مرن + شكل غير منتظم + جسم مركزي</text>
+            </g>
+
+            {/* Bottom: Key Distinctions Summary */}
+            <rect x="25" y="255" width="550" height="65" rx="8" fill="rgba(30, 41, 59, 0.9)" stroke="#64748b" />
+            <text x="560" y="275" textAnchor="end" fill="#e2e8f0" fontSize="11">🌿 <tspan fontWeight="bold" fill="#34d399">خاص بالنبات:</tspan> الجدار الخلوي (السليلوز للحماية والدعامة) + البلاستيدات الخضراء (للبناء الضوئي)</text>
+            <text x="560" y="295" textAnchor="end" fill="#e2e8f0" fontSize="11">⚡ <tspan fontWeight="bold" fill="#38bdf8">مشترك بينهما:</tspan> النواة (التحكم والوراثة) + الميتوكوندريا (إنتاج طاقة ATP) + الغشاء البلازمي والسيتوبلازم</text>
+            <text x="560" y="313" textAnchor="end" fill="#e2e8f0" fontSize="10">🐾 <tspan fontWeight="bold" fill="#f59e0b">خاص بالحيوان:</tspan> الجسم المركزي (السنتروسوم للمساعدة في الانقسام الخلوي)</text>
+          </svg>
+        );
+
+      case 'forces_motion_vector':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowGreen" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+              </marker>
+              <marker id="arrowOrange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+              </marker>
+              <marker id="arrowBlue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+              </marker>
+            </defs>
+
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.7)" rx="12" stroke="#334155" />
+
+            {/* Title */}
+            <rect x="150" y="10" width="300" height="30" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" />
+            <text x="300" y="30" textAnchor="middle" fill="#7dd3fc" fontSize="13" fontWeight="bold">مخطط متجهات القوى، والسرعة، والحركة المتزنة</text>
+
+            {/* Ground Line */}
+            <line x1="30" y1="170" x2="350" y2="170" stroke="#64748b" strokeWidth="3" />
+            <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="10" x2="10" y2="0" stroke="#475569" strokeWidth="1" />
+            </pattern>
+            <rect x="30" y="170" width="320" height="15" fill="url(#hatch)" />
+
+            {/* Moving Object Block */}
+            <rect x="140" y="110" width="100" height="60" rx="6" fill="#1e293b" stroke="#38bdf8" strokeWidth="2.5" />
+            <text x="190" y="138" textAnchor="middle" fill="#f8fafc" fontSize="13" fontWeight="bold">جسم كتلته m</text>
+            <text x="190" y="155" textAnchor="middle" fill="#94a3b8" fontSize="11">m = 20 kg</text>
+
+            {/* Force Vectors */}
+            {/* Applied Force (Right) */}
+            <line x1="240" y1="140" x2="330" y2="140" stroke="#10b981" strokeWidth="3.5" markerEnd="url(#arrowGreen)" />
+            <text x="290" y="130" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">قوة السحب F = 100 N</text>
+
+            {/* Friction Force (Left) */}
+            <line x1="140" y1="140" x2="60" y2="140" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrowOrange)" />
+            <text x="95" y="130" textAnchor="middle" fill="#fbbf24" fontSize="11" fontWeight="bold">احتكاك f = 40 N</text>
+
+            {/* Normal Force (Up) */}
+            <line x1="190" y1="110" x2="190" y2="55" stroke="#38bdf8" strokeWidth="2.5" markerEnd="url(#arrowBlue)" />
+            <text x="190" y="48" textAnchor="middle" fill="#7dd3fc" fontSize="10" fontWeight="bold">القوة العمودية F_N</text>
+
+            {/* Gravity (Down) */}
+            <line x1="190" y1="170" x2="190" y2="215" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrowRed)" />
+            <text x="190" y="230" textAnchor="middle" fill="#fca5a5" fontSize="10" fontWeight="bold">الوزن / الجاذبية F_g</text>
+
+            {/* Right Box: Kinematics Triangle & Newton Law */}
+            <rect x="375" y="50" width="205" height="155" rx="10" fill="rgba(30, 41, 59, 0.85)" stroke="#38bdf8" />
+            <text x="477" y="72" textAnchor="middle" fill="#38bdf8" fontSize="12" fontWeight="bold">مثلث حساب السرعة المتوسطة</text>
+            
+            {/* Triangle */}
+            <polygon points="477,85 425,145 530,145" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" strokeWidth="2" />
+            <line x1="445" y1="120" x2="510" y2="120" stroke="#38bdf8" strokeWidth="1.5" />
+            <line x1="477" y1="120" x2="477" y2="145" stroke="#38bdf8" strokeWidth="1.5" />
+            <text x="477" y="112" textAnchor="middle" fill="#fde047" fontSize="13" fontWeight="bold">المسافة (d)</text>
+            <text x="452" y="138" textAnchor="middle" fill="#38bdf8" fontSize="12" fontWeight="bold">السرعة (v)</text>
+            <text x="502" y="138" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">الزمن (t)</text>
+            
+            <text x="477" y="168" textAnchor="middle" fill="#e2e8f0" fontSize="11" fontWeight="bold">v = d ÷ t  |  d = v × t</text>
+            <text x="477" y="190" textAnchor="middle" fill="#a78bfa" fontSize="10" fontWeight="bold">القوة المحصلة: F_net = F - f = 60 N</text>
+
+            {/* Bottom: Balanced vs Unbalanced Forces */}
+            <rect x="25" y="242" width="555" height="78" rx="8" fill="rgba(30, 41, 59, 0.9)" stroke="#64748b" />
+            <text x="565" y="263" textAnchor="end" fill="#e2e8f0" fontSize="11">⚖️ <tspan fontWeight="bold" fill="#34d399">القوى المتزنة (ΣF = 0):</tspan> القوة المحصلة تساوي صفراً؛ يظل الجسم ساكناً أو يتحرك بسرعة ثابتة في خط مستقيم.</text>
+            <text x="565" y="285" textAnchor="end" fill="#e2e8f0" fontSize="11">🚀 <tspan fontWeight="bold" fill="#f59e0b">القوى غير المتزنة (ΣF ≠ 0):</tspan> القوة المحصلة لا تساوي صفراً؛ تُحدث تسارعاً (تغير السرعة بالمقدار أو الاتجاه: a = F_net / m).</text>
+            <text x="565" y="307" textAnchor="end" fill="#e2e8f0" fontSize="10">🛑 <tspan fontWeight="bold" fill="#ef4444">قوة الاحتكاك:</tspan> قوة تعاكس دائماً اتجاه حركة الجسم وتعتمد على طبيعة السطحين المتلامسين والقوة الضاغطة.</text>
+          </svg>
+        );
+
+      case 'energy_transformation_chain':
+        return (
+          <svg viewBox="0 0 600 330" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowGold" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+              </marker>
+            </defs>
+
+            <rect width="600" height="330" fill="rgba(15, 23, 42, 0.7)" rx="12" stroke="#334155" />
+
+            {/* Title */}
+            <rect x="140" y="10" width="320" height="30" rx="8" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" />
+            <text x="300" y="30" textAnchor="middle" fill="#fde68a" fontSize="13" fontWeight="bold">سلاسل تحولات الطاقة وقانون حفظ الطاقة الكلي</text>
+
+            {/* Energy Chain Blocks */}
+            {/* 1. Solar / Chemical */}
+            <rect x="25" y="55" width="115" height="110" rx="10" fill="rgba(234, 179, 8, 0.15)" stroke="#eab308" strokeWidth="2" />
+            <circle cx="82" cy="85" r="18" fill="#ca8a04" />
+            <text x="82" y="89" textAnchor="middle" fill="#fff" fontSize="14">☀️</text>
+            <text x="82" y="120" textAnchor="middle" fill="#fef08a" fontSize="11" fontWeight="bold">طاقة شمسية</text>
+            <text x="82" y="136" textAnchor="middle" fill="#cbd5e1" fontSize="9">إشعاع ضوئي وحراري</text>
+            <text x="82" y="152" textAnchor="middle" fill="#f59e0b" fontSize="8" fontWeight="bold">بناء ضوئي</text>
+
+            {/* Arrow 1 */}
+            <line x1="145" y1="110" x2="165" y2="110" stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrowGold)" />
+
+            {/* 2. Chemical Potential */}
+            <rect x="170" y="55" width="115" height="110" rx="10" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" strokeWidth="2" />
+            <circle cx="227" cy="85" r="18" fill="#059669" />
+            <text x="227" y="89" textAnchor="middle" fill="#fff" fontSize="14">🍎</text>
+            <text x="227" y="120" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="bold">طاقة كيميائية</text>
+            <text x="227" y="136" textAnchor="middle" fill="#cbd5e1" fontSize="9">مخزونة في الغذاء/الوقود</text>
+            <text x="227" y="152" textAnchor="middle" fill="#10b981" fontSize="8" fontWeight="bold">احتراق / هضم</text>
+
+            {/* Arrow 2 */}
+            <line x1="290" y1="110" x2="310" y2="110" stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrowGold)" />
+
+            {/* 3. Kinetic & Mechanical */}
+            <rect x="315" y="55" width="115" height="110" rx="10" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" strokeWidth="2" />
+            <circle cx="372" cy="85" r="18" fill="#0284c7" />
+            <text x="372" y="89" textAnchor="middle" fill="#fff" fontSize="14">🏃</text>
+            <text x="372" y="120" textAnchor="middle" fill="#7dd3fc" fontSize="11" fontWeight="bold">طاقة حركية</text>
+            <text x="372" y="136" textAnchor="middle" fill="#cbd5e1" fontSize="9">حركة العضلات والآلات</text>
+            <text x="372" y="152" textAnchor="middle" fill="#38bdf8" fontSize="8" fontWeight="bold">E_k = ½ m v²</text>
+
+            {/* Arrow 3 */}
+            <line x1="435" y1="110" x2="455" y2="110" stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrowGold)" />
+
+            {/* 4. Electrical / Thermal Output */}
+            <rect x="460" y="55" width="115" height="110" rx="10" fill="rgba(236, 72, 153, 0.15)" stroke="#ec4899" strokeWidth="2" />
+            <circle cx="517" cy="85" r="18" fill="#be185d" />
+            <text x="517" y="89" textAnchor="middle" fill="#fff" fontSize="14">💡</text>
+            <text x="517" y="120" textAnchor="middle" fill="#f472b6" fontSize="11" fontWeight="bold">طاقة كهربائية/ضوء</text>
+            <text x="517" y="136" textAnchor="middle" fill="#cbd5e1" fontSize="9">إضاءة + حرارة مهدورة</text>
+            <text x="517" y="152" textAnchor="middle" fill="#ec4899" fontSize="8" fontWeight="bold">إنتاج وتشغيل</text>
+
+            {/* Pendulum Potential-Kinetic Exchange */}
+            <rect x="25" y="178" width="550" height="65" rx="8" fill="rgba(30, 41, 59, 0.85)" stroke="#64748b" />
+            <text x="300" y="198" textAnchor="middle" fill="#fde047" fontSize="11" fontWeight="bold">تبادل طاقتي الوضع والحركة (مثال البندول والسقوط الحر):</text>
+            <text x="560" y="218" textAnchor="end" fill="#e2e8f0" fontSize="10">🔹 <tspan fontWeight="bold" fill="#38bdf8">عند أعلى نقطة (أقصى ارتفاع):</tspan> طاقة الوضع قصوى (E_p = max) بينما طاقة الحركة صفر (E_k = 0).</text>
+            <text x="560" y="235" textAnchor="end" fill="#e2e8f0" fontSize="10">🔹 <tspan fontWeight="bold" fill="#34d399">عند أسفل نقطة (لحظة المرور بالقاع):</tspan> طاقة الحركة قصوى (E_k = max) بينما طاقة الوضع أقل ما يمكن.</text>
+
+            {/* Bottom: Conservation Law Banner */}
+            <rect x="25" y="252" width="550" height="68" rx="8" fill="rgba(15, 23, 42, 0.95)" stroke="#f59e0b" strokeWidth="1.8" />
+            <text x="300" y="272" textAnchor="middle" fill="#f59e0b" fontSize="12" fontWeight="bold">👑 القانون الخالد: قانون حفظ الطاقة (Conservation of Energy)</text>
+            <text x="300" y="291" textAnchor="middle" fill="#f8fafc" fontSize="11" fontWeight="bold">"الطاقة لا تفنى ولا تُستحدث من العدم، وإنما تتحول من شكل إلى آخر"</text>
+            <text x="300" y="308" textAnchor="middle" fill="#94a3b8" fontSize="10">الطاقة الكلية = طاقة الوضع + طاقة الحركة + الطاقة الحرارية = مقدار ثابت دائماً</text>
           </svg>
         );
     }

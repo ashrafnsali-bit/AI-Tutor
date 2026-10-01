@@ -2235,59 +2235,346 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
     order: 2,
     titleAr: 'المحاضرة 2: الاستعارة المكنية والتصريحية وسر البلاغة الجمالية',
     titleEn: 'Lecture 2: Implicit & Explicit Metaphors and Aesthetic Eloquence',
-    subtitleAr: 'التمييز الدقيق بين الاستعارة المكنية والتصريحية، وفهم علاقة المشابهة مع قرينة مانعة',
-    subtitleEn: 'Distinguish implicit (Makniyyah) and explicit (Tasrihiyyah) metaphors with context clues.',
-    durationMinutes: 30,
+    subtitleAr: 'التمييز الدقيق بين الاستعارة المكنية والتصريحية، وفهم علاقة المشابهة مع قرينة مانعة تمنع إرادة المعنى الحقيقي',
+    subtitleEn: 'Master implicit (Makniyyah) and explicit (Tasrihiyyah) metaphors with context clues (Qarinah) and aesthetic personification.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'lit-1',
     prerequisiteTitleAr: 'المحاضرة 1: علم البيان: التشبيه وأركانه وأثره البلاغي في المعنى',
     prerequisiteTitleEn: 'Lecture 1: Rhetoric & Imagery: Simile and Its Semantic Aesthetics',
-    keyConceptsAr: ['تعريف الاستعارة باعتبارها تشبيهاً حُذف أحد طرفيه', 'الاستعارة المكنية وحذف المشبه به مع إبقاء لوازمه', 'الاستعارة التصريحية والتصريح بالمشبه به', 'سر جمال الاستعارة: التشخيص والتجسيم والتوضيح'],
-    keyConceptsEn: ['Metaphor as Truncated Simile', 'Implicit Metaphor (Makniyyah)', 'Explicit Metaphor (Tasrihiyyah)', 'Personification and Concretization'],
-    summaryAr: 'الاستعارة تشبيه حذف أحد طرفيه مع قرينة تمنع من إرادة المعنى الحقيقي. إذا صُرح بالمشبه به فهي تصريحية، وإذا حُذف وكُني عنه بشيء من لوازمه فهي مكنية.',
-    summaryEn: 'Metaphor elevates meaning through implicit comparison. Identifying whether tenor or vehicle is retained distinguishes Makniyyah from Tasrihiyyah.',
-    sections: [
+
+    gradeLevelNameAr: 'الصف الثاني ثانوي - المرحلة الثانوية (مسار اللغة العربية والإنسانيات)',
+    gradeLevelNameEn: 'Grade 11 / High School - Arabic Literature & Rhetoric',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الأولى: علم البيان والتصوير الفني',
+    unitTitleEn: 'Unit 1: Imagery, Rhetoric & Artistic Expression',
+    lessonNumberAr: 'الدرس 2: الاستعارة: المكنية والتصريحية وأسرار الجمال',
+    lessonNumberEn: 'Lesson 2: Metaphor: Implicit, Explicit & Aesthetic Values',
+
+    warmupHookAr: 'حين قال الشاعر يصف هول المصيبة: "وَإِذَا المَنِيَّةُ أَنْشَبَتْ أَظْفَارَهَا ... أَلْفَيْتَ كُلَّ تَمِيمَةٍ لَا تَنْفَعُ"، هل للموت أظفار كالحيوان المفترس؟ بالتأكيد لا! لكن الشاعر استعار أظفار الوحش الكاسر وألصقها بالموت ليجسد شراسته وفتكه. الاستعارة هي تشبيه حذف أحد طرفيه لتتحد الحقيقة بالخيال؛ فكيف تفرق بين أن تحذف المشبه أو تحذف المشبه به؟ وكيف تكتشف "القرينة" التي تمنع المعنى الحقيقي؟',
+    warmupHookEn: 'Metaphors transform abstract ideas into living entities by borrowing attributes. Discover how omitting either tenor or vehicle births poetic power.',
+
+    learningOutcomesAr: [
+      'أن يعرّف الطالب الاستعارة باعتبارها تشبيهاً بليغاً حُذف أحد طرفيه مع وجود قرينة مانعة',
+      'أن يفرّق بدقة بين الاستعارة المكنية (حذف المشبه به) والاستعارة التصريحية (حذف المشبه)',
+      'أن يحدد "القرينة" اللفظية أو الحالية التي تمنع إرادة المعنى الحقيقي',
+      'أن يحلل أسرار جمال الاستعارة: التشخيص (بث الحياة في الجماد) والتجسيم (تجسيد المعنويات) والتوضيح'
+    ],
+    learningOutcomesEn: [
+      'Define metaphor as a truncated simile omitting one primary pillar with a context clue (Qarinah)',
+      'Differentiate between Makniyyah (implicit) and Tasrihiyyah (explicit) metaphors',
+      'Identify textual or contextual clues preventing literal interpretation',
+      'Analyze aesthetic aims: personification, concretization, and clarity'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. التمييز بين الاستعارة المكنية والتصريحية',
-        titleEn: '1. Implicit vs Explicit Metaphor Analysis',
-        contentAr: 'في الاستعارة المكنية: نذكر المشبه ونحذف المشبه به ونشير إليه بصفة من صفاته (مثل: بكت السماء). أما في الاستعارة التصريحية: فنحذف المشبه ونصرّح بالمشبه به مباشرة (مثل: واعتصموا بحبل الله).',
-        contentEn: 'In Makniyyah, the vehicle is omitted leaving an attributed quality. In Tasrihiyyah, the tenor is omitted and vehicle directly uttered.',
-        interactiveExample: {
-          titleAr: 'تحليل استعارة مكنية في الشعر العربي',
-          titleEn: 'Worked Example: Makniyyah Metaphor Analysis',
-          equation: 'المشبه مذكور + المشبه به محذوف + قرينة دالة',
-          steps: [
-            { stepNumber: 1, textAr: 'تأمل قول أبي ذؤيب: "وإذا المَنِيَّةُ أَنشَبَت أَظفارَها ... أَلفَيتَ كُلَّ تَميمَةٍ لا تَنفَعُ".', textEn: 'Reflect on: "When fate sinks its claws, every amulet is proven futile."' },
-            { stepNumber: 2, textAr: 'المشبه هو المنية (الموت). هل الموت له أظفار؟ كلا، الأظفار من لوازم الوحش الكاسر.', textEn: 'Tenor: Death. Does death possess claws? Claws belong to predatory beasts.' },
-            { stepNumber: 3, textAr: 'حُذف المشبه به (الوحش المفترس) ورُمز له بشيء من لوازمه (الأظفار)، فهذه استعارة مكنية رائعة.', textEn: 'Vehicle (beast) omitted; its signature attribute (claws) retained: Makniyyah metaphor.' }
-          ],
-          takeawayAr: 'الاستعارة المكنية تمنح المعاني المجردة حياة وحركة وتجسيماً نابضاً.',
-          takeawayEn: 'Makniyyah metaphors personify abstract concepts into vivid tangible dynamics.'
-        },
-        tipsAr: ['ابحث دائماً عن "القرينة"؛ الكلمة التي يستحيل أن تكون بالمعنى الحرفي هي مفتاح الاستعارة.'],
-        tipsEn: ['Always pinpoint the non-literal contextual clue (Qarinah) to unlock the metaphor.']
+        termAr: 'الاستعارة (Metaphor / Isti\'arah)',
+        termEn: 'Metaphor (Isti\'arah)',
+        definitionAr: 'تشبيه حُذف أحد طرفيه الأساسيين (المشبه أو المشبه به) مع وجود علاقة المشابهة وقرينة مانعة من إرادة المعنى الأصلي.',
+        definitionEn: 'A figurative trope formed by deleting either the tenor or the vehicle while retaining a prohibitive contextual clue.'
+      },
+      {
+        termAr: 'الاستعارة المكنية (Implicit Metaphor / Makniyyah)',
+        termEn: 'Implicit Metaphor (Makniyyah)',
+        definitionAr: 'استعارة يُذكر فيها المشبه ويُحذف المشبه به، ويُكنى عنه بشيء من لوازمه وصفاته (مثل: طار الخبر، وبكت السماء).',
+        definitionEn: 'A metaphor retaining the tenor while omitting the vehicle, alluding to it via a signature characteristic.'
+      },
+      {
+        termAr: 'الاستعارة التصريحية (Explicit Metaphor / Tasrihiyyah)',
+        termEn: 'Explicit Metaphor (Tasrihiyyah)',
+        definitionAr: 'استعارة يُحذف فيها المشبه ويُصرّح بلفظ المشبه به مباشرة (مثل: واعتصموا بحبل الله - أي دينه).',
+        definitionEn: 'A metaphor omitting the tenor and explicitly declaring the illustrative vehicle.'
+      },
+      {
+        termAr: 'القرينة (Contextual Clue / Qarinah)',
+        termEn: 'Contextual Clue (Qarinah)',
+        definitionAr: 'اللفظ أو السياق الدال على أن المعنى الحقيقي غير مقصود، بل المقصود هو المعنى المجازي الخيالي.',
+        definitionEn: 'The lexical marker or situational context that rules out a literal reading and confirms figurative intent.'
       }
     ],
+
+    keyConceptsAr: [
+      'الاستعارة تشبيه حذف أحد طرفيه (المشبه أو المشبه به)',
+      'الاستعارة المكنية: ذكر المشبه + حذف المشبه به + إبقاء لازمة من لوازمه',
+      'الاستعارة التصريحية: حذف المشبه + التصريح بلفظ المشبه به',
+      'دور القرينة في إثبات المجاز ومنع المعنى الحقيقي',
+      'أسرار جمال الاستعارة: التشخيص والتجسيم والتوضيح'
+    ],
+    keyConceptsEn: [
+      'Metaphor as Truncated Simile omitting Tenor or Vehicle',
+      'Implicit Metaphor (Makniyyah): Tenor retained, Vehicle deleted with trait clue',
+      'Explicit Metaphor (Tasrihiyyah): Tenor deleted, Vehicle explicitly uttered',
+      'Prohibitive Clue (Qarinah) validating non-literal interpretation',
+      'Aesthetic Goals: Personification, Concretization, Illumination'
+    ],
+    summaryAr: 'في هذه المحاضرة نغوص في جوهر الاستعارة البلاغية؛ نميز بين المكنية التي ترمز للمشبه به بصفاته والتصريحية التي تصرح بالمشبه به، ونحلل الأثر الوجداني والجمالي للتشخيص والتجسيم في روائع الشعر والنثر العربي.',
+    summaryEn: 'Master classical Arabic metaphor analysis: distinguishing implicit Makniyyah from explicit Tasrihiyyah tropes, isolating context clues, and evaluating personification aesthetics.',
+
+    sections: [
+      {
+        titleAr: '1. شجرة الاستعارة: المكنية والتصريحية وفك شفرة القرينة',
+        titleEn: '1. Metaphor Schema: Makniyyah vs Tasrihiyyah & Context Clues',
+        contentAr: 'الاستعارة في أصلها تشبيه بليغ حُذف أحد طرفيه؛ فإذا ذكرت المشبه وحذفت المشبه به ورمزت له بشيء من خصائصه (كالأظفار للوحش، أو البكاء للإنسان) فأنت أمام "استعارة مكنية" (كنّيت عن المشبه به). وإذا حذفت المشبه وصرّحت بلفظ المشبه به مباشرة (كأن تسمي العالم نبيلاً بالبدر أو البحر) فأنت أمام "استعارة تصريحية". القرينة هي اللفظ الذي ينبه القارئ إلى استحالة المعنى الحقيقي واستدعاء الخيال.',
+        contentEn: 'Metaphor is an elliptical simile. Retaining the tenor while alluding to a deleted vehicle via an attribute forms a Makniyyah metaphor; declaring the vehicle while deleting the tenor forms a Tasrihiyyah metaphor.',
+        diagram: {
+          id: 'diag-lit2-metaphor-tree',
+          figureNumberAr: 'شكل (2-1)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط شجرة الاستعارة: المكنية والتصريحية وأسرار الجمال',
+          titleEn: 'Metaphor Classification Tree: Makniyyah, Tasrihiyyah & Aesthetics',
+          captionAr: 'يوضح المخطط كيفية نشوء الاستعارة من التشبيه بحذف أحد الطرفين: فالمكنية تذكر المشبه وتحذف المشبه به، والتصريحية تحذف المشبه وتصرح بالمشبه به، مع بيان أسرار الجمال البلاغي.',
+          captionEn: 'Structural comparison: Makniyyah omits the vehicle retaining an attribute; Tasrihiyyah explicitly articulates the vehicle, achieving personification and concretization.',
+          diagramType: 'rhetoric_metaphor_map',
+          takeawayFormulaAr: 'المكنية = المشبه مَذْكُور + المشبه به مَحْذُوف | التصريحية = المشبه مَحْذُوف + المشبه به مُصَرَّح به',
+          takeawayFormulaEn: 'Makniyyah = Tenor present + Vehicle deleted | Tasrihiyyah = Tenor deleted + Vehicle declared',
+          keyLabels: [
+            { tagAr: 'استعارة مكنية', tagEn: 'Makniyyah (Implicit)', color: '#38bdf8' },
+            { tagAr: 'استعارة تصريحية', tagEn: 'Tasrihiyyah (Explicit)', color: '#10b981' },
+            { tagAr: 'القرينة المانعة', tagEn: 'Prohibitive Clue', color: '#f59e0b' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (2-1): تفكيك استعارة مكنية واستعارة تصريحية',
+          titleEn: 'Worked Example (2-1): Deconstructing Makniyyah & Tasrihiyyah Metaphors',
+          equation: 'المشبه + المشبه به (أحدهما محذوف) + القرينة المانعة',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'النموذج الأول: "طَارَ الخَبَرُ فِي الْمَدِينَةِ". المشبه: الخبر (مذكور). المشبه به: الطائر (محذوف). القرينة: الفعل "طار" (من صفات الطيور). الحكم: استعارة مكنية سر جمالها التجسيم وسرعة الانتشار.',
+              textEn: 'Model 1: "The news flew across town." Tenor: News. Vehicle: Bird (omitted). Clue: "flew". Classification: Makniyyah Metaphor.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'النموذج الثاني: "أَقْبَلَ الْبَدْرُ يَمْشِي إِلَى المِنْبَرِ لِيَخْطُبَ فِي النَّاسِ". المشبه: الخطيب أو العالم (محذوف). المشبه به: البدر (مذكور ومصرح به). القرينة: "يمشي ويخطب" (البدر الحقيقي لا يمشي ولا يخطب). الحكم: استعارة تصريحية.',
+              textEn: 'Model 2: "The full moon stepped onto the pulpit to deliver the speech." Tenor: Orator (omitted). Vehicle: Full Moon (declared). Classification: Tasrihiyyah Metaphor.'
+            }
+          ],
+          takeawayAr: 'انظر دائماً إلى اللفظ المذكور: إن كان هو المشبه به فالاستعارة تصريحية، وإن كان المشبه فالاستعارة مكنية.',
+          takeawayEn: 'Inspect the stated entity: if it is the vehicle, it is Tasrihiyyah; if it is the tenor, it is Makniyyah.'
+        },
+        formativeCheck: {
+          id: 'fc-lit2-1',
+          questionAr: 'في قول المتنبي يصف دخول رسول الروم على سيف الدولة: "وَأَقْبَلَ يَمْشِي فِي البِسَاطِ فَمَا دَرَى ... إِلَى البَحْرِ يَسْعَى أَمْ إِلَى البَدْرِ يَرْتَقِي"، ما نوع الاستعارة في (البحر) و(البدر)؟',
+          questionEn: 'In Al-Mutanabbi\'s verse describing the envoy walking towards the prince: "walking to the sea or rising to the moon", what metaphor type is present?',
+          optionsAr: [
+            'استعارة تصريحية؛ لأنه حذف المشبه (سيف الدولة) وصرح بلفظ المشبه به (البحر والبدر)',
+            'استعارة مكنية؛ لأنه ذكر المشبه وحذف المشبه به',
+            'تشبيه بليغ كامل الأركان',
+            'كناية عن نسبة'
+          ],
+          optionsEn: [
+            'Tasrihiyyah (Explicit Metaphor); tenor (prince) is omitted and vehicles (sea, moon) are declared',
+            'Makniyyah (Implicit Metaphor)',
+            'Complete Eloquent Simile',
+            'Metonymy of attribution'
+          ],
+          correctIndex: 0,
+          explanationAr: 'شبه الشاعر الأمير (سيف الدولة) بالبحر في الكرم وبالبدر في الرفعة والضياء، وحذف المشبه (الأمير) وصرّح بلفظ المشبه به (البحر، البدر)، فهي استعارة تصريحية.',
+          explanationEn: 'The poet omits the prince and explicitly utters the vehicles "sea" and "full moon", forming explicit metaphors.',
+          hintAr: 'هل ذُكر لفظ سيف الدولة أم استُبدل مباشرة بلفظ البحر والبدر؟'
+        },
+        tipsAr: [
+          'الاستعارة المكنية ملازمة دائماً للتشخيص عندما تمنح الجماد أو المعنى أفعال الكائنات الحية.',
+          'القرينة هي الضمانة التي تمنع فهم الكلام على حقيقته الفيزيائية.'
+        ]
+      },
+      {
+        titleAr: '2. أسرار الجمال البلاغي: التشخيص والتجسيم والتوضيح',
+        titleEn: '2. Rhetorical Aesthetic Aims: Personification, Concretization & Clarification',
+        contentAr: 'لا تأتي الاستعارة لمجرد الزينة اللفظية، بل تؤدي وظائف دلالية ووجدانية كبرى تنقسم إلى ثلاثة أسرار جمالية رئيسية:\n1. التشخيص (Tashkhees): منح الجمادات والمعنويات صفات الأشخاص العاقلين، كأن تتحدث الجبال أو تبتسم الآمال.\n2. التجسيم (Tajseem): تحويل الأمور المعنوية المجردة (كالعدل، العلم، الحزن، اليأس) إلى صور مادية مجسمة ذات أبعاد تلمسها الحواس (مثل: "افترس اليأس قلبه"، "نسج خيوط الأمل").\n3. التوضيح (Tawdeeh): توضيح الفكرة حين يكون الطرفان من نفس الطبيعة (مادي بمادي أو معنوي بمعنوي).',
+        contentEn: 'Metaphor achieves three core aesthetic purposes: Personification (endowing non-humans with human agency), Concretization (transforming abstract concepts into tangible physical entities), and Clarification.',
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (2-2): تحديد سر الجمال في شواهد بلاغية',
+          titleEn: 'Worked Example (2-2): Determining Aesthetic Aims in Classical Texts',
+          equation: 'المعنى المجرد + صورة مجسمة/شخصية = سر الجمال',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'الشاهد الأول: "شَكَتْ إِلَيَّ جِمَالِي طُولَ السُّرَى". شُبهت الجمال بإنسان يشكو (تشخيص؛ بث الحياة والعقل في غير العاقل).',
+              textEn: 'Quote 1: "My camels complained of the long nocturnal journey." Personification (Tashkhees).'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الشاهد الثاني: "حَطَّمَ الصَّبْرُ قُيُودَ الْهَوَانِ". الصبر معنى مجرد شُبه بآلة صلبة تحطم القيود (تجسيم؛ تحويل المعنوي إلى مادي ملموس).',
+              textEn: 'Quote 2: "Patience shattered the shackles of humiliation." Concretization (Tajseem).'
+            }
+          ],
+          takeawayAr: 'إذا كان المشبه به شخصاً عاقلاً فالسر هو التشخيص، وإذا كان المشبه به جسماً مادياً لمشبه معنوي فالسر هو التجسيم.',
+          takeawayEn: 'If the vehicle is a human person, the effect is Personification; if an abstract concept is given physical form, it is Concretization.'
+        },
+        tipsAr: ['التشخيص يجعل النص ينبض بالحياة والمشاعر الإنسانية، والتجسيم يرسخ المعنى في الأذهان بصرياً.']
+      }
+    ],
+
+    conceptMapSummaryAr: 'الاستعارة: تشبيه حذف أحد طرفيه. مكنية (ذكر المشبه + حذف المشبه به + قرينة لازمة) مثل: "بكت السماء". تصريحية (حذف المشبه + التصريح بالمشبه به) مثل: "واعتصموا بحبل الله". أسرار الجمال: التشخيص، التجسيم، التوضيح.',
+    conceptMapSummaryEn: 'Metaphor: Truncated simile. Makniyyah (Tenor + deleted vehicle + clue). Tasrihiyyah (Deleted tenor + declared vehicle). Aesthetics: Personification, Concretization, Clarity.',
+
+    goldenRulesAr: [
+      'القاعدة 1: الاستعارة هي في الأصل تشبيه بليغ حُذف أحد طرفيه (المشبه أو المشبه به).',
+      'القاعدة 2: إذا ذُكر المشبه وحُذف المشبه به ودلّت عليه صفة من صفاته فالاستعارة مكنية.',
+      'القاعدة 3: إذا حُذف المشبه وصُرّح بلفظ المشبه به مباشرة في السياق فالاستعارة تصريحية.',
+      'القاعدة 4: لا تصح الاستعارة بلا "قرينة" تمنع إرادة المعنى الحقيقي للفظ.',
+      'القاعدة 5: سر الجمال هو "التشخيص" إذا شُبّه غير العاقل (جماد أو معنوي) بإنسان عاقل.',
+      'القاعدة 6: سر الجمال هو "التجسيم" إذا حُوّل الأمر المعنوي المجرد إلى كائن أو جسم مادي ملموس.',
+      'القاعدة 7: الاستعارة أبلغ من التشبيه الصريح لأنها تدعي أن المشبه هو عين المشبه به لا مجرد شبيه له.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Metaphor is fundamentally an eloquent simile with one pillar deleted.',
+      'Rule 2: Tenor stated + Vehicle omitted with trait marker = Makniyyah (Implicit).',
+      'Rule 3: Tenor omitted + Vehicle explicitly declared = Tasrihiyyah (Explicit).',
+      'Rule 4: A prohibitive contextual clue (Qarinah) is mandatory to establish figurative meaning.',
+      'Rule 5: Personification occurs when non-human entities receive human agency and attributes.',
+      'Rule 6: Concretization occurs when abstract intangibles are rendered as physical solid bodies.',
+      'Rule 7: Metaphors surpass similes by asserting complete ontological identity rather than mere resemblance.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lit-2-1',
+        questionAr: 'اشرح الاستعارة وبين نوعها وسر جمالها في قوله تعالى: "كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ لِتُخْرِجَ النَّاسَ مِنَ الظُّلُمَاتِ إِلَى النُّورِ".',
+        questionEn: 'Explain the metaphor type and aesthetic value in the Quranic verse: "to bring mankind out of darknesses into light".',
+        solutionStepsAr: [
+          '1. المعنى الحقيقي المراد: إخراج الناس من الكفر والضلال إلى الإيمان والهدى.',
+          '2. المشبه: الكفر والضلال (محذوف)، والهدى والإيمان (محذوف).',
+          '3. المشبه به: الظلمات (مذكور ومصرح به)، والنور (مذكور ومصرح به).',
+          '4. القرينة: سياق إنزال الكتاب وهداية البشر تمنع إرادة الظلام الحسي الحقيقي.',
+          '5. نوع الاستعارة: استعارة تصريحية في كلمتي (الظلمات) و(النور).',
+          '6. سر الجمال: التجسيم وتوضيح أثر الإيمان في إنارة بصيرة الإنسان.'
+        ],
+        solutionStepsEn: [
+          '1. Intended sense: guidance from disbelief/misguidance into faith/enlightenment.',
+          '2. Tenor: Disbelief and Faith (both omitted).',
+          '3. Vehicle: Darknesses and Light (both explicitly stated).',
+          '4. Classification: Explicit Metaphors (Tasrihiyyah).',
+          '5. Aesthetic value: Concretization and vivid illumination.'
+        ],
+        answerAr: 'استعارة تصريحية في كلمتي (الظلمات) و(النور)؛ حُذف المشبه (الكفر والإيمان) وصُرّح بلفظ المشبه به، وسر جمالها التجسيم والتوضيح.',
+        answerEn: 'Tasrihiyyah in "Darknesses" and "Light"; tenors omitted, vehicles stated. Aesthetic value: Concretization.'
+      },
+      {
+        id: 'ex-lit-2-2',
+        questionAr: 'حدد نوع الاستعارة في قول الحجاج بن يوسف الثقفي: "إِنِّي لأَرَى رُؤُوساً قَدْ أَيْنَعَتْ وَحَانَ قِطَافُهَا وَإِنِّي لَصَاحِبُهَا".',
+        questionEn: 'Identify the metaphor in Al-Hajjaj\'s speech: "I see heads that have ripened and whose harvest has arrived".',
+        solutionStepsAr: [
+          '1. المشبه: رؤوس المتمردين (مذكور).',
+          '2. المشبه به: الثمار والفواكه الناضجة (محذوف).',
+          '3. القرينة الدالة: قوله "أينعت وحان قطافها"؛ فالإيناع والقطاف من صفات الثمار لا الرؤوس البشرية.',
+          '4. نوع الاستعارة: استعارة مكنية رائعة ومؤثرة.',
+          '5. سر الجمال: التجسيم وإبراز هول الوعيد والقدرة على حسم الأمر.'
+        ],
+        solutionStepsEn: [
+          '1. Tenor: Heads of rebels (stated).',
+          '2. Vehicle: Ripe fruits (deleted).',
+          '3. Trait clue: "Ripened and ready for harvest".',
+          '4. Classification: Makniyyah (Implicit Metaphor).',
+          '5. Aesthetic value: Vivid concretization and dramatic menace.'
+        ],
+        answerAr: 'استعارة مكنية؛ شُبهت الرؤوس بالثمار، وحُذف المشبه به ورُمز له بشيء من لوازمه (أينعت وحان قطافها).',
+        answerEn: 'Makniyyah Metaphor: Heads compared to ripe harvest fruits with vehicle omitted.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lit-2',
       lectureId: 'lit-2',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الثانية: الاستعارة المكنية والتصريحية',
-      titleEn: 'Lecture 2 Assessment: Metaphor Mastery',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 2: الاستعارة المكنية والتصريحية وأسرار البلاغة',
+      titleEn: 'Mastery Assessment 2: Metaphors & Rhetorical Aesthetics',
       passingScore: 80,
       questions: [
         {
           id: 'ql2-1',
-          textAr: 'في جملة "تحدث التاريخ عن أمجاد أمتنا"، ما نوع الاستعارة؟',
-          textEn: 'In "History spoke of our nations glory", what metaphor type is present?',
-          optionsAr: ['استعارة مكنية', 'استعارة تصريحية', 'تشبيه تمثيلي', 'كناية عن موصوف'],
-          optionsEn: ['Implicit Metaphor (Makniyyah)', 'Explicit Metaphor (Tasrihiyyah)', 'Composite Simile', 'Metonymy'],
+          textAr: 'في جملة "تَحَدَّثَ التَّارِيخُ عَنْ أَمْجَادِ أُمَّتِنَا وَبَطُولَاتِهَا"، ما نوع الاستعارة وسر جمالها؟',
+          textEn: 'In "History spoke of our nation\'s glory", what is the metaphor type and its aesthetic effect?',
+          optionsAr: [
+            'استعارة مكنية، وسر جمالها التشخيص (منح التاريخ صفة الإنسان المتحدث)',
+            'استعارة تصريحية، وسر جمالها التوضيح',
+            'تشبيه تمثيلي مركب',
+            'كناية عن موصوف'
+          ],
+          optionsEn: [
+            'Makniyyah (Implicit Metaphor), aesthetic effect is Personification',
+            'Tasrihiyyah (Explicit Metaphor), aesthetic effect is Clarification',
+            'Composite Simile',
+            'Metonymy'
+          ],
           correctIndex: 0,
-          conceptTestedAr: 'الاستعارة المكنية والتشخيص',
+          conceptTestedAr: 'الاستعارة المكنية وسر الجمال (التشخيص)',
           conceptTestedEn: 'Implicit Metaphor & Personification',
-          explanationAr: 'شُبِّه التاريخ بإنسان يتحدث، وحُذف المشبه به (الإنسان) ورُمز إليه بلازمة من لوازمه وهي الحديث (استعارة مكنية).',
-          explanationEn: 'History is personified as a speaker; the human vehicle is omitted, leaving speech as the attribute.',
+          explanationAr: 'شُبِّه التاريخ بإنسان يتحدث، وحُذف المشبه به (الإنسان) ورُمز إليه بلازمة من لوازمه وهي الحديث (استعارة مكنية)، وسر جمالها التشخيص.',
+          explanationEn: 'History is personified as a human speaker; the human vehicle is omitted leaving speech as the attribute (Makniyyah, Personification).',
+          difficulty: 'easy'
+        },
+        {
+          id: 'ql2-2',
+          textAr: 'ما الفرق البنيوي الجوهري بين الاستعارة المكنية والاستعارة التصريحية؟',
+          textEn: 'What is the fundamental structural distinction between Makniyyah and Tasrihiyyah metaphors?',
+          optionsAr: [
+            'المكنية يُذكر فيها المشبه ويُحذف المشبه به، بينما التصريحية يُحذف فيها المشبه ويُصرّح بالمشبه به',
+            'المكنية تختص بالشعر فقط بينما التصريحية بالنثر فقط',
+            'المكنية لا تحتاج إلى قرينة بينما التصريحية تشترط القرينة',
+            'المكنية تحذف الطرفين معاً'
+          ],
+          optionsEn: [
+            'Makniyyah retains tenor and deletes vehicle; Tasrihiyyah deletes tenor and declares vehicle',
+            'Makniyyah is poetry-only; Tasrihiyyah prose-only',
+            'Makniyyah needs no clue',
+            'Makniyyah deletes both pillars'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'الفروق البنيوية بين أقسام الاستعارة',
+          conceptTestedEn: 'Structural Tenor/Vehicle Taxonomy',
+          explanationAr: 'في المكنية نذكر المشبه ونحذف المشبه به (مع إبقاء لوازمه)، وفي التصريحية نحذف المشبه ونصرّح بلفظ المشبه به مباشرة.',
+          explanationEn: 'Makniyyah states tenor and omits vehicle; Tasrihiyyah omits tenor and explicitly names vehicle.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'ql2-3',
+          textAr: 'في قول الشاعر: "فَأَمْطَرَتْ لُؤْلُؤاً مِنْ نَرْجِسٍ وَسَقَتْ ... وَرْداً وَعَضَّتْ عَلَى العُنَّابِ بِالبَرَدِ"، كم استعارة تصريحية وردت في هذا البيت الشهير؟',
+          textEn: 'In the famous verse describing tears like pearls from narcissus eyes upon rose cheeks, how many explicit metaphors are present?',
+          optionsAr: [
+            'خمس استعارات تصريحية: (اللؤلؤ = الدموع)، (النرجس = العيون)، (الورد = الخدود)، (العناب = الأنامل)، (البرد = الأسنان)',
+            'استعارتان فقط',
+            'استعارة مكنية واحدة وتشبيهان',
+            'خمس استعارات مكنية'
+          ],
+          optionsEn: [
+            '5 Tasrihiyyah metaphors: Pearls (Tears), Narcissus (Eyes), Roses (Cheeks), Jujubes (Fingertips), Hail (Teeth)',
+            '2 Metaphors only',
+            '1 Makniyyah and 2 similes',
+            '5 Makniyyah metaphors'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'تعدد الاستعارات التصريحية المتتابعة في بيت واحد',
+          conceptTestedEn: 'Consecutive Tasrihiyyah Identification',
+          explanationAr: 'حذف الشاعر 5 مشبهات وصرح بـ 5 مشبهات بها: اللؤلؤ (الدمع)، النرجس (العيون)، الورد (الخدود)، العناب (الأنامل المخضبة)، البرد (الأسنان البيضاء).',
+          explanationEn: 'The poet crafted 5 consecutive Tasrihiyyah metaphors by stating vehicles for tears, eyes, cheeks, fingers, and teeth.',
+          difficulty: 'hard'
+        },
+        {
+          id: 'ql2-4',
+          textAr: 'ما هو سر الجمال في قولنا: "نَسَجَ الْأَمَلُ ثَوْباً مِنَ النُّورِ لِلْمُجْتَهِدِ"؟',
+          textEn: 'What is the primary aesthetic effect of attributing cloth-weaving to abstract hope?',
+          optionsAr: [
+            'التجسيم (تحويل الأمل وهو معنى مجرد إلى شيء مادي ينسج ثوباً) والتشخيص',
+            'الطباق السلبي',
+            'الجناس الناقص الصوتي',
+            'التورية المعنوية'
+          ],
+          optionsEn: [
+            'Concretization (Tajseem) and Personification of abstract hope into a weaving craftsman',
+            'Negative Antithesis',
+            'Phonetic Jinas',
+            'Tawriyah'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'أسرار الجمال: التجسيم والتشخيص',
+          conceptTestedEn: 'Aesthetic Effect: Tajseem & Tashkhees',
+          explanationAr: 'جعل الأمل كائناً ينسج (تشخيص) وصور الأمل والنور في هيئة ثوب مادي ملموس (تجسيم)، مما يضفي بهجة وتجسيداً بصرياً رائعاً للمشاعر.',
+          explanationEn: 'Hope is personified as a weaver and visualized as a tangible garment, unifying Tashkhees and Tajseem.',
           difficulty: 'medium'
         }
       ]
@@ -2298,71 +2585,316 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
     order: 3,
     titleAr: 'المحاضرة 3: علم البديع: المحسنات اللفظية والمعنوية وأثرها الصوتي',
     titleEn: 'Lecture 3: Rhetorical Figures: Verbal & Semantic Embellishments',
-    subtitleAr: 'دراسة الجناس، والسجع، والطباق، والمقابلة، ودورها في تعزيز الإيقاع والدلالة',
-    subtitleEn: 'Master paronomasia (Jinas), rhyme prose (Saj), and antithesis (TibaQ / Muqabalah).',
-    durationMinutes: 30,
+    subtitleAr: 'دراسة الجناس، والسجع، والتصريع، والطباق، والمقابلة، والتورية، ودورها في تعزيز الإيقاع والدلالة',
+    subtitleEn: 'Master complete/partial paronomasia (Jinas), prose cadence (Saj), poetic opening rhyme (Tasree), antithesis (TibaQ), and multi-polarity contrasts (Muqabalah).',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'lit-2',
     prerequisiteTitleAr: 'المحاضرة 2: الاستعارة المكنية والتصريحية وسر البلاغة الجمالية',
     prerequisiteTitleEn: 'Lecture 2: Implicit & Explicit Metaphors and Aesthetic Eloquence',
-    keyConceptsAr: ['الجناس التام والجناس الناقص', 'السجع وتوافق الفواصل النثرية', 'الطباق الإيجابي والسلبي', 'المقابلة والتضاد المتعدد في المعاني'],
-    keyConceptsEn: ['Complete vs Incomplete Paronomasia (Jinas)', 'Rhythmical Prose Cadence (Saj)', 'Positive and Negative Antithesis', 'Semantic Multi-Parallelism'],
-    summaryAr: 'علم البديع يعنى بوجوه تحسين الكلام بعد رعاية مطابقة المعنى لمقتضى الحال؛ ينقسم إلى محسنات لفظية تضفي جرساً موسيقياً عذباً ومحسنات معنوية تعمق الدلالة.',
-    summaryEn: 'Ilm al-Badi explores verbal and semantic ornamentation, harmonizing phonetic resonance with conceptual depth.',
-    sections: [
+
+    gradeLevelNameAr: 'الصف الثاني ثانوي - المرحلة الثانوية (مسار اللغة العربية والإنسانيات)',
+    gradeLevelNameEn: 'Grade 11 / High School - Arabic Literature & Rhetoric',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثانية: علم البديع والمحسنات البلاغية',
+    unitTitleEn: 'Unit 2: Rhetorical Embellishment & Stylistic Aesthetics',
+    lessonNumberAr: 'الدرس 1: المحسنات اللفظية والمعنوية وأسرارها الموسيقية والدلالية',
+    lessonNumberEn: 'Lesson 1: Verbal & Semantic Figures of Speech',
+
+    warmupHookAr: 'تأمل روعة البيان في قوله تعالى: "وَيَوْمَ تَقُومُ السَّاعَةُ يُقْسِمُ الْمُجْرِمُونَ مَا لَبِثُوا غَيْرَ سَاعَةٍ"! كلمتان متطابقتان تماماً في الحروف والترتيب، لكن الأولى تعني "يوم القيامة" والأخرى تعني "مدة وجيزة من الزمن". هذا هو سحر "علم البديع"؛ العلم الذي يزين الألفاظ بنغمات موسيقية تطرب لها الآذان (المحسنات اللفظية)، ويعمق المعاني بإبراز التضاد والتوافق الذي يرسخ الفكرة في الأذهان (المحسنات المعنوية).',
+    warmupHookEn: 'Ilm al-Badi harmonizes euphonic phonetic resonance with profound semantic depth through symmetry, rhyme, and antithesis.',
+
+    learningOutcomesAr: [
+      'أن يصنف الطالب فنون علم البديع إلى محسنات لفظية ومحسنات معنوية بدقة',
+      'أن يميز بين الجناس التام والجناس الناقص وشروط تطابق الكلمات الأربعة (النوع، العدد، الترتيب، الحركات)',
+      'أن يحلل فن السجع والتصريع في النثر والشعر وأثرهما الإيقاعي والموسيقي',
+      'أن يفرّق بين الطباق (تضاد كلمتين) والمقابلة (تضاد جملتين أو أكثر على الترتيب) والتورية'
+    ],
+    learningOutcomesEn: [
+      'Classify rhetorical figures into verbal (phonetic) and semantic categories',
+      'Distinguish Complete vs Incomplete Jinas based on 4 criteria (type, count, order, vocalization)',
+      'Analyze prose cadence (Saj) and verse rhyming (Tasree)',
+      'Differentiate single antithesis (TibaQ) from structured parallel contrasts (Muqabalah)'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. الجناس: التماثل الصوتي مع اختلاف المعنى',
-        titleEn: '1. Jinas: Phonetic Identity with Divergent Meanings',
-        contentAr: 'الجناس هو تشابه كلمتين في اللفظ مع اختلافهما التام في المعنى. إن اتفقت الكلمتان في نوع الحروف وعددها وترتيبها وحركاتها فهو تام، وإن اختلفتا في أحدها فهو ناقص.',
-        contentEn: 'Jinas occurs when two words resonate phonetically but diverge entirely in meaning, classified into complete and partial.',
-        interactiveExample: {
-          titleAr: 'تطبيق: الجناس التام في القرآن الكريم',
-          titleEn: 'Worked Example: Quranic Complete Jinas',
-          equation: 'لفظ متطابق + معنيان متغايران',
-          steps: [
-            { stepNumber: 1, textAr: 'تأمل قوله تعالى: "وَيَوْمَ تَقُومُ السَّاعَةُ يُقْسِمُ الْمُجْرِمُونَ مَا لَبِثُوا غَيْرَ سَاعَةٍ".', textEn: 'Reflect on: "And the Day the Hour appears, criminals swear they remained no more than an hour."' },
-            { stepNumber: 2, textAr: 'كلمة "الساعة" الأولى تعني يوم القيامة.', textEn: 'The first "Hour" denotes the Day of Resurrection.' },
-            { stepNumber: 3, textAr: 'كلمة "ساعة" الثانية تعني مدة زمنية وجيزة من الوقت.', textEn: 'The second "hour" denotes a brief interval of terrestrial time.' },
-            { stepNumber: 4, textAr: 'هذا هو الجناس التام؛ اتفاق كامل في حروف الكلمة مع تباين عظيم في المعنى.', textEn: 'Complete Jinas: flawless lexical identity paired with dramatic semantic contrast.' }
-          ],
-          takeawayAr: 'الجناس يثير انتباه السامع ويحدث نغمة موسيقية تطرب لها الآذان.',
-          takeawayEn: 'Paronomasia heightens auditor engagement through musical phonetic correspondence.'
-        },
-        tipsAr: ['الجناس المتكلف يضعف الأسلوب؛ سر بلاغة البديع أن يأتي عفو الخاطر لخدمة المعنى.'],
-        tipsEn: ['Excessive unmotivated ornamentation weakens prose; authentic rhetoric arises organically.']
+        termAr: 'علم البديع (Ilm Al-Badi\')',
+        termEn: 'Ilm Al-Badi (Aesthetic Ornamentation)',
+        definitionAr: 'علم بلاغي يُعرف به وجوه تحسين الكلام وتزيينه بعد مطابقة المعنى لمقتضى الحال، وينقسم إلى محسنات لفظية ومعنوية.',
+        definitionEn: 'The classical Arabic rhetorical science of verbal and conceptual embellishment.'
+      },
+      {
+        termAr: 'الجناس (Paronomasia / Jinas)',
+        termEn: 'Paronomasia (Jinas)',
+        definitionAr: 'تشابه كلمتين في اللفظ مع اختلافهما التام في المعنى؛ تام إذا تطابقت الكلمتان في أربعة أمور، وناقص إذا اختلفت في أحدها.',
+        definitionEn: 'Phonetic similarity between words carrying divergent semantic meanings (Complete vs Partial).'
+      },
+      {
+        termAr: 'السجع (Prose Rhyme / Saj\')',
+        termEn: 'Prose Rhyme (Saj\')',
+        definitionAr: 'توافق الحرف الأخير في فواصل الجمل النثرية مما يحدث جرساً موسيقياً عذباً.',
+        definitionEn: 'Rhyming cadence at the terminations of consecutive prose clauses.'
+      },
+      {
+        termAr: 'المقابلة (Multi-Polar Antithesis / Muqabalah)',
+        termEn: 'Structured Contrast (Muqabalah)',
+        definitionAr: 'أن يؤتى بمعنيين أو أكثر ثم يؤتى بما يقابل ذلك على الترتيب (مثل: "يحل لهم الطيبات ويحرم عليهم الخبائث").',
+        definitionEn: 'Syntactic arrangement where two or more concepts are paired with sequential opposing counterparts.'
       }
     ],
+
+    keyConceptsAr: [
+      'أقسام البديع: المحسنات اللفظية (الجناس، السجع، التصريع) والمحسنات المعنوية (الطباق، المقابلة، التورية)',
+      'الجناس التام وشروطه الأربعة (نوع الحروف، عددها، ترتيبها، ضبطها بالشكل)',
+      'السجع وفواصل النثر، والتصريع في مطلع القصائد الشعرية',
+      'الطباق الإيجابي (أبيض/أسود) والطباق السلبي (يعلمون/لا يعلمون)',
+      'المقابلة: تضاد مركب متعدد على الترتيب',
+      'سر بلاغة البديع: إيقاع صوتي عذب وإبراز المعنى بضده'
+    ],
+    keyConceptsEn: [
+      'Verbal vs Semantic Figures Classification',
+      'Four Criteria for Complete Jinas',
+      'Prose Saj Cadence & Poetic Opening Tasree',
+      'Positive vs Negative Antithesis (TibaQ)',
+      'Multi-Element Ordered Oppositions (Muqabalah)',
+      'Aesthetic Function: Phonetic Harmony & Conceptual Contrast'
+    ],
+    summaryAr: 'نستكشف في هذا الدرس روائع علم البديع بشقيه؛ فنتذوق الجرس الموسيقي الأخاذ في الجناس والسجع والتصريع، ونتعلم كيف تبرز الأضداد جمال المعنى في الطباق والمقابلة والتورية الرائعة.',
+    summaryEn: 'Explore verbal music and semantic brilliance through Jinas, Saj, Tasree, TibaQ, and Muqabalah.',
+
+    sections: [
+      {
+        titleAr: '1. المحسنات اللفظية: الجناس، والسجع، والتصريع',
+        titleEn: '1. Verbal Embellishments: Jinas, Saj & Tasree',
+        contentAr: 'المحسنات اللفظية هي الأساليب التي تُعنى بجمال اللفظ وإيقاعه الصوتي:\n1. الجناس: تشابه كلمتين في النطق مع اختلاف المعنى؛ وهو تام إن تطابقت الكلمتان في (نوع الحروف، عددها، ترتيبها، وحركاتها) مثل "ساعة / ساعة"، وناقص إن اختلف شرط منها مثل "عَبْرَة (دمعة) / عِبْرَة (عظة)".\n2. السجع: توافق الحروف الأخيرة في فواصل الجمل النثرية (مثل: "الصومُ حِرمانٌ مشروع، وتأديبٌ بالْجُوع، وخُشوعٌ لِلرَّبِّ الْمَتْبُوع").\n3. التصريع: اتفاق قافيتي شطري البيت الأول في القصيدة الشعرية لإعلان الإيقاع الموسيقي للقصيدة.',
+        contentEn: 'Verbal tropes elevate phonetic resonance: Jinas exploits lexical homophony, Saj provides rhyming prose cadences, and Tasree unifies opening verse hemistichs.',
+        diagram: {
+          id: 'diag-lit3-badi-map',
+          figureNumberAr: 'شكل (3-1)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'خريطة علم البديع: تصنيف المحسنات اللفظية والمعنوية',
+          titleEn: 'Ilm Al-Badi Taxonomy: Verbal & Semantic Figures',
+          captionAr: 'مخطط تصنيفي يبين تقسيم علم البديع إلى محسنات لفظية تمنح جرساً موسيقياً عذباً (الجناس، السجع، التصريع) ومحسنات معنوية تعمق وتبرز الفكرة (الطباق، المقابلة، التورية).',
+          captionEn: 'Comprehensive taxonomy contrasting musical verbal embellishments with concept-deepening semantic figures.',
+          diagramType: 'rhetoric_badi_map',
+          takeawayFormulaAr: 'المحسنات اللفظية = جرس موسيقي وإيقاع | المحسنات المعنوية = إبراز المعنى وتوكيد الفكرة',
+          takeawayFormulaEn: 'Verbal Figures = Musical Cadence | Semantic Figures = Conceptual Contrast & Depth',
+          keyLabels: [
+            { tagAr: 'جناس تام وناقص', tagEn: 'Complete & Partial Jinas', color: '#38bdf8' },
+            { tagAr: 'سجع وتصريع', tagEn: 'Saj & Tasree', color: '#f59e0b' },
+            { tagAr: 'طباق ومقابلة', tagEn: 'TibaQ & Muqabalah', color: '#ec4899' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (3-1): التمييز بين الجناس التام والجناس الناقص',
+          titleEn: 'Worked Example (3-1): Distinguishing Complete vs Partial Jinas',
+          equation: 'تطابق نوع الحروف + عددها + ترتيبها + حركاتها',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'المثال 1: "صَلَّيْتُ المَغْرِبَ فِي أَحَدِ مَسَاجِدِ المَغْرِبِ". الكلمتان: المغرب (صلاة) والمغرب (دولة/جهة). الشروط الأربعة متطابقة تماماً => جناس تام.',
+              textEn: 'Example 1: "I prayed Maghrib in Maghrib (Morocco)." Identical phonetics across all 4 criteria => Complete Jinas.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'المثال 2: "بِيضُ الصَّفَائِحِ لَا سُودُ الصَّحَائِفِ". الكلمتان: الصفائح والصحائف. اختلف ترتيب الحروف (ف-ا-ئ-ح مقابل ح-ا-ئ-ف) => جناس ناقص.',
+              textEn: 'Example 2: "Safaa-ih vs Sahaa-if". Letter order rearranged => Incomplete Jinas.'
+            }
+          ],
+          takeawayAr: 'الجناس التام يتطلب التطابق الكامل بنسبة 100% مع تباين المعنى كلياً.',
+          takeawayEn: 'Complete Jinas demands flawless phonetic matching paired with absolute semantic divergence.'
+        },
+        tipsAr: ['الجناس المتكلف يفسد الأسلوب؛ سر بلاغة البديع أن ينساب عفوياً مع المعنى.']
+      },
+      {
+        titleAr: '2. المحسنات المعنوية: الطباق والمقابلة والتورية',
+        titleEn: '2. Semantic Figures: Antithesis (TibaQ), Ordered Parallelism (Muqabalah) & Double Entendre',
+        contentAr: 'المحسنات المعنوية تُعنى بتعزيز المعنى وتعميقه:\n1. الطباق: الجمع بين لفظين متضادين؛ وهو طباق إيجاب إذا كان بين كلمتين مثبتتين (مثل: "الْأَعْمَى وَالْبَصِيرُ"، "تَحْسَبُهُمْ أَيْقَاظاً وَهُمْ رُقُودٌ")، وطباق سلب إذا كان بين الكلمة ونفيها (مثل: "فَلَا تَخْشَوُا النَّاسَ وَاخْشَوْنِ").\n2. المقابلة: أن يؤتى بمعنيين أو أكثر ثم يؤتى بما يقابل ذلك على الترتيب؛ وهي أوسع وأبلغ من الطباق (مثل: "فَلْيَضْحَكُوا قَلِيلاً وَلْيَبْكُوا كَثِيراً" - ضحك يقابله بكاء، وقليلاً يقابله كثيراً).\n3. التورية: لفظ مفرد له معنيان: معنى قريب غير مقصود، ومعنى بعيد هو المراد المقصود.',
+        contentEn: 'Semantic figures enrich meaning: TibaQ pairs single antonyms (positive or negative), Muqabalah structures ordered multi-word oppositions, and Tawriyah plays on double entendres.',
+        interactiveExample: {
+          titleAr: 'تطبيق بلاغي (3-2): التمييز الدقيق بين الطباق والمقابلة',
+          titleEn: 'Worked Example (3-2): Contrasting Single Antithesis with Multi-Element Muqabalah',
+          equation: 'تضاد لفظين = طباق | تضاد جملتين مرتبين = مقابلة',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'الآية الأولى: "وَأَنَّهُ هُوَ أَضْحَكَ وَأَبْكَى". التضاد بين لفظين منفردين (أضحك ضد أبكى) => طباق إيجاب.',
+              textEn: 'Verse 1: "He brings laughter and brings tears." Single word pair => Positive TibaQ.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'الآية الثانية: "يُحِلُّ لَهُمُ الطَّيِّبَاتِ وَيُحَرِّمُ عَلَيْهِمُ الْخَبَائِثَ". المعنى الأول: (يحل + الطيبات) يقابله على الترتيب: (يحرم + الخبائث) => مقابلة بديعية رائعة (2 ضد 2).',
+              textEn: 'Verse 2: "Permits good things and forbids foul things." Sequential multi-word pairs => Muqabalah (2 vs 2).'
+            }
+          ],
+          takeawayAr: 'المقابلة هي في الحقيقة طباق متعدد منظم على التوالي بين تراكيب متقابلة.',
+          takeawayEn: 'Muqabalah functions as an orchestrated sequential multi-dimensional antithesis.'
+        },
+        tipsAr: ['"وبضدها تتبين الأشياء"؛ التضاد في الطباق والمقابلة يقوي الفكرة ويجلو غموضها.']
+      }
+    ],
+
+    conceptMapSummaryAr: 'علم البديع: محسنات لفظية (جناس تام وناقص، سجع فواصل، تصريع مطالع) تضفي جرساً موسيقياً. محسنات معنوية (طباق إيجاب وسلب، مقابلة مرتبة، تورية) توضح وتعمق المعنى.',
+    conceptMapSummaryEn: 'Ilm al-Badi: Verbal figures (Complete/Partial Jinas, Saj, Tasree) evoke musical cadence. Semantic figures (TibaQ, Muqabalah, Tawriyah) sharpen and intensify meaning.',
+
+    goldenRulesAr: [
+      'القاعدة 1: علم البديع ينقسم إلى قسمين رئيسيين: محسنات لفظية ومحسنات معنوية.',
+      'القاعدة 2: الجناس التام يشترط تطابق الكلمتين في: نوع الحروف، وعددها، وترتيبها، وحركاتها مع تباين المعنى.',
+      'القاعدة 3: الجناس الناقص يحدث إذا اختلفت الكلمتان في واحد فقط من الشروط الأربعة.',
+      'القاعدة 4: السجع يختص بالنثر وهو توافق الحروف الأخيرة في فواصل الجمل.',
+      'القاعدة 5: التصريع يختص بالشعر ويكون في مطلع القصيدة (البيت الأول) باتفاق قافيتي الشطرين.',
+      'القاعدة 6: الطباق تضاد بين كلمتين منفردتين (إيجاب: ليل/نهار، سلب: يعلم/لا يعلم).',
+      'القاعدة 7: المقابلة تضاد تركيبي بين معنيين أو أكثر وما يقابلها على الترتيب في الجملة اللاحقة.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Badi figures split strictly into verbal (phonetic) and semantic categories.',
+      'Rule 2: Complete Jinas demands identity in letter types, counts, order, and diacritics.',
+      'Rule 3: Partial Jinas occurs if any one of the 4 conditions diverges.',
+      'Rule 4: Saj is prose clause end-rhyming.',
+      'Rule 5: Tasree is the rhyming symmetry of the first verse hemistichs in classical poetry.',
+      'Rule 6: TibaQ pairs single contrasting words (positive or negated).',
+      'Rule 7: Muqabalah orchestrates structured sequential contrasts between multi-word clauses.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lit-3-1',
+        questionAr: 'استخرج المحسنات البديعية وبين نوعها في قول الشاعر: "السَّيْفُ أَصْدَقُ أَنْبَاءً مِنَ الكُتُبِ ... فِي حَدِّهِ الحَدُّ بَيْنَ الجِدِّ وَاللَّعِبِ".',
+        questionEn: 'Extract and classify rhetorical figures in Abu Tammam\'s famous opening verse on the sword and books.',
+        solutionStepsAr: [
+          '1. في مطلع البيت: اتفاق نهاية الشطر الأول "الكتبِ" ونهاية الشطر الثاني "اللعبِ" في القافية والوزن => (تصريع).',
+          '2. بين كلمتي "حَدِّهِ" (شفرة السيف) و"الحَدُّ" (الفاصل والحاجز) => (جناس تام في اللفظ مع اختلاف المعنى).',
+          '3. بين كلمتي "الجِدِّ" و"اللَّعِبِ" => (طباق إيجاب يوضح المعنى ويقويه).'
+        ],
+        solutionStepsEn: [
+          '1. Rhyming between hemistich ends (Al-Kutubi / Al-La\'ibi) => Tasree.',
+          '2. Wordplay on "Haddihi" (blade) and "Al-Hadd" (boundary) => Complete Jinas.',
+          '3. Contrast between "Al-Jidd" (earnestness) and "Al-La\'ib" (frivolity) => Positive TibaQ.'
+        ],
+        answerAr: '1. تصريع بين (الكتب واللعب) • 2. جناس تام بين (حده والحد) • 3. طباق إيجاب بين (الجد واللعب).',
+        answerEn: '1. Tasree (Opening rhyme) • 2. Jinas on "Hadd" • 3. TibaQ (Earnestness vs Play).'
+      },
+      {
+        id: 'ex-lit-3-2',
+        questionAr: 'بين نوع المحسن البديعي في قوله تعالى: "فَأَمَّا مَنْ أَعْطَى وَاتَّقَى * وَصَدَّقَ بِالْحُسْنَى * فَسَنُيَسِّرُهُ لِلْيُسْرَى * وَأَمَّا مَنْ بَخِلَ وَاسْتَغْنَى * وَكَذَّبَ بِالْحُسْنَى * فَسَنُيَسِّرُهُ لِلْعُسْرَى".',
+        questionEn: 'Identify the structural rhetorical figure across these paired Quranic passages.',
+        solutionStepsAr: [
+          '1. المقطع الأول يذكر: (أعطى + اتقى + صدق + لليسرى).',
+          '2. المقطع الثاني يذكر ما يقابلها جميعاً على الترتيب: (بخل + استغنى + كذب + للعسرى).',
+          '3. تضاد متسلسل متعدد مرتب بين جملتين كاملتين => مقابلة بديعية في غاية الإعجاز والجمال، مع وجود سجع فواصل متوازن.'
+        ],
+        solutionStepsEn: [
+          '1. Passage 1 states: (Give + Fear God + Affirm truth + Ease).',
+          '2. Passage 2 parallels directly: (Withhold + Self-sufficient + Deny truth + Hardship).',
+          '3. Classification: Masterful Muqabalah paired with harmonic clause endings (Saj).'
+        ],
+        answerAr: 'مقابلة بديعية متكاملة بين صفات المؤمن المنفق وجزائه وصفات البخيل المكذب ومصيره.',
+        answerEn: 'Profound structural Muqabalah contrasting righteous benevolence with obstinate miserliness.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lit-3',
       lectureId: 'lit-3',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الثالثة: علم البديع والمحسنات',
-      titleEn: 'Lecture 3 Assessment: Rhetorical Embellishments',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 3: علم البديع والمحسنات اللفظية والمعنوية',
+      titleEn: 'Mastery Assessment 3: Rhetorical Figures & Embellishments',
       passingScore: 80,
       questions: [
         {
           id: 'ql3-1',
-          textAr: 'ما الفرق بين الطباق والمقابلة في البلاغة العربية؟',
-          textEn: 'What is the distinction between TibaQ and Muqabalah?',
+          textAr: 'ما هو الفارق الجوهري بين الطباق والمقابلة في علم البديع؟',
+          textEn: 'What is the precise distinction between TibaQ and Muqabalah in rhetoric?',
           optionsAr: [
-            'الطباق يكون بين كلمتين متضادتين، أما المقابلة فتكون بين تركيبين يحتويان على تضادين أو أكثر مرتبين',
+            'الطباق تضاد بين لفظين منفردين، بينما المقابلة تضاد بين معنيين أو أكثر وما يقابل ذلك على الترتيب',
             'الطباق محسن لفظي والمقابلة محسن معنوي',
-            'الطباق يختص بالشعر فقط والمقابلة بالنثر',
-            'لا يوجد فرق بينهما كلاهما تضاد واحد'
+            'الطباق يختص بالشعر والمقابلة بالنثر فقط',
+            'لا يوجد فرق بينهما كلاهما جناس'
           ],
           optionsEn: [
-            'TibaQ is between 2 contrasting words; Muqabalah involves 2 or more sequential contrasts',
+            'TibaQ pairs single antonyms; Muqabalah orchestrates structured multi-word sequential oppositions',
             'TibaQ is verbal; Muqabalah is semantic',
-            'TibaQ is poetry-only; Muqabalah is prose-only',
-            'There is no distinction'
+            'TibaQ is poetry-only; Muqabalah prose-only',
+            'No difference'
           ],
           correctIndex: 0,
-          conceptTestedAr: 'الفرق بين الطباق والمقابلة',
-          conceptTestedEn: 'Antithesis vs Parallel Contrast',
-          explanationAr: 'الطباق تضاد بين لفظين منفردين (مثل: الليل والنهار)، بينما المقابلة أن يؤتى بمعنيين أو أكثر ثم يؤتى بما يقابل ذلك على الترتيب.',
-          explanationEn: 'TibaQ pairs single antonyms; Muqabalah orchestrates structured multi-word oppositions.',
+          conceptTestedAr: 'الفرق البلاغي بين الطباق والمقابلة',
+          conceptTestedEn: 'TibaQ vs Muqabalah Distinction',
+          explanationAr: 'الطباق يكون بين كلمتين (مثل: ليل ونهار)، بينما المقابلة تكون بين جملتين تحتويان على معنيين أو أكثر متضادين على الترتيب.',
+          explanationEn: 'TibaQ contrasts single words; Muqabalah structures ordered multi-element clause oppositions.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'ql3-2',
+          textAr: 'في قوله تعالى: "وَتَحْسَبُهُمْ أَيْقَاظاً وَهُمْ رُقُودٌ"، ما نوع المحسن البديعي؟',
+          textEn: 'In "And you would think they were awake, while they were asleep", what rhetorical figure is present?',
+          optionsAr: [
+            'طباق إيجاب (بين أيقاظاً ورقود)',
+            'طباق سلب',
+            'جناس تام',
+            'مقابلة رباعية'
+          ],
+          optionsEn: [
+            'Positive TibaQ (between awake and asleep)',
+            'Negative TibaQ',
+            'Complete Jinas',
+            'Four-way Muqabalah'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'تطبيق الطباق الإيجابي',
+          conceptTestedEn: 'Positive Antithesis Identification',
+          explanationAr: 'التضاد وقع بين كلمتين مثبتتين متضادتين في المعنى (أيقاظ ضد رقود)، فهو طباق إيجاب.',
+          explanationEn: 'Antithesis between two affirmative antonyms (awake vs asleep) constitutes positive TibaQ.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'ql3-3',
+          textAr: 'بين كلمتي "خَيْل" و"خَيْر" في قول النبي ﷺ: "الْخَيْلُ مَعْقُودٌ فِي نَوَاصِيهَا الْخَيْرُ"، ما نوع المحسن البديعي؟',
+          textEn: 'Between Khayl (horses) and Khayr (goodness), what rhetorical figure exists?',
+          optionsAr: [
+            'جناس ناقص (لاختلاف الحرف الأخير: اللام والراء)',
+            'جناس تام',
+            'سجع فواصل',
+            'طباق سلب'
+          ],
+          optionsEn: [
+            'Partial Jinas (diverging in the final letter: L vs R)',
+            'Complete Jinas',
+            'Prose Saj',
+            'Negative TibaQ'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'تمييز الجناس الناقص لاختلاف نوع الحرف',
+          conceptTestedEn: 'Incomplete Jinas Letter Divergence',
+          explanationAr: 'اتفقت الكلمتان في عدد الحركات والترتيب وعدد الحروف واختلفتا في نوع حرف واحد (اللام في الخيل، والراء في الخير) فهو جناس ناقص.',
+          explanationEn: 'Words share identical rhythm and letter count but differ in one consonant (L vs R), creating partial Jinas.',
           difficulty: 'medium'
+        },
+        {
+          id: 'ql3-4',
+          textAr: 'ما المحسن اللفظي الذي يُعرف باتفاق قافيتي الشطر الأول في البيت الافتتاحي للقصيدة الشعرية؟',
+          textEn: 'Which verbal figure is defined by matching rhymes in the two hemistichs of a poem\'s opening verse?',
+          optionsAr: [
+            'التصريع (Tasree\')',
+            'السجع (Saj\')',
+            'الطباق (TibaQ)',
+            'التورية (Tawriyah)'
+          ],
+          optionsEn: [
+            'Tasree (Opening verse hemistich rhyme)',
+            'Saj (Prose clause rhyme)',
+            'TibaQ (Antithesis)',
+            'Tawriyah (Double Entendre)'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'تعريف التصريع في الشعر العربي',
+          conceptTestedEn: 'Definition of Poetic Tasree',
+          explanationAr: 'التصريع هو محسن لفظي خاص بالشعر، ويعني اتفاق نهاية الشطر الأول مع نهاية الشطر الثاني في البيت الأول من القصيدة.',
+          explanationEn: 'Tasree is exclusively poetic, rhyming the end of the first hemistich with the second in the opening verse.',
+          difficulty: 'easy'
         }
       ]
     }
@@ -2372,8 +2904,8 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
     order: 4,
     titleAr: 'المحاضرة 4: النقد الأدبي والتحليل الموضوعي والجمالي للنصوص',
     titleEn: 'Lecture 4: Literary Criticism & Aesthetic Textual Deconstruction',
-    subtitleAr: 'استراتيجيات تفكيك البنية الفنية، وتذوق الصور الشعرية، ونقد العاطفة والفكرة',
-    subtitleEn: 'Analyze poetic structures, thematic unities, aesthetic resonance, and critical frameworks.',
+    subtitleAr: 'استراتيجيات تفكيك البنية الفنية، وتذوق الصور الشعرية، ونقد العاطفة والفكرة والأسلوب وتحقيق الوحدة العضوية',
+    subtitleEn: 'Master applied literary criticism: evaluate emotional sincerity, intellectual depth, figurative artistry, style rhythm, and organic unity in classical and modern Arabic literature.',
     durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
@@ -2381,60 +2913,323 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
     prerequisiteLectureId: 'lit-3',
     prerequisiteTitleAr: 'المحاضرة 3: علم البديع: المحسنات اللفظية والمعنوية وأثرها الصوتي',
     prerequisiteTitleEn: 'Lecture 3: Rhetorical Figures: Verbal & Semantic Embellishments',
-    keyConceptsAr: ['عناصر العمل الأدبي: العاطفة والفكرة والصورة والأسلوب', 'الوحدة العضوية والموضوعية في القصيدة', 'معايير النقد البلاغي والجمالي', 'التحليل التطبيقي لنص أدبي كلاسيكي وحديث'],
-    keyConceptsEn: ['Literary Work Dimensions: Emotion, Idea, Imagery & Style', 'Organic & Thematic Unity', 'Aesthetic Critical Criteria', 'Applied Textual Criticism'],
-    summaryAr: 'المحطة الختامية لمسار اللغة العربية؛ ندمج ما تعلمناه في البيان والبديع والمعاني لنمارس النقد الأدبي التحليلي الراقي للنصوص الشعرية والنثرية.',
-    summaryEn: 'Synthesizing rhetoric, imagery, and figurative analysis to evaluate authentic literary masterpieces.',
-    sections: [
+
+    gradeLevelNameAr: 'الصف الثاني ثانوي - المرحلة الثانوية (مسار اللغة العربية والإنسانيات)',
+    gradeLevelNameEn: 'Grade 11 / High School - Arabic Literature & Rhetoric',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثالثة: النقد الأدبي وقراءة النصوص وتذوقها',
+    unitTitleEn: 'Unit 3: Literary Criticism & Aesthetic Textual Appreciation',
+    lessonNumberAr: 'الدرس 1: مناهج النقد الأدبي، عناصر العمل الأدبي، والوحدة العضوية',
+    lessonNumberEn: 'Lesson 1: Literary Criticism Frameworks & Organic Unity',
+
+    warmupHookAr: 'حين نقرأ قصيدة خالدة لشاعر كالمتنبي أو أحمد شوقي، ما الذي يجعل كلماتها تهز وجداننا بعد مئات السنين؟ هل هي مجرد كلمات منسقة على بحر شعري وقافية، أم نسيج حي نابض بالصدق والجمال والفكر العميق؟ النقد الأدبي ليس "تصيداً للأخطاء"، بل هو عين البصيرة الذواقة التي تفكك أسرار العبقرية الأدبية: كيف اندمجت العاطفة الصادقة مع الفكرة السامية؟ وكيف خدمت الصور البيانية والموسيقى موضوع النص ليصبح كائناً حياً متماسكاً يحقق "الوحدة العضوية"؟',
+    warmupHookEn: 'Literary criticism is not mere fault-finding, but the enlightened appreciation of artistic genius: evaluating how emotion, thought, imagery, and rhythm fuse into an indivisible organic masterpiece.',
+
+    learningOutcomesAr: [
+      'أن يحلل الطالب أركان العمل الأدبي الأربعة (العاطفة، الفكرة، الخيال والتصوير، الأسلوب والإيقاع)',
+      'أن يطبق معايير نقد العاطفة (الصدق، القوة، الانسجام) ونقد الفكرة (العمق، الأصالة، الصحة)',
+      'أن يقيّم جودة الصور البيانية والمحسنات البلاغية ومدى خدمتها للجو النفسي للنص',
+      'أن يوضح مفهوم "الوحدة العضوية والموضوعية" ويميز بين القصيدة المفككة والقصيدة الحية المتكاملة',
+      'أن يكتب تحليلاً نقدياً تطبيقياً لنص أدبي شعري أو نثري وفق المعايير العلمية'
+    ],
+    learningOutcomesEn: [
+      'Deconstruct the 4 cardinal pillars of literary works: Emotion, Intellect, Imagery, Style',
+      'Apply critical criteria for emotion (sincerity, intensity) and intellect (depth, authenticity)',
+      'Evaluate how figurative imagery and rhetorical ornaments support thematic atmosphere',
+      'Explain organic and thematic unity, contrasting modular poetry with unified modern masterpieces',
+      'Compose structured applied literary critiques using rigorous analytical frameworks'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. معايير نقد الصورة الشعرية',
-        titleEn: '1. Poetic Imagery Critical Criteria',
-        contentAr: 'يقاس نجاح الصورة الأدبية بمدى صدقها التعبيري وقدرتها على نقل مشاعر المبدع إلى القارئ دون افتعال أو غرابة منفرة.',
-        contentEn: 'Poetic imagery is critiqued by expressive authenticity, emotional fidelity, and organic coherence within the work.',
-        interactiveExample: {
-          titleAr: 'نقد تحليلي: تجانس العاطفة مع الصورة البيانية',
-          titleEn: 'Worked Criticism: Emotional Alignment with Imagery',
-          equation: 'صدق العاطفة + براعة التشكيل الخيالي = خلود النص',
-          steps: [
-            { stepNumber: 1, textAr: 'اقرأ النص وقرر ما إذا كانت الألفاظ توحي بالحزن أو الفرح أو الحماسة.', textEn: 'Discern whether diction evokes melancholy, joy, or valor.' },
-            { stepNumber: 2, textAr: 'افحص الصور البيانية: هل تدعم هذه العاطفة أم تنفر منها؟', textEn: 'Assess if imagery reinforces the prevailing emotional climate.' },
-            { stepNumber: 3, textAr: 'استنتج القيمة الجمالية والوحدة الفنية للعمل الأدبي.', textEn: 'Synthesize aesthetic value and overall artistic coherence.' }
-          ],
-          takeawayAr: 'النص الأدبي العظيم هو الذي تتكامل فيه الموسيقى والصورة والفكرة في نسيج عضوي لا يقبل التجزئة.',
-          takeawayEn: 'Masterpiece literature unites rhythm, metaphor, and intellect into an indivisible organic synthesis.'
-        },
-        tipsAr: ['احرص على الاستشهاد بعبارات دقيقة من النص عند كتابة تحليلك النقدي.'],
-        tipsEn: ['Always cite specific textual evidence when constructing literary critiques.']
+        termAr: 'النقد الأدبي (Literary Criticism)',
+        termEn: 'Literary Criticism',
+        definitionAr: 'دراسة النصوص الأدبية وفحصها وتفسيرها وتقويمها لبيان مواطن الجمال والقوة وأوجه القصور والضعف وفق معايير موضوعية وذوقية.',
+        definitionEn: 'The disciplined analysis, interpretation, and qualitative evaluation of literary texts based on objective aesthetic criteria.'
+      },
+      {
+        termAr: 'الوحدة العضوية (Organic Unity)',
+        termEn: 'Organic Unity',
+        definitionAr: 'تماسك القصيدة بحيث تصبح كالكائن الحي؛ تدور حول موضوع واحد (وحدة الموضوع)، وتسيطر عليها عاطفة واحدة (وحدة الجو النفسي)، مع ترابط الأفكار وتسلسلها.',
+        definitionEn: 'Coherence where a poem functions like a living organism with thematic singularity, emotional consistency, and sequential progression.'
+      },
+      {
+        termAr: 'صدق العاطفة (Emotional Sincerity)',
+        termEn: 'Emotional Sincerity',
+        definitionAr: 'أن تكون المشاعر المنبثة في النص نابعة من تجربة شعورية حقيقية وإحساس صادق لدى الأديب بعيداً عن الافتعال والنفاق والتقليد البارد.',
+        definitionEn: 'Authentic affective resonance stemming from genuine lived psychological experience rather than artificial imitation.'
+      },
+      {
+        termAr: 'الجو النفسي (Atmospheric Tone / Mood)',
+        termEn: 'Atmospheric Mood',
+        definitionAr: 'الحالة الوجدانية والشعورية العامة التي تخيم على النص الأدبي وتوجه اختيار الألفاظ والصور والإيقاع الموسيقي.',
+        definitionEn: 'The overarching emotional climate governing lexical choice, imagery, and rhythmic cadence.'
       }
     ],
+
+    keyConceptsAr: [
+      'أركان العمل الأدبي الأربعة: العاطفة، الفكرة، الخيال/الصورة، الأسلوب واللغة',
+      'معايير نقد العاطفة: صدق الشعور، وقوة التأثير، والانسجام مع الموضوع',
+      'معايير نقد الفكرة: العمق والأصالة، والسلامة المنطقية، وملاءمتها للواقع الإنساني',
+      'معايير نقد الصورة والخيال: الابتكار، والبعد عن الغرابة والابتذال، والتعبير عن المعنى',
+      'الوحدة العضوية: وحدة الموضوع + وحدة الجو النفسي + ترابط الأفكار وتسلسلها',
+      'الفرق بين النقد الانطباعي الذاتي والنقد المنهجي الموضوعي'
+    ],
+    keyConceptsEn: [
+      'Four Pillars: Emotion, Idea, Imagery/Imagination, Style/Diction',
+      'Emotion Criteria: Sincerity, Affective Intensity, Thematic Concordance',
+      'Idea Criteria: Intellectual Depth, Originality, Logical Coherence',
+      'Imagery Criteria: Originality, Vividness, Organic Integration',
+      'Organic Unity: Thematic Singularity + Emotional Consistency + Sequential Structure',
+      'Impressionistic vs Methodological Objective Criticism'
+    ],
+    summaryAr: 'المحطة الختامية المتوجة لمسار اللغة العربية؛ ندمج ما تعلمناه في علوم البيان والبديع والمعاني لنمارس النقد الأدبي التحليلي الراقي للنصوص، ونفكك أسرار خلود الأعمال الأدبية من خلال تقييم العاطفة والفكرة والصورة والوحدة العضوية.',
+    summaryEn: 'The pinnacle capstone of Arabic Literature: synthesizing imagery, rhetoric, and stylistic analysis into rigorous, illuminating literary criticism and organic unity evaluation.',
+
+    sections: [
+      {
+        titleAr: '1. أركان العمل الأدبي ومعايير التحليل النقدي',
+        titleEn: '1. The Four Pillars of Literature & Critical Assessment Criteria',
+        contentAr: 'يقوم أي عمل أدبي خالد على أربعة أركان متكاملة:\n1. العاطفة (المحرك الوجداني): المشاعر والأحاسيس التي عاشها الأديب؛ وتُنقد بمعيارين: "صدق الشعور" (أن يعبر عن تجربة حقيقية) و"قوة التأثير" في نفس القارئ.\n2. الفكرة (الجوهر العقلي): المعاني والحقائق التي يريد الأديب إيصالها؛ وتُنقد بمدى "عمقها وأصالتها" وسلامتها المنطقية.\n3. الخيال والتصوير (الرداء الجمالي): الصور البيانية من تشبيه واستعارة وكناية؛ وتُنقد بمدى ابتكارها وتناغمها مع العاطفة دون تكلف أو غرابة.\n4. الأسلوب والإيقاع (البناء اللغوي والموسيقي): اختيار الألفاظ الفصيحة، والتراكيب المعبرة، والوزن الموسيقي الذي ينسجم مع نغمة المشاعر.',
+        contentEn: 'Every literary masterpiece rests upon four interlocked pillars: Emotion (sincerity and intensity), Idea (depth and originality), Imagery (inventiveness and affective resonance), and Style (diction and musical cadence).',
+        diagram: {
+          id: 'diag-lit4-criticism-pillars',
+          figureNumberAr: 'شكل (4-1)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'مخطط أركان النقد الأدبي وتحقيق الوحدة العضوية للنص',
+          titleEn: 'Pillars of Literary Criticism & Organic Unity Architecture',
+          captionAr: 'يوضح المخطط تفاعل أركان العمل الأدبي الأربعة (العاطفة، الفكرة، الخيال، الأسلوب) وذروة النقد الأدبي المتمثلة في تقييم "الوحدة العضوية والموضوعية" للقصيدة.',
+          captionEn: 'Comprehensive framework mapping the four dimensions of literary creation converging into organic and thematic unity.',
+          diagramType: 'literary_criticism_map',
+          takeawayFormulaAr: 'العمل الأدبي العظيم = صدق العاطفة + عمق الفكرة + إشراق الخيال + سلاسة الأسلوب + الوحدة العضوية',
+          takeawayFormulaEn: 'Masterpiece Literature = Sincere Emotion + Deep Idea + Radiant Imagery + Refined Style + Organic Unity',
+          keyLabels: [
+            { tagAr: 'العاطفة والفكرة', tagEn: 'Emotion & Intellect', color: '#ef4444' },
+            { tagAr: 'الخيال والأسلوب', tagEn: 'Imagery & Style', color: '#a855f7' },
+            { tagAr: 'الوحدة العضوية', tagEn: 'Organic Unity', color: '#38bdf8' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق نقدي (4-1): تحليل نقدي تطبيقي لبيتين من الشعر العربي',
+          titleEn: 'Worked Criticism (4-1): Applied Literary Deconstruction of Classical Verses',
+          equation: 'تفكيك العاطفة + الفكرة + الصور + الموسيقى = الحكم النقدي',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'البيتان (لأبي القاسم الشابي): "إِذَا الشَّعْبُ يَوْمـاً أَرَادَ الْحَيَـاةَ ... فَلا بُدَّ أَنْ يَسْتَجِيبَ الْقَـدَر / وَلا بُـدَّ لِلَّيـْلِ أَنْ يَنْجَلِــي ... وَلا بُدَّ للْقَيْـدِ أَنْ يَنْكَسِـر".',
+              textEn: 'Verses: Al-Shabbi on the will to live and inevitability of dawn.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'نقد العاطفة: عاطفة حماسية وطنية جياشة تمتلئ بالأمل والتحدي والإيمان الراسخ بحرية الإنسان (عاطفة صادقة قوية).',
+              textEn: 'Emotion: Intense patriotic fervor, unyielding hope and faith in liberty.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'نقد الفكرة والصور: الفكرة عميقة وأصيلة تدعو للإرادة والعمل. الصور البيانية: استعار "الليل" للظلم والاستعمار (استعارة تصريحية)، و"القيد" للعبودية والقهر، وجعل القدر مستجيباً لإرادة الأحرار (تشخيص بديع).',
+              textEn: 'Idea & Imagery: Deep message; Night = Oppression (Tasrihiyyah), Chains = Servitude, Fate responding = Personification.'
+            },
+            {
+              stepNumber: 4,
+              textAr: 'نقد الأسلوب والموسيقى: استخدام بحر المتقارب السريع مع تكرار عبارة "فلا بد / ولا بد" التي منحت النص إيقاعاً حاسماً جازماً يؤكد حتمية النصر.',
+              textEn: 'Style & Rhythm: Rapid Mutagarib meter with decisive repetition reinforcing inevitability.'
+            }
+          ],
+          takeawayAr: 'التحليل النقدي الناجح يربط دائماً بين اختيار الألفاظ والصور البيانية وبين العاطفة المسيطرة على الشاعر.',
+          takeawayEn: 'Insightful criticism inextricably links diction and figurative tropes directly to prevailing affective sentiment.'
+        },
+        tipsAr: ['احرص في النقد على الاستشهاد بكلمات محددة من النص لدعم حكمك النقدي.']
+      },
+      {
+        titleAr: '2. الوحدة العضوية والموضوعية في القصيدة الحديثة',
+        titleEn: '2. Organic & Thematic Unity in Contemporary Literature',
+        contentAr: 'كانت القصيدة الجاهلية القديمة تتعدد فيها الأغراض (الوقوف على الأطلال، الغزل، رحلة الصحراء، ثم المدح أو الفخر) فتسمى "قصيدة البيت المفرد". أما في النقد الأدبي الحديث، فإن المعيار الأسمى لجودة النص هو "الوحدة العضوية" (Organic Unity)، وتتحقق بتوافر ثلاثة شروط:\n1. وحدة الموضوع: أن تدور القصيدة بكاملها حول فكرة أو تجربة شعورية واحدة دون استطراد مخل.\n2. وحدة الجو النفسي: أن تسود النص عاطفة منسجمة تتدرج بتناغم من المطلع إلى المقطع الختامي دون تناقض عاطفي.\n3. ترابط الأفكار وتكاملها: أن يسلم كل بيت إلى البيت الذي يليه، بحيث لا يمكن حذف بيت أو تقديمه دون أن يختل بناء القصيدة، كما لا يمكن بتر عضو من جسد كائن حي.',
+        contentEn: 'Unlike modular multi-thematic pre-Islamic odes, modern literary criticism prizes Organic Unity: thematic singularity, emotional atmosphere consistency, and interdependent stanza progressions where no line can be rearranged without destroying the living synthesis.',
+        interactiveExample: {
+          titleAr: 'تطبيق نقدي (4-2): اختبار تحقق الوحدة العضوية في نص أدبي',
+          titleEn: 'Worked Criticism (4-2): Testing for Organic Unity in Poetry',
+          equation: 'وحدة موضوع + وحدة جو نفسي + ترابط بنيوي = وحدة عضوية مكتملة',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'افحص موضوع النص: هل يتحدث الشاعر عن تجربة الغربة والحنين للوطن من أول بيت لآخر بيت؟ نعم => تحقق وحدة الموضوع.',
+              textEn: 'Step 1: Does the poem maintain a singular thematic focus (e.g. exile and longing)? Yes => Thematic Unity.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'افحص الجو النفسي: هل تسيطر نغمة الشوق والشجن دون انتقال مفاجئ إلى الفرح أو الهجاء؟ نعم => تحقق وحدة الجو النفسي.',
+              textEn: 'Step 2: Is the emotional atmosphere consistently resonant without dissonant shifts? Yes => Atmospheric Unity.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'افحص ترابط الأبيات: هل تتدرج المشاعر وتنمو فكرة القصيدة تصاعدياً نحو الذروة والختام؟ نعم => اكتملت الوحدة العضوية للنص.',
+              textEn: 'Step 3: Do verses progress climactically like an organic living entity? Yes => Flawless Organic Unity.'
+            }
+          ],
+          takeawayAr: 'القصيدة ذات الوحدة العضوية تشبه اللوحة الزيتية المتناسقة؛ كل لون وضربة فرشاة تخدم المشهد الكلي.',
+          takeawayEn: 'A poem with organic unity resembles a unified canvas where every brushstroke serves the holistic portrait.'
+        },
+        tipsAr: ['القصيدة التي تفتقد الوحدة العضوية تبدو كمجموعة من الأبيات المتفرقة التي يمكن إعادة ترتيبها دون أثر.']
+      }
+    ],
+
+    conceptMapSummaryAr: 'النقد الأدبي: تقويم وتذوق للنصوص. أركان العمل الأدبي: 1) العاطفة (الصدق والقوة)، 2) الفكرة (العمق والأصالة)، 3) الصورة/الخيال (التشخيص والتجسيم والابتكار)، 4) الأسلوب والموسيقى. غاية النقد: تقييم الوحدة العضوية (وحدة الموضوع، وحدة الجو النفسي، وترابط الأفكار).',
+    conceptMapSummaryEn: 'Literary Criticism: Evaluating texts. 4 Pillars: Emotion (sincerity), Idea (depth), Imagery (invention), Style (rhythm). Goal: Organic Unity (Thematic unity + Emotional harmony + Sequential coherence).',
+
+    goldenRulesAr: [
+      'القاعدة 1: النقد الأدبي ليس هجوماً أو مدحاً انطباعياً، بل هو تحليل علمي وتذوق منهجي لجماليات النص.',
+      'القاعدة 2: أركان العمل الأدبي الأربعة هي: العاطفة، والفكرة، والصورة/الخيال، والأسلوب/اللغة.',
+      'القاعدة 3: مقياس جودة العاطفة هو صدق الشعور وقوة حرارته وقدرته على التأثير في المتلقي.',
+      'القاعدة 4: مقياس جودة الفكرة هو عمقها، وأصالتها، وملاءمتها للمنطق والواقع الإنساني.',
+      'القاعدة 5: الصورة الشعرية الناجحة هي التي تنبع من العاطفة وتخدمها وتبتعد عن الغرابة والافتعال.',
+      'القاعدة 6: الوحدة العضوية تتحقق باجتماع: وحدة الموضوع، ووحدة الجو النفسي، وترابط الأفكار وتسلسلها.',
+      'القاعدة 7: في القصيدة ذات الوحدة العضوية يستحيل حذف بيت أو تغيير موضعه دون الإخلال بالمعنى العام.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Literary criticism is methodological aesthetic analysis, not subjective impressionism.',
+      'Rule 2: The 4 cardinal pillars are Emotion, Intellect, Imagery, and Style.',
+      'Rule 3: Emotion is judged by sincerity, affective intensity, and reader engagement.',
+      'Rule 4: Ideas are critiqued on depth, originality, and philosophical fidelity.',
+      'Rule 5: Imagery must arise organically from emotion, avoiding strained extravagance.',
+      'Rule 6: Organic Unity requires Thematic Unity + Emotional Consistency + Sequential Progression.',
+      'Rule 7: In an organically unified work, no line can be deleted or transposed without structural collapse.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-lit-4-1',
+        questionAr: 'ما هي معايير نقد "العاطفة" في النص الأدبي؟ وكيف يُميز الناقد بين العاطفة الصادقة والعاطفة المفتعلة؟',
+        questionEn: 'What are the critical criteria for evaluating Emotion in literature? How does a critic distinguish sincere from fabricated sentiment?',
+        solutionStepsAr: [
+          '1. معايير نقد العاطفة تنحصر في ثلاثة أمور أساسية: أ) صدق العاطفة، ب) قوة العاطفة وحرارتها، ج) انسجامها مع طبيعة الفكرة والموقف.',
+          '2. العاطفة الصادقة: نابعة من تجربة نفسية عاشها الأديب، وتظهر في حرارة الألفاظ وتلقائيتها وتناسق الصور دون تكلف.',
+          '3. العاطفة المفتعلة (الكاذبة): عاطفة مصطنعة للمجاملة أو التكسب، وتبدو باردة، مليئة بالصور المكررة والمبالغات التي لا يصدقها العقل ولا تهز الوجدان.'
+        ],
+        solutionStepsEn: [
+          '1. Three cardinal criteria: A) Sincerity, B) Affective intensity and warmth, C) Thematic harmony.',
+          '2. Sincere emotion springs from authentic lived experience, marked by natural, vibrant diction and unforced imagery.',
+          '3. Fabricated emotion feels cold and mechanical, riddled with hollow clichés and unconvincing hyperbole.'
+        ],
+        answerAr: 'معايير نقد العاطفة: الصدق، القوة والحرارة، والانسجام؛ وتتميز الصادقة بالحرارة والتأثير والتلقائية بينما المفتعلة تتسم بالبرود والمبالغة المستهلكة.',
+        answerEn: 'Emotion criteria: Sincerity, Intensity, Harmony. Sincere emotion resonates naturally; fabricated emotion feels cold and clichéd.'
+      },
+      {
+        id: 'ex-lit-4-2',
+        questionAr: 'اشرح بمثال تطبيقي مفهوم "الوحدة العضوية" في القصيدة، وكيف تختلف عن مبدأ "وحدة البيت" في الشعر الكلاسيكي القديم.',
+        questionEn: 'Explain Organic Unity in poetry versus the classical Modular Verse concept with an illustrative example.',
+        solutionStepsAr: [
+          '1. مبدأ "وحدة البيت": كان البيت في بعض القصائد القديمة يمثل وحدة مستقلة في المعنى، مما يسمح بحذف بعض الأبيات أو تقديمها دون الإخلال بالموضوع.',
+          '2. مبدأ "الوحدة العضوية": يتعامل مع القصيدة كجسد واحد متصل؛ موضوعها واحد، وعاطفتها متسقة نامية، وترتيب أبياتها محكم كبناء عضوي متماسك.',
+          '3. مثال: في قصائد مثل "المساء" لخليل مطران، كل بيت يقود إلى ما بعده في تدرج تصاعدي من حزن الغروب إلى استشعار النهاية، مما يمنع تجزئة النص.'
+        ],
+        solutionStepsEn: [
+          '1. Modular Verse: Each line formed an independent semantic unit, allowing transpositions or deletions without narrative rupture.',
+          '2. Organic Unity: The poem functions as a single living organism with singular theme, consistent mood, and indivisible progression.',
+          '3. Example: Khalil Mutran\'s "Al-Masaa" progresses inexorably from melancholy sunset to metaphysical mortality.'
+        ],
+        answerAr: 'الوحدة العضوية تجعل القصيدة كالكائن الحي المتماسك (وحدة موضوع + جو نفسي + ترابط أفكار)، بينما وحدة البيت تجعل كل بيت مستقلاً بذاته.',
+        answerEn: 'Organic Unity renders the poem an indivisible living entity, whereas modular verse treats each line as a standalone unit.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-lit-4',
       lectureId: 'lit-4',
-      titleAr: 'الاختبار النهائي للمحاضرة الرابعة: النقد والتحليل الأدبي',
-      titleEn: 'Lecture 4 Assessment: Applied Literary Criticism',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 4: النقد الأدبي والتحليل الموضوعي والجمالي',
+      titleEn: 'Mastery Assessment 4: Applied Literary Criticism & Organic Unity',
       passingScore: 80,
       questions: [
         {
           id: 'ql4-1',
-          textAr: 'ما المقصود بـ "الوحدة العضوية" في القصيدة الأدبية الحديثة؟',
-          textEn: 'What is meant by organic unity in modern poetry?',
+          textAr: 'ما هي الأركان الثلاثة اللازمة لتحقق "الوحدة العضوية" في القصيدة الأدبية الحديثة؟',
+          textEn: 'What are the three mandatory elements for achieving Organic Unity in modern poetry?',
           optionsAr: [
-            'ترابط أفكار القصيدة ومشاهرها بحيث تكون كالكائن الحي المتماسك',
-            'أن تكون جميع الأبيات منتهية بنفس الحرف',
-            'أن يتحدث الشاعر عن الطبيعة والكائنات الحية فقط',
-            'أن تتكون القصيدة من عدد محدد من الأبيات'
+            'وحدة الموضوع، ووحدة الجو النفسي، وترابط الأفكار والمشاعر وتسلسلها',
+            'اتفاق القافية، واستخدام بحر الطويل، وكثرة الجناس',
+            'التحدث عن الطبيعة فقط، والالتزام بعدد 20 بيتاً، واستخدام الألفاظ الغريبة',
+            'حذف المشبه به في جميع الأبيات'
           ],
           optionsEn: [
-            'Coherence where ideas and emotions interlock like an organic living entity',
-            'All verses ending with identical rhyme letter',
-            'Writing exclusively about biology and nature',
-            'Restricting verse count'
+            'Thematic Singularity, Psychological Mood Consistency, and Sequential Progression of ideas',
+            'Uniform rhyme, long meter, and frequent Jinas',
+            'Writing only about nature, fixed line count, archaic diction',
+            'Omitting vehicle in all lines'
           ],
           correctIndex: 0,
-          conceptTestedAr: 'مفهوم الوحدة العضوية في النقد الأدبي',
-          conceptTestedEn: 'Organic Unity Framework',
-          explanationAr: 'الوحدة العضوية تعني وحدة الموضوع ووحدة الجو النفسي وترابط الأفكار وتكاملها عبر القصيدة.',
-          explanationEn: 'Organic unity signifies thematic coherence, uniform emotional atmosphere, and interlocked ideas.',
+          conceptTestedAr: 'شروط تحقق الوحدة العضوية الثلاثة',
+          conceptTestedEn: 'Three Pillars of Organic Unity',
+          explanationAr: 'تتحقق الوحدة العضوية عندما تدور القصيدة حول موضوع واحد، في ظل جو نفسي وعاطفي منسجم، وتترابط أفكارها ترابطاً سببياً ووجدانياً كأعضاء الجسد الواحد.',
+          explanationEn: 'Organic unity demands thematic unity, emotional consistency, and sequential progression interlocking verses into a living whole.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'ql4-2',
+          textAr: 'ما هو المقياس النقدي الأول للحكم على جودة "العاطفة" في العمل الأدبي؟',
+          textEn: 'What is the primary critical criterion for judging Emotion in a literary work?',
+          optionsAr: [
+            'صدق الشعور وحرارته وقدرته على التأثير في وجدان المتلقي',
+            'استخدام أطول الكلمات المعجمية',
+            'التحدث بصوت مرتفع وإلقاء النص بسرعة',
+            'أن تكون العاطفة هادئة دائماً دون أي انفعال'
+          ],
+          optionsEn: [
+            'Emotional Sincerity, warmth, and affective engagement of the audience',
+            'Long dictionary vocabulary',
+            'Loud recitation',
+            'Keeping emotion completely subdued'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'معايير نقد العاطفة: الصدق وقوة التأثير',
+          conceptTestedEn: 'Emotion Critique: Sincerity & Impact',
+          explanationAr: 'الصدق الشعوري هو روح العمل الأدبي؛ فالقارئ يدرك بفطرته العاطفة الحقيقية النابعة من القلب ويتأثر بها، وينفر من العاطفة المصطنعة الكاذبة.',
+          explanationEn: 'Emotional sincerity distinguishes authentic art from cold imitation, ensuring deep reader connection.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'ql4-3',
+          textAr: 'كيف يقيم الناقد الأدبي جودة "الصورة البيانية والخيال" في النص؟',
+          textEn: 'How does a literary critic evaluate the quality of figurative imagery and imagination?',
+          optionsAr: [
+            'بمدى ابتكارها وتعبيرها الصادق عن عاطفة النص وتجسيدها للمعنى دون تكلف أو غرابة منفرة',
+            'بعدد الصور البيانية في البيت الواحد حتى لو شتتت المعنى',
+            'بأن تكون الصورة منقولة حرفياً من الشعراء القدماء دون أي تجديد',
+            'باستبعاد كل أنواع التشبيه والاستعارة والاعتماد على التقرير المباشر'
+          ],
+          optionsEn: [
+            'By inventiveness, emotional alignment, and natural illumination without strained dissonance',
+            'By maximizing image count per line regardless of clarity',
+            'By copying ancient images without novelty',
+            'By eliminating all metaphors'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'معايير نقد الصورة الشعرية والخيال',
+          conceptTestedEn: 'Criteria for Poetic Imagery Evaluation',
+          explanationAr: 'الصورة البيانية الناجحة تنبع من التجربة الشعورية الحقيقية وتخدم الفكرة بابتكار وأناقة، بعيداً عن حشو الصور المصطنعة أو الغرابة المربكة.',
+          explanationEn: 'Masterful poetic imagery arises organically from genuine emotion, illuminating themes with originality and elegance.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'ql4-4',
+          textAr: 'ما الفرق الرئيسي بين "النقد المنهجي الموضوعي" و"النقد الانطباعي الذاتي"؟',
+          textEn: 'What is the core distinction between Methodological Objective Criticism and Impressionistic Subjective Criticism?',
+          optionsAr: [
+            'المنهجي يستند إلى معايير وأدلة وشواهد بلاغية وفنية محددة، بينما الانطباعي يعتمد على مجرد الاستحسان أو الاستهجان العاطفي المجرد دون تعليل',
+            'المنهجي يختص بالشعر فقط والانطباعي بالنثر',
+            'المنهجي يرفض تذوق الجمال والانطباعي علمي بحت',
+            'لا يوجد فرق كلاهما يعتمد على الصدفة'
+          ],
+          optionsEn: [
+            'Objective criticism relies on rigorous aesthetic standards and textual evidence; Impressionistic relies on unreasoned personal like/dislike',
+            'Objective is poetry-only; Impressionistic prose-only',
+            'Objective rejects beauty',
+            'No difference'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'الفرق بين النقد المنهجي الموضوعي والنقد الانطباعي',
+          conceptTestedEn: 'Objective Methodological vs Impressionistic Criticism',
+          explanationAr: 'النقد المنهجي يحلل عناصر النص (العاطفة، الفكرة، الأسلوب، البناء) بأدلة وبراهين واضحة، بينما الانطباعي يكتفي بقول "هذا جميل" أو "هذا رديء" دون تحليل علمي.',
+          explanationEn: 'Methodological criticism substantiates aesthetic judgements with concrete textual evidence across structure, emotion, and rhetoric.',
           difficulty: 'medium'
         }
       ]
@@ -4243,58 +5038,336 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
     order: 2,
     titleAr: 'المحاضرة 2: الخلية الحية: اللبنة الأساسية لبناء الكائنات الحية',
     titleEn: 'Lecture 2: The Living Cell: Fundamental Building Block of Life',
-    subtitleAr: 'المقارنة بين الخلية النباتية والحيوانية، ووظائف العضيات الحيوية (النواة، الغشاء، الميتوكوندريا)',
-    subtitleEn: 'Compare plant and animal cells, examining organelle functions.',
-    durationMinutes: 30,
+    subtitleAr: 'المقارنة الدقيقة بين الخلية النباتية والحيوانية، ووظائف العضيات الخلوية (النواة، الغشاء، الميتوكوندريا، البلاستيدات، الجدار الخلوي)',
+    subtitleEn: 'Master cell theory, organelle functions (nucleus, mitochondria, membrane), and structural contrasts between plant and animal cells.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'sci-1',
     prerequisiteTitleAr: 'المحاضرة 1: طبيعة المادة والذرات والعناصر والمركبات',
     prerequisiteTitleEn: 'Lecture 1: Nature of Matter: Atoms, Elements & Compounds',
-    keyConceptsAr: ['نظرية الخلية: الخلية وحدة التركيب والوظيفة في الكائنات الحية', 'النواة كمركز للتحكم بالخلية واحتواء المادة الوراثية', 'الميتوكوندريا مصنع الطاقة في الخلية', 'الفروق بين الخلية النباتية والحيوانية (الجدار الخلوي والبلاستيدات الخضراء)'],
-    keyConceptsEn: ['Cell Theory', 'Nucleus Control Center', 'Mitochondria Powerhouse', 'Plant vs Animal Cell Distinctions'],
-    summaryAr: 'الكائنات الحية جميعها، من أصغر بكتيريا إلى أضخم حوت، تتكون من خلايا حية تؤدي كافة وظائف الحياة والتنفس وإنتاج الطاقة.',
-    summaryEn: 'Explore cellular architecture and compare photosynthetic plant cells with animal cells.',
-    sections: [
+
+    gradeLevelNameAr: 'الصف الأول متوسط (الصف السابع) - المرحلة المتوسطة',
+    gradeLevelNameEn: 'Grade 7 / Middle School - General Science',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثانية: تنوع الحياة وبنية الخلايا الحية',
+    unitTitleEn: 'Unit 2: Cellular Biology & Living Systems',
+    lessonNumberAr: 'الدرس 1: الخلية: التركيب والوظائف والمقارنة الخلوية',
+    lessonNumberEn: 'Lesson 1: Cell Structure, Organelles & Comparative Cytology',
+
+    warmupHookAr: 'جسم الإنسان البالغ يتكون من أكثر من 37 تريليون خلية حية تعمل بتناغم مذهل كمدينة عملاقة فائقة التطور! في كل خلية هناك مركز تحكم وإدارة (النواة)، ومحطات لتوليد الطاقة الكهربائية والكيميائية (الميتوكوندريا)، وبوابات أمنية تسمح بدخول المواد وخروجها (الغشاء البلازمي). فما الفارق المجهري الذي يجعل النباتات قادرة على صنع غذائها من أشعة الشمس بينما تعتمد الحيوانات على التغذي؟',
+    warmupHookEn: 'The human body comprises over 37 trillion cooperating living cells. Compare the miraculous microscopic machinery of photosynthetic plant cells against animal cells.',
+
+    learningOutcomesAr: [
+      'أن يوضح الطالب بنود نظرية الخلية الثلاثة وتاريخ اكتشافها بالمجهر',
+      'أن يحدد وظائف العضيات الخلوية الرئيسية: النواة (DNA)، الميتوكوندريا (ATP)، الغشاء البلازمي، والسيتوبلازم',
+      'أن يقارن بدقة مجهرية بين الخلية النباتية والخلية الحيوانية في ثلاثة تراكيب رئيسية (الجدار الخلوي، البلاستيدات الخضراء، الفجوة العصارية)',
+      'أن يربط بين تركيب العضية ووظيفتها الحيوية في الحفاظ على حياة الكائن الحي وتكاثره'
+    ],
+    learningOutcomesEn: [
+      'State the three postulates of Cell Theory',
+      'Identify key organelle roles: Nucleus (DNA control), Mitochondria (ATP energy), Plasma Membrane, Cytoplasm',
+      'Compare plant vs animal cells across cell walls, chloroplasts, central vacuoles, and centrosomes',
+      'Correlate organelle anatomy with macroscopic physiological function'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. المقارنة بين الخلية النباتية والحيوانية',
-        titleEn: '1. Plant vs Animal Cell Comparison',
-        contentAr: 'تتميز الخلية النباتية بوجود جدار خلوي صلب يعطيها شكلاً ثابتاً، وبلاستيدات خضراء تقوم بعملية البناء الضوئي لصنع الغذاء، وفجوة عصارية مركزية كبيرة.',
-        contentEn: 'Plant cells uniquely possess a rigid cellulose wall, chloroplasts for photosynthesis, and a large vacuole.',
-        interactiveExample: {
-          titleAr: 'تطبيق: وظائف العضيات الخلوية',
-          titleEn: 'Worked Example: Organelle Diagnostics',
-          equation: 'البلاستيدات الخضراء + ضوء الشمس = سكر وغذاء (نبات فقط)',
-          steps: [
-            { stepNumber: 1, textAr: 'فحص عينة تحت المجهر: وجدنا جداراً خلوياً وبلاستيدات خضراء.', textEn: 'Microscopic inspection reveals rigid cell wall and green chloroplasts.' },
-            { stepNumber: 2, textAr: 'الاستنتاج: هذه خلية نباتية قادرة على صنع غذائها بنفسها.', textEn: 'Conclusion: This is a plant cell capable of autotrophic photosynthesis.' }
-          ],
-          takeawayAr: 'الجدار الخلوي والبلاستيدات الخضراء ميزتان حاسمتان للخلية النباتية لا توجدان في الخلية الحيوانية.',
-          takeawayEn: 'Cell walls and chloroplasts uniquely distinguish plant from animal cells.'
-        },
-        tipsAr: ['الميتوكوندريا توجد في كلا النوعين لأنها مسؤولة عن حرق الغذاء لتوليد الطاقة.'],
-        tipsEn: ['Mitochondria populate both plant and animal cells for cellular respiration.']
+        termAr: 'نظرية الخلية (Cell Theory)',
+        termEn: 'Cell Theory',
+        definitionAr: 'نظرية علمية تنص على: 1) جميع الكائنات الحية تتكون من خلية أو أكثر، 2) الخلية هي الوحدة الأساسية للتركيب والوظيفة، 3) تنشأ جميع الخلايا من خلايا سابقة لها بالانقسام.',
+        definitionEn: 'Biological doctrine stating all living organisms consist of cells, cells are the unit of life, and cells arise from pre-existing cells.'
+      },
+      {
+        termAr: 'الميتوكوندريا (Mitochondria)',
+        termEn: 'Mitochondria',
+        definitionAr: 'عضيات خلوية تُعرف بمحطات توليد الطاقة في الخلية؛ تقوم بالتنفس الخلوي وأكسدة الجلوكوز لإنتاج مركبات الطاقة ATP.',
+        definitionEn: 'The powerhouse of the cell, carrying out cellular respiration to synthesize ATP energy.'
+      },
+      {
+        termAr: 'البلاستيدات الخضراء (Chloroplasts)',
+        termEn: 'Chloroplasts',
+        definitionAr: 'عضيات توجد في الخلايا النباتية فقط تحتوي على صبغة الكلوروفيل الخضراء وتمتص ضوء الشمس للقيام بعملية البناء الضوئي وصنع السكر.',
+        definitionEn: 'Plant-exclusive organelles containing chlorophyll that capture sunlight for photosynthetic glucose production.'
+      },
+      {
+        termAr: 'الجدار الخلوي (Cell Wall)',
+        termEn: 'Cell Wall',
+        definitionAr: 'جدار صلب خارجي يحيط بالغشاء البلازمي للخلية النباتية يتكون من السليلوز ويوفر الدعامة والحماية والشكل الثابت للخلية.',
+        definitionEn: 'A rigid cellulose outer layer enclosing plant cells that provides structural support and protection.'
       }
     ],
+
+    keyConceptsAr: [
+      'بنود نظرية الخلية الثلاثة',
+      'العضيات المشتركة: النواة (مركز التحكم والوراثة)، الميتوكوندريا (إنتاج الطاقة)، الغشاء البلازمي (النفاذية الاختيارية)',
+      'الفروق المميزة للخلية النباتية: جدار خلوي صلب + بلاستيدات خضراء + فجوة عصارية مركزية كبيرة',
+      'الفروق المميزة للخلية الحيوانية: غشاء مرن + شكل غير منتظم + فجوات صغيرة + جسم مركزي (سنتروسوم)',
+      'التنفس الخلوي (حرق الغذاء وإنتاج الطاقة) مقابل البناء الضوئي (صنع الغذاء)'
+    ],
+    keyConceptsEn: [
+      'Three Postulates of Cell Theory',
+      'Shared Organelles: Nucleus (DNA & control), Mitochondria (ATP), Plasma Membrane (selective permeability)',
+      'Plant Exclusive: Cellulose Wall + Photosynthetic Chloroplasts + Giant Central Vacuole',
+      'Animal Characteristics: Flexible shape, small vacuoles, Centrosomes for division',
+      'Cellular Respiration vs Photosynthesis Energy Dynamics'
+    ],
+    summaryAr: 'في هذه المحاضرة نغوص داخل عالم الخلية الحية المجهري؛ نتعلم بنود نظرية الخلية، ونفحص وظائف عضيات الخلية كالنواة والميتوكوندريا، ونجري مقارنة تشريحية دقيقة توضح الفروق بين الخلية النباتية والحيوانية.',
+    summaryEn: 'Explore cellular anatomy and organelle physiology, comparing photosynthetic plant cells possessing cell walls and chloroplasts with animal cells.',
+
+    sections: [
+      {
+        titleAr: '1. بنية الخلية والعضيات الخلوية الحيوية',
+        titleEn: '1. Cellular Architecture & Essential Organelles',
+        contentAr: 'الخلية هي أصغر وحدة حية قادرة على القيام بجميع مظاهر الحياة. تشترك جميع الخلايا حقيقية النواة في تراكيب أساسية:\n1. النواة: مركز إدارة الخلية وتحتوي على المادة الوراثية (DNA) التي تحمل الصفات الوراثية وتوجه صناعة البروتينات.\n2. الغشاء البلازمي: غشاء مزدوج رقيق يحيط بالخلية ويتميز بخاصية "النفاذية الاختيارية" (ينظم دخول الماء والغذاء وخروج الفضلات).\n3. السيتوبلازم: سائل هلامي يملأ الخلية تسبح فيه العضيات وتحدث فيه معظم التفاعلات الكيميائية الحيوية.\n4. الميتوكوندريا: مصانع الطاقة التي تحرق جزيئات السكر بالأكسجين لإنتاج طاقة ATP التي تحتاجها الخلية للنمو والحركة.',
+        contentEn: 'Cells contain conserved core organelles: the genetic control nucleus (DNA), the selectively permeable plasma membrane, cytoplasm fluid, and ATP-generating mitochondria.',
+        diagram: {
+          id: 'diag-sci2-cell-comparison',
+          figureNumberAr: 'شكل (2-1)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'المقارنة التشريحية الدقيقة بين الخلية النباتية والخلية الحيوانية',
+          titleEn: 'Comparative Anatomy: Plant vs Animal Cell Architecture',
+          captionAr: 'مخطط مقارن يبين العضيات المشتركة (النواة، الميتوكوندريا، الغشاء البلازمي، السيتوبلازم)، والتركيبات الحصرية للخلية النباتية (الجدار الخلوي السليلوزي، البلاستيدات الخضراء، الفجوة العصارية الضخمة)، والخلية الحيوانية (الجسم المركزي).',
+          captionEn: 'Detailed vector cytological comparison contrasting plant-exclusive chloroplasts and cell walls with animal cell morphology.',
+          diagramType: 'plant_animal_cell',
+          takeawayFormulaAr: 'الخلية النباتية = جدار خلوي صلب + بلاستيدات خضراء + فجوة عصارية كبيرة',
+          takeawayFormulaEn: 'Plant Cell = Rigid Cellulose Wall + Chloroplasts + Giant Vacuole',
+          keyLabels: [
+            { tagAr: 'جدار خلوي سلولوزي', tagEn: 'Cellulose Wall', color: '#10b981' },
+            { tagAr: 'بلاستيدات خضراء', tagEn: 'Chloroplasts', color: '#22c55e' },
+            { tagAr: 'ميتوكوندريا الطاقة', tagEn: 'Mitochondria (ATP)', color: '#ef4444' },
+            { tagAr: 'النواة وDNA', tagEn: 'Nucleus & DNA', color: '#a855f7' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'تطبيق عملي (2-1): تشخيص نوع الخلية من خلال فحص العضيات المجهرية',
+          titleEn: 'Worked Example (2-1): Cytological Microscopic Identification',
+          equation: 'وجود الجدار الخلوي + البلاستيدات = خلية نباتية',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'فحص مجهري لعينة (أ): لوحظ وجود جدار خلوي سليلوزي منتظم الشكل وأجسام خضراء بيضاوية تسبح في السيتوبلازم وفجوة مائية ضخمة.',
+              textEn: 'Microscopic inspection of Sample A reveals rigid polygonal walls, green ovoid organelles, and large vacuole.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'التحليل: وجود البلاستيدات الخضراء والجدار الخلوي دليل قاطع على أنها (خلية نباتية) من نسيج ورقة نباتية تصنع الغذاء بالبناء الضوئي.',
+              textEn: 'Deduction: Presence of chloroplasts and cellulose wall confirms Sample A is a photosynthetic Plant Cell.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'فحص عينة (ب): خلايا مرنة مستديرة الشكل محاطة بغشاء بلازمي فقط وتفتقر للجدار والبلاستيدات وبها ميتوكوندريا بكثرة => (خلية حيوانية).',
+              textEn: 'Sample B: Flexible rounded shape, plasma membrane only, lacking chloroplasts => Animal Cell.'
+            }
+          ],
+          takeawayAr: 'الجدار الخلوي والبلاستيدات الخضراء هما البصمة التشريحية الحاسمة لتمييز الخلايا النباتية.',
+          takeawayEn: 'Cell walls and chloroplasts serve as the definitive microscopic hallmarks of plant cytology.'
+        },
+        formativeCheck: {
+          id: 'fc-sci2-1',
+          questionAr: 'أي من العضيات التالية هو المسؤول عن تزويد الخلية بالطاقة اللازمة للأنشطة الحيوية عن طريق التنفس الخلوي؟',
+          questionEn: 'Which organelle powers the cell with ATP energy through cellular respiration?',
+          optionsAr: ['الميتوكوندريا (Mitochondria)', 'البلاستيدات الخضراء', 'الجدار الخلوي', 'الفجوة العصارية'],
+          optionsEn: ['Mitochondria', 'Chloroplasts', 'Cell wall', 'Vacuole'],
+          correctIndex: 0,
+          explanationAr: 'الميتوكوندريا هي محطات توليد الطاقة في الخلية؛ تقوم بأكسدة الجلوكوز وإنتاج جزيئات الطاقة ATP في كل من الخلايا النباتية والحيوانية.',
+          explanationEn: 'Mitochondria generate cellular ATP energy via aerobic respiration in all eukaryotic cells.',
+          hintAr: 'تسمى هذه العضية بـ "مصنع الطاقة" في الخلية.'
+        },
+        tipsAr: [
+          'الميتوكوندريا توجد في الخلايا النباتية والحيوانية معاً، فالنبات يصنع الغذاء بالبلاستيدات ثم يحرقه بالميتوكوندريا لإنتاج الطاقة!',
+          'الغشاء البلازمي يحيط بجميع أنواع الخلايا بلا استثناء.'
+        ]
+      },
+      {
+        titleAr: '2. المقارنة التفصيلية بين الخلية النباتية والحيوانية',
+        titleEn: '2. Comprehensive Plant vs Animal Cell Cytology',
+        contentAr: 'رغم أن كلا النوعين من الخلايا حقيقيات النواة، إلا أن هناك فروقاً تركيبية محورية تلائم طبيعة حياة كل كائن:\n\n• الخلية النباتية: 1) تمتلك جداراً خلوياً سليلوزياً صلباً يمنحها دعامة وشكلاً هندسياً ثابتاً، 2) تحتوي على بلاستيدات خضراء تقوم بالبناء الضوئي، 3) تحتوي على فجوة عصارية مركزية واحدة عملاقة تخزن الماء والأملاح.\n\n• الخلية الحيوانية: 1) لا تمتلك جداراً خلوياً بل غشاء بلازمياً مرناً يعطيها شكلاً مرناً متغيراً، 2) لا تحتوي على بلاستيدات خضراء (غير ذاتية التغذية)، 3) تحتوي على فجوات عصارية متعددة صغيرة الحجم، 4) تمتلك جسماً مركزياً (السنتروسوم) يسهم في عملية الانقسام الخلوي.',
+        contentEn: 'Plant cells possess rigid cellulose cell walls, photosynthetic chloroplasts, and a massive central vacuole. Animal cells feature flexible plasma membranes, small vacuoles, and centrosomes for mitotic division.',
+        interactiveExample: {
+          titleAr: 'تطبيق عملي (2-2): جدول المقارنة التشخيصي بين الخليتين',
+          titleEn: 'Worked Example (2-2): Diagnostic Cytological Contrast Matrix',
+          equation: 'جدار خلوي + بلاستيدات = نباتية | غشاء فقط + جسم مركزي = حيوانية',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'خاصية الجدار الخلوي: موجود في النباتية (يعطي صلابة) / غائب في الحيوانية (يسمح بالمرونة والحركة).',
+              textEn: 'Cell wall: Present in plant / Absent in animal.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'خاصية البلاستيدات الخضراء: موجودة في النباتية لصنع الغذاء / غائبة تماماً في الحيوانية.',
+              textEn: 'Chloroplasts: Present in plant / Absent in animal.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'خاصية الفجوات: فجوة واحدة ضخمة في النباتية / فجوات عديدة وصغيرة في الحيوانية.',
+              textEn: 'Vacuoles: One giant central vacuole in plant / multiple small vacuoles in animal.'
+            }
+          ],
+          takeawayAr: 'التكامل بين التركيب والوظيفة يتجلى في حاجة النبات للدعامة الثابتة وحاجة الحيوان للمرونة الحركية.',
+          takeawayEn: 'Structure reflects lifestyle: rigid structural support for autotrophic plants vs locomotion flexibility for animals.'
+        },
+        tipsAr: ['الخلايا الحيوانية تنفجر إذا امتصت كميات كبيرة من الماء، بينما الخلية النباتية يحميها جدارها السليلوزي الصلب من الانفجار!']
+      }
+    ],
+
+    conceptMapSummaryAr: 'نظرية الخلية: وحدة البناء والوظيفة وتنشأ بالانقسام. العضيات المشتركة: نواة (تحكم وDNA)، ميتوكوندريا (طاقة ATP)، غشاء بلازمي، سيتوبلازم. مميزات النباتية: جدار خلوي سلولوزي، بلاستيدات خضراء، فجوة ضخمة. مميزات الحيوانية: غشاء مرن، فجوات صغيرة، جسم مركزي.',
+    conceptMapSummaryEn: 'Cell Theory: Unit of structure and life arising from division. Shared: Nucleus, Mitochondria, Membrane, Cytoplasm. Plant: Wall + Chloroplasts + Giant Vacuole. Animal: Flexible membrane + Small vacuoles + Centrosome.',
+
+    goldenRulesAr: [
+      'القاعدة 1: الخلية هي الوحدة التركيبية والوظيفية الأساسية لجميع الكائنات الحية على كوكب الأرض.',
+      'القاعدة 2: تنشأ جميع الخلايا الحية حصرياً من انقسام خلايا حية كانت موجودة من قبل.',
+      'القاعدة 3: النواة هي مركز إدارة الخلية وتحتوي على المادة الوراثية (DNA).',
+      'القاعدة 4: الميتوكوندريا هي مصنع إنتاج طاقة ATP وتوجد في كل من الخلايا النباتية والحيوانية.',
+      'القاعدة 5: الجدار الخلوي السليلوزي والبلاستيدات الخضراء توجد حصرياً في الخلايا النباتية.',
+      'القاعدة 6: الغشاء البلازمي يتمتع بخاصية النفاذية الاختيارية لتنظيم حركة المواد من وإلى الخلية.',
+      'القاعدة 7: الفجوة العصارية في النبات تكون واحدة وضخمة لتخزين الماء وضغط الامتلاء، بينما في الحيوان صغيرة ومتعددة.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: The cell is the fundamental unit of structure and physiological function in all living organisms.',
+      'Rule 2: All living cells arise exclusively from the division of pre-existing cells.',
+      'Rule 3: The nucleus is the cellular control center housing genetic DNA blueprints.',
+      'Rule 4: Mitochondria generate ATP energy via cellular respiration in both plant and animal cells.',
+      'Rule 5: Cellulose cell walls and chloroplasts are exclusive to photosynthetic plant cells.',
+      'Rule 6: Plasma membranes exhibit selective permeability controlling substance exchange.',
+      'Rule 7: Plant cells contain a giant turgor vacuole; animal cells feature small dispersed vacuoles.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-sci-2-1',
+        questionAr: 'ماذا يحدث لخلية حيوانية وخلية نباتية عند وضعهما في ماء مقطر نقي؟ فسّر الإجابة بناءً على التركيب الخلوي لكل منهما.',
+        questionEn: 'What happens to an animal cell vs a plant cell when placed in pure distilled water? Explain based on cell wall anatomy.',
+        solutionStepsAr: [
+          '1. في كلتا الحالتين: يدخل الماء إلى داخل الخلية بالخاصية الأسموزية بسبب اختلاف التركيز.',
+          '2. الخلية الحيوانية: تمتلئ بالماء وتنتفخ ثم تنفجر في النهاية لأنها محاطة بغشاء بلازمي مرن رقيق فقط لا يتحمل ضغط الماء الداخلي.',
+          '3. الخلية النباتية: تمتلئ فجوتها العصارية بالماء وتنتفخ وتصبح مشدودة (ممتلئة) دون أن تنفجر؛ لأن الجدار الخلوي السليلوزي الصلب يحيط بها ويتحمل الضغط ويحميها.'
+        ],
+        solutionStepsEn: [
+          '1. Water enters both cells via osmosis.',
+          '2. Animal cell: swells and lyses (bursts) because its thin flexible membrane cannot withstand osmotic turgor pressure.',
+          '3. Plant cell: expands and becomes turgid without lysing due to the mechanical rigidity of its cellulose cell wall.'
+        ],
+        answerAr: 'تنفجر الخلية الحيوانية لعدم وجود جدار خلوي، بينما تنتفخ الخلية النباتية دون أن تنفجر بفضل جدارها الخلوي السليلوزي القوي.',
+        answerEn: 'The animal cell bursts; the plant cell becomes turgid safely protected by its rigid cellulose wall.'
+      },
+      {
+        id: 'ex-sci-2-2',
+        questionAr: 'لماذا تحتوي خلايا العضلات في الحيوانات وخلايا الأوراق المعرضة للشمس في النباتات على أعداد هائلة من الميتوكوندريا والبلاستيدات الخضراء بالترتيب؟',
+        questionEn: 'Why do animal muscle cells contain high counts of mitochondria, and plant leaf cells high counts of chloroplasts?',
+        solutionStepsAr: [
+          '1. خلايا العضلات: تبذل شغلاً حركياً مكثفاً ومستمراً فتحتاج إلى كميات هائلة من طاقة ATP، والميتوكوندريا هي المسؤولة عن إنتاج هذه الطاقة بحرق الجلوكوز.',
+          '2. خلايا أوراق النبات: هي المصنع الرئيسي للبناء الضوئي المعرض لضوء الشمس، فتحتاج لكثافة عالية من البلاستيدات الخضراء لاقتناص أكبر قدر من الطاقة الضوئية وصنع السكر.'
+        ],
+        solutionStepsEn: [
+          '1. Muscle cells perform high-demand mechanical contraction requiring massive ATP synthesized by mitochondria.',
+          '2. Leaf cells capture sunlight for photosynthesis, requiring dense chloroplast populations to produce glucose.'
+        ],
+        answerAr: 'لتلبية الاحتياجات الوظيفية؛ فالعضلات تحتاج طاقة حركة هائلة (ميتوكوندريا)، والأوراق تحتاج تصنيع الغذاء بالبناء الضوئي (بلاستيدات).',
+        answerEn: 'Structure matches function: high ATP demand in muscles (mitochondria) and high glucose synthesis in leaves (chloroplasts).'
+      }
+    ],
+
     assessment: {
       id: 'quiz-sci-2',
       lectureId: 'sci-2',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الثانية: الخلية الحية',
-      titleEn: 'Lecture 2 Assessment: Cell Biology',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 2: الخلية الحية والعضيات والمقارنة الخلوية',
+      titleEn: 'Mastery Assessment 2: Cell Biology & Organelles',
       passingScore: 80,
       questions: [
         {
           id: 'qsc2-1',
           textAr: 'أي من التراكيب التالية يوجد في الخلية النباتية ولا يوجد في الخلية الحيوانية؟',
-          textEn: 'Which organelle is found in plant cells but absent in animal cells?',
-          optionsAr: ['الجدار الخلوي والبلاستيدات الخضراء', 'الغشاء البلازمي', 'النواة والمادة الوراثية', 'الميتوكوندريا'],
-          optionsEn: ['Cell wall and chloroplasts', 'Plasma membrane', 'Nucleus', 'Mitochondria'],
+          textEn: 'Which structure is present in plant cells but strictly absent in animal cells?',
+          optionsAr: [
+            'الجدار الخلوي السليلوزي والبلاستيدات الخضراء',
+            'الغشاء البلازمي والسيتوبلازم',
+            'النواة والمادة الوراثية DNA',
+            'الميتوكوندريا'
+          ],
+          optionsEn: [
+            'Cellulose cell wall and Chloroplasts',
+            'Plasma membrane and Cytoplasm',
+            'Nucleus and DNA',
+            'Mitochondria'
+          ],
           correctIndex: 0,
-          conceptTestedAr: 'الفروق بين الخلية النباتية والحيوانية',
-          conceptTestedEn: 'Plant Cell Specific Structures',
-          explanationAr: 'الجدار الخلوي والبلاستيدات الخضراء توجد حصرياً في الخلايا النباتية لحمايتها وتمكينها من صنع الغذاء.',
-          explanationEn: 'Cell walls and chloroplasts are exclusive to photosynthetic plant cells.',
+          conceptTestedAr: 'الفروق التشريحية المميزة للخلية النباتية',
+          conceptTestedEn: 'Plant-Exclusive Cytological Structures',
+          explanationAr: 'الجدار الخلوي (للدعامة والحماية) والبلاستيدات الخضراء (للبناء الضوئي) توجد حصرياً في الخلايا النباتية.',
+          explanationEn: 'Cell walls and chloroplasts are unique to plant cells, enabling photosynthesis and structural rigidity.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc2-2',
+          textAr: 'ما هي الوظيفة الأساسية للنواة داخل الخلية الحية؟',
+          textEn: 'What is the primary physiological function of the cell nucleus?',
+          optionsAr: [
+            'التحكم في جميع أنشطة الخلية واحتواء المادة الوراثية (DNA) وتوجيه الانقسام',
+            'إنتاج الطاقة الحركية ATP',
+            'امتصاص ضوء الشمس للقيام بالبناء الضوئي',
+            'تخزين الفضلات والماء فقط'
+          ],
+          optionsEn: [
+            'Control cellular activities, house DNA, and direct replication',
+            'Synthesize ATP energy',
+            'Absorb sunlight for photosynthesis',
+            'Store waste and water only'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'وظيفة النواة والتحكم الوراثي',
+          conceptTestedEn: 'Nuclear Control & Genetic Role',
+          explanationAr: 'النواة هي مركز القيادة والتحكم في الخلية؛ لأنها تحتوي على الكروموسومات والـ DNA الذي يحمل كافة التعليمات الوراثية وصناعة البروتينات.',
+          explanationEn: 'The nucleus houses genetic blueprints (DNA) directing all cellular metabolism and reproduction.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc2-3',
+          textAr: 'أي من العضيات التالية توجد في كل من الخلايا النباتية والخلايا الحيوانية معاً وتختص بإنتاج الطاقة ATP؟',
+          textEn: 'Which organelle is shared between both plant and animal cells, specialized in ATP energy generation?',
+          optionsAr: [
+            'الميتوكوندريا (Mitochondria)',
+            'البلاستيدات الخضراء',
+            'الجدار الخلوي',
+            'السنتروسوم'
+          ],
+          optionsEn: [
+            'Mitochondria',
+            'Chloroplasts',
+            'Cell wall',
+            'Centrosome'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'وجود الميتوكوندريا في كلا نوعي الخلايا',
+          conceptTestedEn: 'Mitochondrial Energy Production in Plants and Animals',
+          explanationAr: 'الميتوكوندريا مسؤولة عن التنفس الخلوي وإنتاج طاقة ATP وتوجد في كل من الخلايا الحيوانية والنباتية لمساعدتها على النمو والحياة.',
+          explanationEn: 'Both plant and animal cells rely on mitochondria for aerobic cellular respiration to generate ATP.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qsc2-4',
+          textAr: 'وفقاً لنظرية الخلية الحديثة، من أين تنشأ الخلايا الحية الجديدة؟',
+          textEn: 'According to Cell Theory, from where do new living cells originate?',
+          optionsAr: [
+            'تنشأ من انقسام خلايا حية سابقة لها',
+            'تتولد تلقائياً من المواد غير الحية في البيئة',
+            'تنشأ من تجمع ذرات المعادن في التربة',
+            'تتكون من أشعة الشمس مباشرة دون خلايا سابقة'
+          ],
+          optionsEn: [
+            'From the division of pre-existing living cells',
+            'Spontaneous generation from non-living matter',
+            'Aggregation of soil minerals',
+            'Direct crystallization from sunlight'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'البند الثالث من بنود نظرية الخلية',
+          conceptTestedEn: 'Third Postulate of Cell Theory',
+          explanationAr: 'أثبتت نظرية الخلية (فيرشو وريداي) أن الخلايا لا تتولد ذاتياً من العدم، بل تنشأ حصرياً من انقسام خلايا حية كانت موجودة قبلها.',
+          explanationEn: 'All cells arise exclusively from pre-existing cells via cellular division (Omnis cellula e cellula).',
           difficulty: 'easy'
         }
       ]
@@ -4305,59 +5378,318 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
     order: 3,
     titleAr: 'المحاضرة 3: القوى والحركة: القوة المحصلة ومفهوم السرعة والتوازن',
     titleEn: 'Lecture 3: Forces & Motion: Net Force, Velocity & Equilibrium',
-    subtitleAr: 'حساب السرعة المتوسطة، وفهم تأثير القوى المتزنة وغير المتزنة على حركة الأجسام',
-    subtitleEn: 'Calculate average speed, evaluate balanced forces, and predict motion states.',
-    durationMinutes: 30,
+    subtitleAr: 'حساب السرعة المتوسطة وتطبيقاتها، وتحليل القوى المتزنة وغير المتزنة، وقوة الاحتكاك والتسارع',
+    subtitleEn: 'Master average speed calculations (v = d/t), net force vectors, balanced equilibrium, friction, and Newton\'s acceleration laws.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'sci-2',
     prerequisiteTitleAr: 'المحاضرة 2: الخلية الحية: اللبنة الأساسية لبناء الكائنات الحية',
     prerequisiteTitleEn: 'Lecture 2: The Living Cell: Fundamental Building Block of Life',
-    keyConceptsAr: ['قانون السرعة المتوسطة: السرعة = المسافة ÷ الزمن', 'القوى المتزنة ومحصلتها الصفرية (سكون أو سرعة ثابتة)', 'القوى غير المتزنة وإحداث التسارع وتغيير الحركة', 'قوة الاحتكاك وأثرها في إبطاء الأجسام'],
-    keyConceptsEn: ['Speed Formula: Distance / Time', 'Balanced Forces & Equilibrium', 'Unbalanced Forces Causing Acceleration', 'Friction Resistance'],
-    summaryAr: 'الأجسام لا تغير حركتها من تلقاء نفسها؛ القوة هي المؤثر الذي يدفع أو يسحب الأجسام لتسريعها أو إبطائها أو تغيير اتجاهها.',
-    summaryEn: 'Analyze how balanced and unbalanced forces alter the kinematics of objects in our everyday environment.',
-    sections: [
+
+    gradeLevelNameAr: 'الصف الأول متوسط (الصف السابع) - المرحلة المتوسطة',
+    gradeLevelNameEn: 'Grade 7 / Middle School - General Science',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الثالثة: الميكانيكا والقوى والحركة في الفيزياء',
+    unitTitleEn: 'Unit 3: Mechanics, Forces & Kinematics',
+    lessonNumberAr: 'الدرس 1: السرعة، والقوة المحصلة، والقوانين الفيزيائية للحركة',
+    lessonNumberEn: 'Lesson 1: Speed, Net Force & Kinematic Principles',
+
+    warmupHookAr: 'عندما تركب سيارة تسير بسرعة 120 كم/ساعة على طريق مستقيم وسلس، تشعر وكأنك جالس في غرفتك دون حركة! ولكن بمجرد أن يضغط السائق على المكابح، تندفع إلى الأمام بقوة مفاجئة. ما القوة الخفية التي أبقتك متحركاً؟ وكيف يؤثر الاحتكاك ومحصلة القوى على تحريك الأجسام أو إيقافها؟ مرحباً بك في عالم الميكانيكا الكلاسيكية التي تشرح كل حركة في الكون من حركة الإلكترونات إلى دوران الكواكب!',
+    warmupHookEn: 'Why do you feel motionless in a smoothly cruising car at 120 km/h, yet lurch forward upon braking? Master kinematics, friction vectors, and net force dynamics!',
+
+    learningOutcomesAr: [
+      'أن يطبق الطالب قانون السرعة المتوسطة رياضياً (السرعة = المسافة ÷ الزمن) مع تحويل الوحدات القياسية (م/ث و كم/س)',
+      'أن يحسب القوة المحصلة (Net Force) لمجموعة قوى تؤثر في اتجاه واحد أو في اتجاهين متعاكسين',
+      'أن يميّز بين القوى المتزنة (محصلتها صفر وحالة سكون/سرعة ثابتة) والقوى غير المتزنة (تحدث تسارعاً وتغيراً في الحركة)',
+      'أن يوضح أثر قوة الاحتكاك (Friction) في إعاقة الحركة وتوليد الحرارة وطرق تقليلها أو زيادتها'
+    ],
+    learningOutcomesEn: [
+      'Calculate average speed (v = d / t) and perform standard metric unit conversions (m/s and km/h)',
+      'Compute Net Force for collinear parallel and opposing force vectors',
+      'Distinguish balanced forces (Net force = 0, state of rest or constant velocity) from unbalanced forces (acceleration)',
+      'Analyze friction resistance forces, thermal dissipation, and methods of reducing/increasing friction'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. حساب السرعة المتوسطة',
-        titleEn: '1. Calculating Average Speed',
-        contentAr: 'السرعة هي المسافة المقطوعة مقسومة على الزمن المستغرق لقطعها: ع = ف ÷ ز، ووحدتها القياسية هي متر لكل ثانية (م/ث).',
-        contentEn: 'Average speed equals total path distance divided by elapsed travel time.',
-        interactiveExample: {
-          titleAr: 'تطبيق: حساب سرعة سيارة',
-          titleEn: 'Worked Example: Vehicle Speed Computation',
-          equation: 'السرعة = المسافة ÷ الزمن',
-          steps: [
-            { stepNumber: 1, textAr: 'قطعت سيارة مسافة 180 متراً خلال زمن قدره 6 ثوانٍ.', textEn: 'A car covers 180 meters in 6 seconds.' },
-            { stepNumber: 2, textAr: 'طبق القانون: السرعة = 180 ÷ 6 = 30 م/ث.', textEn: 'Apply formula: Speed = 180 / 6 = 30 m/s.' }
-          ],
-          takeawayAr: 'لمعرفة السرعة، نقسم دائماً مقدار المسافة على مقدار الزمن.',
-          takeawayEn: 'Dividing displacement distance by duration yields travel rate.'
-        },
-        tipsAr: ['تأكد دائماً من مطابقة وحدات القياس (الأمتار مع الثواني، والكيلومترات مع الساعات).'],
-        tipsEn: ['Always verify unit consistency between distance and time dimensions.']
+        termAr: 'السرعة المتوسطة (Average Speed)',
+        termEn: 'Average Speed',
+        definitionAr: 'المسافة الكلية المقطوعة مقسومة على الزمن الكلي المستغرق لقطع تلك المسافة: v = d / t، وتقاس بوحدة (م/ث) أو (كم/س).',
+        definitionEn: 'Total path distance divided by elapsed travel time (v = d / t), measured in m/s or km/h.'
+      },
+      {
+        termAr: 'القوة (Force)',
+        termEn: 'Force',
+        definitionAr: 'سحب أو دفع يؤثر في جسم ما ويكسبه تسارعاً أو يغير من شكله أو اتجاه حركته، وتقاس بوحدة النيوتن (N).',
+        definitionEn: 'A push or pull exerted on an object capable of altering its motion state, measured in Newtons (N).'
+      },
+      {
+        termAr: 'القوة المحصلة (Net Force - F_net)',
+        termEn: 'Net Force (F_net)',
+        definitionAr: 'المجموع الاتجاهي لجميع القوى المؤثرة في جسم ما في لحظة معينة؛ وتحدد ما إذا كان الجسم سيتسارع أم يظل متزناً.',
+        definitionEn: 'The vector sum of all concurrent forces acting on a body determining its acceleration.'
+      },
+      {
+        termAr: 'الاحتكاك (Friction)',
+        termEn: 'Friction',
+        definitionAr: 'قوة مقاومة تنشأ بين أسطح الأجسام المتلامسة وتعمل دائماً في اتجاه معاكس لاتجاه الحركة.',
+        definitionEn: 'A resistive contact force between sliding/rolling surfaces acting opposite to relative motion.'
       }
     ],
+
+    keyConceptsAr: [
+      'قانون السرعة: السرعة = المسافة ÷ الزمن (v = d / t)',
+      'مثلث حساب السرعة والمسافة والزمن: d = v × t  |  t = d ÷ v',
+      'القوى المتزنة (ΣF = 0): الجسم يظل ساكناً أو يتحرك بسرعة منتظمة ثابتة في خط مستقيم',
+      'القوى غير المتزنة (ΣF ≠ 0): تحدث تغيراً في السرعة (تسارعاً أو تباطؤاً) في اتجاه القوة المحصلة',
+      'قوة الاحتكاك: تعاكس اتجاه الحركة وتعتمد على طبيعة السطح والقوة الضاغطة'
+    ],
+    keyConceptsEn: [
+      'Speed Equation: v = d / t',
+      'Kinematic Triangle: d = v * t | t = d / v',
+      'Balanced Forces (Net F = 0): Equilibrium, stationary state, or constant rectilinear velocity',
+      'Unbalanced Forces (Net F != 0): Causes acceleration (change in speed/direction)',
+      'Friction Force: Opposes motion vector and dissipates kinetic energy into heat'
+    ],
+    summaryAr: 'في هذه المحاضرة نتقن قوانين الحركة والقوى الفيزيائية؛ نحسب السرعة المتوسطة للأجسام المتحركة، ونحلل متجهات القوى المحصلة لنفرق بين التوازن والسكون وبين التسارع الناشئ عن القوى غير المتزنة وقوة الاحتكاك.',
+    summaryEn: 'Master kinematics and Newtonian dynamics: speed calculations, net force vector arithmetic, balanced equilibrium, and friction resistance.',
+
+    sections: [
+      {
+        titleAr: '1. السرعة المتوسطة ومثلث حساب الحركة',
+        titleEn: '1. Average Speed & Kinematics Computation Triangle',
+        contentAr: 'السرعة هي مقياس لمعدل تغير المسافة بالنسبة للزمن. تُحسب السرعة المتوسطة بقسمة المسافة على الزمن: v = d / t.\n• إذا كانت المسافة بالأمتار (m) والزمن بالثواني (s)، تكون وحدة السرعة: متر لكل ثانية (م/ث أو m/s).\n• إذا كانت المسافة بالكيلومترات (km) والزمن بالساعات (h)، تكون الوحدة: كيلومتر لكل ساعة (كم/س أو km/h).\n• للتحويل من (كم/س) إلى (م/ث): نقسم على 3.6. وللتحويل من (م/ث) إلى (كم/س): نضرب في 3.6.',
+        contentEn: 'Speed measures displacement rate: v = d / t. Metric SI units are m/s and km/h. To convert km/h to m/s, divide by 3.6.',
+        diagram: {
+          id: 'diag-sci3-forces-motion',
+          figureNumberAr: 'شكل (3-1)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط متجهات القوى، وحساب السرعة، والقوى المتزنة',
+          titleEn: 'Force Vectors, Kinematic Triangle & Dynamic Equilibrium',
+          captionAr: 'يوضح الرسم متجهات القوى المؤثرة في جسم (قوة السحب للأمام، الاحتكاك للخلف، الوزن للأسفل، والقوة العمودية للأعلى)، مع مثلث حساب السرعة وقوانين القوى المتزنة وغير المتزنة.',
+          captionEn: 'Free body vector diagram illustrating applied force, friction, normal force, gravity, and kinematics triangle.',
+          diagramType: 'forces_motion_vector',
+          takeawayFormulaAr: 'السرعة v = المسافة d ÷ الزمن t  |  القوة المحصلة F_net = F_سحب - f_احتكاك',
+          takeawayFormulaEn: 'Speed v = d / t | Net Force F_net = F_applied - f_friction',
+          keyLabels: [
+            { tagAr: 'قوة السحب F', tagEn: 'Applied Force', color: '#10b981' },
+            { tagAr: 'قوة الاحتكاك f', tagEn: 'Friction Force', color: '#f59e0b' },
+            { tagAr: 'مثلث السرعة v=d/t', tagEn: 'Speed Triangle', color: '#38bdf8' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 1: حساب السرعة المتوسطة لقطار فائق السرعة',
+          titleEn: 'Worked Example 1: High-Speed Train Kinematics',
+          equation: 'v = d / t',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'المعطيات: قطار الحرمين قطع مسافة d = 450 كيلومتراً بين مكة والمدينة في زمن قدره t = 2.25 ساعة (ساعتان و 15 دقيقة).',
+              textEn: 'Given: Train distance d = 450 km, travel duration t = 2.25 hours.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'حساب السرعة بوحدة كم/س: v = d ÷ t = 450 ÷ 2.25 = 200 كم/س.',
+              textEn: 'Speed in km/h: v = 450 / 2.25 = 200 km/h.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'تحويل السرعة إلى م/ث: 200 ÷ 3.6 = 55.56 م/ث (أي يقطع 55.5 متراً في كل ثانية واحدة!).',
+              textEn: 'Conversion to m/s: 200 / 3.6 = 55.56 m/s.'
+            }
+          ],
+          takeawayAr: 'السرعة تعبر عن المعدل الزمني لقطع المسافات، ويمكن إيجاد أي متغير إذا علم المتغيران الآخران في مثلث الحركة.',
+          takeawayEn: 'Kinematic triangle allows solving for distance, rate, or duration given two known variables.'
+        },
+        formativeCheck: {
+          id: 'fc-sci3-1',
+          questionAr: 'عداء يركض بسرعة متوسطة مقدارها 8 م/ث. كم ثانية يستغرق لقطع مسافة 400 متر؟',
+          questionEn: 'A runner sprints at 8 m/s. How many seconds does it take to cover 400 meters?',
+          optionsAr: ['50 ثانية', '3200 ثانية', '408 ثوانٍ', '25 ثانية'],
+          optionsEn: ['50 seconds', '3200 seconds', '408 seconds', '25 seconds'],
+          correctIndex: 0,
+          explanationAr: 'من مثلث السرعة: الزمن t = المسافة d ÷ السرعة v = 400 ÷ 8 = 50 ثانية.',
+          explanationEn: 'Time t = distance / speed = 400 / 8 = 50 seconds.',
+          hintAr: 'اقسم المسافة على السرعة لإيجاد الزمن.'
+        },
+        tipsAr: [
+          'احذر من جمع أو قسمة وحدات غير متطابقة (مثل قسمة الكيلومترات على الثواني دون تحويل).',
+          'السرعة اللحظية هي قراءة عداد السرعة في لحظة معينة، بينما السرعة المتوسطة تحسب على كامل الرحلة.'
+        ]
+      },
+      {
+        titleAr: '2. القوة المحصلة والقوى المتزنة وغير المتزنة والاحتكاك',
+        titleEn: '2. Net Force, Equilibrium, Acceleration & Friction Dynamics',
+        contentAr: 'عندما تؤثر عدة قوى على جسم:\n1. قوى في نفس الاتجاه: نجمع مقاديرها (F_net = F₁ + F₂).\n2. قوى في اتجاهين متعاكسين: نطرح القوة الصغرى من الكبرى وتكون المحصلة في اتجاه القوة الكبرى (F_net = F₁ - F₂).\n\n• القوى المتزنة (Balanced Forces): إذا كانت القوة المحصلة تساوي صفراً (F_net = 0)، تسمى القوى متزنة؛ والجسم في هذه الحالة إما أن يظل ساكناً في مكانه أو يستمر في حركته بسرعة ثابتة في خط مستقيم.\n• القوى غير المتزنة (Unbalanced Forces): إذا كانت القوة المحصلة لا تساوي صفراً (F_net ≠ 0)، فإنها تُحدث تسارعاً في الجسم (يزيد من سرعته، يبطئه، أو يغير اتجاه حركته).\n• قوة الاحتكاك: قوة تعاكس الحركة تنشأ من خشونة الأسطح؛ تفيدنا في المشي وفرملة السيارات ولكنها تهدر طاقة على شكل حرارة.',
+        contentEn: 'Net force is the vector sum of applied forces. When Net Force = 0 (balanced), velocity is constant. When Net Force != 0 (unbalanced), acceleration occurs. Friction opposes motion vector.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 2: حساب القوة المحصلة في لعبة شد الحبل وصندوق منزلق',
+          titleEn: 'Worked Example 2: Net Force Vector Resolution',
+          equation: 'F_net = F_يمين - F_يسار',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'صندوق يُسحب بقوة 80 نيوتن جهة اليمين، وتؤثر عليه قوة احتكاك مقدارها 30 نيوتن جهة اليسار.',
+              textEn: 'Box pulled right with 80 N, opposing friction is 30 N left.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'حساب القوة المحصلة: بما أن القوتين متعاكستان: F_net = 80 - 30 = 50 نيوتن باتجاه اليمين.',
+              textEn: 'Net Force: 80 - 30 = 50 N directed right.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'الاستنتاج: القوى غير متزنة (المحصلة > 0)؛ لذا سيتسارع الصندوق ويتحرك متجهاً إلى اليمين.',
+              textEn: 'Conclusion: Unbalanced forces cause box to accelerate rightwards.'
+            }
+          ],
+          takeawayAr: 'تسارع الأجسام واتجاه حركتها يحددهما دائماً مقدار واتجاه القوة المحصلة الإجمالية.',
+          takeawayEn: 'The magnitude and orientation of the Net Force vector uniquely determines kinematics acceleration.'
+        },
+        tipsAr: ['لتقليل الاحتكاك نستخدم التزييت والتشحيم واستخدام العجلات وكراسي التحميل (رولمان بلي).']
+      }
+    ],
+
+    conceptMapSummaryAr: 'السرعة: المسافة ÷ الزمن (v = d / t). القوة المحصلة: جمع في نفس الاتجاه وطرح في الاتجاه المعاكس. قوى متزنة (المحصلة = 0 -> سكون أو سرعة ثابتة). قوى غير متزنة (المحصلة ≠ 0 -> تسارع وتغير حركة). الاحتكاك: يعاكس الحركة ويولد حرارة.',
+    conceptMapSummaryEn: 'Speed: v = d / t. Net Force: additive when parallel, subtractive when opposing. Balanced (F_net = 0 -> rest/constant v). Unbalanced (F_net != 0 -> acceleration). Friction: opposes motion.',
+
+    goldenRulesAr: [
+      'القاعدة 1: السرعة المتوسطة تساوي حاصل قسمة المسافة الكلية على الزمن الكلي: v = d ÷ t.',
+      'القاعدة 2: للتحويل من كم/س إلى م/ث نقسم على 3.6، وللتحويل من م/ث إلى كم/س نضرب في 3.6.',
+      'القاعدة 3: القوة المحصلة لقوتين في نفس الاتجاه تساوي مجموعهما: F_net = F₁ + F₂.',
+      'القاعدة 4: القوة المحصلة لقوتين متعاكستين تساوي الفرق بينهما باتجاه القوة الكبرى: F_net = F_كبيرة - F_صغيرة.',
+      'القاعدة 5: عندما تكون القوى متزنة (F_net = 0) يظل الجسم الساكن ساكناً والمتحرك يستمر بسرعة ثابتة.',
+      'القاعدة 6: القوى غير المتزنة (F_net ≠ 0) هي الوحيدة القادرة على إحداث تسارع وتغيير حالة الحركة.',
+      'القاعدة 7: قوة الاحتكاك تعمل دائماً في اتجاه معاكس تماماً لاتجاه حركة الجسم المتلامس.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Average speed equals total distance divided by elapsed time: v = d / t.',
+      'Rule 2: Convert km/h to m/s by dividing by 3.6; convert m/s to km/h by multiplying by 3.6.',
+      'Rule 3: Net Force for co-directional forces is their scalar sum: F_net = F1 + F2.',
+      'Rule 4: Net Force for opposing forces is their difference directed towards the larger magnitude.',
+      'Rule 5: Balanced forces (Net F = 0) maintain equilibrium: resting bodies remain still, moving bodies sustain constant velocity.',
+      'Rule 6: Unbalanced forces (Net F != 0) produce acceleration, altering speed or direction.',
+      'Rule 7: Friction forces strictly oppose the relative velocity vector of contact surfaces.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-sci-3-1',
+        questionAr: 'سيارة تسير بسرعة منتظمة مقدارها 25 م/ث. 1) احسب المسافة التي تقطعها خلال 40 ثانية. 2) عبر عن سرعة السيارة بوحدة (كم/ساعة).',
+        questionEn: 'A car travels at constant speed 25 m/s. 1) Find distance covered in 40s. 2) Convert speed to km/h.',
+        solutionStepsAr: [
+          '1. حساب المسافة: المسافة d = السرعة v × الزمن t = 25 × 40 = 1000 متر (أي 1 كيلومتر).',
+          '2. تحويل السرعة إلى كم/س: السرعة بوحدة كم/س = 25 × 3.6 = 90 كم/ساعة.'
+        ],
+        solutionStepsEn: [
+          '1. Distance d = v * t = 25 * 40 = 1000 meters (1 km).',
+          '2. Speed in km/h = 25 * 3.6 = 90 km/h.'
+        ],
+        answerAr: 'المسافة المقطوعة = 1000 متر • سرعة السيارة = 90 كم/ساعة.',
+        answerEn: 'Distance = 1000 meters • Speed = 90 km/h.'
+      },
+      {
+        id: 'ex-sci-3-2',
+        questionAr: 'يقوم شخصان بدفع خزانة كتب: الأول يدفع بقوة 70 نيوتن نحو الشرق، والثاني يدفع بقوة 50 نيوتن نحو الشرق أيضاً، بينما قوة الاحتكاك مع الأرض 40 نيوتن نحو الغرب. 1) احسب القوة المحصلة المؤثرة في الخزانة. 2) حدد اتجاه حركتها وهل القوى متزنة أم غير متزنة؟',
+        questionEn: 'Two people push a bookcase: Person 1 applies 70N East, Person 2 applies 50N East, friction is 40N West. 1) Find Net Force. 2) State motion state.',
+        solutionStepsAr: [
+          '1. مجموع قوى الدفع شرقاً: 70 + 50 = 120 نيوتن شرقاً.',
+          '2. قوة الاحتكاك المعاكسة: 40 نيوتن غرباً.',
+          '3. القوة المحصلة: F_net = 120 - 40 = 80 نيوتن باتجاه الشرق.',
+          '4. حالة القوى: قوى غير متزنة (المحصلة = 80 N)، وتتحرك الخزانة بتسارع نحو الشرق.'
+        ],
+        solutionStepsEn: [
+          '1. Total applied force East = 70 + 50 = 120 N East.',
+          '2. Opposing friction = 40 N West.',
+          '3. Net Force = 120 - 40 = 80 N East.',
+          '4. State: Unbalanced forces causing eastward acceleration.'
+        ],
+        answerAr: 'القوة المحصلة = 80 نيوتن باتجاه الشرق • القوى غير متزنة وتتحرك الخزانة شرقاً.',
+        answerEn: 'Net Force = 80 N East • Unbalanced forces accelerating eastward.'
+      }
+    ],
+
     assessment: {
       id: 'quiz-sci-3',
       lectureId: 'sci-3',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الثالثة: القوى والسرعة',
-      titleEn: 'Lecture 3 Assessment: Forces and Speed',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 3: القوى والحركة والسرعة والتوازن',
+      titleEn: 'Mastery Assessment 3: Forces, Motion & Velocity Equilibrium',
       passingScore: 80,
       questions: [
         {
           id: 'qsc3-1',
-          textAr: 'إذا قطعت دراجة مسافة 100 متر في 10 ثوانٍ، فما هي سرعتها المتوسطة؟',
-          textEn: 'If a cyclist rides 100m in 10s, what is the average speed?',
-          optionsAr: ['10 م/ث', '1000 م/ث', '90 م/ث', '5 م/ث'],
-          optionsEn: ['10 m/s', '1000 m/s', '90 m/s', '5 m/s'],
+          textAr: 'إذا قطعت حافلة مسافة 180 كيلومتراً في زمن قدره 3 ساعات، فما هي سرعتها المتوسطة؟',
+          textEn: 'If a bus covers 180 km in 3 hours, what is its average speed?',
+          optionsAr: ['60 كم/س', '540 كم/س', '177 كم/س', '20 كم/س'],
+          optionsEn: ['60 km/h', '540 km/h', '177 km/h', '20 km/h'],
           correctIndex: 0,
-          conceptTestedAr: 'تطبيق قانون السرعة',
-          conceptTestedEn: 'Speed Calculation',
-          explanationAr: 'السرعة = المسافة ÷ الزمن = 100 ÷ 10 = 10 م/ث.',
-          explanationEn: 'Speed = 100m / 10s = 10 m/s.',
+          conceptTestedAr: 'تطبيق قانون السرعة المتوسطة',
+          conceptTestedEn: 'Average Speed Calculation',
+          explanationAr: 'السرعة v = المسافة d ÷ الزمن t = 180 ÷ 3 = 60 كم/س.',
+          explanationEn: 'Speed = 180 km / 3 h = 60 km/h.',
           difficulty: 'easy'
+        },
+        {
+          id: 'qsc3-2',
+          textAr: 'عندما تؤثر قوتان متساويتان في المقدار ومتعاكستان في الاتجاه على جسم ما، فإن القوة المحصلة تكون:',
+          textEn: 'When two equal and opposite forces act on an object, the Net Force is:',
+          optionsAr: [
+            'تساوي صفراً (قوى متزنة ولا يتغير تسارع الجسم)',
+            'تساوي ضعف مقدار إحدى القوتين',
+            'تكون موجبة دائماً وتسبب تسارعاً سريعاً',
+            'تساوي حاصل ضرب القوتين'
+          ],
+          optionsEn: [
+            'Zero (balanced forces, acceleration remains zero)',
+            'Double the single force',
+            'Always positive causing rapid acceleration',
+            'Product of the two forces'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'محصلة القوى المتزنة المتعاكسة',
+          conceptTestedEn: 'Balanced Opposing Forces Equilibrium',
+          explanationAr: 'القوتان المتساويتان والمتعاكستان تلغي كل منهما الأخرى فتكون المحصلة F_net = F - F = 0 (قوى متزنة).',
+          explanationEn: 'Equal and opposite collinear forces cancel out completely yielding F_net = 0.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc3-3',
+          textAr: 'جسم كتلته تتحرك على سطح أفقي؛ ما هو اتجاه قوة الاحتكاك المؤثرة عليه؟',
+          textEn: 'An object slides horizontally; in which direction does friction act?',
+          optionsAr: [
+            'دائماً في اتجاه معاكس لاتجاه حركة الجسم',
+            'في نفس اتجاه حركة الجسم لزيادة سرعته',
+            'عمودياً للأعلى في اتجاه السماء',
+            'عمودياً للأسفل في اتجاه مركز الأرض'
+          ],
+          optionsEn: [
+            'Always opposite to the object\'s velocity vector',
+            'In the same direction to boost speed',
+            'Vertically upward',
+            'Vertically downward'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'اتجاه قوة الاحتكاك المقاومة للحركة',
+          conceptTestedEn: 'Friction Directional Opposition',
+          explanationAr: 'قوة الاحتكاك تنشأ عند تلامس السطوح وتعمل دائماً في الاتجاه المعاكس لاتجاه انزلاق أو حركة الجسم لتقاوم الحركة.',
+          explanationEn: 'Friction is a resistive contact force acting strictly opposite to relative motion.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc3-4',
+          textAr: 'سيارة تسير بسرعة 90 كم/ساعة؛ ما مقدار هذه السرعة بوحدة متر لكل ثانية (م/ث)؟',
+          textEn: 'A car moves at 90 km/h; what is this speed in m/s?',
+          optionsAr: ['25 م/ث', '324 م/ث', '90 م/ث', '15 م/ث'],
+          optionsEn: ['25 m/s', '324 m/s', '90 m/s', '15 m/s'],
+          correctIndex: 0,
+          conceptTestedAr: 'التحويل القياسي بين كم/س و م/ث',
+          conceptTestedEn: 'Metric Speed Unit Conversion',
+          explanationAr: 'للتحويل من كم/س إلى م/ث نقسم على 3.6: السرعة = 90 ÷ 3.6 = 25 م/ث.',
+          explanationEn: '90 km/h divided by 3.6 = 25 m/s.',
+          difficulty: 'medium'
         }
       ]
     }
@@ -4367,58 +5699,349 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
     order: 4,
     titleAr: 'المحاضرة 4: أشكال الطاقة وتحولاتها وقانون حفظ الطاقة الأساسي',
     titleEn: 'Lecture 4: Energy Forms, Conversions & Conservation Laws',
-    subtitleAr: 'استكشاف الطاقة الحركية والكامنة، وتتبع سلاسل تحولات الطاقة في الحياة اليومية',
-    subtitleEn: 'Investigate kinetic and potential energy forms and conservation chains.',
-    durationMinutes: 30,
+    subtitleAr: 'استكشاف طاقة الحركة والوضع، وتتبع سلاسل تحولات الطاقة في الحياة اليومية، وقانون حفظ الطاقة الميكانيكية والكيميائية',
+    subtitleEn: 'Master kinetic energy (E_k = 1/2 m v^2), potential energy (E_p = m g h), transformation chains, and the Universal Law of Conservation of Energy.',
+    durationMinutes: 35,
     isLocked: true,
     isCompleted: false,
     passingScoreRequired: 80,
     prerequisiteLectureId: 'sci-3',
     prerequisiteTitleAr: 'المحاضرة 3: القوى والحركة: القوة المحصلة ومفهوم السرعة والتوازن',
     prerequisiteTitleEn: 'Lecture 3: Forces & Motion: Net Force, Velocity & Equilibrium',
-    keyConceptsAr: ['تعريف الطاقة: القدرة على إحداث تغيير أو بذل شغل', 'الطاقة الحركية (طاقة الأجسام المتحركة)', 'طاقة الوضع الكامنة (طاقة مخزونة بفعل الارتفاع أو التوتر)', 'قانون حفظ الطاقة: الطاقة لا تفنى ولا تستحدث من العدم'],
-    keyConceptsEn: ['Definition of Energy', 'Kinetic Energy of Motion', 'Gravitational Potential Energy', 'Conservation of Energy Principle'],
-    summaryAr: 'الطاقة هي المحرك الأساسي لكل ما يحدث في الطبيعة؛ تنتقل وتتحول من صورة كيميائية وحركية وكهربائية دون أن تفقد ذرة واحدة من طاقتها الإجمالية.',
-    summaryEn: 'Energy drives all physical phenomena, dynamically transforming between kinetic, thermal, electrical and potential reservoirs.',
-    sections: [
+
+    gradeLevelNameAr: 'الصف الأول متوسط (الصف السابع) - المرحلة المتوسطة',
+    gradeLevelNameEn: 'Grade 7 / Middle School - General Science',
+    termAr: 'الفصل الدراسي الأول',
+    termEn: 'First Semester / Term 1',
+    unitTitleAr: 'الوحدة الرابعة: الطاقة وتحولاتها وقوانين حفظها في الكون',
+    unitTitleEn: 'Unit 4: Energy Thermodynamics & Conservation Laws',
+    lessonNumberAr: 'الدرس 1: أشكال الطاقة، السلاسل التحويلية، وقانون حفظ الطاقة',
+    lessonNumberEn: 'Lesson 1: Energy Forms, Conversion Chains & Conservation',
+
+    warmupHookAr: 'تأمل فنجان القهوة الساخن، أو هاتفك الذكي الذي يعمل لساعات، أو سيارة تسير بسرعة فائقة: كل هذه الظواهر يقودها عامل واحد مشترك وهو "الطاقة"! عندما تأكل تفاحة، تتحول طاقتها الكيميائية المخزونة إلى طاقة حركية في عضلاتك وطاقة حرارية تدفئ جسمك. هل يمكن أن تختفي الطاقة أو تفنى تماماً؟ الإجابة القاطعة في علم الفيزياء هي: لا! فالطاقة لا تفنى ولا تُستحدث، بل تتنكر في أشكال وصور لا حصر لها!',
+    warmupHookEn: 'Energy is the universal currency of the cosmos. From dietary calories powering muscle kinematics to solar panels charging batteries, discover how energy transitions between kinetic and potential forms without a single joule lost!',
+
+    learningOutcomesAr: [
+      'أن يعرّف الطالب الطاقة ويصنف أشكالها الرئيسية (حركية، وضع جاذبية، كيميائية، حرارية، كهربائية، إشعاعية)',
+      'أن يربط بين طاقة الحركة وسرعة وكتلة الجسم، وبين طاقة الوضع وارتفاع الجسم عن الأرض',
+      'أن يتتبع سلاسل تحولات الطاقة في الأجهزة اليومية (المصباح، المروحة، المحرك، الألواح الشمسية)',
+      'أن يطبق قانون حفظ الطاقة ويفسر تبادل طاقتي الوضع والحركة في البندول والسقوط الحر'
+    ],
+    learningOutcomesEn: [
+      'Define energy and categorize primary forms (Kinetic, Gravitational Potential, Chemical, Thermal, Electrical, Radiant)',
+      'Correlate kinetic energy with mass and velocity, and potential energy with elevation',
+      'Trace energy transformation chains across everyday technologies (lamps, fans, motors, solar panels)',
+      'Apply the Law of Conservation of Energy to mechanical systems (pendulums, roller coasters, free-fall)'
+    ],
+
+    vocabulary: [
       {
-        titleAr: '1. تحولات الطاقة في الأجهزة اليومية',
-        titleEn: '1. Energy Transformation Chains',
-        contentAr: 'في المصباح الكهربائي: تتحول الطاقة الكهربائية إلى طاقة ضوئية وطاقة حرارية. وفي المروحة: تتحول الطاقة الكهربائية إلى طاقة حركية.',
-        contentEn: 'Electrical devices channel energy across forms: lamps produce light and heat; fans produce kinetic airflow.',
-        interactiveExample: {
-          titleAr: 'تطبيق: تحول طاقة الوضع إلى طاقة حركة',
-          titleEn: 'Worked Example: Potential to Kinetic Energy Shift',
-          equation: 'طاقة وضع (في الأعلى) -> طاقة حركة (عند السقوط)',
-          steps: [
-            { stepNumber: 1, textAr: 'كرة مستقرة على حافة طاولة تمتلك طاقة وضع جاذبية كامنة.', textEn: 'A ball atop a table holds gravitational potential energy.' },
-            { stepNumber: 2, textAr: 'عندما تسقط الكرة، تتحول طاقة الوضع تدريجياً إلى طاقة حركة سريعة.', textEn: 'During descent, potential energy transitions to kinetic motion.' }
-          ],
-          takeawayAr: 'مجموع طاقتي الحركة والوضع يظل ثابتاً في النظام وفق قانون حفظ الطاقة.',
-          takeawayEn: 'Total mechanical energy remains conserved across transformation steps.'
-        },
-        tipsAr: ['الحرارة غالباً ما تكون صورة الطاقة المفقودة أو المهدورة في معظم تحولات الطاقة.'],
-        tipsEn: ['Thermal dissipation represents the common waste byproduct in mechanical conversions.']
+        termAr: 'الطاقة (Energy)',
+        termEn: 'Energy',
+        definitionAr: 'القدرة على إحداث تغيير أو بذل شغل فيزيائي، وتقاس بوحدة الجول (Joule - J).',
+        definitionEn: 'The capacity to perform work or effect physical change, measured in Joules (J).'
+      },
+      {
+        termAr: 'الطاقة الحركية (Kinetic Energy - E_k)',
+        termEn: 'Kinetic Energy (E_k)',
+        definitionAr: 'الطاقة التي يمتلكها الجسم بسبب حركته وسرعته؛ وتزداد بزيادة كتلة الجسم ومربع سرعته: E_k = ½ m v².',
+        definitionEn: 'Energy possessed by an object due to motion: E_k = 1/2 m v^2.'
+      },
+      {
+        termAr: 'طاقة الوضع الكامنة (Potential Energy - E_p)',
+        termEn: 'Potential Energy (E_p)',
+        definitionAr: 'طاقة مخزونة في الجسم بفعل موضعه وارتفاعه عن سطح الأرض ضد الجاذبية: E_p = m · g · h.',
+        definitionEn: 'Energy stored within a system by virtue of positional elevation: E_p = m * g * h.'
+      },
+      {
+        termAr: 'قانون حفظ الطاقة (Law of Conservation of Energy)',
+        termEn: 'Conservation of Energy',
+        definitionAr: 'قانون فيزيائي كوني ينص على أن الطاقة لا تفنى ولا تُستحدث من العدم، وإنما تتحول فقط من شكل إلى شكل آخر.',
+        definitionEn: 'Universal thermodynamic principle stating energy cannot be created or destroyed, only transformed.'
       }
     ],
+
+    keyConceptsAr: [
+      'مفهوم الطاقة ووحدة قياسها (الجول J)',
+      'الطاقة الحركية: تزداد بزيادة الكتلة والسرعة (E_k = ½ m v²)',
+      'طاقة الوضع الجاذبية: تزداد بزيادة الارتفاع والكتلة (E_p = m g h)',
+      'التبادل الميكانيكي: طاقة الوضع في القمة تتحول بالكامل إلى طاقة حركة في القاع',
+      'سلاسل تحول الطاقة: شمسية -> كيميائية -> ميكانيكية -> كهربائية/حرارية',
+      'قانون حفظ الطاقة: الطاقة الكلية في النظام المغلق ثابتة دائماً'
+    ],
+    keyConceptsEn: [
+      'Energy Concept & SI Metric Unit (Joule J)',
+      'Kinetic Energy dependent on mass and speed squared',
+      'Gravitational Potential Energy proportional to elevation height',
+      'Mechanical Exchange: Potential energy at peak converts to kinetic at bottom',
+      'Transformation Chains: Solar -> Chemical -> Mechanical -> Electrical/Thermal',
+      'Conservation Law: Total System Energy = Constant'
+    ],
+    summaryAr: 'المحاضرة الختامية لمسار العلوم العامة؛ نستكشف فيها أشكال الطاقة وطاقتي الوضع والحركة، ونتتبع سلاسل تحولات الطاقة المذهلة في حياتنا اليومية، ونرسخ القانون الفيزيائي الخالد: قانون حفظ الطاقة الكلي.',
+    summaryEn: 'Capstone General Science lecture: exploring kinetic and potential energy reservoirs, tracing multi-step conversion chains, and cementing the universal Law of Conservation of Energy.',
+
+    sections: [
+      {
+        titleAr: '1. أشكال الطاقة وسلاسل التحولات اليومية',
+        titleEn: '1. Energy Forms & Everyday Conversion Chains',
+        contentAr: 'تتخذ الطاقة في الكون أشكالاً وصوراً متعددة تتفاعل وتتحول باستمرار:\n1. الطاقة الحركية: طاقة الأجسام المتحركة كالسيارات والرياح.\n2. طاقة الوضع الكامنة: طاقة مخزونة كطاقة الجاذبية عند رفع صخرة لأعلى، أو الطاقة الكامنة في زنبرك مشدود.\n3. الطاقة الكيميائية: طاقة مخزونة في الروابط الكيميائية للغذاء والوقود والبطاريات.\n4. الطاقة الكهربائية والضوئية والحرارية: طاقات ناتجة عن حركة الشحنات والأمواج الكهرومغناطيسية واهتزاز الجزيئات.\n\nتتحول الطاقة عبر سلاسل متصلة: فالشمس تمد النبات بطاقة ضوئية يحولها لبناء ضوئي وطاقة كيميائية، وعندما يتغذى الإنسان تتحول لحركة وحرارة.',
+        contentEn: 'Energy manifests as kinetic, gravitational potential, chemical, electrical, thermal, and radiant forms, dynamically converting across interconnected natural and engineered chains.',
+        diagram: {
+          id: 'diag-sci4-energy-chains',
+          figureNumberAr: 'شكل (4-1)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'سلاسل تحولات الطاقة وقانون حفظ الطاقة الكلي',
+          titleEn: 'Energy Transformation Chains & Universal Conservation Law',
+          captionAr: 'مخطط يوضح تسلسل تحولات الطاقة من الإشعاع الشمسي إلى الطاقة الكيميائية في الغذاء والحركية في العضلات والمخرجات الكهربائية والحرارية، مع بيان تبادل طاقتي الوضع والحركة في البندول وقانون حفظ الطاقة.',
+          captionEn: 'Comprehensive thermodynamic schema tracing solar radiation to chemical and kinetic energy, along with pendulum mechanical energy conservation.',
+          diagramType: 'energy_transformation_chain',
+          takeawayFormulaAr: 'الطاقة الكلية = طاقة الوضع + طاقة الحركة = مقدار ثابت دائماً (الطاقة لا تفنى ولا تستحدث)',
+          takeawayFormulaEn: 'Total Mechanical Energy = E_potential + E_kinetic = Constant',
+          keyLabels: [
+            { tagAr: 'طاقة وضع E_p', tagEn: 'Potential Energy', color: '#eab308' },
+            { tagAr: 'طاقة حركة E_k', tagEn: 'Kinetic Energy', color: '#38bdf8' },
+            { tagAr: 'قانون حفظ الطاقة', tagEn: 'Energy Conservation', color: '#10b981' }
+          ]
+        },
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 1: تتبع سلاسل تحولات الطاقة في محطة كهرومائية',
+          titleEn: 'Worked Example 1: Hydroelectric Power Energy Chain',
+          equation: 'طاقة وضع مائية -> طاقة حركة توربين -> طاقة كهربائية',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'الماء المحتجز خلف السد على ارتفاع شاهق يمتلك طاقة وضع جاذبية هائلة (E_p = m·g·h).',
+              textEn: 'Water impounded behind elevated dam holds massive gravitational potential energy.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'عند فتح البوابات وتدفق الماء بقوة، تتحول طاقة الوضع إلى طاقة حركة مائية سريعة تدير زعانف التوربينات الضخمة.',
+              textEn: 'Released water converts potential energy into kinetic energy spinning heavy turbines.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'يقوم المولد الكهربائي بتحويل الطاقة الحركية للتوربينات إلى طاقة كهربائية تنقل عبر الأسلاك للمنازل والمدن.',
+              textEn: 'Generators convert rotational kinetic energy into electrical energy grid output.'
+            }
+          ],
+          takeawayAr: 'في كل خطوة تتحول الطاقة من صورة لأخرى مع انبعاث نسبة بسيطة من الطاقة الحرارية المهدورة بفعل الاحتكاك، والمجموع الكلي ثابت.',
+          takeawayEn: 'Energy transitions between forms while total system energy remains precisely conserved.'
+        },
+        formativeCheck: {
+          id: 'fc-sci4-1',
+          questionAr: 'ما هي تحولات الطاقة الأساسية التي تحدث عند إضاءة مصباح كهربائي موصول ببطارية جافة؟',
+          questionEn: 'What are the energy transformations in a battery-powered flashlight?',
+          optionsAr: [
+            'من طاقة كيميائية (في البطارية) إلى طاقة كهربائية ثم إلى طاقة ضوئية وحرارية',
+            'من طاقة نووية إلى طاقة حركية',
+            'من طاقة ضوئية إلى طاقة وضع',
+            'من طاقة صوتية إلى طاقة كيميائية'
+          ],
+          optionsEn: [
+            'Chemical (battery) -> Electrical -> Light and Thermal energy',
+            'Nuclear -> Kinetic',
+            'Light -> Potential',
+            'Sound -> Chemical'
+          ],
+          correctIndex: 0,
+          explanationAr: 'البطارية تختزن طاقة كيميائية تتحول لتيار كهربائي، وعند مروره في سلك المصباح يتوهج منتجاً طاقة ضوئية وحرارة.',
+          explanationEn: 'Chemical potential stored in the battery yields electric current which illuminates the filament releasing light and heat.',
+          hintAr: 'فكر في نوع الطاقة المخزونة داخل البطارية أولاً.'
+        },
+        tipsAr: [
+          'الحرارة هي أكثر صور الطاقة المهدورة شيوعاً في معظم تحولات الطاقة غير المثالية.',
+          'كفاءة الجهاز تقاس بنسبة الطاقة المفيدة الناتجة مقارنة بإجمالي الطاقة المدخلة.'
+        ]
+      },
+      {
+        titleAr: '2. التبادل الميكانيكي وقانون حفظ الطاقة',
+        titleEn: '2. Mechanical Energy Exchange & Universal Conservation Law',
+        contentAr: 'الطاقة الميكانيكية لجسم هي مجموع طاقتي الوضع والحركة: E_total = E_p + E_k.\n\nتأمل حركة البندول أو عربة قطار الملاهي (الأفعوانية):\n1. عند أقصى ارتفاع (القمة): يتوقف الجسم لحظياً، فتكون طاقة الوضع في أقصى قيمة لها (E_p = Max)، بينما تكون طاقة الحركة صفراً (E_k = 0).\n2. أثناء السقوط والهبوط: تنقص طاقة الوضع تدريجياً وتتحول بنفس المقدار تماماً إلى طاقة حركة.\n3. عند أدنى نقطة (القاع): تكون طاقة الحركة في أقصى قيمة لها (E_k = Max) وتكون السرعة قصوى، بينما طاقة الوضع أقل ما يمكن.\n\nينص قانون حفظ الطاقة على: "الطاقة لا تفنى ولا تُستحدث من العدم، وإنما تتحول من شكل إلى آخر". هذا يعني أن الطاقة الإجمالية للكون ثابتة لا تزيد ولا تنقص بمقدار ذرة واحدة!',
+        contentEn: 'Mechanical energy is conserved: E_mech = E_p + E_k. At maximum height, E_p is maximized and E_k is 0. At the lowest point, E_k is maximized. The Universal Law of Conservation of Energy states energy is neither created nor destroyed.',
+        interactiveExample: {
+          titleAr: 'مثال تطبيقي 2: حساب الطاقة الميكانيكية لكرة تسقط سقوطاً حراً',
+          titleEn: 'Worked Example 2: Mechanical Energy Conservation in Free-Fall',
+          equation: 'E_total = E_p + E_k = ثابت',
+          steps: [
+            {
+              stepNumber: 1,
+              textAr: 'كرة كتلتها 2 كجم على ارتفاع 10 أمتار تمتلك طاقة وضع: E_p = 2 × 9.8 × 10 = 196 جول، وسرعتها صفر (E_k = 0). الطاقة الكلية = 196 جول.',
+              textEn: 'Ball (2kg) at 10m holds E_p = 2 * 9.8 * 10 = 196 J, E_k = 0. Total Energy = 196 J.'
+            },
+            {
+              stepNumber: 2,
+              textAr: 'عندما تسقط وتصل إلى منتصف المسافة (ارتفاع 5 أمتار): تصبح طاقة الوضع = 98 جول، وتكون طاقة الحركة قد أصبحت 98 جول. المجموع = 196 جول.',
+              textEn: 'At mid-height (5m): E_p = 98 J, E_k = 98 J. Total Energy = 196 J.'
+            },
+            {
+              stepNumber: 3,
+              textAr: 'لحظة الاصطدام بالأرض (ارتفاع 0): تصبح طاقة الوضع = 0 جول، وتتحول كل الطاقة إلى طاقة حركة: E_k = 196 جول. المجموع = 196 جول دائماً!',
+              textEn: 'At ground impact (0m): E_p = 0 J, E_k = 196 J. Total Energy = 196 J.'
+            }
+          ],
+          takeawayAr: 'النقصان في طاقة الوضع يقابله دائماً زيادة مساوية تماماً في طاقة الحركة وفق قانون حفظ الطاقة.',
+          takeawayEn: 'Potential energy loss strictly equals kinetic energy gain in conservative mechanical systems.'
+        },
+        tipsAr: ['في الحياة الواقعية يتحول جزء يسير من الطاقة الميكانيكية إلى حرارة وصوت بفعل مقاومة الهواء.']
+      }
+    ],
+
+    conceptMapSummaryAr: 'الطاقة: القدرة على بذل شغل (بالجول). أشكالها: حركية (E_k)، وضع (E_p)، كيميائية، كهربائية، حرارية، ضوئية. تبادل الطاقة الميكانيكية: E_total = E_p + E_k = ثابت. قانون حفظ الطاقة: الطاقة لا تفنى ولا تستحدث من العدم بل تتحول من شكل إلى آخر.',
+    conceptMapSummaryEn: 'Energy: Capacity to do work (Joules). Forms: Kinetic (E_k), Potential (E_p), Chemical, Electrical, Thermal, Radiant. Mechanical conservation: E_total = E_p + E_k = Constant. Conservation Law: Energy is neither created nor destroyed.',
+
+    goldenRulesAr: [
+      'القاعدة 1: الطاقة هي المقدرة على إحداث تغيير أو إنجاز شغل فيزيائي وتقاس بوحدة الجول (J).',
+      'القاعدة 2: الطاقة الحركية تعتمد طردياً على كتلة الجسم ومربع سرعته: E_k = ½ m v².',
+      'القاعدة 3: طاقة الوضع الجاذبية تعتمد طردياً على كتلة الجسم وارتفاعه عن سطح الأرض: E_p = m · g · h.',
+      'القاعدة 4: عند أقصى ارتفاع تكون طاقة الوضع قصوى وطاقة الحركة صفراً، وعند أدنى نقطة تكون طاقة الحركة قصوى.',
+      'القاعدة 5: الطاقة الميكانيكية الكلية لجسم تساوي مجموع طاقتي الوضع والحركة: E_mech = E_p + E_k.',
+      'القاعدة 6: قانون حفظ الطاقة: "الطاقة لا تفنى ولا تُستحدث من العدم، بل تتحول من صورة إلى أخرى".',
+      'القاعدة 7: الحرارة الناتجة عن الاحتكاك هي أشهر صور الطاقة المهدورة في الآلات والأجهزة.'
+    ],
+    goldenRulesEn: [
+      'Rule 1: Energy is the capacity to do work or effect change, quantified in Joules (J).',
+      'Rule 2: Kinetic energy scales with mass and velocity squared: E_k = 1/2 m v^2.',
+      'Rule 3: Gravitational potential energy scales with mass and elevation: E_p = m * g * h.',
+      'Rule 4: At maximum elevation, potential energy peaks and kinetic energy is zero; at minimum elevation, kinetic energy peaks.',
+      'Rule 5: Total mechanical energy equals the sum of potential and kinetic energy: E_total = E_p + E_k.',
+      'Rule 6: Conservation Law: Energy is neither created nor destroyed, only transformed between forms.',
+      'Rule 7: Thermal dissipation from friction represents the ubiquitous waste output in non-ideal devices.'
+    ],
+
+    textbookExercises: [
+      {
+        id: 'ex-sci-4-1',
+        questionAr: 'بندول بسيط كتلته 0.5 كجم تم سحبه لأعلى بحيث اكتسب طاقة وضع مقدارها 20 جول ثم تُرك ليتأرجح بحرية. 1) ما مقدار طاقة حركته عند أعلى نقطة؟ 2) ما مقدار طاقة حركته وطاقة وضعه عند مروره بأدنى نقطة في مساره؟',
+        questionEn: 'A simple pendulum (0.5 kg) is elevated gaining 20 J potential energy and released. 1) Find kinetic energy at peak. 2) Find kinetic and potential energy at lowest point.',
+        solutionStepsAr: [
+          '1. عند أعلى نقطة: يتوقف البندول لحظياً لعكس اتجاه حركته، فتكون سرعته صفراً، وبالتالي طاقة حركته E_k = 0 جول.',
+          '2. عند أدنى نقطة (القاع): تنعدم طاقة الوضع (E_p = 0 جول) وتتحول كامل طاقة الوضع الابتدائية إلى طاقة حركة وفق قانون حفظ الطاقة، فتكون طاقة الحركة E_k = 20 جول.'
+        ],
+        solutionStepsEn: [
+          '1. At highest point: velocity is zero, so Kinetic Energy E_k = 0 J.',
+          '2. At lowest point: elevation is minimum (E_p = 0 J) and potential energy converts fully to Kinetic Energy E_k = 20 J.'
+        ],
+        answerAr: '1) عند أعلى نقطة: طاقة الحركة = 0 جول | 2) عند أدنى نقطة: طاقة الحركة = 20 جول، وطاقة الوضع = 0 جول.',
+        answerEn: '1) At peak: E_k = 0 J | 2) At bottom: E_k = 20 J, E_p = 0 J.'
+      },
+      {
+        id: 'ex-sci-4-2',
+        questionAr: 'تتبع تحولات الطاقة في سيارة تعمل بالبنزين بدءاً من خزان الوقود وحتى حركة عجلات السيارة وإضاءة مصابيحها.',
+        questionEn: 'Trace energy conversions in a gasoline automobile from fuel tank to wheel motion and headlamps.',
+        solutionStepsAr: [
+          '1. في خزان الوقود: يختزن البنزين طاقة كيميائية كامنة في روابطه الجزيئية.',
+          '2. في المحرك (الاحتراق): تتحول الطاقة الكيميائية إلى طاقة حرارية هائلة ترفع ضغط الغازات داخل الأسطوانات.',
+          '3. في المكابس والعجلات: يدفع تمدد الغازات المكابس لتحويل الطاقة الحرارية إلى طاقة حركية ميكانيكية تدير العجلات.',
+          '4. في الدينامو (المولد): يتحول جزء من الطاقة الحركية إلى طاقة كهربائية تشحن البطارية وتضيء مصابيح السيارة (طاقة ضوئية).'
+        ],
+        solutionStepsEn: [
+          '1. Fuel tank: Chemical potential energy in gasoline hydrocarbon bonds.',
+          '2. Engine cylinders: Combustion converts chemical energy to high-pressure thermal energy.',
+          '3. Pistons and wheels: Gas expansion converts thermal to mechanical kinetic rotation.',
+          '4. Alternator and lights: Part of kinetic rotation converts to electrical and radiant light energy.'
+        ],
+        answerAr: 'طاقة كيميائية (بنزين) -> طاقة حرارية (احتراق) -> طاقة حركية (عجلات) -> طاقة كهربائية وضوئية (مصابيح).',
+        answerEn: 'Chemical (gasoline) -> Thermal (combustion) -> Mechanical kinetic (wheels) -> Electrical & Light (lamps).'
+      }
+    ],
+
     assessment: {
       id: 'quiz-sci-4',
       lectureId: 'sci-4',
-      titleAr: 'الاختبار الإلزامي للمحاضرة الرابعة: تحولات الطاقة',
-      titleEn: 'Lecture 4 Assessment: Energy Transformations',
+      titleAr: 'الاختبار الإتقاني الشامل للمحاضرة 4: أشكال الطاقة وتحولاتها وقانون حفظ الطاقة',
+      titleEn: 'Mastery Assessment 4: Energy Forms & Universal Conservation Laws',
       passingScore: 80,
       questions: [
         {
           id: 'qsc4-1',
+          textAr: 'ما هو نص "قانون حفظ الطاقة" الأساسي في الفيزياء؟',
+          textEn: 'What is the fundamental postulate of the Law of Conservation of Energy?',
+          optionsAr: [
+            'الطاقة لا تفنى ولا تُستحدث من العدم، وإنما تتحول من شكل إلى آخر',
+            'الطاقة الحركية تفنى دائماً عند التوقف ولا تترك أي أثر',
+            'يمكن تصنيع طاقة جديدة من لا شيء في الآلات الحديثة',
+            'الطاقة الكلية للكون تتناقص باستمرار مع مرور الوقت'
+          ],
+          optionsEn: [
+            'Energy is neither created nor destroyed, only transformed between forms',
+            'Kinetic energy vanishes permanently without trace upon stopping',
+            'New energy can be created from nothing in modern engines',
+            'Total cosmic energy continually diminishes over time'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'نص قانون حفظ الطاقة الكوني',
+          conceptTestedEn: 'Universal Law of Energy Conservation',
+          explanationAr: 'ينص قانون حفظ الطاقة على أن الطاقة الإجمالية في أي نظام معزول تظل ثابتة ومحفوظة، ولا يمكن إفناؤها أو خلقها من العدم بل تتحول فقط من صورة لأخرى.',
+          explanationEn: 'The first law of thermodynamics states total energy in an isolated system remains constant over time.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc4-2',
+          textAr: 'كرة تسقط من قمة برج نحو الأرض؛ ماذا يحدث لطاقتي الوضع والحركة للكرة أثناء سقوطها بإهمال مقاومة الهواء؟',
+          textEn: 'A ball falls from a tower towards ground; what happens to potential and kinetic energies neglecting air resistance?',
+          optionsAr: [
+            'تتناقص طاقة الوضع وتزداد طاقة الحركة بنفس المقدار ويظل المجموع ثابتاً',
+            'تزداد طاقة الوضع وتتناقص طاقة الحركة',
+            'تتناقص طاقة الوضع وطاقة الحركة معاً إلى الصفر',
+            'تظل طاقة الوضع ثابتة ولا تتغير'
+          ],
+          optionsEn: [
+            'Potential energy decreases while kinetic energy increases equally, keeping total sum constant',
+            'Potential increases while kinetic decreases',
+            'Both potential and kinetic drop to zero',
+            'Potential remains unchanged'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'التبادل بين طاقتي الوضع والحركة في السقوط الحر',
+          conceptTestedEn: 'Potential to Kinetic Conversion in Free-Fall',
+          explanationAr: 'مع تناقص الارتفاع تقل طاقة الوضع (E_p)، وتتحول مباشرة إلى طاقة حركة (E_k) تزيد من سرعة الكرة بحيث يبقى مجموع طاقتي الوضع والحركة (E_mech) ثابتاً دائماً.',
+          explanationEn: 'Loss of gravitational potential energy precisely balances the gain in kinetic energy, conserving total mechanical energy.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'qsc4-3',
           textAr: 'ما هو تحول الطاقة الأساسي الذي يحدث في المروحة الكهربائية؟',
           textEn: 'What is the primary energy transformation in an electric fan?',
-          optionsAr: ['من طاقة كهربائية إلى طاقة حركية', 'من طاقة كيميائية إلى طاقة نووية', 'من طاقة صوتية إلى طاقة ضوئية', 'من طاقة وضع إلى طاقة كيميائية'],
-          optionsEn: ['Electrical to kinetic energy', 'Chemical to nuclear energy', 'Sound to light energy', 'Potential to chemical energy'],
+          optionsAr: [
+            'من طاقة كهربائية إلى طاقة حركية (مع جزء حراري مهدر)',
+            'من طاقة كيميائية إلى طاقة نووية',
+            'من طاقة صوتية إلى طاقة ضوئية',
+            'من طاقة وضع إلى طاقة كيميائية'
+          ],
+          optionsEn: [
+            'Electrical energy to mechanical kinetic rotation (with thermal waste)',
+            'Chemical to nuclear energy',
+            'Sound to light energy',
+            'Potential to chemical energy'
+          ],
           correctIndex: 0,
-          conceptTestedAr: 'تحولات الطاقة في الأجهزة',
-          conceptTestedEn: 'Device Energy Conversion',
-          explanationAr: 'تستهلك المروحة الطاقة الكهربائية من المقبس لتحريك ريشها وتحويلها إلى طاقة حركية.',
-          explanationEn: 'The fan converts electrical input into mechanical kinetic rotation.',
+          conceptTestedAr: 'تحولات الطاقة في الأجهزة الكهروميكانيكية',
+          conceptTestedEn: 'Device Energy Transformation',
+          explanationAr: 'تستهلك المروحة الطاقة الكهربائية من القابس وتحولها عبر محركها الكهرومغناطيسي إلى طاقة حركية تدير شفرات الهواء.',
+          explanationEn: 'Electric fans convert incoming electrical power into rotational kinetic movement of the blades.',
+          difficulty: 'easy'
+        },
+        {
+          id: 'qsc4-4',
+          textAr: 'أي من الأجسام التالية يمتلك أكبر مقدار من "الطاقة الحركية"؟',
+          textEn: 'Which object possesses the greatest Kinetic Energy?',
+          optionsAr: [
+            'شاحنة ضخمة تسير بسرعة 100 كم/ساعة',
+            'دراجة هوائية خفيفة تسير بسرعة 10 كم/ساعة',
+            'سيارة متوقفة تماماً في موقف السيارات',
+            'شخص يمشي ببطء على قدميه'
+          ],
+          optionsEn: [
+            'A massive heavy truck cruising at 100 km/h',
+            'A lightweight bicycle riding at 10 km/h',
+            'A stationary parked car',
+            'A person walking slowly'
+          ],
+          correctIndex: 0,
+          conceptTestedAr: 'العوامل المؤثرة في مقدار الطاقة الحركية (الكتلة والسرعة)',
+          conceptTestedEn: 'Kinetic Energy Dependence on Mass and Speed (E_k = 1/2 m v^2)',
+          explanationAr: 'الطاقة الحركية E_k = ½ m v² تعتمد على كتلة الجسم ومربع سرعته؛ والشاحنة تمتلك أكبر كتلة وسرعة عالية مما يمنحها طاقة حركية هائلة.',
+          explanationEn: 'Kinetic energy scales with mass and velocity squared; the massive high-speed truck has the maximum kinetic energy.',
           difficulty: 'easy'
         }
       ]

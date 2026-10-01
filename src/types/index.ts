@@ -232,6 +232,12 @@ export interface LectureDiagram {
     | 'arabic_parts_of_speech'
     | 'arabic_sentence_structure'
     | 'rhetoric_simile_map'
+    | 'rhetoric_metaphor_map'
+    | 'rhetoric_badi_map'
+    | 'literary_criticism_map'
+    | 'plant_animal_cell'
+    | 'forces_motion_vector'
+    | 'energy_transformation_chain'
     | 'polynomial_curve' 
     | 'apparatus' 
     | 'custom_svg';
