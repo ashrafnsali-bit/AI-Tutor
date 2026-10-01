@@ -17,7 +17,8 @@ import {
   X,
   BarChart2,
   ChevronDown,
-  BookOpen
+  BookOpen,
+  Mail
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -33,6 +34,7 @@ interface NavbarProps {
   onToggleLanguage: () => void;
   onOpenProgress?: () => void;
   onOpenAdmin?: () => void;
+  onOpenContact?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -47,7 +49,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLogout,
   onToggleLanguage,
   onOpenProgress,
-  onOpenAdmin
+  onOpenAdmin,
+  onOpenContact
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -264,6 +267,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <span className="item-subtitle">{isEn ? 'Parent dashboard & limits' : 'لوحة متابعة ولي الأمر'}</span>
                     </div>
                   </button>
+
+                  {onOpenContact && (
+                    <button 
+                      type="button" 
+                      className="dropdown-item"
+                      onClick={() => { setIsDropdownOpen(false); onOpenContact(); }}
+                    >
+                      <Mail size={16} className="item-icon item-icon-contact text-cyan-400" />
+                      <div className="item-text">
+                        <span className="item-title">{isEn ? 'Contact Us / Feedback' : 'تواصل معنا والملاحظات'}</span>
+                        <span className="item-subtitle">{isEn ? 'Send email feedback' : 'مراسلتنا عبر الإيميل'}</span>
+                      </div>
+                    </button>
+                  )}
                 </div>
 
                 <div className="dropdown-divider"></div>
@@ -410,6 +427,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Users size={18} />
                 <span>{isEn ? 'Admin' : 'لوحة المشرف'}</span>
+              </button>
+            )}
+
+            {onOpenContact && (
+              <button
+                type="button"
+                className="btn-mobile-tool btn-mobile-contact"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenContact(); }}
+              >
+                <Mail size={18} className="text-cyan-400" />
+                <span>{isEn ? 'Contact Us / Feedback' : 'تواصل معنا والملاحظات'}</span>
               </button>
             )}
           </div>

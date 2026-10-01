@@ -28,6 +28,7 @@ import { AuthModal } from './components/AuthModal';
 import { GenerateLectureModal } from './components/GenerateLectureModal';
 import { ProgressDashboard } from './components/ProgressDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
+import { ContactModal, FloatingContactButton } from './components/ContactModal';
 
 export function App() {
   // Load saved state or default with consistency checks
@@ -115,6 +116,7 @@ export function App() {
   const [isGenerateLectureOpen, setIsGenerateLectureOpen] = useState(false);
   const [isProgressOpen, setIsProgressOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const [geoNotice, setGeoNotice] = useState<{ show: boolean; countryName: string; flag: string; city?: string } | null>(null);
 
   // User session state
@@ -368,6 +370,7 @@ export function App() {
         onToggleLanguage={handleToggleLanguage}
         onOpenProgress={() => setIsProgressOpen(true)}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenContact={() => setIsContactOpen(true)}
       />
 
       {/* Dynamic Geolocation Country Notification Banner */}
@@ -530,6 +533,20 @@ export function App() {
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         language={profile.language}
+      />
+
+      {/* Floating Always-Visible Contact Us Button */}
+      <FloatingContactButton
+        onClick={() => setIsContactOpen(true)}
+        language={profile.language}
+      />
+
+      {/* Interactive Contact Us & Email Feedback Modal */}
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        language={profile.language}
+        currentLecture={activeLecture}
       />
     </div>
   );
