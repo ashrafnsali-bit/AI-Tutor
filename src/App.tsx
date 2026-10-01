@@ -30,8 +30,12 @@ import { ProgressDashboard } from './components/ProgressDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
 import { ContactModal, FloatingContactButton } from './components/ContactModal';
 import { WelcomeOnboardingModal } from './components/WelcomeOnboardingModal';
+import { PreparatoryLandingPage } from './components/PreparatoryLandingPage';
 
 export function App() {
+  // Main view state: 'landing' (Preparatory Hub) | 'workspace' (Active Lectures)
+  const [currentView, setCurrentView] = useState<'landing' | 'workspace'>('landing');
+
   // Load saved state or default with consistency checks
   const [profile, setProfile] = useState<StudentProfile>(() => {
     const saved = localStorage.getItem('TEACHER_AI_STUDENT_PROFILE');
@@ -351,111 +355,135 @@ export function App() {
       const updated = [...prev, formattedLec];
       return updated;
     });
-    setSelectedLectureId(formattedLec.id);
-
-    // Persist in shared community curriculum store so all visitors and students in the same country/subject/grade benefit
+       // Persist in shared community curriculum store so all visitors and students in the same country/subject/grade benefit
     saveSharedCurriculumLecture(formattedLec, profile.country, profile.subject, profile.gradeLevel).catch((err) => {
       console.warn('Could not save to shared curriculum store:', err);
     });
   };
+
+  const handleSelectCurriculumAndStart = (updatedProfile: StudentProfile) => {
+    handleSaveProfile(updatedProfile);
+    setCurrentView('workspace');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="app-root">
-      {/* Top Navigation */}
-      <Navbar
-        profile={profile}
-        hasApiKey={!!apiKey}
-        isLoggedIn={isLoggedIn}
-        onOpenProfile={() => setIsProfileOpen(true)}
-        onOpenApiKey={() => setIsApiKeyOpen(true)}
-        onOpenParental={() => setIsParentalOpen(true)}
-        onOpenTutor={() => setIsChatOpen(true)}
-        onOpenAuth={() => setIsAuthOpen(true)}
-        onLogout={handleLogout}
-        onToggleLanguage={handleToggleLanguage}
-        onOpenProgress={() => setIsProgressOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
-        onOpenContact={() => setIsContactOpen(true)}
-        onOpenOnboarding={() => setIsOnboardingOpen(true)}
-      />
+      {/* ═══ VIEW 1: PREPARATORY WELCOME & CURRICULUM SELECTION HUB ═══ */}
+      {currentView === 'landing' ? (
+        <PreparatoryLandingPage
+          profile={profile}
+          hasApiKey={!!apiKey}
+          isLoggedIn={isLoggedIn}
+          onSelectCurriculumAndStart={handleSelectCurriculumAndStart}
+          onOpenAuth={() => setIsAuthOpen(true)}
+          onOpenAdmin={() => setIsAdminOpen(true)}
+          onOpenApiKey={() => setIsApiKeyOpen(true)}
+          onOpenContact={() => setIsContactOpen(true)}
+          onToggleLanguage={handleToggleLanguage}
+        />
+      ) : (
+        /* ═══ VIEW 2: ACTIVE LECTURES & SOCRATIC TUTOR WORKSPACE ═══ */
+        <>
+          {/* Top Navigation */}
+          <Navbar
+            profile={profile}
+            hasApiKey={!!apiKey}
+            isLoggedIn={isLoggedIn}
+            onOpenProfile={() => setIsProfileOpen(true)}
+            onOpenApiKey={() => setIsApiKeyOpen(true)}
+            onOpenParental={() => setIsParentalOpen(true)}
+            onOpenTutor={() => setIsChatOpen(true)}
+            onOpenAuth={() => setIsAuthOpen(true)}
+            onLogout={handleLogout}
+            onToggleLanguage={handleToggleLanguage}
+            onOpenProgress={() => setIsProgressOpen(true)}
+            onOpenAdmin={() => setIsAdminOpen(true)}
+            onOpenContact={() => setIsContactOpen(true)}
+            onOpenOnboarding={() => setIsOnboardingOpen(true)}
+            onReturnHome={() => setCurrentView('landing')}
+          />
 
-      {/* Dynamic Geolocation Country Notification Banner */}
-      {geoNotice && (
-        <div className="geo-location-notification-banner" dir={profile.language === 'en' ? 'ltr' : 'rtl'}>
-          <div className="gln-content">
-            <span className="gln-flag">{geoNotice.flag}</span>
-            <span className="gln-text">
-              {profile.language === 'en'
-                ? `📍 Detected location (${geoNotice.city || geoNotice.countryName}): National curriculum automatically adapted to ${geoNotice.countryName} official standards.`
-                : `📍 تم اكتشاف موقعك الجغرافي (${geoNotice.city || geoNotice.countryName}): تم ضبط المنهج الوطني تلقائياً وفق المعايير الرسمية لـ ${geoNotice.countryName}.`}
-            </span>
+          {/* Dynamic Geolocation Country Notification Banner */}
+          {geoNotice && (
+            <div className="geo-location-notification-banner" dir={profile.language === 'en' ? 'ltr' : 'rtl'}>
+              <div className="gln-content">
+                <span className="gln-flag">{geoNotice.flag}</span>
+                <span className="gln-text">
+                  {profile.language === 'en'
+                    ? `📍 Detected location (${geoNotice.city || geoNotice.countryName}): National curriculum automatically adapted to ${geoNotice.countryName} official standards.`
+                    : `📍 تم اكتشاف موقعك الجغرافي (${geoNotice.city || geoNotice.countryName}): تم ضبط المنهج الوطني تلقائياً وفق المعايير الرسمية لـ ${geoNotice.countryName}.`}
+                </span>
+                <button
+                  type="button"
+                  className="gln-btn-manage"
+                  onClick={() => { setGeoNotice(null); setIsProfileOpen(true); }}
+                >
+                  {profile.language === 'en' ? 'Customize' : 'تخصيص المسار'}
+                </button>
+                <button
+                  type="button"
+                  className="gln-btn-close"
+                  onClick={() => setGeoNotice(null)}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Mobile Learning Hub Segmented Switcher */}
+          <div className="mobile-workspace-tabs mobile-only">
             <button
               type="button"
-              className="gln-btn-manage"
-              onClick={() => { setGeoNotice(null); setIsProfileOpen(true); }}
+              className={`mobile-tab-btn ${mobileTab === 'lecture' ? 'tab-active' : ''}`}
+              onClick={() => setMobileTab('lecture')}
             >
-              {profile.language === 'en' ? 'Customize' : 'تخصيص المسار'}
+              <BookOpen size={16} />
+              <span>{profile.language === 'en' ? 'Active Lecture' : 'المحاضرة والشرح'}</span>
             </button>
             <button
               type="button"
-              className="gln-btn-close"
-              onClick={() => setGeoNotice(null)}
+              className={`mobile-tab-btn ${mobileTab === 'roadmap' ? 'tab-active' : ''}`}
+              onClick={() => setMobileTab('roadmap')}
             >
-              ✕
+              <Map size={16} />
+              <span>{profile.language === 'en' ? 'Course Roadmap' : 'خارطة المنهج'}</span>
             </button>
           </div>
-        </div>
+
+          {/* Main Learning Hub Grid */}
+          <div className={`learning-workspace mobile-view-${mobileTab}`}>
+            {/* Sidebar Roadmap with Locked Gates */}
+            <LectureRoadmap
+              lectures={lectures}
+              selectedLectureId={selectedLectureId}
+              lang={profile.language}
+              profile={profile}
+              onGenerateLecture={() => setIsGenerateLectureOpen(true)}
+              onSelectLecture={(id) => {
+                setSelectedLectureId(id);
+                setMobileTab('lecture');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+
+            {/* Active Lecture Learning Viewer */}
+            <LectureViewer
+              lecture={activeLecture}
+              lang={profile.language}
+              profile={profile}
+              onStartAssessment={() => setIsAssessmentOpen(true)}
+              onOpenTutor={() => setIsChatOpen(true)}
+              onNextLecture={() => {
+                handleNextLecture();
+                setMobileTab('lecture');
+              }}
+              hasNextUnlocked={hasNextUnlocked}
+            />
+          </div>
+        </>
       )}
-
-      {/* Mobile Learning Hub Segmented Switcher */}
-      <div className="mobile-workspace-tabs mobile-only">
-        <button
-          type="button"
-          className={`mobile-tab-btn ${mobileTab === 'lecture' ? 'tab-active' : ''}`}
-          onClick={() => setMobileTab('lecture')}
-        >
-          <BookOpen size={16} />
-          <span>{profile.language === 'en' ? 'Active Lecture' : 'المحاضرة والشرح'}</span>
-        </button>
-        <button
-          type="button"
-          className={`mobile-tab-btn ${mobileTab === 'roadmap' ? 'tab-active' : ''}`}
-          onClick={() => setMobileTab('roadmap')}
-        >
-          <Map size={16} />
-          <span>{profile.language === 'en' ? 'Course Roadmap' : 'خارطة المنهج'}</span>
-        </button>
-      </div>
-
-      {/* Main Learning Hub Grid */}
-      <div className={`learning-workspace mobile-view-${mobileTab}`}>
-        {/* Sidebar Roadmap with Locked Gates */}
-        <LectureRoadmap
-          lectures={lectures}
-          selectedLectureId={selectedLectureId}
-          lang={profile.language}
-          profile={profile}
-          onGenerateLecture={() => setIsGenerateLectureOpen(true)}
-          onSelectLecture={(id) => {
-            setSelectedLectureId(id);
-            setMobileTab('lecture');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
-
-        {/* Active Lecture Learning Viewer */}
-        <LectureViewer
-          lecture={activeLecture}
-          lang={profile.language}
-          profile={profile}
-          onStartAssessment={() => setIsAssessmentOpen(true)}
-          onOpenTutor={() => setIsChatOpen(true)}
-          onNextLecture={() => {
-            handleNextLecture();
-            setMobileTab('lecture');
-          }}
-          hasNextUnlocked={hasNextUnlocked}
-        />
-      </div>
 
       {/* Socratic Chat Drawer */}
       <SocraticChat

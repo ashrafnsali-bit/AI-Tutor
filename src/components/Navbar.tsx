@@ -37,6 +37,7 @@ interface NavbarProps {
   onOpenAdmin?: () => void;
   onOpenContact?: () => void;
   onOpenOnboarding?: () => void;
+  onReturnHome?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -53,7 +54,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenProgress,
   onOpenAdmin,
   onOpenContact,
-  onOpenOnboarding
+  onOpenOnboarding,
+  onReturnHome
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -89,7 +91,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="site-header">
       <div className="header-container">
         {/* 1. Brand Section */}
-        <div className="brand-group" onClick={onOpenProfile} style={{ cursor: 'pointer' }} title={t.brandSubtitle}>
+        <div 
+          className="brand-group" 
+          onClick={onReturnHome || onOpenProfile} 
+          style={{ cursor: 'pointer' }} 
+          title={isEn ? "Return to Learning Preparation Hub & Switch Subject" : "العودة للصفحة التحضيرية واختيار منهج أو مادة أخرى"}
+        >
           <div className="brand-icon-wrapper">
             <GraduationCap className="brand-icon" size={24} />
             <span className="brand-pulse"></span>
