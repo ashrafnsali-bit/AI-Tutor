@@ -353,13 +353,14 @@ export function App() {
       if (sanitized.specialization === 'GENERAL' && sanitized.gradeLevel !== 'G10') sanitized.specialization = 'STEM';
     }
 
-    if (sanitized.subject !== profile.subject || sanitized.gradeLevel !== profile.gradeLevel || sanitized.country !== profile.country) {
-      const freshLecs = loadSubjectLectures(sanitized.subject, sanitized.country, sanitized.gradeLevel);
-      setLectures(freshLecs);
-      const newLecId = freshLecs[0]?.id || '';
-      setSelectedLectureId(newLecId);
-      localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', newLecId);
-    }
+    const freshLecs = loadSubjectLectures(sanitized.subject, sanitized.country, sanitized.gradeLevel);
+    setLectures(freshLecs);
+    const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
+    const validSaved = freshLecs.find((l) => l.id === savedLectureId && !l.isLocked);
+    const chosenLecId = validSaved ? validSaved.id : freshLecs[0]?.id || '';
+    setSelectedLectureId(chosenLecId);
+    localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', chosenLecId);
+
     setProfile(sanitized);
     updateUserAccount(sanitized.id, sanitized).catch(() => {});
   };
