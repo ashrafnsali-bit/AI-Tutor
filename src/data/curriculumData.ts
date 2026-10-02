@@ -10,6 +10,7 @@ import {
 } from './primaryCurriculumData';
 import { MIDDLE_MATH_LECTURES } from './middleMathCurriculumData';
 import { MIDDLE_MATH_G8_LECTURES } from './middleMath8CurriculumData';
+import { MIDDLE_MATH_G9_LECTURES } from './middleMath9CurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
@@ -22,6 +23,7 @@ export {
   ISLAMIC_STUDIES_LECTURES,
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
+  MIDDLE_MATH_G9_LECTURES,
   MIDDLE_COMPUTER_SCIENCE_LECTURES,
   MIDDLE_COMPUTER_SCIENCE_G8_LECTURES,
   MIDDLE_SCIENCE_G8_LECTURES,
@@ -6645,7 +6647,10 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     if (gradeLevel === 'G8') {
       return MIDDLE_MATH_G8_LECTURES;
     }
-    if (gradeLevel && ['G7', 'G9'].includes(gradeLevel)) {
+    if (gradeLevel === 'G9') {
+      return MIDDLE_MATH_G9_LECTURES;
+    }
+    if (gradeLevel === 'G7') {
       return MIDDLE_MATH_LECTURES;
     }
     if (gradeLevel && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) {
