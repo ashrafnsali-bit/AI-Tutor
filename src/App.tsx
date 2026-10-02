@@ -33,8 +33,17 @@ import { WelcomeOnboardingModal } from './components/WelcomeOnboardingModal';
 import { PreparatoryLandingPage } from './components/PreparatoryLandingPage';
 
 export function App() {
-  // Main view state: 'landing' (Preparatory Hub) | 'workspace' (Active Lectures)
-  const [currentView, setCurrentView] = useState<'landing' | 'workspace'>('landing');
+  // Check if returning registered student or existing learning session:
+  // A registered user (TEACHER_AI_ACTIVE_USER) or a student who has launched/studied in a session (TEACHER_AI_HAS_STUDIED)
+  // resumes directly in their workspace without seeing the preparatory landing page.
+  const [currentView, setCurrentView] = useState<'landing' | 'workspace'>(() => {
+    const activeUser = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+    const hasStudied = localStorage.getItem('TEACHER_AI_HAS_STUDIED');
+    if (activeUser || hasStudied === 'true') {
+      return 'workspace';
+    }
+    return 'landing';
+  });
 
   // Load saved state or default with consistency checks
   const [profile, setProfile] = useState<StudentProfile>(() => {
@@ -103,7 +112,11 @@ export function App() {
   });
 
   const [selectedLectureId, setSelectedLectureId] = useState<string>(() => {
+    const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
     const lecs = loadSubjectLectures(profile.subject);
+    if (savedLectureId && lecs.some(l => l.id === savedLectureId && !l.isLocked)) {
+      return savedLectureId;
+    }
     return lecs[0]?.id || 'phys-1';
   });
 
@@ -123,7 +136,10 @@ export function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(() => {
-    return !localStorage.getItem('TEACHER_AI_ONBOARDING_SEEN');
+    const seen = localStorage.getItem('TEACHER_AI_ONBOARDING_SEEN');
+    const activeUser = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+    const hasStudied = localStorage.getItem('TEACHER_AI_HAS_STUDIED');
+    return !seen && !activeUser && hasStudied !== 'true';
   });
   const [geoNotice, setGeoNotice] = useState<{ show: boolean; countryName: string; flag: string; city?: string } | null>(null);
 
@@ -165,15 +181,25 @@ export function App() {
       if (user) {
         setIsLoggedIn(true);
         setProfile(user);
+        setCurrentView('workspace');
         loadUserSubjectLectures(user.id, user.subject).then((savedLecs) => {
           if (savedLecs && savedLecs.length > 0) {
             setLectures(savedLecs);
-            setSelectedLectureId(savedLecs[0]?.id || '');
+            const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
+            const matchingLec = savedLecs.find(l => l.id === savedLectureId && !l.isLocked);
+            setSelectedLectureId(matchingLec ? matchingLec.id : savedLecs[0]?.id || '');
           }
         });
       }
     });
   }, []);
+
+  // Save last accessed lecture ID and learning session flag
+  useEffect(() => {
+    if (selectedLectureId) {
+      localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', selectedLectureId);
+    }
+  }, [selectedLectureId]);
 
   // Sync profile to local storage & database
   useEffect(() => {
@@ -255,6 +281,8 @@ export function App() {
   const handleNextLecture = () => {
     if (nextLecture && !nextLecture.isLocked) {
       setSelectedLectureId(nextLecture.id);
+      localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', nextLecture.id);
+      localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -266,6 +294,8 @@ export function App() {
 
   const handlePurgeData = () => {
     localStorage.removeItem('TEACHER_AI_STUDENT_PROFILE');
+    localStorage.removeItem('TEACHER_AI_HAS_STUDIED');
+    localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
     localStorage.removeItem('TEACHER_AI_LECTURES');
     localStorage.removeItem('TEACHER_AI_LECTURES_MATH');
     localStorage.removeItem('TEACHER_AI_LECTURES_PHYSICS');
@@ -312,7 +342,9 @@ export function App() {
     if (sanitized.subject !== profile.subject) {
       const freshLecs = loadSubjectLectures(sanitized.subject);
       setLectures(freshLecs);
-      setSelectedLectureId(freshLecs[0]?.id || '');
+      const newLecId = freshLecs[0]?.id || '';
+      setSelectedLectureId(newLecId);
+      localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', newLecId);
     }
     setProfile(sanitized);
     updateUserAccount(sanitized.id, sanitized).catch(() => {});
@@ -324,21 +356,31 @@ export function App() {
   const handleAuthSuccess = async (user: UserAccount) => {
     setIsLoggedIn(true);
     setProfile(user);
+    localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
+    localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
     const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
     const effectiveLecs = (dbLecs && dbLecs.length > 0) ? dbLecs : loadSubjectLectures(user.subject);
     setLectures(effectiveLecs);
-    setSelectedLectureId(effectiveLecs[0]?.id || '');
+    const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
+    const matchingLec = effectiveLecs.find(l => l.id === savedLectureId && !l.isLocked);
+    const chosenId = matchingLec ? matchingLec.id : effectiveLecs[0]?.id || '';
+    setSelectedLectureId(chosenId);
+    localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', chosenId);
+    setCurrentView('workspace');
     setIsAuthOpen(false);
   };
 
   const handleLogout = async () => {
     await logoutUserAccount();
     setIsLoggedIn(false);
+    localStorage.removeItem('TEACHER_AI_HAS_STUDIED');
+    localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
     const freshProfile = INITIAL_STUDENT_PROFILE;
     setProfile(freshProfile);
     const freshLecs = loadSubjectLectures(freshProfile.subject);
     setLectures(freshLecs);
     setSelectedLectureId(freshLecs[0]?.id || '');
+    setCurrentView('landing');
   };
 
   // Handle a newly AI-generated curriculum lecture added to roadmap
@@ -355,7 +397,7 @@ export function App() {
       const updated = [...prev, formattedLec];
       return updated;
     });
-       // Persist in shared community curriculum store so all visitors and students in the same country/subject/grade benefit
+    // Persist in shared community curriculum store so all visitors and students in the same country/subject/grade benefit
     saveSharedCurriculumLecture(formattedLec, profile.country, profile.subject, profile.gradeLevel).catch((err) => {
       console.warn('Could not save to shared curriculum store:', err);
     });
@@ -363,6 +405,8 @@ export function App() {
 
   const handleSelectCurriculumAndStart = (updatedProfile: StudentProfile) => {
     handleSaveProfile(updatedProfile);
+    localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
+    localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
     setCurrentView('workspace');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
