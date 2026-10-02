@@ -221,18 +221,23 @@ h4 {
 
 /* 2. Center Info Pill: Active Academic Track & Score */
 .header-center-pill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
   gap: 0.65rem;
-  padding: 0.35rem 0.9rem;
+  padding: 0.35rem 0.95rem;
   background: rgba(20, 29, 47, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 9999px;
   cursor: pointer;
   transition: all var(--transition-fast);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: #e2e8f0;
+  height: 38px;
+  max-height: 38px;
+  box-sizing: border-box;
 }
 
 .header-center-pill:hover {

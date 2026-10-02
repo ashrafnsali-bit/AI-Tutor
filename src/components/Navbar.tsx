@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { getCountryInfo, getNationalSubjectLabel } from '../data/curriculumCountries';
+import { getCountryInfo } from '../data/curriculumCountries';
 import { 
   GraduationCap, 
   Key, 
@@ -113,11 +113,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="header-center-pill desktop-only" onClick={onOpenProfile} title={t.editProfileTooltip} style={{ cursor: 'pointer' }}>
           <span className="pill-country-badge">
             <span className="pill-flag">{countryInfo.flag}</span>
-            <span className="pill-country-name">{isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
+            <span className="pill-country-name">{isEn ? countryInfo.nameEn : (profile.country === 'EG' ? 'مصر' : (profile.country === 'SA' ? 'السعودية' : countryInfo.nameAr))}</span>
           </span>
           <span className="pill-divider">•</span>
           <span className="pill-academic-track" title={`${stageLabel} - ${gradeLabel}`}>
-            {getNationalSubjectLabel(profile.subject, profile.country, profile.gradeLevel, profile.language)} • {gradeLabel}
+            {stageLabel}
           </span>
           <span className="pill-divider">•</span>
           <div className="pill-score-badge" title={t.masteryPointsTooltip}>
