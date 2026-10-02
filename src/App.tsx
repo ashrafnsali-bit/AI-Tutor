@@ -370,23 +370,6 @@ export function App() {
     updateUserAccount(sanitized.id, sanitized).catch(() => {});
   };
 
-  const handleSwitchSubject = (newSubject: Subject) => {
-    let nextSpec = profile.specialization;
-    if (newSubject === 'ARABIC_LIT') {
-      nextSpec = 'HUMANITIES';
-    } else if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(newSubject)) {
-      if (nextSpec === 'HUMANITIES' || nextSpec === 'GENERAL') {
-        nextSpec = 'STEM';
-      }
-    }
-    const updated: StudentProfile = {
-      ...profile,
-      subject: newSubject,
-      specialization: nextSpec
-    };
-    handleSaveProfile(updated);
-  };
-
   // Mobile Tab view: 'lecture' | 'roadmap'
   const [mobileTab, setMobileTab] = useState<'lecture' | 'roadmap'>('lecture');
 
@@ -489,7 +472,6 @@ export function App() {
             onOpenContact={() => setIsContactOpen(true)}
             onOpenOnboarding={() => setIsOnboardingOpen(true)}
             onReturnHome={() => setCurrentView('landing')}
-            onSwitchSubject={handleSwitchSubject}
           />
 
           {/* Dynamic Geolocation Country Notification Banner */}
@@ -549,7 +531,6 @@ export function App() {
               lang={profile.language}
               profile={profile}
               onGenerateLecture={() => setIsGenerateLectureOpen(true)}
-              onSwitchSubject={handleSwitchSubject}
               onOpenProfile={() => setIsProfileOpen(true)}
               onSelectLecture={(id) => {
                 setSelectedLectureId(id);

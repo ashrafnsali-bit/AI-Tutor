@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Language, Lecture, StudentProfile, Subject } from '../types';
+import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
 import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock } from 'lucide-react';
@@ -11,7 +11,6 @@ interface LectureRoadmapProps {
   profile: StudentProfile;
   onSelectLecture: (lectureId: string) => void;
   onGenerateLecture?: () => void;
-  onSwitchSubject?: (subject: Subject) => void;
   onOpenProfile?: () => void;
 }
 
@@ -22,7 +21,6 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   profile,
   onSelectLecture,
   onGenerateLecture,
-  onSwitchSubject,
   onOpenProfile
 }) => {
   const t = getTranslations(lang);
@@ -45,13 +43,6 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const dynamicCourseName = (isPrimarySchool || isMiddleSchool)
     ? `${courseSubject} • ${courseGrade}`
     : `${courseSubject} • ${courseGrade} (${courseTrack})`;
-
-  // Available subjects based on grade level
-  const availableSubjects: Subject[] = isPrimarySchool
-    ? ['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES']
-    : isMiddleSchool
-    ? ['GENERAL_SCIENCE', 'MATH', 'ARABIC_LANG', 'COMPUTER_SCIENCE']
-    : ['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE', 'ARABIC_LIT'];
 
   return (
     <aside className="roadmap-sidebar">
@@ -77,45 +68,13 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
                     borderRadius: '6px',
                     cursor: 'pointer'
                   }}
-                  title={isEn ? "Change Grade or Track" : "تغيير الصف أو المسار"}
+                  title={isEn ? "Edit Profile & Subject" : "تعديل المادة والصف"}
                 >
-                  {courseGrade} ⚙️
+                  ⚙️ {isEn ? "Edit" : "تعديل"}
                 </button>
               )}
             </div>
             <span className="roadmap-course-name">{dynamicCourseName}</span>
-
-            {/* Quick Interactive Subject Switcher */}
-            {onSwitchSubject && (
-              <div style={{ marginTop: '8px', position: 'relative' }}>
-                <select
-                  value={subjectKey}
-                  onChange={(e) => onSwitchSubject(e.target.value as Subject)}
-                  style={{
-                    width: '100%',
-                    padding: '6px 10px',
-                    paddingRight: isEn ? '24px' : '10px',
-                    paddingLeft: isEn ? '10px' : '24px',
-                    background: 'rgba(15, 23, 42, 0.85)',
-                    border: '1px solid rgba(56, 189, 248, 0.4)',
-                    borderRadius: '8px',
-                    color: '#f8fafc',
-                    fontSize: '0.82rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    outline: 'none',
-                    appearance: 'auto'
-                  }}
-                  title={isEn ? "Switch to another subject" : "التبديل إلى مادة أخرى"}
-                >
-                  {availableSubjects.map((s) => (
-                    <option key={s} value={s} style={{ background: '#0f172a', color: '#fff' }}>
-                      📚 {getNationalSubjectLabel(s, countryKey, gradeKey, lang)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
           </div>
         </div>
 
