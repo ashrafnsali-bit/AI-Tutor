@@ -106,14 +106,14 @@ export function App() {
     return INITIAL_STUDENT_PROFILE;
   });
 
-  // Hydrate lectures corresponding to student's enrolled subject
+  // Hydrate lectures corresponding to student's enrolled subject and grade
   const [lectures, setLectures] = useState<Lecture[]>(() => {
-    return loadSubjectLectures(profile.subject);
+    return loadSubjectLectures(profile.subject, profile.country, profile.gradeLevel);
   });
 
   const [selectedLectureId, setSelectedLectureId] = useState<string>(() => {
     const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
-    const lecs = loadSubjectLectures(profile.subject);
+    const lecs = loadSubjectLectures(profile.subject, profile.country, profile.gradeLevel);
     if (savedLectureId && lecs.some(l => l.id === savedLectureId && !l.isLocked)) {
       return savedLectureId;
     }
@@ -209,9 +209,9 @@ export function App() {
 
   // Sync lectures progress per subject to local storage & database
   useEffect(() => {
-    saveSubjectLectures(profile.subject, lectures);
+    saveSubjectLectures(profile.subject, lectures, profile.gradeLevel);
     saveUserSubjectLectures(profile.id, profile.subject, lectures).catch(() => {});
-  }, [profile.id, profile.subject, lectures]);
+  }, [profile.id, profile.subject, profile.gradeLevel, lectures]);
 
   // Adjust HTML dir and title when language changes
   useEffect(() => {
@@ -298,6 +298,12 @@ export function App() {
     localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
     localStorage.removeItem('TEACHER_AI_LECTURES');
     localStorage.removeItem('TEACHER_AI_LECTURES_MATH');
+    localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G7');
+    localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G8');
+    localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G9');
+    localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G10');
+    localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G11');
+    localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G12');
     localStorage.removeItem('TEACHER_AI_LECTURES_PHYSICS');
     localStorage.removeItem('TEACHER_AI_LECTURES_CHEMISTRY');
     localStorage.removeItem('TEACHER_AI_LECTURES_BIOLOGY');
@@ -305,7 +311,7 @@ export function App() {
     localStorage.removeItem('TEACHER_AI_LECTURES_ARABIC_LIT');
     const freshProfile = INITIAL_STUDENT_PROFILE;
     setProfile(freshProfile);
-    const freshLectures = loadSubjectLectures(freshProfile.subject);
+    const freshLectures = loadSubjectLectures(freshProfile.subject, freshProfile.country, freshProfile.gradeLevel);
     setLectures(freshLectures);
     setSelectedLectureId(freshLectures[0].id);
   };
@@ -339,8 +345,8 @@ export function App() {
       if (sanitized.specialization === 'GENERAL' && sanitized.gradeLevel !== 'G10') sanitized.specialization = 'STEM';
     }
 
-    if (sanitized.subject !== profile.subject) {
-      const freshLecs = loadSubjectLectures(sanitized.subject);
+    if (sanitized.subject !== profile.subject || sanitized.gradeLevel !== profile.gradeLevel || sanitized.country !== profile.country) {
+      const freshLecs = loadSubjectLectures(sanitized.subject, sanitized.country, sanitized.gradeLevel);
       setLectures(freshLecs);
       const newLecId = freshLecs[0]?.id || '';
       setSelectedLectureId(newLecId);
@@ -359,7 +365,7 @@ export function App() {
     localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
     localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
     const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
-    const effectiveLecs = (dbLecs && dbLecs.length > 0) ? dbLecs : loadSubjectLectures(user.subject);
+    const effectiveLecs = (dbLecs && dbLecs.length > 0) ? dbLecs : loadSubjectLectures(user.subject, user.country, user.gradeLevel);
     setLectures(effectiveLecs);
     const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
     const matchingLec = effectiveLecs.find(l => l.id === savedLectureId && !l.isLocked);
@@ -377,7 +383,7 @@ export function App() {
     localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
     const freshProfile = INITIAL_STUDENT_PROFILE;
     setProfile(freshProfile);
-    const freshLecs = loadSubjectLectures(freshProfile.subject);
+    const freshLecs = loadSubjectLectures(freshProfile.subject, freshProfile.country, freshProfile.gradeLevel);
     setLectures(freshLecs);
     setSelectedLectureId(freshLecs[0]?.id || '');
     setCurrentView('landing');

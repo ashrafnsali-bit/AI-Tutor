@@ -8,12 +8,14 @@ import {
   PRIMARY_SCIENCE_LECTURES,
   ISLAMIC_STUDIES_LECTURES
 } from './primaryCurriculumData';
+import { MIDDLE_MATH_LECTURES } from './middleMathCurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
   PRIMARY_ARABIC_LECTURES,
   PRIMARY_SCIENCE_LECTURES,
-  ISLAMIC_STUDIES_LECTURES
+  ISLAMIC_STUDIES_LECTURES,
+  MIDDLE_MATH_LECTURES
 };
 
 // ============================================================================
@@ -6628,16 +6630,25 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   GENERAL_SCIENCE: GENERAL_SCIENCE_LECTURES
 };
 
-export function getCurriculumForSubject(subject: Subject): Lecture[] {
+export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): Lecture[] {
+  if (subject === 'MATH') {
+    if (gradeLevel && ['G7', 'G8', 'G9'].includes(gradeLevel)) {
+      return MIDDLE_MATH_LECTURES;
+    }
+    if (gradeLevel && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) {
+      return PRIMARY_MATH_LECTURES;
+    }
+    return MATH_LECTURES; // High School STEM
+  }
   return SUBJECT_CURRICULA[subject] || MATH_LECTURES;
 }
 
 export function loadSubjectLectures(subject: Subject, country: string = 'SA', gradeLevel?: string): Lecture[] {
-  const masterCurriculum = getCurriculumForSubject(subject);
+  const masterCurriculum = getCurriculumForSubject(subject, gradeLevel);
   
   // Retrieve any community / AI-generated shared lectures for this subject and country
   const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel || ''}`;
-  const generalKey = `TEACHER_AI_SHARED_LECS_${subject}`;
+  const generalKey = `TEACHER_AI_SHARED_LECS_${subject}_${gradeLevel || ''}`;
   let sharedLecs: Lecture[] = [];
   try {
     const list1 = JSON.parse(localStorage.getItem(countryKey) || '[]') as Lecture[];
@@ -6659,7 +6670,7 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
     }
   });
 
-  const storageKey = `TEACHER_AI_LECTURES_${subject}`;
+  const storageKey = gradeLevel ? `TEACHER_AI_LECTURES_${subject}_${gradeLevel}` : `TEACHER_AI_LECTURES_${subject}`;
   const saved = localStorage.getItem(storageKey);
   if (saved) {
     try {
@@ -6694,8 +6705,8 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
   return combined;
 }
 
-export function saveSubjectLectures(subject: Subject, lectures: Lecture[]): void {
-  const storageKey = `TEACHER_AI_LECTURES_${subject}`;
+export function saveSubjectLectures(subject: Subject, lectures: Lecture[], gradeLevel?: string): void {
+  const storageKey = gradeLevel ? `TEACHER_AI_LECTURES_${subject}_${gradeLevel}` : `TEACHER_AI_LECTURES_${subject}`;
   localStorage.setItem(storageKey, JSON.stringify(lectures));
 }
 
