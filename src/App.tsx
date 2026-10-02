@@ -489,6 +489,7 @@ export function App() {
             onOpenContact={() => setIsContactOpen(true)}
             onOpenOnboarding={() => setIsOnboardingOpen(true)}
             onReturnHome={() => setCurrentView('landing')}
+            onSwitchSubject={handleSwitchSubject}
           />
 
           {/* Dynamic Geolocation Country Notification Banner */}

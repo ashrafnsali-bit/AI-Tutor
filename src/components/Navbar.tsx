@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { StudentProfile } from '../types';
+import type { StudentProfile, Subject } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { getCountryInfo } from '../data/curriculumCountries';
+import { getCountryInfo, getNationalSubjectLabel } from '../data/curriculumCountries';
 import { 
   GraduationCap, 
   Key, 
@@ -38,6 +38,7 @@ interface NavbarProps {
   onOpenContact?: () => void;
   onOpenOnboarding?: () => void;
   onReturnHome?: () => void;
+  onSwitchSubject?: (subject: Subject) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -55,7 +56,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAdmin,
   onOpenContact,
   onOpenOnboarding,
-  onReturnHome
+  onReturnHome,
+  onSwitchSubject
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -110,15 +112,54 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* 2. Center Info Pill: Active Academic Track & Score */}
-        <div className="header-center-pill desktop-only" onClick={onOpenProfile} title={t.editProfileTooltip}>
-          <span className="pill-country-badge">
+        <div className="header-center-pill desktop-only">
+          <span className="pill-country-badge" onClick={onOpenProfile} style={{ cursor: 'pointer' }} title={t.editProfileTooltip}>
             <span className="pill-flag">{countryInfo.flag}</span>
             <span className="pill-country-name">{isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
           </span>
           <span className="pill-divider">•</span>
-          <span className="pill-academic-track" title={`${stageLabel} - ${gradeLabel}`}>
-            {stageLabel}
+          <span className="pill-academic-track" onClick={onOpenProfile} style={{ cursor: 'pointer' }} title={`${stageLabel} - ${gradeLabel}`}>
+            {gradeLabel}
           </span>
+          <span className="pill-divider">•</span>
+
+          {/* Direct Subject Dropdown Selector in Header */}
+          {onSwitchSubject ? (
+            <select
+              value={profile.subject}
+              onChange={(e) => onSwitchSubject(e.target.value as Subject)}
+              onClick={(e) => e.stopPropagation()}
+              className="navbar-subject-select"
+              style={{
+                background: 'rgba(56, 189, 248, 0.15)',
+                border: '1px solid rgba(56, 189, 248, 0.45)',
+                color: '#38bdf8',
+                borderRadius: '8px',
+                padding: '2px 8px',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                outline: 'none'
+              }}
+              title={isEn ? "Switch Subject" : "تبديل المادة"}
+            >
+              {(isPrimarySchool
+                ? ['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES']
+                : isMiddleSchool
+                ? ['GENERAL_SCIENCE', 'MATH', 'ARABIC_LANG', 'COMPUTER_SCIENCE']
+                : ['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE', 'ARABIC_LIT']
+              ).map((s) => (
+                <option key={s} value={s} style={{ background: '#0f172a', color: '#fff' }}>
+                  {getNationalSubjectLabel(s as Subject, profile.country, profile.gradeLevel, profile.language)}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span className="pill-academic-track" onClick={onOpenProfile} style={{ cursor: 'pointer' }}>
+              {getNationalSubjectLabel(profile.subject, profile.country, profile.gradeLevel, profile.language)}
+            </span>
+          )}
+
           <span className="pill-divider">•</span>
           <div className="pill-score-badge" title={t.masteryPointsTooltip}>
             <Award size={13} className="pill-score-icon" />
