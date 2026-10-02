@@ -11,6 +11,7 @@ import {
 import { MIDDLE_MATH_LECTURES } from './middleMathCurriculumData';
 import { MIDDLE_MATH_G8_LECTURES } from './middleMath8CurriculumData';
 import { MIDDLE_MATH_G9_LECTURES } from './middleMath9CurriculumData';
+import { HIGH_MATH_G10_LECTURES } from './highMath10CurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
@@ -26,6 +27,7 @@ export {
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
+  HIGH_MATH_G10_LECTURES,
   MIDDLE_COMPUTER_SCIENCE_LECTURES,
   MIDDLE_COMPUTER_SCIENCE_G8_LECTURES,
   MIDDLE_SCIENCE_G8_LECTURES,
@@ -6648,6 +6650,9 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
 
 export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): Lecture[] {
   if (subject === 'MATH') {
+    if (gradeLevel === 'G10') {
+      return HIGH_MATH_G10_LECTURES;
+    }
     if (gradeLevel === 'G8') {
       return MIDDLE_MATH_G8_LECTURES;
     }
