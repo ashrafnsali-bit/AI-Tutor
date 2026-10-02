@@ -22,6 +22,7 @@ import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
 import { HIGH_CHEMISTRY_G10_LECTURES } from './highChemistry10CurriculumData';
 import { HIGH_CHEMISTRY_G11_LECTURES } from './highChemistry11CurriculumData';
+import { HIGH_CHEMISTRY_G12_LECTURES } from './highChemistry12CurriculumData';
 import { HIGH_BIO_G10_LECTURES } from './highBio10CurriculumData';
 import { HIGH_BIO_G11_LECTURES } from './highBio11CurriculumData';
 import { HIGH_PHYSICS_G11_LECTURES } from './highPhysics11CurriculumData';
@@ -46,6 +47,7 @@ export {
   MIDDLE_SCIENCE_G9_LECTURES,
   HIGH_CHEMISTRY_G10_LECTURES,
   HIGH_CHEMISTRY_G11_LECTURES,
+  HIGH_CHEMISTRY_G12_LECTURES,
   HIGH_BIO_G10_LECTURES,
   HIGH_BIO_G11_LECTURES,
   HIGH_PHYSICS_G11_LECTURES,
@@ -6720,13 +6722,16 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     return PHYSICS_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'CHEMISTRY') {
+    if (gradeLevel === 'G12') {
+      return HIGH_CHEMISTRY_G12_LECTURES;
+    }
     if (gradeLevel === 'G11') {
       return HIGH_CHEMISTRY_G11_LECTURES;
     }
     if (gradeLevel === 'G10') {
       return HIGH_CHEMISTRY_G10_LECTURES;
     }
-    return CHEMISTRY_LECTURES; // Grade 12 Advanced / STEM
+    return HIGH_CHEMISTRY_G12_LECTURES;
   }
   if (subject === 'BIOLOGY') {
     if (gradeLevel === 'G11') {
