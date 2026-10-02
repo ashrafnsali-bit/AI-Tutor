@@ -679,7 +679,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             <text x="385" y="249" textAnchor="middle" fill="#000" fontSize="12" fontWeight="bold">−</text>
 
             {/* Formula Callout */}
-            <rect x="180" y="15" width="240" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" />
+            <rect x="80" y="15" width="440" height="35" rx="10" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" strokeWidth="1.5" />
             <text x="300" y="38" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="900">العدد الكتلي A = p⁺ + n⁰ | العدد الذري Z = p⁺</text>
           </svg>
         );
@@ -723,9 +723,9 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             <circle cx="515" cy="180" r="12" fill="#fbbf24" />
             <text x="480" y="245" textAnchor="middle" fill="#94a3b8" fontSize="12">خلط فيزيائي يمكن فصله</text>
 
-            {/* Footer Summary */}
-            <rect x="120" y="275" width="360" height="34" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#64748b" />
-            <text x="300" y="297" textAnchor="middle" fill="#cbd5e1" fontSize="13" fontWeight="bold">المركب يتحد كيميائياً بنسب ثابتة، بينما المخلوط يُفصل بطرق فيزيائية</text>
+            {/* Footer Summary - Generous width pill with perfect text margins */}
+            <rect x="25" y="274" width="550" height="36" rx="18" fill="rgba(15, 23, 42, 0.9)" stroke="#64748b" strokeWidth="1.5" />
+            <text x="300" y="297" textAnchor="middle" fill="#cbd5e1" fontSize="12.5" fontWeight="bold">المركب يتحد كيميائياً بنسب ثابتة، بينما المخلوط يُفصل بطرق فيزيائية</text>
           </svg>
         );
 
