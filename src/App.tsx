@@ -183,11 +183,19 @@ export function App() {
         setProfile(user);
         setCurrentView('workspace');
         loadUserSubjectLectures(user.id, user.subject).then((savedLecs) => {
+          const freshLecs = loadSubjectLectures(user.subject, user.country, user.gradeLevel);
           if (savedLecs && savedLecs.length > 0) {
-            setLectures(savedLecs);
+            const reconciled = freshLecs.map((fl) => {
+              const found = savedLecs.find((s) => s.id === fl.id);
+              return found ? { ...fl, isLocked: found.isLocked, isCompleted: found.isCompleted, lastAttempt: found.lastAttempt } : fl;
+            });
+            setLectures(reconciled);
             const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
-            const matchingLec = savedLecs.find(l => l.id === savedLectureId && !l.isLocked);
-            setSelectedLectureId(matchingLec ? matchingLec.id : savedLecs[0]?.id || '');
+            const matchingLec = reconciled.find((l) => l.id === savedLectureId && !l.isLocked);
+            setSelectedLectureId(matchingLec ? matchingLec.id : reconciled[0]?.id || '');
+          } else {
+            setLectures(freshLecs);
+            setSelectedLectureId(freshLecs[0]?.id || '');
           }
         });
       }
@@ -365,7 +373,13 @@ export function App() {
     localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
     localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
     const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
-    const effectiveLecs = (dbLecs && dbLecs.length > 0) ? dbLecs : loadSubjectLectures(user.subject, user.country, user.gradeLevel);
+    const freshLecs = loadSubjectLectures(user.subject, user.country, user.gradeLevel);
+    const effectiveLecs = (dbLecs && dbLecs.length > 0)
+      ? freshLecs.map((fl) => {
+          const found = dbLecs.find((s) => s.id === fl.id);
+          return found ? { ...fl, isLocked: found.isLocked, isCompleted: found.isCompleted, lastAttempt: found.lastAttempt } : fl;
+        })
+      : freshLecs;
     setLectures(effectiveLecs);
     const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
     const matchingLec = effectiveLecs.find(l => l.id === savedLectureId && !l.isLocked);
