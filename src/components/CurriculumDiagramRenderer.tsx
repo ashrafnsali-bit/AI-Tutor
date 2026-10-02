@@ -690,7 +690,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             {/* 3 Categories: Element vs Compound vs Mixture */}
             {/* 1. Element Box (Pure Identical Atoms) */}
             <rect x="40" y="50" width="160" height="210" rx="12" fill="rgba(15, 23, 42, 0.7)" stroke="#38bdf8" strokeWidth="2" />
-            <text x="120" y="80" textAnchor="middle" fill="#38bdf8" fontSize="15" fontWeight="bold">عنصر نقي (Element)</text>
+            <text x="120" y="78" textAnchor="middle" fill="#38bdf8" fontSize="13.5" fontWeight="bold">عنصر نقي (Element)</text>
             {/* 6 identical blue atoms */}
             <circle cx="85" cy="120" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
             <circle cx="155" cy="120" r="16" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
@@ -701,7 +701,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 
             {/* 2. Compound Box (Chemically bonded H2O molecules) */}
             <rect x="220" y="50" width="160" height="210" rx="12" fill="rgba(15, 23, 42, 0.7)" stroke="#10b981" strokeWidth="2" />
-            <text x="300" y="80" textAnchor="middle" fill="#34d399" fontSize="15" fontWeight="bold">مركب كيميائي (Compound)</text>
+            <text x="300" y="78" textAnchor="middle" fill="#34d399" fontSize="13.5" fontWeight="bold">مركب (Compound)</text>
             {/* Molecule 1 H2O */}
             <circle cx="300" cy="125" r="16" fill="#ef4444" />
             <circle cx="282" cy="142" r="10" fill="#cbd5e1" />
@@ -714,7 +714,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 
             {/* 3. Mixture Box (Physical blend) */}
             <rect x="400" y="50" width="160" height="210" rx="12" fill="rgba(15, 23, 42, 0.7)" stroke="#f59e0b" strokeWidth="2" />
-            <text x="480" y="80" textAnchor="middle" fill="#fbbf24" fontSize="15" fontWeight="bold">مخلوط (Mixture)</text>
+            <text x="480" y="78" textAnchor="middle" fill="#fbbf24" fontSize="13.5" fontWeight="bold">مخلوط (Mixture)</text>
             {/* Mixed particles without bonding */}
             <circle cx="445" cy="120" r="12" fill="#0284c7" />
             <rect x="495" y="110" width="20" height="20" rx="4" fill="#a855f7" />

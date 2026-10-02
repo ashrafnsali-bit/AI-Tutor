@@ -5132,7 +5132,7 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
           captionAr: 'يوضح الرسم الفروق الجوهرية على المستوى الجزيئي: العنصر يتكون من ذرات متماثلة (مثل النحاس)، والمركب ينتج عن اتحاد ذرات مختلفة بروابط كيميائية بنسب ثابتة (مثل الماء H₂O)، بينما المخلوط هو مزيج فيزيائي بدون روابط كيميائية يمكن فصله بسهولة.',
           captionEn: 'Molecular comparison: Pure elements consist of identical atoms, compounds feature chemically bonded distinct atoms in fixed proportions (H₂O), and mixtures are physical blends separable by non-chemical means.',
           diagramType: 'matter_states_compound',
-          takeawayFormulaAr: 'الكثافة D = الكتلة m ÷ الحجم V | يطفو إذا D_جسم < D_سائل',
+          takeawayFormulaAr: 'قانون الكثافة: الكثافة = الكتلة ÷ الحجم (D = m / V) • شرط الطفو: كثافة الجسم < كثافة السائل',
           takeawayFormulaEn: 'Density D = m / V | Floats if D_object < D_fluid',
           keyLabels: [
             { tagAr: 'عنصر نقي (Element)', tagEn: 'Pure Element', descAr: 'ذرات متطابقة لا يمكن تجزئتها كيميائياً', descEn: 'Identical atoms indivisible by chemical means' },
