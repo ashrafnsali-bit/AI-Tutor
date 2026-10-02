@@ -89,10 +89,10 @@ export function App() {
           } else if (merged.subject === 'PRIMARY_MATH') {
             merged.subject = 'MATH';
           }
-          if (merged.subject === 'PHYSICS' && merged.specialization === 'HUMANITIES') {
-            merged.specialization = 'STEM';
-          } else if (merged.specialization === 'HUMANITIES' && merged.subject !== 'ARABIC_LIT') {
-            merged.subject = 'ARABIC_LIT';
+          if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(merged.subject)) {
+            if (merged.specialization === 'HUMANITIES') {
+              merged.specialization = 'STEM';
+            }
           }
           if (merged.specialization === 'GENERAL' && merged.gradeLevel !== 'G10') {
             merged.specialization = 'STEM';
@@ -350,6 +350,11 @@ export function App() {
       if (PRIMARY_SUBJS.includes(sanitized.subject) || sanitized.subject === 'ARABIC_LANG') sanitized.subject = 'ARABIC_LIT';
       if (['PRIMARY_SCIENCE', 'GENERAL_SCIENCE'].includes(sanitized.subject)) sanitized.subject = 'PHYSICS';
       if (sanitized.subject === 'PRIMARY_MATH') sanitized.subject = 'MATH';
+      if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(sanitized.subject)) {
+        if (sanitized.specialization === 'HUMANITIES') {
+          sanitized.specialization = 'STEM';
+        }
+      }
       if (sanitized.specialization === 'GENERAL' && sanitized.gradeLevel !== 'G10') sanitized.specialization = 'STEM';
     }
 
@@ -363,6 +368,23 @@ export function App() {
 
     setProfile(sanitized);
     updateUserAccount(sanitized.id, sanitized).catch(() => {});
+  };
+
+  const handleSwitchSubject = (newSubject: Subject) => {
+    let nextSpec = profile.specialization;
+    if (newSubject === 'ARABIC_LIT') {
+      nextSpec = 'HUMANITIES';
+    } else if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(newSubject)) {
+      if (nextSpec === 'HUMANITIES' || nextSpec === 'GENERAL') {
+        nextSpec = 'STEM';
+      }
+    }
+    const updated: StudentProfile = {
+      ...profile,
+      subject: newSubject,
+      specialization: nextSpec
+    };
+    handleSaveProfile(updated);
   };
 
   // Mobile Tab view: 'lecture' | 'roadmap'
@@ -526,6 +548,8 @@ export function App() {
               lang={profile.language}
               profile={profile}
               onGenerateLecture={() => setIsGenerateLectureOpen(true)}
+              onSwitchSubject={handleSwitchSubject}
+              onOpenProfile={() => setIsProfileOpen(true)}
               onSelectLecture={(id) => {
                 setSelectedLectureId(id);
                 setMobileTab('lecture');

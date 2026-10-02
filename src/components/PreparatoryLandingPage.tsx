@@ -275,7 +275,9 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       country: selectedCountry,
       gradeLevel: selectedGrade,
       educationTrack: selectedTrack,
-      specialization: (isPrimary || isMiddle) ? 'GENERAL' : selectedSpec,
+      specialization: (isPrimary || isMiddle) 
+        ? 'GENERAL' 
+        : (selectedSubject === 'ARABIC_LIT' ? 'HUMANITIES' : (selectedSubject === 'BIOLOGY' ? 'HEALTH' : (selectedSpec === 'HUMANITIES' ? 'STEM' : selectedSpec))),
       subject: selectedSubject,
       age: defaultAge
     };
@@ -635,7 +637,16 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
                   <div
                     key={subj.id}
                     className={`prep-subject-box ${isSelected ? 'subject-box-active' : ''}`}
-                    onClick={() => setSelectedSubject(subj.id)}
+                    onClick={() => {
+                      setSelectedSubject(subj.id);
+                      if (subj.id === 'ARABIC_LIT') {
+                        setSelectedSpec('HUMANITIES');
+                      } else if (subj.id === 'BIOLOGY') {
+                        setSelectedSpec('HEALTH');
+                      } else if (['PHYSICS', 'MATH', 'CHEMISTRY', 'COMPUTER_SCIENCE'].includes(subj.id)) {
+                        setSelectedSpec('STEM');
+                      }
+                    }}
                   >
                     <div className="psubj-icon" style={{ color: subj.color, borderColor: `${subj.color}40` }}>
                       {subj.icon}
