@@ -10,6 +10,7 @@ import {
 } from './primaryCurriculumData';
 import { MIDDLE_MATH_LECTURES } from './middleMathCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
+import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -17,7 +18,8 @@ export {
   PRIMARY_SCIENCE_LECTURES,
   ISLAMIC_STUDIES_LECTURES,
   MIDDLE_MATH_LECTURES,
-  MIDDLE_COMPUTER_SCIENCE_LECTURES
+  MIDDLE_COMPUTER_SCIENCE_LECTURES,
+  MIDDLE_COMPUTER_SCIENCE_G8_LECTURES
 };
 
 // ============================================================================
@@ -6643,7 +6645,10 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     return MATH_LECTURES; // High School STEM
   }
   if (subject === 'COMPUTER_SCIENCE') {
-    if (gradeLevel && ['G7', 'G8', 'G9'].includes(gradeLevel)) {
+    if (gradeLevel === 'G8') {
+      return MIDDLE_COMPUTER_SCIENCE_G8_LECTURES;
+    }
+    if (gradeLevel && ['G7', 'G9'].includes(gradeLevel)) {
       return MIDDLE_COMPUTER_SCIENCE_LECTURES;
     }
     return COMPUTER_SCIENCE_LECTURES; // High School STEM
