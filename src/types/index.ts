@@ -125,7 +125,7 @@ export interface Question {
 
 export interface Assessment {
   id: string;
-  lectureId: string;
+  lectureId?: string;
   titleAr: string;
   titleEn: string;
   passingScore: number; // default 80%
@@ -180,17 +180,21 @@ export interface VocabularyItem {
   termAr: string;
   termEn: string;
   definitionAr: string;
-  definitionEn: string;
+  definitionEn?: string;
 }
 
 export interface TextbookExercise {
   id: string;
-  questionAr: string;
-  questionEn: string;
+  questionAr?: string;
+  questionEn?: string;
+  problemAr?: string;
+  problemEn?: string;
   solutionStepsAr: string[];
-  solutionStepsEn: string[];
-  answerAr: string;
-  answerEn: string;
+  solutionStepsEn?: string[];
+  answerAr?: string;
+  answerEn?: string;
+  finalAnswerAr?: string;
+  finalAnswerEn?: string;
 }
 
 export interface DiagramKeyLabel {
@@ -313,9 +317,15 @@ export interface Lecture {
 
   keyConceptsAr: string[];
   keyConceptsEn: string[];
-  summaryAr: string;
-  summaryEn: string;
-  sections: LectureSection[];
+  summaryAr?: string;
+  summaryEn?: string;
+  sections?: LectureSection[];
+  mainContentAr?: string;
+  mainContentEn?: string;
+  diagramType?: string;
+  diagramData?: any;
+  workedExamples?: any[];
+  formativeAssessment?: any[];
 
   // Concept Map / Golden takeaways
   conceptMapAr?: string[];

@@ -12,13 +12,16 @@ import { MIDDLE_MATH_LECTURES } from './middleMathCurriculumData';
 import { MIDDLE_MATH_G8_LECTURES } from './middleMath8CurriculumData';
 import { MIDDLE_MATH_G9_LECTURES } from './middleMath9CurriculumData';
 import { HIGH_MATH_G10_LECTURES } from './highMath10CurriculumData';
+import { HIGH_MATH_G11_LECTURES } from './highMath11CurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 import { HIGH_COMP_G10_LECTURES } from './highComp10CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
 import { HIGH_CHEMISTRY_G10_LECTURES } from './highChemistry10CurriculumData';
+import { HIGH_CHEMISTRY_G11_LECTURES } from './highChemistry11CurriculumData';
 import { HIGH_BIO_G10_LECTURES } from './highBio10CurriculumData';
+import { HIGH_BIO_G11_LECTURES } from './highBio11CurriculumData';
 import { HIGH_PHYSICS_G11_LECTURES } from './highPhysics11CurriculumData';
 import { MIDDLE_ARABIC_G9_LECTURES } from './middleArabic9CurriculumData';
 
@@ -31,13 +34,16 @@ export {
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
   HIGH_MATH_G10_LECTURES,
+  HIGH_MATH_G11_LECTURES,
   MIDDLE_COMPUTER_SCIENCE_LECTURES,
   MIDDLE_COMPUTER_SCIENCE_G8_LECTURES,
   HIGH_COMP_G10_LECTURES,
   MIDDLE_SCIENCE_G8_LECTURES,
   MIDDLE_SCIENCE_G9_LECTURES,
   HIGH_CHEMISTRY_G10_LECTURES,
+  HIGH_CHEMISTRY_G11_LECTURES,
   HIGH_BIO_G10_LECTURES,
+  HIGH_BIO_G11_LECTURES,
   HIGH_PHYSICS_G11_LECTURES,
   MIDDLE_ARABIC_G9_LECTURES
 };
@@ -6656,6 +6662,9 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
 
 export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): Lecture[] {
   if (subject === 'MATH') {
+    if (gradeLevel === 'G11') {
+      return HIGH_MATH_G11_LECTURES;
+    }
     if (gradeLevel === 'G10') {
       return HIGH_MATH_G10_LECTURES;
     }
@@ -6671,7 +6680,7 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     if (gradeLevel && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) {
       return PRIMARY_MATH_LECTURES;
     }
-    return MATH_LECTURES; // High School STEM
+    return MATH_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'COMPUTER_SCIENCE') {
     if (gradeLevel === 'G10') {
@@ -6701,12 +6710,18 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     return PHYSICS_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'CHEMISTRY') {
+    if (gradeLevel === 'G11') {
+      return HIGH_CHEMISTRY_G11_LECTURES;
+    }
     if (gradeLevel === 'G10') {
       return HIGH_CHEMISTRY_G10_LECTURES;
     }
     return CHEMISTRY_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'BIOLOGY') {
+    if (gradeLevel === 'G11') {
+      return HIGH_BIO_G11_LECTURES;
+    }
     if (gradeLevel === 'G10') {
       return HIGH_BIO_G10_LECTURES;
     }

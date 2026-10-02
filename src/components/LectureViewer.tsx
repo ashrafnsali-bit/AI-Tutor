@@ -194,16 +194,18 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           </h2>
         </div>
 
-        {lecture.sections.map((sec, secIdx) => {
-          const secTitle   = isEn ? sec.titleEn   : sec.titleAr;
-          const secContent = isEn ? sec.contentEn : sec.contentAr;
-          const tips       = isEn ? sec.tipsEn    : sec.tipsAr;
-          const check      = sec.formativeCheck;
-          const ex         = sec.interactiveExample;
-          const isOpen     = openSections[secIdx] !== false;
-          const exKey      = ex ? stepKey(secIdx, ex.titleAr || '') : '';
-          const currentStep = ex ? (activeExampleStep[exKey] ?? 0) : 0;
-          const allShown    = ex ? (showAllSteps[exKey] ?? false) : false;
+        {/* Lesson Sections or Markdown Content */}
+        {lecture.sections && lecture.sections.length > 0 ? (
+          lecture.sections.map((sec, secIdx) => {
+            const secTitle   = isEn ? sec.titleEn   : sec.titleAr;
+            const secContent = isEn ? sec.contentEn : sec.contentAr;
+            const tips       = isEn ? sec.tipsEn    : sec.tipsAr;
+            const check      = sec.formativeCheck;
+            const ex         = sec.interactiveExample;
+            const isOpen     = openSections[secIdx] !== false;
+            const exKey      = ex ? stepKey(secIdx, ex.titleAr || '') : '';
+            const currentStep = ex ? (activeExampleStep[exKey] ?? 0) : 0;
+            const allShown    = ex ? (showAllSteps[exKey] ?? false) : false;
 
           return (
             <article key={secIdx} className="content-section-card">
@@ -486,7 +488,19 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               )}
             </article>
           );
-        })}
+        })
+        ) : (
+          <div className="content-section-card" style={{ padding: '1.5rem', lineHeight: '1.8' }}>
+            <div 
+              className="section-explanation"
+              style={{ color: '#e2e8f0', fontSize: '1rem', whiteSpace: 'pre-line' }}
+            >
+              {(isEn ? (lecture.mainContentEn || lecture.mainContentAr) : (lecture.mainContentAr || lecture.mainContentEn))?.split('\n').filter(Boolean).map((para, pi) => (
+                <p key={pi} className="section-para">{para}</p>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ═══ SECTION 5 — LESSON SUMMARY ═══ */}
@@ -561,9 +575,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
           <div className="exercises-v2-list">
             {lecture.textbookExercises.map((ex, exIdx) => {
-              const qText  = isEn ? ex.questionEn  : ex.questionAr;
-              const steps  = isEn ? ex.solutionStepsEn : ex.solutionStepsAr;
-              const answer = isEn ? ex.answerEn    : ex.answerAr;
+              const qText  = (isEn ? (ex.questionEn || ex.problemEn) : (ex.questionAr || ex.problemAr)) || '';
+              const steps  = (isEn ? (ex.solutionStepsEn || ex.solutionStepsAr) : ex.solutionStepsAr) || [];
+              const answer = (isEn ? (ex.answerEn || ex.finalAnswerEn) : (ex.answerAr || ex.finalAnswerAr)) || '';
               const revealed = revealedSolutions[ex.id];
 
               return (
