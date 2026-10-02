@@ -6689,9 +6689,9 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
           return freshLec;
         });
 
-        // Also preserve any newly generated lectures saved in user session
+        // Also preserve any newly AI-generated lectures saved in user session
         parsed.forEach(p => {
-          if (!result.some(r => r.id === p.id)) {
+          if (p.id && p.id.startsWith('ai-gen-') && !result.some(r => r.id === p.id)) {
             result.push(p);
           }
         });
