@@ -17,6 +17,7 @@ import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 import { HIGH_COMP_G10_LECTURES } from './highComp10CurriculumData';
 import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
+import { HIGH_COMP_G12_LECTURES } from './highComp12CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
 import { HIGH_CHEMISTRY_G10_LECTURES } from './highChemistry10CurriculumData';
@@ -40,6 +41,7 @@ export {
   MIDDLE_COMPUTER_SCIENCE_G8_LECTURES,
   HIGH_COMP_G10_LECTURES,
   HIGH_COMP_G11_LECTURES,
+  HIGH_COMP_G12_LECTURES,
   MIDDLE_SCIENCE_G8_LECTURES,
   MIDDLE_SCIENCE_G9_LECTURES,
   HIGH_CHEMISTRY_G10_LECTURES,
@@ -6685,6 +6687,9 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     return MATH_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'COMPUTER_SCIENCE') {
+    if (gradeLevel === 'G12') {
+      return HIGH_COMP_G12_LECTURES;
+    }
     if (gradeLevel === 'G11') {
       return HIGH_COMP_G11_LECTURES;
     }
@@ -6697,7 +6702,7 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     if (gradeLevel && ['G7', 'G9'].includes(gradeLevel)) {
       return MIDDLE_COMPUTER_SCIENCE_LECTURES;
     }
-    return COMPUTER_SCIENCE_LECTURES; // Grade 12 Advanced / STEM
+    return HIGH_COMP_G12_LECTURES;
   }
   if (subject === 'GENERAL_SCIENCE') {
     if (gradeLevel === 'G9') {
