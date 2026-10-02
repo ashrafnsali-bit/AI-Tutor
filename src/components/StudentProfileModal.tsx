@@ -102,13 +102,11 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
     } else if (age === 17) {
       nextGrade = 'G11';
-      if (nextSpec === 'GENERAL') nextSpec = 'STEM';
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
     } else if (age >= 18) {
       nextGrade = 'G12';
-      if (nextSpec === 'GENERAL') nextSpec = 'STEM';
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
@@ -160,7 +158,6 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
-      if (nextSpec === 'GENERAL' && grade !== 'G10') nextSpec = 'STEM';
     }
 
     setFormData((prev) => ({
