@@ -4728,21 +4728,21 @@ export function saveSubjectLectures(
 export const INITIAL_LECTURES = HIGH_CHEMISTRY_G12_LECTURES;
 
 export const INITIAL_STUDENT_PROFILE: StudentProfile = {
-  id: 'std-1001',
-  name: 'عمر التميمي',
-  nameAr: 'عمر التميمي',
-  nameEn: 'Omar Al-Tamimi',
+  id: 'std-student',
+  name: 'طالب مسجل',
+  nameAr: 'طالب مسجل',
+  nameEn: 'Registered Student',
   age: 16,
   dateOfBirth: '2010-04-15',
-  country: 'EG',
+  country: 'SA',
   specialization: 'GENERAL',
   subject: 'CHEMISTRY',
   gradeLevel: 'G12',
   language: 'ar',
-  parentEmail: 'parent.altamimi@example.com',
+  parentEmail: '',
   isParentVerified: true,
   timeLimitMinutes: 60,
-  usedTodayMinutes: 18,
-  masteryPoints: 450
+  usedTodayMinutes: 0,
+  masteryPoints: 100
 };
 

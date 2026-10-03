@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import type { CountryCode, GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
+import React, { useState, useEffect } from 'react';
+import type { CountryCode, GradeLevel, Language, Specialization, StudentProfile, Subject, UserAccount } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { detectStudentCountry, setManualCountryOverride } from '../services/geoService';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
-import { X, User, ShieldAlert, CheckCircle2, Users } from 'lucide-react';
+import { getActiveUserAccount } from '../services/database';
+import { X, User, ShieldAlert, CheckCircle2, Users, ShieldCheck, Lock, Globe } from 'lucide-react';
 
 interface StudentProfileModalProps {
   isOpen: boolean;
@@ -24,6 +25,18 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
   const [isDetecting, setIsDetecting] = useState(false);
   const [detectNotice, setDetectNotice] = useState<string | null>(null);
+  const [activeDbUser, setActiveDbUser] = useState<UserAccount | null>(null);
+
+  // Sync active user account from IndexedDB database
+  useEffect(() => {
+    if (isOpen) {
+      getActiveUserAccount().then(user => {
+        if (user) {
+          setActiveDbUser(user);
+        }
+      });
+    }
+  }, [isOpen, profile]);
 
   const PRIMARY_SUBJECTS: Subject[] = ['PRIMARY_ARABIC', 'PRIMARY_MATH', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'];
   const MIDDLE_SUBJECTS: Subject[] = ['ARABIC_LANG', 'MATH', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'];
@@ -205,15 +218,23 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    onSave({
+      ...formData,
+      id: profile.id,
+      name: profile.name,
+      nameAr: profile.nameAr,
+      nameEn: profile.nameEn
+    });
     onClose();
   };
 
   const isMinorUnder13 = formData.age > 0 && formData.age < 13;
+  const officialStudentName = activeDbUser?.name || profile.name || 'طالب مسجل';
+  const officialStudentId = activeDbUser?.username ? `@${activeDbUser.username}` : (activeDbUser?.id || profile.id || 'STD-USER');
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-container modal-profile-container" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div className="modal-title-group">
             <div className="modal-icon-badge">
@@ -242,29 +263,164 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
               </div>
             )}
 
-            <div className="form-grid">
-            {/* Student Name */}
-            <div className="form-group">
-              <label className="form-label">{t.labelFullName}</label>
-              <input
-                type="text"
-                className="form-input"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-                placeholder="Omar Al-Tamimi"
-              />
+            {/* Official Student Academic Identity Card (Fetched from Database - Non Editable) */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.7) 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              borderRadius: '16px',
+              padding: '1.25rem',
+              marginBottom: '0.75rem',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                  <div style={{
+                    width: '52px',
+                    height: '52px',
+                    borderRadius: '14px',
+                    background: 'rgba(56, 189, 248, 0.15)',
+                    border: '1.5px solid rgba(56, 189, 248, 0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#38bdf8',
+                    flexShrink: 0,
+                    position: 'relative'
+                  }}>
+                    <ShieldCheck size={28} />
+                    <span style={{
+                      position: 'absolute',
+                      bottom: '-2px',
+                      right: '-2px',
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '50%',
+                      background: '#10b981',
+                      border: '2px solid #0f172a'
+                    }} />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem', flexWrap: 'wrap' }}>
+                      <span style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: '999px',
+                        background: 'rgba(16, 185, 129, 0.15)',
+                        border: '1px solid rgba(16, 185, 129, 0.35)',
+                        color: '#34d399',
+                        fontSize: '0.74rem',
+                        fontWeight: 700
+                      }}>
+                        <CheckCircle2 size={12} />
+                        <span>قاعدة البيانات المركزية للطلاب</span>
+                      </span>
+                      <span style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.3rem',
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: '999px',
+                        background: 'rgba(245, 158, 11, 0.12)',
+                        border: '1px solid rgba(245, 158, 11, 0.32)',
+                        color: '#fbbf24',
+                        fontSize: '0.74rem',
+                        fontWeight: 700
+                      }}>
+                        <Lock size={12} />
+                        <span>الاسم معتمد ومحمي من التعديل</span>
+                      </span>
+                    </div>
+                    <h3 style={{
+                      fontSize: '1.35rem',
+                      fontWeight: 800,
+                      color: '#ffffff',
+                      margin: '0.15rem 0 0.35rem 0'
+                    }}>
+                      {officialStudentName}
+                    </h3>
+                    <div style={{
+                      fontSize: '0.78rem',
+                      color: '#94a3b8',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.6rem',
+                      flexWrap: 'wrap'
+                    }}>
+                      <span><strong>رقم القيد الأكاديمي:</strong> {officialStudentId}</span>
+                      <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>•</span>
+                      <span><strong>الحالة:</strong> حساب موثق ومسجل</span>
+                      {activeDbUser?.email && (
+                        <>
+                          <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>•</span>
+                          <span><strong>البريد:</strong> {activeDbUser.email}</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {onSwitchAccount && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      onSwitchAccount();
+                    }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.6rem 1.1rem',
+                      borderRadius: '10px',
+                      background: 'rgba(56, 189, 248, 0.12)',
+                      border: '1px solid rgba(56, 189, 248, 0.35)',
+                      color: '#38bdf8',
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      fontFamily: 'inherit'
+                    }}
+                    title="التبديل إلى طالب آخر أو إنشاء حساب طالب جديد"
+                  >
+                    <Users size={16} />
+                    <span>تبديل الطالب / إضافة حساب</span>
+                  </button>
+                )}
+              </div>
+              <div style={{
+                marginTop: '0.85rem',
+                paddingTop: '0.75rem',
+                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                fontSize: '0.75rem',
+                color: '#94a3b8',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '0.4rem',
+                lineHeight: 1.5
+              }}>
+                <span>ℹ️</span>
+                <span>يتم جلب اسم الطالب وسجله الدراسي مباشرة من قاعدة البيانات المركزية ولا يمكن تعديل الاسم يدوياً من هذه الخانة لضمان صحة الشهادات والتقارير الأكاديمية.</span>
+              </div>
             </div>
 
-            {/* Official State / National Curriculum Country */}
-            <div className="form-group">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                <label className="form-label" style={{ margin: 0 }}>
-                  {t.countrySelectLabel}
-                  <span style={{ fontSize: '0.75rem', fontWeight: 500, color: formData.isAutoDetectedCountry ? '#38bdf8' : '#f59e0b', marginInlineStart: '0.5rem' }}>
-                    {formData.isAutoDetectedCountry ? '(✨ كشف جغرافي تلقائي)' : '(✏️ تم التحديد يدوياً)'}
+            {/* Section Divider */}
+            <div className="profile-section-divider">
+              <span className="section-divider-title">إعدادات المنهج والدراسة التكيفية</span>
+            </div>
+
+            {/* Official State / National Curriculum Country (Full Width Card) */}
+            <div className="form-group full-width country-picker-card">
+              <div className="country-picker-header">
+                <div className="country-label-wrap">
+                  <label className="form-label" style={{ margin: 0 }}>
+                    <Globe size={16} style={{ display: 'inline', marginInlineEnd: '0.4rem', color: '#38bdf8' }} />
+                    {t.countrySelectLabel}
+                  </label>
+                  <span className={`badge-geo-state ${formData.isAutoDetectedCountry ? 'auto' : 'manual'}`}>
+                    {formData.isAutoDetectedCountry ? '✨ كشف جغرافي تلقائي وفق موقعك' : '✏️ تم التحديد يدوياً'}
                   </span>
-                </label>
+                </div>
                 <button
                   type="button"
                   className="btn-auto-detect-geo"
@@ -292,7 +448,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 </button>
               </div>
               <select
-                className="form-select"
+                className="form-select country-select-input"
                 value={formData.country || 'SA'}
                 onChange={(e) => {
                   const chosenCountry = e.target.value as CountryCode;
@@ -316,11 +472,13 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 <option value="INTL">🌍 المنهج الدولي والمعايير العامة</option>
               </select>
               {detectNotice && (
-                <span className="geo-detect-toast" style={{ color: formData.isAutoDetectedCountry ? '#10b981' : '#f59e0b', fontSize: '0.72rem', marginTop: '0.25rem', display: 'block' }}>
+                <span className="geo-detect-toast" style={{ color: formData.isAutoDetectedCountry ? '#10b981' : '#f59e0b', fontSize: '0.72rem', marginTop: '0.35rem', display: 'block' }}>
                   {detectNotice}
                 </span>
               )}
             </div>
+
+            <div className="form-grid">
 
             {/* Education Type (حكومي / أهلي / شرعي / دولي) */}
             <div className="form-group">

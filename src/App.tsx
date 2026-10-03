@@ -61,10 +61,27 @@ export function App() {
     // Default dynamic country if not manually overridden: cached IP geo, then timezone geo, or SA
     const defaultDynamicCountry = cachedGeo?.country || tzCountry || 'SA';
 
+    // 1. Prioritize authenticated active user account from database session
+    const activeStored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+    if (activeStored) {
+      try {
+        const parsedActive = JSON.parse(activeStored);
+        if (parsedActive && parsedActive.id && parsedActive.name) {
+          return parsedActive;
+        }
+      } catch {}
+    }
+
     const saved = localStorage.getItem('TEACHER_AI_STUDENT_PROFILE');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
+        // Clean up legacy static 'عمر التميمي' or temporary manual overwrite 'احمد علي'
+        if ((parsed.name === 'عمر التميمي' || parsed.name === 'احمد علي') && !activeStored) {
+          parsed.name = INITIAL_STUDENT_PROFILE.name;
+          parsed.nameAr = INITIAL_STUDENT_PROFILE.nameAr;
+          parsed.nameEn = INITIAL_STUDENT_PROFILE.nameEn;
+        }
         const merged: StudentProfile = { ...INITIAL_STUDENT_PROFILE, ...parsed };
         
         // If user has NOT manually chosen a country, dynamically apply the detected country
@@ -445,7 +462,14 @@ export function App() {
   };
 
   const handleSaveProfile = (updated: StudentProfile) => {
-    const sanitized: StudentProfile = { ...updated };
+    // Retain official registered name and ID from database profile - cannot be modified from profile settings
+    const sanitized: StudentProfile = {
+      ...updated,
+      id: profile.id,
+      name: profile.name,
+      nameAr: profile.nameAr,
+      nameEn: profile.nameEn
+    };
 
     // Record or clear manual override based on whether it was auto-detected or explicitly picked
     if (sanitized.isAutoDetectedCountry) {
