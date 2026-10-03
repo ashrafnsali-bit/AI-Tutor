@@ -91,12 +91,10 @@ export function App() {
           }
           if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(merged.subject)) {
             if (merged.specialization === 'HUMANITIES') {
-              merged.specialization = 'STEM';
+              merged.specialization = 'GENERAL';
             }
           }
-          if (merged.specialization === 'GENERAL' && merged.gradeLevel !== 'G10') {
-            merged.specialization = 'STEM';
-          }
+          
         }
         return merged;
       } catch (e) {
@@ -352,10 +350,10 @@ export function App() {
       if (sanitized.subject === 'PRIMARY_MATH') sanitized.subject = 'MATH';
       if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(sanitized.subject)) {
         if (sanitized.specialization === 'HUMANITIES') {
-          sanitized.specialization = 'STEM';
+          sanitized.specialization = 'GENERAL';
         }
       }
-      if (sanitized.specialization === 'GENERAL' && sanitized.gradeLevel !== 'G10') sanitized.specialization = 'STEM';
+      
     }
 
     const freshLecs = loadSubjectLectures(sanitized.subject, sanitized.country, sanitized.gradeLevel);

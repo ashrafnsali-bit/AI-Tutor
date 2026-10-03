@@ -44,7 +44,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       if (copy.subject === 'ARABIC_LANG' || copy.subject === 'PRIMARY_ARABIC') copy.subject = 'ARABIC_LIT';
       if (copy.subject === 'GENERAL_SCIENCE' || copy.subject === 'PRIMARY_SCIENCE') copy.subject = 'PHYSICS';
       if (copy.subject === 'PRIMARY_MATH') copy.subject = 'MATH';
-      if (copy.specialization === 'GENERAL' && copy.gradeLevel !== 'G10') copy.specialization = 'STEM';
+      
     }
     return copy;
   });
