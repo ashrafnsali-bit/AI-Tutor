@@ -4460,7 +4460,7 @@ When adding column by column from Right to Left:
 
 ---
 
-### 5. Interactive Diagram: Place Value & Regrouping
+### رسم توضيحي: القيمة المكانية وإعادة التجميع (Place Value & Regrouping)
 \`\`\`xml
 <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family:system-ui, sans-serif;">
   <rect width="720" height="230" fill="#0f172a" rx="16"/>
@@ -4478,11 +4478,11 @@ When adding column by column from Right to Left:
   <!-- Regrouping Box -->
   <g transform="translate(370, 20)">
     <rect width="330" height="190" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="12"/>
-    <text x="165" y="30" fill="#34d399" font-size="15" font-weight="bold" text-anchor="middle">Addition & Subtraction Rules</text>
-    <text x="25" y="65" fill="#f8fafc" font-size="13">➕ <tspan fill="#34d399" font-weight="bold">Carrying (Sum ≥ 10):</tspan> Carry tens to the left</text>
-    <text x="25" y="100" fill="#f8fafc" font-size="13">➖ <tspan fill="#ef4444" font-weight="bold">Borrowing (Top &lt; Bottom):</tspan> Regroup from next col</text>
-    <text x="25" y="135" fill="#f8fafc" font-size="13">🔁 <tspan fill="#fbbf24" font-weight="bold">Check Addition:</tspan> Sum - Addend = Addend</text>
-    <text x="25" y="170" fill="#38bdf8" font-size="13" font-weight="bold">✨ 24,530 + 18,745 = 43,275</text>
+    <text x="165" y="30" fill="#34d399" font-size="15" font-weight="bold" text-anchor="middle">Addition &amp; Subtraction Rules</text>
+    <text x="25" y="65" fill="#f8fafc" font-size="13">➕ <tspan fill="#34d399" font-weight="bold">Carrying (Sum ≥ 10):</tspan> Carry to the left</text>
+    <text x="25" y="100" fill="#f8fafc" font-size="13">➖ <tspan fill="#ef4444" font-weight="bold">Borrowing (Top &lt; Bot):</tspan> Regroup next</text>
+    <text x="25" y="135" fill="#f8fafc" font-size="13">🔁 <tspan fill="#fbbf24" font-weight="bold">Check Add:</tspan> Sum - Addend = Addend</text>
+    <text x="165" y="170" fill="#38bdf8" font-size="14" font-weight="bold" text-anchor="middle">✨ 24,530 + 18,745 = 43,275</text>
   </g>
 </svg>
 \`\`\`
