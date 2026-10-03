@@ -42,6 +42,7 @@ import { PRIMARY_ISLAMIC_G2_LECTURES } from './primaryIslamic2CurriculumData';
 import { PRIMARY_ISLAMIC_G3_LECTURES } from './primaryIslamic3CurriculumData';
 import { PRIMARY_ISLAMIC_G4_LECTURES } from './primaryIslamic4CurriculumData';
 import { PRIMARY_ISLAMIC_G5_LECTURES } from './primaryIslamic5CurriculumData';
+import { PRIMARY_ISLAMIC_G6_LECTURES } from './primaryIslamic6CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -58,6 +59,7 @@ export {
   PRIMARY_ISLAMIC_G3_LECTURES,
   PRIMARY_ISLAMIC_G4_LECTURES,
   PRIMARY_ISLAMIC_G5_LECTURES,
+  PRIMARY_ISLAMIC_G6_LECTURES,
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
@@ -4479,6 +4481,9 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     }
     if (gradeLevel === 'G5') {
       return PRIMARY_ISLAMIC_G5_LECTURES;
+    }
+    if (gradeLevel === 'G6') {
+      return PRIMARY_ISLAMIC_G6_LECTURES;
     }
     return ISLAMIC_STUDIES_FULL;
   }
