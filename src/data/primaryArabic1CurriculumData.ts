@@ -75,7 +75,7 @@ export const PRIMARY_ARABIC_G1_LECTURES: Lecture[] = [
         definitionAr: 'واو صغيرة فوق الحرف، نضم الشفتين عند نطقها بصوت قصير (أُ ، بُ ، تُ).'
       },
       {
-        termAr: 'الكapproachingالكapproachingالكapproachingالكapproachingالكapproachingالكapproachingالكَسْرَة ( ِ )',
+        termAr: 'الكَسْرَة ( ِ )',
         termEn: 'Kasra',
         definitionAr: 'خط صغير مائل تحت الحرف، نخفض الفك عند نطقه بصوت قصير (إِ ، بِ ، تِ).'
       },

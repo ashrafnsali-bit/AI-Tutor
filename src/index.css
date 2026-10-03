@@ -3780,6 +3780,8 @@ input:checked + .slider.round:before {
   font-weight: 700;
   color: #f8fafc;
   margin: 0.15rem 0 0 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .vocab-def-text {
@@ -3787,6 +3789,8 @@ input:checked + .slider.round:before {
   line-height: 1.6;
   color: #cbd5e1;
   margin: 0.2rem 0 0 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Sections Divider */
