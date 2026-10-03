@@ -7,11 +7,28 @@ function devHtmlPlugin(): Plugin {
   return {
     name: 'dev-html-plugin',
     apply: 'serve',
-    transformIndexHtml() {
-      const templatePath = path.resolve(process.cwd(), 'index.template.html');
-      if (fs.existsSync(templatePath)) {
-        return fs.readFileSync(templatePath, 'utf-8');
-      }
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const url = req.url?.split('?')[0] || '';
+        if (url === '/' || url === '/AI-Tutor/' || url === '/AI-Tutor/index.html' || url === '/index.html') {
+          const templatePath = path.resolve(process.cwd(), 'index.template.html');
+          if (fs.existsSync(templatePath)) {
+            const raw = fs.readFileSync(templatePath, 'utf-8');
+            server.transformIndexHtml(req.url || '/', raw)
+              .then(html => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                res.end(html);
+              })
+              .catch(err => {
+                console.error('Error transforming index.template.html:', err);
+                next();
+              });
+            return;
+          }
+        }
+        next();
+      });
     }
   };
 }

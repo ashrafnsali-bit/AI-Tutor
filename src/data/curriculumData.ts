@@ -50,6 +50,7 @@ import { PRIMARY_ISLAMIC_G3_LECTURES } from './primaryIslamic3CurriculumData';
 import { PRIMARY_ISLAMIC_G4_LECTURES } from './primaryIslamic4CurriculumData';
 import { PRIMARY_ISLAMIC_G5_LECTURES } from './primaryIslamic5CurriculumData';
 import { PRIMARY_ISLAMIC_G6_LECTURES } from './primaryIslamic6CurriculumData';
+import { UAE_ISLAMIC_G6_LECTURES } from './uaeIslamic6CurriculumData';
 import { PRIMARY_ARABIC_G4_LECTURES } from './primaryArabic4CurriculumData';
 import { PRIMARY_ARABIC_G5_LECTURES } from './primaryArabic5CurriculumData';
 import { PRIMARY_ARABIC_G6_LECTURES } from './primaryArabic6CurriculumData';
@@ -74,6 +75,7 @@ export {
   PRIMARY_ISLAMIC_G4_LECTURES,
   PRIMARY_ISLAMIC_G5_LECTURES,
   PRIMARY_ISLAMIC_G6_LECTURES,
+  UAE_ISLAMIC_G6_LECTURES,
   PRIMARY_ARABIC_G4_LECTURES,
   PRIMARY_ARABIC_G5_LECTURES,
   PRIMARY_ARABIC_G6_LECTURES,
@@ -4452,7 +4454,7 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   GENERAL_SCIENCE: GENERAL_SCIENCE_LECTURES
 };
 
-export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): Lecture[] {
+export function getCurriculumForSubject(subject: Subject, gradeLevel?: string, country: string = 'SA'): Lecture[] {
   if (subject === 'PRIMARY_MATH') {
     if (gradeLevel === 'G1') return PRIMARY_MATH_G1_LECTURES;
     if (gradeLevel === 'G2') return PRIMARY_MATH_G2_LECTURES;
@@ -4486,7 +4488,10 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     if (gradeLevel === 'G3') return PRIMARY_ISLAMIC_G3_LECTURES;
     if (gradeLevel === 'G4') return PRIMARY_ISLAMIC_G4_LECTURES;
     if (gradeLevel === 'G5') return PRIMARY_ISLAMIC_G5_LECTURES;
-    if (gradeLevel === 'G6') return PRIMARY_ISLAMIC_G6_LECTURES;
+    if (gradeLevel === 'G6') {
+      if (country === 'AE') return UAE_ISLAMIC_G6_LECTURES;
+      return PRIMARY_ISLAMIC_G6_LECTURES;
+    }
     return ISLAMIC_STUDIES_FULL;
   }
   if (subject === 'MATH') {
@@ -4616,7 +4621,7 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
 }
 
 export function loadSubjectLectures(subject: Subject, country: string = 'SA', gradeLevel?: string): Lecture[] {
-  const masterCurriculum = getCurriculumForSubject(subject, gradeLevel);
+  const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country);
   
   // Retrieve any community / AI-generated shared lectures for this subject and country
   const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel || ''}`;
@@ -4657,27 +4662,31 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
     try {
       const parsed = JSON.parse(saved) as Lecture[];
       if (Array.isArray(parsed)) {
-        const result = combined.map((freshLec) => {
-          const found = parsed.find((p) => p.id === freshLec.id);
-          if (found) {
-            return {
-              ...freshLec,
-              isLocked: found.isLocked,
-              isCompleted: found.isCompleted,
-              lastAttempt: found.lastAttempt
-            };
-          }
-          return freshLec;
-        });
+        // Validate that cached lectures match current curriculum IDs to prevent cross-country cache bleeding
+        const hasMatchingCurriculum = combined.some(freshLec => parsed.some(p => p.id === freshLec.id));
+        if (hasMatchingCurriculum) {
+          const result = combined.map((freshLec) => {
+            const found = parsed.find((p) => p.id === freshLec.id);
+            if (found) {
+              return {
+                ...freshLec,
+                isLocked: found.isLocked,
+                isCompleted: found.isCompleted,
+                lastAttempt: found.lastAttempt
+              };
+            }
+            return freshLec;
+          });
 
-        // Also preserve any newly AI-generated lectures saved in user session
-        parsed.forEach(p => {
-          if (p.id && p.id.startsWith('ai-gen-') && !result.some(r => r.id === p.id)) {
-            result.push(p);
-          }
-        });
+          // Also preserve any newly AI-generated lectures saved in user session
+          parsed.forEach(p => {
+            if (p.id && p.id.startsWith('ai-gen-') && !result.some(r => r.id === p.id)) {
+              result.push(p);
+            }
+          });
 
-        return result;
+          return result;
+        }
       }
     } catch (e) {
       console.error(e);
