@@ -1,5 +1,5 @@
 import type { Lecture, StudentProfile, Subject } from '../types';
-import { CHEMISTRY_LECTURES, BIOLOGY_LECTURES, COMPUTER_SCIENCE_LECTURES } from './stemCurriculumData';
+import { BIOLOGY_LECTURES, COMPUTER_SCIENCE_LECTURES } from './stemCurriculumData';
 import { ISLAMIC_STUDIES_FULL, PRIMARY_ARABIC_FULL } from './islamicArabicCurriculum';
 
 import {
@@ -69,6 +69,7 @@ export const MATH_LECTURES: Lecture[] = HIGH_MATH_G12_LECTURES;
 // 2. ADVANCED / GENERAL SECONDARY PHYSICS CURRICULUM (الفيزياء للثانوية العامة ومدارس اللغات)
 // ============================================================================
 export const PHYSICS_LECTURES: Lecture[] = HIGH_PHYSICS_G12_LECTURES;
+export const CHEMISTRY_LECTURES: Lecture[] = HIGH_CHEMISTRY_G12_LECTURES;
 
 // ============================================================================
 // 3. ARABIC LITERATURE & RHETORIC CURRICULUM (اللغة العربية والبلاغة)
@@ -4390,7 +4391,7 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   ISLAMIC_STUDIES: ISLAMIC_STUDIES_FULL,
   MATH: MATH_LECTURES,
   PHYSICS: HIGH_PHYSICS_G12_LECTURES,
-  CHEMISTRY: CHEMISTRY_LECTURES,
+  CHEMISTRY: HIGH_CHEMISTRY_G12_LECTURES,
   BIOLOGY: BIOLOGY_LECTURES,
   COMPUTER_SCIENCE: COMPUTER_SCIENCE_LECTURES,
   ARABIC_LIT: ARABIC_LIT_LECTURES,
@@ -4560,7 +4561,7 @@ export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   age: 16,
   dateOfBirth: '2010-04-15',
   country: 'SA',
-  specialization: 'STEM',
+  specialization: 'GENERAL',
   subject: 'PHYSICS',
   gradeLevel: 'G12',
   language: 'ar',
