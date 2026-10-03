@@ -30,12 +30,14 @@ import { HIGH_PHYSICS_G11_LECTURES } from './highPhysics11CurriculumData';
 import { HIGH_PHYSICS_G12_LECTURES } from './highPhysics12CurriculumData';
 import { MIDDLE_ARABIC_G9_LECTURES } from './middleArabic9CurriculumData';
 import { PRIMARY_ARABIC_G1_LECTURES } from './primaryArabic1CurriculumData';
+import { PRIMARY_ARABIC_G2_LECTURES } from './primaryArabic2CurriculumData';
 import { PRIMARY_MATH_G1_LECTURES } from './primaryMath1CurriculumData';
 import { PRIMARY_SCIENCE_G1_LECTURES } from './primaryScience1CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
   PRIMARY_ARABIC_LECTURES,
+  PRIMARY_ARABIC_G2_LECTURES,
   PRIMARY_SCIENCE_LECTURES,
   PRIMARY_SCIENCE_G1_LECTURES,
   ISLAMIC_STUDIES_LECTURES,
@@ -4416,13 +4418,16 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     if (gradeLevel === 'G1') {
       return PRIMARY_ARABIC_G1_LECTURES;
     }
-    if (gradeLevel === 'G2' || gradeLevel === 'G3') {
+    if (gradeLevel === 'G2') {
+      return PRIMARY_ARABIC_G2_LECTURES;
+    }
+    if (gradeLevel === 'G3') {
       return PRIMARY_ARABIC_LECTURES;
     }
     if (gradeLevel === 'G4' || gradeLevel === 'G5' || gradeLevel === 'G6') {
       return PRIMARY_ARABIC_FULL;
     }
-    return PRIMARY_ARABIC_G1_LECTURES;
+    return PRIMARY_ARABIC_G2_LECTURES;
   }
   if (subject === 'PRIMARY_SCIENCE') {
     if (gradeLevel === 'G1') {
