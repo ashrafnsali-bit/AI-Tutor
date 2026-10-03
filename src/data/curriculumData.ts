@@ -32,10 +32,12 @@ import { MIDDLE_ARABIC_G9_LECTURES } from './middleArabic9CurriculumData';
 import { PRIMARY_ARABIC_G1_LECTURES } from './primaryArabic1CurriculumData';
 import { PRIMARY_ARABIC_G2_LECTURES } from './primaryArabic2CurriculumData';
 import { PRIMARY_MATH_G1_LECTURES } from './primaryMath1CurriculumData';
+import { PRIMARY_MATH_G2_LECTURES } from './primaryMath2CurriculumData';
 import { PRIMARY_SCIENCE_G1_LECTURES } from './primaryScience1CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
+  PRIMARY_MATH_G2_LECTURES,
   PRIMARY_ARABIC_LECTURES,
   PRIMARY_ARABIC_G2_LECTURES,
   PRIMARY_SCIENCE_LECTURES,
@@ -4412,6 +4414,9 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     if (gradeLevel === 'G1') {
       return PRIMARY_MATH_G1_LECTURES;
     }
+    if (gradeLevel === 'G2') {
+      return PRIMARY_MATH_G2_LECTURES;
+    }
     return PRIMARY_MATH_LECTURES;
   }
   if (subject === 'PRIMARY_ARABIC') {
@@ -4456,6 +4461,7 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     }
     if (gradeLevel && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) {
       if (gradeLevel === 'G1') return PRIMARY_MATH_G1_LECTURES;
+      if (gradeLevel === 'G2') return PRIMARY_MATH_G2_LECTURES;
       return PRIMARY_MATH_LECTURES;
     }
     return MATH_LECTURES; // Grade 12 Advanced / STEM
