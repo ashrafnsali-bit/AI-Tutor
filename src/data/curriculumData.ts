@@ -1,6 +1,7 @@
 import type { Lecture, StudentProfile, Subject } from '../types';
 import { BIOLOGY_LECTURES, COMPUTER_SCIENCE_LECTURES } from './stemCurriculumData';
 import { ISLAMIC_STUDIES_FULL, PRIMARY_ARABIC_FULL } from './islamicArabicCurriculum';
+import { getNationalTextbookInfo, getCountryInfo } from './curriculumCountries';
 
 import {
   PRIMARY_MATH_LECTURES,
@@ -4589,7 +4590,21 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
     sharedLecs = [];
   }
 
-  const combined = [...masterCurriculum];
+  let combined = [...masterCurriculum];
+  
+  if (gradeLevel) {
+    const cInfo = getCountryInfo(country as any);
+    const natInfo = getNationalTextbookInfo(country as any, subject, gradeLevel as any);
+    combined = combined.map(lec => ({
+      ...lec,
+      gradeLevelNameAr: `${cInfo.nameAr} - ${natInfo.textbookName}`,
+      gradeLevelNameEn: `${cInfo.nameEn} - ${natInfo.textbookName}`,
+      ministryAr: cInfo.ministryAr,
+      ministryEn: cInfo.ministryEn,
+      termAr: natInfo.semester,
+      termEn: natInfo.semester
+    }));
+  }
   sharedLecs.forEach(sh => {
     if (!combined.some(c => c.id === sh.id)) {
       combined.push({
