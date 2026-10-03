@@ -462,6 +462,8 @@ export function getNationalTextbookInfo(
 
   let textbookName = '';
 
+  const isMiddle = ['G7', 'G8', 'G9'].includes(gradeLevel);
+
   // Country-specific textbook names
   switch (country) {
     case 'SA': // Saudi Arabia
@@ -475,18 +477,48 @@ export function getNationalTextbookInfo(
         textbookName = `الدراسات الإسلامية (التوحيد والفقه والسلوك والحديث) (${gradeAr})`;
       } else if (subject === 'ARABIC_LANG') {
         textbookName = `لغتي الخالدة (${gradeAr}) - وزارة التعليم السعودية`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
       } else if (subject === 'MATH') {
-        textbookName = gradeLevel === 'G10' ? 'الرياضيات 1-2 (مسارات السنة الأولى المشتركة)' : `الرياضيات (${gradeAr}) - نظام المسارات`;
+        textbookName = isMiddle
+          ? `الرياضيات (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`
+          : gradeLevel === 'G10'
+          ? 'الرياضيات 1 (السنة الأولى المشتركة - نظام المسارات)'
+          : gradeLevel === 'G11'
+          ? 'الرياضيات 2 (المسار العام ومسار علوم الحاسب والهندسة)'
+          : 'الرياضيات 3 (مسار علوم الحاسب والهندسة والمسار العام)';
       } else if (subject === 'COMPUTER_SCIENCE') {
-        textbookName = `المهارات والتقنية الرقمية (${gradeAr}) - مسار علوم الحاسب والهندسة`;
+        textbookName = isMiddle
+          ? `المهارات الرقمية (${gradeAr}) - وزارة التعليم السعودية`
+          : gradeLevel === 'G10'
+          ? 'التقنية الرقمية 1 (السنة الأولى المشتركة)'
+          : gradeLevel === 'G11'
+          ? 'علم البيانات وهندسة البرمجيات (مسار علوم الحاسب والهندسة)'
+          : 'الذكاء الاصطناعي وإنترنت الأشياء (مسار علوم الحاسب والهندسة)';
       } else if (subject === 'PHYSICS') {
-        textbookName = `الفيزياء (${gradeAr}) - مسار علوم الحاسب والهندسة`;
+        textbookName = gradeLevel === 'G10'
+          ? 'الفيزياء 1 (السنة الأولى المشتركة - نظام المسارات)'
+          : gradeLevel === 'G11'
+          ? 'الفيزياء 2 (مسار علوم الحاسب والهندسة والصحة)'
+          : 'الفيزياء 3 (مسار علوم الحاسب والهندسة)';
       } else if (subject === 'CHEMISTRY') {
-        textbookName = `الكيمياء (${gradeAr}) - مسار الصحة والحياة`;
+        textbookName = gradeLevel === 'G10'
+          ? 'الكيمياء 1 (السنة الأولى المشتركة - نظام المسارات)'
+          : gradeLevel === 'G11'
+          ? 'الكيمياء 2 (مسار الصحة والحياة والعلوم)'
+          : 'الكيمياء 3 (مسار الصحة والحياة)';
       } else if (subject === 'BIOLOGY') {
-        textbookName = `الأحياء (${gradeAr}) - مسار الصحة والحياة`;
+        textbookName = gradeLevel === 'G10'
+          ? 'علم البيئة / الأحياء 1 (السنة الأولى المشتركة)'
+          : gradeLevel === 'G11'
+          ? 'الأحياء 2 (مسار الصحة والحياة)'
+          : 'الأحياء 3 (مسار الصحة والحياة)';
       } else if (subject === 'ARABIC_LIT') {
-        textbookName = `الدراسات الأدبية واللغوية (${gradeAr}) - المسار الشرعي والإنساني`;
+        textbookName = gradeLevel === 'G10'
+          ? 'الكفايات اللغوية 1 (السنة الأولى المشتركة - مسارات)'
+          : gradeLevel === 'G11'
+          ? 'الدراسات الأدبية واللغوية (المسار الشرعي والإنساني)'
+          : 'البلاغة والنقد المتقدم (المسار الشرعي والإنساني)';
       }
       break;
 
@@ -512,17 +544,41 @@ export function getNationalTextbookInfo(
       } else if (subject === 'GENERAL_SCIENCE') {
         textbookName = `العلوم العامة (المرحلة الإعدادية - التعليم المصري) - ${gradeAr}`;
       } else if (subject === 'MATH') {
-        textbookName = `الرياضيات (الجبر والإحصاء والهندسة وحساب المثلثات) - ${gradeAr}`;
+        textbookName = isMiddle
+          ? `الرياضيات (الجبر والإحصاء والهندسة وحساب المثلثات) - ${gradeAr}`
+          : gradeLevel === 'G10'
+          ? 'الرياضيات العامة (الجبر وحساب المثلثات والهندسة المستوية - 1 ثانوي)'
+          : gradeLevel === 'G11'
+          ? 'الرياضيات البحتة والتطبيقية (الميكانيكا والتفاضل - 2 ثانوي)'
+          : 'الرياضيات للثانوية العامة (التفاضل والتكامل والجبر والهندسة الفراغية - 3 ثانوي)';
       } else if (subject === 'PHYSICS') {
-        textbookName = `الفيزياء للثانوية العامة ومدارس اللغات (القسم العلمي) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? 'الفيزياء والقياس ومعادلات الحركة (الصف الأول الثانوي - كتاب الوزارة)'
+          : gradeLevel === 'G11'
+          ? 'الفيزياء (الموجات والضوء والحرارة والموائع - 2 ثانوي)'
+          : 'الفيزياء للثانوية العامة ومدارس اللغات (الكهربية والمغناطيسية والحديثة - 3 ثانوي)';
       } else if (subject === 'CHEMISTRY') {
-        textbookName = `الكيمياء للثانوية العامة (علمي علوم وعلمي رياضة) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? 'الكيمياء مركز العلوم والحساب الكيميائي (الصف الأول الثانوي)'
+          : gradeLevel === 'G11'
+          ? 'الكيمياء (بنية الذرة والجدول الدوري والروابط - 2 ثانوي)'
+          : 'الكيمياء العامة والعضوية للثانوية العامة (3 ثانوي)';
       } else if (subject === 'BIOLOGY') {
-        textbookName = `الأحياء والجيولوجيا للثانوية العامة (شعبة علمي علوم) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? 'الأحياء الأساس الكيميائي للحياة والخلية (الصف الأول الثانوي)'
+          : gradeLevel === 'G11'
+          ? 'الأحياء (التغذية والنقل والتنفس والإخراج - 2 ثانوي)'
+          : 'الأحياء والجيولوجيا للثانوية العامة (المناعة والوراثة الجزيئية - 3 ثانوي)';
       } else if (subject === 'COMPUTER_SCIENCE') {
-        textbookName = `تكنولوجيا المعلومات والاتصالات والحاسب الآلي (ICT) - ${gradeAr}`;
+        textbookName = isMiddle
+          ? `الكمبيوتر وتكنولوجيا المعلومات والاتصالات (${gradeAr})`
+          : 'تكنولوجيا المعلومات والاتصالات والحاسب الآلي (ICT - الثانوية العامة)';
       } else if (subject === 'ARABIC_LIT') {
-        textbookName = `اللغة العربية وقواعد النحو والأدب والبلاغة (الثانوية العامة) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? 'اللغة العربية والأدب والبلاغة والنصوص (الصف الأول الثانوي)'
+          : gradeLevel === 'G11'
+          ? 'اللغة العربية وتاريخ الأدب والبلاغة (الصف الثاني الثانوي)'
+          : 'اللغة العربية ومدارس الشعر الحديث والبلاغة (الثانوية العامة - 3 ثانوي)';
       }
       break;
 
@@ -539,10 +595,24 @@ export function getNationalTextbookInfo(
         textbookName = `العلوم المتكاملة والاستكشاف العلمي (مؤسسة الإمارات للتعليم المدرسي) - ${gradeAr}`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية والهوية الوطنية (وزارة التربية ومؤسسة الإمارات) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية (سلسلة ينابيع المعرفة - الحلقة الثانية) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم المتكاملة والاستكشاف العلمي (الحلقة الثانية - ESE) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = isMiddle
+          ? `الرياضيات المتكاملة (الحلقة الثانية - ESE) - ${gradeAr}`
+          : `الرياضيات المتقدمة (المسار المتقدم ومسار النخبة) - ${gradeAr}`;
       } else if (subject === 'PHYSICS') {
         textbookName = `الفيزياء المتقدمة (المسار المتقدم ومسار النخبة) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء التطبيقية والحيوية (المسار المتقدم ومسار النخبة) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء والعلوم الصحية (مسار الصحة والحياة - ESE) - ${gradeAr}`;
       } else if (subject === 'COMPUTER_SCIENCE') {
         textbookName = `علوم الحاسوب والابتكار والذكاء الاصطناعي - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية والدراسات الأدبية والبلاغية (الثانوية الإماراتية) - ${gradeAr}`;
       } else {
         textbookName = `المنهج الإماراتي المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -557,6 +627,24 @@ export function getNationalTextbookInfo(
         textbookName = `العلوم - ${gradeAr} (وزارة التربية بدولة الكويت)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية والقرآن الكريم - ${gradeAr} (دولة الكويت)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `لغتي العربية (المرحلة المتوسطة - كفايات وزارة التربية) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم (المرحلة المتوسطة - وزارة التربية بدولة الكويت) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = isMiddle
+          ? `الرياضيات (المرحلة المتوسطة - دولة الكويت) - ${gradeAr}`
+          : `الرياضيات للثانوية العامة (القسم العلمي والأدبي - الكويت) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `تكنولوجيا المعلومات والحاسوب - ${gradeAr} (دولة الكويت)`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء (المرحلة الثانوية - وزارة التربية بدولة الكويت) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (المرحلة الثانوية - دولة الكويت) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء والعلوم الحياتية (المرحلة الثانوية - الكويت) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية وتاريخ الأدب والبلاغة والنقد (الثانوية الكويتية) - ${gradeAr}`;
       } else {
         textbookName = `المنهج الكويتي المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -571,6 +659,22 @@ export function getNationalTextbookInfo(
         textbookName = `اللغة العربية (مهارات الاتصال) - ${gradeAr} (وزارة التربية الأردنية)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية - ${gradeAr} (المملكة الأردنية الهاشمية)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية (مهارات الاتصال وقواعد اللغة) - ${gradeAr} (الأردن)`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم العامة (مناهج كولينز الوطنية المطورة) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (مناهج كولينز الوطنية المطورة - الفرع العلمي والأساسي) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `الحاسوب وتكنولوجيا المعلومات والبرمجة - ${gradeAr} (الأردن)`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء (الفرع العلمي - المناهج المطورة بالأردن) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (الفرع العلمي - المملكة الأردنية الهاشمية) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `العلوم الحياتية (الأحياء - الفرع العلمي بالأردن) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية تخصص (البلاغة والنقد والأدب وقضاياه - الأردن) - ${gradeAr}`;
       } else {
         textbookName = `المنهج الأردني المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -589,6 +693,22 @@ export function getNationalTextbookInfo(
         }
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `ديني قيمي (التربية الإسلامية) - ${gradeAr} (وزارة التربية العمانية)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `لغتي الجميلة (التعليم الأساسي - الحلقة الثانية بسلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم (سلاسل كامبريدج للتعليم الأساسي بسلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (سلاسل كامبريدج المطبقة بسلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `تقنية المعلومات والذكاء الاصطناعي (سلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء (سلاسل كامبريدج - دبلوم التعليم العام بسلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (سلاسل كامبريدج - سلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء (سلاسل كامبريدج - سلطنة عمان) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `المؤنس في اللغة والأدب (دبلوم التعليم العام - سلطنة عمان) - ${gradeAr}`;
       } else {
         textbookName = `المنهج العُماني المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -603,6 +723,22 @@ export function getNationalTextbookInfo(
         textbookName = `اللغة العربية (مصادر التعلم المعتمدة) - ${gradeAr} (دولة قطر)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية - معايير المناهج القطرية - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية (المرحلة الإعدادية - معايير المناهج القطرية) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم العامة (المرحلة الإعدادية - معايير المناهج القطرية) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (معايير المناهج القطرية ومصادر التعلم) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `الحوسبة وتكنولوجيا المعلومات (المناهج القطرية) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء (المسار العلمي والتكنولوجي - الثانوية القطرية) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (المسار العلمي والمسار الطبي - دولة قطر) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء (المسار العلمي والمسار الطبي - قطر) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية والأدب والبلاغة (الثانوية القطرية) - ${gradeAr}`;
       } else {
         textbookName = `المنهج القطري المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -617,6 +753,22 @@ export function getNationalTextbookInfo(
         textbookName = `اللغة العربية - ${gradeAr} (المنهج الوطني البحريني)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية - ${gradeAr} (مملكة البحرين)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية (المرحلة الإعدادية - مملكة البحرين) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم (المرحلة الإعدادية - وزارة التربية والتعليم بالبحرين) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (توحيد المسارات والمرحلة الإعدادية - البحرين) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `المواد الرقمية والتقنية (مملكة البحرين) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء (المسار العلمي والتوحيد - مملكة البحرين) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (المسار العلمي - مملكة البحرين) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء (المسار العلمي والرياضيات - البحرين) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية والدراسات الأدبية والبلاغية (البحرين) - ${gradeAr}`;
       } else {
         textbookName = `المنهج البحريني المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -635,6 +787,22 @@ export function getNationalTextbookInfo(
         }
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `القرآن الكريم والتربية الإسلامية - ${gradeAr} (العراق)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `قواعد اللغة العربية والمطالعة والنصوص - ${gradeAr} (العراق)`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم (الجزء الأول والثاني - وزارة التربية العراقية) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (الجبر والهندسة - وزارة التربية العراقية) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `الحاسوب وتكنولوجيا المعلومات (جمهورية العراق) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء للفرع العلمي (التطبيقي والأحيائي - العراق) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء للفرع العلمي (وزارة التربية العراقية) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `علم الأحياء للفرع العلمي (جمهورية العراق) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `الأدب والنصوص وقواعد اللغة العربية (السادس الإعدادي - العراق) - ${gradeAr}`;
       } else {
         textbookName = `المنهج العراقي المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -649,6 +817,22 @@ export function getNationalTextbookInfo(
         textbookName = `المفيد في اللغة العربية / مرشدي في اللغة العربية - ${gradeAr} (المغرب)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية (الممتاز في التربية الإسلامية) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `الرائد في اللغة العربية / مرشدي في اللغة العربية (الثانوي الإعدادي بالمغرب) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `علوم الحياة والأرض والفيزياء والكيمياء (الثانوي الإعدادي - المغرب) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `المفيد في الرياضيات / فضاء الرياضيات (المملكة المغربية) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `المعلوميات والبرمجة (المملكة المغربية) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء والكيمياء (سلك الباكالوريا - العلوم الرياضية والتجريبية بالمغرب) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء والتحولات المادية (سلك الباكالوريا بالمغرب) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `علوم الحياة والأرض (شعبة العلوم التجريبية - الباكالوريا المغربية) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية وآدابها (شعبة الآداب والعلوم الإنسانية - الباكالوريا) - ${gradeAr}`;
       } else {
         textbookName = `المنهاج المغربي المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -663,6 +847,22 @@ export function getNationalTextbookInfo(
         textbookName = `كتابي في اللغة العربية - ${gradeAr} (الجيل الثاني - الجزائر)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية - ${gradeAr} (وزارة التربية الوطنية بالجزائر)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية وآدابها (التعليم المتوسط - الجيل الثاني بالجزائر) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم الفيزيائية والتكنولوجيا وعلوم الطبيعة والحياة (التعليم المتوسط) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (التعليم المتوسط - مناهج الجيل الثاني بالجزائر) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `الإعلام الآلي وتكنولوجيا الاتصال (الجمهورية الجزائرية) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `العلوم الفيزيائية (شعبة العلوم التجريبية والرياضيات - البكالوريا الجزائرية) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء والتحولات الكيميائية (التعليم الثانوي بالجزائر) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `علوم الطبيعة والحياة (شعبة العلوم التجريبية - البكالوريا بالجزائر) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `الأدب العربي واللغات (شعبة الآداب والفلسفة واللغات - البكالوريا) - ${gradeAr}`;
       } else {
         textbookName = `المنهاج الجزائري المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -677,6 +877,22 @@ export function getNationalTextbookInfo(
         textbookName = `قراءة وتواصل وإنتاج كتابي - ${gradeAr} (تونس)`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية - ${gradeAr} (وزارة التربية التونسية)`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `العربية (المدرسة الإعدادية - المركز البيداغوجي بالجمهورية التونسية) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم الفيزيائية وعلوم الحياة والأرض (التعليم الأساسي التونسي) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (التعليم الأساسي وشعب الباكالوريا بتونس) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `الإعلامية والخوارزميات والبرمجة (الجمهورية التونسية) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `العلوم الفيزيائية (شعبة الرياضيات والعلوم التجريبية - الباكالوريا التونسية) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (شعبة العلوم التجريبية والرياضيات - تونس) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `علوم الحياة والأرض (شعبة العلوم التجريبية - الباكالوريا التونسية) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `العربية وآدابها (شعبة الآداب والباكالوريا التونسية) - ${gradeAr}`;
       } else {
         textbookName = `البرنامج التعليمي التونسي المعتمد لمادة ${subject} - ${gradeAr}`;
       }
@@ -696,6 +912,34 @@ export function getNationalTextbookInfo(
         textbookName = `اللغة العربية وفق المعايير الدولية - ${gradeAr}`;
       } else if (subject === 'ISLAMIC_STUDIES') {
         textbookName = `التربية الإسلامية والقيم الإنسانية - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية للناطقين بها (المعايير الدولية - المرحلة المتوسطة) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = isEn
+          ? `Middle School Integrated Science (NGSS) - ${gradeEn}`
+          : `العلوم المتكاملة للمرحلة المتوسطة وفق معايير NGSS - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = isEn
+          ? `Mathematics & Pre-Calculus / AP Calculus - ${gradeEn}`
+          : `الرياضيات الدولية والتفاضل والتكامل - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = isEn
+          ? `Advanced AP / IB Physics - ${gradeEn}`
+          : `الفيزياء المتقدمة وفق معايير AP / IB الدولية - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = isEn
+          ? `Advanced AP / IB Chemistry - ${gradeEn}`
+          : `الكيمياء العامة والعضوية وفق المعايير الدولية - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = isEn
+          ? `Advanced AP / IB Biology - ${gradeEn}`
+          : `الأحياء والعلوم الجزيئية الدولية - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = isEn
+          ? `Computer Science, Python & AI Principles - ${gradeEn}`
+          : `علوم الحاسوب والبرمجة والذكاء الاصطناعي الدولي - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `الأدب العربي والبلاغة والنقد المقارن (المرحلة الثانوية) - ${gradeAr}`;
       } else {
         textbookName = isEn 
           ? `International Curriculum for ${subject} - ${gradeEn}` 
