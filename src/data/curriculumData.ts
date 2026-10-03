@@ -29,6 +29,7 @@ import { HIGH_BIO_G11_LECTURES } from './highBio11CurriculumData';
 import { HIGH_PHYSICS_G11_LECTURES } from './highPhysics11CurriculumData';
 import { HIGH_PHYSICS_G12_LECTURES } from './highPhysics12CurriculumData';
 import { MIDDLE_ARABIC_G9_LECTURES } from './middleArabic9CurriculumData';
+import { PRIMARY_ARABIC_G1_LECTURES } from './primaryArabic1CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -55,7 +56,8 @@ export {
   HIGH_BIO_G11_LECTURES,
   HIGH_PHYSICS_G11_LECTURES,
   HIGH_PHYSICS_G12_LECTURES,
-  MIDDLE_ARABIC_G9_LECTURES
+  MIDDLE_ARABIC_G9_LECTURES,
+  PRIMARY_ARABIC_G1_LECTURES
 };
 
 // ============================================================================
@@ -4386,7 +4388,7 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
 // Master subject curriculum registry
 export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   PRIMARY_MATH: PRIMARY_MATH_LECTURES,
-  PRIMARY_ARABIC: PRIMARY_ARABIC_FULL,
+  PRIMARY_ARABIC: PRIMARY_ARABIC_G1_LECTURES,
   PRIMARY_SCIENCE: PRIMARY_SCIENCE_LECTURES,
   ISLAMIC_STUDIES: ISLAMIC_STUDIES_FULL,
   MATH: MATH_LECTURES,
@@ -4400,6 +4402,18 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
 };
 
 export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): Lecture[] {
+  if (subject === 'PRIMARY_ARABIC') {
+    if (gradeLevel === 'G1') {
+      return PRIMARY_ARABIC_G1_LECTURES;
+    }
+    if (gradeLevel === 'G2' || gradeLevel === 'G3') {
+      return PRIMARY_ARABIC_LECTURES;
+    }
+    if (gradeLevel === 'G4' || gradeLevel === 'G5' || gradeLevel === 'G6') {
+      return PRIMARY_ARABIC_FULL;
+    }
+    return PRIMARY_ARABIC_G1_LECTURES;
+  }
   if (subject === 'MATH') {
     if (gradeLevel === 'G11') {
       return HIGH_MATH_G11_LECTURES;
