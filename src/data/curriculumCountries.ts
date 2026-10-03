@@ -454,7 +454,8 @@ export function getNationalTextbookInfo(
   subject: Subject,
   gradeLevel: GradeLevel,
   track: EducationTrack = 'GENERAL',
-  lang: Language = 'ar'
+  lang: Language = 'ar',
+  educationType: EducationType = 'PUBLIC'
 ): { textbookName: string; ministry: string; standardCode: string; semester: string } {
   const cInfo = getCountryInfo(country);
   const isEn = lang === 'en';
@@ -949,10 +950,45 @@ export function getNationalTextbookInfo(
       break;
   }
 
+  let ministry = isEn ? cInfo.ministryEn : cInfo.ministryAr;
+
+  if (educationType === 'ISLAMIC') {
+    if (country === 'EG') {
+      ministry = isEn ? 'Al-Azhar Al-Sharif - Institutes Sector' : 'الأزهر الشريف - قطاع المعاهد الأزهرية';
+      if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = isEn ? `Azhar Islamic Jurisprudence & Usul al-Din - ${gradeEn}` : `الفقه المذهبي وأصول الدين والقرآن الكريم - ${gradeAr} (الأزهر الشريف)`;
+      } else if (subject === 'ARABIC_LANG' || subject === 'ARABIC_LIT' || subject === 'PRIMARY_ARABIC') {
+        textbookName = isEn ? `Azhar Arabic Grammar, Rhetoric & Literature - ${gradeEn}` : `النحو والصرف والبلاغة والأدب الأزهري - ${gradeAr} (المعاهد الأزهرية)`;
+      }
+    } else if (country === 'SA') {
+      ministry = isEn ? 'Al-Imam University - Scientific Religious Institutes' : 'جامعة الإمام محمد بن سعود الإسلامية - المعاهد العلمية';
+      if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = isEn ? `Sharia Sciences & Hadith (Scientific Institutes) - ${gradeEn}` : `العلوم الشرعية والفرائض والحديث (المعاهد العلمية السعودية) - ${gradeAr}`;
+      }
+    }
+  } else if (educationType === 'PRIVATE') {
+    if (country === 'EG') {
+      ministry = isEn ? 'Ministry of Education - Experimental & Language Schools' : 'وزارة التربية والتعليم - المدارس الرسمية للغات والتجريبية';
+      if (!textbookName.includes('لغات')) {
+        textbookName += isEn ? ' (Language & Experimental Schools)' : ' (مدارس اللغات والتعليم الخاص)';
+      }
+    } else if (country === 'AE') {
+      ministry = isEn ? 'ADEK / KHDA Private & Charter Schools' : 'هيئة المعرفة والتنمية البشرية / دائرة التعليم والمعرفة (المدارس الخاصة)';
+      textbookName += isEn ? ' (Private & Charter Schools)' : ' (المدارس الخاصة والشراكات التعليمية)';
+    }
+  } else if (educationType === 'INTERNATIONAL') {
+    ministry = isEn ? 'International Boards (Cambridge / IB / College Board AP)' : 'المجالس الدولية للاعتماد الأكاديمي (Cambridge / IB / College Board AP)';
+    if (!textbookName.includes('AP') && !textbookName.includes('International') && !textbookName.includes('الدولية')) {
+      textbookName = isEn 
+        ? `International Standard Curriculum for ${subject} - ${gradeEn} (AP / IB / IGCSE)` 
+        : `المعايير الدولية المعتمدة لمادة ${subject} - ${gradeAr} (AP / IB / IGCSE)`;
+    }
+  }
+
   return {
     textbookName,
-    ministry: isEn ? cInfo.ministryEn : cInfo.ministryAr,
-    standardCode: `${country}-${subject}-${gradeLevel}-${track}`,
+    ministry,
+    standardCode: `${country}-${educationType}-${subject}-${gradeLevel}-${track}`,
     semester: isEn ? cInfo.termDefaultEn : cInfo.termDefaultAr
   };
 }
@@ -1182,10 +1218,12 @@ export function adaptCurriculumToCountry(
   country: CountryCode,
   subject: Subject,
   gradeLevel: GradeLevel,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL',
   lang: Language = 'ar'
 ): Lecture[] {
   const cInfo = getCountryInfo(country);
-  const natTextbook = getNationalTextbookInfo(country, subject, gradeLevel, 'GENERAL', lang);
+  const natTextbook = getNationalTextbookInfo(country, subject, gradeLevel, track, lang, educationType);
 
   // Replacement patterns for currencies
   const currencyReplacements: { from: RegExp; to: string }[] = [
@@ -1268,28 +1306,36 @@ export function adaptCurriculumToCountry(
     return result;
   };
 
-  const nationalOverrides = getNationalLessonOverrides(country, subject, gradeLevel);
+  const nationalOverrides = getNationalLessonOverrides(country, subject, gradeLevel, educationType, track);
 
-  return lectures.map((lec, index) => {
+  const totalCount = nationalOverrides && nationalOverrides.length > 0
+    ? Math.max(lectures.length, nationalOverrides.length)
+    : lectures.length;
+
+  const result: Lecture[] = [];
+
+  for (let index = 0; index < totalCount; index++) {
+    const baseLec = lectures[index] || lectures[index % Math.max(1, lectures.length)] || lectures[0];
     const override = nationalOverrides && nationalOverrides[index] ? nationalOverrides[index] : null;
 
-    const finalTitleAr = override?.titleAr || applyTextTransforms(lec.titleAr);
-    const finalTitleEn = override?.titleEn || lec.titleEn;
-    const finalSubtitleAr = override?.subtitleAr || applyTextTransforms(lec.subtitleAr || lec.descriptionAr);
-    const finalSubtitleEn = override?.subtitleEn || lec.subtitleEn || lec.descriptionEn || '';
-    const finalTopicAr = override?.topicAr || applyTextTransforms(lec.topicAr);
-    const finalTopicEn = override?.topicEn || lec.topicEn;
-    const finalUnitTitleAr = override?.unitTitleAr || lec.unitTitleAr || finalTopicAr;
-    const finalUnitTitleEn = override?.unitTitleEn || lec.unitTitleEn || finalTopicEn;
-    const finalDescriptionAr = override?.descriptionAr || applyTextTransforms(lec.descriptionAr);
-    const finalDescriptionEn = override?.descriptionEn || lec.descriptionEn;
-    const finalLessonNumberAr = override?.lessonNumberAr || lec.lessonNumberAr || `الدرس ${index + 1}`;
-    const finalWarmupHookAr = override?.warmupHookAr || applyTextTransforms(lec.warmupHookAr);
-    const finalSummaryAr = override?.summaryAr || applyTextTransforms(lec.summaryAr);
+    const finalTitleAr = override?.titleAr || applyTextTransforms(baseLec?.titleAr || `الدرس ${index + 1}`);
+    const finalTitleEn = override?.titleEn || baseLec?.titleEn || `Lesson ${index + 1}`;
+    const finalSubtitleAr = override?.subtitleAr || applyTextTransforms(baseLec?.subtitleAr || baseLec?.descriptionAr || '');
+    const finalSubtitleEn = override?.subtitleEn || baseLec?.subtitleEn || baseLec?.descriptionEn || '';
+    const finalTopicAr = override?.topicAr || applyTextTransforms(baseLec?.topicAr || '');
+    const finalTopicEn = override?.topicEn || baseLec?.topicEn || '';
+    const finalUnitTitleAr = override?.unitTitleAr || baseLec?.unitTitleAr || finalTopicAr;
+    const finalUnitTitleEn = override?.unitTitleEn || baseLec?.unitTitleEn || finalTopicEn;
+    const finalDescriptionAr = override?.descriptionAr || applyTextTransforms(baseLec?.descriptionAr || '');
+    const finalDescriptionEn = override?.descriptionEn || baseLec?.descriptionEn || '';
+    const finalLessonNumberAr = override?.lessonNumberAr || baseLec?.lessonNumberAr || `الدرس ${index + 1}`;
+    const finalWarmupHookAr = override?.warmupHookAr || applyTextTransforms(baseLec?.warmupHookAr || '');
+    const finalSummaryAr = override?.summaryAr || applyTextTransforms(baseLec?.summaryAr || '');
 
     // Clone lecture deeply with authentic national adaptation
     const adapted: Lecture = {
-      ...lec,
+      ...baseLec,
+      id: `${country.toLowerCase()}-${educationType.toLowerCase()}-${subject.toLowerCase()}-${(gradeLevel || 'g').toLowerCase()}-lec-${index + 1}`,
       titleAr: finalTitleAr,
       titleEn: finalTitleEn,
       subtitleAr: finalSubtitleAr,
@@ -1301,16 +1347,19 @@ export function adaptCurriculumToCountry(
       descriptionAr: finalDescriptionAr,
       descriptionEn: finalDescriptionEn,
       lessonNumberAr: finalLessonNumberAr,
+      order: index + 1,
       gradeLevelNameAr: `${cInfo.nameAr} - ${natTextbook.textbookName}`,
       gradeLevelNameEn: `${cInfo.nameEn} - ${natTextbook.textbookName}`,
-      ministryAr: cInfo.ministryAr,
-      ministryEn: cInfo.ministryEn,
+      ministryAr: natTextbook.ministry,
+      ministryEn: natTextbook.ministry,
       termAr: natTextbook.semester,
       termEn: natTextbook.semester,
       country,
       warmupHookAr: finalWarmupHookAr,
       summaryAr: finalSummaryAr,
-      sections: lec.sections ? lec.sections.map(sec => ({
+      isLocked: index > 0,
+      isCompleted: false,
+      sections: baseLec?.sections ? baseLec.sections.map(sec => ({
         ...sec,
         titleAr: applyTextTransforms(sec.titleAr),
         contentAr: applyTextTransforms(sec.contentAr),
@@ -1327,23 +1376,25 @@ export function adaptCurriculumToCountry(
         formativeCheck: sec.formativeCheck ? {
           ...sec.formativeCheck,
           questionAr: applyTextTransforms(sec.formativeCheck.questionAr),
-          optionsAr: sec.formativeCheck.optionsAr.map(opt => applyTextTransforms(opt)),
+          optionsAr: sec.formativeCheck.optionsAr ? sec.formativeCheck.optionsAr.map(opt => applyTextTransforms(opt)) : [],
           explanationAr: applyTextTransforms(sec.formativeCheck.explanationAr)
         } : undefined
       })) : [],
-      assessment: lec.assessment ? {
-        ...lec.assessment,
-        titleAr: applyTextTransforms(lec.assessment.titleAr),
-        questions: lec.assessment.questions ? lec.assessment.questions.map(q => ({
+      assessment: baseLec?.assessment ? {
+        ...baseLec.assessment,
+        titleAr: applyTextTransforms(baseLec.assessment.titleAr),
+        questions: baseLec.assessment.questions ? baseLec.assessment.questions.map(q => ({
           ...q,
           textAr: applyTextTransforms(q.textAr),
           optionsAr: q.optionsAr ? q.optionsAr.map(opt => applyTextTransforms(opt)) : [],
           conceptTestedAr: applyTextTransforms(q.conceptTestedAr),
           explanationAr: applyTextTransforms(q.explanationAr)
         })) : []
-      } : lec.assessment
+      } : baseLec?.assessment
     };
 
-    return adapted;
-  });
+    result.push(adapted);
+  }
+
+  return result;
 }

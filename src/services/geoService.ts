@@ -250,9 +250,10 @@ export function getLectureCurriculumAlignment(
   subject: Subject,
   gradeLevel: GradeLevel,
   track: EducationTrack = 'GENERAL',
-  lang: 'ar' | 'en' = 'ar'
+  lang: 'ar' | 'en' = 'ar',
+  educationType: EducationType = 'PUBLIC'
 ) {
-  const nationalInfo = getNationalTextbookInfo(country, subject, gradeLevel, track, lang);
+  const nationalInfo = getNationalTextbookInfo(country, subject, gradeLevel, track, lang, educationType);
   return {
     country,
     nationalStandardCode: nationalInfo.standardCode,

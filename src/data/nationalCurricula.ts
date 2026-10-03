@@ -1,4 +1,4 @@
-import type { CountryCode, GradeLevel, Subject } from '../types';
+import type { CountryCode, EducationTrack, EducationType, GradeLevel, Subject } from '../types';
 
 export interface NationalLessonOverride {
   titleAr: string;
@@ -26,6 +26,323 @@ export type SubjectGradeKey = `${Subject}_${GradeLevel}` | Subject;
  * and syllabus objectives transform into that country's REAL national curriculum.
  */
 export const NATIONAL_CURRICULA: Partial<Record<CountryCode, Partial<Record<string, NationalLessonOverride[]>>>> = {
+  // ══════════════════════════════════════════════════════════
+  // 🇸🇦 SAUDI ARABIA (المملكة العربية السعودية - نظام الفصول الثلاثة والمسارات والمعاهد)
+  // ══════════════════════════════════════════════════════════
+  SA: {
+    // ── الصف السادس الابتدائي: الرياضيات ──
+    PRIMARY_MATH_G6: [
+      {
+        titleAr: 'القيمة المنزلية والعمليات الحسابية والأنماط الجبرية',
+        subtitleAr: 'المقارنة بين الأعداد الكبيرة والملايين، خصائص الجمع والضرب، والقوى والأسس والمتغيرات والعبارات الجبرية',
+        topicAr: 'الفصل الأول: الجبر والدوال والأنماط',
+        unitTitleAr: 'الفصل الأول: الأنماط العددية والجبر',
+        descriptionAr: 'منهاج وزارة التعليم السعودية المعتمد (الرياضيات 6 ابتدائي - نظام الفصول الثلاثة).',
+        lessonNumberAr: 'الدرس الأول - الفصل 1'
+      },
+      {
+        titleAr: 'الإحصاء والتمثيلات البيانية بالخطوط والأعمدة والمقاييس',
+        subtitleAr: 'قراءة وتمثيل البيانات بالخطوط والأعمدة المزدوجة، وحساب المتوسط الحسابي والوسيط والمنوال والمدى بدقة',
+        topicAr: 'الفصل الثاني: الإحصاء والتمثيلات البيانية',
+        unitTitleAr: 'الفصل الثاني: الإحصاء وتحليل البيانات',
+        descriptionAr: 'تطبيقات إحصائية واقعية على بيانات الطقس وعدد السكان في مناطق المملكة العربية السعودية.',
+        lessonNumberAr: 'الدرس الثاني - الفصل 2'
+      },
+      {
+        titleAr: 'العمليات على الكسور العشرية والاعتيادية والأعداد الكسرية',
+        subtitleAr: 'مقارنة الكسور، ضرب وقسمة الكسور العشرية والاعتيادية، وخطة حل المسألة والتخمين والتحقق',
+        topicAr: 'الفصل الثالث: الكسور والعمليات الحسابية',
+        unitTitleAr: 'الفصل الثالث: العمليات على الكسور',
+        descriptionAr: 'حل المسائل الحسابية الميدانية في البيع والشراء والقياس اليومي بالمملكة.',
+        lessonNumberAr: 'الدرس الثالث - الفصل 3'
+      },
+      {
+        titleAr: 'النسبة والتناسب والنسبة المئوية والاحتمال',
+        subtitleAr: 'كتابة النسب في أبسط صورة، المعدل ومعدل الوحدة، جداول النسب والتناسب، وحساب النسبة المئوية من كمية',
+        topicAr: 'الفصل الرابع: النسبة والتناسب',
+        unitTitleAr: 'الفصل الرابع: النسبة والتناسب والخصومات',
+        descriptionAr: 'تطبيقات النسبة المئوية في مواسم التخفيضات والضريبة التجارية بالمملكة العربية السعودية.',
+        lessonNumberAr: 'الدرس الرابع - الفصل 4'
+      },
+      {
+        titleAr: 'الهندسة والقياس: المحيط والمساحة وحجم المنشور والأسطوانة',
+        subtitleAr: 'حساب محيط ومساحة متوازي الأضلاع والمثلث، ومساحة سطح وحجم المنشور الرباعي والأسطوانة وتطبيقاتها الحياتية',
+        topicAr: 'الفصل الخامس: الهندسة والقياس الفراغي',
+        unitTitleAr: 'الفصل الخامس: القياس والمساحات والحجوم',
+        descriptionAr: 'حساب مساحات المشاريع الهندسية والمعمارية في المشروعات الوطنية الكبرى (نيوم وذا لاين).',
+        lessonNumberAr: 'الدرس الخامس - الفصل 5'
+      }
+    ],
+
+    // ── الصف السادس الابتدائي: العلوم ──
+    PRIMARY_SCIENCE_G6: [
+      {
+        titleAr: 'نظرية الخلية والتركيب الخلوي والمجهر والوراثة والصفات',
+        subtitleAr: 'مكونات الخلية النباتية والحيوانية، البناء الضوئي والتنفس، وانقسام الخلايا ونقل الصفات الوراثية والجينات',
+        topicAr: 'الوحدة الأولى: تنوع الحياة والتركيب الحيوي',
+        unitTitleAr: 'الفصل الأول: الخلايا والوراثة',
+        descriptionAr: 'منهاج العلوم المطور - وزارة التعليم بالمملكة العربية السعودية (الصف السادس الابتدائي).',
+        lessonNumberAr: 'الدرس 1 - الفصل 1'
+      },
+      {
+        titleAr: 'عمليات الحياة في النباتات والمخلوقات الحية الدقيقة',
+        subtitleAr: 'امتصاص الماء والأملاح في الجذور، النقل في الساق والأوراق، والتكاثر في النباتات الوعائية واللاوعائية',
+        topicAr: 'الوحدة الأولى: عمليات الحياة في النبات',
+        unitTitleAr: 'الفصل الثاني: النباتات والبيئة',
+        descriptionAr: 'دراسة الغطاء النباتي الصحراوي والزراعي في واحات الأحساء وتبوك والقصيم بالسعودية.',
+        lessonNumberAr: 'الدرس 2 - الفصل 2'
+      },
+      {
+        titleAr: 'الأنظمة البيئية والسلاسل الغذائية وهرم الطاقة وحماية الموارد',
+        subtitleAr: 'العلاقات بين المخلوقات الحية (الافتراس، التكافل، التطفل)، ودورات العناصر وحماية المحميات الطبيعية',
+        topicAr: 'الوحدة الثانية: الأنظمة البيئية والموارد',
+        unitTitleAr: 'الفصل الثالث: السلاسل الغذائية والبيئة',
+        descriptionAr: 'مبادرة السعودية الخضراء والمحميات الملكية لحماية الحياة الفطرية المهددة بالانقراض.',
+        lessonNumberAr: 'الدرس 3 - الفصل 3'
+      },
+      {
+        titleAr: 'الأرض والفضاء: حركات الأرض وفصول السنة والكسوف والخسوف',
+        subtitleAr: 'دوران الأرض حول محورها وحول الشمس، تعاقب الليل والنهار، أطوار القمر وظاهرتي المد والجزر',
+        topicAr: 'الوحدة الثالثة: الأرض والفلك',
+        unitTitleAr: 'الفصل الرابع: الفضاء والنظام الشمسي',
+        descriptionAr: 'دراسة استكشاف الفضاء ومهمات المملكة لرواد الفضاء السعوديين إلى محطة الفضاء الدولية.',
+        lessonNumberAr: 'الدرس 4 - الفصل 4'
+      },
+      {
+        titleAr: 'المادة وتغيراتها: الذرات والعناصر والجدول الدوري والأحماض والقواعد',
+        subtitleAr: 'التركيب الذري (البروتونات والنيوترونات والإلكترونات)، التغيرات الفيزيائية والكيميائية، والخصائص الكاشفة',
+        topicAr: 'الوحدة الرابعة: المادة والطاقة',
+        unitTitleAr: 'الفصل الخامس: بنية المادة والتفاعلات',
+        descriptionAr: 'تطبيقات صناعة البتروكيماويات والتكرير في شركة أرامكو السعودية وسابك.',
+        lessonNumberAr: 'الدرس 5 - الفصل 5'
+      }
+    ],
+
+    // ── الصف السادس الابتدائي: الدراسات الإسلامية ──
+    ISLAMIC_STUDIES_G6: [
+      {
+        titleAr: 'التوحيد: الإيمان باليوم الآخر والقضاء والقدر وأثرهما',
+        subtitleAr: 'الركن الخامس والسادس من أركان الإيمان، حقيقة البعث والحساب والميزان والجنة والنار، والرضا بالقدر',
+        topicAr: 'قسم التوحيد: أركان الإيمان الكبرى',
+        unitTitleAr: 'الوحدة الأولى: الإيمان باليوم الآخر والقدر',
+        descriptionAr: 'مقرر الدراسات الإسلامية للصف السادس الابتدائي - وزارة التعليم بالمملكة العربية السعودية.',
+        lessonNumberAr: 'الدرس 1 - التوحيد'
+      },
+      {
+        titleAr: 'الفقه والسلوك: أحكام صلاة الكسوف والاستسقاء وصلاة الجنازة',
+        subtitleAr: 'صفة صلاة الكسوف والخسوف، شروط وسنن صلاة الاستسقاء عند الجدب، وأحكام تغسيل وتكفين والصلاة على الميت',
+        topicAr: 'قسم الفقه والسلوك: صلوات المناسبات',
+        unitTitleAr: 'الوحدة الثانية: الصلوات والسنن المؤكدة',
+        descriptionAr: 'التطبيق العملي لأحكام الصلوات في المساجد والحرمين الشريفين بالمملكة العربية السعودية.',
+        lessonNumberAr: 'الدرس 2 - الفقه والسلوك'
+      },
+      {
+        titleAr: 'الحديث والسيرة: فضل تلاوة القرآن وبر الوالدين وحجة الوداع',
+        subtitleAr: 'دراسة الأحاديث النبوية الصحيحة في فضل حفظ القرآن، وحق الوالدين، وخطبة حجة الوداع ووفاة النبي ﷺ',
+        topicAr: 'قسم الحديث والسيرة النبوية',
+        unitTitleAr: 'الوحدة الثالثة: الهدي النبوي والأخلاق',
+        descriptionAr: 'غرس القيم الإسلامية الأصيلة والاقتداء بسنة النبي ﷺ في تعامله ورحمته.',
+        lessonNumberAr: 'الدرس 3 - الحديث والسيرة'
+      },
+      {
+        titleAr: 'الفقه والسلوك: زكاة الفطر والصدقة وحقوق الجار والمعاملات',
+        subtitleAr: 'حكم زكاة الفطر ووقت إخراجها ومقدارها، والفرق بين الزكاة الواجبة والصدقة المستحبة، ورعاية الجار',
+        topicAr: 'قسم الفقه والسلوك: التكافل الاجتماعي',
+        unitTitleAr: 'الوحدة الرابعة: الزكاة والصدقات',
+        descriptionAr: 'تطبيقات منصة إحسان الوطنية والعمل الخيري المعتمد في المملكة العربية السعودية.',
+        lessonNumberAr: 'الدرس 4 - الفقه والسلوك'
+      },
+      {
+        titleAr: 'التفسير والقرآن الكريم: سورة الملك وتدبر دلائل التوحيد',
+        subtitleAr: 'تلاوة وحفظ آيات سورة الملك وتفسير الحكمة من خلق الموت والحياة وشهادة الكون بالوحدانية',
+        topicAr: 'قسم التفسير والقرآن الكريم',
+        unitTitleAr: 'الوحدة الخامسة: القرآن وتدبر الآيات',
+        descriptionAr: 'حفظ وتدبر الآيات الكريمة وفق المصحف الشريف لمجمع الملك فهد لطباعة المصحف بالمدينة المنورة.',
+        lessonNumberAr: 'الدرس 5 - التفسير'
+      }
+    ],
+
+    // ── الصف السادس: لغتي الجميلة ──
+    PRIMARY_ARABIC_G6: [
+      {
+        titleAr: 'لغتي الجميلة: قدوات ومثل عليا (شخصيات إسلامية ملهمة)',
+        subtitleAr: 'نصوص القراءة والفهم القرائي لشخصية الخليفة أبي بكر الصديق وعمر بن الخطاب رضي الله عنهما',
+        topicAr: 'الوحدة الأولى: قدوات ومثل عليا',
+        unitTitleAr: 'الوحدة 1: القيم والقدوة',
+        descriptionAr: 'كتاب لغتي الجميلة للصف السادس الابتدائي - وزارة التعليم السعودية.',
+        lessonNumberAr: 'الدرس 1'
+      },
+      {
+        titleAr: 'المشتقات: اسم الفاعل واسم المفعول والمصادر وصياغتها',
+        subtitleAr: 'صياغة اسم الفاعل واسم المفعول من الفعل الثلاثي وفوق الثلاثي واستخراج المشتقات وتوظيفها تعبيرياً',
+        topicAr: 'الصنف اللغوي: المشتقات العربية',
+        unitTitleAr: 'الوحدة 1: الصنف اللغوي',
+        descriptionAr: 'قواعد الصرف والاشتقاق المقررة في المنهج السعودي لتعزيز الفصاحة اللغوية.',
+        lessonNumberAr: 'الدرس 2'
+      },
+      {
+        titleAr: 'النحو: رفع الفعل المضارع ونصبه وجزمه، والأفعال الخمسة',
+        subtitleAr: 'حالات إعراب الفعل المضارع الصحيح والمعتل الآخر، وعلامات إعراب الأفعال الخمسة بثبوت النون وحذفها',
+        topicAr: 'الوظيفة النحوية: إعراب الأفعال',
+        unitTitleAr: 'الوحدة 2: الوظيفة النحوية',
+        descriptionAr: 'التدريبات الإعرابية التطبيقية وفق نماذج اختبارات نافس الوطنية بالسعودية.',
+        lessonNumberAr: 'الدرس 3'
+      },
+      {
+        titleAr: 'الظاهرة الإملائية: همزتا الوصل والقطع وهمزة ابن والهمزة المتطرفة',
+        subtitleAr: 'مواضع همزة الوصل والقطع، وحالات حذف همزة (ابن) وإثباتها، ورسم الهمزة المتطرفة على الألف والواو والياء والسطر',
+        topicAr: 'الظاهرة الإملائية والرسم الكتابي',
+        unitTitleAr: 'الوحدة 2: الرسم الإملائي',
+        descriptionAr: 'إتقان الكتابة الصحيحة وتجنب الأخطاء الإملائية الشائعة في اللغة العربية.',
+        lessonNumberAr: 'الدرس 4'
+      }
+    ],
+
+    // ── المرحلة الثانوية (نظام المسارات): فيزياء 1 (الصف العاشر G10) ──
+    PHYSICS_G10: [
+      {
+        titleAr: 'مدخل إلى علم الفيزياء والقياس العلمي وعلم الفلك (مسارات)',
+        subtitleAr: 'الرياضيات والفيزياء، النظام الدولي للوحدات (SI)، تحليل الوحدات، والدقة والضبط وتقدير القياسات',
+        topicAr: 'الفصل 1: مدخل إلى علم الفيزياء',
+        unitTitleAr: 'الوحدة الأولى: أساسيات القياس والفيزياء',
+        descriptionAr: 'منهاج الفيزياء 1 (السنة الأولى المشتركة - نظام المسارات الثانوي بالسعودية).',
+        lessonNumberAr: 'الفصل 1 - الدرس 1'
+      },
+      {
+        titleAr: 'تمثيل الحركة ومنحنيات الموقع-الزمن والسرعة المتجهة',
+        subtitleAr: 'مخططات الحركة والنموذج الجسيمي، أنظمة الإحداثيات والإزاحة، وحساب السرعة المتجهة من ميل المنحنى',
+        topicAr: 'الفصل 2: تمثيل الحركة',
+        unitTitleAr: 'الوحدة الأولى: علم الحركة والميكانيكا',
+        descriptionAr: 'تحليل الرسوم البيانية للحركة واستخدام المستشعرات الرقمية في معامل المدارس السعودية.',
+        lessonNumberAr: 'الفصل 2 - الدرس 2'
+      },
+      {
+        titleAr: 'الحركة المتسارعة ومعادلات الحركة بتسارع منتظم والسقوط الحر',
+        subtitleAr: 'التسارع المتوسط واللحظي، اشتقاق معادلات الحركة الثلاث بتسارع ثابت، وتسارع الجاذبية الأرضية g',
+        topicAr: 'الفصل 3: الحركة المتسارعة',
+        unitTitleAr: 'الوحدة الأولى: الحركة في خط مستقيم',
+        descriptionAr: 'حل مسائل المقذوفات والسقوط الحر وفق نماذج اختبار التحصيلي للمركز الوطني قياس.',
+        lessonNumberAr: 'الفصل 3 - الدرس 3'
+      },
+      {
+        titleAr: 'القوى في بعد واحد وقوانين نيوتن والقوة العمودية والاحتكاك',
+        subtitleAr: 'القوة والقصور الذاتي، القانون الأول والثاني والثالث لنيوتن، والوزن الظاهري والقوة العمودية وقوة الشد',
+        topicAr: 'الفصل 4: القوى في بعد واحد',
+        unitTitleAr: 'الوحدة الثانية: القوى والحركة لنيوتن',
+        descriptionAr: 'مخطط الجسم الحر وحساب القوة المحصلة وتطبيقات الحركة في المصاعد والسيارات.',
+        lessonNumberAr: 'الفصل 4 - الدرس 4'
+      },
+      {
+        titleAr: 'القوى في بعدين وتحليل المتجهات والحركة الدائرية',
+        subtitleAr: 'المتجهات ومركباتها، الاحتكاك السكوني والحركي على السطوح المائلة، والقوة المركزية والتسارع المركزي',
+        topicAr: 'الفصل 5: القوى في بعدين',
+        unitTitleAr: 'الوحدة الثانية: المتجهات والحركة الدائرية',
+        descriptionAr: 'تطبيقات المنعطفات الآمنة على الطرق السريعة وقطارات المملكة (قطار الحرمين وسار).',
+        lessonNumberAr: 'الفصل 5 - الدرس 5'
+      }
+    ],
+
+    // ── كيمياء 1 (نظام المسارات - الصف العاشر G10) ──
+    CHEMISTRY_G10: [
+      {
+        titleAr: 'مقدمة في الكيمياء: طبقة الأوزون ومركبات الكلوروفلوروكربون',
+        subtitleAr: 'تعريف المادة والكيمياء، طبقات الغلاف الجوي وأهمية غاز الأوزون، الطريقة العلمية وقواعد السلامة في المختبر',
+        topicAr: 'الفصل 1: مقدمة في الكيمياء',
+        unitTitleAr: 'الوحدة الأولى: الكيمياء والمادة',
+        descriptionAr: 'منهاج الكيمياء 1 (نظام المسارات - وزارة التعليم بالمملكة العربية السعودية).',
+        lessonNumberAr: 'الفصل 1 - الدرس 1'
+      },
+      {
+        titleAr: 'المادة — الخواص والتغيرات وقانون حفظ الكتلة وقانون النسب',
+        subtitleAr: 'الخواص الفيزيائية والكيميائية، التغيرات الفيزيائية والكيميائية، قانون حفظ الكتلة، وقانون النسب الثابتة والمتضاعفة',
+        topicAr: 'الفصل 2: المادة والخواص والتغيرات',
+        unitTitleAr: 'الوحدة الأولى: خواص المادة وقوانينها',
+        descriptionAr: 'التجارب المعملية لتحديد نقاء المواد وفصل المخاليط بالترشيح والتقطير والتسامي.',
+        lessonNumberAr: 'الفصل 2 - الدرس 2'
+      },
+      {
+        titleAr: 'تركيب الذرة: النظريات الذرية والبروتونات والنيوترونات والإلكترونات',
+        subtitleAr: 'أفكار ديموقريطوس ودالتون، تجربة أنبوب أشعة المهبط وطومسون، تجربة رذرفورد والنواة، والنظائر والكتلة الذرية',
+        topicAr: 'الفصل 3: تركيب الذرة',
+        unitTitleAr: 'الوحدة الثانية: التركيب الذري الحديث',
+        descriptionAr: 'حل مسائل حساب متوسط الكتلة الذرية للنظائر وفق معايير اختبارات قياس التحصيلية.',
+        lessonNumberAr: 'الفصل 3 - الدرس 3'
+      },
+      {
+        titleAr: 'النظرية الكمية والذرة والترتيب الإلكتروني وقواعد التوزيع',
+        subtitleAr: 'الضوء وطاقة الكم، التأثير الكهروضوئي، نموذج بور لذرة الهيدروجين، ومبدأ أوفباو وباولي وقاعدة هوند',
+        topicAr: 'الفصل 4: التوزيع الإلكتروني والكم',
+        unitTitleAr: 'الوحدة الثانية: النظرية الكمية والجدول الدوري',
+        descriptionAr: 'كتابة التوزيع الإلكتروني ورسم مربعات المستويات الفرعية وترميز الغاز النبيل.',
+        lessonNumberAr: 'الفصل 4 - الدرس 4'
+      }
+    ],
+
+    // ── رياضيات 1 (نظام المسارات - الصف العاشر G10) ──
+    MATH_G10: [
+      {
+        titleAr: 'التبرير والبرهان: التبرير الاستقرائي والعبارات الشرطية والمنطق',
+        subtitleAr: 'التبرير الاستقرائي والتخمين والأمثلة المضادة، جداول الصواب ونفي العبارة، والعبارات الشرطية وتطبيقاتها',
+        topicAr: 'الفصل 1: التبرير والبرهان الرياضي',
+        unitTitleAr: 'الوحدة الأولى: المنطق الرياضي والبراهين',
+        descriptionAr: 'منهاج الرياضيات 1 (السنة الأولى المشتركة - نظام المسارات الثانوي السعودي).',
+        lessonNumberAr: 'الفصل 1 - الدرس 1'
+      },
+      {
+        titleAr: 'التوازي والتعامد وميل المستقيم وإثبات توازي المستقيمات',
+        subtitleAr: 'المستقيمان والقاطع والزوايا المتبادلة والمتناظرة، صيغ معادلة المستقيم (الميل والمقطع ونقطة وميل)، والبعد بين نقطة ومستقيم',
+        topicAr: 'الفصل 2: المستقيمات المتوازية والمتعامدة',
+        unitTitleAr: 'الوحدة الثانية: الهندسة الإحداثية والمستقيمات',
+        descriptionAr: 'تطبيقات هندسية على شبكات الطرق والمسارات الهندسية بالسعودية.',
+        lessonNumberAr: 'الفصل 2 - الدرس 2'
+      },
+      {
+        titleAr: 'تطابق المثلثات: حالات SSS و SAS و ASA و AAS والبراهين الهندسية',
+        subtitleAr: 'المثلثات المتطابقة، إثبات تطابق مثلثين بـ 3 أضلاع، أو ضلعين وزاوية محصورة، وتطابق المثلثات قائمة الزاوية (HL)',
+        topicAr: 'الفصل 3: تطابق المثلثات',
+        unitTitleAr: 'الوحدة الثالثة: المثلثات والتطابق',
+        descriptionAr: 'صياغة البراهين الهندسية ذات العمودين والبرهان التسلسلي والحر بدقة.',
+        lessonNumberAr: 'الفصل 3 - الدرس 3'
+      },
+      {
+        titleAr: 'العلاقات في المثلث ومتباينات المثلث والبرهان غير المباشر',
+        subtitleAr: 'المنصفات والقطع المتوسطة والارتفاعات في المثلث، متباينة زاوية-ضلع، ومتباينة المثلث وخطوات البرهان بالتناقض',
+        topicAr: 'الفصل 4: العلاقات والتباين في المثلث',
+        unitTitleAr: 'الوحدة الرابعة: متباينات المثلث والبرهان',
+        descriptionAr: 'استخدام المتباينات في التحقق من إمكانية تشكيل المثلثات وتطبيقات المسافات والملاحة.',
+        lessonNumberAr: 'الفصل 4 - الدرس 4'
+      }
+    ],
+
+    // ── التعليم الديني والشرعي السعودي (المعاهد العلمية ISLAMIC) ──
+    ISLAMIC_STUDIES_ISLAMIC: [
+      {
+        titleAr: 'التوحيد والعقيدة: تحقيق التوحيد الخالص ونواقض الإسلام وأقسامه',
+        subtitleAr: 'توحيد الربوبية والألوهية والأسماء والصفات، حقيقة لا إله إلا الله وشروطها، والتحذير من الشرك الأكبر والأصغر',
+        topicAr: 'المعاهد العلمية: التوحيد والاعتقاد الصحيح',
+        unitTitleAr: 'الوحدة 1: التوحيد الصافي ونواقضه',
+        descriptionAr: 'منهاج المعاهد العلمية التابعة لجامعة الإمام محمد بن سعود الإسلامية.',
+        lessonNumberAr: 'الدرس الأول - التوحيد'
+      },
+      {
+        titleAr: 'الفقه الإسلامي: فقه البيوع والمعاملات المالية المعاصرة والربا',
+        subtitleAr: 'شروط البيع، الخيار وأنواعه، أقسام الربا (ربا الفضل والنسيئة)، والتطبيقات المصرفية الإسلامية المعاصرة',
+        topicAr: 'المعاهد العلمية: فقه المعاملات المالية',
+        unitTitleAr: 'الوحدة 2: فقه البيوع المصرفية',
+        descriptionAr: 'دراسة قرارات المجمع الفقهي الإسلامي وهيئة كبار العلماء بالمملكة العربية السعودية.',
+        lessonNumberAr: 'الدرس الثاني - الفقه'
+      },
+      {
+        titleAr: 'علم الفرائض والمواريث: أركان الإرث وأصحاب الفروض والعصبات',
+        subtitleAr: 'موانع الإرث، أصحاب النصف والربع والثمن والثلثين والثلث والسدس، والعصبات والتعصيب وحجب الحرمان والنقصان',
+        topicAr: 'المعاهد العلمية: الفرائض وحساب التركات',
+        unitTitleAr: 'الوحدة 3: أحكام المواريث والفرائض',
+        descriptionAr: 'حساب المسائل الفرضية وقسمة التركات بدقة وفق الفقه المقارن المعتمد.',
+        lessonNumberAr: 'الدرس الثالث - الفرائض'
+      }
+    ]
+  },
+
   // ══════════════════════════════════════════════════════════
   // 🇪🇬 EGYPT (جمهورية مصر العربية - المناهج المطورة والتعليم 2.0 والثانوية العامة)
   // ══════════════════════════════════════════════════════════
@@ -378,6 +695,207 @@ export const NATIONAL_CURRICULA: Partial<Record<CountryCode, Partial<Record<stri
         descriptionAr: 'تجارب التصادم وقوانين الأمان في وسائل المواصلات المصرية وفق معايير السلامة والأمان.',
         lessonNumberAr: 'المفهوم الرابع - الدرس 4'
       }
+    ],
+
+    // ── الصف السادس الابتدائي: التربية الدينية الإسلامية (المنهج الحكومي والخاص Edu 2.0) ──
+    ISLAMIC_STUDIES_G6: [
+      {
+        titleAr: 'الإيمان باليوم الآخر والقضاء والقدر وحساب الأعمال',
+        subtitleAr: 'أركان الإيمان، حقيقة البعث والجزاء، والرضا بقضاء الله وقدره وثمراته الإيمانية في سلوك المسلم',
+        topicAr: 'المحور الأول: عقيدتي وإيماني',
+        unitTitleAr: 'الوحدة الأولى: الإيمان باليوم الآخر والقدر',
+        descriptionAr: 'منهج وزارة التربية والتعليم المصرية المطور (التعليم 2.0) - كتاب التربية الدينية الإسلامية.',
+        lessonNumberAr: 'الدرس 1 - العقيدة'
+      },
+      {
+        titleAr: 'أسماء الله الحسنى: الواحد، الأحد، الصمد، القادر ومقتضيات الإيمان بها',
+        subtitleAr: 'شرح معاني أسماء الله الحسنى ودلالاتها التوحيدية، واستشعار قدرة الله المطلقة في الكون',
+        topicAr: 'المحور الأول: أسماء الله الحسنى ومعانيها',
+        unitTitleAr: 'الوحدة الأولى: التوحيد والأسماء الحسنى',
+        descriptionAr: 'تعزيز العقيدة السليمة وفهم معاني أسماء الله الحسنى وتطبيقها في الدعاء والسلوك.',
+        lessonNumberAr: 'الدرس 2 - العقيدة'
+      },
+      {
+        titleAr: 'سورة الحشر وتدبر آياتها وأحكام التجويد (القلقلة ومخارج الحروف)',
+        subtitleAr: 'تلاوة الآيات الكريمة وتفسيرها، التعرف على أسباب النزول، وتطبيق أحكام القلقلة ومخارج الحروف بدقة',
+        topicAr: 'المحور الثاني: القرآن الكريم وتدبره',
+        unitTitleAr: 'الوحدة الثانية: القرآن والتجويد',
+        descriptionAr: 'حفظ وتلاوة وتدبر آيات سورة الحشر وفق المنظومة التعليمية المصرية.',
+        lessonNumberAr: 'الدرس 3 - القرآن الكريم'
+      },
+      {
+        titleAr: 'السيرة النبوية: غزوة الخندق (الأحزاب) وحفر الخندق وثبات المؤمنين',
+        subtitleAr: 'تجمع قبائل الأحزاب، مشورة الصحابي الجليل سلمان الفارسي، المعجزات النبوية أثناء حفر الخندق، ونصر الله',
+        topicAr: 'المحور الثالث: السيرة النبوية والشخصيات',
+        unitTitleAr: 'الوحدة الثالثة: السيرة والقدوة',
+        descriptionAr: 'دروس الصبر والشورى والعمل الجماعي والتوكل على الله في غزوة الأحزاب.',
+        lessonNumberAr: 'الدرس 4 - السيرة النبوية'
+      },
+      {
+        titleAr: 'العبادات والأخلاق: آداب الاستئذان وبر الوالدين وصلة الأرحام وحسن الجوار',
+        subtitleAr: 'آداب دخول البيوت، بر الوالدين في حياتهما وبعد مماتهما، وصلة الأرحام وإكرام الجار وحفظ لسانه',
+        topicAr: 'المحور الرابع: العبادات والمعاملات الأخلاقية',
+        unitTitleAr: 'الوحدة الرابعة: الأخلاق والآداب',
+        descriptionAr: 'بناء الشخصية المصرية الصالحة المتسامحة وفق القيم الأخلاقية الإسلامية.',
+        lessonNumberAr: 'الدرس 5 - الآداب والأخلاق'
+      }
+    ],
+
+    // ── المعاهد الأزهرية الشريفة (التعليم الديني والأزهري - الفقه المذهبي وأصول الدين) ──
+    ISLAMIC_STUDIES_ISLAMIC: [
+      {
+        titleAr: 'الفقه المذهبي الأزهري: الطهارة وأحكام الوضوء والصلاة ومبطلاتها',
+        subtitleAr: 'دراسة الفقه المذهبي (الشافعي / الحنفي): شروط صحة الصلاة، فرائضها وسننها، وسجود السهو والأحكام التطبيقية',
+        topicAr: 'قسم الفقه المذهبي (الشافعي / الحنفي)',
+        unitTitleAr: 'الوحدة الأولى: الفقه الإسلامي الأزهري',
+        descriptionAr: 'منهج قطاع المعاهد الأزهرية الشريفة - دراسة فقهية مؤصلة بالدليل الشرعي.',
+        lessonNumberAr: 'الدرس 1 - الفقه المذهبي'
+      },
+      {
+        titleAr: 'أصول الدين (التوحيد): صفات الله تعالى النفسية والسلبية والمعاني',
+        subtitleAr: 'معرفة الله تعالى بالأدلة العقلية والنقلية، صفات الجلال والكمال، وما يستحيل في حقه تعالى وما يجوز',
+        topicAr: 'قسم التوحيد والعقيدة الأزهرية',
+        unitTitleAr: 'الوحدة الثانية: التوحيد والصفات الإلهية',
+        descriptionAr: 'أصول العقيدة وفق المنهج الأزهري الوسطي القائم على البرهان العقلي والنقلي.',
+        lessonNumberAr: 'الدرس 2 - التوحيد'
+      },
+      {
+        titleAr: 'أصول الدين (التفسير والحديث): تفسير سورة النبأ وشرح أحاديث الإيمان',
+        subtitleAr: 'تفسير جزء عم تحليلياً، وشرح الأحاديث النبوية الصحيحة في أركان الإسلام وثمرات الصدق والأمانة',
+        topicAr: 'قسم التفسير والحديث النبوي',
+        unitTitleAr: 'الوحدة الثالثة: التفسير والحديث',
+        descriptionAr: 'دراسة نصوص الكتاب والسنة وتخريج الأحاديث وبيان معاني المفردات والفوائد المستنبطة.',
+        lessonNumberAr: 'الدرس 3 - الحديث والتفسير'
+      },
+      {
+        titleAr: 'السيرة النبوية الشريفة: الهجرة النبوية المباركة وتأسيس دولة المدينة',
+        subtitleAr: 'أسباب الهجرة، خطة النبي ﷺ وصحبته لأبي بكر الصديق، بناء المسجد النبوي، والمؤاخاة بين المهاجرين والأنصار',
+        topicAr: 'قسم السيرة النبوية وتاريخ الإسلام',
+        unitTitleAr: 'الوحدة الرابعة: السيرة النبوية العطرة',
+        descriptionAr: 'دروس وعبر من السيرة النبوية الشريفة المقررة على طلاب المعاهد الأزهرية.',
+        lessonNumberAr: 'الدرس 4 - السيرة النبوية'
+      },
+      {
+        titleAr: 'القرآن الكريم وتجويده: أحكام النون الساكنة والتنوين والمدود والمخارج',
+        subtitleAr: 'الإظهار والإدغام والإقلاب والإخفاء، أحكام الميم الساكنة، والمد اللازم والواجب والجائز وحفظ المقررات',
+        topicAr: 'قسم القرآن الكريم والتجويد الأزهري',
+        unitTitleAr: 'الوحدة الخامسة: التجويد وتلاوة القرآن',
+        descriptionAr: 'تطبيق أحكام التلاوة والتجويد العملي وفق رواية حفص عن عاصم من طريق الشاطبية.',
+        lessonNumberAr: 'الدرس 5 - التجويد'
+      }
+    ],
+
+    // ── اللغة العربية بالمعاهد الأزهرية (نحو، صرف، بلاغة، مطالعة) ──
+    ARABIC_LANG_ISLAMIC: [
+      {
+        titleAr: 'النحو الأزهري: علامات الإعراب الأصلية والفرعية والأسماء الستة',
+        subtitleAr: 'إعراب الأسماء بالحركات والحروف، شروط إعراب الأسماء الستة، والتدريبات الإعرابية من القرآن والشعر العربي',
+        topicAr: 'قسم النحو: علامات الإعراب',
+        unitTitleAr: 'الوحدة الأولى: قواعد النحو الأزهري',
+        descriptionAr: 'كتاب النحو لقطاع المعاهد الأزهرية الشريفة - دراسة القواعد بأمثلة شواهد التنزيل.',
+        lessonNumberAr: 'الدرس 1 - النحو'
+      },
+      {
+        titleAr: 'الصرف الأزهري: الميزان الصرفي وتجريد وزيادة الأفعال',
+        subtitleAr: 'أصل وضع الميزان (ف-ع-ل)، أحرف الزيادة (سألتمونيها)، والفرق بين الفعل المجرد والمزيد الثلاثي والرباعي',
+        topicAr: 'قسم الصرف: الميزان الصرفي',
+        unitTitleAr: 'الوحدة الثانية: علم الصرف العربي',
+        descriptionAr: 'علم الصرف الأزهري وضبط بنية الكلمة العربية واشتقاقاتها.',
+        lessonNumberAr: 'الدرس 2 - الصرف'
+      },
+      {
+        titleAr: 'البلاغة الأزهرية: التشبيه وأركانه وأقسامه وسر جماله',
+        subtitleAr: 'المشبه والمشبه به وأداة التشبيه ووجه الشبه، التشبيه المفرد والتمثيلي والضمني والبليغ، والتشخيص والتجسيم',
+        topicAr: 'قسم البلاغة: علم البيان',
+        unitTitleAr: 'الوحدة الثالثة: البلاغة والبيان',
+        descriptionAr: 'تذوق أسرار الإعجاز البلاغي والبياني في القرآن الكريم وكلام العرب.',
+        lessonNumberAr: 'الدرس 3 - البلاغة'
+      },
+      {
+        titleAr: 'الأدب والنصوص والمطالعة: روائع الشعر العربي ورسالة الأزهر الحضارية',
+        subtitleAr: 'تحليل النصوص الأدبية المختارة، دراسة المعاني والأخيلة والجماليات، ومكانة الأزهر الشريف في حفظ التراث',
+        topicAr: 'قسم الأدب والنصوص والمطالعة',
+        unitTitleAr: 'الوحدة الرابعة: الأدب والمطالعة',
+        descriptionAr: 'تنمية الفصاحة والتذوق الأدبي والاعتزاز باللغة العربية وهوية الأمة.',
+        lessonNumberAr: 'الدرس 4 - الأدب والمطالعة'
+      }
+    ],
+
+    // ── مدارس اللغات والتعليم التجريبي والرسمي المتميز (PRIVATE Languages) ──
+    PHYSICS_G10_PRIVATE: [
+      {
+        titleAr: 'Physical Measurements, SI Units & Dimensional Formula (Language Schools)',
+        titleEn: 'Physical Measurements & Dimensional Analysis',
+        subtitleAr: 'Physical quantities, international system of units, precision in measurement, and testing validity of physical formulas',
+        subtitleEn: 'SI Units, measuring tools, absolute and relative error, and dimensional consistency',
+        topicAr: 'Unit 1: Physical Quantities and Measurements',
+        unitTitleAr: 'Chapter 1: Physical Measurement',
+        descriptionAr: 'Egyptian Ministry of Education - Official Curriculum for Experimental & Language High Schools.',
+        lessonNumberAr: 'Chapter 1 - Lecture 1'
+      },
+      {
+        titleAr: 'Vectors & Scalar Quantities, Vector Addition and Cross Product',
+        titleEn: 'Scalar & Vector Quantities, Vector Algebra',
+        subtitleAr: 'Distance vs displacement, graphical and algebraic vector addition, resolving vectors into rectangular components',
+        subtitleEn: 'Vector addition, components resolution, dot product and cross product of vectors',
+        topicAr: 'Unit 1: Vector Mechanics',
+        unitTitleAr: 'Chapter 1: Vectors and Motion',
+        descriptionAr: 'Rigorous analytical physics curriculum for secondary language schools in Egypt.',
+        lessonNumberAr: 'Chapter 1 - Lecture 2'
+      },
+      {
+        titleAr: 'Equations of Motion with Uniform Acceleration & Free Fall',
+        titleEn: 'Uniformly Accelerated Motion & Free Fall',
+        subtitleAr: 'Deriving the three kinematic equations, velocity-time graphs, vertical projectiles and gravitational acceleration g',
+        subtitleEn: 'Derivation of kinematic equations and 1D free fall trajectory analysis',
+        topicAr: 'Unit 2: Linear Kinematics',
+        unitTitleAr: 'Chapter 2: Linear Motion',
+        descriptionAr: 'Problem-solving strategies and graph interpretation aligned with Egyptian National Bank of Questions.',
+        lessonNumberAr: 'Chapter 2 - Lecture 3'
+      },
+      {
+        titleAr: "Newton's Laws of Motion, Inertia, Action & Reaction",
+        titleEn: "Newton's Laws of Motion & Momentum Dynamics",
+        subtitleAr: "First and third law of Newton, force and inertia, terminal velocity, and rocket propulsion applications",
+        subtitleEn: 'Law of inertia, equilibrium condition, action-reaction pairs, and projectile physics',
+        topicAr: 'Unit 3: Force and Laws of Motion',
+        unitTitleAr: 'Chapter 3: Dynamics',
+        descriptionAr: 'Mechanics laboratory applications and real-world scenarios in transport engineering.',
+        lessonNumberAr: 'Chapter 3 - Lecture 4'
+      }
+    ],
+
+    MATH_G10_PRIVATE: [
+      {
+        titleAr: 'Matrices and Determinants & System of Linear Equations (Language Schools)',
+        titleEn: 'Matrices, Determinants & Cramer Rule',
+        subtitleAr: 'Matrix operations, matrix multiplication, evaluation of 2x2 and 3x3 determinants, and solving linear systems by Cramer rule',
+        subtitleEn: 'Matrix algebra, identity and inverse matrices, and application to real-world linear modeling',
+        topicAr: 'Unit 1: Algebra & Linear Systems',
+        unitTitleAr: 'Module 1: Matrices and Determinants',
+        descriptionAr: 'Official Secondary 1 Mathematics curriculum for Experimental and Private Language Schools in Egypt.',
+        lessonNumberAr: 'Chapter 1 - Lesson 1'
+      },
+      {
+        titleAr: 'Trigonometric Identities & Solving Trigonometric Equations',
+        titleEn: 'Trigonometric Identities & Equations',
+        subtitleAr: 'Pythagorean identities, solving basic trigonometric equations, and angles of elevation and depression applications',
+        subtitleEn: 'Fundamental trigonometric relationships and geometric angle measurement modeling',
+        topicAr: 'Unit 2: Trigonometry',
+        unitTitleAr: 'Module 2: Analytical Trigonometry',
+        descriptionAr: 'Comprehensive trigonometry problems aligned with Egyptian MoE Language specifications.',
+        lessonNumberAr: 'Chapter 2 - Lesson 2'
+      },
+      {
+        titleAr: 'Vectors in 2D Coordinate Plane and Analytic Geometry',
+        titleEn: 'Vectors in the Coordinate Plane',
+        subtitleAr: 'Position vectors, vector magnitude and direction, scalar multiplication, and conditions for parallelism and perpendicularity',
+        subtitleEn: 'Geometric representation, vector addition, and physical applications to velocity and resultant forces',
+        topicAr: 'Unit 3: Analytic Geometry',
+        unitTitleAr: 'Module 3: 2D Vectors',
+        descriptionAr: 'Vector analysis and coordinate geometry for Secondary 1 students in Egypt.',
+        lessonNumberAr: 'Chapter 3 - Lesson 3'
+      }
     ]
   },
 
@@ -563,6 +1081,94 @@ export const NATIONAL_CURRICULA: Partial<Record<CountryCode, Partial<Record<stri
         unitTitleAr: 'الوحدة 4: المتجهات والضرب الداخلي',
         descriptionAr: 'النمذجة الرياضية لحركة الروبوتات والطائرات بدون طيار في مراكز الابتكار بالإمارات.',
         lessonNumberAr: 'الوحدة الرابعة - الدرس 4'
+      }
+    ],
+
+    // ── الصف السادس الابتدائي: العلوم المتطورة (مؤسسة الإمارات للتعليم المدرسي ESE) ──
+    PRIMARY_SCIENCE_G6: [
+      {
+        titleAr: 'الخلية كنظام حيوي: بنية الخلية النباتية والحيوانية ووظائف العضيات',
+        subtitleAr: 'الغشاء البلازمي، النواة، الميتوكوندريا، البلاستيدات الخضراء، والتمايز الخلوي في الكائنات الحية',
+        topicAr: 'المجال 1: الأنظمة الحية والتركيب الخلوي',
+        unitTitleAr: 'الوحدة 1: الخلية والحياة',
+        descriptionAr: 'منهاج مؤسسة الإمارات للتعليم المدرسي (الصف السادس الابتدائي).',
+        lessonNumberAr: 'الدرس 1'
+      },
+      {
+        titleAr: 'التنوع الحيوي والنظم البيئية والمحميات الطبيعية بدولة الإمارات',
+        subtitleAr: 'السلاسل والشبكات الغذائية، تدفق الطاقة، محميات القرم ومها الوادي، وحماية التنوع الأحيائي',
+        topicAr: 'المجال 2: النظم البيئية والاستدامة',
+        unitTitleAr: 'الوحدة 2: البيئة الطبيعية بالإمارات',
+        descriptionAr: 'دراسة جهود دولة الإمارات في الحفاظ على الحياة الفطرية والمحميات الطبيعية العالمية.',
+        lessonNumberAr: 'الدرس 2'
+      },
+      {
+        titleAr: 'القوى والطاقة والموجات الكهرومغناطيسية وخصائص الضوء',
+        subtitleAr: 'أنواع الطاقة وتحولاتها، انكسار وانعكاس الضوء، الطيف الكهرومغناطيسي، وسرعة انتشار الموجات',
+        topicAr: 'المجال 3: المادة والطاقة والأمواج',
+        unitTitleAr: 'الوحدة 3: الطاقة والموجات',
+        descriptionAr: 'التطبيقات الفيزيائية الحديثة وتقنيات الطاقة الشمسية بدولة الإمارات.',
+        lessonNumberAr: 'الدرس 3'
+      },
+      {
+        titleAr: 'علوم الفضاء ومسبار الأمل الإماراتي والمجموعة الشمسية',
+        subtitleAr: 'كواكب المجموعة الشمسية، مدارات الأقمار، مهمة مسبار الأمل لاستكشاف الغلاف الجوي للمريخ',
+        topicAr: 'المجال 4: الأرض والفضاء',
+        unitTitleAr: 'الوحدة 4: الفضاء والفلك الحديث',
+        descriptionAr: 'إنجازات وكالة الإمارات للفضاء ومشروع مسبار الأمل لاستكشاف كوكب المريخ.',
+        lessonNumberAr: 'الدرس 4'
+      },
+      {
+        titleAr: 'الاستدامة البيئية والطاقة المتجددة (مبادرة الإمارات للحياد المناخي 2050)',
+        subtitleAr: 'الطاقة الشمسية والنووية السلمية (محطات براكة)، إدارة الموارد المائية وإعادة التدوير واستدامة البيئة',
+        topicAr: 'المجال 5: التكنولوجيا والاستدامة البيئية',
+        unitTitleAr: 'الوحدة 5: مستقبل الطاقة والاستدامة',
+        descriptionAr: 'مشاريع الاستدامة والطاقة النظيفة الرائدة في إمارة أبوظبي ودبي وعموم الإمارات.',
+        lessonNumberAr: 'الدرس 5'
+      }
+    ],
+
+    // ── الصف السادس الابتدائي: الرياضيات (مؤسسة الإمارات للتعليم المدرسي ESE) ──
+    PRIMARY_MATH_G6: [
+      {
+        titleAr: 'النسب والمعدلات ومعدل الوحدة والتفكير التناسبي (ESE)',
+        subtitleAr: 'مفهوم النسبة، إيجاد النسب المكافئة، معدل الوحدة وجداول النسب، وتطبيقات التسوق والسرعة والتحويلات',
+        topicAr: 'المجال 1: النسب والعلاقات التناسبية',
+        unitTitleAr: 'الوحدة 1: النسب والمعدلات',
+        descriptionAr: 'منهاج مؤسسة الإمارات للتعليم المدرسي المطور للصف السادس الابتدائي.',
+        lessonNumberAr: 'الدرس 1'
+      },
+      {
+        titleAr: 'العمليات على الكسور العشرية والاعتيادية وقسمة الكسور',
+        subtitleAr: 'ضرب وقسمة الكسور الاعتيادية، تمثيل النماذج الرياضية، والعمليات الحسابية المتعددة بالدرهم الإماراتي',
+        topicAr: 'المجال 2: الأعداد والعمليات الحسابية',
+        unitTitleAr: 'الوحدة 2: نظام الأعداد الحقيقية',
+        descriptionAr: 'إتقان خوارزميات الحساب واستخدام النماذج البصرية لحل المشكلات اليومية.',
+        lessonNumberAr: 'الدرس 2'
+      },
+      {
+        titleAr: 'المقادير الجبرية والمتغيرات وحل المعادلات الخطية في خطوة واحدة',
+        subtitleAr: 'كتابة المقادير الجبرية، التعويض في المتغيرات، واستخدام خصائص المساواة لحل المعادلات الخطية',
+        topicAr: 'المجال 3: التعبيرات والمعادلات الجبرية',
+        unitTitleAr: 'الوحدة 3: الجبر والمعادلات',
+        descriptionAr: 'بناء التفكير الجبري والنمذجة الرياضية لتمثيل مواقف الحياة الواقعية.',
+        lessonNumberAr: 'الدرس 3'
+      },
+      {
+        titleAr: 'المساحة والحجم والمساحة السطحية للأشكال الهندسية ثلاثية الأبعاد',
+        subtitleAr: 'مساحة المثلثات ومتوازيات الأضلاع، حجم المنشور الرباعي القائم، والمخططات السطحية للمجسمات',
+        topicAr: 'المجال 4: الهندسة والقياس المكاني',
+        unitTitleAr: 'الوحدة 4: الهندسة والقياس',
+        descriptionAr: 'حساب مساحات وحجوم المنشآت الهندسية والمباني المعمارية الحديثة في دولة الإمارات.',
+        lessonNumberAr: 'الدرس 4'
+      },
+      {
+        titleAr: 'الإحصاء وتحليل البيانات ومقاييس النزعة المركزية والانتشار',
+        subtitleAr: 'المتوسط الحسابي، الوسيط، المنوال، المدى، وتمثيل البيانات بمخطط الصندوق والنقاط والمدرج التكراري',
+        topicAr: 'المجال 5: الإحصاء والاحتمالات',
+        unitTitleAr: 'الوحدة 5: الإحصاء وتحليل البيانات',
+        descriptionAr: 'تحليل وتفسير البيانات الإحصائية في التكنولوجيا والاقتصاد الرقمي بدولة الإمارات.',
+        lessonNumberAr: 'الدرس 5'
       }
     ]
   },
@@ -1045,30 +1651,174 @@ export const NATIONAL_CURRICULA: Partial<Record<CountryCode, Partial<Record<stri
         descriptionAr: 'Collision kinetics, rocket propulsion, and system center-of-mass analysis.',
         lessonNumberAr: 'Module 5 - Lecture 5'
       }
+    ],
+
+    MATH_G10: [
+      {
+        titleAr: 'الدوال الرياضية والتحويلات والاقترانات النسبية (AP / Cambridge IGCSE)',
+        titleEn: 'Functions, Transformations & Rational Expressions',
+        subtitleAr: 'Domain & range, composite & inverse functions, transformations, and asymptotes',
+        subtitleEn: 'Rigorous analysis of function behaviors and graphical modeling',
+        topicAr: 'Unit 1: Advanced Functions & Modeling',
+        unitTitleAr: 'Module 1: Pre-Calculus Foundations',
+        descriptionAr: 'International College Board AP Pre-Calculus & Cambridge IGCSE / A-Level Mathematics.',
+        lessonNumberAr: 'Module 1 - Lecture 1'
+      },
+      {
+        titleAr: 'حساب المثلثات الدائري ودائرة الوحدة والمتطابقات المتقدمة',
+        titleEn: 'Trigonometric Functions, Unit Circle & Identities',
+        subtitleAr: 'Radian measures, unit circle trigonometry, harmonic sinusoidal modeling, and trigonometric proofs',
+        subtitleEn: 'Double-angle formulas, inverse trigonometry, and periodic oscillation problems',
+        topicAr: 'Unit 2: Circular Trigonometry & Waves',
+        unitTitleAr: 'Module 2: Trigonometric Analysis',
+        descriptionAr: 'Advanced trigonometric identities and harmonic analysis for international exams.',
+        lessonNumberAr: 'Module 2 - Lecture 2'
+      },
+      {
+        titleAr: 'المتجهات والمصفوفات والجبر الخطي ثنائي وثلاثي الأبعاد',
+        titleEn: 'Vectors, Matrices & Linear Systems in 2D & 3D',
+        subtitleAr: 'Vector dot products, matrix algebra, determinants, inverse matrices, and systems of linear equations',
+        subtitleEn: 'Vector spaces, eigenvalues intro, and transformation matrices',
+        topicAr: 'Unit 3: Linear Algebra & Spatial Vectors',
+        unitTitleAr: 'Module 3: Vectors and Matrices',
+        descriptionAr: 'Linear algebraic transformations applied to computer graphics and robotics.',
+        lessonNumberAr: 'Module 3 - Lecture 3'
+      },
+      {
+        titleAr: 'مقدمة في التفاضل والتكامل: النهايات ومعدل التغير والاشتقاق',
+        titleEn: 'Introduction to Calculus: Limits, Continuity & Derivatives',
+        subtitleAr: 'Limits at infinity, limit definition of the derivative, power rule, and velocity as rate of change',
+        subtitleEn: 'Calculus foundations preparing students for AP Calculus AB/BC and IB Math HL',
+        topicAr: 'Unit 4: Differential Calculus Foundations',
+        unitTitleAr: 'Module 4: Limits and Derivatives',
+        descriptionAr: 'Essential gateway concepts into calculus and advanced mathematical analysis.',
+        lessonNumberAr: 'Module 4 - Lecture 4'
+      }
+    ],
+
+    CHEMISTRY_G10: [
+      {
+        titleAr: 'التركيب الذري والجدول الدوري والروابط الكيميائية (AP Chemistry)',
+        titleEn: 'Atomic Structure, Periodicity & Chemical Bonding (AP / IB)',
+        subtitleAr: 'Quantum numbers, electron configuration, periodic trends, and Lewis molecular geometry',
+        subtitleEn: 'Electronegativity, VSEPR theory, molecular polarity, and orbital hybridization',
+        topicAr: 'Unit 1: Atomic Structure and Properties',
+        unitTitleAr: 'Module 1: Atomic and Molecular Structure',
+        descriptionAr: 'Advanced Placement Chemistry and IB Higher Level Chemistry Standards.',
+        lessonNumberAr: 'Module 1 - Lecture 1'
+      },
+      {
+        titleAr: 'الحسابات الكيميائية والمول وقوانين الغازات المثالية',
+        titleEn: 'Stoichiometry, Chemical Reactions & Ideal Gas Laws',
+        subtitleAr: 'Mole ratios, limiting reactants, percent yield, and the ideal gas equation PV = nRT',
+        subtitleEn: 'Molar volume, gas mixtures, Dalton partial pressure, and kinetic molecular theory',
+        topicAr: 'Unit 2: Chemical Reactions & Gas Laws',
+        unitTitleAr: 'Module 2: Stoichiometry and Gases',
+        descriptionAr: 'Quantitative chemical problem-solving and rigorous stoichiometry.',
+        lessonNumberAr: 'Module 2 - Lecture 2'
+      }
+    ],
+
+    COMPUTER_SCIENCE: [
+      {
+        titleAr: 'الخوارزميات وهياكل البيانات وتصميم البرمجيات (AP Computer Science)',
+        titleEn: 'Algorithms, Data Structures & Computational Thinking',
+        subtitleAr: 'Big-O notation, recursion, array processing, search & sort algorithms, and object-oriented principles',
+        subtitleEn: 'Algorithmic efficiency, sorting algorithms, OOP architecture, and computational analysis',
+        topicAr: 'Unit 1: Algorithms and Problem Solving',
+        unitTitleAr: 'Module 1: Advanced Algorithms',
+        descriptionAr: 'AP Computer Science A / Principles & Cambridge IGCSE / A-Level Computer Science.',
+        lessonNumberAr: 'Module 1 - Lecture 1'
+      },
+      {
+        titleAr: 'الذكاء الاصطناعي وهندسة البيانات والشبكات الحاسوبية',
+        titleEn: 'Artificial Intelligence, Data Networks & Cyber Systems',
+        subtitleAr: 'Machine learning fundamentals, neural networks intro, network protocols (TCP/IP), and cryptography',
+        subtitleEn: 'Supervised learning models, encryption algorithms, cybersecurity, and modern cloud computing',
+        topicAr: 'Unit 2: AI & Distributed Networks',
+        unitTitleAr: 'Module 2: AI and Network Systems',
+        descriptionAr: 'Next-generation computing curriculum preparing students for future tech careers.',
+        lessonNumberAr: 'Module 2 - Lecture 2'
+      }
     ]
   }
 };
 
 /**
- * Retrieves the authentic national lesson overrides for a given country, subject, and grade.
+ * Retrieves the authentic national lesson overrides for a given country, subject, grade, educationType, and track.
+ * Implements intelligent multi-tier resolution:
+ * 1. Country + Subject + Grade + EducationType
+ * 2. Country + Subject + Grade + Track
+ * 3. Country + Subject + EducationType
+ * 4. Country + Subject + Grade
+ * 5. Country + Subject
+ * 6. International / Azhari Cross-country fallbacks
  */
 export function getNationalLessonOverrides(
   country: CountryCode,
   subject: Subject,
-  gradeLevel: GradeLevel
+  gradeLevel: GradeLevel,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
 ): NationalLessonOverride[] | undefined {
-  const countryData = NATIONAL_CURRICULA[country];
-  if (!countryData) return undefined;
-
-  // 1. Try exact subject and grade level match (e.g. 'PHYSICS_G10')
-  const specificKey = `${subject}_${gradeLevel}`;
-  if (countryData[specificKey] && countryData[specificKey]!.length > 0) {
-    return countryData[specificKey];
+  // If user selected INTERNATIONAL education type and not already on INTL, prioritize INTL curriculum
+  if (educationType === 'INTERNATIONAL' && country !== 'INTL') {
+    const intlOverrides = getNationalLessonOverrides('INTL', subject, gradeLevel, 'INTERNATIONAL', track);
+    if (intlOverrides && intlOverrides.length > 0) return intlOverrides;
   }
 
-  // 2. Try subject key fallback (e.g. 'PHYSICS')
-  if (countryData[subject] && countryData[subject]!.length > 0) {
-    return countryData[subject];
+  const countryData = NATIONAL_CURRICULA[country];
+  if (countryData) {
+    // 1. Try exact subject + grade + educationType (e.g. 'ISLAMIC_STUDIES_G6_ISLAMIC' or 'PHYSICS_G10_PRIVATE')
+    const keyWithGradeAndType = `${subject}_${gradeLevel}_${educationType}`;
+    if (countryData[keyWithGradeAndType] && countryData[keyWithGradeAndType]!.length > 0) {
+      return countryData[keyWithGradeAndType];
+    }
+
+    // 2. Try subject + grade + track (e.g. 'PHYSICS_G10_CS_ENGINEERING')
+    const keyWithGradeAndTrack = `${subject}_${gradeLevel}_${track}`;
+    if (countryData[keyWithGradeAndTrack] && countryData[keyWithGradeAndTrack]!.length > 0) {
+      return countryData[keyWithGradeAndTrack];
+    }
+
+    // 3. Try subject + educationType (e.g. 'ISLAMIC_STUDIES_ISLAMIC' or 'ARABIC_LANG_ISLAMIC')
+    const keyWithType = `${subject}_${educationType}`;
+    if (countryData[keyWithType] && countryData[keyWithType]!.length > 0) {
+      return countryData[keyWithType];
+    }
+
+    // 4. Try exact subject and grade level match (e.g. 'ISLAMIC_STUDIES_G6' or 'PHYSICS_G10')
+    const specificKey = `${subject}_${gradeLevel}`;
+    if (countryData[specificKey] && countryData[specificKey]!.length > 0) {
+      return countryData[specificKey];
+    }
+
+    // 5. Try subject key fallback (e.g. 'PHYSICS' or 'ISLAMIC_STUDIES')
+    if (countryData[subject] && countryData[subject]!.length > 0) {
+      return countryData[subject];
+    }
+  }
+
+  // Cross-country fallbacks:
+  // If Islamic education type requested and this country doesn't have custom Islamic overrides, fallback to Azhari/Saudi Islamic
+  if (educationType === 'ISLAMIC') {
+    if (NATIONAL_CURRICULA.EG?.[`${subject}_ISLAMIC`]) {
+      return NATIONAL_CURRICULA.EG[`${subject}_ISLAMIC`];
+    }
+    if (NATIONAL_CURRICULA.SA?.[`${subject}_ISLAMIC`]) {
+      return NATIONAL_CURRICULA.SA[`${subject}_ISLAMIC`];
+    }
+  }
+
+  // If International education type requested, fallback to INTL
+  if (NATIONAL_CURRICULA.INTL) {
+    const intlKey = `${subject}_${gradeLevel}`;
+    if (NATIONAL_CURRICULA.INTL[intlKey] && NATIONAL_CURRICULA.INTL[intlKey]!.length > 0) {
+      return NATIONAL_CURRICULA.INTL[intlKey];
+    }
+    if (NATIONAL_CURRICULA.INTL[subject] && NATIONAL_CURRICULA.INTL[subject]!.length > 0) {
+      return NATIONAL_CURRICULA.INTL[subject];
+    }
   }
 
   return undefined;

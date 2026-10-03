@@ -129,12 +129,26 @@ export function App() {
 
   // Hydrate lectures corresponding to student's enrolled subject and grade
   const [lectures, setLectures] = useState<Lecture[]>(() => {
-    return loadSubjectLectures(profile.subject, profile.country, profile.gradeLevel);
+    return loadSubjectLectures(
+      profile.subject,
+      profile.country,
+      profile.gradeLevel,
+      profile.educationType || 'PUBLIC',
+      profile.educationTrack || 'GENERAL',
+      profile.language
+    );
   });
 
   const [selectedLectureId, setSelectedLectureId] = useState<string>(() => {
     const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
-    const lecs = loadSubjectLectures(profile.subject, profile.country, profile.gradeLevel);
+    const lecs = loadSubjectLectures(
+      profile.subject,
+      profile.country,
+      profile.gradeLevel,
+      profile.educationType || 'PUBLIC',
+      profile.educationTrack || 'GENERAL',
+      profile.language
+    );
     if (savedLectureId && lecs.some(l => l.id === savedLectureId && !l.isLocked)) {
       return savedLectureId;
     }
@@ -186,7 +200,14 @@ export function App() {
         if (prev.country !== geo.country) {
           const adapted = adaptProfileToCountry(prev, geo.country);
           // Immediately reload curriculum lectures for the newly detected country
-          const freshLecs = loadSubjectLectures(adapted.subject, geo.country, adapted.gradeLevel);
+          const freshLecs = loadSubjectLectures(
+            adapted.subject,
+            geo.country,
+            adapted.gradeLevel,
+            adapted.educationType || 'PUBLIC',
+            adapted.educationTrack || 'GENERAL',
+            adapted.language
+          );
           setLectures(freshLecs);
           setSelectedLectureId(freshLecs[0]?.id || '');
           return adapted;
@@ -218,7 +239,14 @@ export function App() {
         setProfile(user);
         setCurrentView('workspace');
         loadUserSubjectLectures(user.id, user.subject).then((savedLecs) => {
-          const freshLecs = loadSubjectLectures(user.subject, user.country, user.gradeLevel);
+          const freshLecs = loadSubjectLectures(
+            user.subject,
+            user.country,
+            user.gradeLevel,
+            user.educationType || 'PUBLIC',
+            user.educationTrack || 'GENERAL',
+            user.language
+          );
           if (savedLecs && savedLecs.length > 0) {
             const reconciled = freshLecs.map((fl) => {
               const found = savedLecs.find((s) => s.id === fl.id);
@@ -250,11 +278,11 @@ export function App() {
     updateUserAccount(profile.id, profile).catch(() => {});
   }, [profile]);
 
-  // Sync lectures progress per subject and country to local storage & database
+  // Sync lectures progress per subject, country, and educationType to local storage & database
   useEffect(() => {
-    saveSubjectLectures(profile.subject, lectures, profile.gradeLevel, profile.country);
+    saveSubjectLectures(profile.subject, lectures, profile.gradeLevel, profile.country, profile.educationType || 'PUBLIC');
     saveUserSubjectLectures(profile.id, profile.subject, lectures).catch(() => {});
-  }, [profile.id, profile.subject, profile.gradeLevel, profile.country, lectures]);
+  }, [profile.id, profile.subject, profile.gradeLevel, profile.country, profile.educationType, lectures]);
 
   // Adjust HTML dir and title when language changes
   useEffect(() => {
@@ -359,7 +387,14 @@ export function App() {
     const autoCountry = detectCountryFromTimezone() || 'SA';
     const freshProfile = adaptProfileToCountry(INITIAL_STUDENT_PROFILE, autoCountry);
     setProfile(freshProfile);
-    const freshLectures = loadSubjectLectures(freshProfile.subject, freshProfile.country, freshProfile.gradeLevel);
+    const freshLectures = loadSubjectLectures(
+      freshProfile.subject,
+      freshProfile.country,
+      freshProfile.gradeLevel,
+      freshProfile.educationType || 'PUBLIC',
+      freshProfile.educationTrack || 'GENERAL',
+      freshProfile.language
+    );
     setLectures(freshLectures);
     setSelectedLectureId(freshLectures[0].id);
   };
@@ -405,7 +440,14 @@ export function App() {
       
     }
 
-    const freshLecs = loadSubjectLectures(sanitized.subject, sanitized.country, sanitized.gradeLevel);
+    const freshLecs = loadSubjectLectures(
+      sanitized.subject,
+      sanitized.country,
+      sanitized.gradeLevel,
+      sanitized.educationType || 'PUBLIC',
+      sanitized.educationTrack || 'GENERAL',
+      sanitized.language
+    );
     setLectures(freshLecs);
     const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
     const validSaved = freshLecs.find((l) => l.id === savedLectureId && !l.isLocked);
@@ -426,7 +468,14 @@ export function App() {
     localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
     localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
     const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
-    const freshLecs = loadSubjectLectures(user.subject, user.country, user.gradeLevel);
+    const freshLecs = loadSubjectLectures(
+      user.subject,
+      user.country,
+      user.gradeLevel,
+      user.educationType || 'PUBLIC',
+      user.educationTrack || 'GENERAL',
+      user.language
+    );
     const effectiveLecs = (dbLecs && dbLecs.length > 0)
       ? freshLecs.map((fl) => {
           const found = dbLecs.find((s) => s.id === fl.id);
@@ -450,7 +499,14 @@ export function App() {
     localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
     const freshProfile = INITIAL_STUDENT_PROFILE;
     setProfile(freshProfile);
-    const freshLecs = loadSubjectLectures(freshProfile.subject, freshProfile.country, freshProfile.gradeLevel);
+    const freshLecs = loadSubjectLectures(
+      freshProfile.subject,
+      freshProfile.country,
+      freshProfile.gradeLevel,
+      freshProfile.educationType || 'PUBLIC',
+      freshProfile.educationTrack || 'GENERAL',
+      freshProfile.language
+    );
     setLectures(freshLecs);
     setSelectedLectureId(freshLecs[0]?.id || '');
     setCurrentView('landing');
