@@ -406,6 +406,9 @@ export function getNationalSubjectLabel(
       case 'PRIMARY_MATH':
         return isEn ? 'Mathematics & Arithmetic (Primary School)' : 'الرياضيات والحساب (المرحلة الابتدائية)';
       case 'PRIMARY_SCIENCE':
+        if (_gradeLevel === 'G1' || _gradeLevel === 'G2' || _gradeLevel === 'G3') {
+          return isEn ? 'Discover & Science (Education 2.0)' : 'ديسكفر والعلوم (التعليم 2.0 - ابتدائي)';
+        }
         return isEn ? 'Science (Education 2.0 Primary)' : 'العلوم (التعليم 2.0 - ابتدائي)';
       case 'GENERAL_SCIENCE':
         return isEn ? 'General Science (Preparatory School)' : 'العلوم (المرحلة الإعدادية)';
