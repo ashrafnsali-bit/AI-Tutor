@@ -3,6 +3,11 @@ import type { AdminStudentView, Language } from '../types';
 import { getAdminStudentsOverview, deleteUserAccount, updateUserAccount } from '../services/database';
 import { getCountryInfo } from '../data/curriculumCountries';
 import { 
+  subscribeToPresenceUpdates, 
+  simulateStudentJoin, 
+  endSimulatedStudent 
+} from '../services/presenceService';
+import { 
   Users, 
   Search, 
   Download, 
@@ -75,6 +80,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   });
 
   const [notification, setNotification] = useState<string | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
 
   const showNotification = (msg: string) => {
     setNotification(msg);
@@ -109,23 +115,53 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     showNotification('تم تسجيل خروج المشرف بنجاح.');
   };
 
-  const loadData = async () => {
-    setLoading(true);
+  const loadData = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const data = await getAdminStudentsOverview();
       setStudents(data);
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (isOpen) {
-      loadData();
-    }
+    if (!isOpen) return;
+
+    loadData();
+
+    // Real-Time Zero-Latency Presence Subscription
+    const unsubscribe = subscribeToPresenceUpdates(() => {
+      loadData(true);
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, [isOpen]);
+
+  const handleToggleSimulation = () => {
+    if (!isSimulating) {
+      simulateStudentJoin({
+        userId: 'usr-ahmed-kamal',
+        userName: 'أحمد محمود كمال',
+        userEmail: 'ahmed.kamal@egypt-student.edu',
+        country: 'EG',
+        gradeLevel: 'G6',
+        subject: 'PRIMARY_ARABIC',
+        currentLectureTitle: 'قراءة نص: كن إيجابياً ومؤثراً'
+      });
+      setIsSimulating(true);
+      showNotification('تم بدء جلسة محاكاة حضور الطالب "أحمد محمود كمال" 🧪');
+    } else {
+      endSimulatedStudent('usr-ahmed-kamal');
+      setIsSimulating(false);
+      showNotification('تم إنهاء جلسة المحاكاة وعاد الرصد للحضور الحقيقي.');
+    }
+    loadData(true);
+  };
 
   // Filtered and sorted students
   const filteredStudents = useMemo(() => {
@@ -463,7 +499,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <button 
                   type="button" 
                   className="btn-admin-action" 
-                  onClick={loadData} 
+                  onClick={() => loadData(false)} 
                   title="تحديث البيانات"
                   disabled={loading}
                 >
@@ -633,74 +669,108 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </section>
 
         {/* 2.6 Live Stream of Online Active Students (Brodcast Strip) */}
-        {kpis.onlineCount > 0 && selectedStatus !== 'COMPLETED' && (
+        {selectedStatus !== 'COMPLETED' && (
           <section className="admin-live-stream-section">
             <div className="live-stream-header">
               <div className="live-stream-title-group">
-                <span className="live-radio-badge">
-                  <Radio size={14} className="text-emerald-400 animate-pulse" />
-                  <span>بث مباشر لحظي</span>
+                <span className={`live-radio-badge ${kpis.onlineCount > 0 ? 'online-live' : 'offline-idle'}`}>
+                  <Radio size={14} className={kpis.onlineCount > 0 ? "text-emerald-400 animate-pulse" : "text-slate-400"} />
+                  <span>{kpis.onlineCount > 0 ? 'بث مباشر لحظي' : 'رصد لحظي فعلي (نشط)'}</span>
                 </span>
                 <h3 className="live-stream-title">
-                  الطلاب النشطون المتصلون الآن ({kpis.onlineCount} طلاب يدرسون حالياً):
+                  {kpis.onlineCount > 0 
+                    ? `الطلاب النشطون المتصلون الآن (${kpis.onlineCount} طلاب يدرسون حالياً):` 
+                    : `لا يوجد طلاب متصلين في هذه اللحظة (0 طلاب نشطون)`
+                  }
                 </h3>
               </div>
-              <span className="live-stream-subtext">انقر على بطاقة أي طالب لمتابعة تفاصيل دراسته الحية</span>
+              
+              <div className="live-stream-actions-group">
+                <button 
+                  type="button" 
+                  className={`btn-simulate-join ${isSimulating ? 'simulating-active' : ''}`}
+                  onClick={handleToggleSimulation}
+                  title="محاكاة جلسة طالب تجريبية للتحقق من ميزة الرصد اللحظي المباشر"
+                >
+                  <Sparkles size={13} />
+                  <span>{isSimulating ? 'إنهاء جلسة المحاكاة ⏹️' : 'تجربة محاكاة حضور طالب 🧪'}</span>
+                </button>
+                <span className="live-stream-subtext">
+                  {kpis.onlineCount > 0 
+                    ? 'يتم رصد الحضور اللحظي الفعلي من الجلسات الحية' 
+                    : 'يظهر الطالب فور فتح المنصة وبدء جلسة دراسية حقيقية'}
+                </span>
+              </div>
             </div>
 
-            <div className="live-stream-cards-grid">
-              {students.filter(s => s.isOnline).map((s) => {
-                const country = getCountryInfo(s.country);
-                return (
-                  <div 
-                    key={s.id} 
-                    className="live-active-card"
-                    onClick={() => handleOpenStudentDossier(s)}
-                    title={`انقر لمتابعة السجل الدراسي الكامل لـ ${s.name}`}
-                  >
-                    <div className="live-active-card-top">
-                      <div className="live-card-avatar-wrap">
-                        <span className="live-avatar-letter">{s.name.charAt(0)}</span>
-                        <span className="live-pulse-badge" />
-                      </div>
-                      <div className="live-card-meta">
-                        <div className="live-name-row">
-                          <strong className="live-name">{s.name}</strong>
-                          <span className="live-flag" title={country.nameAr}>{country.flag}</span>
+            {kpis.onlineCount > 0 ? (
+              <div className="live-stream-cards-grid">
+                {students.filter(s => s.isOnline).map((s) => {
+                  const country = getCountryInfo(s.country);
+                  return (
+                    <div 
+                      key={s.id} 
+                      className="live-active-card"
+                      onClick={() => handleOpenStudentDossier(s)}
+                      title={`انقر لمتابعة السجل الدراسي الكامل لـ ${s.name}`}
+                    >
+                      <div className="live-active-card-top">
+                        <div className="live-card-avatar-wrap">
+                          <span className="live-avatar-letter">{s.name.charAt(0)}</span>
+                          <span className="live-pulse-badge" />
                         </div>
-                        <span className="live-stage">{s.gradeLevel} • {s.subject}</span>
+                        <div className="live-card-meta">
+                          <div className="live-name-row">
+                            <strong className="live-name">{s.name}</strong>
+                            <span className="live-flag" title={country.nameAr}>{country.flag}</span>
+                            {isSimulating && s.id === 'usr-ahmed-kamal' && (
+                              <span className="sim-chip">محاكاة تجريبية 🧪</span>
+                            )}
+                          </div>
+                          <span className="live-stage">{s.gradeLevel} • {s.subject}</span>
+                        </div>
+                        <span className="live-time-chip">{s.lastActiveTimeAgo}</span>
                       </div>
-                      <span className="live-time-chip">{s.lastActiveTimeAgo}</span>
-                    </div>
 
-                    <div className="live-studying-box">
-                      <span className="live-studying-label">يدرس الآن:</span>
-                      <span className="live-studying-lecture" title={s.currentLectureTitle}>
-                        📖 {s.currentLectureTitle}
-                      </span>
-                    </div>
-
-                    <div className="live-card-footer">
-                      <div className="live-quantity-info">
-                        <span>إنجاز المحاضرات:</span>
-                        <strong>{s.completedLecturesCount} من {s.totalLecturesCount} ({s.progressPercentage}%)</strong>
+                      <div className="live-studying-box">
+                        <span className="live-studying-label">يدرس الآن:</span>
+                        <span className="live-studying-lecture" title={s.currentLectureTitle}>
+                          📖 {s.currentLectureTitle}
+                        </span>
                       </div>
-                      <button 
-                        type="button" 
-                        className="btn-live-inspect"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleOpenStudentDossier(s);
-                        }}
-                      >
-                        <ExternalLink size={12} />
-                        <span>متابعة</span>
-                      </button>
+
+                      <div className="live-card-footer">
+                        <div className="live-quantity-info">
+                          <span>إنجاز المحاضرات:</span>
+                          <strong>{s.completedLecturesCount} من {s.totalLecturesCount} ({s.progressPercentage}%)</strong>
+                        </div>
+                        <button 
+                          type="button" 
+                          className="btn-live-inspect"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenStudentDossier(s);
+                          }}
+                        >
+                          <ExternalLink size={12} />
+                          <span>متابعة</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="live-stream-empty-box">
+                <div className="live-empty-icon-wrap">
+                  <Radio size={24} className="text-slate-400" />
+                </div>
+                <div className="live-empty-text-wrap">
+                  <strong>نظام الحضور اللحظي يعكس الطلاب المتصلين فعلياً في الوقت الحقيقي</strong>
+                  <p>لا يوجد طالب يدرس في هذه اللحظة. بمجرد قيام أي طالب بفتح المنصة أو المذاكرة، سيظهر اسمه فوراً مع المحاضرة المفتوحة ووقت اتصاله الحقيقي.</p>
+                </div>
+              </div>
+            )}
           </section>
         )}
 

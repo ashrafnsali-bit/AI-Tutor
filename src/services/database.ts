@@ -1,5 +1,6 @@
 import type { AssessmentResult, CountryCode, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
 import { INITIAL_STUDENT_PROFILE, loadSubjectLectures } from '../data/curriculumData';
+import { getStudentPresence } from './presenceService';
 
 const DB_NAME = 'TeacherAI_PlatformDB';
 const DB_VERSION = 4; // Upgraded for shared_curriculum_lectures
@@ -666,7 +667,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 45,
       masteryPoints: 420,
       createdAt: Date.now() - 14 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 3 * 60 * 1000 // Online now (3m ago)
+      lastLoginAt: Date.now() - 2 * 24 * 3600 * 1000 // Offline (2 days ago)
     },
     {
       id: 'usr-sara-shammari',
@@ -700,7 +701,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 80,
       masteryPoints: 500,
       createdAt: Date.now() - 20 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 8 * 60 * 1000 // Online now (8m ago)
+      lastLoginAt: Date.now() - 4 * 24 * 3600 * 1000 // Offline (4 days ago)
     },
     {
       id: 'usr-ahmed-kamal',
@@ -734,7 +735,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 30,
       masteryPoints: 210,
       createdAt: Date.now() - 10 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 1 * 60 * 1000 // Online now (1m ago)
+      lastLoginAt: Date.now() - 1 * 24 * 3600 * 1000 // Offline (yesterday)
     },
     {
       id: 'usr-fatima-mansoori',
@@ -768,7 +769,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 20,
       masteryPoints: 340,
       createdAt: Date.now() - 7 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 42 * 60 * 1000 // Recent (42m ago)
+      lastLoginAt: Date.now() - 3 * 24 * 3600 * 1000 // Offline (3 days ago)
     },
     {
       id: 'usr-yousef-otaibi',
@@ -802,7 +803,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 15,
       masteryPoints: 120,
       createdAt: Date.now() - 3 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 28 * 3600 * 1000 // Offline (yesterday)
+      lastLoginAt: Date.now() - 7 * 24 * 3600 * 1000 // Offline (7 days ago)
     }
   ];
 
@@ -851,23 +852,28 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
       const remainingLecturesCount = Math.max(0, totalLecturesCount - completedLecturesCount);
       const currentLectureOrder = Math.min(completedLecturesCount + 1, totalLecturesCount);
       const currentLecture = userLectures.find(l => l.order === currentLectureOrder) || userLectures[currentLectureOrder - 1];
-      const currentLectureTitle = currentLecture?.titleAr || `المحاضرة ${currentLectureOrder}`;
+      let currentLectureTitle = currentLecture?.titleAr || `المحاضرة ${currentLectureOrder}`;
 
       const progressPercentage = Math.min(100, Math.round((completedLecturesCount / totalLecturesCount) * 100));
 
-      // Calculate Real-time Online Presence and Activity
+      // Check GENUINE Real-Time Online Presence via presenceService
+      const livePresence = getStudentPresence(user.id);
+      const isOnline = !!livePresence;
+
       const now = Date.now();
       const lastLogin = user.lastLoginAt || user.createdAt || (now - 3600 * 1000);
       const diffMinutes = Math.max(0, Math.floor((now - lastLogin) / (60 * 1000)));
 
-      let isOnline = false;
       let activeStatus: 'ONLINE' | 'RECENT' | 'OFFLINE' = 'OFFLINE';
       let lastActiveTimeAgo = '';
 
-      if (diffMinutes <= 15) {
-        isOnline = true;
+      if (isOnline && livePresence) {
         activeStatus = 'ONLINE';
-        lastActiveTimeAgo = diffMinutes === 0 ? 'متصل الآن 🟢' : `نشط منذ ${diffMinutes} د`;
+        const sessionMins = Math.max(0, Math.floor((now - livePresence.sessionStartedAt) / (60 * 1000)));
+        lastActiveTimeAgo = sessionMins === 0 ? 'متصل الآن 🟢' : `متصل منذ ${sessionMins} د`;
+        if (livePresence.currentLectureTitle) {
+          currentLectureTitle = livePresence.currentLectureTitle;
+        }
       } else if (diffMinutes < 180) {
         activeStatus = 'RECENT';
         const hours = Math.floor(diffMinutes / 60);

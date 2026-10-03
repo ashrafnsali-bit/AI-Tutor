@@ -23,6 +23,7 @@ import {
   saveSharedCurriculumLecture,
   logoutUserAccount
 } from './services/database';
+import { sendStudentHeartbeat, clearStudentPresence } from './services/presenceService';
 import { Navbar } from './components/Navbar';
 import { LectureRoadmap } from './components/LectureRoadmap';
 import { LectureViewer } from './components/LectureViewer';
@@ -298,6 +299,43 @@ export function App() {
     }
   }, [profile.language]);
 
+  // Live Real-Time Presence Heartbeat for Active Student
+  useEffect(() => {
+    if (!profile || !profile.id) return;
+
+    const currentLec = lectures.find((l) => l.id === selectedLectureId) || lectures[0];
+    const lecTitle = currentLec?.titleAr || 'المحاضرة الحالية';
+
+    const sendBeat = () => {
+      sendStudentHeartbeat({
+        userId: profile.id,
+        userName: profile.name,
+        userEmail: profile.email || `${profile.username || 'student'}@student.ai`,
+        country: profile.country,
+        gradeLevel: profile.gradeLevel,
+        subject: profile.subject,
+        currentLectureId: selectedLectureId || '',
+        currentLectureTitle: lecTitle,
+        status: isAssessmentOpen ? 'QUIZ' : 'STUDYING',
+        sessionStartedAt: Date.now()
+      });
+    };
+
+    sendBeat();
+    const interval = setInterval(sendBeat, 5000);
+
+    const handleBeforeUnload = () => {
+      clearStudentPresence(profile.id);
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [profile, selectedLectureId, lectures, isAssessmentOpen]);
+
   const activeLecture = lectures.find((l) => l.id === selectedLectureId) || lectures[0];
 
   // Check if next lecture exists and is unlocked
@@ -493,6 +531,9 @@ export function App() {
   };
 
   const handleLogout = async () => {
+    if (profile?.id) {
+      clearStudentPresence(profile.id);
+    }
     await logoutUserAccount();
     setIsLoggedIn(false);
     localStorage.removeItem('TEACHER_AI_HAS_STUDIED');
