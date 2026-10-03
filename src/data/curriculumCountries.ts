@@ -1,4 +1,4 @@
-import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Subject } from '../types';
+import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Subject, Lecture } from '../types';
 
 export interface CountryCurriculumInfo {
   code: CountryCode;
@@ -12,7 +12,15 @@ export interface CountryCurriculumInfo {
   termDefaultAr: string;
   termDefaultEn: string;
   termsCount: number; // 2 or 3 terms
-  hasHighSchoolTracks: boolean; // e.g. Saudi Masarat
+  currencyAr: string;
+  currencyShortAr: string;
+  currencyEn: string;
+  currencyCode: string;
+  capitalCityAr: string;
+  capitalCityEn: string;
+  culturalEventAr: string;
+  culturalEventEn: string;
+  hasHighSchoolTracks: boolean;
   availableTracks: EducationTrack[];
   availableTypes: EducationType[];
 }
@@ -25,11 +33,19 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Saudi Arabia',
     ministryAr: 'وزارة التعليم بالمملكة العربية السعودية',
     ministryEn: 'Ministry of Education - Kingdom of Saudi Arabia',
-    systemNameAr: 'المنهج السعودي المعتمد (نظام المسارات)',
+    systemNameAr: 'المنهج السعودي المعتمد (نظام الفصول الثلاثة والمسارات)',
     systemNameEn: 'Official Saudi National Curriculum (Masarat System)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Trimester / Term 2',
     termsCount: 3,
+    currencyAr: 'ريال سعودي',
+    currencyShortAr: 'ريال',
+    currencyEn: 'Saudi Riyal',
+    currencyCode: 'SAR',
+    capitalCityAr: 'الرياض',
+    capitalCityEn: 'Riyadh',
+    culturalEventAr: 'معرض الرياض الدولي للكتاب',
+    culturalEventEn: 'Riyadh International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'CS_ENGINEERING', 'HEALTH_LIFE', 'BUSINESS', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC', 'INTERNATIONAL']
@@ -41,11 +57,19 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Egypt',
     ministryAr: 'وزارة التربية والتعليم والتعليم الفني بمصر',
     ministryEn: 'Ministry of Education and Technical Education - Egypt',
-    systemNameAr: 'المنهج المصري المعتمد (الثانوية العامة المطورة)',
-    systemNameEn: 'Official Egyptian National Curriculum',
+    systemNameAr: 'المنهج المصري المعتمد (منظومة التعليم 2.0 المطورة)',
+    systemNameEn: 'Official Egyptian National Curriculum (Edu 2.0)',
     termDefaultAr: 'الفصل الدراسي الثاني (الترم الثاني)',
     termDefaultEn: 'Second Semester / Term 2',
     termsCount: 2,
+    currencyAr: 'جنيه مصري',
+    currencyShortAr: 'جنيه',
+    currencyEn: 'Egyptian Pound',
+    currencyCode: 'EGP',
+    capitalCityAr: 'القاهرة',
+    capitalCityEn: 'Cairo',
+    culturalEventAr: 'معرض القاهرة الدولي للكتاب',
+    culturalEventEn: 'Cairo International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC', 'INTERNATIONAL']
@@ -56,12 +80,20 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameAr: 'دولة الإمارات العربية المتحدة',
     nameEn: 'United Arab Emirates',
     ministryAr: 'وزارة التربية والتعليم ومؤسسة الإمارات للتعليم المدرسي',
-    ministryEn: 'Ministry of Education - UAE',
-    systemNameAr: 'المنهج الإماراتي المعتمد (المسار العام والمتقدم)',
-    systemNameEn: 'Official UAE National Curriculum (General & Advanced Tracks)',
+    ministryEn: 'Ministry of Education - UAE (Emirates Schools Establishment)',
+    systemNameAr: 'المنهج الإماراتي المعتمد (نظام الحلقات والمسار العام والمتقدم)',
+    systemNameEn: 'Official UAE National Curriculum (Cycles & Advanced Tracks)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Term 2',
     termsCount: 3,
+    currencyAr: 'درهم إماراتي',
+    currencyShortAr: 'درهم',
+    currencyEn: 'UAE Dirham',
+    currencyCode: 'AED',
+    capitalCityAr: 'أبوظبي',
+    capitalCityEn: 'Abu Dhabi',
+    culturalEventAr: 'معرض الشارقة الدولي للكتاب',
+    culturalEventEn: 'Sharjah International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'CS_ENGINEERING', 'HEALTH_LIFE', 'BUSINESS'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'INTERNATIONAL']
@@ -73,11 +105,19 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Kuwait',
     ministryAr: 'وزارة التربية بدولة الكويت',
     ministryEn: 'Ministry of Education - State of Kuwait',
-    systemNameAr: 'المنهج الكويتي المعتمد (النظام الموحد)',
+    systemNameAr: 'المنهج الكويتي المعتمد (نظام الكفايات والتعليم العام)',
     systemNameEn: 'Official Kuwaiti National Curriculum',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'دينار كويتي',
+    currencyShortAr: 'دينار',
+    currencyEn: 'Kuwaiti Dinar',
+    currencyCode: 'KWD',
+    capitalCityAr: 'مدينة الكويت',
+    capitalCityEn: 'Kuwait City',
+    culturalEventAr: 'معرض الكويت الدولي للكتاب',
+    culturalEventEn: 'Kuwait International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC']
@@ -87,13 +127,21 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     flag: '🇯🇴',
     nameAr: 'المملكة الأردنية الهاشمية',
     nameEn: 'Jordan',
-    ministryAr: 'وزارة التربية والتعليم بالمملكة الأردنية',
+    ministryAr: 'وزارة التربية والتعليم بالمملكة الأردنية الهاشمية',
     ministryEn: 'Ministry of Education - Hashemite Kingdom of Jordan',
-    systemNameAr: 'المنهج الأردني المعتمد (التوجيهي الوطني)',
-    systemNameEn: 'Official Jordanian National Curriculum (Tawjihi)',
+    systemNameAr: 'المنهج الأردني المعتمد (مناهج كولينز الوطنية المطورة والتوجيهي)',
+    systemNameEn: 'Official Jordanian National Curriculum (Collins & Tawjihi)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'دينار أردني',
+    currencyShortAr: 'دينار',
+    currencyEn: 'Jordanian Dinar',
+    currencyCode: 'JOD',
+    capitalCityAr: 'عمّان',
+    capitalCityEn: 'Amman',
+    culturalEventAr: 'معرض عمّان الدولي للكتاب',
+    culturalEventEn: 'Amman International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'HEALTH_LIFE', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE']
@@ -105,11 +153,19 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Oman',
     ministryAr: 'وزارة التربية والتعليم بسلطنة عُمان',
     ministryEn: 'Ministry of Education - Sultanate of Oman',
-    systemNameAr: 'المنهج العُماني المعتمد (التعليم الأساسي وما بعد الأساسي)',
-    systemNameEn: 'Official Omani National Curriculum',
+    systemNameAr: 'المنهج العُماني المعتمد (التعليم الأساسي وسلاسل كامبريدج المطبقة)',
+    systemNameEn: 'Official Omani National Curriculum (Basic Education)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'ريال عُماني',
+    currencyShortAr: 'ريال',
+    currencyEn: 'Omani Rial',
+    currencyCode: 'OMR',
+    capitalCityAr: 'مسقط',
+    capitalCityEn: 'Muscat',
+    culturalEventAr: 'معرض مسقط الدولي للكتاب',
+    culturalEventEn: 'Muscat International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC']
@@ -119,13 +175,21 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     flag: '🇶🇦',
     nameAr: 'دولة قطر',
     nameEn: 'Qatar',
-    ministryAr: 'وزارة التربية والتعليم والتعليم العالي بقطر',
+    ministryAr: 'وزارة التربية والتعليم والتعليم العالي بدولة قطر',
     ministryEn: 'Ministry of Education and Higher Education - Qatar',
-    systemNameAr: 'المنهج القطري المعتمد (المسار العلمي والأدبي والتكنولوجي)',
+    systemNameAr: 'المنهج القطري المعتمد (معايير المناهج التعليمية الوطنية)',
     systemNameEn: 'Official Qatari National Curriculum',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'ريال قطري',
+    currencyShortAr: 'ريال',
+    currencyEn: 'Qatari Riyal',
+    currencyCode: 'QAR',
+    capitalCityAr: 'الدوحة',
+    capitalCityEn: 'Doha',
+    culturalEventAr: 'معرض الدوحة الدولي للكتاب',
+    culturalEventEn: 'Doha International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'CS_ENGINEERING', 'HEALTH_LIFE', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'INTERNATIONAL']
@@ -137,11 +201,19 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Bahrain',
     ministryAr: 'وزارة التربية والتعليم بمملكة البحرين',
     ministryEn: 'Ministry of Education - Kingdom of Bahrain',
-    systemNameAr: 'المنهج البحريني المعتمد (نظام توحيد المسارات)',
+    systemNameAr: 'المنهج البحريني المعتمد (التعليم الأساسي وتوحيد المسارات)',
     systemNameEn: 'Official Bahraini National Curriculum',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'دينار بحريني',
+    currencyShortAr: 'دينار',
+    currencyEn: 'Bahraini Dinar',
+    currencyCode: 'BHD',
+    capitalCityAr: 'المنامة',
+    capitalCityEn: 'Manama',
+    culturalEventAr: 'معرض البحرين الدولي للكتاب',
+    culturalEventEn: 'Bahrain International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'BUSINESS', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE']
@@ -152,12 +224,20 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameAr: 'جمهورية العراق',
     nameEn: 'Iraq',
     ministryAr: 'وزارة التربية العراقية',
-    ministryEn: 'Ministry of Education - Iraq',
-    systemNameAr: 'المنهج العراقي المعتمد (الفرع العلمي والأدبي)',
+    ministryEn: 'Ministry of Education - Republic of Iraq',
+    systemNameAr: 'المنهج العراقي المعتمد (التعليم الابتدائي والفرع العلمي والأدبي)',
     systemNameEn: 'Official Iraqi National Curriculum',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'دينار عراقي',
+    currencyShortAr: 'دينار',
+    currencyEn: 'Iraqi Dinar',
+    currencyCode: 'IQD',
+    capitalCityAr: 'بغداد',
+    capitalCityEn: 'Baghdad',
+    culturalEventAr: 'معرض بغداد الدولي للكتاب',
+    culturalEventEn: 'Baghdad International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC']
@@ -168,12 +248,20 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameAr: 'المملكة المغربية',
     nameEn: 'Morocco',
     ministryAr: 'وزارة التربية الوطنية والتعليم الأولي والرياضة',
-    ministryEn: 'Ministry of National Education - Morocco',
-    systemNameAr: 'المنهاج المغربي المعتمد (سلك البكالوريا)',
-    systemNameEn: 'Official Moroccan National Curriculum (Baccalaureate)',
+    ministryEn: 'Ministry of National Education - Kingdom of Morocco',
+    systemNameAr: 'المنهاج المغربي المعتمد (المنهاج المنقح للابتدائي وسلك البكالوريا)',
+    systemNameEn: 'Official Moroccan National Curriculum',
     termDefaultAr: 'الدورة الثانية',
     termDefaultEn: 'Second Semester',
     termsCount: 2,
+    currencyAr: 'درهم مغربي',
+    currencyShortAr: 'درهم',
+    currencyEn: 'Moroccan Dirham',
+    currencyCode: 'MAD',
+    capitalCityAr: 'الرباط',
+    capitalCityEn: 'Rabat',
+    culturalEventAr: 'المعرض الدولي للنشر والكتاب بالرباط',
+    culturalEventEn: 'Rabat International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'INTERNATIONAL']
@@ -183,13 +271,21 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     flag: '🇩🇿',
     nameAr: 'الجمهورية الجزائرية',
     nameEn: 'Algeria',
-    ministryAr: 'وزارة التربية الوطنية بالجزائر',
+    ministryAr: 'وزارة التربية الوطنية بالجمهورية الجزائرية',
     ministryEn: 'Ministry of National Education - Algeria',
-    systemNameAr: 'المنهاج الجزائري المعتمد (شعب البكالوريا)',
-    systemNameEn: 'Official Algerian National Curriculum',
+    systemNameAr: 'المنهاج الجزائري المعتمد (مناهج الجيل الثاني وشعب البكالوريا)',
+    systemNameEn: 'Official Algerian National Curriculum (Second Generation)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Term',
     termsCount: 3,
+    currencyAr: 'دينار جزائري',
+    currencyShortAr: 'دينار',
+    currencyEn: 'Algerian Dinar',
+    currencyCode: 'DZD',
+    capitalCityAr: 'الجزائر',
+    capitalCityEn: 'Algiers',
+    culturalEventAr: 'صالون الجزائر الدولي للكتاب',
+    culturalEventEn: 'Algiers International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE']
@@ -199,13 +295,21 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     flag: '🇹🇳',
     nameAr: 'الجمهورية التونسية',
     nameEn: 'Tunisia',
-    ministryAr: 'وزارة التربية التونسية',
-    ministryEn: 'Ministry of Education - Tunisia',
-    systemNameAr: 'البرنامج التعليمي التونسي المعتمد (شعب الباكالوريا)',
+    ministryAr: 'وزارة التربية بالجمهورية التونسية',
+    ministryEn: 'Ministry of Education - Republic of Tunisia',
+    systemNameAr: 'البرنامج التعليمي التونسي المعتمد (التعليم الأساسي وشعب الباكالوريا)',
     systemNameEn: 'Official Tunisian National Curriculum',
     termDefaultAr: 'الثلاثي الثاني',
     termDefaultEn: 'Second Trimester',
     termsCount: 3,
+    currencyAr: 'دينار تونسي',
+    currencyShortAr: 'دينار',
+    currencyEn: 'Tunisian Dinar',
+    currencyCode: 'TND',
+    capitalCityAr: 'تونس',
+    capitalCityEn: 'Tunis',
+    culturalEventAr: 'معرض تونس الدولي للكتاب',
+    culturalEventEn: 'Tunis International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'CS_ENGINEERING', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE']
@@ -213,15 +317,23 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
   INTL: {
     code: 'INTL',
     flag: '🌍',
-    nameAr: 'المنهج الدولي والمعايير العامة',
+    nameAr: 'المعايير الدولية والمناهج العالمية',
     nameEn: 'International / General Standards',
-    ministryAr: 'معايير التعليم الدولية والمناهج المعتمدة',
-    ministryEn: 'International Academic & Pedagogical Standards',
-    systemNameAr: 'المنهج العام الدولي المعتمد',
-    systemNameEn: 'International General Curriculum',
+    ministryAr: 'معايير التعليم الدولية ومناهج العلوم والرياضيات العالمية',
+    ministryEn: 'International Academic & Pedagogical Standards (US/IB/UK)',
+    systemNameAr: 'المنهج الدولي المعياري المعتمد (Common Core & STEM)',
+    systemNameEn: 'International General Curriculum (Common Core & STEM)',
     termDefaultAr: 'الفصل الثاني',
     termDefaultEn: 'Term 2',
     termsCount: 2,
+    currencyAr: 'دولار أمريكي',
+    currencyShortAr: '$',
+    currencyEn: 'US Dollar',
+    currencyCode: 'USD',
+    capitalCityAr: 'نيويورك / لندن',
+    capitalCityEn: 'Global Centers',
+    culturalEventAr: 'المؤتمر الدولي للتعليم والابتكار',
+    culturalEventEn: 'Global Education Forum',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'CS_ENGINEERING', 'HEALTH_LIFE', 'BUSINESS', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'INTERNATIONAL']
@@ -303,6 +415,36 @@ export function getCountryDisplayLabel(code: CountryCode, lang: Language = 'ar')
     : `${info.flag} ${info.nameAr} (${info.systemNameAr})`;
 }
 
+const GRADE_NAMES_AR: Record<GradeLevel, string> = {
+  G1: 'الصف الأول الابتدائي',
+  G2: 'الصف الثاني الابتدائي',
+  G3: 'الصف الثالث الابتدائي',
+  G4: 'الصف الرابع الابتدائي',
+  G5: 'الصف الخامس الابتدائي',
+  G6: 'الصف السادس الابتدائي',
+  G7: 'الصف الأول الإعدادي / المتوسط',
+  G8: 'الصف الثاني الإعدادي / المتوسط',
+  G9: 'الصف الثالث الإعدادي / المتوسط',
+  G10: 'الصف الأول الثانوي',
+  G11: 'الصف الثاني الثانوي',
+  G12: 'الصف الثالث الثانوي'
+};
+
+const GRADE_NAMES_EN: Record<GradeLevel, string> = {
+  G1: 'Grade 1 / Primary 1',
+  G2: 'Grade 2 / Primary 2',
+  G3: 'Grade 3 / Primary 3',
+  G4: 'Grade 4 / Primary 4',
+  G5: 'Grade 5 / Primary 5',
+  G6: 'Grade 6 / Primary 6',
+  G7: 'Grade 7 / Middle 1',
+  G8: 'Grade 8 / Middle 2',
+  G9: 'Grade 9 / Middle 3',
+  G10: 'Grade 10 / High 1',
+  G11: 'Grade 11 / High 2',
+  G12: 'Grade 12 / High 3'
+};
+
 /**
  * Returns accurate national textbook and chapter information tailored by Country, Subject, Grade & Track
  */
@@ -315,68 +457,252 @@ export function getNationalTextbookInfo(
 ): { textbookName: string; ministry: string; standardCode: string; semester: string } {
   const cInfo = getCountryInfo(country);
   const isEn = lang === 'en';
+  const gradeAr = GRADE_NAMES_AR[gradeLevel] || gradeLevel;
+  const gradeEn = GRADE_NAMES_EN[gradeLevel] || gradeLevel;
 
-  const textbookMap: Record<string, string> = {
-    // Saudi Arabia
-    'SA_PRIMARY_MATH_G4': 'رياضيات الصف الرابع الابتدائي - الفصل الدراسي الثاني',
-    'SA_PRIMARY_MATH_G6': 'رياضيات الصف السادس الابتدائي - الفصل الدراسي الثاني',
-    'SA_PRIMARY_ARABIC_G4': 'لغتي الجميلة - الصف الرابع الابتدائي',
-    'SA_PRIMARY_ARABIC_G6': 'لغتي الجميلة - الصف السادس الابتدائي',
-    'SA_PRIMARY_SCIENCE_G4': 'العلوم - الصف الرابع الابتدائي (الفصل الثاني)',
-    'SA_PRIMARY_SCIENCE_G6': 'العلوم - الصف السادس الابتدائي',
-    'SA_ISLAMIC_STUDIES_G4': 'الدراسات الإسلامية - الصف الرابع الابتدائي',
-    'SA_ISLAMIC_STUDIES_G6': 'الدراسات الإسلامية - الصف السادس الابتدائي',
-    'SA_ARABIC_LANG_G7': 'لغتي الخالدة - أول متوسط',
-    'SA_ARABIC_LANG_G8': 'لغتي الخالدة - ثاني متوسط',
-    'SA_ARABIC_LANG_G9': 'لغتي الخالدة - ثالث متوسط',
-    'SA_MATH_G7': 'الرياضيات (الأعداد النسبية والجبر والإحصاء) - أول متوسط',
-    'SA_MATH_G8': 'الرياضيات (الجبر والهندسة والقياس) - ثاني متوسط',
-    'SA_MATH_G9': 'الرياضيات (الدوال الخطية والتحليل) - ثالث متوسط',
-    'SA_MATH_G10': 'الرياضيات 1-2 (مسارات السنة الأولى المشتركة)',
-    'SA_COMPUTER_SCIENCE_G7': 'المهارات الرقمية وتكنولوجيا المعلومات - أول متوسط',
-    'SA_COMPUTER_SCIENCE_G8': 'المهارات الرقمية وتكنولوجيا المعلومات - ثاني متوسط',
-    'SA_COMPUTER_SCIENCE_G9': 'المهارات الرقمية والبرمجة - ثالث متوسط',
-    'SA_PHYSICS_G12': 'الفيزياء 3 (مسار علوم الحاسب والهندسة)',
-    'SA_CHEMISTRY_G11': 'الكيمياء 2-1 (مسار الصحة والحياة)',
-    'SA_BIOLOGY_G11': 'الأحياء 2-1 (مسار الصحة والحياة)',
-    'SA_COMPUTER_SCIENCE_G11': 'التقنية الرقمية 2-1 (مسار علوم الحاسب والهندسة)',
-    'SA_ARABIC_LIT_G12': 'الدراسات الأدبية واللغوية (المسار الشرعي والإنساني)',
-    // Egypt (وزارة التربية والتعليم المصرية - التعليم 2.0 والثانوية العامة)
-    'EG_PRIMARY_MATH_G4': 'الرياضيات - الصف الرابع الابتدائي (كتاب الوزارة وسلاح التلميذ)',
-    'EG_PRIMARY_MATH_G6': 'الرياضيات - الصف السادس الابتدائي (منهج التعليم 2.0 المطور)',
-    'EG_PRIMARY_ARABIC_G4': 'اللغة العربية - الصف الرابع الابتدائي (كتاب التلميذ)',
-    'EG_PRIMARY_ARABIC_G6': 'اللغة العربية - الصف السادس الابتدائي (كتاب التلميذ - التعليم 2.0)',
-    'EG_PRIMARY_SCIENCE_G4': 'العلوم - الصف الرابع الابتدائي (التعليم 2.0)',
-    'EG_PRIMARY_SCIENCE_G6': 'العلوم - الصف السادس الابتدائي (التعليم 2.0 المطور)',
-    'EG_ISLAMIC_STUDIES_G4': 'التربية الدينية الإسلامية - الصف الرابع الابتدائي',
-    'EG_ISLAMIC_STUDIES_G6': 'التربية الدينية الإسلامية - الصف السادس الابتدائي',
-    'EG_ARABIC_LANG_G7': 'اللغة العربية - الصف الأول الإعدادي',
-    'EG_ARABIC_LANG_G8': 'اللغة العربية - الصف الثاني الإعدادي',
-    'EG_ARABIC_LANG_G9': 'اللغة العربية - الصف الثالث الإعدادي (الشهادة الإعدادية)',
-    'EG_GENERAL_SCIENCE_G7': 'العلوم - الصف الأول الإعدادي',
-    'EG_GENERAL_SCIENCE_G8': 'العلوم - الصف الثاني الإعدادي',
-    'EG_GENERAL_SCIENCE_G9': 'العلوم - الصف الثالث الإعدادي',
-    'EG_MATH_G7': 'الرياضيات (الجبر والإحصاء والهندسة والتحويلات) - الصف الأول الإعدادي (مدارس اللغات والتعليم العام)',
-    'EG_MATH_G8': 'الرياضيات (الجبر والأعداد الحقيقية والهندسة) - الصف الثاني الإعدادي',
-    'EG_MATH_G9': 'الرياضيات (الجبر والإحصاء وحساب المثلثات) - الصف الثالث الإعدادي (الشهادة الإعدادية)',
-    'EG_MATH_G10': 'الرياضيات العامة - الصف الأول الثانوي',
-    'EG_COMPUTER_SCIENCE_G7': 'تكنولوجيا المعلومات والاتصالات والحاسب الآلي (ICT & Computer) - الصف الأول الإعدادي (مدارس اللغات والرسمية)',
-    'EG_COMPUTER_SCIENCE_G8': 'الكمبيوتر وتكنولوجيا المعلومات - الصف الثاني الإعدادي',
-    'EG_COMPUTER_SCIENCE_G9': 'الكمبيوتر وتكنولوجيا المعلومات - الصف الثالث الإعدادي',
-    'EG_PHYSICS_G12': 'الفيزياء للثانوية العامة (القسم العلمي)',
-    'EG_CHEMISTRY_G12': 'الكيمياء للثانوية العامة (شعبة علمي علوم وعلمي رياضة)',
-    'EG_BIOLOGY_G12': 'الأحياء للثانوية العامة (شعبة علمي علوم)',
-    'EG_ARABIC_LIT_G12': 'اللغة العربية وقواعد النحو والأدب - الثانوية العامة',
-    // UAE
-    'AE_PRIMARY_MATH_G4': 'الرياضيات - الصف الرابع (مؤسسة الإمارات للتعليم المدرسي)',
-    'AE_PRIMARY_ARABIC_G4': 'اللغة العربية - الصف الرابع (الحلقة الأولى)',
-    'AE_PRIMARY_ARABIC_G6': 'اللغة العربية - الصف السادس (الحلقة الثانية)',
-    'AE_PHYSICS_G12': 'الفيزياء المتقدمة - الصف الثاني عشر (المسار المتقدم)',
-    'AE_COMPUTER_SCIENCE_G11': 'علوم الحاسوب والابتكار - مسار النخبة والمتقدم'
-  };
+  let textbookName = '';
 
-  const key = `${country}_${subject}_${gradeLevel}`;
-  const textbookName = textbookMap[key] || `${isEn ? 'Official National Textbook for' : 'الكتاب الوزاري المعتمد لمادة'} ${subject}`;
+  // Country-specific textbook names
+  switch (country) {
+    case 'SA': // Saudi Arabia
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات (${gradeAr}) - وزارة التعليم السعودية (نظام الفصول الثلاثة)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `لغتي الجميلة (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `الدراسات الإسلامية (التوحيد والفقه والسلوك والحديث) (${gradeAr})`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `لغتي الخالدة (${gradeAr}) - وزارة التعليم السعودية`;
+      } else if (subject === 'MATH') {
+        textbookName = gradeLevel === 'G10' ? 'الرياضيات 1-2 (مسارات السنة الأولى المشتركة)' : `الرياضيات (${gradeAr}) - نظام المسارات`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `المهارات والتقنية الرقمية (${gradeAr}) - مسار علوم الحاسب والهندسة`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء (${gradeAr}) - مسار علوم الحاسب والهندسة`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء (${gradeAr}) - مسار الصحة والحياة`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء (${gradeAr}) - مسار الصحة والحياة`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `الدراسات الأدبية واللغوية (${gradeAr}) - المسار الشرعي والإنساني`;
+      }
+      break;
+
+    case 'EG': // Egypt
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات والحساب المطور (كتاب الوزارة والتعليم 2.0) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        if (gradeLevel === 'G1' || gradeLevel === 'G2' || gradeLevel === 'G3') {
+          textbookName = `تواصل - كتاب اللغة العربية (التعليم 2.0) - ${gradeAr}`;
+        } else {
+          textbookName = `اللغة العربية (كتاب الوزارة وسلاح التلميذ - التعليم 2.0 المطور) - ${gradeAr}`;
+        }
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        if (gradeLevel === 'G1' || gradeLevel === 'G2' || gradeLevel === 'G3') {
+          textbookName = `اكتشف والعلوم (Discover - التعليم 2.0) - ${gradeAr}`;
+        } else {
+          textbookName = `العلوم والمفاهيم العلمية المطورة (التعليم 2.0) - ${gradeAr}`;
+        }
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الدينية الإسلامية (كتاب الوزارة المعتمد) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية (المرحلة الإعدادية - وزارة التربية والتعليم) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم العامة (المرحلة الإعدادية - التعليم المصري) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = `الرياضيات (الجبر والإحصاء والهندسة وحساب المثلثات) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء للثانوية العامة ومدارس اللغات (القسم العلمي) - ${gradeAr}`;
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = `الكيمياء للثانوية العامة (علمي علوم وعلمي رياضة) - ${gradeAr}`;
+      } else if (subject === 'BIOLOGY') {
+        textbookName = `الأحياء والجيولوجيا للثانوية العامة (شعبة علمي علوم) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `تكنولوجيا المعلومات والاتصالات والحاسب الآلي (ICT) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = `اللغة العربية وقواعد النحو والأدب والبلاغة (الثانوية العامة) - ${gradeAr}`;
+      }
+      break;
+
+    case 'AE': // UAE
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات المتكاملة (كتاب الطالب - ESE) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        if (['G1', 'G2', 'G3', 'G4'].includes(gradeLevel)) {
+          textbookName = `اللغة العربية (سلسلة ألف باء الإمارات - الحلقة الأولى) - ${gradeAr}`;
+        } else {
+          textbookName = `اللغة العربية (الحلقة الثانية - مؤسسة الإمارات للتعليم المدرسي) - ${gradeAr}`;
+        }
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم المتكاملة والاستكشاف العلمي (مؤسسة الإمارات للتعليم المدرسي) - ${gradeAr}`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية والهوية الوطنية (وزارة التربية ومؤسسة الإمارات) - ${gradeAr}`;
+      } else if (subject === 'PHYSICS') {
+        textbookName = `الفيزياء المتقدمة (المسار المتقدم ومسار النخبة) - ${gradeAr}`;
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = `علوم الحاسوب والابتكار والذكاء الاصطناعي - ${gradeAr}`;
+      } else {
+        textbookName = `المنهج الإماراتي المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'KW': // Kuwait
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات - ${gradeAr} (وزارة التربية بدولة الكويت)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `لغتي العربية (منهج الكفايات المعتمد) - ${gradeAr} (الكويت)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم - ${gradeAr} (وزارة التربية بدولة الكويت)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية والقرآن الكريم - ${gradeAr} (دولة الكويت)`;
+      } else {
+        textbookName = `المنهج الكويتي المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'JO': // Jordan
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات (مناهج كولينز الوطنية المطورة) - ${gradeAr} (الأردن)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم (مناهج كولينز الوطنية المطورة) - ${gradeAr} (الأردن)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `اللغة العربية (مهارات الاتصال) - ${gradeAr} (وزارة التربية الأردنية)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية - ${gradeAr} (المملكة الأردنية الهاشمية)`;
+      } else {
+        textbookName = `المنهج الأردني المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'OM': // Oman
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات (سلاسل كامبريدج المطبقة بسلطنة عُمان) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم (سلاسل كامبريدج المطبقة بسلطنة عُمان) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        if (['G1', 'G2', 'G3', 'G4'].includes(gradeLevel)) {
+          textbookName = `أحب لغتي (التعليم الأساسي - الحلقة الأولى) - ${gradeAr} (سلطنة عمان)`;
+        } else {
+          textbookName = `لغتي الجميلة (التعليم الأساسي - الحلقة الثانية) - ${gradeAr} (سلطنة عمان)`;
+        }
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `ديني قيمي (التربية الإسلامية) - ${gradeAr} (وزارة التربية العمانية)`;
+      } else {
+        textbookName = `المنهج العُماني المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'QA': // Qatar
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات (معايير المناهج القطرية ومصادر التعلم) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم (معايير المناهج القطرية ومصادر التعلم) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `اللغة العربية (مصادر التعلم المعتمدة) - ${gradeAr} (دولة قطر)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية - معايير المناهج القطرية - ${gradeAr}`;
+      } else {
+        textbookName = `المنهج القطري المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'BH': // Bahrain
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات - ${gradeAr} (وزارة التربية والتعليم بمملكة البحرين)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم المطورة - ${gradeAr} (مملكة البحرين)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `اللغة العربية - ${gradeAr} (المنهج الوطني البحريني)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية - ${gradeAr} (مملكة البحرين)`;
+      } else {
+        textbookName = `المنهج البحريني المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'IQ': // Iraq
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات - ${gradeAr} (وزارة التربية العراقية)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم - ${gradeAr} (وزارة التربية العراقية)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        if (['G1', 'G2', 'G3'].includes(gradeLevel)) {
+          textbookName = `قراءتي - ${gradeAr} (وزارة التربية العراقية)`;
+        } else {
+          textbookName = `قواعد اللغة العربية وقراءتي - ${gradeAr} (جمهورية العراق)`;
+        }
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `القرآن الكريم والتربية الإسلامية - ${gradeAr} (العراق)`;
+      } else {
+        textbookName = `المنهج العراقي المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'MA': // Morocco
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `المرجع في الرياضيات / فضاء الرياضيات - ${gradeAr} (المملكة المغربية)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `النشاط العلمي (المنهاج المنقح للتعليم الابتدائي) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `المفيد في اللغة العربية / مرشدي في اللغة العربية - ${gradeAr} (المغرب)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية (الممتاز في التربية الإسلامية) - ${gradeAr}`;
+      } else {
+        textbookName = `المنهاج المغربي المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'DZ': // Algeria
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `كتاب الرياضيات - ${gradeAr} (مناهج الجيل الثاني - الجزائر)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `التربية العلمية والتكنولوجية - ${gradeAr} (الجمهورية الجزائرية)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `كتابي في اللغة العربية - ${gradeAr} (الجيل الثاني - الجزائر)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية - ${gradeAr} (وزارة التربية الوطنية بالجزائر)`;
+      } else {
+        textbookName = `المنهاج الجزائري المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'TN': // Tunisia
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات - ${gradeAr} (المركز البيداغوجي بالجمهورية التونسية)`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `الإيقاظ العلمي - ${gradeAr} (التعليم الأساسي بتونس)`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `قراءة وتواصل وإنتاج كتابي - ${gradeAr} (تونس)`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية - ${gradeAr} (وزارة التربية التونسية)`;
+      } else {
+        textbookName = `البرنامج التعليمي التونسي المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+
+    case 'INTL': // International
+    default:
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = isEn 
+          ? `Primary Mathematics & Arithmetic - ${gradeEn} (Common Core Aligned)` 
+          : `الرياضيات الابتدائية والمعايير الدولية - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = isEn 
+          ? `Primary Science & Inquiry - ${gradeEn} (NGSS Standards)` 
+          : `العلوم والاستكشاف العلمي الدولي - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `اللغة العربية وفق المعايير الدولية - ${gradeAr}`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية والقيم الإنسانية - ${gradeAr}`;
+      } else {
+        textbookName = isEn 
+          ? `International Curriculum for ${subject} - ${gradeEn}` 
+          : `المنهج الدولي المعتمد لمادة ${subject} - ${gradeAr}`;
+      }
+      break;
+  }
 
   return {
     textbookName,
@@ -400,32 +726,32 @@ export function getNationalSubjectLabel(
   if (country === 'EG') {
     switch (subject) {
       case 'PRIMARY_ARABIC':
-        return isEn ? 'Arabic Language (Student Book - Education 2.0)' : 'اللغة العربية (كتاب التلميذ - التعليم 2.0)';
+        return isEn ? 'Arabic Language (Edu 2.0)' : 'اللغة العربية (التعليم 2.0 - تواصل)';
       case 'ARABIC_LANG':
-        return isEn ? 'Arabic Language (Preparatory / Middle School)' : 'اللغة العربية (المرحلة الإعدادية)';
+        return isEn ? 'Arabic Language (Middle School)' : 'اللغة العربية (المرحلة الإعدادية)';
       case 'PRIMARY_MATH':
-        return isEn ? 'Mathematics & Arithmetic (Primary School)' : 'الرياضيات والحساب (المرحلة الابتدائية)';
+        return isEn ? 'Mathematics (Primary Edu 2.0)' : 'الرياضيات والحساب (المرحلة الابتدائية المطورة)';
       case 'PRIMARY_SCIENCE':
         if (_gradeLevel === 'G1' || _gradeLevel === 'G2' || _gradeLevel === 'G3') {
-          return isEn ? 'Discover & Science (Education 2.0)' : 'ديسكفر والعلوم (التعليم 2.0 - ابتدائي)';
+          return isEn ? 'Discover & Science (Edu 2.0)' : 'ديسكفر واكتشف والعلوم (التعليم 2.0)';
         }
-        return isEn ? 'Science (Education 2.0 Primary)' : 'العلوم (التعليم 2.0 - ابتدائي)';
+        return isEn ? 'Science (Edu 2.0 Primary)' : 'العلوم المطورة (التعليم 2.0 الابتدائي)';
       case 'GENERAL_SCIENCE':
-        return isEn ? 'General Science (Preparatory School)' : 'العلوم (المرحلة الإعدادية)';
+        return isEn ? 'General Science (Preparatory)' : 'العلوم العامة (المرحلة الإعدادية)';
       case 'ISLAMIC_STUDIES':
-        return isEn ? 'Islamic Religious Education' : 'التربية الدينية الإسلامية';
+        return isEn ? 'Islamic Religious Education' : 'التربية الدينية الإسلامية (كتاب الوزارة)';
       case 'MATH':
-        return isEn ? 'General Mathematics & Algebra' : 'الرياضيات العامة والجبر';
+        return isEn ? 'Mathematics & Algebra' : 'الرياضيات (الجبر والهندسة وحساب المثلثات)';
       case 'PHYSICS':
-        return isEn ? 'Physics (General Secondary)' : 'الفيزياء (الثانوية العامة)';
+        return isEn ? 'Physics (General Secondary)' : 'الفيزياء (الثانوية العامة المصرية)';
       case 'CHEMISTRY':
-        return isEn ? 'Chemistry (General Secondary)' : 'الكيمياء (الثانوية العامة)';
+        return isEn ? 'Chemistry (General Secondary)' : 'الكيمياء (الثانوية العامة المصرية)';
       case 'BIOLOGY':
-        return isEn ? 'Biology & Geology (General Secondary)' : 'الأحياء والجيولوجيا (الثانوية العامة)';
+        return isEn ? 'Biology & Geology (Secondary)' : 'الأحياء والجيولوجيا (الثانوية العامة)';
       case 'COMPUTER_SCIENCE':
-        return isEn ? 'Information Technology & Computer' : 'تكنولوجيا المعلومات والحاسب الآلي';
+        return isEn ? 'ICT & Computer Science' : 'تكنولوجيا المعلومات والحاسب الآلي';
       case 'ARABIC_LIT':
-        return isEn ? 'Arabic Grammar & Rhetoric (High School)' : 'اللغة العربية والنحو والبلاغة';
+        return isEn ? 'Arabic Rhetoric & Grammar' : 'اللغة العربية والنحو والأدب (الثانوية العامة)';
       default:
         break;
     }
@@ -434,25 +760,25 @@ export function getNationalSubjectLabel(
   if (country === 'SA') {
     switch (subject) {
       case 'PRIMARY_ARABIC':
-        return isEn ? 'Arabic Language (Lughati Al-Jameelah)' : 'اللغة العربية (لغتي الجميلة - ابتدائي)';
+        return isEn ? 'Arabic Language (Lughati Al-Jameelah)' : 'لغتي الجميلة (المرحلة الابتدائية السعودية)';
       case 'ARABIC_LANG':
-        return isEn ? 'Arabic Language (Lughati Al-Khalidah - Middle)' : 'اللغة العربية (لغتي الخالدة - متوسط)';
+        return isEn ? 'Arabic Language (Lughati Al-Khalidah)' : 'لغتي الخالدة (المرحلة المتوسطة السعودية)';
       case 'ISLAMIC_STUDIES':
-        return isEn ? 'Islamic Studies (Tawheed & Fiqh)' : 'الدراسات الإسلامية (ابتدائي)';
+        return isEn ? 'Islamic Studies (Masarat)' : 'الدراسات الإسلامية (التوحيد والفقه والسلوك)';
       case 'PRIMARY_MATH':
-        return isEn ? 'Primary Mathematics' : 'الرياضيات (المرحلة الابتدائية)';
+        return isEn ? 'Primary Mathematics (Saudi)' : 'الرياضيات (المرحلة الابتدائية - فصول ثلاثة)';
       case 'PRIMARY_SCIENCE':
-        return isEn ? 'Primary Science' : 'العلوم (المرحلة الابتدائية)';
+        return isEn ? 'Primary Science (Saudi)' : 'العلوم (المرحلة الابتدائية السعودية)';
       case 'GENERAL_SCIENCE':
-        return isEn ? 'Middle School Science' : 'العلوم (المرحلة المتوسطة)';
+        return isEn ? 'Middle School Science' : 'العلوم (المرحلة المتوسطة السعودية)';
       case 'MATH':
-        return isEn ? 'Mathematics (Masarat Track)' : 'الرياضيات (نظام المسارات)';
+        return isEn ? 'Mathematics (Masarat Track)' : 'الرياضيات (نظام مسارات الثانوية)';
       case 'PHYSICS':
-        return isEn ? 'Physics (Masarat Track)' : 'الفيزياء (مسار الهندسة والحاسب)';
+        return isEn ? 'Physics (CS & Engineering)' : 'الفيزياء (مسار علوم الحاسب والهندسة)';
       case 'CHEMISTRY':
-        return isEn ? 'Chemistry (Masarat Track)' : 'الكيمياء (مسار الصحة والحياة)';
+        return isEn ? 'Chemistry (Health & Life)' : 'الكيمياء (مسار الصحة والحياة)';
       case 'BIOLOGY':
-        return isEn ? 'Biology (Masarat Track)' : 'الأحياء (مسار الصحة والحياة)';
+        return isEn ? 'Biology (Health & Life)' : 'الأحياء (مسار الصحة والحياة)';
       case 'COMPUTER_SCIENCE':
         return isEn ? 'Digital Technology (Masarat)' : 'التقنية الرقمية وعلوم الحاسب';
       case 'ARABIC_LIT':
@@ -462,7 +788,112 @@ export function getNationalSubjectLabel(
     }
   }
 
-  // Standard / Universal Arab World Subject Names
+  if (country === 'AE') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return isEn ? 'Arabic Language (UAE Cycles)' : 'اللغة العربية (سلسلة ألف باء الإمارات)';
+      case 'PRIMARY_MATH':
+        return isEn ? 'Integrated Mathematics (ESE)' : 'الرياضيات المتكاملة (مؤسسة الإمارات)';
+      case 'PRIMARY_SCIENCE':
+        return isEn ? 'Integrated Science (ESE)' : 'العلوم المتكاملة والاستكشاف (مؤسسة الإمارات)';
+      case 'ISLAMIC_STUDIES':
+        return isEn ? 'Islamic Education & Identity' : 'التربية الإسلامية والهوية الوطنية الإماراتية';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'KW') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return 'لغتي العربية (منهج الكفايات الكويتي)';
+      case 'PRIMARY_MATH':
+        return 'الرياضيات (وزارة التربية الكويتية)';
+      case 'PRIMARY_SCIENCE':
+        return 'العلوم (وزارة التربية الكويتية)';
+      case 'ISLAMIC_STUDIES':
+        return 'التربية الإسلامية والقرآن الكريم (الكويت)';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'JO') {
+    switch (subject) {
+      case 'PRIMARY_MATH':
+        return 'الرياضيات (مناهج كولينز الوطنية المطورة)';
+      case 'PRIMARY_SCIENCE':
+        return 'العلوم (مناهج كولينز الوطنية المطورة)';
+      case 'PRIMARY_ARABIC':
+        return 'اللغة العربية (مهارات الاتصال - الأردن)';
+      case 'ISLAMIC_STUDIES':
+        return 'التربية الإسلامية (المملكة الأردنية)';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'OM') {
+    switch (subject) {
+      case 'PRIMARY_MATH':
+        return 'الرياضيات (سلاسل كامبريدج المطبقة بعُمان)';
+      case 'PRIMARY_SCIENCE':
+        return 'العلوم (سلاسل كامبريدج المطبقة بعُمان)';
+      case 'PRIMARY_ARABIC':
+        return _gradeLevel && ['G1', 'G2', 'G3', 'G4'].includes(_gradeLevel) ? 'أحب لغتي (التعليم الأساسي العماني)' : 'لغتي الجميلة (التعليم الأساسي العماني)';
+      case 'ISLAMIC_STUDIES':
+        return 'ديني قيمي (التربية الإسلامية بسلطنة عمان)';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'MA') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return 'المفيد / مرشدي في اللغة العربية (المغرب)';
+      case 'PRIMARY_MATH':
+        return 'المرجع في الرياضيات (المنهاج المنقح - المغرب)';
+      case 'PRIMARY_SCIENCE':
+        return 'النشاط العلمي (التعليم الابتدائي بالمغرب)';
+      case 'ISLAMIC_STUDIES':
+        return 'التربية الإسلامية (الممتاز في التربية الإسلامية)';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'DZ') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return 'كتابي في اللغة العربية (الجيل الثاني - الجزائر)';
+      case 'PRIMARY_MATH':
+        return 'كتاب الرياضيات (الجيل الثاني - الجزائر)';
+      case 'PRIMARY_SCIENCE':
+        return 'التربية العلمية والتكنولوجية (الجزائر)';
+      case 'ISLAMIC_STUDIES':
+        return 'التربية الإسلامية (الجيل الثاني - الجزائر)';
+      default:
+        break;
+    }
+  }
+
+  if (country === 'TN') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return 'قراءة وتواصل وإنتاج كتابي (تونس)';
+      case 'PRIMARY_MATH':
+        return 'الرياضيات (التعليم الأساسي التونسي)';
+      case 'PRIMARY_SCIENCE':
+        return 'الإيقاظ العلمي (المرحلة الأولى - تونس)';
+      case 'ISLAMIC_STUDIES':
+        return 'التربية الإسلامية (التعليم الأساسي بتونس)';
+      default:
+        break;
+    }
+  }
+
+  // Fallback labels
   switch (subject) {
     case 'PRIMARY_ARABIC':
       return isEn ? 'Arabic Language (Primary Stage)' : 'اللغة العربية (المرحلة الابتدائية)';
@@ -475,9 +906,9 @@ export function getNationalSubjectLabel(
     case 'GENERAL_SCIENCE':
       return isEn ? 'General Science (Middle School)' : 'العلوم العامة (المرحلة المتوسطة)';
     case 'ISLAMIC_STUDIES':
-      return isEn ? 'Islamic Education & Ethics' : 'التربية الإسلامية والدراسات الدينية';
+      return isEn ? 'Islamic Religious Studies' : 'التربية الإسلامية والدراسات الدينية';
     case 'MATH':
-      return isEn ? 'Mathematics (Algebra & Functions)' : 'الرياضيات (الجبر والدوال)';
+      return isEn ? 'General Mathematics & Algebra' : 'الرياضيات (الجبر والدوال)';
     case 'PHYSICS':
       return isEn ? 'Physics' : 'الفيزياء';
     case 'CHEMISTRY':
@@ -493,3 +924,151 @@ export function getNationalSubjectLabel(
   }
 }
 
+/**
+ * Deep Country Curriculum Adaptor:
+ * Tailors lectures seamlessly to reflect the target country's authentic curriculum:
+ * 1. Ministry and national textbook titles.
+ * 2. Currency units in word problems.
+ * 3. Geographic, cultural, and national landmarks in warmups, examples, and checks.
+ * 4. National educational system structure and standard codes.
+ */
+export function adaptCurriculumToCountry(
+  lectures: Lecture[],
+  country: CountryCode,
+  subject: Subject,
+  gradeLevel: GradeLevel,
+  lang: Language = 'ar'
+): Lecture[] {
+  const cInfo = getCountryInfo(country);
+  const natTextbook = getNationalTextbookInfo(country, subject, gradeLevel, 'GENERAL', lang);
+
+  // Replacement patterns for currencies
+  const currencyReplacements: { from: RegExp; to: string }[] = [
+    { from: /ريالاً\s*سعودياً|ريالاً|ريالات|ريال\s*سعودي/g, to: cInfo.currencyAr },
+    { from: /جنيهات|جنيهاً|جنيه\s*مصري/g, to: cInfo.currencyAr },
+    { from: /دراهم|درهماً|درهم\s*إماراتي/g, to: cInfo.currencyAr },
+    { from: /دنانير|ديناراً|دينار\s*كويتي|دينار\s*أردني|دينار\s*بحريني|دينار\s*عراقي|دينار\s*جزائري|دينار\s*تونسي/g, to: cInfo.currencyAr },
+    { from: /SAR|EGP|AED|KWD|JOD|OMR|QAR|BHD|IQD|MAD|DZD|TND/g, to: cInfo.currencyCode }
+  ];
+
+  // Specific city / landmark replacements
+  const cityReplacements: { from: RegExp; to: string }[] = [];
+  if (country === 'EG') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض القاهرة الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*جدة/g, to: 'مدينة القاهرة' },
+      { from: /واحة\s*الأحساء/g, to: 'واحات الفيوم ووادي النيل' },
+      { from: /جبال\s*السروات/g, to: 'جبال البحر الأحمر وسانت كاترين' }
+    );
+  } else if (country === 'AE') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض الشارقة الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة أبوظبي ودبي' },
+      { from: /واحة\s*الأحساء/g, to: 'واحة العين الخضراء' }
+    );
+  } else if (country === 'KW') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض الكويت الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة الكويت' }
+    );
+  } else if (country === 'JO') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض عمّان الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة عمّان' },
+      { from: /واحة\s*الأحساء/g, to: 'واحة وادي رم والبحر الميت' }
+    );
+  } else if (country === 'OM') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض مسقط الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة مسقط وصلالة' }
+    );
+  } else if (country === 'QA') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض الدوحة الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة الدوحة ولوسيل' }
+    );
+  } else if (country === 'MA') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'المعرض الدولي للنشر والكتاب بالرباط' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة الرباط والدار البيضاء' }
+    );
+  } else if (country === 'DZ') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'صالون الجزائر الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة الجزائر العاصمة ووهران' }
+    );
+  } else if (country === 'TN') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض تونس الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة تونس وصفاقس' }
+    );
+  } else if (country === 'IQ') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي/g, to: 'معرض بغداد الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة/g, to: 'مدينة بغداد والبصرة' }
+    );
+  }
+
+  const applyTextTransforms = (text?: string): string => {
+    if (!text) return '';
+    let result = text;
+    // Apply currency adaptations
+    for (const cr of currencyReplacements) {
+      result = result.replace(cr.from, cr.to);
+    }
+    // Apply city adaptations
+    for (const lr of cityReplacements) {
+      result = result.replace(lr.from, lr.to);
+    }
+    return result;
+  };
+
+  return lectures.map((lec) => {
+    // Clone lecture deeply
+    const adapted: Lecture = {
+      ...lec,
+      gradeLevelNameAr: `${cInfo.nameAr} - ${natTextbook.textbookName}`,
+      gradeLevelNameEn: `${cInfo.nameEn} - ${natTextbook.textbookName}`,
+      ministryAr: cInfo.ministryAr,
+      ministryEn: cInfo.ministryEn,
+      termAr: natTextbook.semester,
+      termEn: natTextbook.semester,
+      country,
+      warmupHookAr: applyTextTransforms(lec.warmupHookAr),
+      summaryAr: applyTextTransforms(lec.summaryAr),
+      sections: lec.sections ? lec.sections.map(sec => ({
+        ...sec,
+        contentAr: applyTextTransforms(sec.contentAr),
+        interactiveExample: sec.interactiveExample ? {
+          ...sec.interactiveExample,
+          titleAr: applyTextTransforms(sec.interactiveExample.titleAr),
+          steps: sec.interactiveExample.steps ? sec.interactiveExample.steps.map(st => ({
+            ...st,
+            textAr: applyTextTransforms(st.textAr),
+            noteAr: applyTextTransforms(st.noteAr)
+          })) : [],
+          takeawayAr: applyTextTransforms(sec.interactiveExample.takeawayAr)
+        } : undefined,
+        formativeCheck: sec.formativeCheck ? {
+          ...sec.formativeCheck,
+          questionAr: applyTextTransforms(sec.formativeCheck.questionAr),
+          optionsAr: sec.formativeCheck.optionsAr.map(opt => applyTextTransforms(opt)),
+          explanationAr: applyTextTransforms(sec.formativeCheck.explanationAr)
+        } : undefined
+      })) : [],
+      assessment: lec.assessment ? {
+        ...lec.assessment,
+        titleAr: applyTextTransforms(lec.assessment.titleAr),
+        questions: lec.assessment.questions ? lec.assessment.questions.map(q => ({
+          ...q,
+          textAr: applyTextTransforms(q.textAr),
+          optionsAr: q.optionsAr ? q.optionsAr.map(opt => applyTextTransforms(opt)) : [],
+          conceptTestedAr: applyTextTransforms(q.conceptTestedAr),
+          explanationAr: applyTextTransforms(q.explanationAr)
+        })) : []
+      } : lec.assessment
+    };
+
+    return adapted;
+  });
+}

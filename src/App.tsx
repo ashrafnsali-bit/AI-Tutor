@@ -213,11 +213,11 @@ export function App() {
     updateUserAccount(profile.id, profile).catch(() => {});
   }, [profile]);
 
-  // Sync lectures progress per subject to local storage & database
+  // Sync lectures progress per subject and country to local storage & database
   useEffect(() => {
-    saveSubjectLectures(profile.subject, lectures, profile.gradeLevel);
+    saveSubjectLectures(profile.subject, lectures, profile.gradeLevel, profile.country);
     saveUserSubjectLectures(profile.id, profile.subject, lectures).catch(() => {});
-  }, [profile.id, profile.subject, profile.gradeLevel, lectures]);
+  }, [profile.id, profile.subject, profile.gradeLevel, profile.country, lectures]);
 
   // Adjust HTML dir and title when language changes
   useEffect(() => {

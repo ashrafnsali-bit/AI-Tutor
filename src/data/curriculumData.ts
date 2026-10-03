@@ -1,7 +1,7 @@
 import type { Lecture, StudentProfile, Subject } from '../types';
 import { BIOLOGY_LECTURES, COMPUTER_SCIENCE_LECTURES } from './stemCurriculumData';
-import { ISLAMIC_STUDIES_FULL, PRIMARY_ARABIC_FULL } from './islamicArabicCurriculum';
-import { getNationalTextbookInfo, getCountryInfo } from './curriculumCountries';
+import { ISLAMIC_STUDIES_FULL } from './islamicArabicCurriculum';
+import { adaptCurriculumToCountry } from './curriculumCountries';
 
 import {
   PRIMARY_MATH_LECTURES,
@@ -32,17 +32,26 @@ import { HIGH_PHYSICS_G12_LECTURES } from './highPhysics12CurriculumData';
 import { MIDDLE_ARABIC_G9_LECTURES } from './middleArabic9CurriculumData';
 import { PRIMARY_ARABIC_G1_LECTURES } from './primaryArabic1CurriculumData';
 import { PRIMARY_ARABIC_G2_LECTURES } from './primaryArabic2CurriculumData';
+import { PRIMARY_ARABIC_G3_LECTURES } from './primaryArabic3CurriculumData';
 import { PRIMARY_MATH_G1_LECTURES } from './primaryMath1CurriculumData';
 import { PRIMARY_MATH_G2_LECTURES } from './primaryMath2CurriculumData';
 import { PRIMARY_MATH_G3_LECTURES } from './primaryMath3CurriculumData';
 import { PRIMARY_SCIENCE_G1_LECTURES } from './primaryScience1CurriculumData';
 import { PRIMARY_SCIENCE_G2_LECTURES } from './primaryScience2CurriculumData';
 import { PRIMARY_SCIENCE_G3_LECTURES } from './primaryScience3CurriculumData';
+import { PRIMARY_ISLAMIC_G1_LECTURES } from './primaryIslamic1CurriculumData';
 import { PRIMARY_ISLAMIC_G2_LECTURES } from './primaryIslamic2CurriculumData';
 import { PRIMARY_ISLAMIC_G3_LECTURES } from './primaryIslamic3CurriculumData';
 import { PRIMARY_ISLAMIC_G4_LECTURES } from './primaryIslamic4CurriculumData';
 import { PRIMARY_ISLAMIC_G5_LECTURES } from './primaryIslamic5CurriculumData';
 import { PRIMARY_ISLAMIC_G6_LECTURES } from './primaryIslamic6CurriculumData';
+import { PRIMARY_ARABIC_G4_LECTURES } from './primaryArabic4CurriculumData';
+import { PRIMARY_ARABIC_G5_LECTURES } from './primaryArabic5CurriculumData';
+import { PRIMARY_ARABIC_G6_LECTURES } from './primaryArabic6CurriculumData';
+import { PRIMARY_MATH_G5_LECTURES } from './primaryMath5CurriculumData';
+import { PRIMARY_MATH_G6_LECTURES } from './primaryMath6CurriculumData';
+import { PRIMARY_SCIENCE_G5_LECTURES } from './primaryScience5CurriculumData';
+import { PRIMARY_SCIENCE_G6_LECTURES } from './primaryScience6CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -60,6 +69,13 @@ export {
   PRIMARY_ISLAMIC_G4_LECTURES,
   PRIMARY_ISLAMIC_G5_LECTURES,
   PRIMARY_ISLAMIC_G6_LECTURES,
+  PRIMARY_ARABIC_G4_LECTURES,
+  PRIMARY_ARABIC_G5_LECTURES,
+  PRIMARY_ARABIC_G6_LECTURES,
+  PRIMARY_MATH_G5_LECTURES,
+  PRIMARY_MATH_G6_LECTURES,
+  PRIMARY_SCIENCE_G5_LECTURES,
+  PRIMARY_SCIENCE_G6_LECTURES,
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
@@ -4428,63 +4444,39 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
 
 export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): Lecture[] {
   if (subject === 'PRIMARY_MATH') {
-    if (gradeLevel === 'G1') {
-      return PRIMARY_MATH_G1_LECTURES;
-    }
-    if (gradeLevel === 'G2') {
-      return PRIMARY_MATH_G2_LECTURES;
-    }
-    if (gradeLevel === 'G3') {
-      return PRIMARY_MATH_G3_LECTURES;
-    }
+    if (gradeLevel === 'G1') return PRIMARY_MATH_G1_LECTURES;
+    if (gradeLevel === 'G2') return PRIMARY_MATH_G2_LECTURES;
+    if (gradeLevel === 'G3') return PRIMARY_MATH_G3_LECTURES;
+    if (gradeLevel === 'G4') return PRIMARY_MATH_LECTURES;
+    if (gradeLevel === 'G5') return PRIMARY_MATH_G5_LECTURES;
+    if (gradeLevel === 'G6') return PRIMARY_MATH_G6_LECTURES;
     return PRIMARY_MATH_LECTURES;
   }
   if (subject === 'PRIMARY_ARABIC') {
-    if (gradeLevel === 'G1') {
-      return PRIMARY_ARABIC_G1_LECTURES;
-    }
-    if (gradeLevel === 'G2') {
-      return PRIMARY_ARABIC_G2_LECTURES;
-    }
-    if (gradeLevel === 'G3') {
-      return PRIMARY_ARABIC_LECTURES;
-    }
-    if (gradeLevel === 'G4' || gradeLevel === 'G5' || gradeLevel === 'G6') {
-      return PRIMARY_ARABIC_FULL;
-    }
-    return PRIMARY_ARABIC_G2_LECTURES;
+    if (gradeLevel === 'G1') return PRIMARY_ARABIC_G1_LECTURES;
+    if (gradeLevel === 'G2') return PRIMARY_ARABIC_G2_LECTURES;
+    if (gradeLevel === 'G3') return PRIMARY_ARABIC_G3_LECTURES;
+    if (gradeLevel === 'G4') return PRIMARY_ARABIC_G4_LECTURES;
+    if (gradeLevel === 'G5') return PRIMARY_ARABIC_G5_LECTURES;
+    if (gradeLevel === 'G6') return PRIMARY_ARABIC_G6_LECTURES;
+    return PRIMARY_ARABIC_G4_LECTURES;
   }
   if (subject === 'PRIMARY_SCIENCE') {
-    if (gradeLevel === 'G1') {
-      return PRIMARY_SCIENCE_G1_LECTURES;
-    }
-    if (gradeLevel === 'G2') {
-      return PRIMARY_SCIENCE_G2_LECTURES;
-    }
-    if (gradeLevel === 'G3') {
-      return PRIMARY_SCIENCE_G3_LECTURES;
-    }
-    if (gradeLevel === 'G4' || gradeLevel === 'G5' || gradeLevel === 'G6') {
-      return PRIMARY_SCIENCE_LECTURES;
-    }
-    return PRIMARY_SCIENCE_G3_LECTURES;
+    if (gradeLevel === 'G1') return PRIMARY_SCIENCE_G1_LECTURES;
+    if (gradeLevel === 'G2') return PRIMARY_SCIENCE_G2_LECTURES;
+    if (gradeLevel === 'G3') return PRIMARY_SCIENCE_G3_LECTURES;
+    if (gradeLevel === 'G4') return PRIMARY_SCIENCE_LECTURES;
+    if (gradeLevel === 'G5') return PRIMARY_SCIENCE_G5_LECTURES;
+    if (gradeLevel === 'G6') return PRIMARY_SCIENCE_G6_LECTURES;
+    return PRIMARY_SCIENCE_LECTURES;
   }
   if (subject === 'ISLAMIC_STUDIES') {
-    if (gradeLevel === 'G2') {
-      return PRIMARY_ISLAMIC_G2_LECTURES;
-    }
-    if (gradeLevel === 'G3') {
-      return PRIMARY_ISLAMIC_G3_LECTURES;
-    }
-    if (gradeLevel === 'G4') {
-      return PRIMARY_ISLAMIC_G4_LECTURES;
-    }
-    if (gradeLevel === 'G5') {
-      return PRIMARY_ISLAMIC_G5_LECTURES;
-    }
-    if (gradeLevel === 'G6') {
-      return PRIMARY_ISLAMIC_G6_LECTURES;
-    }
+    if (gradeLevel === 'G1') return PRIMARY_ISLAMIC_G1_LECTURES;
+    if (gradeLevel === 'G2') return PRIMARY_ISLAMIC_G2_LECTURES;
+    if (gradeLevel === 'G3') return PRIMARY_ISLAMIC_G3_LECTURES;
+    if (gradeLevel === 'G4') return PRIMARY_ISLAMIC_G4_LECTURES;
+    if (gradeLevel === 'G5') return PRIMARY_ISLAMIC_G5_LECTURES;
+    if (gradeLevel === 'G6') return PRIMARY_ISLAMIC_G6_LECTURES;
     return ISLAMIC_STUDIES_FULL;
   }
   if (subject === 'MATH') {
@@ -4507,6 +4499,9 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
       if (gradeLevel === 'G1') return PRIMARY_MATH_G1_LECTURES;
       if (gradeLevel === 'G2') return PRIMARY_MATH_G2_LECTURES;
       if (gradeLevel === 'G3') return PRIMARY_MATH_G3_LECTURES;
+      if (gradeLevel === 'G4') return PRIMARY_MATH_LECTURES;
+      if (gradeLevel === 'G5') return PRIMARY_MATH_G5_LECTURES;
+      if (gradeLevel === 'G6') return PRIMARY_MATH_G6_LECTURES;
       return PRIMARY_MATH_LECTURES;
     }
     return MATH_LECTURES; // Grade 12 Advanced / STEM
@@ -4530,21 +4525,14 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
     return HIGH_COMP_G12_LECTURES;
   }
   if (subject === 'GENERAL_SCIENCE') {
-    if (gradeLevel === 'G1') {
-      return PRIMARY_SCIENCE_G1_LECTURES;
-    }
-    if (gradeLevel === 'G2') {
-      return PRIMARY_SCIENCE_G2_LECTURES;
-    }
-    if (gradeLevel === 'G3') {
-      return PRIMARY_SCIENCE_G3_LECTURES;
-    }
-    if (gradeLevel === 'G9') {
-      return MIDDLE_SCIENCE_G9_LECTURES;
-    }
-    if (gradeLevel === 'G8') {
-      return MIDDLE_SCIENCE_G8_LECTURES;
-    }
+    if (gradeLevel === 'G1') return PRIMARY_SCIENCE_G1_LECTURES;
+    if (gradeLevel === 'G2') return PRIMARY_SCIENCE_G2_LECTURES;
+    if (gradeLevel === 'G3') return PRIMARY_SCIENCE_G3_LECTURES;
+    if (gradeLevel === 'G4') return PRIMARY_SCIENCE_LECTURES;
+    if (gradeLevel === 'G5') return PRIMARY_SCIENCE_G5_LECTURES;
+    if (gradeLevel === 'G6') return PRIMARY_SCIENCE_G6_LECTURES;
+    if (gradeLevel === 'G9') return MIDDLE_SCIENCE_G9_LECTURES;
+    if (gradeLevel === 'G8') return MIDDLE_SCIENCE_G8_LECTURES;
     return GENERAL_SCIENCE_LECTURES;
   }
   if (subject === 'PHYSICS') {
@@ -4600,21 +4588,14 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
     sharedLecs = [];
   }
 
-  let combined = [...masterCurriculum];
-  
-  if (gradeLevel) {
-    const cInfo = getCountryInfo(country as any);
-    const natInfo = getNationalTextbookInfo(country as any, subject, gradeLevel as any);
-    combined = combined.map(lec => ({
-      ...lec,
-      gradeLevelNameAr: `${cInfo.nameAr} - ${natInfo.textbookName}`,
-      gradeLevelNameEn: `${cInfo.nameEn} - ${natInfo.textbookName}`,
-      ministryAr: cInfo.ministryAr,
-      ministryEn: cInfo.ministryEn,
-      termAr: natInfo.semester,
-      termEn: natInfo.semester
-    }));
-  }
+  // Deeply adapt curriculum to target country's national textbook, curriculum standards, currency, and local context
+  let combined = adaptCurriculumToCountry(
+    masterCurriculum,
+    (country as any) || 'SA',
+    subject,
+    (gradeLevel as any) || 'G4'
+  );
+
   sharedLecs.forEach(sh => {
     if (!combined.some(c => c.id === sh.id)) {
       combined.push({
@@ -4624,7 +4605,9 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
     }
   });
 
-  const storageKey = gradeLevel ? `TEACHER_AI_LECTURES_${subject}_${gradeLevel}` : `TEACHER_AI_LECTURES_${subject}`;
+  const storageKey = gradeLevel 
+    ? `TEACHER_AI_LECTURES_${country}_${subject}_${gradeLevel}` 
+    : `TEACHER_AI_LECTURES_${country}_${subject}`;
   const saved = localStorage.getItem(storageKey);
   if (saved) {
     try {
@@ -4659,8 +4642,10 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
   return combined;
 }
 
-export function saveSubjectLectures(subject: Subject, lectures: Lecture[], gradeLevel?: string): void {
-  const storageKey = gradeLevel ? `TEACHER_AI_LECTURES_${subject}_${gradeLevel}` : `TEACHER_AI_LECTURES_${subject}`;
+export function saveSubjectLectures(subject: Subject, lectures: Lecture[], gradeLevel?: string, country: string = 'SA'): void {
+  const storageKey = gradeLevel 
+    ? `TEACHER_AI_LECTURES_${country}_${subject}_${gradeLevel}` 
+    : `TEACHER_AI_LECTURES_${country}_${subject}`;
   localStorage.setItem(storageKey, JSON.stringify(lectures));
 }
 
