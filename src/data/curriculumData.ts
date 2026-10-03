@@ -36,6 +36,7 @@ import { PRIMARY_MATH_G2_LECTURES } from './primaryMath2CurriculumData';
 import { PRIMARY_SCIENCE_G1_LECTURES } from './primaryScience1CurriculumData';
 import { PRIMARY_SCIENCE_G2_LECTURES } from './primaryScience2CurriculumData';
 import { PRIMARY_ISLAMIC_G2_LECTURES } from './primaryIslamic2CurriculumData';
+import { PRIMARY_ISLAMIC_G3_LECTURES } from './primaryIslamic3CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -47,6 +48,7 @@ export {
   PRIMARY_SCIENCE_G2_LECTURES,
   ISLAMIC_STUDIES_LECTURES,
   PRIMARY_ISLAMIC_G2_LECTURES,
+  PRIMARY_ISLAMIC_G3_LECTURES,
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
@@ -4453,6 +4455,9 @@ export function getCurriculumForSubject(subject: Subject, gradeLevel?: string): 
   if (subject === 'ISLAMIC_STUDIES') {
     if (gradeLevel === 'G2') {
       return PRIMARY_ISLAMIC_G2_LECTURES;
+    }
+    if (gradeLevel === 'G3') {
+      return PRIMARY_ISLAMIC_G3_LECTURES;
     }
     return ISLAMIC_STUDIES_FULL;
   }
