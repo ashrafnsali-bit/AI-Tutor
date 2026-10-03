@@ -1,4 +1,5 @@
 import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Subject, Lecture } from '../types';
+import { getNationalLessonOverrides } from './nationalCurricula';
 
 export interface CountryCurriculumInfo {
   code: CountryCode;
@@ -1267,10 +1268,39 @@ export function adaptCurriculumToCountry(
     return result;
   };
 
-  return lectures.map((lec) => {
-    // Clone lecture deeply
+  const nationalOverrides = getNationalLessonOverrides(country, subject, gradeLevel);
+
+  return lectures.map((lec, index) => {
+    const override = nationalOverrides && nationalOverrides[index] ? nationalOverrides[index] : null;
+
+    const finalTitleAr = override?.titleAr || applyTextTransforms(lec.titleAr);
+    const finalTitleEn = override?.titleEn || lec.titleEn;
+    const finalSubtitleAr = override?.subtitleAr || applyTextTransforms(lec.subtitleAr || lec.descriptionAr);
+    const finalSubtitleEn = override?.subtitleEn || lec.subtitleEn || lec.descriptionEn || '';
+    const finalTopicAr = override?.topicAr || applyTextTransforms(lec.topicAr);
+    const finalTopicEn = override?.topicEn || lec.topicEn;
+    const finalUnitTitleAr = override?.unitTitleAr || lec.unitTitleAr || finalTopicAr;
+    const finalUnitTitleEn = override?.unitTitleEn || lec.unitTitleEn || finalTopicEn;
+    const finalDescriptionAr = override?.descriptionAr || applyTextTransforms(lec.descriptionAr);
+    const finalDescriptionEn = override?.descriptionEn || lec.descriptionEn;
+    const finalLessonNumberAr = override?.lessonNumberAr || lec.lessonNumberAr || `الدرس ${index + 1}`;
+    const finalWarmupHookAr = override?.warmupHookAr || applyTextTransforms(lec.warmupHookAr);
+    const finalSummaryAr = override?.summaryAr || applyTextTransforms(lec.summaryAr);
+
+    // Clone lecture deeply with authentic national adaptation
     const adapted: Lecture = {
       ...lec,
+      titleAr: finalTitleAr,
+      titleEn: finalTitleEn,
+      subtitleAr: finalSubtitleAr,
+      subtitleEn: finalSubtitleEn,
+      topicAr: finalTopicAr,
+      topicEn: finalTopicEn,
+      unitTitleAr: finalUnitTitleAr,
+      unitTitleEn: finalUnitTitleEn,
+      descriptionAr: finalDescriptionAr,
+      descriptionEn: finalDescriptionEn,
+      lessonNumberAr: finalLessonNumberAr,
       gradeLevelNameAr: `${cInfo.nameAr} - ${natTextbook.textbookName}`,
       gradeLevelNameEn: `${cInfo.nameEn} - ${natTextbook.textbookName}`,
       ministryAr: cInfo.ministryAr,
@@ -1278,10 +1308,11 @@ export function adaptCurriculumToCountry(
       termAr: natTextbook.semester,
       termEn: natTextbook.semester,
       country,
-      warmupHookAr: applyTextTransforms(lec.warmupHookAr),
-      summaryAr: applyTextTransforms(lec.summaryAr),
+      warmupHookAr: finalWarmupHookAr,
+      summaryAr: finalSummaryAr,
       sections: lec.sections ? lec.sections.map(sec => ({
         ...sec,
+        titleAr: applyTextTransforms(sec.titleAr),
         contentAr: applyTextTransforms(sec.contentAr),
         interactiveExample: sec.interactiveExample ? {
           ...sec.interactiveExample,

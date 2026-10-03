@@ -94,6 +94,39 @@ for (const country of testCountries) {
   assert(adaptedLecs[0].gradeLevelNameAr?.includes(SUPPORTED_COUNTRIES[country].nameAr), `gradeLevelNameAr includes country name for ${country}`);
 }
 
+// 5. Test Country-Specific Lesson Titles & Syllabus Transformation
+console.log('\n--- 5. Testing National Lesson Titles & Topic Transformation per Country ---');
+const lecsSA = loadSubjectLectures('PHYSICS', 'SA', 'G10');
+const lecsEG = loadSubjectLectures('PHYSICS', 'EG', 'G10');
+const lecsAE = loadSubjectLectures('PHYSICS', 'AE', 'G10');
+const lecsJO = loadSubjectLectures('PHYSICS', 'JO', 'G10');
+const lecsKW = loadSubjectLectures('PHYSICS', 'KW', 'G10');
+const lecsMA = loadSubjectLectures('PHYSICS', 'MA', 'G10');
+const lecsDZ = loadSubjectLectures('PHYSICS', 'DZ', 'G10');
+const lecsTN = loadSubjectLectures('PHYSICS', 'TN', 'G10');
+const lecsOM = loadSubjectLectures('PHYSICS', 'OM', 'G10');
+const lecsQA = loadSubjectLectures('PHYSICS', 'QA', 'G10');
+const lecsBH = loadSubjectLectures('PHYSICS', 'BH', 'G10');
+const lecsIQ = loadSubjectLectures('PHYSICS', 'IQ', 'G10');
+const lecsINTL = loadSubjectLectures('PHYSICS', 'INTL', 'G10');
+
+assert(lecsEG[0].titleAr.includes('القياس الفيزيائي والكميات الأساسية'), `Egypt G10 Physics Lesson 1 is authentic Egyptian textbook: "${lecsEG[0].titleAr}"`);
+assert(lecsAE[0].titleAr.includes('نظام ESE'), `UAE G10 Physics Lesson 1 is authentic ESE textbook: "${lecsAE[0].titleAr}"`);
+assert(lecsJO[0].titleAr.includes('المنهاج المطور'), `Jordan G10 Physics Lesson 1 is authentic Collins textbook: "${lecsJO[0].titleAr}"`);
+assert(lecsKW[0].titleAr.includes('المعادلات الحركية'), `Kuwait G10 Physics Lesson 1 is authentic Kuwaiti textbook: "${lecsKW[0].titleAr}"`);
+assert(lecsMA[0].titleAr.includes('الجدع المشترك'), `Morocco G10 Physics Lesson 1 is authentic Moroccan textbook: "${lecsMA[0].titleAr}"`);
+assert(lecsDZ[0].titleAr.includes('المنهاج الجزائري'), `Algeria G10 Physics Lesson 1 is authentic Algerian textbook: "${lecsDZ[0].titleAr}"`);
+assert(lecsTN[0].titleAr.includes('البرنامج التونسي'), `Tunisia G10 Physics Lesson 1 is authentic Tunisian textbook: "${lecsTN[0].titleAr}"`);
+assert(lecsOM[0].titleAr.includes('سلاسل كامبريدج بعُمان'), `Oman G10 Physics Lesson 1 is authentic Omani textbook: "${lecsOM[0].titleAr}"`);
+assert(lecsQA[0].titleAr.includes('المسار العلمي القطري'), `Qatar G10 Physics Lesson 1 is authentic Qatari textbook: "${lecsQA[0].titleAr}"`);
+assert(lecsBH[0].titleAr.includes('توحيد المسارات بالبحرين'), `Bahrain G10 Physics Lesson 1 is authentic Bahraini textbook: "${lecsBH[0].titleAr}"`);
+assert(lecsIQ[0].titleAr.includes('المنهج العراقي'), `Iraq G10 Physics Lesson 1 is authentic Iraqi textbook: "${lecsIQ[0].titleAr}"`);
+assert(lecsINTL[0].titleAr.includes('AP / IB Physics'), `International G10 Physics Lesson 1 is AP/IB: "${lecsINTL[0].titleAr}"`);
+
+// Verify that changing country changes lesson title
+assert(lecsEG[0].titleAr !== lecsSA[0].titleAr, `Country change transforms curriculum: Egypt title != Saudi title`);
+assert(lecsEG[0].topicAr !== lecsSA[0].topicAr, `Country change transforms topic: Egypt topic != Saudi topic`);
+
 console.log('\n====================================================');
 console.log(`SUMMARY: ${passedTests} / ${totalTests} TESTS PASSED!`);
 console.log('====================================================');

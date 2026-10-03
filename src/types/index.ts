@@ -283,6 +283,10 @@ export interface Lecture {
   titleEn: string;
   subtitleAr: string;
   subtitleEn: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  topicAr?: string;
+  topicEn?: string;
   durationMinutes: number;
   isLocked: boolean;
   isCompleted: boolean;
