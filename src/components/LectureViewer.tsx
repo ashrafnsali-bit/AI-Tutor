@@ -9,6 +9,7 @@ import {
   PenTool, Star, Zap, ArrowRight, RefreshCw, X, Layers
 } from 'lucide-react';
 import { CurriculumDiagramRenderer } from './CurriculumDiagramRenderer';
+import { RichContentRenderer } from './RichContentRenderer';
 
 interface LectureViewerProps {
   lecture: Lecture;
@@ -490,18 +491,199 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           );
         })
         ) : (
-          <div className="content-section-card" style={{ padding: '1.5rem', lineHeight: '1.8' }}>
-            <div 
-              className="section-explanation"
-              style={{ color: '#e2e8f0', fontSize: '1rem', whiteSpace: 'pre-line' }}
-            >
-              {(isEn ? (lecture.mainContentEn || lecture.mainContentAr) : (lecture.mainContentAr || lecture.mainContentEn))?.split('\n').filter(Boolean).map((para, pi) => (
-                <p key={pi} className="section-para">{para}</p>
-              ))}
-            </div>
+          <div className="content-section-card" style={{ padding: '1.75rem', lineHeight: '1.8' }}>
+            <RichContentRenderer
+              content={(isEn ? (lecture.mainContentEn || lecture.mainContentAr) : (lecture.mainContentAr || lecture.mainContentEn)) || ''}
+              isEn={isEn}
+            />
           </div>
         )}
       </section>
+
+      {/* ═══ STANDALONE WORKED EXAMPLES (IF SECTIONS EMPTY) ═══ */}
+      {(!lecture.sections || lecture.sections.length === 0) && lecture.workedExamples && lecture.workedExamples.length > 0 && (
+        <section className="lesson-section worked-examples-section">
+          <div className="lesson-section-head" style={{ borderBottom: '1px solid #334155', paddingBottom: '0.75rem', marginBottom: '1.25rem' }}>
+            <div className="section-head-icon" style={{ background: '#3b82f6', color: '#fff', borderRadius: '8px', padding: '6px', display: 'flex' }}>
+              <Calculator size={18} />
+            </div>
+            <h2 className="lesson-section-title" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#38bdf8' }}>
+              {isEn ? '💡 Interactive Worked Examples' : '💡 أمثلة محلولة خطوة بخطوة'}
+            </h2>
+          </div>
+
+          <div className="worked-examples-grid" style={{ display: 'grid', gap: '1.25rem' }}>
+            {lecture.workedExamples.map((ex, exIdx) => {
+              const exTitle = isEn ? ex.titleEn : ex.titleAr;
+              const probText = (isEn ? (ex.problemEn || ex.problemAr) : (ex.problemAr || ex.problemEn)) || '';
+              const steps = (isEn ? (ex.stepByStepSolutionEn || ex.stepsEn || ex.stepByStepSolutionAr || ex.stepsAr) : (ex.stepByStepSolutionAr || ex.stepsAr)) || [];
+              const finalAns = (isEn ? (ex.finalAnswerEn || ex.finalAnswerAr) : (ex.finalAnswerAr || ex.finalAnswerEn)) || '';
+              const takeaway = (isEn ? (ex.takeawayEn || ex.takeawayAr) : (ex.takeawayAr || ex.takeawayEn)) || '';
+              return (
+                <div key={ex.id || exIdx} className="worked-example-card" style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '14px', padding: '1.25rem' }}>
+                  <div className="we-header" style={{ display: 'flex', borderBottom: '1px solid #1e293b', paddingBottom: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <span style={{ background: '#38bdf8', color: '#0f172a', fontWeight: 'bold', padding: '4px 10px', borderRadius: '6px', fontSize: '0.85rem' }}>
+                        {isEn ? `Example ${exIdx + 1}` : `مثال ${exIdx + 1}`}
+                      </span>
+                      <h4 style={{ margin: 0, color: '#f8fafc', fontSize: '1.1rem' }}>{exTitle}</h4>
+                    </div>
+                  </div>
+
+                  {probText && (
+                    <div style={{ background: '#1e293b', padding: '1rem', borderRadius: '10px', marginBottom: '1rem', color: '#e2e8f0', fontSize: '1rem', lineHeight: '1.7' }}>
+                      <p style={{ margin: 0 }}>{probText}</p>
+                    </div>
+                  )}
+
+                  {steps.length > 0 && (
+                    <div className="we-steps-list" style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                      {steps.map((st: string, sIdx: number) => (
+                        <div key={sIdx} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: '#141e33', padding: '0.75rem 1rem', borderRadius: '8px', borderLeft: isEn ? '3px solid #38bdf8' : 'none', borderRight: !isEn ? '3px solid #38bdf8' : 'none' }}>
+                          <span style={{ color: '#38bdf8', fontWeight: 'bold', minWidth: '24px' }}>{sIdx + 1}.</span>
+                          <span style={{ color: '#cbd5e1', lineHeight: '1.6' }}>{st}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {finalAns && (
+                    <div style={{ marginTop: '1rem', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid #10b981', padding: '0.75rem 1rem', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#34d399' }}>
+                      <CheckCircle2 size={16} />
+                      <span>{isEn ? 'Final Answer:' : 'النتيجة النهائية:'} <strong>{finalAns}</strong></span>
+                    </div>
+                  )}
+
+                  {takeaway && (
+                    <div style={{ marginTop: '0.75rem', color: '#fbbf24', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Star size={14} />
+                      <span>{takeaway}</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* ═══ STANDALONE FORMATIVE ASSESSMENT (IF SECTIONS EMPTY) ═══ */}
+      {(!lecture.sections || lecture.sections.length === 0) && lecture.formativeAssessment && lecture.formativeAssessment.length > 0 && (
+        <section className="lesson-section formative-section">
+          <div className="lesson-section-head" style={{ borderBottom: '1px solid #334155', paddingBottom: '0.75rem', marginBottom: '1.25rem' }}>
+            <div className="section-head-icon" style={{ background: '#10b981', color: '#fff', borderRadius: '8px', padding: '6px', display: 'flex' }}>
+              <CheckCircle size={18} />
+            </div>
+            <h2 className="lesson-section-title" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#34d399' }}>
+              {isEn ? '❓ Quick Understanding Checks' : '❓ أسئلة تحقق سريعة'}
+            </h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {lecture.formativeAssessment.map((q: any, qIdx: number) => {
+              const qText = isEn ? q.questionEn : q.questionAr;
+              const opts = isEn ? q.optionsEn : q.optionsAr;
+              const rationale = isEn ? q.rationaleEn : q.rationaleAr;
+              const selectedIdx = formativeSelected[q.id];
+              const isChecked = formativeChecked[q.id];
+              const isCorrect = isChecked && selectedIdx === q.correctIndex;
+
+              return (
+                <div key={q.id || qIdx} style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '14px', padding: '1.25rem' }}>
+                  <p style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#f8fafc', marginBottom: '1rem' }}>
+                    {qIdx + 1}. {qText}
+                  </p>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.65rem' }}>
+                    {opts.map((opt: string, oIdx: number) => {
+                      let btnBg = '#1e293b';
+                      let btnBorder = '#334155';
+                      let btnColor = '#cbd5e1';
+
+                      const isSelected = selectedIdx === oIdx;
+                      if (isChecked) {
+                        if (oIdx === q.correctIndex) {
+                          btnBg = 'rgba(16, 185, 129, 0.2)';
+                          btnBorder = '#10b981';
+                          btnColor = '#34d399';
+                        } else if (isSelected) {
+                          btnBg = 'rgba(239, 68, 68, 0.2)';
+                          btnBorder = '#ef4444';
+                          btnColor = '#f87171';
+                        }
+                      } else if (isSelected) {
+                        btnBg = 'rgba(56, 189, 248, 0.2)';
+                        btnBorder = '#38bdf8';
+                        btnColor = '#38bdf8';
+                      }
+
+                      return (
+                        <button
+                          key={oIdx}
+                          type="button"
+                          onClick={() => handleSelectFormativeOption(q.id, oIdx)}
+                          style={{
+                            background: btnBg,
+                            border: `1px solid ${btnBorder}`,
+                            color: btnColor,
+                            padding: '0.75rem 1rem',
+                            borderRadius: '8px',
+                            textAlign: 'start',
+                            cursor: 'pointer',
+                            fontSize: '0.95rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem'
+                          }}
+                        >
+                          <span style={{ fontWeight: 'bold' }}>{String.fromCharCode(65 + oIdx)}.</span>
+                          <span>{opt}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                    {!isChecked ? (
+                      <button
+                        type="button"
+                        disabled={selectedIdx === undefined}
+                        onClick={() => handleCheckFormativeAnswer(q.id)}
+                        style={{
+                          background: selectedIdx !== undefined ? '#38bdf8' : '#334155',
+                          color: selectedIdx !== undefined ? '#0f172a' : '#94a3b8',
+                          border: 'none',
+                          padding: '0.5rem 1.25rem',
+                          borderRadius: '8px',
+                          fontWeight: 'bold',
+                          cursor: selectedIdx !== undefined ? 'pointer' : 'not-allowed',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.4rem'
+                        }}
+                      >
+                        <CheckCircle2 size={15} />
+                        {isEn ? 'Check Answer' : 'تحقق من الإجابة'}
+                      </button>
+                    ) : (
+                      <div style={{ color: isCorrect ? '#34d399' : '#f87171', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold' }}>
+                        {isCorrect ? <CheckCircle size={16} /> : <AlertOctagon size={16} />}
+                        <span>{isCorrect ? (isEn ? 'Correct!' : 'إجابة صحيحة!') : (isEn ? 'Incorrect' : 'إجابة غير صحيحة')}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {isChecked && rationale && (
+                    <div style={{ marginTop: '0.75rem', background: '#141e33', padding: '0.75rem', borderRadius: '8px', color: '#cbd5e1', fontSize: '0.9rem' }}>
+                      💡 {rationale}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ═══ SECTION 5 — LESSON SUMMARY ═══ */}
       {summary && (
