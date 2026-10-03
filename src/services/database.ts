@@ -1,5 +1,5 @@
 import type { AssessmentResult, CountryCode, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
-import { INITIAL_STUDENT_PROFILE } from '../data/curriculumData';
+import { INITIAL_STUDENT_PROFILE, loadSubjectLectures } from '../data/curriculumData';
 
 const DB_NAME = 'TeacherAI_PlatformDB';
 const DB_VERSION = 4; // Upgraded for shared_curriculum_lectures
@@ -666,7 +666,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 45,
       masteryPoints: 420,
       createdAt: Date.now() - 14 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 15 * 60 * 1000
+      lastLoginAt: Date.now() - 3 * 60 * 1000 // Online now (3m ago)
     },
     {
       id: 'usr-sara-shammari',
@@ -700,7 +700,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 80,
       masteryPoints: 500,
       createdAt: Date.now() - 20 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 2 * 3600 * 1000
+      lastLoginAt: Date.now() - 8 * 60 * 1000 // Online now (8m ago)
     },
     {
       id: 'usr-ahmed-kamal',
@@ -734,7 +734,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 30,
       masteryPoints: 210,
       createdAt: Date.now() - 10 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 5 * 3600 * 1000
+      lastLoginAt: Date.now() - 1 * 60 * 1000 // Online now (1m ago)
     },
     {
       id: 'usr-fatima-mansoori',
@@ -768,7 +768,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 20,
       masteryPoints: 340,
       createdAt: Date.now() - 7 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 24 * 3600 * 1000
+      lastLoginAt: Date.now() - 42 * 60 * 1000 // Recent (42m ago)
     },
     {
       id: 'usr-yousef-otaibi',
@@ -802,7 +802,7 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
       usedTodayMinutes: 15,
       masteryPoints: 120,
       createdAt: Date.now() - 3 * 24 * 3600 * 1000,
-      lastLoginAt: Date.now() - 48 * 3600 * 1000
+      lastLoginAt: Date.now() - 28 * 3600 * 1000 // Offline (yesterday)
     }
   ];
 
@@ -830,18 +830,59 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
       const grades = await loadAllGrades(user.id);
       const sessions = await loadAllSessions(user.id);
 
-      // Determine lectures
-      const userLectures = await loadUserSubjectLectures(user.id, user.subject) || [];
+      // Determine real curriculum lectures for student's subject, country, grade & track
+      let userLectures = await loadUserSubjectLectures(user.id, user.subject) || [];
+      if (!userLectures || userLectures.length === 0) {
+        userLectures = loadSubjectLectures(
+          user.subject,
+          user.country,
+          user.gradeLevel,
+          user.educationType,
+          user.educationTrack
+        );
+      }
       const totalLecturesCount = userLectures.length > 0 ? userLectures.length : 5;
       
       const completedLecs = userLectures.filter(l => l.isCompleted);
-      const completedLecturesCount = completedLecs.length > 0 ? completedLecs.length : (user.masteryPoints >= 400 ? 4 : user.masteryPoints >= 300 ? 3 : user.masteryPoints >= 200 ? 2 : 1);
+      const completedLecturesCount = completedLecs.length > 0 
+        ? completedLecs.length 
+        : Math.min(totalLecturesCount, Math.max(1, Math.round((user.masteryPoints / 500) * totalLecturesCount)));
       
+      const remainingLecturesCount = Math.max(0, totalLecturesCount - completedLecturesCount);
       const currentLectureOrder = Math.min(completedLecturesCount + 1, totalLecturesCount);
-      const currentLecture = userLectures.find(l => l.order === currentLectureOrder);
+      const currentLecture = userLectures.find(l => l.order === currentLectureOrder) || userLectures[currentLectureOrder - 1];
       const currentLectureTitle = currentLecture?.titleAr || `المحاضرة ${currentLectureOrder}`;
 
-      const progressPercentage = Math.round((completedLecturesCount / totalLecturesCount) * 100);
+      const progressPercentage = Math.min(100, Math.round((completedLecturesCount / totalLecturesCount) * 100));
+
+      // Calculate Real-time Online Presence and Activity
+      const now = Date.now();
+      const lastLogin = user.lastLoginAt || user.createdAt || (now - 3600 * 1000);
+      const diffMinutes = Math.max(0, Math.floor((now - lastLogin) / (60 * 1000)));
+
+      let isOnline = false;
+      let activeStatus: 'ONLINE' | 'RECENT' | 'OFFLINE' = 'OFFLINE';
+      let lastActiveTimeAgo = '';
+
+      if (diffMinutes <= 15) {
+        isOnline = true;
+        activeStatus = 'ONLINE';
+        lastActiveTimeAgo = diffMinutes === 0 ? 'متصل الآن 🟢' : `نشط منذ ${diffMinutes} د`;
+      } else if (diffMinutes < 180) {
+        activeStatus = 'RECENT';
+        const hours = Math.floor(diffMinutes / 60);
+        const mins = diffMinutes % 60;
+        lastActiveTimeAgo = hours > 0 ? `قبل ${hours} س و ${mins} د` : `قبل ${mins} د`;
+      } else {
+        activeStatus = 'OFFLINE';
+        const diffHours = Math.floor(diffMinutes / 60);
+        if (diffHours < 24) {
+          lastActiveTimeAgo = `قبل ${diffHours} ساعة`;
+        } else {
+          const diffDays = Math.floor(diffHours / 24);
+          lastActiveTimeAgo = `قبل ${diffDays} يوم`;
+        }
+      }
 
       // Score computations
       const scores = grades.map(g => g.score);
@@ -863,20 +904,19 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
         day: 'numeric'
       });
 
-      const lecturesStatus = Array.from({ length: totalLecturesCount }, (_, i) => {
-        const order = i + 1;
-        const matchingLec = userLectures.find(l => l.order === order);
-        const matchingGrade = grades.find(g => g.lectureId.endsWith(`-${order}`));
+      const lecturesStatus = userLectures.map((lec, i) => {
+        const order = lec.order || (i + 1);
+        const matchingGrade = grades.find(g => g.lectureId === lec.id || g.lectureId.endsWith(`-${order}`));
         const isCompleted = order <= completedLecturesCount;
         const isLocked = order > completedLecturesCount + 1;
         
         return {
-          lectureId: matchingLec?.id || `lec-${order}`,
+          lectureId: lec.id || `lec-${order}`,
           order,
-          title: matchingLec?.titleAr || `المحاضرة ${order}`,
+          title: lec.titleAr || `المحاضرة ${order}`,
           isCompleted,
           isLocked,
-          score: matchingGrade ? matchingGrade.score : (isCompleted ? 88 + (order * 2) % 10 : undefined),
+          score: matchingGrade ? matchingGrade.score : (isCompleted ? Math.min(100, 85 + ((order * 7) % 15)) : undefined),
           passed: isCompleted,
           attemptCount: matchingGrade ? matchingGrade.attemptNumber : (isCompleted ? 1 : 0)
         };
@@ -888,7 +928,11 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
         currentLectureOrder,
         completedLecturesCount,
         totalLecturesCount,
+        remainingLecturesCount,
         progressPercentage,
+        isOnline,
+        activeStatus,
+        lastActiveTimeAgo,
         averageScore,
         bestScore,
         totalAssessmentsPassed,
@@ -901,7 +945,12 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
     })
   );
 
-  return overviewList.sort((a, b) => b.lastLoginAt - a.lastLoginAt);
+  return overviewList.sort((a, b) => {
+    // Sort online students first
+    if (a.isOnline && !b.isOnline) return -1;
+    if (!a.isOnline && b.isOnline) return 1;
+    return b.lastLoginAt - a.lastLoginAt;
+  });
 }
 
 export async function deleteUserAccount(userId: string): Promise<void> {

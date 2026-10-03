@@ -89,6 +89,7 @@ export interface AdminStudentView extends UserAccount {
   currentLectureOrder: number;
   completedLecturesCount: number;
   totalLecturesCount: number;
+  remainingLecturesCount: number;
   progressPercentage: number;
   averageScore: number;
   bestScore: number;
@@ -96,6 +97,9 @@ export interface AdminStudentView extends UserAccount {
   totalAssessmentsFailed: number;
   totalStudyMinutes: number;
   lastActiveDate: string;
+  isOnline: boolean;
+  activeStatus: 'ONLINE' | 'RECENT' | 'OFFLINE';
+  lastActiveTimeAgo: string;
   recentScores: number[];
   lecturesStatus: {
     lectureId: string;

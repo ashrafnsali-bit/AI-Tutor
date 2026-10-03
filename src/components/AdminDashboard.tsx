@@ -27,7 +27,9 @@ import {
   Eye,
   EyeOff,
   LogIn,
-  LogOut
+  LogOut,
+  Radio,
+  Layers
 } from 'lucide-react';
 
 interface AdminDashboardProps {
@@ -156,6 +158,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         // Status filter
         let matchesStatus = true;
+        if (selectedStatus === 'ONLINE') matchesStatus = !!s.isOnline;
         if (selectedStatus === 'COMPLETED') matchesStatus = s.progressPercentage === 100;
         if (selectedStatus === 'IN_PROGRESS') matchesStatus = s.progressPercentage > 0 && s.progressPercentage < 100;
         if (selectedStatus === 'NEEDS_SUPPORT') matchesStatus = s.averageScore < 80;
@@ -163,7 +166,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         return matchesSearch && matchesCountry && matchesStage && matchesStatus;
       })
       .sort((a, b) => {
-        if (sortBy === 'LAST_LOGIN') return b.lastLoginAt - a.lastLoginAt;
+        if (sortBy === 'LAST_LOGIN') {
+          if (a.isOnline && !b.isOnline) return -1;
+          if (!a.isOnline && b.isOnline) return 1;
+          return b.lastLoginAt - a.lastLoginAt;
+        }
         if (sortBy === 'PROGRESS') return b.progressPercentage - a.progressPercentage;
         if (sortBy === 'SCORE') return b.averageScore - a.averageScore;
         if (sortBy === 'NAME') return a.name.localeCompare(b.name, 'ar');
@@ -171,33 +178,71 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       });
   }, [students, searchQuery, selectedCountry, selectedStage, selectedStatus, sortBy]);
 
-  // Aggregated KPIs
+  // Aggregated KPIs including Live Online Presence & Detailed Lecture Completion Quantities
   const kpis = useMemo(() => {
     const total = students.length;
-    if (!total) return { totalStudents: 0, avgProgress: 0, avgScore: 0, verifiedParents: 0, totalTestsPassed: 0 };
+    if (!total) {
+      return { 
+        totalStudents: 0, 
+        onlineCount: 0, 
+        totalLecturesCompleted: 0, 
+        totalLecturesAvailable: 0, 
+        overallCurriculumCompletionPct: 0, 
+        avgProgress: 0, 
+        avgScore: 0, 
+        verifiedParents: 0, 
+        totalTestsPassed: 0,
+        completed100Count: 0,
+        inProgressCount: 0
+      };
+    }
+
+    const onlineCount = students.filter(s => s.isOnline).length;
+    const totalLecturesCompleted = students.reduce((sum, s) => sum + (s.completedLecturesCount || 0), 0);
+    const totalLecturesAvailable = students.reduce((sum, s) => sum + (s.totalLecturesCount || 0), 0);
+    const overallCurriculumCompletionPct = totalLecturesAvailable > 0 
+      ? Math.round((totalLecturesCompleted / totalLecturesAvailable) * 100) 
+      : 0;
 
     const avgProgress = Math.round(students.reduce((sum, s) => sum + s.progressPercentage, 0) / total);
     const avgScore = Math.round(students.reduce((sum, s) => sum + s.averageScore, 0) / total);
     const verifiedParents = students.filter(s => s.isParentVerified || s.parentEmail).length;
     const totalTestsPassed = students.reduce((sum, s) => sum + s.totalAssessmentsPassed, 0);
+    const completed100Count = students.filter(s => s.progressPercentage === 100).length;
+    const inProgressCount = students.filter(s => s.progressPercentage > 0 && s.progressPercentage < 100).length;
 
-    return { totalStudents: total, avgProgress, avgScore, verifiedParents, totalTestsPassed };
+    return { 
+      totalStudents: total, 
+      onlineCount, 
+      totalLecturesCompleted, 
+      totalLecturesAvailable, 
+      overallCurriculumCompletionPct, 
+      avgProgress, 
+      avgScore, 
+      verifiedParents, 
+      totalTestsPassed,
+      completed100Count,
+      inProgressCount
+    };
   }, [students]);
 
-  // Export to CSV
+  // Export to CSV with Real-Time Presence & Lecture Breakdown
   const handleExportCSV = () => {
     const headers = [
       'اسم الطالب',
+      'حالة الاتصال اللحظية',
+      'وقت آخر نشاط',
       'البريد الإلكتروني',
       'اسم المستخدم',
       'الدولة',
       'الصف الدراسي',
       'التخصص',
       'المادة',
-      'المحاضرة الحالية',
+      'المحاضرة الحالية/الجاري دراستها',
       'نسبة إتمام المنهج %',
-      'المحاضرات المكتملة',
-      'إجمالي المحاضرات',
+      'كمية المحاضرات المكتملة',
+      'إجمالي المحاضرات بالمنهج',
+      'المحاضرات المتبقية للاجتياز',
       'معدل الدرجات %',
       'أعلى درجة %',
       'اسم ولي الأمر',
@@ -210,6 +255,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     const rows = filteredStudents.map(s => [
       `"${s.name}"`,
+      s.isOnline ? 'متصل الآن 🟢' : s.activeStatus === 'RECENT' ? 'نشط مؤخراً ⏳' : 'غير متصل ⚪',
+      `"${s.lastActiveTimeAgo}"`,
       `"${s.email}"`,
       `"${s.username}"`,
       `"${s.country}"`,
@@ -220,6 +267,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       s.progressPercentage,
       s.completedLecturesCount,
       s.totalLecturesCount,
+      s.remainingLecturesCount,
       s.averageScore,
       s.bestScore,
       `"${s.parentName || 'غير مسجل'}"`,
@@ -235,11 +283,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `TeacherAI_Students_Report_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `TeacherAI_Students_Progress_Report_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showNotification('تم تحميل تقرير الطلاب بصيغة CSV بنجاح! 📊');
+    showNotification('تم تحميل تقرير الطلاب وكمية إنجاز المحاضرات بصيغة CSV بنجاح! 📊');
   };
 
   const handleOpenStudentDossier = (s: AdminStudentView) => {
@@ -456,39 +504,56 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         {/* 2. Top Metric KPI Cards */}
         <section className="admin-kpi-grid">
-          {/* Card 1 */}
-          <div className="admin-kpi-card card-primary">
-            <div className="kpi-icon-wrap bg-blue-glow">
-              <Users size={22} className="text-blue-400" />
-            </div>
-            <div className="kpi-data">
-              <span className="kpi-label">إجمالي الطلاب المسجلين</span>
-              <div className="kpi-value-row">
-                <span className="kpi-number">{kpis.totalStudents}</span>
-                <span className="kpi-tag">طالب نشط</span>
-              </div>
-              <span className="kpi-foot">بإيميلات موثقة وسجلات دراسية</span>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="admin-kpi-card card-success">
+          {/* Card 1: Active Online Students Right Now */}
+          <div 
+            className={`admin-kpi-card card-primary kpi-clickable ${selectedStatus === 'ONLINE' ? 'kpi-active-filter' : ''}`}
+            onClick={() => setSelectedStatus(selectedStatus === 'ONLINE' ? 'ALL' : 'ONLINE')}
+            title="انقر للتصفية السريعة وعرض الطلاب المتصلين الآن فقط"
+          >
             <div className="kpi-icon-wrap bg-emerald-glow">
-              <BookOpen size={22} className="text-emerald-400" />
+              <Radio size={22} className="text-emerald-400 animate-pulse" />
             </div>
             <div className="kpi-data">
-              <span className="kpi-label">متوسط إنجاز المحاضرات</span>
+              <span className="kpi-label">الطلاب النشطون الآن 🟢</span>
               <div className="kpi-value-row">
-                <span className="kpi-number">{kpis.avgProgress}%</span>
-                <div className="kpi-mini-bar">
-                  <div className="kpi-mini-fill" style={{ width: `${kpis.avgProgress}%` }}></div>
-                </div>
+                <span className="kpi-number text-emerald-400">{kpis.onlineCount}</span>
+                <span className="kpi-tag badge-online-live">
+                  <span className="live-pulse-dot" />
+                  متصل ومباشر
+                </span>
               </div>
-              <span className="kpi-foot">المحاضرات المكتملة واجتياز المعايير</span>
+              <span className="kpi-foot">
+                من إجمالي {kpis.totalStudents} طلاب مسجلين بالمنصة
+              </span>
             </div>
           </div>
 
-          {/* Card 3 */}
+          {/* Card 2: Lectures Completion Quantity */}
+          <div className="admin-kpi-card card-success">
+            <div className="kpi-icon-wrap bg-blue-glow">
+              <Layers size={22} className="text-blue-400" />
+            </div>
+            <div className="kpi-data">
+              <span className="kpi-label">كمية إنجاز المحاضرات 📚</span>
+              <div className="kpi-value-row">
+                <span className="kpi-number">{kpis.totalLecturesCompleted}</span>
+                <span className="kpi-tag badge-curriculum-pct">
+                  {kpis.overallCurriculumCompletionPct}% الإنجاز الكلي
+                </span>
+              </div>
+              <div className="kpi-mini-bar">
+                <div 
+                  className="kpi-mini-fill" 
+                  style={{ width: `${kpis.overallCurriculumCompletionPct}%` }}
+                />
+              </div>
+              <span className="kpi-foot">
+                {kpis.totalLecturesCompleted} من أصل {kpis.totalLecturesAvailable} محاضرة مكتملة ({kpis.completed100Count} أتموا 100%)
+              </span>
+            </div>
+          </div>
+
+          {/* Card 3: Test Scores & Assessments */}
           <div className="admin-kpi-card card-warning">
             <div className="kpi-icon-wrap bg-amber-glow">
               <Award size={22} className="text-amber-400" />
@@ -503,7 +568,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </div>
 
-          {/* Card 4 */}
+          {/* Card 4: Parental Supervision */}
           <div className="admin-kpi-card card-purple">
             <div className="kpi-icon-wrap bg-purple-glow">
               <ShieldCheck size={22} className="text-purple-400" />
@@ -518,6 +583,126 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </div>
         </section>
+
+        {/* 2.5 Quick Filter Pills */}
+        <section className="admin-quick-pills-bar">
+          <button 
+            type="button" 
+            className={`admin-quick-pill ${selectedStatus === 'ALL' ? 'active' : ''}`}
+            onClick={() => setSelectedStatus('ALL')}
+          >
+            <Users size={14} />
+            <span>جميع الطلاب ({kpis.totalStudents})</span>
+          </button>
+
+          <button 
+            type="button" 
+            className={`admin-quick-pill pill-online ${selectedStatus === 'ONLINE' ? 'active' : ''}`}
+            onClick={() => setSelectedStatus('ONLINE')}
+          >
+            <span className="online-indicator-dot" />
+            <span>🟢 النشطون الآن ({kpis.onlineCount})</span>
+          </button>
+
+          <button 
+            type="button" 
+            className={`admin-quick-pill pill-completed ${selectedStatus === 'COMPLETED' ? 'active' : ''}`}
+            onClick={() => setSelectedStatus('COMPLETED')}
+          >
+            <CheckCircle2 size={14} />
+            <span>🏆 أتموا المنهج 100% ({kpis.completed100Count})</span>
+          </button>
+
+          <button 
+            type="button" 
+            className={`admin-quick-pill pill-progress ${selectedStatus === 'IN_PROGRESS' ? 'active' : ''}`}
+            onClick={() => setSelectedStatus('IN_PROGRESS')}
+          >
+            <BookOpen size={14} />
+            <span>⏳ قيد إنجاز المحاضرات ({kpis.inProgressCount})</span>
+          </button>
+
+          <button 
+            type="button" 
+            className={`admin-quick-pill pill-warning ${selectedStatus === 'NEEDS_SUPPORT' ? 'active' : ''}`}
+            onClick={() => setSelectedStatus('NEEDS_SUPPORT')}
+          >
+            <AlertCircle size={14} />
+            <span>⚠️ يحتاجون متابعة ودعم ({students.filter(s => s.averageScore < 80).length})</span>
+          </button>
+        </section>
+
+        {/* 2.6 Live Stream of Online Active Students (Brodcast Strip) */}
+        {kpis.onlineCount > 0 && selectedStatus !== 'COMPLETED' && (
+          <section className="admin-live-stream-section">
+            <div className="live-stream-header">
+              <div className="live-stream-title-group">
+                <span className="live-radio-badge">
+                  <Radio size={14} className="text-emerald-400 animate-pulse" />
+                  <span>بث مباشر لحظي</span>
+                </span>
+                <h3 className="live-stream-title">
+                  الطلاب النشطون المتصلون الآن ({kpis.onlineCount} طلاب يدرسون حالياً):
+                </h3>
+              </div>
+              <span className="live-stream-subtext">انقر على بطاقة أي طالب لمتابعة تفاصيل دراسته الحية</span>
+            </div>
+
+            <div className="live-stream-cards-grid">
+              {students.filter(s => s.isOnline).map((s) => {
+                const country = getCountryInfo(s.country);
+                return (
+                  <div 
+                    key={s.id} 
+                    className="live-active-card"
+                    onClick={() => handleOpenStudentDossier(s)}
+                    title={`انقر لمتابعة السجل الدراسي الكامل لـ ${s.name}`}
+                  >
+                    <div className="live-active-card-top">
+                      <div className="live-card-avatar-wrap">
+                        <span className="live-avatar-letter">{s.name.charAt(0)}</span>
+                        <span className="live-pulse-badge" />
+                      </div>
+                      <div className="live-card-meta">
+                        <div className="live-name-row">
+                          <strong className="live-name">{s.name}</strong>
+                          <span className="live-flag" title={country.nameAr}>{country.flag}</span>
+                        </div>
+                        <span className="live-stage">{s.gradeLevel} • {s.subject}</span>
+                      </div>
+                      <span className="live-time-chip">{s.lastActiveTimeAgo}</span>
+                    </div>
+
+                    <div className="live-studying-box">
+                      <span className="live-studying-label">يدرس الآن:</span>
+                      <span className="live-studying-lecture" title={s.currentLectureTitle}>
+                        📖 {s.currentLectureTitle}
+                      </span>
+                    </div>
+
+                    <div className="live-card-footer">
+                      <div className="live-quantity-info">
+                        <span>إنجاز المحاضرات:</span>
+                        <strong>{s.completedLecturesCount} من {s.totalLecturesCount} ({s.progressPercentage}%)</strong>
+                      </div>
+                      <button 
+                        type="button" 
+                        className="btn-live-inspect"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenStudentDossier(s);
+                        }}
+                      >
+                        <ExternalLink size={12} />
+                        <span>متابعة</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* 3. Search & Filters Bar */}
         <section className="admin-filter-bar">
@@ -575,7 +760,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               onChange={(e) => setSelectedStatus(e.target.value)}
               className="admin-filter-select"
             >
-              <option value="ALL">جميع حالات التقدم</option>
+              <option value="ALL">جميع حالات النشاط والتقدم</option>
+              <option value="ONLINE">النشطون الآن 🟢</option>
               <option value="COMPLETED">أتم المنهج كاملاً (100%)</option>
               <option value="IN_PROGRESS">قيد الدراسة والتقدم</option>
               <option value="NEEDS_SUPPORT">يحتاج متابعة (أقل من 80%)</option>
@@ -587,7 +773,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               onChange={(e) => setSortBy(e.target.value as any)}
               className="admin-filter-select"
             >
-              <option value="LAST_LOGIN">الأحدث نشاطاً</option>
+              <option value="LAST_LOGIN">الأحدث نشاطاً (المتصلون أولاً)</option>
               <option value="PROGRESS">الأعلى إنجازاً بالمحاضرات</option>
               <option value="SCORE">الأعلى درجات</option>
               <option value="NAME">أبجدياً بالاسم</option>
@@ -613,9 +799,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <table className="admin-table">
                 <thead>
                   <tr>
-                    <th>الطالب والحساب</th>
+                    <th>الطالب والحساب وحالة الاتصال</th>
                     <th>المرحلة والمنهج</th>
-                    <th>المحاضرة الحالية والتقدم</th>
+                    <th>كمية إنجاز المحاضرات والتقدم</th>
                     <th>الدرجات والتقييم</th>
                     <th>بيانات ولي الأمر والرقابة</th>
                     <th>الإجراءات</th>
@@ -625,8 +811,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   {filteredStudents.map((s) => {
                     const countryInfo = getCountryInfo(s.country);
                     return (
-                      <tr key={s.id} className="admin-table-row">
-                        {/* 1. Student Identity */}
+                      <tr key={s.id} className={`admin-table-row ${s.isOnline ? 'row-online-student' : ''}`}>
+                        {/* 1. Student Identity & Online Presence */}
                         <td>
                           <div className="student-profile-cell">
                             <div className="student-avatar-wrap">
@@ -636,16 +822,46 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               <span className="student-country-flag" title={countryInfo.nameAr}>
                                 {countryInfo.flag}
                               </span>
+                              {s.isOnline && (
+                                <span className="avatar-online-beacon" title="متصل الآن 🟢" />
+                              )}
                             </div>
                             <div className="student-meta-details">
-                              <span className="student-full-name">{s.name}</span>
+                              <div className="student-name-row">
+                                <span className="student-full-name">{s.name}</span>
+                                {s.isOnline ? (
+                                  <span className="presence-tag online" title={`متصل الآن: ${s.lastActiveTimeAgo}`}>
+                                    <span className="presence-dot pulse" />
+                                    متصل الآن 🟢
+                                  </span>
+                                ) : s.activeStatus === 'RECENT' ? (
+                                  <span className="presence-tag recent" title={`نشاط قريب: ${s.lastActiveTimeAgo}`}>
+                                    <span className="presence-dot recent" />
+                                    {s.lastActiveTimeAgo}
+                                  </span>
+                                ) : (
+                                  <span className="presence-tag offline" title={`آخر ظهور: ${s.lastActiveDate}`}>
+                                    <span className="presence-dot offline" />
+                                    غير متصل
+                                  </span>
+                                )}
+                              </div>
+
                               <span className="student-email-row" title="البريد الإلكتروني للطالب">
                                 <Mail size={12} />
                                 <code>{s.email}</code>
                               </span>
+
+                              {s.isOnline && (
+                                <div className="student-active-studying-now" title={s.currentLectureTitle}>
+                                  <span className="studying-now-label">يدرس حالياً:</span>
+                                  <span className="studying-now-title">{s.currentLectureTitle}</span>
+                                </div>
+                              )}
+
                               <div className="student-sub-pills">
                                 <span className="sub-pill">@{s.username}</span>
-                                <span className="sub-pill text-muted">آخر ظهور: {s.lastActiveDate}</span>
+                                <span className="sub-pill text-muted">آخر نشاط: {s.lastActiveTimeAgo}</span>
                               </div>
                             </div>
                           </div>
@@ -667,16 +883,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           </div>
                         </td>
 
-                        {/* 3. Current Lecture & Progress */}
+                        {/* 3. Lectures Completion Quantity & Interactive Stepper */}
                         <td>
                           <div className="lecture-progress-cell">
-                            <div className="current-lec-badge">
-                              <BookOpen size={13} className="text-indigo-400" />
-                              <span className="lec-title" title={s.currentLectureTitle}>
-                                {s.currentLectureTitle}
+                            {/* Quantity Headline */}
+                            <div className="lecture-qty-header">
+                              <div className="lecture-qty-count">
+                                <strong>{s.completedLecturesCount}</strong> من <strong>{s.totalLecturesCount}</strong> محاضرات مكتملة
+                              </div>
+                              <span className={`progress-pct-badge ${s.progressPercentage === 100 ? 'badge-success' : 'badge-info'}`}>
+                                {s.progressPercentage}%
                               </span>
                             </div>
 
+                            {/* Progress Bar */}
                             <div className="progress-bar-container">
                               <div 
                                 className={`progress-bar-fill ${s.progressPercentage === 100 ? 'bar-complete' : ''}`}
@@ -684,13 +904,41 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               />
                             </div>
 
-                            <div className="progress-details-row">
-                              <span className="progress-ratio">
-                                {s.completedLecturesCount} من {s.totalLecturesCount} محاضرات
+                            {/* Current Lecture Badge */}
+                            <div className="current-lec-badge">
+                              <BookOpen size={13} className="text-indigo-400" />
+                              <span className="lec-status-indicator">
+                                {s.progressPercentage === 100 ? 'تم إتمام المقرر:' : (s.isOnline ? 'يدرس حالياً:' : 'المحاضرة المفتوحة:')}
                               </span>
-                              <span className={`progress-pct-badge ${s.progressPercentage === 100 ? 'badge-success' : 'badge-info'}`}>
-                                {s.progressPercentage}%
+                              <span className="lec-title" title={s.currentLectureTitle}>
+                                {s.currentLectureTitle}
                               </span>
+                            </div>
+
+                            {/* Visual Mini Stepper / Matrix of All Lectures */}
+                            <div className="mini-lecture-grid" title="مصفوفة حالة إنجاز كل محاضرة">
+                              {s.lecturesStatus.map((lec) => (
+                                <span 
+                                  key={lec.order}
+                                  className={`mini-lec-token ${lec.isCompleted ? 'token-completed' : lec.order === s.currentLectureOrder ? 'token-current' : 'token-locked'}`}
+                                  title={`المحاضرة ${lec.order}: ${lec.title} ${lec.isCompleted ? `(مكتملة ✅ - الدرجة: ${lec.score || 90}%)` : lec.order === s.currentLectureOrder ? '(قيد الدراسة حالياً 📖)' : '(مغلقة 🔒)'}`}
+                                >
+                                  {lec.isCompleted ? '✓' : lec.order}
+                                </span>
+                              ))}
+                            </div>
+
+                            {/* Remaining lectures count note */}
+                            <div className="remaining-lectures-row">
+                              {s.remainingLecturesCount > 0 ? (
+                                <span className="remaining-count-text">
+                                  متبقي <strong>{s.remainingLecturesCount}</strong> محاضرات للاجتياز
+                                </span>
+                              ) : (
+                                <span className="completion-complete-tag">
+                                  🎉 تم إكمال المنهج بنسبة 100%
+                                </span>
+                              )}
                             </div>
                           </div>
                         </td>
@@ -798,10 +1046,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <div className="dossier-title-group">
                   <div className="dossier-avatar">
                     {selectedStudent.name.charAt(0)}
+                    {selectedStudent.isOnline && (
+                      <span className="dossier-avatar-beacon" title="متصل الآن 🟢" />
+                    )}
                   </div>
                   <div>
-                    <h3 className="dossier-name">{selectedStudent.name}</h3>
+                    <div className="dossier-name-row">
+                      <h3 className="dossier-name">{selectedStudent.name}</h3>
+                      {selectedStudent.isOnline ? (
+                        <span className="dossier-online-badge online">
+                          <span className="live-pulse-dot" />
+                          متصل الآن 🟢
+                        </span>
+                      ) : (
+                        <span className="dossier-online-badge offline">
+                          آخر نشاط: {selectedStudent.lastActiveTimeAgo}
+                        </span>
+                      )}
+                    </div>
                     <p className="dossier-email">{selectedStudent.email} • @{selectedStudent.username}</p>
+                    {selectedStudent.isOnline && (
+                      <div className="dossier-current-studying-alert">
+                        <Radio size={13} className="text-emerald-400 animate-pulse" />
+                        <span>يدرس حالياً في هذه اللحظة: <strong>{selectedStudent.currentLectureTitle}</strong></span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <button type="button" className="btn-close-dossier" onClick={() => setSelectedStudent(null)}>
@@ -810,6 +1079,30 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
 
               <div className="dossier-body">
+                {/* 1. Dedicated Lecture Completion Metrics Banner */}
+                <div className="dossier-curriculum-summary-banner">
+                  <div className="summary-metric-box">
+                    <span className="metric-label">إجمالي مقررات المنهج</span>
+                    <span className="metric-num">{selectedStudent.totalLecturesCount}</span>
+                    <span className="metric-sub">محاضرات دراسية</span>
+                  </div>
+                  <div className="summary-metric-box box-success">
+                    <span className="metric-label">المحاضرات المنجزة والمجتازة</span>
+                    <span className="metric-num">{selectedStudent.completedLecturesCount}</span>
+                    <span className="metric-sub">تم اجتياز اختباراتها ✅</span>
+                  </div>
+                  <div className="summary-metric-box box-info">
+                    <span className="metric-label">المحاضرات المتبقية للاجتياز</span>
+                    <span className="metric-num">{selectedStudent.remainingLecturesCount}</span>
+                    <span className="metric-sub">{selectedStudent.remainingLecturesCount === 0 ? 'أتم المنهج كاملاً 🎉' : 'محاضرات قادمة ⏳'}</span>
+                  </div>
+                  <div className="summary-metric-box box-progress">
+                    <span className="metric-label">نسبة الإنجاز الكلية</span>
+                    <span className="metric-num">{selectedStudent.progressPercentage}%</span>
+                    <span className="metric-sub">المعدل: {selectedStudent.averageScore}%</span>
+                  </div>
+                </div>
+
                 {/* Academic Progress Roadmap */}
                 <div className="dossier-section">
                   <div className="dossier-section-head">

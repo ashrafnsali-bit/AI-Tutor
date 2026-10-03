@@ -275,7 +275,7 @@ export function App() {
   // Sync profile to local storage & database
   useEffect(() => {
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(profile));
-    updateUserAccount(profile.id, profile).catch(() => {});
+    updateUserAccount(profile.id, { ...profile, lastLoginAt: Date.now() }).catch(() => {});
   }, [profile]);
 
   // Sync lectures progress per subject, country, and educationType to local storage & database
