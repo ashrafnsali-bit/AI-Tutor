@@ -4551,7 +4551,7 @@ export function saveSubjectLectures(subject: Subject, lectures: Lecture[], grade
   localStorage.setItem(storageKey, JSON.stringify(lectures));
 }
 
-export const INITIAL_LECTURES = MATH_LECTURES;
+export const INITIAL_LECTURES = HIGH_CHEMISTRY_G12_LECTURES;
 
 export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   id: 'std-1001',
@@ -4560,9 +4560,9 @@ export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   nameEn: 'Omar Al-Tamimi',
   age: 16,
   dateOfBirth: '2010-04-15',
-  country: 'SA',
+  country: 'EG',
   specialization: 'GENERAL',
-  subject: 'PHYSICS',
+  subject: 'CHEMISTRY',
   gradeLevel: 'G12',
   language: 'ar',
   parentEmail: 'parent.altamimi@example.com',
