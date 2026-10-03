@@ -145,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {onOpenOnboarding && (
             <button
               type="button"
-              className="btn-header-guide-glow"
+              className="btn-header-guide-glow desktop-extra-wide-only"
               onClick={onOpenOnboarding}
               title={isEn ? "Platform Guide & Learning Roadmap" : "دليل المنصة وخريطة المراحل التعليمية"}
             >
@@ -158,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {onOpenAdmin && (
             <button
               type="button"
-              className="btn-header-admin-glow"
+              className="btn-header-admin-glow desktop-extra-wide-only"
               onClick={onOpenAdmin}
               title={isEn ? "Admin Dashboard (Students, Progress & Supervision)" : "لوحة تحكم المشرف والأدمن (متابعة الطلاب، اجتياز المحاضرات والرقابة الأبوية)"}
             >
