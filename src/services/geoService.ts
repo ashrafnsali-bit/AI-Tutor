@@ -11,30 +11,85 @@ export interface GeoDetectionResult {
 }
 
 const CACHE_KEY = 'TEACHER_AI_DETECTED_GEO';
+export const MANUAL_OVERRIDE_KEY = 'TEACHER_AI_MANUAL_COUNTRY_OVERRIDE';
+
+/**
+ * Check if the user has manually set a country override
+ */
+export function isManualCountryOverride(): boolean {
+  try {
+    return localStorage.getItem(MANUAL_OVERRIDE_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Set or clear the manual country override flag
+ */
+export function setManualCountryOverride(manual: boolean): void {
+  try {
+    if (manual) {
+      localStorage.setItem(MANUAL_OVERRIDE_KEY, 'true');
+    } else {
+      localStorage.removeItem(MANUAL_OVERRIDE_KEY);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Retrieve cached geo result if available
+ */
+export function getCachedGeoResult(): GeoDetectionResult | null {
+  try {
+    const cached = sessionStorage.getItem(CACHE_KEY) || localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      return JSON.parse(cached) as GeoDetectionResult;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
 
 // Mapping timezones to CountryCode as an instantaneous zero-network fallback
 const TIMEZONE_TO_COUNTRY: Record<string, CountryCode> = {
+  // Saudi Arabia & Yemen
   'Asia/Riyadh': 'SA',
+  'Asia/Aden': 'SA',
+  // Egypt, Sudan, Libya
   'Africa/Cairo': 'EG',
-  'Asia/Dubai': 'AE',
-  'Asia/Kuwait': 'KW',
-  'Asia/Amman': 'JO',
-  'Asia/Muscat': 'OM',
-  'Asia/Qatar': 'QA',
-  'Asia/Bahrain': 'BH',
-  'Asia/Baghdad': 'IQ',
-  'Africa/Casablanca': 'MA',
-  'Africa/Algiers': 'DZ',
-  'Africa/Tunis': 'TN',
   'Africa/Tripoli': 'EG',
+  'Africa/Khartoum': 'EG',
+  // UAE
+  'Asia/Dubai': 'AE',
+  // Kuwait
+  'Asia/Kuwait': 'KW',
+  // Jordan & Levant
+  'Asia/Amman': 'JO',
   'Asia/Damascus': 'JO',
   'Asia/Beirut': 'JO',
   'Asia/Jerusalem': 'JO',
   'Asia/Gaza': 'JO',
   'Asia/Hebron': 'JO',
-  'Africa/Khartoum': 'EG',
-  'Asia/Aden': 'SA',
-  'Africa/Nouakchott': 'MA'
+  // Oman
+  'Asia/Muscat': 'OM',
+  // Qatar
+  'Asia/Qatar': 'QA',
+  // Bahrain
+  'Asia/Bahrain': 'BH',
+  // Iraq
+  'Asia/Baghdad': 'IQ',
+  // Morocco & Mauritania
+  'Africa/Casablanca': 'MA',
+  'Africa/El_Aaiun': 'MA',
+  'Africa/Nouakchott': 'MA',
+  // Algeria
+  'Africa/Algiers': 'DZ',
+  // Tunisia
+  'Africa/Tunis': 'TN'
 };
 
 /**
@@ -43,8 +98,26 @@ const TIMEZONE_TO_COUNTRY: Record<string, CountryCode> = {
 export function detectCountryFromTimezone(): CountryCode {
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (tz && TIMEZONE_TO_COUNTRY[tz]) {
-      return TIMEZONE_TO_COUNTRY[tz];
+    if (tz) {
+      if (TIMEZONE_TO_COUNTRY[tz]) {
+        return TIMEZONE_TO_COUNTRY[tz];
+      }
+      // If client timezone is clearly European/American/Asian international:
+      if (
+        tz.startsWith('Europe/') || 
+        tz.startsWith('America/') || 
+        tz.startsWith('Australia/') || 
+        tz.startsWith('Pacific/') ||
+        tz === 'UTC' ||
+        tz === 'Etc/UTC' ||
+        tz === 'Asia/Tokyo' ||
+        tz === 'Asia/Singapore' ||
+        tz === 'Asia/Shanghai' ||
+        tz === 'Asia/Hong_Kong' ||
+        tz === 'Asia/Seoul'
+      ) {
+        return 'INTL';
+      }
     }
   } catch {
     /* ignore */

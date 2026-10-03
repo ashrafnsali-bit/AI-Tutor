@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { CountryCode, EducationTrack, GradeLevel, Specialization, StudentProfile, Subject } from '../types';
 import { SUPPORTED_COUNTRIES, getNationalSubjectLabel } from '../data/curriculumCountries';
+import { setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
   Sparkles, 
   Compass, 
@@ -249,7 +250,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       educationTrack: selectedTrack,
       specialization: (isPrim || isMid) ? 'GENERAL' : selectedSpec,
       subject: selectedSubject,
-      age: defaultAge
+      age: defaultAge,
+      isAutoDetectedCountry: !isManualCountryOverride()
     };
 
     onFinish(updated);
@@ -543,7 +545,10 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                       key={cCode}
                       type="button"
                       className={`country-chip-btn ${isSelected ? 'country-chip-active' : ''}`}
-                      onClick={() => setSelectedCountry(cCode)}
+                      onClick={() => {
+                        setManualCountryOverride(true);
+                        setSelectedCountry(cCode);
+                      }}
                     >
                       <span className="chip-flag">{country.flag}</span>
                       <span className="chip-name">{isEn ? country.nameEn : country.nameAr}</span>

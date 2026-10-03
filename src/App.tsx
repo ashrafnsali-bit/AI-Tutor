@@ -7,7 +7,14 @@ import {
   saveSubjectLectures 
 } from './data/curriculumData';
 import { getCountryInfo } from './data/curriculumCountries';
-import { detectStudentCountry, adaptProfileToCountry } from './services/geoService';
+import { 
+  detectStudentCountry, 
+  adaptProfileToCountry, 
+  isManualCountryOverride, 
+  setManualCountryOverride, 
+  getCachedGeoResult, 
+  detectCountryFromTimezone 
+} from './services/geoService';
 import { 
   getActiveUserAccount, 
   updateUserAccount, 
@@ -45,14 +52,26 @@ export function App() {
     return 'landing';
   });
 
-  // Load saved state or default with consistency checks
+  // Load saved state or default with dynamic geo-adaptation
   const [profile, setProfile] = useState<StudentProfile>(() => {
+    const isManual = isManualCountryOverride();
+    const cachedGeo = getCachedGeoResult();
+    const tzCountry = detectCountryFromTimezone();
+    // Default dynamic country if not manually overridden: cached IP geo, then timezone geo, or SA
+    const defaultDynamicCountry = cachedGeo?.country || tzCountry || 'SA';
+
     const saved = localStorage.getItem('TEACHER_AI_STUDENT_PROFILE');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         const merged: StudentProfile = { ...INITIAL_STUDENT_PROFILE, ...parsed };
         
+        // If user has NOT manually chosen a country, dynamically apply the detected country
+        if (!isManual && defaultDynamicCountry && merged.country !== defaultDynamicCountry) {
+          merged.country = defaultDynamicCountry;
+          merged.isAutoDetectedCountry = true;
+        }
+
         // Strict educational alignment between grade/age and subject/track:
         const PRIMARY_SUBJS: Subject[] = ['PRIMARY_ARABIC', 'PRIMARY_MATH', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'];
         const MIDDLE_SUBJS: Subject[] = ['ARABIC_LANG', 'MATH', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'];
@@ -94,12 +113,16 @@ export function App() {
               merged.specialization = 'GENERAL';
             }
           }
-          
         }
         return merged;
       } catch (e) {
         console.error(e);
       }
+    }
+    
+    // First-time visit: adapt INITIAL_STUDENT_PROFILE to dynamic country if not manually overridden
+    if (!isManual && defaultDynamicCountry) {
+      return adaptProfileToCountry(INITIAL_STUDENT_PROFILE, defaultDynamicCountry);
     }
     return INITIAL_STUDENT_PROFILE;
   });
@@ -146,31 +169,45 @@ export function App() {
     return !!localStorage.getItem('TEACHER_AI_ACTIVE_USER');
   });
 
-  // Dynamic Geolocation Detection on startup
+  // Dynamic Geolocation Detection on startup (unless user manually chose their country)
   useEffect(() => {
-    const hasDetected = sessionStorage.getItem('TEACHER_AI_GEO_TOASTED');
-    if (!hasDetected) {
-      detectStudentCountry().then(geo => {
-        if (geo && geo.country) {
-          const cInfo = getCountryInfo(geo.country);
-          setProfile(prev => {
-            // Auto adapt profile country if it was default or untouched
-            if (!prev.isAutoDetectedCountry && prev.country === 'SA' && geo.country !== 'SA') {
-              return adaptProfileToCountry(prev, geo.country);
-            }
-            return prev;
-          });
-          setGeoNotice({
-            show: true,
-            countryName: cInfo.nameAr,
-            flag: cInfo.flag,
-            city: geo.city
-          });
-          sessionStorage.setItem('TEACHER_AI_GEO_TOASTED', 'true');
-          setTimeout(() => setGeoNotice(null), 9000);
+    const isManual = isManualCountryOverride();
+    if (isManual) return; // Respect user's explicit manual override!
+
+    detectStudentCountry().then(geo => {
+      if (!geo || !geo.country) return;
+      
+      // Double check manual override hasn't been set in the meantime
+      if (isManualCountryOverride()) return;
+
+      const cInfo = getCountryInfo(geo.country);
+
+      setProfile(prev => {
+        if (prev.country !== geo.country) {
+          const adapted = adaptProfileToCountry(prev, geo.country);
+          // Immediately reload curriculum lectures for the newly detected country
+          const freshLecs = loadSubjectLectures(adapted.subject, geo.country, adapted.gradeLevel);
+          setLectures(freshLecs);
+          setSelectedLectureId(freshLecs[0]?.id || '');
+          return adapted;
         }
-      }).catch(() => {});
-    }
+        return prev;
+      });
+
+      const hasToasted = sessionStorage.getItem('TEACHER_AI_GEO_TOASTED');
+      if (!hasToasted) {
+        setGeoNotice({
+          show: true,
+          countryName: cInfo.nameAr,
+          flag: cInfo.flag,
+          city: geo.city
+        });
+        sessionStorage.setItem('TEACHER_AI_GEO_TOASTED', 'true');
+        setTimeout(() => setGeoNotice(null), 9000);
+      }
+    }).catch(err => {
+      console.warn('Geolocation detection skipped:', err);
+    });
   }, []);
 
   // Check active user from database on startup
@@ -302,6 +339,10 @@ export function App() {
     localStorage.removeItem('TEACHER_AI_STUDENT_PROFILE');
     localStorage.removeItem('TEACHER_AI_HAS_STUDIED');
     localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
+    localStorage.removeItem('TEACHER_AI_MANUAL_COUNTRY_OVERRIDE');
+    sessionStorage.removeItem('TEACHER_AI_GEO_TOASTED');
+    sessionStorage.removeItem('TEACHER_AI_DETECTED_GEO');
+    localStorage.removeItem('TEACHER_AI_DETECTED_GEO');
     localStorage.removeItem('TEACHER_AI_LECTURES');
     localStorage.removeItem('TEACHER_AI_LECTURES_MATH');
     localStorage.removeItem('TEACHER_AI_LECTURES_MATH_G7');
@@ -315,7 +356,8 @@ export function App() {
     localStorage.removeItem('TEACHER_AI_LECTURES_BIOLOGY');
     localStorage.removeItem('TEACHER_AI_LECTURES_COMPUTER_SCIENCE');
     localStorage.removeItem('TEACHER_AI_LECTURES_ARABIC_LIT');
-    const freshProfile = INITIAL_STUDENT_PROFILE;
+    const autoCountry = detectCountryFromTimezone() || 'SA';
+    const freshProfile = adaptProfileToCountry(INITIAL_STUDENT_PROFILE, autoCountry);
     setProfile(freshProfile);
     const freshLectures = loadSubjectLectures(freshProfile.subject, freshProfile.country, freshProfile.gradeLevel);
     setLectures(freshLectures);
@@ -331,6 +373,13 @@ export function App() {
 
   const handleSaveProfile = (updated: StudentProfile) => {
     const sanitized: StudentProfile = { ...updated };
+
+    // Record or clear manual override based on whether it was auto-detected or explicitly picked
+    if (sanitized.isAutoDetectedCountry) {
+      setManualCountryOverride(false);
+    } else {
+      setManualCountryOverride(true);
+    }
     const PRIMARY_SUBJS: Subject[] = ['PRIMARY_ARABIC', 'PRIMARY_MATH', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'];
     const MIDDLE_SUBJS: Subject[] = ['ARABIC_LANG', 'MATH', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'];
 

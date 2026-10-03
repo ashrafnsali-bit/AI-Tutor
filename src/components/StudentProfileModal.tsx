@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { CountryCode, GradeLevel, Language, Specialization, StudentProfile, Subject } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { detectStudentCountry } from '../services/geoService';
+import { detectStudentCountry, setManualCountryOverride } from '../services/geoService';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
 import { X, User, ShieldAlert, CheckCircle2, Users } from 'lucide-react';
 
@@ -259,13 +259,19 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
             {/* Official State / National Curriculum Country */}
             <div className="form-group">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                <label className="form-label" style={{ margin: 0 }}>{t.countrySelectLabel}</label>
+                <label className="form-label" style={{ margin: 0 }}>
+                  {t.countrySelectLabel}
+                  <span style={{ fontSize: '0.75rem', fontWeight: 500, color: formData.isAutoDetectedCountry ? '#38bdf8' : '#f59e0b', marginInlineStart: '0.5rem' }}>
+                    {formData.isAutoDetectedCountry ? '(✨ كشف جغرافي تلقائي)' : '(✏️ تم التحديد يدوياً)'}
+                  </span>
+                </label>
                 <button
                   type="button"
                   className="btn-auto-detect-geo"
                   onClick={async () => {
                     setIsDetecting(true);
                     try {
+                      setManualCountryOverride(false);
                       const res = await detectStudentCountry(true);
                       setFormData(prev => ({
                         ...prev,
@@ -273,22 +279,27 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                         detectedCity: res.city,
                         isAutoDetectedCountry: true
                       }));
-                      setDetectNotice(`📍 تم اكتشاف موقعك (${res.city || res.countryName}) وضبط المنهج بنجاح!`);
+                      setDetectNotice(`📍 تم التحديد التلقائي بنجاح وفق موقعك (${res.city || res.countryName}) وتم ضبط المنهج!`);
                     } catch {
                       setDetectNotice('تعذر تحديد الموقع الجغرافي تلقائياً');
                     } finally {
                       setIsDetecting(false);
                     }
                   }}
-                  title="اكتشاف بلد الدخول تلقائياً بالذكاء الجغرافي"
+                  title="العودة للاكتشاف التلقائي لبلد الدخول بالذكاء الجغرافي"
                 >
-                  {isDetecting ? '⏳ جارٍ التحديد...' : '📍 تحديد تلقائي'}
+                  {isDetecting ? '⏳ جارٍ التحديد...' : '📍 كشف موقعي تلقائياً'}
                 </button>
               </div>
               <select
                 className="form-select"
                 value={formData.country || 'SA'}
-                onChange={(e) => setFormData({ ...formData, country: e.target.value as CountryCode, isAutoDetectedCountry: false })}
+                onChange={(e) => {
+                  const chosenCountry = e.target.value as CountryCode;
+                  setManualCountryOverride(true);
+                  setFormData({ ...formData, country: chosenCountry, isAutoDetectedCountry: false });
+                  setDetectNotice(`✏️ تم تثبيت الدولة يدوياً: لن يتم تغييرها تلقائياً.`);
+                }}
               >
                 <option value="SA">🇸🇦 المملكة العربية السعودية (وزارة التعليم)</option>
                 <option value="EG">🇪🇬 جمهورية مصر العربية (وزارة التربية والتعليم)</option>
@@ -305,7 +316,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 <option value="INTL">🌍 المنهج الدولي والمعايير العامة</option>
               </select>
               {detectNotice && (
-                <span className="geo-detect-toast" style={{ color: '#10b981', fontSize: '0.72rem', marginTop: '0.25rem', display: 'block' }}>
+                <span className="geo-detect-toast" style={{ color: formData.isAutoDetectedCountry ? '#10b981' : '#f59e0b', fontSize: '0.72rem', marginTop: '0.25rem', display: 'block' }}>
                   {detectNotice}
                 </span>
               )}

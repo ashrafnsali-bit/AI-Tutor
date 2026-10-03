@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { CountryCode, EducationTrack, GradeLevel, Specialization, StudentProfile, Subject } from '../types';
 import { SUPPORTED_COUNTRIES, getCountryInfo, getNationalSubjectLabel } from '../data/curriculumCountries';
+import { detectStudentCountry, setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
   Sparkles, 
   Compass, 
@@ -57,6 +58,16 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
   const [selectedTrack, setSelectedTrack] = useState<EducationTrack>(profile.educationTrack || 'GENERAL');
   const [selectedSpec, setSelectedSpec] = useState<Specialization>(profile.specialization || 'STEM');
   const [selectedSubject, setSelectedSubject] = useState<Subject>(profile.subject || 'PHYSICS');
+  const [isManual, setIsManual] = useState<boolean>(() => isManualCountryOverride());
+  const [isDetecting, setIsDetecting] = useState<boolean>(false);
+
+  // Sync selectedCountry with profile.country if not manually overridden
+  useEffect(() => {
+    if (!isManualCountryOverride() && profile.country) {
+      setSelectedCountry(profile.country);
+      setIsManual(false);
+    }
+  }, [profile.country]);
 
   // Active Stage determination
   const isPrimary = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade);
@@ -279,7 +290,8 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         ? 'GENERAL' 
         : (selectedSubject === 'ARABIC_LIT' ? 'HUMANITIES' : (selectedSubject === 'BIOLOGY' ? 'HEALTH' : (selectedSpec === 'HUMANITIES' ? 'STEM' : selectedSpec))),
       subject: selectedSubject,
-      age: defaultAge
+      age: defaultAge,
+      isAutoDetectedCountry: !isManual
     };
 
     onSelectCurriculumAndStart(updated);
@@ -539,10 +551,52 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
 
           {/* 1. Country Selection */}
           <div className="prep-field-block">
-            <label className="prep-field-label">
-              <Globe2 size={16} />
-              <span>{isEn ? '1. Select National Curriculum Standard:' : '1. حدد الدولة والمنهج الوطني المعتمد:'}</span>
-            </label>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <label className="prep-field-label" style={{ marginBottom: 0 }}>
+                <Globe2 size={16} />
+                <span>{isEn ? '1. Select National Curriculum Standard:' : '1. حدد الدولة والمنهج الوطني المعتمد:'}</span>
+                <span style={{ fontSize: '0.78rem', fontWeight: 600, color: !isManual ? '#38bdf8' : '#f59e0b', marginInlineStart: '0.5rem' }}>
+                  {!isManual ? (isEn ? '(✨ Auto-detected by Location)' : '(✨ كشف تلقائي حسب موقعك الجغرافي)') : (isEn ? '(✏️ تم الاختيار يدوياً)' : '(✏️ تم الاختيار يدوياً)')}
+                </span>
+              </label>
+
+              <button
+                type="button"
+                className="btn-prep-auto-geo"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '10px',
+                  background: !isManual ? 'rgba(56, 189, 248, 0.16)' : 'rgba(30, 41, 59, 0.8)',
+                  border: !isManual ? '1px solid #38bdf8' : '1px solid rgba(255, 255, 255, 0.18)',
+                  color: !isManual ? '#38bdf8' : '#e2e8f0',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  boxShadow: !isManual ? '0 0 10px rgba(56, 189, 248, 0.2)' : 'none'
+                }}
+                onClick={async () => {
+                  setIsDetecting(true);
+                  try {
+                    setManualCountryOverride(false);
+                    setIsManual(false);
+                    const res = await detectStudentCountry(true);
+                    setSelectedCountry(res.country);
+                  } catch {
+                    /* ignore */
+                  } finally {
+                    setIsDetecting(false);
+                  }
+                }}
+                title={isEn ? "Reset and detect country automatically from your location" : "إعادة الكشف التلقائي وضبط المنهج حسب موقعك الجغرافي"}
+              >
+                {isDetecting ? (isEn ? '⏳ Detecting...' : '⏳ جارٍ الكشف...') : (isEn ? '📍 Auto-Detect Location' : '📍 كشف موقعي تلقائياً')}
+              </button>
+            </div>
+
             <div className="prep-country-grid">
               {(Object.keys(SUPPORTED_COUNTRIES) as CountryCode[]).map((cCode) => {
                 const country = SUPPORTED_COUNTRIES[cCode];
@@ -552,7 +606,11 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
                     key={cCode}
                     type="button"
                     className={`prep-country-btn ${isSelected ? 'country-selected' : ''}`}
-                    onClick={() => setSelectedCountry(cCode)}
+                    onClick={() => {
+                      setManualCountryOverride(true);
+                      setIsManual(true);
+                      setSelectedCountry(cCode);
+                    }}
                   >
                     <span className="pcountry-flag">{country.flag}</span>
                     <span className="pcountry-name">{isEn ? country.nameEn : country.nameAr}</span>
