@@ -77,7 +77,7 @@ export const translations = {
     specLabels: {
       STEM: 'علمي وتقني (STEM)',
       HUMANITIES: 'علوم إنسانية (أدبي)',
-      GENERAL: 'تعليم عام (أساسي)',
+      GENERAL: 'التعليم العام (الثانوية العامة ومدارس اللغات)',
       HEALTH: 'مسار الصحة والحياة',
       VOCATIONAL: 'مسار تقني مهني'
     },
@@ -317,7 +317,7 @@ export const translations = {
     specLabels: {
       STEM: 'STEM (Science & Tech)',
       HUMANITIES: 'Humanities & Languages',
-      GENERAL: 'General Education',
+      GENERAL: 'General Secondary (مدارس اللغات والعام)',
       HEALTH: 'Health & Life Sciences',
       VOCATIONAL: 'Vocational & Tech'
     },

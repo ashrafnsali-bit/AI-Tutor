@@ -410,10 +410,10 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                   value={formData.specialization}
                   onChange={(e) => handleSpecializationChange(e.target.value as Specialization)}
                 >
+                  <option value="GENERAL">{t.specLabels.GENERAL}</option>
                   <option value="STEM">{t.specLabels.STEM}</option>
                   <option value="HUMANITIES">{t.specLabels.HUMANITIES}</option>
                   <option value="HEALTH">{t.specLabels.HEALTH}</option>
-                  <option value="GENERAL">{t.specLabels.GENERAL}</option>
                   <option value="VOCATIONAL">{t.specLabels.VOCATIONAL}</option>
                 </select>
               )}
