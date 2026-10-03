@@ -4623,8 +4623,8 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
   const generalKey = `TEACHER_AI_SHARED_LECS_${subject}_${gradeLevel || ''}`;
   let sharedLecs: Lecture[] = [];
   try {
-    const list1 = JSON.parse(localStorage.getItem(countryKey) || '[]') as Lecture[];
-    const list2 = JSON.parse(localStorage.getItem(generalKey) || '[]') as Lecture[];
+    const list1 = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem(countryKey) || '[]') as Lecture[] : [];
+    const list2 = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem(generalKey) || '[]') as Lecture[] : [];
     const map = new Map<string, Lecture>();
     [...list1, ...list2].forEach(l => { if (l && l.id) map.set(l.id, l); });
     sharedLecs = Array.from(map.values());
@@ -4652,7 +4652,7 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
   const storageKey = gradeLevel 
     ? `TEACHER_AI_LECTURES_${country}_${subject}_${gradeLevel}` 
     : `TEACHER_AI_LECTURES_${country}_${subject}`;
-  const saved = localStorage.getItem(storageKey);
+  const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
   if (saved) {
     try {
       const parsed = JSON.parse(saved) as Lecture[];
@@ -4687,6 +4687,7 @@ export function loadSubjectLectures(subject: Subject, country: string = 'SA', gr
 }
 
 export function saveSubjectLectures(subject: Subject, lectures: Lecture[], gradeLevel?: string, country: string = 'SA'): void {
+  if (typeof localStorage === 'undefined') return;
   const storageKey = gradeLevel 
     ? `TEACHER_AI_LECTURES_${country}_${subject}_${gradeLevel}` 
     : `TEACHER_AI_LECTURES_${country}_${subject}`;
