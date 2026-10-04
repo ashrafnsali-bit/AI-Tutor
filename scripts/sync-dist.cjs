@@ -29,10 +29,17 @@ if (fs.existsSync(distDir)) {
   // Copy dist to docs
   fs.cpSync(distDir, docsDir, { recursive: true });
 
-  // Create .nojekyll in dist, docs, and root to prevent Jekyll processing
-  fs.writeFileSync(path.join(distDir, '.nojekyll'), '');
-  fs.writeFileSync(path.join(docsDir, '.nojekyll'), '');
-  fs.writeFileSync(path.join(rootDir, '.nojekyll'), '');
+  // Copy public image assets to dist, docs, and root for Open Graph & WhatsApp link preview
+  const publicDir = path.join(rootDir, 'public');
+  const imgFiles = ['og-image.jpg', 'og-preview.jpg', 'logo.jpg', 'logo.png', 'apple-touch-icon.png', 'favicon.png', 'favicon-32x32.png'];
+  imgFiles.forEach(f => {
+    const src = path.join(publicDir, f);
+    if (fs.existsSync(src)) {
+      try { fs.copyFileSync(src, path.join(distDir, f)); } catch {}
+      try { fs.copyFileSync(src, path.join(docsDir, f)); } catch {}
+      try { fs.copyFileSync(src, path.join(rootDir, f)); } catch {}
+    }
+  });
 
   console.log('Successfully synced dist to root, docs, and 404.html for GitHub Pages production');
 }
