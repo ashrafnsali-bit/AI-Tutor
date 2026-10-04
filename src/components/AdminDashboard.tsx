@@ -7,6 +7,7 @@ import {
   simulateStudentJoin, 
   endSimulatedStudent 
 } from '../services/presenceService';
+import { pullCloudData, onCloudUserRegistered } from '../services/cloudSyncService';
 import { 
   Users, 
   Search, 
@@ -118,6 +119,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const loadData = async (silent = false) => {
     if (!silent) setLoading(true);
     try {
+      await pullCloudData().catch(() => {});
       const data = await getAdminStudentsOverview();
       setStudents(data);
     } catch (err) {
@@ -132,13 +134,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     loadData();
 
-    // Real-Time Zero-Latency Presence Subscription
-    const unsubscribe = subscribeToPresenceUpdates(() => {
+    // Real-Time Zero-Latency Presence Subscription (cross-device SSE + local)
+    const unsubscribePresence = subscribeToPresenceUpdates(() => {
+      loadData(true);
+    });
+
+    // Real-Time Global Cloud User Registration Subscription
+    const unsubscribeUserReg = onCloudUserRegistered(() => {
       loadData(true);
     });
 
     return () => {
-      unsubscribe();
+      unsubscribePresence();
+      unsubscribeUserReg();
     };
   }, [isOpen]);
 

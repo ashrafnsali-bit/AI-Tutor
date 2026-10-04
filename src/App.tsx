@@ -24,6 +24,7 @@ import {
   logoutUserAccount
 } from './services/database';
 import { sendStudentHeartbeat, clearStudentPresence } from './services/presenceService';
+import { initCloudSync } from './services/cloudSyncService';
 import { Navbar } from './components/Navbar';
 import { LectureRoadmap } from './components/LectureRoadmap';
 import { LectureViewer } from './components/LectureViewer';
@@ -200,6 +201,11 @@ export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return !!localStorage.getItem('TEACHER_AI_ACTIVE_USER');
   });
+
+  // Connect to Global Cloud Synchronization & Real-time Live Network on startup
+  useEffect(() => {
+    initCloudSync();
+  }, []);
 
   // Dynamic Geolocation Detection on startup (unless user manually chose their country)
   useEffect(() => {

@@ -1,8 +1,9 @@
-/**
- * Real-Time Presence Service for TeacherAI
- * Tracks truly active students via localStorage heartbeats, visibility states,
- * and BroadcastChannel for zero-latency multi-tab/cross-window presence.
- */
+import {
+  broadcastCloudHeartbeat,
+  broadcastCloudStudentLeft,
+  getCloudActiveStudents,
+  onCloudPresenceChange
+} from './cloudSyncService';
 
 export interface ActiveStudentPresence {
   userId: string;
@@ -13,7 +14,7 @@ export interface ActiveStudentPresence {
   subject: string;
   currentLectureId: string;
   currentLectureTitle: string;
-  status: 'STUDYING' | 'QUIZ' | 'IDLE';
+  status: 'STUDYING' | 'QUIZ' | 'IDLE' | 'OFFLINE';
   lastPing: number;        // Epoch timestamp of last heartbeat
   sessionStartedAt: number;
   tabId: string;
@@ -22,7 +23,7 @@ export interface ActiveStudentPresence {
 
 const PRESENCE_STORAGE_KEY = 'TEACHER_AI_LIVE_PRESENCE_REGISTRY';
 const PRESENCE_CHANNEL_NAME = 'TEACHER_AI_PRESENCE_CHANNEL';
-const HEARTBEAT_EXPIRY_MS = 20000; // 20 seconds without ping = considered offline
+const HEARTBEAT_EXPIRY_MS = 25000; // 25 seconds without ping = considered offline
 
 let presenceChannel: BroadcastChannel | null = null;
 try {
@@ -47,41 +48,56 @@ export function getTabId(): string {
 }
 
 /**
- * Clean up expired heartbeats and return current genuinely active students
+ * Clean up expired heartbeats and return current genuinely active students across all devices
  */
 export function getLiveActiveStudents(): ActiveStudentPresence[] {
   if (typeof window === 'undefined') return [];
+  const map = new Map<string, ActiveStudentPresence>();
+  const now = Date.now();
+
+  // 1. Read Cloud Presence (students active on other laptops, phones, or tabs worldwide)
   try {
-    const raw = localStorage.getItem(PRESENCE_STORAGE_KEY);
-    if (!raw) return [];
-
-    const registry: Record<string, ActiveStudentPresence> = JSON.parse(raw);
-    const now = Date.now();
-    const activeList: ActiveStudentPresence[] = [];
-    const validRegistry: Record<string, ActiveStudentPresence> = {};
-
-    Object.values(registry).forEach((item) => {
-      // Must have pinged within the last 20 seconds
-      if (item && item.userId && (now - item.lastPing) <= HEARTBEAT_EXPIRY_MS) {
-        activeList.push(item);
-        validRegistry[item.userId] = item;
+    const cloudActive = getCloudActiveStudents();
+    cloudActive.forEach((item) => {
+      if (item && item.userId && (now - item.lastPing) <= HEARTBEAT_EXPIRY_MS && item.status !== 'OFFLINE') {
+        map.set(item.userId, item);
       }
     });
-
-    // Write back pruned registry if items expired
-    if (Object.keys(registry).length !== Object.keys(validRegistry).length) {
-      localStorage.setItem(PRESENCE_STORAGE_KEY, JSON.stringify(validRegistry));
-    }
-
-    return activeList;
   } catch (err) {
-    console.error('Error reading live presence:', err);
-    return [];
+    console.warn('Error reading cloud active students:', err);
   }
+
+  // 2. Read Local Presence (current machine/browser localStorage)
+  try {
+    const raw = localStorage.getItem(PRESENCE_STORAGE_KEY);
+    if (raw) {
+      const registry: Record<string, ActiveStudentPresence> = JSON.parse(raw);
+      const validRegistry: Record<string, ActiveStudentPresence> = {};
+
+      Object.values(registry).forEach((item) => {
+        if (item && item.userId && (now - item.lastPing) <= HEARTBEAT_EXPIRY_MS && item.status !== 'OFFLINE') {
+          validRegistry[item.userId] = item;
+          const existing = map.get(item.userId);
+          if (!existing || item.lastPing > existing.lastPing) {
+            map.set(item.userId, item);
+          }
+        }
+      });
+
+      // Write back pruned local registry if items expired
+      if (Object.keys(registry).length !== Object.keys(validRegistry).length) {
+        localStorage.setItem(PRESENCE_STORAGE_KEY, JSON.stringify(validRegistry));
+      }
+    }
+  } catch (err) {
+    console.error('Error reading local live presence:', err);
+  }
+
+  return Array.from(map.values());
 }
 
 /**
- * Get real-time presence record for a specific student ID
+ * Get real-time presence record for a specific student ID (checks both local and global cloud)
  */
 export function getStudentPresence(userId: string): ActiveStudentPresence | null {
   const activeStudents = getLiveActiveStudents();
@@ -90,6 +106,7 @@ export function getStudentPresence(userId: string): ActiveStudentPresence | null
 
 /**
  * Send real-time heartbeat for the current active student session
+ * Broadcasts to both local BroadcastChannel AND global Cloud SSE network!
  */
 export function sendStudentHeartbeat(data: Omit<ActiveStudentPresence, 'lastPing' | 'tabId'>): void {
   if (typeof window === 'undefined' || !data.userId) return;
@@ -103,19 +120,22 @@ export function sendStudentHeartbeat(data: Omit<ActiveStudentPresence, 'lastPing
       tabId
     };
 
+    // 1. Local machine persistence
     const raw = localStorage.getItem(PRESENCE_STORAGE_KEY);
     const registry: Record<string, ActiveStudentPresence> = raw ? JSON.parse(raw) : {};
-
     registry[data.userId] = presenceRecord;
     localStorage.setItem(PRESENCE_STORAGE_KEY, JSON.stringify(registry));
 
-    // Broadcast live event to Admin Dashboard
+    // 2. Broadcast to local tabs
     if (presenceChannel) {
       presenceChannel.postMessage({
         type: 'STUDENT_HEARTBEAT',
         payload: presenceRecord
       });
     }
+
+    // 3. Broadcast to Global Cloud Network (enables cross-device real-time presence!)
+    broadcastCloudHeartbeat(presenceRecord).catch(() => {});
   } catch (err) {
     console.error('Failed to send presence heartbeat:', err);
   }
@@ -129,11 +149,11 @@ export function clearStudentPresence(userId: string): void {
 
   try {
     const raw = localStorage.getItem(PRESENCE_STORAGE_KEY);
-    if (!raw) return;
-
-    const registry: Record<string, ActiveStudentPresence> = JSON.parse(raw);
-    delete registry[userId];
-    localStorage.setItem(PRESENCE_STORAGE_KEY, JSON.stringify(registry));
+    if (raw) {
+      const registry: Record<string, ActiveStudentPresence> = JSON.parse(raw);
+      delete registry[userId];
+      localStorage.setItem(PRESENCE_STORAGE_KEY, JSON.stringify(registry));
+    }
 
     if (presenceChannel) {
       presenceChannel.postMessage({
@@ -141,18 +161,21 @@ export function clearStudentPresence(userId: string): void {
         userId
       });
     }
+
+    // Notify global cloud network that student left
+    broadcastCloudStudentLeft(userId);
   } catch (err) {
     console.error('Failed to clear presence:', err);
   }
 }
 
 /**
- * Subscribe to real-time presence changes across tabs
+ * Subscribe to real-time presence changes across tabs AND across all devices worldwide
  */
 export function subscribeToPresenceUpdates(callback: (activeStudents: ActiveStudentPresence[]) => void): () => void {
   if (typeof window === 'undefined') return () => {};
 
-  // BroadcastChannel listener
+  // BroadcastChannel listener (local machine)
   const handleMessage = (event: MessageEvent) => {
     if (event.data?.type === 'STUDENT_HEARTBEAT' || event.data?.type === 'STUDENT_LEFT' || event.data?.type === 'SIMULATION_UPDATE') {
       callback(getLiveActiveStudents());
@@ -171,10 +194,15 @@ export function subscribeToPresenceUpdates(callback: (activeStudents: ActiveStud
   }
   window.addEventListener('storage', handleStorage);
 
+  // Subscribe to Global Cloud Real-Time presence stream (cross-device SSE)
+  const unsubCloud = onCloudPresenceChange(() => {
+    callback(getLiveActiveStudents());
+  });
+
   // Periodic poll to ensure expiry triggers UI update even without storage event
   const interval = setInterval(() => {
     callback(getLiveActiveStudents());
-  }, 4000);
+  }, 3500);
 
   return () => {
     if (presenceChannel) {
@@ -182,6 +210,7 @@ export function subscribeToPresenceUpdates(callback: (activeStudents: ActiveStud
     }
     window.removeEventListener('storage', handleStorage);
     clearInterval(interval);
+    unsubCloud();
   };
 }
 

@@ -1,6 +1,13 @@
 import type { AssessmentResult, CountryCode, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
 import { INITIAL_STUDENT_PROFILE, loadSubjectLectures } from '../data/curriculumData';
 import { getStudentPresence } from './presenceService';
+import { 
+  syncUserAccountToCloud, 
+  syncGradeToCloud, 
+  pullCloudData, 
+  getCachedCloudUsers,
+  getCachedCloudGrades
+} from './cloudSyncService';
 
 const DB_NAME = 'TeacherAI_PlatformDB';
 const DB_VERSION = 4; // Upgraded for shared_curriculum_lectures
@@ -184,6 +191,9 @@ export async function saveGrade(
     localStorage.setItem(lsKey, JSON.stringify(existing));
   } catch { /* ignore */ }
 
+  // Synchronize to Global Cloud Database & real-time live pub/sub
+  syncGradeToCloud(record).catch(() => {});
+
   return record;
 }
 
@@ -191,19 +201,29 @@ export async function saveGrade(
  * Load all grades for a specific student
  */
 export async function loadAllGrades(userId: string): Promise<GradeRecord[]> {
+  let localGrades: GradeRecord[] = [];
   try {
     const db = await getDB();
-    return new Promise((resolve) => {
+    localGrades = await new Promise((resolve) => {
       const tx = db.transaction(GRADES_STORE, 'readonly');
       const store = tx.objectStore(GRADES_STORE);
       const idx = store.index('userId');
       const req = idx.getAll(IDBKeyRange.only(userId));
-      req.onsuccess = () => resolve((req.result as GradeRecord[]).sort((a, b) => b.timestamp - a.timestamp));
+      req.onsuccess = () => resolve((req.result as GradeRecord[]) || []);
       req.onerror = () => resolve(loadGradesFromLocalStorage(userId));
     });
   } catch {
-    return loadGradesFromLocalStorage(userId);
+    localGrades = loadGradesFromLocalStorage(userId);
   }
+
+  // Merge with Cloud Grades (e.g. if student took assessment on another device)
+  const cloudGrades = getCachedCloudGrades(userId);
+  const gradesMap = new Map<string, GradeRecord>();
+  [...localGrades, ...cloudGrades].forEach(g => {
+    if (g && g.id) gradesMap.set(g.id, g);
+  });
+
+  return Array.from(gradesMap.values()).sort((a, b) => b.timestamp - a.timestamp);
 }
 
 /**
@@ -390,6 +410,10 @@ export async function registerUserAccount(
   }
 
   localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(newUser));
+
+  // Global Multi-Device Real-Time Cloud Synchronization
+  syncUserAccountToCloud(newUser).catch((err) => console.warn('Cloud sync error on user registration:', err));
+
   return newUser;
 }
 
@@ -471,6 +495,7 @@ export async function updateUserAccount(id: string, updates: Partial<UserAccount
     });
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(updated));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(updated));
+    syncUserAccountToCloud(updated).catch(() => {});
     return updated;
   } catch {
     const users = getLocalUsers();
@@ -485,6 +510,7 @@ export async function updateUserAccount(id: string, updates: Partial<UserAccount
     }
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(updated));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(updated));
+    syncUserAccountToCloud(updated).catch(() => {});
     return updated;
   }
 }
@@ -807,7 +833,8 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
     }
   ];
 
-  [...demoSeedUsers, ...localUsers, ...dbUsers].forEach(u => {
+  const cloudUsers = getCachedCloudUsers();
+  [...demoSeedUsers, ...localUsers, ...dbUsers, ...cloudUsers].forEach(u => {
     if (u && u.id) userMap.set(u.id, u);
   });
 
@@ -816,6 +843,9 @@ export async function loadAllRegisteredUsers(): Promise<UserAccount[]> {
   if (activeUser && activeUser.id) {
     userMap.set(activeUser.id, activeUser);
   }
+
+  // Trigger background pull from cloud to ensure freshest multi-device data
+  pullCloudData().catch(() => {});
 
   return Array.from(userMap.values());
 }
