@@ -42,6 +42,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { ContactModal, FloatingContactButton } from './components/ContactModal';
 import { WelcomeOnboardingModal } from './components/WelcomeOnboardingModal';
 import { PreparatoryLandingPage } from './components/PreparatoryLandingPage';
+import { ShareModal } from './components/ShareModal';
 
 export function App() {
   // Check if returning registered student or existing learning session:
@@ -194,6 +195,7 @@ export function App() {
   const [isProgressOpen, setIsProgressOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(() => {
     const seen = localStorage.getItem('TEACHER_AI_ONBOARDING_SEEN');
     const activeUser = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
@@ -787,6 +789,7 @@ export function App() {
           onOpenAdmin={() => setIsAdminOpen(true)}
           onOpenApiKey={() => setIsApiKeyOpen(true)}
           onOpenContact={() => setIsContactOpen(true)}
+          onOpenShare={() => setIsShareOpen(true)}
           onToggleLanguage={handleToggleLanguage}
         />
       ) : (
@@ -808,6 +811,7 @@ export function App() {
             onOpenAdmin={() => setIsAdminOpen(true)}
             onOpenContact={() => setIsContactOpen(true)}
             onOpenOnboarding={() => setIsOnboardingOpen(true)}
+            onOpenShare={() => setIsShareOpen(true)}
             onReturnHome={() => setCurrentView('landing')}
           />
 
@@ -1008,6 +1012,13 @@ export function App() {
           localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
           setIsOnboardingOpen(false);
         }}
+      />
+
+      {/* Share Platform & Concise Description Modal */}
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        isEn={profile.language === 'en'}
       />
     </div>
   );

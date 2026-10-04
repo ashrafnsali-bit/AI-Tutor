@@ -20,7 +20,8 @@ import {
   ChevronDown,
   BookOpen,
   Mail,
-  Compass
+  Compass,
+  Share2
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -38,6 +39,7 @@ interface NavbarProps {
   onOpenAdmin?: () => void;
   onOpenContact?: () => void;
   onOpenOnboarding?: () => void;
+  onOpenShare?: () => void;
   onReturnHome?: () => void;
 }
 
@@ -56,6 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAdmin,
   onOpenContact,
   onOpenOnboarding,
+  onOpenShare,
   onReturnHome
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -192,6 +195,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <ShieldCheck size={15} className="admin-glow-icon" />
               <span>{isEn ? 'Admin' : 'لوحة المشرف'}</span>
+            </button>
+          )}
+
+          {/* Quick Platform Share Trigger */}
+          {onOpenShare && (
+            <button
+              type="button"
+              className="btn-header-guide-glow desktop-extra-wide-only"
+              onClick={onOpenShare}
+              title={isEn ? "Share Platform Link & Summary" : "مشاركة رابط وشرح المنصة"}
+            >
+              <Share2 size={15} className="guide-compass-icon text-cyan-400" />
+              <span>{isEn ? 'Share' : 'مشاركة'}</span>
             </button>
           )}
 
@@ -343,6 +359,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <div className="item-text">
                         <span className="item-title">{isEn ? 'Contact Us / Feedback' : 'تواصل معنا والملاحظات'}</span>
                         <span className="item-subtitle">{isEn ? 'Send email feedback' : 'مراسلتنا عبر الإيميل'}</span>
+                      </div>
+                    </button>
+                  )}
+
+                  {onOpenShare && (
+                    <button 
+                      type="button" 
+                      className="dropdown-item"
+                      onClick={() => { setIsDropdownOpen(false); onOpenShare(); }}
+                    >
+                      <Share2 size={16} className="item-icon text-cyan-400" />
+                      <div className="item-text">
+                        <span className="item-title">{isEn ? 'Share Platform Link' : 'مشاركة رابط وشرح المنصة'}</span>
+                        <span className="item-subtitle">{isEn ? 'WhatsApp, Telegram & link preview' : 'شرح المنصة ومعاينة الرابط'}</span>
                       </div>
                     </button>
                   )}
@@ -514,6 +544,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Mail size={18} className="text-cyan-400" />
                 <span>{isEn ? 'Contact Us / Feedback' : 'تواصل معنا والملاحظات'}</span>
+              </button>
+            )}
+
+            {onOpenShare && (
+              <button
+                type="button"
+                className="btn-mobile-tool"
+                onClick={() => { setIsMobileMenuOpen(false); onOpenShare(); }}
+              >
+                <Share2 size={18} className="text-cyan-400" />
+                <span>{isEn ? 'Share Platform' : 'مشاركة رابط وشرح المنصة'}</span>
               </button>
             )}
           </div>
