@@ -10,13 +10,15 @@ export interface GeminiEvaluationResponse {
 }
 
 export const GEMINI_CANDIDATE_MODELS = [
+  'gemini-3.5-flash-lite',
   'gemini-3.8-flash',
   'gemini-3.1-pro-preview',
+  'gemini-3.5-flash',
   'gemini-3.8-pro',
+  'gemini-3.0-flash',
   'gemini-2.0-flash',
   'gemini-1.5-flash',
-  'gemini-1.5-pro',
-  'gemini-2.0-flash-lite'
+  'gemini-1.5-pro'
 ];
 
 let cachedWorkingModel: string | null = null;
@@ -31,6 +33,44 @@ export interface GeminiCallPayload {
 }
 
 /**
+ * Query Google API directly for active models available to this API key
+ */
+async function getAvailableModelsFromGoogle(apiKey: string): Promise<string[]> {
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.models)) {
+        const supported = data.models
+          .filter((m: any) => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes('generateContent'))
+          .map((m: any) => m.name ? m.name.replace(/^models\//, '') : '')
+          .filter((name: string) => Boolean(name) && !name.includes('2.0-flash-lite') && !name.includes('2.5-'));
+        
+        if (supported.length > 0) {
+          return supported.sort((a: string, b: string) => {
+            const score = (m: string) => {
+              if (m.includes('3.5-flash-lite')) return 100;
+              if (m.includes('3.8-flash')) return 90;
+              if (m.includes('3.1-pro')) return 85;
+              if (m.includes('3.5-flash')) return 80;
+              if (m.includes('3.0-flash')) return 75;
+              if (m.includes('flash-lite')) return 70;
+              if (m.includes('flash')) return 60;
+              if (m.includes('pro')) return 50;
+              return 10;
+            };
+            return score(b) - score(a);
+          });
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[Gemini API] Could not dynamically fetch models list:', err);
+  }
+  return [];
+}
+
+/**
  * Universal Gemini API caller with automatic model fallback & intelligent error handling
  */
 export async function callGeminiApiWithFallback(
@@ -40,10 +80,20 @@ export async function callGeminiApiWithFallback(
   const activeKey = apiKey.trim();
   if (!activeKey) return { error: 'NO_API_KEY' };
 
+  // 1. Fetch available models from user account or fallback to candidates
+  let dynamicModels: string[] = [];
+  try {
+    dynamicModels = await getAvailableModelsFromGoogle(activeKey);
+  } catch { /* proceed */ }
+
+  const baseCandidates = dynamicModels.length > 0 
+    ? [...dynamicModels, ...GEMINI_CANDIDATE_MODELS.filter(m => !dynamicModels.includes(m))]
+    : GEMINI_CANDIDATE_MODELS;
+
   // Prioritize cached working model to avoid redundant fallback iterations
   const modelsToTry = cachedWorkingModel
-    ? [cachedWorkingModel, ...GEMINI_CANDIDATE_MODELS.filter(m => m !== cachedWorkingModel)]
-    : [...GEMINI_CANDIDATE_MODELS];
+    ? [cachedWorkingModel, ...baseCandidates.filter(m => m !== cachedWorkingModel)]
+    : baseCandidates;
 
   let lastError = '';
 
@@ -70,8 +120,37 @@ export async function callGeminiApiWithFallback(
         }
       } else {
         const errText = await response.text();
-        lastError = errText;
         console.warn(`[Gemini API] Model ${modelName} returned ${response.status}:`, errText);
+
+        // Immediate retry without responseMimeType if model doesn't support structured JSON config
+        if (response.status === 400 && payload.generationConfig?.responseMimeType) {
+          try {
+            const retryPayload = {
+              ...payload,
+              generationConfig: {
+                ...payload.generationConfig,
+                responseMimeType: undefined
+              }
+            };
+            const retryRes = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(retryPayload)
+            });
+            if (retryRes.ok) {
+              const retryData = await retryRes.json();
+              const candidate = retryData.candidates?.[0];
+              const text = candidate?.content?.parts?.[0]?.text;
+              if (text && text.trim().length > 0) {
+                cachedWorkingModel = modelName;
+                console.log(`[Gemini API] Successfully generated on retry without responseMimeType with: ${modelName}`);
+                return { text, modelUsed: modelName };
+              }
+            }
+          } catch { /* proceed */ }
+        }
+
+        lastError = errText;
       }
     } catch (e) {
       lastError = e instanceof Error ? e.message : 'Network error';
@@ -88,7 +167,7 @@ export async function callGeminiApiWithFallback(
         responseMimeType: undefined
       }
     };
-    for (const modelName of ['gemini-3.8-flash', 'gemini-3.1-pro-preview', 'gemini-2.0-flash', 'gemini-1.5-flash']) {
+    for (const modelName of ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-3.1-pro-preview', 'gemini-2.0-flash', 'gemini-1.5-flash']) {
       try {
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
         const response = await fetch(endpoint, {
