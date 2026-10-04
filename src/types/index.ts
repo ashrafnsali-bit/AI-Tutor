@@ -301,6 +301,8 @@ export interface Lecture {
 
   // Official National Curriculum Metadata
   country?: CountryCode;
+  subject?: Subject;
+  gradeLevel?: GradeLevel;
   ministryAr?: string;
   ministryEn?: string;
   gradeLevelNameAr?: string;

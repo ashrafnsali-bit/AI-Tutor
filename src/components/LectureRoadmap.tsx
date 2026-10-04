@@ -2,7 +2,7 @@ import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
-import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock } from 'lucide-react';
+import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock, Globe } from 'lucide-react';
 
 interface LectureRoadmapProps {
   lectures: Lecture[];
@@ -144,6 +144,13 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
                       <Clock size={11} style={{ marginInlineEnd: '4px' }} />
                       {lecture.durationMinutes} {t.minutesUnit}
                     </span>
+
+                    {(lecture.id.startsWith('gen-') || lecture.id.startsWith('ai-gen-') || (lecture as any).isSharedCommunity) && (
+                      <span className="meta-pill" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#059669', border: '1px solid rgba(16, 185, 129, 0.3)' }} title={isEn ? "Shared Community Lesson accessible to all visitors" : "درس سحابي مشترك متاح لجميع زوار المنصة"}>
+                        <Globe size={11} style={{ marginInlineEnd: '4px' }} />
+                        {isEn ? "Community" : "سحابي مشترك"}
+                      </span>
+                    )}
                     
                     {isLocked ? (
                       <span className="meta-pill locked-gate-pill">

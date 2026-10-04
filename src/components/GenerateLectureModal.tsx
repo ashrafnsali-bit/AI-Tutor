@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import type { Language, Lecture, StudentProfile } from "../types";
 import { generateCurriculumLecture } from "../services/geminiService";
 import { getCountryInfo } from "../data/curriculumCountries";
@@ -263,14 +263,22 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
               <CheckCircle2 size={16} />
               <p>
                 {isEn
-                  ? "Lecture generated successfully! Adding to your roadmap..."
-                  : "تم توليد المحاضرة بنجاح! جاري إضافتها إلى خريطة التعلم..."}
+                  ? "Lecture generated & published globally for all visitors! Adding to your roadmap..."
+                  : "تم توليد المحاضرة ونشرها سحابياً لجميع الزوار والطلاب بنجاح! جاري إضافتها إلى خريطة المنهج..."}
               </p>
             </div>
           )}
 
           {!isGenerating && !success && (
             <div className="gen-what-included">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', padding: '8px 12px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.25)', fontSize: '0.82rem', color: '#059669', fontWeight: 600 }}>
+                <Globe size={16} />
+                <span>
+                  {isEn
+                    ? "Global Cloud Sync: Once generated, this lecture is permanently saved to the site for all visitors worldwide."
+                    : "مزامنة سحابية فورية: فور التوليد، يتم حفظ المحاضرة بالموقع وتصبح متاحة فوراً لجميع الزوار حول العالم."}
+                </span>
+              </div>
               <p className="gen-what-title">
                 {isEn ? "Generated lecture includes:" : "المحاضرة المُولَّدة تشمل:"}
               </p>

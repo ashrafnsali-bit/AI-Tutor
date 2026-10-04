@@ -4640,12 +4640,42 @@ export function loadSubjectLectures(
   // Retrieve any community / AI-generated shared lectures for this subject, country, and educationType
   const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || ''}`;
   const generalKey = `TEACHER_AI_SHARED_LECS_${educationType}_${subject}_${gradeLevel || ''}`;
+  const countryKeySimple = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel || ''}`;
+  const generalKeySimple = `TEACHER_AI_SHARED_LECS_${subject}`;
+  const cloudKey = 'TEACHER_AI_CLOUD_SHARED_LECTURES';
+
   let sharedLecs: Lecture[] = [];
   try {
-    const list1 = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem(countryKey) || '[]') as Lecture[] : [];
-    const list2 = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem(generalKey) || '[]') as Lecture[] : [];
+    const rawKeys = [
+      countryKey,
+      generalKey,
+      countryKeySimple,
+      generalKeySimple,
+      cloudKey
+    ];
     const map = new Map<string, Lecture>();
-    [...list1, ...list2].forEach(l => { if (l && l.id) map.set(l.id, l); });
+    rawKeys.forEach(k => {
+      if (typeof localStorage === 'undefined') return;
+      try {
+        const raw = localStorage.getItem(k);
+        if (raw) {
+          const list = JSON.parse(raw) as Lecture[];
+          if (Array.isArray(list)) {
+            list.forEach(l => {
+              if (!l || !l.id) return;
+              // Check country match
+              if (l.country && country && l.country !== country) return;
+              // Check subject match
+              if (l.subject && l.subject !== subject) return;
+              if (!l.subject && !l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')) && !l.id.startsWith('gen-') && !l.id.startsWith('ai-gen-')) return;
+              // Check gradeLevel match if specified on lecture
+              if (gradeLevel && l.gradeLevel && l.gradeLevel !== gradeLevel) return;
+              map.set(l.id, l);
+            });
+          }
+        }
+      } catch { /* ignore individual key parse */ }
+    });
     sharedLecs = Array.from(map.values());
   } catch {
     sharedLecs = [];
@@ -4666,6 +4696,7 @@ export function loadSubjectLectures(
     if (!combined.some(c => c.id === sh.id)) {
       combined.push({
         ...sh,
+        isLocked: false,
         order: combined.length + 1
       });
     }
@@ -4687,7 +4718,7 @@ export function loadSubjectLectures(
             if (found) {
               return {
                 ...freshLec,
-                isLocked: found.isLocked,
+                isLocked: freshLec.isLocked !== undefined ? freshLec.isLocked : found.isLocked,
                 isCompleted: found.isCompleted,
                 lastAttempt: found.lastAttempt
               };
@@ -4697,8 +4728,11 @@ export function loadSubjectLectures(
 
           // Also preserve any newly AI-generated lectures saved in user session
           parsed.forEach(p => {
-            if (p.id && p.id.startsWith('ai-gen-') && !result.some(r => r.id === p.id)) {
-              result.push(p);
+            if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity) && !result.some(r => r.id === p.id)) {
+              result.push({
+                ...p,
+                isLocked: false
+              });
             }
           });
 

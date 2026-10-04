@@ -6,7 +6,9 @@ import {
   syncGradeToCloud, 
   pullCloudData, 
   getCachedCloudUsers,
-  getCachedCloudGrades
+  getCachedCloudGrades,
+  syncSharedLectureToCloud,
+  getCachedCloudLectures
 } from './cloudSyncService';
 
 const DB_NAME = 'TeacherAI_PlatformDB';
@@ -564,6 +566,8 @@ export async function saveSharedCurriculumLecture(
   const record: Lecture & { isSharedCommunity: boolean; savedAt: number } = {
     ...lecture,
     country,
+    subject,
+    gradeLevel,
     isSharedCommunity: true,
     savedAt: Date.now()
   };
@@ -579,11 +583,17 @@ export async function saveSharedCurriculumLecture(
     });
   } catch { /* ignore */ }
 
-  // 2. Synchronize to LocalStorage shared arrays
-  const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`;
-  const generalKey = `TEACHER_AI_SHARED_LECS_${subject}`;
+  // 2. Synchronize to LocalStorage shared arrays across all compatible key patterns
+  const keys = [
+    `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_${subject}`,
+    `TEACHER_AI_SHARED_LECS_${country}_PUBLIC_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_PUBLIC_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_${country}_PUBLIC_${subject}_`,
+    `TEACHER_AI_SHARED_LECS_PUBLIC_${subject}_`
+  ];
 
-  [countryKey, generalKey].forEach(k => {
+  keys.forEach(k => {
     try {
       const list = JSON.parse(localStorage.getItem(k) || '[]') as Lecture[];
       const idx = list.findIndex(item => item.id === lecture.id);
@@ -595,6 +605,13 @@ export async function saveSharedCurriculumLecture(
       localStorage.setItem(k, JSON.stringify(list));
     } catch { /* ignore */ }
   });
+
+  // 3. Broadcast to Global Real-Time Cloud Network so ALL visitors & students globally see the lecture
+  try {
+    await syncSharedLectureToCloud(record);
+  } catch (err) {
+    console.warn('[Database] Could not sync lecture to cloud:', err);
+  }
 }
 
 /**
@@ -618,7 +635,7 @@ export async function loadSharedCurriculumLectures(
         const all = (req.result as Lecture[]) || [];
         const filtered = all.filter(l => 
           (!l.country || l.country === country) &&
-          l.id.toLowerCase().includes(subject.toLowerCase().replace('_', ''))
+          (!l.subject || l.subject === subject || l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')))
         );
         resolve(filtered);
       };
@@ -629,13 +646,26 @@ export async function loadSharedCurriculumLectures(
   }
 
   // Fallback / merge with localStorage
-  const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`;
-  const generalKey = `TEACHER_AI_SHARED_LECS_${subject}`;
-  const local1 = JSON.parse(localStorage.getItem(countryKey) || '[]') as Lecture[];
-  const local2 = JSON.parse(localStorage.getItem(generalKey) || '[]') as Lecture[];
+  const keys = [
+    `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_${subject}`,
+    `TEACHER_AI_SHARED_LECS_${country}_PUBLIC_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_PUBLIC_${subject}_${gradeLevel}`
+  ];
+
+  const localLectures: Lecture[] = [];
+  keys.forEach(k => {
+    try {
+      const list = JSON.parse(localStorage.getItem(k) || '[]') as Lecture[];
+      localLectures.push(...list);
+    } catch { /* ignore */ }
+  });
+
+  // Pull globally synchronized lectures from cloud cache
+  const cloudLectures = getCachedCloudLectures(subject, country, gradeLevel);
 
   const combinedMap = new Map<string, Lecture>();
-  [...dbLectures, ...local1, ...local2].forEach(l => {
+  [...dbLectures, ...localLectures, ...cloudLectures].forEach(l => {
     if (l && l.id) combinedMap.set(l.id, l);
   });
 

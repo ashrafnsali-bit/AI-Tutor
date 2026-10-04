@@ -11,7 +11,7 @@
  * 4. Automatic Heartbeat Pruning & State Transitions
  */
 
-import type { UserAccount } from '../types';
+import type { UserAccount, Lecture, Subject } from '../types';
 import type { GradeRecord } from './database';
 import type { ActiveStudentPresence } from './presenceService';
 
@@ -25,6 +25,7 @@ const CLOUD_USERS_HISTORY_URL = `https://ntfy.sh/${TOPIC_USERS}/json?poll=1&sinc
 
 const CLOUD_STUDENTS_CACHE_KEY = 'TEACHER_AI_CLOUD_STUDENTS_CACHE';
 const CLOUD_GRADES_CACHE_KEY = 'TEACHER_AI_CLOUD_GRADES_CACHE';
+const CLOUD_LECTURES_CACHE_KEY = 'TEACHER_AI_CLOUD_SHARED_LECTURES';
 const CLOUD_PRESENCE_CACHE_KEY = 'TEACHER_AI_CLOUD_PRESENCE_REGISTRY';
 const HEARTBEAT_EXPIRY_MS = 25000; // 25 seconds timeout for live presence
 
@@ -32,12 +33,14 @@ export type CloudSyncEvent =
   | { type: 'HEARTBEAT'; payload: ActiveStudentPresence }
   | { type: 'STUDENT_LEFT'; userId: string }
   | { type: 'USER_REGISTERED'; payload: UserAccount }
-  | { type: 'GRADE_SAVED'; payload: GradeRecord };
+  | { type: 'GRADE_SAVED'; payload: GradeRecord }
+  | { type: 'LECTURE_GENERATED'; payload: Lecture };
 
 // In-memory active presence registry from all cloud nodes
 const cloudPresenceRegistry: Record<string, ActiveStudentPresence> = {};
 const presenceListeners: Array<(active: ActiveStudentPresence[]) => void> = [];
 const userRegisteredListeners: Array<(user: UserAccount) => void> = [];
+const lectureGeneratedListeners: Array<(lecture: Lecture) => void> = [];
 
 let sseConnection: EventSource | null = null;
 let isInitialized = false;
@@ -159,6 +162,16 @@ function handleCloudEvent(event: CloudSyncEvent): void {
     case 'GRADE_SAVED': {
       if (event.payload && event.payload.id) {
         cacheCloudGrade(event.payload);
+      }
+      break;
+    }
+
+    case 'LECTURE_GENERATED': {
+      if (event.payload && event.payload.id) {
+        cacheCloudLecture(event.payload);
+        lectureGeneratedListeners.forEach(fn => {
+          try { fn(event.payload); } catch (e) { console.error(e); }
+        });
       }
       break;
     }
@@ -345,6 +358,8 @@ export async function pullCloudData(): Promise<UserAccount[]> {
               cacheCloudUser(event.payload);
             } else if (event.type === 'GRADE_SAVED' && event.payload) {
               cacheCloudGrade(event.payload);
+            } else if (event.type === 'LECTURE_GENERATED' && event.payload) {
+              cacheCloudLecture(event.payload);
             }
           }
         } catch {
@@ -431,3 +446,67 @@ export function onCloudUserRegistered(callback: (user: UserAccount) => void): ()
     if (idx >= 0) userRegisteredListeners.splice(idx, 1);
   };
 }
+
+/**
+ * Broadcast newly AI-generated lecture to the entire cloud so all visitors can immediately access it
+ */
+export async function syncSharedLectureToCloud(lecture: Lecture): Promise<void> {
+  if (!lecture || !lecture.id) return;
+
+  // 1. Cache locally first
+  cacheCloudLecture(lecture);
+
+  // 2. Broadcast live event to all connected visitors and students across the internet
+  try {
+    await fetch(CLOUD_USERS_POST_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'LECTURE_GENERATED',
+        payload: lecture
+      } as CloudSyncEvent)
+    });
+    console.log(`[CloudSync] Broadcasted new shared lecture: ${lecture.titleAr || lecture.id}`);
+  } catch (err) {
+    console.warn('Realtime cloud lecture sync warning:', err);
+  }
+}
+
+export function cacheCloudLecture(lecture: Lecture): void {
+  try {
+    const list = getCachedCloudLectures();
+    const idx = list.findIndex(l => l.id === lecture.id);
+    if (idx >= 0) {
+      list[idx] = { ...list[idx], ...lecture };
+    } else {
+      list.push(lecture);
+    }
+    localStorage.setItem(CLOUD_LECTURES_CACHE_KEY, JSON.stringify(list));
+  } catch { /* ignore */ }
+}
+
+export function getCachedCloudLectures(subject?: Subject, country?: string, gradeLevel?: string): Lecture[] {
+  try {
+    const raw = localStorage.getItem(CLOUD_LECTURES_CACHE_KEY);
+    const list: Lecture[] = raw ? JSON.parse(raw) : [];
+    if (!subject && !country && !gradeLevel) return list;
+    return list.filter(l => {
+      if (country && l.country && l.country !== country) return false;
+      if (subject && l.id && !l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')) && !l.id.startsWith('gen-') && !l.id.startsWith('ai-gen-')) {
+        return false;
+      }
+      return true;
+    });
+  } catch {
+    return [];
+  }
+}
+
+export function onCloudLectureGenerated(callback: (lecture: Lecture) => void): () => void {
+  initCloudSync();
+  lectureGeneratedListeners.push(callback);
+  return () => {
+    const idx = lectureGeneratedListeners.indexOf(callback);
+    if (idx >= 0) lectureGeneratedListeners.splice(idx, 1);
+  };
+}
+
