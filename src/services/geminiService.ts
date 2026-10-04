@@ -10,12 +10,13 @@ export interface GeminiEvaluationResponse {
 }
 
 export const GEMINI_CANDIDATE_MODELS = [
+  'gemini-3.8-flash',
   'gemini-3.1-pro-preview',
+  'gemini-3.8-pro',
   'gemini-2.0-flash',
   'gemini-1.5-flash',
   'gemini-1.5-pro',
-  'gemini-2.0-flash-lite',
-  'gemini-2.5-flash'
+  'gemini-2.0-flash-lite'
 ];
 
 let cachedWorkingModel: string | null = null;
@@ -87,7 +88,7 @@ export async function callGeminiApiWithFallback(
         responseMimeType: undefined
       }
     };
-    for (const modelName of ['gemini-3.1-pro-preview', 'gemini-2.0-flash', 'gemini-1.5-flash']) {
+    for (const modelName of ['gemini-3.8-flash', 'gemini-3.1-pro-preview', 'gemini-2.0-flash', 'gemini-1.5-flash']) {
       try {
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
         const response = await fetch(endpoint, {
