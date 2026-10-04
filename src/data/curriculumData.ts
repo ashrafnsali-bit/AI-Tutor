@@ -4665,6 +4665,8 @@ export function loadSubjectLectures(
               if (!l || !l.id) return;
               // Check country match
               if (l.country && country && l.country !== country) return;
+              // Check educationType match
+              if (l.educationType && educationType && l.educationType !== educationType) return;
               // Check subject match
               if (l.subject && l.subject !== subject) return;
               if (!l.subject && !l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')) && !l.id.startsWith('gen-') && !l.id.startsWith('ai-gen-')) return;
@@ -4692,13 +4694,16 @@ export function loadSubjectLectures(
     lang
   );
 
+  // Append community / shared lectures without duplicating existing topics
   sharedLecs.forEach(sh => {
-    if (!combined.some(c => c.id === sh.id)) {
-      combined.push({
-        ...sh,
-        isLocked: false,
-        order: combined.length + 1
-      });
+    const shTitleClean = (sh.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+    const alreadyExists = combined.some(c => {
+      if (c.id === sh.id) return true;
+      const cTitleClean = (c.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      return cTitleClean && shTitleClean && cTitleClean === shTitleClean;
+    });
+    if (!alreadyExists) {
+      combined.push(sh);
     }
   });
 
@@ -4706,6 +4711,8 @@ export function loadSubjectLectures(
     ? `TEACHER_AI_LECTURES_${country}_${educationType}_${subject}_${gradeLevel}` 
     : `TEACHER_AI_LECTURES_${country}_${educationType}_${subject}`;
   const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
+  
+  let rawList = combined;
   if (saved) {
     try {
       const parsed = JSON.parse(saved) as Lecture[];
@@ -4713,13 +4720,12 @@ export function loadSubjectLectures(
         // Validate that cached lectures match current curriculum IDs to prevent cross-country/cross-type cache bleeding
         const hasMatchingCurriculum = combined.some(freshLec => parsed.some(p => p.id === freshLec.id));
         if (hasMatchingCurriculum) {
-          const result = combined.map((freshLec) => {
+          rawList = combined.map((freshLec) => {
             const found = parsed.find((p) => p.id === freshLec.id);
             if (found) {
               return {
                 ...freshLec,
-                isLocked: freshLec.isLocked !== undefined ? freshLec.isLocked : found.isLocked,
-                isCompleted: found.isCompleted,
+                isCompleted: !!found.isCompleted,
                 lastAttempt: found.lastAttempt
               };
             }
@@ -4728,22 +4734,66 @@ export function loadSubjectLectures(
 
           // Also preserve any newly AI-generated lectures saved in user session
           parsed.forEach(p => {
-            if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity) && !result.some(r => r.id === p.id)) {
-              result.push({
-                ...p,
-                isLocked: false
-              });
+            if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
+              const pClean = (p.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+              const exists = rawList.some(r => r.id === p.id || (pClean && (r.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim() === pClean));
+              if (!exists) {
+                rawList.push(p);
+              }
             }
           });
-
-          return result.map(ensureFourExamplesForLecture);
         }
       }
     } catch (e) {
       console.error(e);
     }
   }
-  return combined.map(ensureFourExamplesForLecture);
+
+  // Strictly enforce Dynamic Sequential Numbering, Clean Titles, and Strict Sequential Locking:
+  // - Lecture 0 is unlocked.
+  // - Any subsequent lecture is locked unless its immediately preceding lecture is completed!
+  const formattedList: Lecture[] = [];
+  for (let i = 0; i < rawList.length; i++) {
+    const lec = rawList[i];
+    const order = i + 1;
+    let titleAr = lec.titleAr || '';
+    let titleEn = lec.titleEn || '';
+
+    // If this is an AI/community lecture, dynamically guarantee its title numbering matches its current sequential order
+    if (lec.id.startsWith('gen-') || lec.id.startsWith('ai-gen-') || (lec as any).isSharedCommunity) {
+      const cleanAr = titleAr.replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      if (cleanAr) {
+        titleAr = `المحاضرة ${order}: ${cleanAr}`;
+      }
+      const cleanEn = titleEn.replace(/^(Lecture|Lesson)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      if (cleanEn) {
+        titleEn = `Lecture ${order}: ${cleanEn}`;
+      }
+    }
+
+    const isFirst = i === 0;
+    const prevLec = i > 0 ? formattedList[i - 1] : null;
+    const isUnlocked = isFirst || !!(prevLec && prevLec.isCompleted);
+
+    formattedList.push({
+      ...lec,
+      order,
+      titleAr,
+      titleEn,
+      lessonNumberAr: `الدرس ${order}`,
+      lessonNumberEn: `Lesson ${order}`,
+      country: (lec.country || country) as any,
+      subject: (lec.subject || subject) as any,
+      gradeLevel: (lec.gradeLevel || gradeLevel) as any,
+      educationType: (lec.educationType || educationType) as any,
+      prerequisiteLectureId: prevLec?.id,
+      prerequisiteTitleAr: prevLec?.titleAr,
+      prerequisiteTitleEn: prevLec?.titleEn,
+      isLocked: !isUnlocked
+    });
+  }
+
+  return formattedList.map(ensureFourExamplesForLecture);
 }
 
 export function saveSubjectLectures(

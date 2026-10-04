@@ -212,19 +212,37 @@ export function App() {
     const unsub = onCloudLectureGenerated((cloudLec) => {
       if (!cloudLec || !cloudLec.id) return;
       const matchesCountry = !cloudLec.country || cloudLec.country === profile.country;
-      const matchesSubject = !cloudLec.subject || cloudLec.subject === profile.subject || cloudLec.id.toLowerCase().includes(profile.subject.toLowerCase().replace('_', '')) || cloudLec.id.startsWith('gen-') || cloudLec.id.startsWith('ai-gen-');
+      const matchesEducationType = !cloudLec.educationType || cloudLec.educationType === (profile.educationType || 'PUBLIC');
       const matchesGrade = !cloudLec.gradeLevel || !profile.gradeLevel || cloudLec.gradeLevel === profile.gradeLevel;
+      const matchesSubject = !cloudLec.subject || cloudLec.subject === profile.subject || cloudLec.id.toLowerCase().includes(profile.subject.toLowerCase().replace('_', ''));
 
-      if (matchesCountry && matchesSubject && matchesGrade) {
+      if (matchesCountry && matchesEducationType && matchesGrade && matchesSubject) {
         setLectures((prev) => {
           if (prev.some(l => l.id === cloudLec.id)) return prev;
+          const nextOrder = prev.length + 1;
+          const lastLec = prev[prev.length - 1];
+          const isPrecedingCompleted = lastLec ? !!lastLec.isCompleted : true;
+
+          const cleanTitleAr = (cloudLec.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+          const cleanTitleEn = (cloudLec.titleEn || '').replace(/^(Lecture|Lesson)\s*\d+\s*[:\-–]\s*/i, '').trim();
+
           const formatted: Lecture = {
             ...cloudLec,
             country: profile.country,
             subject: profile.subject,
             gradeLevel: profile.gradeLevel,
-            isLocked: false,
-            order: prev.length + 1
+            educationType: profile.educationType || 'PUBLIC',
+            educationTrack: profile.educationTrack || 'GENERAL',
+            order: nextOrder,
+            titleAr: cleanTitleAr ? `المحاضرة ${nextOrder}: ${cleanTitleAr}` : `المحاضرة ${nextOrder}: درس جديد`,
+            titleEn: cleanTitleEn ? `Lecture ${nextOrder}: ${cleanTitleEn}` : `Lecture ${nextOrder}: New Lesson`,
+            lessonNumberAr: `الدرس ${nextOrder}`,
+            lessonNumberEn: `Lesson ${nextOrder}`,
+            prerequisiteLectureId: lastLec?.id,
+            prerequisiteTitleAr: lastLec?.titleAr,
+            prerequisiteTitleEn: lastLec?.titleEn,
+            isCompleted: false,
+            isLocked: !isPrecedingCompleted
           };
           return [...prev, formatted];
         });
@@ -232,7 +250,7 @@ export function App() {
     });
 
     return () => unsub();
-  }, [profile.country, profile.subject, profile.gradeLevel]);
+  }, [profile.country, profile.educationType, profile.subject, profile.gradeLevel]);
 
   // Dynamic Geolocation Detection on startup (unless user manually chose their country)
   useEffect(() => {
@@ -612,25 +630,56 @@ export function App() {
 
   // Handle a newly AI-generated curriculum lecture added to roadmap
   const handleLectureGenerated = (newLecture: Lecture) => {
-    const formattedLec: Lecture = {
-      ...newLecture,
-      country: profile.country,
-      subject: profile.subject,
-      gradeLevel: profile.gradeLevel,
-      isLocked: false,
-      order: lectures.length + 1
-    };
-
     setLectures((prev) => {
-      // Ensure the new lecture is unlocked and appended at the end
-      if (prev.some(l => l.id === formattedLec.id)) return prev;
-      return [...prev, formattedLec];
-    });
-    setSelectedLectureId(formattedLec.id);
+      const nextOrder = prev.length + 1;
+      const lastLec = prev[prev.length - 1];
+      const isPrecedingCompleted = lastLec ? !!lastLec.isCompleted : true;
 
-    // Persist in shared community curriculum store so all visitors and students in the same country/subject/grade benefit
-    saveSharedCurriculumLecture(formattedLec, profile.country, profile.subject, profile.gradeLevel).catch((err) => {
-      console.warn('Could not save to shared curriculum store:', err);
+      const cleanTitleAr = (newLecture.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      const finalTitleAr = cleanTitleAr ? `المحاضرة ${nextOrder}: ${cleanTitleAr}` : `المحاضرة ${nextOrder}: درس جديد`;
+
+      const cleanTitleEn = (newLecture.titleEn || '').replace(/^(Lecture|Lesson)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      const finalTitleEn = cleanTitleEn ? `Lecture ${nextOrder}: ${cleanTitleEn}` : `Lecture ${nextOrder}: New Lesson`;
+
+      const formattedLec: Lecture = {
+        ...newLecture,
+        country: profile.country,
+        subject: profile.subject,
+        gradeLevel: profile.gradeLevel,
+        educationType: profile.educationType || 'PUBLIC',
+        educationTrack: profile.educationTrack || 'GENERAL',
+        order: nextOrder,
+        titleAr: finalTitleAr,
+        titleEn: finalTitleEn,
+        lessonNumberAr: `الدرس ${nextOrder}`,
+        lessonNumberEn: `Lesson ${nextOrder}`,
+        prerequisiteLectureId: lastLec?.id,
+        prerequisiteTitleAr: lastLec?.titleAr,
+        prerequisiteTitleEn: lastLec?.titleEn,
+        isCompleted: false,
+        isLocked: !isPrecedingCompleted
+      };
+
+      if (prev.some(l => l.id === formattedLec.id)) return prev;
+      const updated = [...prev, formattedLec];
+
+      // Persist in shared community curriculum store with country and educationType matching
+      saveSharedCurriculumLecture(
+        formattedLec, 
+        profile.country, 
+        profile.subject, 
+        profile.gradeLevel,
+        profile.educationType || 'PUBLIC'
+      ).catch((err) => {
+        console.warn('Could not save to shared curriculum store:', err);
+      });
+
+      // If unlocked, select it; otherwise remain on current lecture
+      if (!formattedLec.isLocked) {
+        setSelectedLectureId(formattedLec.id);
+      }
+
+      return updated;
     });
   };
 

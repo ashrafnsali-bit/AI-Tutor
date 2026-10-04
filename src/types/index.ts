@@ -303,6 +303,8 @@ export interface Lecture {
   country?: CountryCode;
   subject?: Subject;
   gradeLevel?: GradeLevel;
+  educationType?: EducationType;
+  educationTrack?: EducationTrack;
   ministryAr?: string;
   ministryEn?: string;
   gradeLevelNameAr?: string;

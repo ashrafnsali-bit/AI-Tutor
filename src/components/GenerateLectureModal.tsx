@@ -177,6 +177,19 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
             </div>
             <div className="gen-profile-row">
               <BookMarked size={15} className="gen-profile-icon" />
+              <span className="gen-profile-label">{isEn ? "Education:" : "نوع التعليم:"}</span>
+              <span className="gen-profile-value">
+                {profile.educationType === 'ISLAMIC'
+                  ? (isEn ? 'Islamic / Religious Education' : 'التعليم الديني / الأزهري')
+                  : profile.educationType === 'PRIVATE'
+                  ? (isEn ? 'Private / Model Schools' : 'التعليم الخاص والنموذجي')
+                  : profile.educationType === 'INTERNATIONAL'
+                  ? (isEn ? 'International Curriculum' : 'التعليم الدولي')
+                  : (isEn ? 'General / Public Education' : 'التعليم العام (الحكومي)')}
+              </span>
+            </div>
+            <div className="gen-profile-row">
+              <BookMarked size={15} className="gen-profile-icon" />
               <span className="gen-profile-label">{isEn ? "Curriculum:" : "المنهج:"}</span>
               <span className="gen-profile-value gen-profile-ministry">
                 {isEn ? countryInfo.systemNameEn : countryInfo.systemNameAr}
@@ -188,8 +201,8 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
             <Sparkles size={14} />
             <span>
               {isEn
-                ? `Will generate Lecture #${nextLectureNumber} in sequence`
-                : `سيتم توليد الدرس رقم ${nextLectureNumber} في التسلسل`}
+                ? `Will generate Lecture #${nextLectureNumber} (sequential lock: unlocks after mastering Lecture #${nextLectureNumber - 1})`
+                : `سيتم توليد المحاضرة رقم ${nextLectureNumber} بالتسلسل (تُفتح تلقائياً بعد إتقان المحاضرة رقم ${nextLectureNumber - 1})`}
             </span>
           </div>
 

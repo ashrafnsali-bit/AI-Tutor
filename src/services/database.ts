@@ -1,4 +1,4 @@
-import type { AssessmentResult, CountryCode, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
+import type { AssessmentResult, CountryCode, EducationType, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
 import { INITIAL_STUDENT_PROFILE, loadSubjectLectures } from '../data/curriculumData';
 import { getStudentPresence } from './presenceService';
 import { 
@@ -561,13 +561,15 @@ export async function saveSharedCurriculumLecture(
   lecture: Lecture,
   country: CountryCode = 'SA',
   subject: Subject = 'MATH',
-  gradeLevel: GradeLevel = 'G12'
+  gradeLevel: GradeLevel = 'G12',
+  educationType: EducationType = 'PUBLIC'
 ): Promise<void> {
   const record: Lecture & { isSharedCommunity: boolean; savedAt: number } = {
     ...lecture,
     country,
     subject,
     gradeLevel,
+    educationType,
     isSharedCommunity: true,
     savedAt: Date.now()
   };
@@ -585,12 +587,10 @@ export async function saveSharedCurriculumLecture(
 
   // 2. Synchronize to LocalStorage shared arrays across all compatible key patterns
   const keys = [
+    `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}`,
     `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${subject}`,
-    `TEACHER_AI_SHARED_LECS_${country}_PUBLIC_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_PUBLIC_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${country}_PUBLIC_${subject}_`,
-    `TEACHER_AI_SHARED_LECS_PUBLIC_${subject}_`
+    `TEACHER_AI_SHARED_LECS_${educationType}_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_${subject}`
   ];
 
   keys.forEach(k => {
@@ -615,12 +615,13 @@ export async function saveSharedCurriculumLecture(
 }
 
 /**
- * Loads all shared public/generated lectures for a given country, subject, and grade.
+ * Loads all shared public/generated lectures for a given country, subject, grade, and educationType.
  */
 export async function loadSharedCurriculumLectures(
   country: CountryCode = 'SA',
   subject: Subject = 'MATH',
-  gradeLevel: GradeLevel = 'G12'
+  gradeLevel: GradeLevel = 'G12',
+  educationType: EducationType = 'PUBLIC'
 ): Promise<Lecture[]> {
   let dbLectures: Lecture[] = [];
 
@@ -635,6 +636,8 @@ export async function loadSharedCurriculumLectures(
         const all = (req.result as Lecture[]) || [];
         const filtered = all.filter(l => 
           (!l.country || l.country === country) &&
+          (!l.educationType || l.educationType === educationType) &&
+          (!l.gradeLevel || l.gradeLevel === gradeLevel) &&
           (!l.subject || l.subject === subject || l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')))
         );
         resolve(filtered);
@@ -647,10 +650,10 @@ export async function loadSharedCurriculumLectures(
 
   // Fallback / merge with localStorage
   const keys = [
+    `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}`,
     `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${subject}`,
-    `TEACHER_AI_SHARED_LECS_${country}_PUBLIC_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_PUBLIC_${subject}_${gradeLevel}`
+    `TEACHER_AI_SHARED_LECS_${educationType}_${subject}_${gradeLevel}`,
+    `TEACHER_AI_SHARED_LECS_${subject}`
   ];
 
   const localLectures: Lecture[] = [];
@@ -666,7 +669,12 @@ export async function loadSharedCurriculumLectures(
 
   const combinedMap = new Map<string, Lecture>();
   [...dbLectures, ...localLectures, ...cloudLectures].forEach(l => {
-    if (l && l.id) combinedMap.set(l.id, l);
+    if (l && l.id) {
+      if (l.country && country && l.country !== country) return;
+      if (l.educationType && educationType && l.educationType !== educationType) return;
+      if (l.gradeLevel && gradeLevel && l.gradeLevel !== gradeLevel) return;
+      combinedMap.set(l.id, l);
+    }
   });
 
   return Array.from(combinedMap.values());

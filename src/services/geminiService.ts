@@ -545,23 +545,26 @@ export async function generateCurriculumLecture(
   const prompt = `You are a Senior National Curriculum Author, Pedagogical Expert, and Textbook Lead for ${cInfo.nameAr} (${cInfo.ministryAr}).
 Generate an authentic, high-caliber, comprehensive academic lesson strictly aligned with national standards for:
 - Country & Standard: ${cInfo.nameAr} (${cInfo.systemNameAr}) [Country Code: ${profile.country}]
+- Ministry / Authority: ${cInfo.ministryAr}
+- Education Type: ${profile.educationType || 'PUBLIC'} (${profile.educationType === 'ISLAMIC' ? 'التعليم الديني / الأزهري' : profile.educationType === 'INTERNATIONAL' ? 'التعليم الدولي' : profile.educationType === 'PRIVATE' ? 'التعليم الخاص والنموذجي' : 'التعليم العام / الحكومي'})
 - Grade Level: ${profile.gradeLevel}
-- Educational Track / Specialization: ${profile.educationTrack || profile.specialization}
+- Educational Track / Specialization: ${profile.educationTrack || profile.specialization || 'GENERAL'}
 - Subject: ${profile.subject}
-- Sequence Order / Lecture Number: ${lectureNumber}
+- Sequence Order / Dynamic Lecture Number: ${lectureNumber} (This MUST be titled Lecture ${lectureNumber} / المحاضرة ${lectureNumber})
 ${unitTitle ? `- Unit: ${unitTitle}` : ''}
 ${lessonTopic ? `- Focus Topic: ${lessonTopic}` : ''}
-${existingTitles.length > 0 ? `- Already covered topics (DO NOT duplicate): ${existingTitles.join(' | ')}` : ''}
+${existingTitles.length > 0 ? `- Already covered topics in this curriculum (DO NOT duplicate): ${existingTitles.join(' | ')}` : ''}
 
 CRITICAL RULES:
-1. Adhere strictly to the official educational guidelines, scientific terms, and symbols of ${cInfo.nameAr}.
-2. The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
-3. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
-4. Focus and conciseness: Keep each section explanation focused, direct, and impactful (approx. 100-150 words per section) so all 4 sections, worked examples, textbook exercises, and assessments generate completely without truncating.
-5. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
+1. Adhere strictly to the official educational guidelines, textbook terminology, and symbols of ${cInfo.nameAr} for Grade ${profile.gradeLevel} and Education Type ${profile.educationType || 'PUBLIC'}.
+2. The title MUST explicitly begin with: "المحاضرة ${lectureNumber}: " in Arabic and "Lecture ${lectureNumber}: " in English.
+3. The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
+4. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
+5. Focus and conciseness: Keep each section explanation focused, direct, and impactful (approx. 100-150 words per section) so all 4 sections, worked examples, textbook exercises, and assessments generate completely without truncating.
+6. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
 
 {
-  "id": "gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}",
+  "id": "gen-${profile.country.toLowerCase()}-${(profile.educationType || 'public').toLowerCase()}-${profile.subject.toLowerCase()}-${profile.gradeLevel.toLowerCase()}-${lectureNumber}-${Date.now()}",
   "order": ${lectureNumber},
   "titleAr": "المحاضرة ${lectureNumber}: عنوان الدرس الدقيق بالعربية",
   "titleEn": "Lecture ${lectureNumber}: Exact Lesson Title in English",
@@ -741,19 +744,31 @@ CRITICAL RULES:
   try {
     const rawParsed = repairAndParseJson(rawText);
 
+    const rawTitleAr = rawParsed.titleAr || '';
+    const cleanTitleAr = rawTitleAr.replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+    const finalTitleAr = cleanTitleAr ? `المحاضرة ${lectureNumber}: ${cleanTitleAr}` : `المحاضرة ${lectureNumber}: درس جديد`;
+
+    const rawTitleEn = rawParsed.titleEn || '';
+    const cleanTitleEn = rawTitleEn.replace(/^(Lecture|Lesson)\s*\d+\s*[:\-–]\s*/i, '').trim();
+    const finalTitleEn = cleanTitleEn ? `Lecture ${lectureNumber}: ${cleanTitleEn}` : `Lecture ${lectureNumber}: New Lesson`;
+
     // Normalize and strictly guarantee all required schema fields
     const lecture: Lecture = {
-      id: rawParsed.id || `gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}`,
+      id: `gen-${profile.country.toLowerCase()}-${(profile.educationType || 'public').toLowerCase()}-${profile.subject.toLowerCase()}-${profile.gradeLevel.toLowerCase()}-${lectureNumber}-${Date.now()}`,
       order: lectureNumber,
-      titleAr: rawParsed.titleAr || `المحاضرة ${lectureNumber}: درس جديد`,
-      titleEn: rawParsed.titleEn || `Lecture ${lectureNumber}: New Curriculum Topic`,
+      titleAr: finalTitleAr,
+      titleEn: finalTitleEn,
       subtitleAr: rawParsed.subtitleAr || rawParsed.titleAr || '',
       subtitleEn: rawParsed.subtitleEn || rawParsed.titleEn || '',
       durationMinutes: Number(rawParsed.durationMinutes) || 30,
-      isLocked: lectureNumber > 1 ? (rawParsed.isLocked ?? true) : false,
+      isLocked: lectureNumber > 1,
       isCompleted: false,
       passingScoreRequired: 80,
       country: profile.country,
+      subject: profile.subject,
+      gradeLevel: profile.gradeLevel,
+      educationType: profile.educationType || 'PUBLIC',
+      educationTrack: profile.educationTrack || 'GENERAL',
       ministryAr: cInfo.ministryAr,
       ministryEn: cInfo.ministryEn,
       gradeLevelNameAr: rawParsed.gradeLevelNameAr || `المرحلة التعليمية - ${profile.gradeLevel}`,
@@ -762,8 +777,8 @@ CRITICAL RULES:
       termEn: cInfo.termDefaultEn,
       unitTitleAr: rawParsed.unitTitleAr || unitTitle || 'الوحدة الدراسية المقررة',
       unitTitleEn: rawParsed.unitTitleEn || unitTitle || 'Curriculum Unit',
-      lessonNumberAr: rawParsed.lessonNumberAr || `الدرس ${lectureNumber}`,
-      lessonNumberEn: rawParsed.lessonNumberEn || `Lesson ${lectureNumber}`,
+      lessonNumberAr: `الدرس ${lectureNumber}`,
+      lessonNumberEn: `Lesson ${lectureNumber}`,
       warmupHookAr: rawParsed.warmupHookAr || '',
       warmupHookEn: rawParsed.warmupHookEn || '',
       learningOutcomesAr: rawParsed.learningOutcomesAr || rawParsed.learningObjectivesAr || [],
