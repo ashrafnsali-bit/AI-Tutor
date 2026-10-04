@@ -241,6 +241,74 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
         </div>
       </header>
 
+      {/* ═══ LECTURE SOLVED / NEXT LECTURE DIRECT BANNER ═══ */}
+      {lecture.isCompleted && (
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(5, 150, 105, 0.08) 100%)',
+          border: '1.5px solid rgba(16, 185, 129, 0.4)',
+          borderRadius: '14px',
+          padding: '1rem 1.25rem',
+          margin: '1.25rem 0 1.5rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          boxShadow: '0 4px 20px rgba(16, 185, 129, 0.15)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '12px',
+              background: 'rgba(16, 185, 129, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#34d399',
+              flexShrink: 0
+            }}>
+              <CheckCircle2 size={24} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 800, color: '#ffffff', fontSize: '1.05rem', marginBottom: '2px' }}>
+                {isEn ? '✓ Lecture Solved and Passed Successfully!' : '✓ تم حل هذه المحاضرة واجتياز التقييم بنجاح!'}
+              </div>
+              <div style={{ fontSize: '0.84rem', color: '#a7f3d0' }}>
+                {isEn
+                  ? `Achievement score: ${lecture.lastAttempt?.score || 100}% • The next lecture is unlocked and ready for you.`
+                  : `درجة الإنجاز: ${lecture.lastAttempt?.score || 100}% • المحاضرة التالية مفتوحة وجاهزة للدراسة.`}
+              </div>
+            </div>
+          </div>
+
+          {hasNextUnlocked && onNextLecture && (
+            <button
+              type="button"
+              onClick={onNextLecture}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '10px',
+                padding: '0.7rem 1.35rem',
+                fontWeight: 700,
+                fontSize: '0.92rem',
+                cursor: 'pointer',
+                boxShadow: '0 4px 16px rgba(16, 185, 129, 0.4)',
+                transition: 'all 0.2s'
+              }}
+            >
+              <span>{isEn ? 'Go to Next Lesson' : 'الانتقال للمحاضرة القادمة'}</span>
+              <ArrowRight size={17} />
+            </button>
+          )}
+        </div>
+      )}
+
       {/* ═══ SECTION 1 — WARM-UP / REAL WORLD HOOK ═══ */}
       {warmup && (
         <section className="lesson-section warmup-section">

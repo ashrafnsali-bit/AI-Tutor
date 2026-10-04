@@ -28,6 +28,7 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
 
   const completedCount = lectures.filter((l) => l.isCompleted).length;
   const progressPercent = Math.round((completedCount / lectures.length) * 100);
+  const nextLectureToSolve = lectures.find(l => !l.isCompleted && !l.isLocked) || null;
 
   // Dynamic Course Header matching student's active track, country and grade
   const subjectKey = profile?.subject || 'PHYSICS';
@@ -90,12 +91,54 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
         </div>
       </div>
 
+      {/* Solved vs. Next Lecture Guidance Header Card */}
+      <div className="roadmap-guidance-card">
+        <div className="guidance-stats-row">
+          <div className="guidance-stat-pill stat-solved">
+            <CheckCircle2 size={13} className="text-emerald-400" />
+            <span>{isEn ? `Solved: ${completedCount}/${lectures.length}` : `المحاضرات المحلولة: ${completedCount} من ${lectures.length}`}</span>
+          </div>
+          {nextLectureToSolve && (
+            <div className="guidance-stat-pill stat-next">
+              <span className="pulse-dot"></span>
+              <span>{isEn ? 'Up Next' : 'المحطة القادمة'}</span>
+            </div>
+          )}
+        </div>
+
+        {nextLectureToSolve ? (
+          <div className="guidance-next-target">
+            <div className="next-target-text">
+              <span className="target-prefix">{isEn ? 'Next to solve:' : 'المحاضرة التالية المستحقة:'}</span>
+              <strong className="target-title">{(isEn ? nextLectureToSolve.titleEn : nextLectureToSolve.titleAr) || nextLectureToSolve.titleAr}</strong>
+            </div>
+            {selectedLectureId !== nextLectureToSolve.id && (
+              <button
+                type="button"
+                className="btn-jump-next-lecture"
+                onClick={() => onSelectLecture(nextLectureToSolve.id)}
+                title={isEn ? "Open the next lesson to solve" : "الانتقال المباشر للمحاضرة القادمة"}
+              >
+                <PlayCircle size={13} />
+                <span>{isEn ? 'Go to Lesson' : 'الانتقال لها'}</span>
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="guidance-all-completed">
+            <Award size={16} className="text-amber-400" />
+            <span>{isEn ? '🎉 All curriculum lectures solved!' : '🎉 تم حل واجتياز كافة المحاضرات بنجاح!'}</span>
+          </div>
+        )}
+      </div>
+
       {/* Lectures List */}
       <div className="roadmap-list">
         {lectures.map((lecture, index) => {
           const isSelected = lecture.id === selectedLectureId;
           const isLocked = lecture.isLocked;
           const isCompleted = lecture.isCompleted;
+          const isNextTarget = nextLectureToSolve?.id === lecture.id;
 
           const title = (isEn ? lecture.titleEn : lecture.titleAr) || lecture.titleAr || '';
           const subtitle = (isEn ? lecture.subtitleEn : lecture.subtitleAr) || lecture.subtitleAr || '';
@@ -105,7 +148,7 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
               <div
                 className={`roadmap-card ${isSelected ? 'card-selected' : ''} ${
                   isLocked ? 'card-locked' : 'card-unlocked'
-                } ${isCompleted ? 'card-completed' : ''}`}
+                } ${isCompleted ? 'card-completed card-solved' : ''} ${isNextTarget ? 'card-up-next' : ''}`}
                 onClick={() => {
                   if (!isLocked) {
                     onSelectLecture(lecture.id);
@@ -123,6 +166,10 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
                   ) : isLocked ? (
                     <div className="status-badge-icon badge-locked" title={t.lockedGatePill(lecture.passingScoreRequired, index)}>
                       <Lock size={18} />
+                    </div>
+                  ) : isNextTarget ? (
+                    <div className="status-badge-icon badge-next-target" title={isEn ? "Up Next" : "المحاضرة التالية المستحقة"}>
+                      <PlayCircle size={18} />
                     </div>
                   ) : (
                     <div className="status-badge-icon badge-active" title={t.btnLaunchQuiz}>
@@ -157,8 +204,14 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
                         {t.lockedGatePill(lecture.passingScoreRequired, index)}
                       </span>
                     ) : isCompleted ? (
-                      <span className="meta-pill score-pass-pill">
-                        {t.scorePassPill(lecture.lastAttempt?.score || 100)}
+                      <span className="meta-pill score-pass-pill badge-solved-label">
+                        <CheckCircle2 size={11} style={{ marginInlineEnd: '4px' }} />
+                        {isEn ? `Solved (${lecture.lastAttempt?.score || 100}%)` : `تم حلها بنجاح (${lecture.lastAttempt?.score || 100}%)`}
+                      </span>
+                    ) : isNextTarget ? (
+                      <span className="meta-pill badge-next-pill">
+                        <span className="pulse-dot-sm"></span>
+                        {isEn ? 'Up Next' : 'المحاضرة القادمة'}
                       </span>
                     ) : lecture.lastAttempt ? (
                       <span className="meta-pill score-fail-pill">

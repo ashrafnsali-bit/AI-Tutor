@@ -1,4 +1,4 @@
-import type { AssessmentResult, CountryCode, EducationType, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
+import type { AssessmentResult, CountryCode, EducationTrack, EducationType, GradeLevel, Lecture, StudentProfile, Subject, UserAccount } from '../types';
 import { INITIAL_STUDENT_PROFILE, loadSubjectLectures } from '../data/curriculumData';
 import { getStudentPresence } from './presenceService';
 import { 
@@ -330,6 +330,38 @@ export async function recordSession(
     if (existing.length > 500) existing.splice(0, existing.length - 500);
     localStorage.setItem(lsKey, JSON.stringify(existing));
   } catch { /* ignore */ }
+}
+
+export const recordStudySession = recordSession;
+
+export interface LastSessionState {
+  userId: string;
+  userName: string;
+  subject: Subject;
+  gradeLevel: GradeLevel;
+  country: CountryCode;
+  educationType?: EducationType;
+  educationTrack?: EducationTrack;
+  lastLectureId: string;
+  lastLectureTitle?: string;
+  completedLecturesCount?: number;
+  totalLecturesCount?: number;
+  timestamp: number;
+}
+
+export function saveLastSessionState(sessionState: LastSessionState): void {
+  try {
+    localStorage.setItem('TEACHER_AI_LAST_SESSION', JSON.stringify(sessionState));
+    localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', sessionState.lastLectureId);
+  } catch { /* ignore */ }
+}
+
+export function getLastSessionState(): LastSessionState | null {
+  try {
+    const raw = localStorage.getItem('TEACHER_AI_LAST_SESSION');
+    if (raw) return JSON.parse(raw) as LastSessionState;
+  } catch { /* ignore */ }
+  return null;
 }
 
 /**

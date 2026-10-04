@@ -21,7 +21,9 @@ import {
   saveUserSubjectLectures, 
   loadUserSubjectLectures,
   saveSharedCurriculumLecture,
-  logoutUserAccount
+  logoutUserAccount,
+  saveLastSessionState,
+  recordStudySession
 } from './services/database';
 import { sendStudentHeartbeat, clearStudentPresence } from './services/presenceService';
 import { initCloudSync, onCloudLectureGenerated } from './services/cloudSyncService';
@@ -168,10 +170,13 @@ export function App() {
       profile.educationTrack || 'GENERAL',
       profile.language
     );
-    if (savedLectureId && lecs.some(l => l.id === savedLectureId && !l.isLocked)) {
-      return savedLectureId;
+    const savedMatching = lecs.find(l => l.id === savedLectureId && !l.isLocked);
+    if (savedMatching && !savedMatching.isCompleted) {
+      return savedMatching.id;
     }
-    return lecs[0]?.id || 'phys-1';
+    const firstUncompleted = lecs.find(l => !l.isCompleted && !l.isLocked);
+    if (firstUncompleted) return firstUncompleted.id;
+    return savedMatching ? savedMatching.id : lecs[0]?.id || 'phys-1';
   });
 
   const [apiKey, setApiKey] = useState<string>(() => {
@@ -201,6 +206,9 @@ export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return !!localStorage.getItem('TEACHER_AI_ACTIVE_USER');
   });
+
+  // Track selected by a new visitor on landing page pending mandatory registration
+  const [pendingTrackProfile, setPendingTrackProfile] = useState<StudentProfile | null>(null);
 
   // Connect to Global Cloud Synchronization & Real-time Live Network on startup
   useEffect(() => {
@@ -604,6 +612,9 @@ export function App() {
     setProfile(user);
     localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
     localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
+    localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
+    localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
+
     const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
     const freshLecs = loadSubjectLectures(
       user.subject,
@@ -620,13 +631,39 @@ export function App() {
         })
       : freshLecs;
     setLectures(effectiveLecs);
+
+    // Auto-advance to the first uncompleted unlocked lecture (or saved lecture if not completed)
     const savedLectureId = localStorage.getItem('TEACHER_AI_LAST_LECTURE_ID');
     const matchingLec = effectiveLecs.find(l => l.id === savedLectureId && !l.isLocked);
-    const chosenId = matchingLec ? matchingLec.id : effectiveLecs[0]?.id || '';
+    const firstUncompleted = effectiveLecs.find(l => !l.isCompleted && !l.isLocked);
+    const chosenId = (matchingLec && !matchingLec.isCompleted)
+      ? matchingLec.id
+      : (firstUncompleted ? firstUncompleted.id : (effectiveLecs[0]?.id || ''));
+
     setSelectedLectureId(chosenId);
     localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', chosenId);
+
+    // Save and record active session
+    const currentLec = effectiveLecs.find(l => l.id === chosenId);
+    saveLastSessionState({
+      userId: user.id,
+      userName: user.name,
+      subject: user.subject,
+      gradeLevel: user.gradeLevel,
+      country: user.country,
+      educationType: user.educationType || 'PUBLIC',
+      educationTrack: user.educationTrack || 'GENERAL',
+      lastLectureId: chosenId,
+      lastLectureTitle: currentLec?.titleAr || '',
+      completedLecturesCount: effectiveLecs.filter(l => l.isCompleted).length,
+      totalLecturesCount: effectiveLecs.length,
+      timestamp: Date.now()
+    });
+    recordStudySession(user.id, user.subject, chosenId, currentLec?.titleAr || '', 'start').catch(() => {});
+
     setCurrentView('workspace');
     setIsAuthOpen(false);
+    setPendingTrackProfile(null);
   };
 
   const handleLogout = async () => {
@@ -708,9 +745,31 @@ export function App() {
   };
 
   const handleSelectCurriculumAndStart = (updatedProfile: StudentProfile) => {
+    if (!isLoggedIn) {
+      // New visitor: Enforce mandatory registration and parental control activation first!
+      setPendingTrackProfile(updatedProfile);
+      setIsAuthOpen(true);
+      return;
+    }
+
     handleSaveProfile(updatedProfile);
     localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
     localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
+
+    // Save and record active session
+    saveLastSessionState({
+      userId: profile.id,
+      userName: profile.name,
+      subject: updatedProfile.subject,
+      gradeLevel: updatedProfile.gradeLevel,
+      country: updatedProfile.country,
+      educationType: updatedProfile.educationType || 'PUBLIC',
+      educationTrack: updatedProfile.educationTrack || 'GENERAL',
+      lastLectureId: selectedLectureId,
+      timestamp: Date.now()
+    });
+    recordStudySession(profile.id, updatedProfile.subject, selectedLectureId, activeLecture?.titleAr || '', 'start').catch(() => {});
+
     setCurrentView('workspace');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -885,8 +944,13 @@ export function App() {
       {/* Student Database Auth & Registration Modal */}
       <AuthModal
         isOpen={isAuthOpen}
+        initialProfile={pendingTrackProfile}
+        noticeMessage={pendingTrackProfile ? (profile.language === 'en' ? 'Complete mandatory registration to start your selected curriculum track' : 'أكمل التسجيل وتفعيل الرقابة الأبوية للانتقال لمسارك المختار') : undefined}
         onSuccess={handleAuthSuccess}
-        onClose={() => setIsAuthOpen(false)}
+        onClose={() => {
+          setIsAuthOpen(false);
+          setPendingTrackProfile(null);
+        }}
       />
 
       {/* Student Progress & Grades Dashboard */}

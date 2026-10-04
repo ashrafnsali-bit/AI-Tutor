@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Specialization, Subject, UserAccount } from '../types';
+import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Specialization, StudentProfile, Subject, UserAccount } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { registerUserAccount, loginUserAccount } from '../services/database';
 import { detectStudentCountry } from '../services/geoService';
-import { getNationalSubjectLabel } from '../data/curriculumCountries';
+import { getNationalSubjectLabel, getCountryInfo } from '../data/curriculumCountries';
 import { 
   X, 
   UserPlus, 
@@ -24,11 +24,19 @@ import {
 
 interface AuthModalProps {
   isOpen: boolean;
+  initialProfile?: StudentProfile | null;
+  noticeMessage?: string;
   onSuccess: (user: UserAccount) => void;
   onClose: () => void;
 }
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ 
+  isOpen, 
+  initialProfile, 
+  noticeMessage, 
+  onSuccess, 
+  onClose 
+}) => {
   if (!isOpen) return null;
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('register');
@@ -46,14 +54,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
   const [regUsername, setRegUsername] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
-  const [regCountry, setRegCountry] = useState<CountryCode>('SA');
-  const [regEducationType] = useState<EducationType>('PUBLIC');
-  const [regEducationTrack] = useState<EducationTrack>('CS_ENGINEERING');
-  const [regAge, setRegAge] = useState<number>(17);
-  const [regGrade, setRegGrade] = useState<GradeLevel>('G12');
-  const [regSpec, setRegSpec] = useState<Specialization>('STEM');
-  const [regSubject, setRegSubject] = useState<Subject>('PHYSICS');
-  const [regLanguage] = useState<Language>('ar');
+  const [regCountry, setRegCountry] = useState<CountryCode>(initialProfile?.country || 'SA');
+  const [regEducationType, setRegEducationType] = useState<EducationType>(initialProfile?.educationType || 'PUBLIC');
+  const [regEducationTrack, setRegEducationTrack] = useState<EducationTrack>(initialProfile?.educationTrack || 'GENERAL');
+  const [regAge, setRegAge] = useState<number>(initialProfile?.age || 16);
+  const [regGrade, setRegGrade] = useState<GradeLevel>(initialProfile?.gradeLevel || 'G10');
+  const [regSpec, setRegSpec] = useState<Specialization>(initialProfile?.specialization || 'STEM');
+  const [regSubject, setRegSubject] = useState<Subject>(initialProfile?.subject || 'PHYSICS');
+  const [regLanguage] = useState<Language>(initialProfile?.language || 'ar');
+
+  // Pre-fill fields whenever initialProfile changes
+  useEffect(() => {
+    if (initialProfile) {
+      if (initialProfile.country) setRegCountry(initialProfile.country);
+      if (initialProfile.gradeLevel) setRegGrade(initialProfile.gradeLevel);
+      if (initialProfile.educationTrack) setRegEducationTrack(initialProfile.educationTrack);
+      if (initialProfile.educationType) setRegEducationType(initialProfile.educationType);
+      if (initialProfile.specialization) setRegSpec(initialProfile.specialization);
+      if (initialProfile.subject) setRegSubject(initialProfile.subject);
+      if (initialProfile.age) setRegAge(initialProfile.age);
+    }
+  }, [initialProfile, isOpen]);
 
   // Register Parent Supervision Data (Mandatory)
   const [regParentName, setRegParentName] = useState('');
@@ -188,23 +209,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
     e.preventDefault();
     setErrorMsg('');
 
-    if (!regUsername.trim() || regUsername.length < 3) {
-      setErrorMsg('اسم المستخدم يجب أن يتكون من 3 أحرف على الأقل');
+    if (!regName.trim() || regName.trim().length < 3) {
+      setErrorMsg('يرجى إدخال اسم الطالب الكامل (ثلاثي على الأقل) لتوثيق الشهادات والمسار الأكاديمي');
       return;
     }
 
-    if (!regParentName.trim()) {
-      setErrorMsg('يرجى كتابة اسم ولي الأمر الكامل للموافقة والرقابة');
+    if (!regUsername.trim() || regUsername.length < 3) {
+      setErrorMsg('اسم المستخدم يجب أن يتكون من 3 أحرف على الأقل (بدون مسافات)');
+      return;
+    }
+
+    if (!regEmail.trim() || !regEmail.includes('@')) {
+      setErrorMsg('يرجى إدخال بريد إلكتروني صحيح للطالب');
+      return;
+    }
+
+    if (!regPassword.trim() || regPassword.length < 6) {
+      setErrorMsg('كلمة المرور يجب أن تتكون من 6 خانات على الأقل لضمان أمان الحساب');
+      return;
+    }
+
+    if (!regParentName.trim() || regParentName.trim().length < 3) {
+      setErrorMsg('يرجى كتابة اسم ولي الأمر الكامل للموافقة وتفعيل الرقابة الأبوية');
       return;
     }
 
     if (!regParentPhone.trim() || regParentPhone.length < 7) {
-      setErrorMsg('يرجى إدخال رقم جوال صحيح لولي الأمر لاستلام كود الموافقة');
+      setErrorMsg('يرجى إدخال رقم جوال صحيح لولي الأمر لاستلام كود الموافقة والرقابة');
       return;
     }
 
     if (!regParentEmail.trim() || !regParentEmail.includes('@')) {
-      setErrorMsg('يرجى إدخال بريد إلكتروني صحيح لولي الأمر');
+      setErrorMsg('يرجى إدخال بريد إلكتروني صحيح لولي الأمر لتلقي تقارير المتابعة والدرجات');
       return;
     }
 
@@ -380,19 +416,52 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
           <form onSubmit={handleInitiateOtp} className="modal-form-wrapper">
             <div className="modal-body auth-scrollable-body">
               
+              {/* Selected Track Guidance Banner */}
+              {(initialProfile || noticeMessage) && (
+                <div style={{
+                  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.16) 0%, rgba(56, 189, 248, 0.12) 100%)',
+                  border: '1px solid rgba(99, 102, 241, 0.35)',
+                  borderRadius: '12px',
+                  padding: '0.85rem 1rem',
+                  marginBottom: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem'
+                }}>
+                  <Sparkles size={20} className="text-cyan-400" style={{ flexShrink: 0 }} />
+                  <div style={{ fontSize: '0.85rem', color: '#e2e8f0', lineHeight: 1.5 }}>
+                    <div style={{ fontWeight: 700, color: '#ffffff', marginBottom: '2px' }}>
+                      {noticeMessage || (regLanguage === 'en' ? 'Selected Learning Track & Mandatory Onboarding' : 'المسار التعليمي المختار وتأكيد التسجيل')}
+                    </div>
+                    <div>
+                      <span style={{ color: '#38bdf8', fontWeight: 700 }}>
+                        {getNationalSubjectLabel(regSubject, regCountry, regGrade, regLanguage)}
+                      </span>{' • '}
+                      <span>{t.gradeLabels[regGrade] || regGrade}</span>{' • '}
+                      <span>{getCountryInfo(regCountry)?.nameAr}</span>
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '3px' }}>
+                      {regLanguage === 'en'
+                        ? 'Fill in the mandatory student and parental verification details below to launch your lessons.'
+                        : 'يرجى إكمال البيانات الإلزامية وتأكيد موافقة ولي الأمر لتفعيل الحساب والانتقال مباشرة للمحاضرات.'}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Section 1: Student Details */}
               <div className="auth-section-divider">
                 <User size={16} className="text-indigo-400" />
-                <span>1. البيانات الأساسية للطالب</span>
+                <span>1. البيانات الأساسية للطالب (إلزامية)</span>
               </div>
 
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label">{t.labelFullName} *</label>
+                  <label className="form-label">{t.labelFullName} * (ثلاثي)</label>
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="مثال: عمر خالد التميمي"
+                    placeholder="مثال: أحمد علي محمود"
                     value={regName}
                     onChange={(e) => setRegName(e.target.value)}
                     required
@@ -404,9 +473,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="omar_tamimi"
+                    placeholder="ahmed_ali"
                     value={regUsername}
-                    onChange={(e) => setRegUsername(e.target.value)}
+                    onChange={(e) => setRegUsername(e.target.value.replace(/\s+/g, '').toLowerCase())}
                     required
                   />
                 </div>
@@ -566,7 +635,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onSuccess, onClose
                       <input
                         type="text"
                         className="form-input"
-                        placeholder="مثال: خالد محمد التميمي"
+                        placeholder="مثال: علي محمود السيد"
                         value={regParentName}
                         onChange={(e) => setRegParentName(e.target.value)}
                         required
