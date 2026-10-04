@@ -397,6 +397,9 @@ export async function registerUserAccount(
       const addReq = tx.objectStore(USERS_STORE).add(newUser);
       addReq.onsuccess = () => {
         tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: newUser.id, user: newUser });
+        try {
+          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(newUser));
+        } catch {}
         resolve();
       };
       addReq.onerror = () => reject(new Error('اسم المستخدم موجود بالفعل'));
@@ -442,7 +445,12 @@ export async function loginUserAccount(identifier: string, password?: string): P
       const tx = db.transaction([USERS_STORE, SESSION_STORE], 'readwrite');
       tx.objectStore(USERS_STORE).put(user);
       tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: user.id, user });
-      tx.oncomplete = () => resolve();
+      tx.oncomplete = () => {
+        try {
+          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
+        } catch {}
+        resolve();
+      };
       tx.onerror = () => reject(tx.error);
     });
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
@@ -470,11 +478,37 @@ export async function getActiveUserAccount(): Promise<UserAccount | null> {
       req.onsuccess = () => resolve(req.result || null);
       req.onerror = () => resolve(null);
     });
-    if (rec?.user) return rec.user;
+    if (rec?.user) {
+      if (rec.user.name && rec.user.name !== 'عمر التميمي') {
+        try {
+          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(rec.user));
+          localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(rec.user));
+        } catch {}
+        return rec.user;
+      }
+    }
   } catch { /* ignore */ }
 
   const stored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
-  if (stored) { try { return JSON.parse(stored) as UserAccount; } catch { /* ignore */ } }
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored) as UserAccount;
+      if (parsed && parsed.id && parsed.name && parsed.name !== 'عمر التميمي') {
+        return parsed;
+      }
+    } catch { /* ignore */ }
+  }
+
+  const profileStored = localStorage.getItem('TEACHER_AI_STUDENT_PROFILE');
+  if (profileStored) {
+    try {
+      const parsed = JSON.parse(profileStored) as UserAccount;
+      if (parsed && parsed.id && parsed.name && parsed.name !== 'عمر التميمي') {
+        return parsed;
+      }
+    } catch { /* ignore */ }
+  }
+
   return null;
 }
 

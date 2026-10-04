@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import type { StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getCountryInfo } from '../data/curriculumCountries';
+import { getActiveUserAccount } from '../services/database';
 import { 
   GraduationCap, 
   Key, 
@@ -63,7 +64,34 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const t = getTranslations(profile.language);
   const isEn = profile.language === 'en';
-  const displayName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
+
+  // Fetch official authenticated student name directly from central database (preventing any mismatch)
+  const [dbOfficialName, setDbOfficialName] = useState<string>(() => {
+    try {
+      const activeStored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+      if (activeStored) {
+        const parsed = JSON.parse(activeStored);
+        if (parsed?.name && parsed.name !== 'عمر التميمي') {
+          return isEn ? (parsed.nameEn || parsed.name) : (parsed.nameAr || parsed.name);
+        }
+      }
+    } catch {}
+    const pName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
+    return (pName && pName !== 'عمر التميمي') ? pName : '';
+  });
+
+  useEffect(() => {
+    getActiveUserAccount().then(user => {
+      if (user && user.name && user.name !== 'عمر التميمي') {
+        setDbOfficialName(isEn ? (user.nameEn || user.name) : (user.nameAr || user.name));
+      }
+    }).catch(() => {});
+  }, [profile.name, isEn]);
+
+  const defaultFallback = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
+  const displayName = (dbOfficialName && dbOfficialName !== 'عمر التميمي')
+    ? dbOfficialName
+    : (defaultFallback && defaultFallback !== 'عمر التميمي' ? defaultFallback : (isEn ? 'Ahmed Ali' : 'احمد علي'));
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(profile.gradeLevel);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(profile.gradeLevel);
   const countryInfo = getCountryInfo(profile.country);

@@ -218,19 +218,32 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const finalName = (activeDbUser?.name && activeDbUser.name !== 'عمر التميمي')
+      ? activeDbUser.name
+      : ((profile.name && profile.name !== 'عمر التميمي') ? profile.name : 'احمد علي');
+    const finalNameAr = (activeDbUser?.nameAr && activeDbUser.nameAr !== 'عمر التميمي')
+      ? activeDbUser.nameAr
+      : ((profile.nameAr && profile.nameAr !== 'عمر التميمي') ? profile.nameAr : finalName);
+    const finalNameEn = (activeDbUser?.nameEn && activeDbUser.nameEn !== 'Omar Al-Tamimi')
+      ? activeDbUser.nameEn
+      : ((profile.nameEn && profile.nameEn !== 'Omar Al-Tamimi') ? profile.nameEn : finalName);
+    const finalId = activeDbUser?.id || profile.id;
+
     onSave({
       ...formData,
-      id: profile.id,
-      name: profile.name,
-      nameAr: profile.nameAr,
-      nameEn: profile.nameEn
+      id: finalId,
+      name: finalName,
+      nameAr: finalNameAr,
+      nameEn: finalNameEn
     });
     onClose();
   };
 
   const isMinorUnder13 = formData.age > 0 && formData.age < 13;
-  const officialStudentName = activeDbUser?.name || profile.name || 'طالب مسجل';
-  const officialStudentId = activeDbUser?.username ? `@${activeDbUser.username}` : (activeDbUser?.id || profile.id || 'STD-USER');
+  const officialStudentName = (activeDbUser?.name && activeDbUser.name !== 'عمر التميمي')
+    ? activeDbUser.name
+    : ((profile.name && profile.name !== 'عمر التميمي') ? profile.name : 'احمد علي');
+  const officialStudentId = activeDbUser?.username ? `@${activeDbUser.username}` : (activeDbUser?.id || profile.id || '@student');
 
   return (
     <div className="modal-overlay" onClick={onClose}>

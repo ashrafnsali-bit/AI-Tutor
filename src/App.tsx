@@ -67,7 +67,7 @@ export function App() {
     if (activeStored) {
       try {
         const parsedActive = JSON.parse(activeStored);
-        if (parsedActive && parsedActive.id && parsedActive.name) {
+        if (parsedActive && parsedActive.id && parsedActive.name && parsedActive.name !== 'عمر التميمي') {
           return parsedActive;
         }
       } catch {}
@@ -77,8 +77,8 @@ export function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Clean up legacy static 'عمر التميمي' or temporary manual overwrite 'احمد علي'
-        if ((parsed.name === 'عمر التميمي' || parsed.name === 'احمد علي') && !activeStored) {
+        // Clean up legacy static demo name 'عمر التميمي'
+        if (parsed.name === 'عمر التميمي') {
           parsed.name = INITIAL_STUDENT_PROFILE.name;
           parsed.nameAr = INITIAL_STUDENT_PROFILE.nameAr;
           parsed.nameEn = INITIAL_STUDENT_PROFILE.nameEn;
@@ -303,9 +303,20 @@ export function App() {
   // Check active user from database on startup
   useEffect(() => {
     getActiveUserAccount().then((user) => {
-      if (user) {
+      if (user && user.name && user.name !== 'عمر التميمي') {
         setIsLoggedIn(true);
-        setProfile(user);
+        setProfile((prev) => ({
+          ...prev,
+          ...user,
+          id: user.id || prev.id,
+          name: user.name,
+          nameAr: user.nameAr || user.name,
+          nameEn: user.nameEn || user.name
+        }));
+        try {
+          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
+          localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
+        } catch {}
         setCurrentView('workspace');
         loadUserSubjectLectures(user.id, user.subject).then((savedLecs) => {
           const freshLecs = loadSubjectLectures(
@@ -343,6 +354,7 @@ export function App() {
 
   // Sync profile to local storage & database
   useEffect(() => {
+    if (profile.name === 'عمر التميمي') return;
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(profile));
     updateUserAccount(profile.id, { ...profile, lastLoginAt: Date.now() }).catch(() => {});
   }, [profile]);
@@ -512,14 +524,26 @@ export function App() {
     }));
   };
 
-  const handleSaveProfile = (updated: StudentProfile) => {
-    // Retain official registered name and ID from database profile - cannot be modified from profile settings
+  const handleSaveProfile = async (updated: StudentProfile) => {
+    // Retain official registered name and ID from central database profile - cannot be modified from profile settings
+    const activeDb = await getActiveUserAccount().catch(() => null);
+    const officialName = (activeDb?.name && activeDb.name !== 'عمر التميمي')
+      ? activeDb.name
+      : ((updated.name && updated.name !== 'عمر التميمي') ? updated.name : (profile.name !== 'عمر التميمي' ? profile.name : 'احمد علي'));
+    const officialNameAr = (activeDb?.nameAr && activeDb.nameAr !== 'عمر التميمي')
+      ? activeDb.nameAr
+      : ((updated.nameAr && updated.nameAr !== 'عمر التميمي') ? updated.nameAr : (profile.nameAr !== 'عمر التميمي' ? profile.nameAr : officialName));
+    const officialNameEn = (activeDb?.nameEn && activeDb.nameEn !== 'Omar Al-Tamimi')
+      ? activeDb.nameEn
+      : (updated.nameEn || profile.nameEn || officialName);
+    const officialId = activeDb?.id || profile.id || updated.id;
+
     const sanitized: StudentProfile = {
       ...updated,
-      id: profile.id,
-      name: profile.name,
-      nameAr: profile.nameAr,
-      nameEn: profile.nameEn
+      id: officialId,
+      name: officialName,
+      nameAr: officialNameAr,
+      nameEn: officialNameEn
     };
 
     // Record or clear manual override based on whether it was auto-detected or explicitly picked

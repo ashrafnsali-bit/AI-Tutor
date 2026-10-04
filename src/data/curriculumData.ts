@@ -4814,9 +4814,9 @@ export const INITIAL_LECTURES = HIGH_CHEMISTRY_G12_LECTURES;
 
 export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   id: 'std-student',
-  name: 'طالب مسجل',
-  nameAr: 'طالب مسجل',
-  nameEn: 'Registered Student',
+  name: 'احمد علي',
+  nameAr: 'احمد علي',
+  nameEn: 'Ahmed Ali',
   age: 16,
   dateOfBirth: '2010-04-15',
   country: 'SA',
@@ -4824,7 +4824,7 @@ export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   subject: 'CHEMISTRY',
   gradeLevel: 'G12',
   language: 'ar',
-  parentEmail: '',
+  parentEmail: 'student@example.com',
   isParentVerified: true,
   timeLimitMinutes: 60,
   usedTodayMinutes: 0,
