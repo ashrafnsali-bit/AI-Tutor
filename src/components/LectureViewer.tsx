@@ -22,6 +22,127 @@ interface LectureViewerProps {
   hasNextUnlocked: boolean;
 }
 
+function cleanExampleTitle(title: string): string {
+  if (!title) return '';
+  return title
+    .replace(/^مثال\s*(تطبيقي)?\s*(\d*\s*من\s*\d*)?[:\s-]*/i, '')
+    .replace(/^Worked\s*Example\s*(\d*\s*of\s*\d*)?[:\s-]*/i, '')
+    .trim();
+}
+
+function cleanLatexMath(mathStr: string): string {
+  return mathStr
+    .replace(/\\text\{([^}]+)\}/g, '$1')
+    .replace(/\\int_\{([^}]+)\}\^\{([^}]+)\}/g, '∫[$1→$2] ')
+    .replace(/\\int_([a-zA-Z0-9]+)\^([a-zA-Z0-9]+)/g, '∫[$1→$2] ')
+    .replace(/\\int_\{([^}]+)\}/g, '∫[$1] ')
+    .replace(/\\int_([a-zA-Z0-9]+)/g, '∫[$1] ')
+    .replace(/\\int\b/g, '∫ ')
+    .replace(/\\pi\b/g, 'π')
+    .replace(/\\times\b/g, ' × ')
+    .replace(/\\div\b/g, ' ÷ ')
+    .replace(/\\pm\b/g, ' ± ')
+    .replace(/\\leq?\b/g, ' ≤ ')
+    .replace(/\\geq?\b/g, ' ≥ ')
+    .replace(/\\neq\b/g, ' ≠ ')
+    .replace(/\\approx\b/g, ' ≈ ')
+    .replace(/\\infty\b/g, '∞')
+    .replace(/\\alpha\b/g, 'α')
+    .replace(/\\beta\b/g, 'β')
+    .replace(/\\theta\b/g, 'θ')
+    .replace(/\\lambda\b/g, 'λ')
+    .replace(/\\Delta\b/g, 'Δ')
+    .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    .replace(/\\cdot\b/g, '·')
+    .replace(/\\,/g, ' ')
+    .replace(/\\quad/g, '  ')
+    .replace(/\\qquad/g, '   ')
+    .replace(/[\$]/g, '')
+    .replace(/\^2\b/g, '²')
+    .replace(/\^3\b/g, '³')
+    .replace(/\^4\b/g, '⁴')
+    .replace(/\^n\b/g, 'ⁿ')
+    .replace(/_0\b/g, '₀')
+    .replace(/_1\b/g, '₁')
+    .replace(/_2\b/g, '₂')
+    .replace(/_a\b/g, 'ₐ')
+    .replace(/_b\b/g, 'ᵦ')
+    .replace(/_c\b/g, '꜀')
+    .replace(/_d\b/g, 'Ꮷ')
+    .trim();
+}
+
+function renderMathFormattedText(text: string): React.ReactNode {
+  if (!text) return null;
+
+  // Split by display math $$...$$ first
+  const displaySegments = text.split(/(\$\$[\s\S]*?\$\$)/g);
+
+  return displaySegments.map((dispSegment, dIdx) => {
+    if (!dispSegment) return null;
+
+    if (dispSegment.startsWith('$$') && dispSegment.endsWith('$$')) {
+      const mathInner = dispSegment.slice(2, -2).trim();
+      return (
+        <div key={`disp-${dIdx}`} className="math-formula-display" dir="ltr">
+          {cleanLatexMath(mathInner)}
+        </div>
+      );
+    }
+
+    const parts = dispSegment.split(/(\*\*.*?\*\*|\$[^\$]+?\$)/g);
+
+    return (
+      <React.Fragment key={`frag-${dIdx}`}>
+        {parts.map((part, idx) => {
+          if (!part) return null;
+
+          if (part.startsWith('**') && part.endsWith('**')) {
+            return (
+              <strong key={idx} style={{ color: '#f8fafc', fontWeight: 700 }}>
+                {part.slice(2, -2)}
+              </strong>
+            );
+          }
+
+          if (part.startsWith('$') && part.endsWith('$')) {
+            const mathContent = part.slice(1, -1);
+            return (
+              <span key={idx} className="math-formula-inline" dir="ltr">
+                {cleanLatexMath(mathContent)}
+              </span>
+            );
+          }
+
+          if (/(\\[a-zA-Z]+|\b[a-zA-Z]\s*=\s*[^,;.]+)/.test(part) && (part.includes('\\') || part.includes('^') || part.includes('='))) {
+            const tokens = part.split(/(\\[a-zA-Z]+(?:\^\{?[^}]*\}?|_\{?[^}]*\}?)?|[a-zA-Z]\s*=\s*[^,;.\s]+)/g);
+            if (tokens.length > 1) {
+              return (
+                <React.Fragment key={idx}>
+                  {tokens.map((tk, tIdx) => {
+                    if (!tk) return null;
+                    if (tk.startsWith('\\') || (tk.includes('=') && !/[\u0600-\u06FF]/.test(tk))) {
+                      return (
+                        <span key={tIdx} className="math-formula-inline" dir="ltr">
+                          {cleanLatexMath(tk)}
+                        </span>
+                      );
+                    }
+                    return <span key={tIdx}>{tk}</span>;
+                  })}
+                </React.Fragment>
+              );
+            }
+          }
+
+          return <span key={idx}>{part}</span>;
+        })}
+      </React.Fragment>
+    );
+  });
+}
+
 export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
@@ -262,7 +383,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   {/* Main Explanation Text */}
                   <div className="section-explanation">
                     {secContent.split('\n').filter(Boolean).map((para, pi) => (
-                      <p key={pi} className="section-para">{para}</p>
+                      <div key={pi} className="section-para">
+                        {renderMathFormattedText(para)}
+                      </div>
                     ))}
                   </div>
 
@@ -274,24 +397,43 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   {/* ── INTERACTIVE WORKED EXAMPLE (Step-by-Step) ── */}
                   {ex && (
                     <div className="worked-example-card">
+                      {/* Card Header */}
                       <div className="we-header">
                         <div className="we-header-left">
                           <div className="we-icon-wrap">
-                            <Calculator size={16} />
+                            <Calculator size={18} />
                           </div>
-                          <div>
-                            <span className="we-label">{isEn ? 'Interactive Worked Example' : 'مثال تطبيقي تفاعلي'}</span>
+                          <div className="we-title-group">
+                            <span className="we-label">
+                              <Sparkles size={13} />
+                              {isEn ? `Interactive Example ${secIdx + 1} of 4` : `مثال توضيحي تفاعلي (${secIdx + 1} من 4)`}
+                            </span>
                             <h4 className="we-title">
-                              {isEn ? ex.titleEn : ex.titleAr}
+                              {cleanExampleTitle(isEn ? ex.titleEn : ex.titleAr)}
                             </h4>
                           </div>
                         </div>
-                        {ex.equation && (
-                          <div className="we-equation-badge">
-                            {ex.equation}
-                          </div>
-                        )}
+
+                        {/* Step Count Chip */}
+                        <div className="we-step-counter-chip">
+                          {isEn
+                            ? `Step ${(activeExampleStep[exKey] ?? 0) + 1} of ${ex.steps.length}`
+                            : `الخطوة ${(activeExampleStep[exKey] ?? 0) + 1} من ${ex.steps.length}`}
+                        </div>
                       </div>
+
+                      {/* Problem Statement / Formula Banner */}
+                      {ex.equation && (
+                        <div className="we-problem-statement">
+                          <div className="we-problem-tag-row">
+                            <BookOpen size={14} />
+                            <span>{isEn ? 'Problem / Governing Rule' : 'نص المسألة / القاعدة الرياضية'}</span>
+                          </div>
+                          <div className="we-problem-content">
+                            {renderMathFormattedText(ex.equation)}
+                          </div>
+                        </div>
+                      )}
 
                       {/* Step-by-Step Progress */}
                       <div className="we-steps-progress">
@@ -299,6 +441,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           <div
                             key={sIdx}
                             className={`we-step-dot ${sIdx <= currentStep || allShown ? 'step-dot-active' : ''} ${sIdx === currentStep && !allShown ? 'step-dot-current' : ''}`}
+                            title={`الخطوة ${sIdx + 1}`}
                           />
                         ))}
                       </div>
@@ -317,10 +460,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             >
                               <div className="we-step-num">{step.stepNumber}</div>
                               <div className="we-step-content">
-                                <p className="we-step-text">{stepText}</p>
+                                <p className="we-step-text">
+                                  {renderMathFormattedText(stepText)}
+                                </p>
                                 {stepNote && (
                                   <span className="we-step-note">
-                                    <Lightbulb size={11} /> {stepNote}
+                                    <Lightbulb size={12} /> {stepNote}
                                   </span>
                                 )}
                               </div>
@@ -337,7 +482,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             className="we-btn-next"
                             onClick={() => advanceStep(exKey, ex.steps.length)}
                           >
-                            <Play size={14} />
+                            <Play size={15} />
                             {isEn ? 'Next Step' : 'الخطوة التالية'}
                           </button>
                         ) : !allShown ? (
@@ -346,8 +491,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             className="we-btn-next we-btn-finish"
                             onClick={() => setShowAllSteps(p => ({ ...p, [exKey]: true }))}
                           >
-                            <SkipForward size={14} />
-                            {isEn ? 'See All Steps' : 'عرض جميع الخطوات'}
+                            <SkipForward size={15} />
+                            {isEn ? 'Show All Steps' : 'عرض جميع الخطوات'}
                           </button>
                         ) : null}
                         <button
@@ -358,18 +503,25 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             setShowAllSteps(p => ({ ...p, [exKey]: false }));
                           }}
                         >
-                          <RefreshCw size={13} />
+                          <RefreshCw size={14} />
                           {isEn ? 'Restart' : 'إعادة'}
                         </button>
                       </div>
 
                       {/* Golden Takeaway */}
-                      <div className="we-takeaway">
-                        <Star size={14} className="takeaway-star" />
-                        <p className="takeaway-text">
-                          {isEn ? ex.takeawayEn : ex.takeawayAr}
-                        </p>
-                      </div>
+                      {ex.takeawayAr && (
+                        <div className="we-takeaway">
+                          <Star size={16} className="takeaway-star" />
+                          <div className="takeaway-content" style={{ flex: 1 }}>
+                            <div className="takeaway-title" style={{ fontSize: '0.78rem', color: '#fbbf24', fontWeight: 800, marginBottom: '0.2rem' }}>
+                              {isEn ? 'Golden Pedagogical Takeaway' : 'الفائدة التربوية الذهبية'}
+                            </div>
+                            <p className="takeaway-text">
+                              {renderMathFormattedText(isEn ? ex.takeawayEn : ex.takeawayAr)}
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
