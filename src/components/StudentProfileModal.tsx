@@ -472,6 +472,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
               >
                 <option value="SA">🇸🇦 المملكة العربية السعودية (وزارة التعليم)</option>
                 <option value="EG">🇪🇬 جمهورية مصر العربية (وزارة التربية والتعليم)</option>
+                <option value="SD">🇸🇩 جمهورية السودان (وزارة التربية والتعليم الاتحادية)</option>
                 <option value="AE">🇦🇪 دولة الإمارات العربية المتحدة (مؤسسة الإمارات للتعليم)</option>
                 <option value="KW">🇰🇼 دولة الكويت (وزارة التربية)</option>
                 <option value="JO">🇯🇴 المملكة الأردنية الهاشمية (وزارة التربية والتعليم)</option>

@@ -59,10 +59,11 @@ const TIMEZONE_TO_COUNTRY: Record<string, CountryCode> = {
   // Saudi Arabia & Yemen
   'Asia/Riyadh': 'SA',
   'Asia/Aden': 'SA',
-  // Egypt, Sudan, Libya
+  // Egypt & Libya
   'Africa/Cairo': 'EG',
   'Africa/Tripoli': 'EG',
-  'Africa/Khartoum': 'EG',
+  // Sudan
+  'Africa/Khartoum': 'SD',
   // UAE
   'Asia/Dubai': 'AE',
   // Kuwait

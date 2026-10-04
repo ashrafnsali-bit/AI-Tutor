@@ -812,6 +812,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <option value="ALL">جميع الدول 🌍</option>
                 <option value="SA">🇸🇦 السعودية</option>
                 <option value="EG">🇪🇬 مصر</option>
+                <option value="SD">🇸🇩 السودان</option>
                 <option value="AE">🇦🇪 الإمارات</option>
                 <option value="KW">🇰🇼 الكويت</option>
                 <option value="JO">🇯🇴 الأردن</option>

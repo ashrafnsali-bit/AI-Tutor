@@ -75,6 +75,30 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
     availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC', 'INTERNATIONAL']
   },
+  SD: {
+    code: 'SD',
+    flag: '🇸🇩',
+    nameAr: 'جمهورية السودان',
+    nameEn: 'Sudan',
+    ministryAr: 'وزارة التربية والتعليم الاتحادية - جمهورية السودان',
+    ministryEn: 'Federal Ministry of Education - Republic of Sudan',
+    systemNameAr: 'المنهج السوداني القومي الجديد المحدث (نظام السلم التعليمي 6-3-3: الابتدائي، المتوسط، والثانوي)',
+    systemNameEn: 'Official Sudanese National Curriculum (Updated 6-3-3 System)',
+    termDefaultAr: 'الفصل الدراسي الثاني',
+    termDefaultEn: 'Second Semester',
+    termsCount: 2,
+    currencyAr: 'جنيه سوداني',
+    currencyShortAr: 'جنيه',
+    currencyEn: 'Sudanese Pound',
+    currencyCode: 'SDG',
+    capitalCityAr: 'الخرطوم',
+    capitalCityEn: 'Khartoum',
+    culturalEventAr: 'معرض الخرطوم الدولي للكتاب',
+    culturalEventEn: 'Khartoum International Book Fair',
+    hasHighSchoolTracks: true,
+    availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
+    availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC']
+  },
   AE: {
     code: 'AE',
     flag: '🇦🇪',
@@ -584,6 +608,58 @@ export function getNationalTextbookInfo(
       }
       break;
 
+    case 'SD': // Sudan (جمهورية السودان - المنهج القومي بخت الرضا والسلم 6-3-3)
+      if (subject === 'PRIMARY_MATH') {
+        textbookName = `الرياضيات والحساب (سلسلة بخت الرضا المطورة) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_ARABIC') {
+        textbookName = `اللغة العربية (العربية لغتي - كتاب بخت الرضا القومي) - ${gradeAr}`;
+      } else if (subject === 'PRIMARY_SCIENCE') {
+        textbookName = `العلوم الطبيعية والبيئة (المركز القومي للمناهج بخت الرضا) - ${gradeAr}`;
+      } else if (subject === 'ISLAMIC_STUDIES') {
+        textbookName = `التربية الإسلامية المعتمدة (القرآن والفقه والسيرة) - ${gradeAr}`;
+      } else if (subject === 'ARABIC_LANG') {
+        textbookName = `اللغة العربية للمرحلة المتوسطة (النحو والصرف والقراءة والنصوص - بخت الرضا) - ${gradeAr}`;
+      } else if (subject === 'GENERAL_SCIENCE') {
+        textbookName = `العلوم العامة للمرحلة المتوسطة (الكيمياء والفيزياء والأحياء والبيئة) - ${gradeAr}`;
+      } else if (subject === 'MATH') {
+        textbookName = isMiddle
+          ? `الرياضيات للمرحلة المتوسطة (الجبر والهندسة والإحصاء - المنهج القومي الجديد) - ${gradeAr}`
+          : gradeLevel === 'G10'
+          ? 'الرياضيات العامة (الجبر والهندسة التحليلية وحساب المثلثات - 1 ثانوي سوداني)'
+          : gradeLevel === 'G11'
+          ? 'الرياضيات (المتخصصة والأساسية - 2 ثانوي سوداني)'
+          : 'الرياضيات المتخصصة للشهادة الثانوية السودانية (التفاضل والتكامل والجبر والهندسة - 3 ثانوي)';
+      } else if (subject === 'PHYSICS') {
+        textbookName = gradeLevel === 'G10'
+          ? 'الفيزياء العامة والقياس والميكانيكا (الصف الأول الثانوي السوداني)'
+          : gradeLevel === 'G11'
+          ? 'الفيزياء (الموجات والحرارة والموائع والضوء - 2 ثانوي سوداني)'
+          : 'الفيزياء للشهادة الثانوية السودانية (الكهربائية والمغناطيسية والفيزياء الذرية والنووية - 3 ثانوي)';
+      } else if (subject === 'CHEMISTRY') {
+        textbookName = gradeLevel === 'G10'
+          ? 'الكيمياء العامة وبنية المادة والجدول الدوري (الصف الأول الثانوي السوداني)'
+          : gradeLevel === 'G11'
+          ? 'الكيمياء (الروابط والحساب الكيميائي والمحاليل والاتزان - 2 ثانوي سوداني)'
+          : 'الكيمياء للشهادة الثانوية السودانية (الكيمياء العضوية والتحليلية والحرارية - 3 ثانوي)';
+      } else if (subject === 'BIOLOGY') {
+        textbookName = gradeLevel === 'G10'
+          ? 'الأحياء والبيئة والخلية الحية (الصف الأول الثانوي السوداني)'
+          : gradeLevel === 'G11'
+          ? 'الأحياء (التغذية والنقل والتنفس والتكاثر - 2 ثانوي سوداني)'
+          : 'الأحياء للشهادة الثانوية السودانية (الوراثة وعلم البيئة وأجهزة الجسم - 3 ثانوي)';
+      } else if (subject === 'COMPUTER_SCIENCE') {
+        textbookName = isMiddle
+          ? `تكنولوجيا المعلومات والاتصالات والحاسوب (المرحلة المتوسطة السودانية) - ${gradeAr}`
+          : 'علوم الحاسوب وتقنية المعلومات (المرحلة الثانوية السودانية)';
+      } else if (subject === 'ARABIC_LIT') {
+        textbookName = gradeLevel === 'G10'
+          ? 'الأدب العربي والبلاغة والنصوص (الصف الأول الثانوي السوداني)'
+          : gradeLevel === 'G11'
+          ? 'تاريخ الأدب العربي والنصوص والبلاغة (الصف الثاني الثانوي سوداني)'
+          : 'الأدب والبلاغة والنقد وروائع الأدب السوداني والعربي (الشهادة الثانوية السودانية - 3 ثانوي)';
+      }
+      break;
+
     case 'AE': // UAE
       if (subject === 'PRIMARY_MATH') {
         textbookName = `الرياضيات المتكاملة (كتاب الطالب - ESE) - ${gradeAr}`;
@@ -1004,6 +1080,35 @@ export function getNationalSubjectLabel(
 ): string {
   const isEn = lang === 'en';
 
+  if (country === 'SD') {
+    switch (subject) {
+      case 'PRIMARY_ARABIC':
+        return isEn ? 'Arabic Language (Bakht Al-Ruda)' : 'اللغة العربية (العربية لغتي - بخت الرضا)';
+      case 'ARABIC_LANG':
+        return isEn ? 'Arabic Language (Intermediate Stage)' : 'اللغة العربية (المرحلة المتوسطة السودانية)';
+      case 'PRIMARY_MATH':
+        return isEn ? 'Mathematics (Bakht Al-Ruda Primary)' : 'الرياضيات والحساب (المرحلة الابتدائية - بخت الرضا)';
+      case 'PRIMARY_SCIENCE':
+        return isEn ? 'Natural Science & Environment (Primary)' : 'العلوم الطبيعية والبيئة (المرحلة الابتدائية)';
+      case 'GENERAL_SCIENCE':
+        return isEn ? 'General Science (Intermediate Stage)' : 'العلوم العامة (المرحلة المتوسطة السودانية)';
+      case 'COMPUTER_SCIENCE':
+        return isEn ? 'ICT & Computer Studies' : 'الحاسوب والتعليم الرقمي';
+      case 'MATH':
+        return isEn ? 'Mathematics (Sudanese Curriculum)' : 'الرياضيات (المنهج القومي السوداني)';
+      case 'PHYSICS':
+        return isEn ? 'Physics (Sudanese Secondary)' : 'الفيزياء (المرحلة الثانوية السودانية)';
+      case 'CHEMISTRY':
+        return isEn ? 'Chemistry (Sudanese Secondary)' : 'الكيمياء (المرحلة الثانوية السودانية)';
+      case 'BIOLOGY':
+        return isEn ? 'Biology (Sudanese Secondary)' : 'الأحياء (المرحلة الثانوية السودانية)';
+      case 'ARABIC_LIT':
+        return isEn ? 'Arabic Literature & Sudanese Poetry' : 'الأدب العربي وروائع الشعر السوداني';
+      case 'ISLAMIC_STUDIES':
+        return isEn ? 'Islamic Studies (Quran & Fiqh)' : 'التربية الإسلامية (القرآن والفقه والسيرة)';
+    }
+  }
+
   if (country === 'EG') {
     switch (subject) {
       case 'PRIMARY_ARABIC':
@@ -1242,6 +1347,13 @@ export function adaptCurriculumToCountry(
       { from: /مدينة\s*الرياض|مدينة\s*جدة/g, to: 'مدينة القاهرة' },
       { from: /واحة\s*الأحساء/g, to: 'واحات الفيوم ووادي النيل' },
       { from: /جبال\s*السروات/g, to: 'جبال البحر الأحمر وسانت كاترين' }
+    );
+  } else if (country === 'SD') {
+    cityReplacements.push(
+      { from: /معرض\s*الرياض\s*الدولي\s*للكتاب|معرض\s*الكتاب\s*المدرسي|معرض\s*القاهرة\s*الدولي\s*للكتاب/g, to: 'معرض الخرطوم الدولي للكتاب' },
+      { from: /مدينة\s*الرياض|مدينة\s*القاهرة|مدينة\s*جدة/g, to: 'مدينة الخرطوم وأم درمان' },
+      { from: /واحة\s*الأحساء|واحات\s*الفيوم/g, to: 'مقرن النيلين والجزيرة' },
+      { from: /جبال\s*السروات|جبال\s*البحر\s*الأحمر/g, to: 'جبل مرة وتلال البحر الأحمر' }
     );
   } else if (country === 'AE') {
     cityReplacements.push(

@@ -35,6 +35,7 @@ export type Language = 'ar' | 'en';
 export type CountryCode = 
   | 'SA' 
   | 'EG' 
+  | 'SD' 
   | 'AE' 
   | 'KW' 
   | 'JO' 

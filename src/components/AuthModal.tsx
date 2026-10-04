@@ -95,6 +95,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       if (geo?.country) {
         setRegCountry(geo.country);
         if (geo.country === 'EG') setRegParentPhone('+20 1');
+        else if (geo.country === 'SD') setRegParentPhone('+249 9');
         else if (geo.country === 'AE') setRegParentPhone('+971 5');
         else if (geo.country === 'KW') setRegParentPhone('+965 ');
         else if (geo.country === 'JO') setRegParentPhone('+962 7');
@@ -514,6 +515,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   >
                     <option value="SA">🇸🇦 المملكة العربية السعودية (وزارة التعليم)</option>
                     <option value="EG">🇪🇬 جمهورية مصر العربية (وزارة التربية والتعليم)</option>
+                    <option value="SD">🇸🇩 جمهورية السودان (وزارة التربية والتعليم الاتحادية)</option>
                     <option value="AE">🇦🇪 دولة الإمارات العربية المتحدة (مؤسسة الإمارات للتعليم)</option>
                     <option value="KW">🇰🇼 دولة الكويت (وزارة التربية)</option>
                     <option value="JO">🇯🇴 المملكة الأردنية الهاشمية (وزارة التربية والتعليم)</option>

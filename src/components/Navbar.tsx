@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="header-center-pill desktop-only" onClick={onOpenProfile} title={t.editProfileTooltip} style={{ cursor: 'pointer' }}>
           <span className="pill-country-badge">
             <span className="pill-flag">{countryInfo.flag}</span>
-            <span className="pill-country-name">{isEn ? countryInfo.nameEn : (profile.country === 'EG' ? 'مصر' : (profile.country === 'SA' ? 'السعودية' : countryInfo.nameAr))}</span>
+            <span className="pill-country-name">{isEn ? countryInfo.nameEn : (profile.country === 'EG' ? 'مصر' : (profile.country === 'SA' ? 'السعودية' : (profile.country === 'SD' ? 'السودان' : countryInfo.nameAr)))}</span>
           </span>
           <span className="pill-divider">•</span>
           <span className="pill-academic-track" title={`${stageLabel} - ${gradeLabel}`}>
