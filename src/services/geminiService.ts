@@ -1,5 +1,6 @@
 import type { ChatMessage, Lecture, Question, StudentProfile } from '../types';
 import { getCountryInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/curriculumCountries';
+import { ensureFourExamplesForLecture } from './lectureExampleEnricher';
 
 export interface GeminiEvaluationResponse {
   score: number;
@@ -298,8 +299,9 @@ ${existingTitles.length > 0 ? `- Already covered topics (DO NOT duplicate): ${ex
 
 CRITICAL RULES:
 1. Adhere strictly to the official educational guidelines, scientific terms, and symbols of ${cInfo.nameAr}.
-2. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, in-depth explanation sections with formative checks and step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
-3. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
+2. The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
+3. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
+4. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
 
 {
   "id": "gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}",
@@ -556,7 +558,7 @@ CRITICAL RULES:
       }
     };
 
-    return { lecture };
+    return { lecture: ensureFourExamplesForLecture(lecture) };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown generation error';
     return { lecture: null, error: message };

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
+import { ensureFourExamplesForLecture } from '../services/lectureExampleEnricher';
 import {
   BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
@@ -22,8 +23,9 @@ interface LectureViewerProps {
 }
 
 export const LectureViewer: React.FC<LectureViewerProps> = ({
-  lecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
+  lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
+  const lecture = useMemo(() => ensureFourExamplesForLecture(rawLecture), [rawLecture]);
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
   const [formativeHints, setFormativeHints]       = useState<Record<string, boolean>>({});
@@ -97,6 +99,10 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
             <span className="lesson-meta-badge">
               <Flame size={13} />
               {lecture.durationMinutes} {t.minutesUnit}
+            </span>
+            <span className="lesson-meta-badge badge-examples-guarantee" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.3)', fontWeight: 600 }}>
+              <Calculator size={13} />
+              {isEn ? '4 Step-by-Step Worked Examples' : '🎯 4 أمثلة توضيحية تفاعلية محلولة'}
             </span>
             {passed !== undefined && (
               <span className={`lesson-meta-badge ${passed ? 'badge-passed' : 'badge-failed'}`}>
@@ -243,7 +249,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                     {ex && (
                       <span className="section-has-example-badge">
                         <Calculator size={12} />
-                        <span>{isEn ? 'Example' : 'مثال'}</span>
+                        <span>{isEn ? `Example ${secIdx + 1} of 4` : `مثال ${secIdx + 1} من 4`}</span>
                       </span>
                     )}
                   </div>
@@ -274,7 +280,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             <Calculator size={16} />
                           </div>
                           <div>
-                            <span className="we-label">{isEn ? 'Worked Example' : 'مثال محلول'}</span>
+                            <span className="we-label">{isEn ? 'Interactive Worked Example' : 'مثال تطبيقي تفاعلي'}</span>
                             <h4 className="we-title">
                               {isEn ? ex.titleEn : ex.titleAr}
                             </h4>

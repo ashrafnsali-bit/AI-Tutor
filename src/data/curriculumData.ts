@@ -2,6 +2,7 @@ import type { EducationTrack, EducationType, Language, Lecture, StudentProfile, 
 import { BIOLOGY_LECTURES, COMPUTER_SCIENCE_LECTURES } from './stemCurriculumData';
 import { ISLAMIC_STUDIES_FULL } from './islamicArabicCurriculum';
 import { adaptCurriculumToCountry } from './curriculumCountries';
+import { ensureFourExamplesForLecture } from '../services/lectureExampleEnricher';
 
 import {
   PRIMARY_MATH_LECTURES,
@@ -4701,14 +4702,14 @@ export function loadSubjectLectures(
             }
           });
 
-          return result;
+          return result.map(ensureFourExamplesForLecture);
         }
       }
     } catch (e) {
       console.error(e);
     }
   }
-  return combined;
+  return combined.map(ensureFourExamplesForLecture);
 }
 
 export function saveSubjectLectures(
