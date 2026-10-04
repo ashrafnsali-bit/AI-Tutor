@@ -1,4 +1,4 @@
-import type { CountryCode, EducationTrack, EducationType, GradeLevel, Subject } from '../types';
+import type { Assessment, CountryCode, EducationTrack, EducationType, GradeLevel, LectureSection, Subject, VocabularyItem } from '../types';
 
 export interface NationalLessonOverride {
   titleAr: string;
@@ -16,6 +16,11 @@ export interface NationalLessonOverride {
   warmupHookAr?: string;
   summaryAr?: string;
   standardCode?: string;
+  sections?: LectureSection[];
+  learningOutcomesAr?: string[];
+  vocabulary?: VocabularyItem[];
+  keyConceptsAr?: string[];
+  assessment?: Assessment;
 }
 
 export type SubjectGradeKey = `${Subject}_${GradeLevel}` | Subject;

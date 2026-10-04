@@ -1471,28 +1471,33 @@ export function adaptCurriculumToCountry(
       summaryAr: finalSummaryAr,
       isLocked: index > 0,
       isCompleted: false,
-      sections: baseLec?.sections ? baseLec.sections.map(sec => ({
-        ...sec,
-        titleAr: applyTextTransforms(sec.titleAr),
-        contentAr: applyTextTransforms(sec.contentAr),
-        interactiveExample: sec.interactiveExample ? {
-          ...sec.interactiveExample,
-          titleAr: applyTextTransforms(sec.interactiveExample.titleAr),
-          steps: sec.interactiveExample.steps ? sec.interactiveExample.steps.map(st => ({
-            ...st,
-            textAr: applyTextTransforms(st.textAr),
-            noteAr: applyTextTransforms(st.noteAr)
-          })) : [],
-          takeawayAr: applyTextTransforms(sec.interactiveExample.takeawayAr)
-        } : undefined,
-        formativeCheck: sec.formativeCheck ? {
-          ...sec.formativeCheck,
-          questionAr: applyTextTransforms(sec.formativeCheck.questionAr),
-          optionsAr: sec.formativeCheck.optionsAr ? sec.formativeCheck.optionsAr.map(opt => applyTextTransforms(opt)) : [],
-          explanationAr: applyTextTransforms(sec.formativeCheck.explanationAr)
-        } : undefined
-      })) : [],
-      assessment: baseLec?.assessment ? {
+      learningOutcomesAr: override?.learningOutcomesAr || baseLec?.learningOutcomesAr,
+      vocabulary: override?.vocabulary || baseLec?.vocabulary,
+      keyConceptsAr: override?.keyConceptsAr || baseLec?.keyConceptsAr,
+      sections: (override?.sections && override.sections.length > 0)
+        ? override.sections
+        : (baseLec?.sections ? baseLec.sections.map(sec => ({
+            ...sec,
+            titleAr: applyTextTransforms(sec.titleAr),
+            contentAr: applyTextTransforms(sec.contentAr),
+            interactiveExample: sec.interactiveExample ? {
+              ...sec.interactiveExample,
+              titleAr: applyTextTransforms(sec.interactiveExample.titleAr),
+              steps: sec.interactiveExample.steps ? sec.interactiveExample.steps.map(st => ({
+                ...st,
+                textAr: applyTextTransforms(st.textAr),
+                noteAr: applyTextTransforms(st.noteAr)
+              })) : [],
+              takeawayAr: applyTextTransforms(sec.interactiveExample.takeawayAr)
+            } : undefined,
+            formativeCheck: sec.formativeCheck ? {
+              ...sec.formativeCheck,
+              questionAr: applyTextTransforms(sec.formativeCheck.questionAr),
+              optionsAr: sec.formativeCheck.optionsAr ? sec.formativeCheck.optionsAr.map(opt => applyTextTransforms(opt)) : [],
+              explanationAr: applyTextTransforms(sec.formativeCheck.explanationAr)
+            } : undefined
+          })) : []),
+      assessment: override?.assessment || (baseLec?.assessment ? {
         ...baseLec.assessment,
         titleAr: applyTextTransforms(baseLec.assessment.titleAr),
         questions: baseLec.assessment.questions ? baseLec.assessment.questions.map(q => ({
@@ -1502,7 +1507,7 @@ export function adaptCurriculumToCountry(
           conceptTestedAr: applyTextTransforms(q.conceptTestedAr),
           explanationAr: applyTextTransforms(q.explanationAr)
         })) : []
-      } : baseLec?.assessment
+      } : baseLec?.assessment)
     };
 
     result.push(adapted);

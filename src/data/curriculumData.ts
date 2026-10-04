@@ -23,6 +23,7 @@ import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
 import { HIGH_COMP_G12_LECTURES } from './highComp12CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
+import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES } from './sudanCurriculumData';
 import { HIGH_CHEMISTRY_G10_LECTURES } from './highChemistry10CurriculumData';
 import { HIGH_CHEMISTRY_G11_LECTURES } from './highChemistry11CurriculumData';
 import { HIGH_CHEMISTRY_G12_LECTURES } from './highChemistry12CurriculumData';
@@ -4553,6 +4554,7 @@ export function getCurriculumForSubject(
     return HIGH_COMP_G12_LECTURES;
   }
   if (subject === 'GENERAL_SCIENCE') {
+    if (country === 'SD' && gradeLevel === 'G9') return SUDAN_MIDDLE_SCIENCE_G9_LECTURES;
     if (gradeLevel === 'G1') return PRIMARY_SCIENCE_G1_LECTURES;
     if (gradeLevel === 'G2') return PRIMARY_SCIENCE_G2_LECTURES;
     if (gradeLevel === 'G3') return PRIMARY_SCIENCE_G3_LECTURES;
