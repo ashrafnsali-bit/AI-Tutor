@@ -9,6 +9,109 @@ export interface GeminiEvaluationResponse {
   conceptAdvice: { concept: string; isCorrect: boolean; advice: string }[];
 }
 
+export const GEMINI_CANDIDATE_MODELS = [
+  'gemini-3.1-pro-preview',
+  'gemini-2.0-flash',
+  'gemini-1.5-flash',
+  'gemini-1.5-pro',
+  'gemini-2.0-flash-lite',
+  'gemini-2.5-flash'
+];
+
+let cachedWorkingModel: string | null = null;
+
+export interface GeminiCallPayload {
+  contents: any[];
+  generationConfig?: {
+    temperature?: number;
+    maxOutputTokens?: number;
+    responseMimeType?: string;
+  };
+}
+
+/**
+ * Universal Gemini API caller with automatic model fallback & intelligent error handling
+ */
+export async function callGeminiApiWithFallback(
+  apiKey: string,
+  payload: GeminiCallPayload
+): Promise<{ text: string; modelUsed: string } | { error: string }> {
+  const activeKey = apiKey.trim();
+  if (!activeKey) return { error: 'NO_API_KEY' };
+
+  // Prioritize cached working model to avoid redundant fallback iterations
+  const modelsToTry = cachedWorkingModel
+    ? [cachedWorkingModel, ...GEMINI_CANDIDATE_MODELS.filter(m => m !== cachedWorkingModel)]
+    : [...GEMINI_CANDIDATE_MODELS];
+
+  let lastError = '';
+
+  for (const modelName of modelsToTry) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const candidate = data.candidates?.[0];
+        const text = candidate?.content?.parts?.[0]?.text;
+        if (text && text.trim().length > 0) {
+          cachedWorkingModel = modelName;
+          console.log(`[Gemini API] Successfully generated with model: ${modelName}`);
+          return { text, modelUsed: modelName };
+        } else {
+          lastError = `Model ${modelName} returned empty text (finishReason: ${candidate?.finishReason || 'unknown'})`;
+          console.warn(`[Gemini API] ${lastError}`);
+        }
+      } else {
+        const errText = await response.text();
+        lastError = errText;
+        console.warn(`[Gemini API] Model ${modelName} returned ${response.status}:`, errText);
+      }
+    } catch (e) {
+      lastError = e instanceof Error ? e.message : 'Network error';
+      console.warn(`[Gemini API] Model ${modelName} network error:`, lastError);
+    }
+  }
+
+  // Fallback: If responseMimeType: 'application/json' caused rejection across candidate models, retry without responseMimeType
+  if (payload.generationConfig?.responseMimeType) {
+    const fallbackPayload = {
+      ...payload,
+      generationConfig: {
+        ...payload.generationConfig,
+        responseMimeType: undefined
+      }
+    };
+    for (const modelName of ['gemini-3.1-pro-preview', 'gemini-2.0-flash', 'gemini-1.5-flash']) {
+      try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(fallbackPayload)
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const candidate = data.candidates?.[0];
+          const text = candidate?.content?.parts?.[0]?.text;
+          if (text && text.trim().length > 0) {
+            cachedWorkingModel = modelName;
+            console.log(`[Gemini API] Successfully generated without responseMimeType using: ${modelName}`);
+            return { text, modelUsed: modelName };
+          }
+        }
+      } catch { /* continue */ }
+    }
+  }
+
+  return { error: lastError || 'All candidate Gemini models failed' };
+}
+
 /**
  * Ask Google Gemini in strict Socratic Tutor mode (Localized by Country & National Curriculum)
  */
@@ -67,50 +170,36 @@ Strict Pedagogical Directives:
 6. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
     `.trim();
 
-  // If API Key is present, call Gemini API
+  // If API Key is present, call Gemini API with fallback
   if (activeKey && activeKey.trim() !== '') {
-    try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey.trim()}`;
-
-      const contents = [
-        {
-          role: 'user',
-          parts: [{ text: `System Instruction:\n${systemInstruction}` }]
-        },
-        ...history.slice(-6).map((msg) => ({
-          role: msg.role === 'user' ? 'user' : 'model',
-          parts: [{ text: msg.text }]
-        })),
-        {
-          role: 'user',
-          parts: [{ text: studentQuery }]
-        }
-      ];
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents,
-          generationConfig: {
-            temperature: 0.35,
-            maxOutputTokens: 600
-          }
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (candidate) {
-          return {
-            text: candidate,
-            scaffoldingType: 'socratic_question'
-          };
-        }
+    const contents = [
+      {
+        role: 'user',
+        parts: [{ text: `System Instruction:\n${systemInstruction}` }]
+      },
+      ...history.slice(-6).map((msg) => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }]
+      })),
+      {
+        role: 'user',
+        parts: [{ text: studentQuery }]
       }
-    } catch (err) {
-      console.error('Error invoking Gemini API:', err);
+    ];
+
+    const result = await callGeminiApiWithFallback(activeKey, {
+      contents,
+      generationConfig: {
+        temperature: 0.35,
+        maxOutputTokens: 600
+      }
+    });
+
+    if ('text' in result && result.text) {
+      return {
+        text: result.text,
+        scaffoldingType: 'socratic_question'
+      };
     }
   }
 
@@ -155,11 +244,8 @@ export async function evaluateAssessmentWithGemini(
   const activeKey = apiKey || (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_API_KEY;
 
   if (activeKey && activeKey.trim() !== '') {
-    try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey.trim()}`;
-
-      const prompt = isEn
-        ? `
+    const prompt = isEn
+      ? `
 You are the academic Socratic advisor to student ${profile.name} (${profile.gradeLevel}).
 The student just completed the mandatory assessment for lecture "${lectureTitle}".
 Score achieved: ${score}% (${correctCount} of ${questions.length} questions correct).
@@ -171,8 +257,8 @@ ${conceptAdvice.map((c) => `- Concept "${c.concept}": ${c.isCorrect ? 'Correct' 
 
 Task:
 Write a concise, motivating 3-4 sentence Socratic evaluation directly addressing the student in English. Summarize their performance and give actionable guidance on what they should do next.
-        `.trim()
-        : `
+      `.trim()
+      : `
 أنت الموجه التربوي الأكاديمي للطالب ${profile.name} في ${profile.gradeLevel}.
 أجرى الطالب الاختبار الإلزامي لمحاضرة "${lectureTitle}".
 النتيجة المحققة: ${score}% (${correctCount} من أصل ${questions.length} أسئلة صحيحة).
@@ -184,26 +270,15 @@ ${conceptAdvice.map((c) => `- مفهوم "${c.concept}": ${c.isCorrect ? 'إجا
 
 المطلوب:
 اكتب فقرة تقييم وتشجيع تربوية قصيرة ومباشرة (3 إلى 4 جمل فقط) موجهة للطالب بالعربية، توضح له ملخص أدائه وماذا يجب أن يفعل الآن بالتحديد بروح محفزة وسقراطية.
-        `.trim();
+      `.trim();
 
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.3, maxOutputTokens: 350 }
-        })
-      });
+    const result = await callGeminiApiWithFallback(activeKey, {
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.3, maxOutputTokens: 350 }
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (candidate) {
-          return { score, passed, qualitativeFeedback: candidate, conceptAdvice };
-        }
-      }
-    } catch (e) {
-      console.error('Error generating Gemini evaluation:', e);
+    if ('text' in result && result.text) {
+      return { score, passed, qualitativeFeedback: result.text, conceptAdvice };
     }
   }
 
@@ -459,41 +534,27 @@ CRITICAL RULES:
   }
 }`;
 
-  const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest', 'gemini-2.5-pro'];
-  let rawText: string | null = null;
-  let lastError = '';
-
-  for (const modelName of candidateModels) {
-    try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey.trim()}`;
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.35,
-            maxOutputTokens: 5000,
-            responseMimeType: 'application/json'
-          }
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (rawText) break;
-      } else {
-        lastError = await response.text();
-      }
-    } catch (e) {
-      lastError = e instanceof Error ? e.message : 'Network error';
+  const apiResult = await callGeminiApiWithFallback(activeKey, {
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.35,
+      maxOutputTokens: 5000,
+      responseMimeType: 'application/json'
     }
+  });
+
+  if ('error' in apiResult) {
+    let cleanMsg = apiResult.error;
+    try {
+      const parsed = JSON.parse(apiResult.error);
+      if (parsed?.error?.message) {
+        cleanMsg = parsed.error.message;
+      }
+    } catch { /* raw text */ }
+    return { lecture: null, error: `Gemini API Error: ${cleanMsg}` };
   }
 
-  if (!rawText) {
-    return { lecture: null, error: `Gemini API Error: ${lastError || 'Could not generate lesson.'}` };
-  }
+  const rawText = apiResult.text;
 
   try {
 
