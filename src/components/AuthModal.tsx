@@ -605,6 +605,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', regCountry, regGrade, regLanguage)}</option>
                         <option value="BIOLOGY">{getNationalSubjectLabel('BIOLOGY', regCountry, regGrade, regLanguage)}</option>
                         <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', regCountry, regGrade, regLanguage)}</option>
+                        <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', regCountry, regGrade, regLanguage)}</option>
                       </optgroup>
                     ) : (
                       <optgroup label="المواد الدراسية">

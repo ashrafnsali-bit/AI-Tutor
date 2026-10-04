@@ -1,4 +1,8 @@
 import type { Lecture, LectureSection, Assessment } from '../types';
+import { SUDAN_PRIMARY_SCIENCE_G6_LECTURES } from './sudanPrimaryScience6CurriculumData';
+import { SUDAN_HIGH_GEOGRAPHY_G10_LECTURES } from './sudanHighGeography10CurriculumData';
+
+export { SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES };
 
 // ============================================================================
 // OFFICIAL REPUBLIC OF SUDAN NATIONAL CURRICULUM (المنهج القومي السوداني المحدث)
@@ -668,7 +672,11 @@ export const SUDAN_HIGH_PHYSICS_G12_LECTURES: Lecture[] = [
 // 6. CENTRAL SUDAN CURRICULUM ROUTER (الموجّه المركزي لمناهج السودان)
 // ────────────────────────────────────────────────────────────────────────────
 export function getSudanCurriculum(subject: string, gradeLevel?: string): Lecture[] | null {
+  if (subject === 'PRIMARY_SCIENCE' && (gradeLevel === 'G6' || !gradeLevel)) {
+    return SUDAN_PRIMARY_SCIENCE_G6_LECTURES;
+  }
   if (subject === 'GENERAL_SCIENCE') {
+    if (gradeLevel === 'G6') return SUDAN_PRIMARY_SCIENCE_G6_LECTURES;
     if (gradeLevel === 'G9') return SUDAN_MIDDLE_SCIENCE_G9_LECTURES;
     if (gradeLevel === 'G8') return SUDAN_MIDDLE_SCIENCE_G8_LECTURES;
   }
@@ -680,6 +688,9 @@ export function getSudanCurriculum(subject: string, gradeLevel?: string): Lectur
   }
   if (subject === 'PHYSICS' && (gradeLevel === 'G12' || !gradeLevel)) {
     return SUDAN_HIGH_PHYSICS_G12_LECTURES;
+  }
+  if (subject === 'GEOGRAPHY' && (gradeLevel === 'G10' || !gradeLevel)) {
+    return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
   }
   return null;
 }

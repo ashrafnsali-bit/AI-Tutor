@@ -111,7 +111,8 @@ export const translations = {
       COMPUTER_SCIENCE: 'التقنية الرقمية وعلوم الحاسب',
       ARABIC_LIT: 'اللغة العربية والبلاغة والأدب',
       ARABIC_LANG: 'اللغة العربية (المرحلة المتوسطة / الإعدادية)',
-      GENERAL_SCIENCE: 'العلوم العامة (المرحلة المتوسطة / الإعدادية)'
+      GENERAL_SCIENCE: 'العلوم العامة (المرحلة المتوسطة / الإعدادية)',
+      GEOGRAPHY: 'الجغرافيا والدراسات البيئية'
     },
 
     // Roadmap
@@ -351,7 +352,8 @@ export const translations = {
       COMPUTER_SCIENCE: 'Digital Technology & Computer Science',
       ARABIC_LIT: 'Arabic Literature & Rhetoric (High School)',
       ARABIC_LANG: 'Arabic Language (Grammar & Reading - Middle School)',
-      GENERAL_SCIENCE: 'General Science (Middle School)'
+      GENERAL_SCIENCE: 'General Science (Middle School)',
+      GEOGRAPHY: 'Geography & Environmental Studies'
     },
 
     // Roadmap

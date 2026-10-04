@@ -657,6 +657,8 @@ export function getNationalTextbookInfo(
           : gradeLevel === 'G11'
           ? 'تاريخ الأدب العربي والنصوص والبلاغة (الصف الثاني الثانوي سوداني)'
           : 'الأدب والبلاغة والنقد وروائع الأدب السوداني والعربي (الشهادة الثانوية السودانية - 3 ثانوي)';
+      } else if (subject === 'GEOGRAPHY') {
+        textbookName = `كتاب الجغرافيا والدراسات البيئية (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
       }
       break;
 
@@ -1106,6 +1108,8 @@ export function getNationalSubjectLabel(
         return isEn ? 'Arabic Literature & Sudanese Poetry' : 'الأدب العربي وروائع الشعر السوداني';
       case 'ISLAMIC_STUDIES':
         return isEn ? 'Islamic Studies (Quran & Fiqh)' : 'التربية الإسلامية (القرآن والفقه والسيرة)';
+      case 'GEOGRAPHY':
+        return isEn ? 'Geography & Environmental Studies (Bakht Al-Ruda)' : 'الجغرافيا والدراسات البيئية (بخت الرضا)';
     }
   }
 
@@ -1305,6 +1309,8 @@ export function getNationalSubjectLabel(
       return isEn ? 'Computer Science & AI' : 'علوم الحاسب والذكاء الاصطناعي';
     case 'ARABIC_LIT':
       return isEn ? 'Arabic Literature & Rhetoric' : 'اللغة العربية والبلاغة والأدب';
+    case 'GEOGRAPHY':
+      return isEn ? 'Geography & Environmental Studies' : 'الجغرافيا والدراسات البيئية';
     default:
       return subject;
   }
