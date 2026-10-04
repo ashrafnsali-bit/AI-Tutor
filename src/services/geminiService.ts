@@ -429,6 +429,107 @@ export interface GenerateCurriculumParams {
   apiKey?: string;
 }
 
+/**
+ * Structural JSON repair engine that recovers complete objects even if token limits cut off output
+ */
+export function repairAndParseJson(text: string): any {
+  let cleaned = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
+
+  // 1. Standard parse attempt
+  try {
+    return JSON.parse(cleaned);
+  } catch (e) {
+    console.warn('[Gemini API] Direct JSON parse failed, executing automatic repair...', e);
+  }
+
+  // 2. Strip leading text if any
+  const firstBrace = cleaned.indexOf('{');
+  if (firstBrace > 0) {
+    cleaned = cleaned.slice(firstBrace);
+  }
+
+  // 3. Scan character state: in-string, escaping, brackets, braces
+  let inString = false;
+  let isEscaped = false;
+  let openBraces = 0;
+  let openBrackets = 0;
+
+  for (let i = 0; i < cleaned.length; i++) {
+    const ch = cleaned[i];
+    if (ch === '\\' && inString) {
+      isEscaped = !isEscaped;
+      continue;
+    }
+    if (ch === '"' && !isEscaped) {
+      inString = !inString;
+    }
+    isEscaped = false;
+
+    if (!inString) {
+      if (ch === '{') openBraces++;
+      else if (ch === '}') openBraces = Math.max(0, openBraces - 1);
+      else if (ch === '[') openBrackets++;
+      else if (ch === ']') openBrackets = Math.max(0, openBrackets - 1);
+    }
+  }
+
+  let repaired = cleaned;
+
+  // If truncated inside an unclosed string literal, close it
+  if (inString) {
+    repaired += '"';
+  }
+
+  // Clean trailing commas or dangling keys
+  repaired = repaired.replace(/,\s*$/g, '');
+  repaired = repaired.replace(/"[^"\\]*"\s*:\s*$/g, '');
+  repaired = repaired.replace(/,\s*$/g, '');
+
+  // Recount braces and brackets on repaired text
+  let bCount = 0;
+  let kCount = 0;
+  inString = false;
+  isEscaped = false;
+  for (let i = 0; i < repaired.length; i++) {
+    const ch = repaired[i];
+    if (ch === '\\' && inString) {
+      isEscaped = !isEscaped;
+      continue;
+    }
+    if (ch === '"' && !isEscaped) {
+      inString = !inString;
+    }
+    isEscaped = false;
+    if (!inString) {
+      if (ch === '{') bCount++;
+      else if (ch === '}') bCount = Math.max(0, bCount - 1);
+      else if (ch === '[') kCount++;
+      else if (ch === ']') kCount = Math.max(0, kCount - 1);
+    }
+  }
+
+  // Close open brackets and braces in proper order
+  while (kCount > 0) {
+    repaired += ']';
+    kCount--;
+  }
+  while (bCount > 0) {
+    repaired += '}';
+    bCount--;
+  }
+
+  // Clean trailing commas before closing braces/brackets
+  repaired = repaired.replace(/,\s*([}\]])/g, '$1');
+
+  try {
+    const parsed = JSON.parse(repaired);
+    console.log('[Gemini API] Successfully repaired truncated JSON response!');
+    return parsed;
+  } catch (finalErr) {
+    throw new Error(`JSON parsing failed: ${(finalErr as Error).message}`);
+  }
+}
+
 export async function generateCurriculumLecture(
   params: GenerateCurriculumParams,
   existingTitles: string[] = []
@@ -456,7 +557,8 @@ CRITICAL RULES:
 1. Adhere strictly to the official educational guidelines, scientific terms, and symbols of ${cInfo.nameAr}.
 2. The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
 3. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
-4. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
+4. Focus and conciseness: Keep each section explanation focused, direct, and impactful (approx. 100-150 words per section) so all 4 sections, worked examples, textbook exercises, and assessments generate completely without truncating.
+5. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
 
 {
   "id": "gen-${profile.subject.toLowerCase()}-${lectureNumber}-${Date.now()}",
@@ -618,7 +720,7 @@ CRITICAL RULES:
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 0.35,
-      maxOutputTokens: 5000,
+      maxOutputTokens: 8192,
       responseMimeType: 'application/json'
     }
   });
@@ -637,9 +739,7 @@ CRITICAL RULES:
   const rawText = apiResult.text;
 
   try {
-
-    const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
-    const rawParsed = JSON.parse(cleaned);
+    const rawParsed = repairAndParseJson(rawText);
 
     // Normalize and strictly guarantee all required schema fields
     const lecture: Lecture = {
