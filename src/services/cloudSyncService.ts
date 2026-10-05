@@ -344,7 +344,10 @@ export async function syncGradeToCloud(grade: GradeRecord): Promise<void> {
  */
 export async function pullCloudData(): Promise<UserAccount[]> {
   try {
-    const res = await fetch(CLOUD_USERS_HISTORY_URL);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(CLOUD_USERS_HISTORY_URL, { signal: controller.signal });
+    clearTimeout(timeoutId);
     if (res.ok) {
       const text = await res.text();
       const lines = text.trim().split('\n').filter(Boolean);
@@ -367,8 +370,8 @@ export async function pullCloudData(): Promise<UserAccount[]> {
         }
       }
     }
-  } catch (err) {
-    // If network offline, read from local cache
+  } catch (_err) {
+    // If network offline or timed out, read from local cache
   }
 
   return getCachedCloudUsers();

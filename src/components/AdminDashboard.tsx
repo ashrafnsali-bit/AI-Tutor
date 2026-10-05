@@ -119,11 +119,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const loadData = async (silent = false) => {
     if (!silent) setLoading(true);
     try {
-      await pullCloudData().catch(() => {});
+      // 1. Immediately load local & cached student overview (Instant response!)
       const data = await getAdminStudentsOverview();
       setStudents(data);
+      if (!silent) setLoading(false);
+
+      // 2. Refresh from cloud in background without blocking the UI
+      pullCloudData()
+        .then(async () => {
+          const freshData = await getAdminStudentsOverview();
+          if (freshData && freshData.length > 0) {
+            setStudents(freshData);
+          }
+        })
+        .catch(() => {});
     } catch (err) {
-      console.error(err);
+      console.error('Error loading admin students overview:', err);
     } finally {
       if (!silent) setLoading(false);
     }

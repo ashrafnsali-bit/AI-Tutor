@@ -1080,7 +1080,7 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
 
       const lecturesStatus = userLectures.map((lec, i) => {
         const order = lec.order || (i + 1);
-        const matchingGrade = grades.find(g => g.lectureId === lec.id || g.lectureId.endsWith(`-${order}`));
+        const matchingGrade = grades.find(g => g && (g.lectureId === lec.id || (typeof g.lectureId === 'string' && g.lectureId.endsWith(`-${order}`))));
         const isCompleted = order <= completedLecturesCount;
         const isLocked = order > completedLecturesCount + 1;
         
