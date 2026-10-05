@@ -2749,14 +2749,14 @@ export function getNationalLessonOverrides(
     }
   }
 
-  // Cross-country fallbacks:
-  // If Islamic education type requested and this country doesn't have custom Islamic overrides, fallback to Azhari/Saudi Islamic
-  if (educationType === 'ISLAMIC') {
-    if (NATIONAL_CURRICULA.EG?.[`${subject}_ISLAMIC`]) {
-      return NATIONAL_CURRICULA.EG[`${subject}_ISLAMIC`];
+  // International education type explicit fallback to INTL standards
+  if (educationType === 'INTERNATIONAL' && NATIONAL_CURRICULA.INTL) {
+    const intlKey = `${subject}_${gradeLevel}`;
+    if (NATIONAL_CURRICULA.INTL[intlKey] && NATIONAL_CURRICULA.INTL[intlKey]!.length > 0) {
+      return NATIONAL_CURRICULA.INTL[intlKey];
     }
-    if (NATIONAL_CURRICULA.SA?.[`${subject}_ISLAMIC`]) {
-      return NATIONAL_CURRICULA.SA[`${subject}_ISLAMIC`];
+    if (NATIONAL_CURRICULA.INTL[subject] && NATIONAL_CURRICULA.INTL[subject]!.length > 0) {
+      return NATIONAL_CURRICULA.INTL[subject];
     }
   }
 

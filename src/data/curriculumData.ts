@@ -4733,7 +4733,7 @@ export function loadSubjectLectures(
     }
   });
 
-  const storageKey = `TEACHER_AI_LECTURES_V3_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
+  const storageKey = `TEACHER_AI_LECTURES_V4_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
   const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
   
   let rawList = combined;
@@ -4837,7 +4837,7 @@ export function saveSubjectLectures(
   educationType: EducationType = 'PUBLIC'
 ): void {
   if (typeof localStorage === 'undefined') return;
-  const storageKey = `TEACHER_AI_LECTURES_V3_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
+  const storageKey = `TEACHER_AI_LECTURES_V4_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
   localStorage.setItem(storageKey, JSON.stringify(lectures));
 }
 

@@ -1452,41 +1452,178 @@ export function adaptCurriculumToCountry(
     return result;
   };
 
-  function generateSudanSectionsForOverride(override: NationalLessonOverride, idx: number): LectureSection[] {
+  function getMinistryAuthority(countryCode: CountryCode, eduType: EducationType): { ministryAr: string; authorityAr: string; examNameAr: string } {
+    if (countryCode === 'EG') {
+      if (eduType === 'ISLAMIC') {
+        return {
+          ministryAr: 'قطاع المعاهد الأزهرية - مشيخة الأزهر الشريف',
+          authorityAr: 'الإدارة المركزية للمناهج والكتب بالأزهر الشريف بمصر',
+          examNameAr: 'امتحانات الشهادة الأزهرية'
+        };
+      }
+      return {
+        ministryAr: 'وزارة التربية والتعليم والتعليم الفني - جمهورية مصر العربية',
+        authorityAr: 'مركز تطوير المناهج والمواد التعليمية (بنك المعرفة المصري)',
+        examNameAr: 'امتحانات الثانوية العامة والشهادات المصرية'
+      };
+    }
+    if (countryCode === 'SD') {
+      if (eduType === 'ISLAMIC') {
+        return {
+          ministryAr: 'وزارة التربية والتعليم الاتحادية - إدارة التعليم الديني والقرآني',
+          authorityAr: 'إدارة المعاهد العلمية والدينية بجمهورية السودان',
+          examNameAr: 'امتحانات الشهادة الأهلية والدينية السودانية'
+        };
+      }
+      return {
+        ministryAr: 'وزارة التربية والتعليم الاتحادية - جمهورية السودان',
+        authorityAr: 'المركز القومي للمناهج والبحث التربوي (بخت الرضا)',
+        examNameAr: 'امتحانات الشهادة الثانوية والابتدائية السودانية'
+      };
+    }
+    if (countryCode === 'SA') {
+      if (eduType === 'ISLAMIC') {
+        return {
+          ministryAr: 'وزارة التعليم - المعاهد العلمية ومدارس تحفيظ القرآن الكريم',
+          authorityAr: 'وكالة البرامج التعليمية ومدارس تحفيظ القرآن بالمملكة',
+          examNameAr: 'اختبارات التحصيل الدراسي والمعاهد العلمية'
+        };
+      }
+      return {
+        ministryAr: 'وزارة التعليم - المملكة العربية السعودية',
+        authorityAr: 'الإدارة العامة للمناهج (نظام الفصول الثلاثة والمسارات)',
+        examNameAr: 'اختبارات نافس والتحصيلي والقدرات بالمملكة'
+      };
+    }
+    if (countryCode === 'AE') {
+      return {
+        ministryAr: 'مؤسسة الإمارات للتعليم المدرسي - وزارة التربية والتعليم',
+        authorityAr: 'قطاع المناهج الوطنية بدولة الإمارات العربية المتحدة',
+        examNameAr: 'اختبارات الإمارات القياسية (EmSAT)'
+      };
+    }
+    if (countryCode === 'JO') {
+      return {
+        ministryAr: 'وزارة التربية والتعليم - المملكة الأردنية الهاشمية',
+        authorityAr: 'إدارة المناهج والكتب المدرسية الأردنية',
+        examNameAr: 'امتحان شهادة الدراسة الثانوية العامة (التوجيهي)'
+      };
+    }
+    if (countryCode === 'KW') {
+      return {
+        ministryAr: 'وزارة التربية - دولة الكويت',
+        authorityAr: 'قطاع البحوث التربوية والمناهج بدولة الكويت',
+        examNameAr: 'الامتحانات الموحدة لوزارة التربية الكويتية'
+      };
+    }
+    if (countryCode === 'QA') {
+      return {
+        ministryAr: 'وزارة التربية والتعليم والتعليم العالي - دولة قطر',
+        authorityAr: 'إدارة المناهج ومصادر التعلم بدولة قطر',
+        examNameAr: 'اختبارات الشهادة الثانوية العامة القطرية'
+      };
+    }
+    if (countryCode === 'OM') {
+      return {
+        ministryAr: 'وزارة التربية والتعليم - سلطنة عمان',
+        authorityAr: 'المديرية العامة لتطوير المناهج بسلطنة عمان',
+        examNameAr: 'امتحانات دبلوم التعليم العام بسلطنة عمان'
+      };
+    }
+    if (countryCode === 'BH') {
+      return {
+        ministryAr: 'وزارة التربية والتعليم - مملكة البحرين',
+        authorityAr: 'إدارة المناهج بوزارة التربية والتعليم بمملكة البحرين',
+        examNameAr: 'الامتحانات الوطنية والشهادة الثانوية بالبحرين'
+      };
+    }
+    if (countryCode === 'IQ') {
+      return {
+        ministryAr: 'وزارة التربية - جمهورية العراق',
+        authorityAr: 'المديرية العامة للمناهج بالعراق',
+        examNameAr: 'الامتحانات الوزارية العامة (البكالوريا)'
+      };
+    }
+    if (countryCode === 'MA') {
+      return {
+        ministryAr: 'وزارة التربية الوطنية والتعليم الأولي والرياضة - المملكة المغربية',
+        authorityAr: 'مديرية المناهج بالمملكة المغربية',
+        examNameAr: 'امتحانات نيل شهادة البكالوريا المغربية'
+      };
+    }
+    if (countryCode === 'DZ') {
+      return {
+        ministryAr: 'وزارة التربية الوطنية - الجمهورية الجزائرية الديمقراطية الشعبية',
+        authorityAr: 'المعهد الوطني للبحث في التربية بالجزائر',
+        examNameAr: 'امتحان شهادة البكالوريا الجزائرية'
+      };
+    }
+    if (countryCode === 'TN') {
+      return {
+        ministryAr: 'وزارة التربية - الجمهورية التونسية',
+        authorityAr: 'الإدارة العامة للبرامج والتكوين المستمر بتونس',
+        examNameAr: 'امتحان البكالوريا التونسية'
+      };
+    }
+    return {
+      ministryAr: 'المعايير التعليمية الوطنية المعتمدة',
+      authorityAr: 'المجلس الأكاديمي لتطوير المناهج',
+      examNameAr: 'الاختبارات القياسية المعتمدة'
+    };
+  }
+
+  function generateNationalSectionsForOverride(
+    override: NationalLessonOverride,
+    idx: number,
+    countryCode: CountryCode,
+    eduType: EducationType
+  ): LectureSection[] {
+    const auth = getMinistryAuthority(countryCode, eduType);
+    const countryName = getCountryInfo(countryCode).nameAr;
+    const eduTypeLabel = eduType === 'ISLAMIC' ? 'التعليم الشرعي / الأزهري' : (eduType === 'PRIVATE' ? 'التعليم الخاص' : (eduType === 'INTERNATIONAL' ? 'التعليم الدولي' : 'التعليم العام'));
+
     return [
       {
-        titleAr: `1. الشرح النظري والمفاهيم: ${override.titleAr}`,
-        titleEn: `1. Core Concepts: ${override.titleEn || override.titleAr}`,
-        contentAr: `${override.descriptionAr} يتناول هذا الدرس وفق مفردات كتاب المنهج القومي لوزارة التربية والتعليم الاتحادية بجمهورية السودان (المركز القومي للمناهج والبحث التربوي بخت الرضا) دراسة موضوع "${override.topicAr}"، وما يرتبط به من أسس علمية وتطبيقات عملية في البيئة السودانية والتجارب الوطنية. ${override.subtitleAr}. يحرص المنهج على ربط المفاهيم النظرية بالتطبيقات الحياتية لتزويد الطالب بالمهارات الأساسية للنجاح والتفوق.`,
-        contentEn: `According to the authentic Sudanese national syllabus (Bakht Al-Ruda), this lesson covers ${override.topicAr} with practical applications. ${override.subtitleEn || ''}`,
+        titleAr: `1. الشرح المفاهيمي والأساس العلمي: ${override.titleAr}`,
+        titleEn: `1. Conceptual Fundamentals: ${override.titleEn || override.titleAr}`,
+        contentAr: `${override.descriptionAr} يتناول هذا الدرس وفق المعايير الرسمية المعتمدة لدى (${auth.ministryAr} - ${countryName}) ومقررات ${eduTypeLabel} دراسة موضوع "${override.topicAr}"، وما يرتبط به من محاور وقوانين تأسيسية وتطبيقات حيوية. ${override.subtitleAr}. يحرص المنهج الوطني على ربط الجانب النظري بالواقع العملي لإكساب الطالب الفهم العميق والمهارات التحليلية المطلوبة.`,
+        contentEn: `According to the official curriculum standards of ${auth.ministryAr}, this unit addresses ${override.topicAr}. ${override.subtitleEn || ''}`,
+        tipsAr: [
+          `التركيز على المفاهيم الجوهرية المعتمدة رسمياً في (${auth.authorityAr}).`,
+          `استحضار التطبيقات والمسائل النموذجية للتحضير المباشر لـ (${auth.examNameAr}).`
+        ],
+        tipsEn: [
+          'Focus on core ministerial syllabus concepts.',
+          'Review worked examples to prepare for national assessments.'
+        ],
         interactiveExample: {
-          titleAr: `تطبيق ومسألة توضيحية: ${override.titleAr}`,
+          titleAr: `مثال تطبيقي ومسألة محلولة: ${override.titleAr}`,
           titleEn: `Worked Example: ${override.titleEn || override.titleAr}`,
-          equation: `${override.topicAr} - بخت الرضا`,
+          equation: `${override.topicAr} - ${auth.ministryAr}`,
           steps: [
             {
               stepNumber: 1,
-              textAr: `الخطوة الأولى: تحديد المعطيات والمفاهيم الأساسية المستفادة من: ${override.subtitleAr}`,
+              textAr: `تحديد المعطيات والمفاهيم الأساسية المستفادة من: ${override.subtitleAr}`,
               textEn: 'Step 1: Identify given parameters and underlying principles.'
             },
             {
               stepNumber: 2,
-              textAr: `الخطوة الثانية: تطبيق القواعد والخطوات العلمية المعتمدة في المنهج القومي السوداني للوصول إلى الحل الدقيق والنموذجي.`,
-              textEn: 'Step 2: Apply the national curriculum analytical steps to derive the exact solution.'
+              textAr: `تطبيق القواعد العلمية والخطوات المنهجية المعتمدة لدى (${auth.authorityAr}) للوصول إلى النتيجة الصحيحة النموذجية.`,
+              textEn: 'Step 2: Apply the analytical steps to derive the exact standardized solution.'
             }
           ],
-          takeawayAr: `استيعاب درس "${override.titleAr}" وفق معايير كتاب بخت الرضا يرسخ الفهم العميق ويضمن التفوق في امتحانات الشهادة.`,
-          takeawayEn: 'Mastering this topic according to Bakht Al-Ruda curriculum standards guarantees solid conceptual grounding.'
+          takeawayAr: `استيعاب درس "${override.titleAr}" وفق معايير (${auth.ministryAr}) يرسخ الفهم العميق ويضمن التفوق في (${auth.examNameAr}).`,
+          takeawayEn: 'Mastering this topic guarantees strong conceptual foundation and academic excellence.'
         },
         formativeCheck: {
-          id: `sd-fc-gen-${idx + 1}`,
+          id: `nat-fc-${countryCode.toLowerCase()}-${eduType.toLowerCase()}-${idx + 1}`,
           questionAr: `ما هو المحور الأساسي الذي يركز عليه هذا الدرس في ${override.unitTitleAr}؟`,
           questionEn: `What is the primary focus of this lesson in ${override.unitTitleEn || override.unitTitleAr}?`,
           optionsAr: [
             override.titleAr,
-            'مفاهيم تمهيدية عامة غير مقررة',
-            'قوانين نظرية خارج السلم التعليمي السوداني',
-            'مراجعة غير مرتبطة بالوحدة'
+            'مفاهيم عامة خارج المقرر المعتمد',
+            'قوانين نظرية ملغاة من الخطة الدراسية',
+            'مراجعة غير مرتبطة بالوحدة المقررة'
           ],
           optionsEn: [
             override.titleEn || override.titleAr,
@@ -1495,29 +1632,36 @@ export function adaptCurriculumToCountry(
             'Non-syllabus review'
           ],
           correctIndex: 0,
-          explanationAr: `يركز هذا الدرس وفق كتاب المنهج القومي السوداني المحدث على دراسة ${override.titleAr} وتطبيقاتها العلمية والعملية.`,
-          explanationEn: `This lesson focuses specifically on ${override.titleEn || override.titleAr} aligned with the official national syllabus.`
+          explanationAr: `يركز هذا الدرس وفق كتاب المنهج الرسمي لـ (${auth.ministryAr}) على دراسة "${override.titleAr}" وتطبيقاتها العلمية والعملية.`,
+          explanationEn: `This lesson focuses specifically on ${override.titleEn || override.titleAr} aligned with official national syllabus.`
         }
       }
     ];
   }
 
-  function generateSudanAssessmentForOverride(override: NationalLessonOverride, idx: number): Assessment {
+  function generateNationalAssessmentForOverride(
+    override: NationalLessonOverride,
+    idx: number,
+    countryCode: CountryCode,
+    eduType: EducationType
+  ): Assessment {
+    const auth = getMinistryAuthority(countryCode, eduType);
+
     return {
-      id: `sd-assess-gen-${idx + 1}`,
+      id: `nat-assess-${countryCode.toLowerCase()}-${eduType.toLowerCase()}-${idx + 1}`,
       titleAr: `اختبار تقييم استيعاب: ${override.titleAr}`,
       titleEn: `Mastery Assessment: ${override.titleEn || override.titleAr}`,
       passingScore: 80,
       questions: [
         {
-          id: `sd-q-gen-${idx + 1}-1`,
-          textAr: `في سياق دراسة ${override.topicAr} وفق المنهج السوداني، ما هو الهدف التعليمي الأهم لهذا الدرس؟`,
+          id: `nat-q-${countryCode.toLowerCase()}-${idx + 1}-1`,
+          textAr: `في سياق دراسة ${override.topicAr} وفق معايير (${auth.ministryAr})، ما هو الهدف التعليمي الأهم لهذا الدرس؟`,
           textEn: `In the context of studying ${override.topicEn || override.topicAr}, what is the main objective?`,
           optionsAr: [
             `إتقان وفهم: ${override.titleAr}`,
-            'حفظ التعريفات فقط دون فهم التطبيقات',
-            'دراسة موضوعات من خارج كتاب بخت الرضا',
-            'تجاوز الخطوات المنهجية المعتمدة'
+            'حفظ القوانين دون فهم التطبيقات الواقعية',
+            'دراسة موضوعات من خارج الخطة الدراسية المعتمدة',
+            'تجاوز الخطوات المنهجية المحددة في الدليل'
           ],
           optionsEn: [
             `Mastering: ${override.titleEn || override.titleAr}`,
@@ -1528,24 +1672,24 @@ export function adaptCurriculumToCountry(
           correctIndex: 0,
           conceptTestedAr: `استيعاب أهداف: ${override.titleAr}`,
           conceptTestedEn: 'Syllabus objective mastery',
-          explanationAr: `يهدف الدرس بصورة أساسية إلى تمكين الطالب من استيعاب ${override.titleAr} وتطبيق مهاراته في التمارين والامتحانات القومية بالسودان.`,
+          explanationAr: `يهدف الدرس بصورة أساسية إلى تمكين الطالب من استيعاب "${override.titleAr}" وتطبيق مهاراته في (${auth.examNameAr}).`,
           explanationEn: `The lesson empowers the student to master ${override.titleEn || override.titleAr} in accordance with official national exams.`,
           difficulty: 'medium'
         },
         {
-          id: `sd-q-gen-${idx + 1}-2`,
+          id: `nat-q-${countryCode.toLowerCase()}-${idx + 1}-2`,
           textAr: `أي العبارات الآتية تعبر بدقة عن محتوى الدرس في ${override.unitTitleAr}؟`,
           textEn: `Which statement accurately reflects the lesson content in ${override.unitTitleEn || override.unitTitleAr}?`,
           optionsAr: [
             override.subtitleAr,
-            'الدرس لا يشمل أي تطبيقات عملية في السودان',
-            'الموضوع يقتصر على سرد تاريخي دون قوانين',
-            'محتوى لا ينتمي للمنهج القومي'
+            'الدرس لا يشمل أي تطبيقات عملية في المنهج المعتمد',
+            'الموضوع يقتصر على سرد عام دون تفاصيل علمية',
+            'محتوى لا ينتمي للمنهج الوطني الرسمي'
           ],
           optionsEn: [
             override.subtitleEn || override.subtitleAr,
-            'No practical applications in Sudan',
-            'Historical recount only',
+            'No practical applications in curriculum',
+            'General recount without detail',
             'Non-curriculum content'
           ],
           correctIndex: 0,
@@ -1559,7 +1703,13 @@ export function adaptCurriculumToCountry(
     };
   }
 
+  // 1. Guard against mangling dedicated authentic national curricula:
+  const isAlreadyDedicated = lectures.length > 0 && lectures.every(l => l.country === country);
   const nationalOverrides = getNationalLessonOverrides(country, subject, gradeLevel, educationType, track);
+
+  if (isAlreadyDedicated && !nationalOverrides) {
+    return lectures;
+  }
 
   const totalCount = nationalOverrides && nationalOverrides.length > 0
     ? Math.max(lectures.length, nationalOverrides.length)
@@ -1583,15 +1733,15 @@ export function adaptCurriculumToCountry(
     const finalDescriptionEn = override?.descriptionEn || baseLec?.descriptionEn || '';
     const finalLessonNumberAr = override?.lessonNumberAr || baseLec?.lessonNumberAr || `الدرس ${index + 1}`;
     
-    // For Sudan, guarantee authentic warmup and summary without bleedover from foreign bases
+    const auth = getMinistryAuthority(country, educationType);
     const finalWarmupHookAr = override?.warmupHookAr 
-      || (country === 'SD' && override
-        ? `مرحباً بك في دراسة "${override.titleAr}" وفق مفردات كتاب المنهج القومي لوزارة التربية والتعليم الاتحادية بالسودان (المركز القومي للمناهج والبحث التربوي بخت الرضا). سنستكشف في هذا الدرس ${override.topicAr} ونتعرف على أهم القوانين والتطبيقات العلمية والعملية المرتبطة بها في السودان.`
+      || (override
+        ? `مرحباً بك في دراسة "${override.titleAr}" وفق المعايير الرسمية المعتمدة لدى (${auth.ministryAr}). سنستكشف في هذا الدرس ${override.topicAr} ونتعرف على أهم القوانين والتطبيقات العلمية والعملية المرتبطة بها.`
         : applyTextTransforms(baseLec?.warmupHookAr || ''));
 
     const finalSummaryAr = override?.summaryAr 
-      || (country === 'SD' && override
-        ? `ملخص المنهج القومي السوداني: تناول هذا الدرس دراسة ${override.titleAr} و${override.topicAr} وفق معايير المركز القومي للمناهج والبحث التربوي (بخت الرضا) مع التركيز على المهارات والتطبيقات الأساسية.`
+      || (override
+        ? `ملخص المنهج الرسمي: تناول هذا الدرس دراسة ${override.titleAr} و${override.topicAr} وفق معايير (${auth.authorityAr}) مع التركيز على المهارات والتطبيقات الأساسية لـ (${auth.examNameAr}).`
         : applyTextTransforms(baseLec?.summaryAr || ''));
 
     // Clone lecture deeply with authentic national adaptation
@@ -1612,32 +1762,34 @@ export function adaptCurriculumToCountry(
       order: index + 1,
       gradeLevelNameAr: `${cInfo.nameAr} - ${natTextbook.textbookName}`,
       gradeLevelNameEn: `${cInfo.nameEn} - ${natTextbook.textbookName}`,
-      ministryAr: natTextbook.ministry,
+      ministryAr: auth.ministryAr || natTextbook.ministry,
       ministryEn: natTextbook.ministry,
       termAr: natTextbook.semester,
       termEn: natTextbook.semester,
       country,
+      educationType,
+      educationTrack: track,
       warmupHookAr: finalWarmupHookAr,
       summaryAr: finalSummaryAr,
       isLocked: index > 0,
       isCompleted: false,
-      learningOutcomesAr: override?.learningOutcomesAr || (country === 'SD' && override ? [
-        `أن يستوعب الطالب المفاهيم الأساسية في ${override.titleAr} وفق منهج بخت الرضا.`,
+      learningOutcomesAr: override?.learningOutcomesAr || (override ? [
+        `أن يستوعب الطالب المفاهيم الأساسية في ${override.titleAr} وفق معايير ${auth.authorityAr}.`,
         `أن يحلل الطالب القوانين والقواعد العلمية المتعلقة بـ ${override.topicAr}.`,
-        `أن يطبق القواعد والمهارات في حل التدريبات والمسائل الامتحانية المعتمدة بالسودان.`
+        `أن يطبق القواعد والمهارات في حل التدريبات والمسائل الامتحانية لـ ${auth.examNameAr}.`
       ] : baseLec?.learningOutcomesAr),
-      vocabulary: override?.vocabulary || (country === 'SD' && override ? [
-        { termAr: override.topicAr, termEn: override.topicEn || override.topicAr, definitionAr: `مفهوم أساسي ضمن مقرر ${override.unitTitleAr} المعتمد من المركز القومي للمناهج بخت الرضا.` }
+      vocabulary: override?.vocabulary || (override ? [
+        { termAr: override.topicAr, termEn: override.topicEn || override.topicAr, definitionAr: `مفهوم أساسي ضمن مقرر ${override.unitTitleAr} المعتمد من ${auth.authorityAr}.` }
       ] : baseLec?.vocabulary),
-      keyConceptsAr: override?.keyConceptsAr || (country === 'SD' && override ? [
+      keyConceptsAr: override?.keyConceptsAr || (override ? [
         override.titleAr,
         override.topicAr,
-        'تطبيقات المنهج القومي السوداني المحدث (بخت الرضا)'
+        `تطبيقات المنهج المعتمد (${auth.authorityAr})`
       ] : baseLec?.keyConceptsAr),
       sections: (override?.sections && override.sections.length > 0)
         ? override.sections
-        : (country === 'SD' && override
-          ? generateSudanSectionsForOverride(override, index)
+        : (override
+          ? generateNationalSectionsForOverride(override, index, country, educationType)
           : (baseLec?.sections ? baseLec.sections.map(sec => ({
               ...sec,
               titleAr: applyTextTransforms(sec.titleAr),
@@ -1659,8 +1811,8 @@ export function adaptCurriculumToCountry(
                 explanationAr: applyTextTransforms(sec.formativeCheck.explanationAr)
               } : undefined
             })) : [])),
-      assessment: override?.assessment || (country === 'SD' && override
-        ? generateSudanAssessmentForOverride(override, index)
+      assessment: override?.assessment || (override
+        ? generateNationalAssessmentForOverride(override, index, country, educationType)
         : (baseLec?.assessment ? {
             ...baseLec.assessment,
             titleAr: applyTextTransforms(baseLec.assessment.titleAr),
