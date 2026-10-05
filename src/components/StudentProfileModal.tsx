@@ -23,6 +23,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  const isEn = profile.language === 'en';
   const [isDetecting, setIsDetecting] = useState(false);
   const [detectNotice, setDetectNotice] = useState<string | null>(null);
   const [activeDbUser, setActiveDbUser] = useState<UserAccount | null>(null);
@@ -218,15 +219,12 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const finalName = (activeDbUser?.name && activeDbUser.name !== 'عمر التميمي')
-      ? activeDbUser.name
-      : ((profile.name && profile.name !== 'عمر التميمي') ? profile.name : 'احمد علي');
-    const finalNameAr = (activeDbUser?.nameAr && activeDbUser.nameAr !== 'عمر التميمي')
-      ? activeDbUser.nameAr
-      : ((profile.nameAr && profile.nameAr !== 'عمر التميمي') ? profile.nameAr : finalName);
-    const finalNameEn = (activeDbUser?.nameEn && activeDbUser.nameEn !== 'Omar Al-Tamimi')
-      ? activeDbUser.nameEn
-      : ((profile.nameEn && profile.nameEn !== 'Omar Al-Tamimi') ? profile.nameEn : finalName);
+    const guestLabel = isEn ? 'Guest Student' : 'طالب زائر';
+    const cleanName = (val?: string) => (val && val !== 'عمر التميمي' && val !== 'احمد علي' && val !== 'Ahmed Ali') ? val : '';
+
+    const finalName = cleanName(activeDbUser?.name) || cleanName(profile.name) || guestLabel;
+    const finalNameAr = cleanName(activeDbUser?.nameAr) || cleanName(profile.nameAr) || finalName;
+    const finalNameEn = cleanName(activeDbUser?.nameEn) || cleanName(profile.nameEn) || (isEn ? finalName : 'Guest Student');
     const finalId = activeDbUser?.id || profile.id;
 
     onSave({
@@ -240,9 +238,9 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   };
 
   const isMinorUnder13 = formData.age > 0 && formData.age < 13;
-  const officialStudentName = (activeDbUser?.name && activeDbUser.name !== 'عمر التميمي')
-    ? activeDbUser.name
-    : ((profile.name && profile.name !== 'عمر التميمي') ? profile.name : 'احمد علي');
+  const guestLabel = isEn ? 'Guest Student' : 'طالب زائر';
+  const cleanName = (val?: string) => (val && val !== 'عمر التميمي' && val !== 'احمد علي' && val !== 'Ahmed Ali') ? val : '';
+  const officialStudentName = cleanName(activeDbUser?.name) || cleanName(profile.name) || guestLabel;
   const officialStudentId = activeDbUser?.username ? `@${activeDbUser.username}` : (activeDbUser?.id || profile.id || '@student');
 
   return (

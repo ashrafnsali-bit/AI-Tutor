@@ -67,32 +67,35 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isEn = profile.language === 'en';
 
   // Fetch official authenticated student name directly from central database (preventing any mismatch)
+  const isInvalidDemoName = (n?: string) => !n || n === 'عمر التميمي' || n === 'احمد علي' || n === 'Ahmed Ali';
+
   const [dbOfficialName, setDbOfficialName] = useState<string>(() => {
     try {
       const activeStored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
       if (activeStored) {
         const parsed = JSON.parse(activeStored);
-        if (parsed?.name && parsed.name !== 'عمر التميمي') {
+        if (parsed?.name && !isInvalidDemoName(parsed.name)) {
           return isEn ? (parsed.nameEn || parsed.name) : (parsed.nameAr || parsed.name);
         }
       }
     } catch {}
     const pName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
-    return (pName && pName !== 'عمر التميمي') ? pName : '';
+    return !isInvalidDemoName(pName) ? pName : '';
   });
 
   useEffect(() => {
     getActiveUserAccount().then(user => {
-      if (user && user.name && user.name !== 'عمر التميمي') {
+      if (user && user.name && !isInvalidDemoName(user.name)) {
         setDbOfficialName(isEn ? (user.nameEn || user.name) : (user.nameAr || user.name));
       }
     }).catch(() => {});
   }, [profile.name, isEn]);
 
   const defaultFallback = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
-  const displayName = (dbOfficialName && dbOfficialName !== 'عمر التميمي')
-    ? dbOfficialName
-    : (defaultFallback && defaultFallback !== 'عمر التميمي' ? defaultFallback : (isEn ? 'Ahmed Ali' : 'احمد علي'));
+  const cleanDbName = !isInvalidDemoName(dbOfficialName) ? dbOfficialName : '';
+  const cleanDefault = !isInvalidDemoName(defaultFallback) ? defaultFallback : '';
+  const guestLabel = isEn ? 'Guest Student' : 'طالب زائر';
+  const displayName = cleanDbName || cleanDefault || guestLabel;
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(profile.gradeLevel);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(profile.gradeLevel);
   const countryInfo = getCountryInfo(profile.country);
@@ -209,22 +212,36 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>{isEn ? 'العربية' : 'English'}</span>
           </button>
 
-          {/* User Profile & Settings Menu Dropdown */}
-          <div className="user-dropdown-container" ref={dropdownRef}>
+          {/* User Profile & Settings Menu Dropdown OR Direct Log In Button */}
+          {!isLoggedIn ? (
             <button 
               type="button" 
-              className={`user-menu-trigger ${isDropdownOpen ? 'active' : ''}`}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              aria-expanded={isDropdownOpen}
-              title={displayName}
+              className="user-menu-trigger"
+              onClick={() => onOpenAuth?.()}
+              title={isEn ? "Log In or Register" : "تسجيل الدخول / إنشاء حساب"}
+              style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2))', borderColor: 'rgba(56, 189, 248, 0.4)' }}
             >
-              <div className="user-avatar-small">
+              <div className="user-avatar-small" style={{ background: 'linear-gradient(135deg, #06b6d4, #3b82f6)' }}>
                 <User size={15} />
               </div>
-              <span className="user-name-label">{displayName}</span>
-              <span className={`status-indicator-dot ${hasApiKey ? 'dot-active' : 'dot-pending'}`} title={hasApiKey ? t.geminiActive : t.geminiPending} />
-              <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
+              <span className="user-name-label">{isEn ? 'Log In' : 'تسجيل الدخول'}</span>
             </button>
+          ) : (
+            <div className="user-dropdown-container" ref={dropdownRef}>
+              <button 
+                type="button" 
+                className={`user-menu-trigger ${isDropdownOpen ? 'active' : ''}`}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-expanded={isDropdownOpen}
+                title={displayName}
+              >
+                <div className="user-avatar-small">
+                  <User size={15} />
+                </div>
+                <span className="user-name-label">{displayName}</span>
+                <span className={`status-indicator-dot ${hasApiKey ? 'dot-active' : 'dot-pending'}`} title={hasApiKey ? t.geminiActive : t.geminiPending} />
+                <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
+              </button>
 
             {/* Glassmorphic Dropdown Menu */}
             {isDropdownOpen && (
@@ -396,6 +413,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             )}
           </div>
+          )}
         </div>
 
         {/* 4. Mobile Header Right Bar */}
@@ -403,13 +421,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button 
             type="button" 
             className="mobile-avatar-btn" 
-            onClick={onOpenProfile}
-            title={t.editProfileTooltip}
+            onClick={isLoggedIn ? onOpenProfile : () => onOpenAuth?.()}
+            title={isLoggedIn ? t.editProfileTooltip : (isEn ? 'Log In' : 'تسجيل الدخول')}
           >
             <div className="avatar-circle">
               <User size={16} />
             </div>
-            <span className="mobile-points-badge">{profile.masteryPoints} {t.pointsShort}</span>
+            {isLoggedIn ? (
+              <span className="mobile-points-badge">{profile.masteryPoints} {t.pointsShort}</span>
+            ) : (
+              <span className="mobile-points-badge" style={{ background: '#06b6d4', color: '#000', fontSize: '9px', fontWeight: 'bold' }}>
+                {isEn ? 'Login' : 'دخول'}
+              </span>
+            )}
           </button>
 
           <button
@@ -427,25 +451,41 @@ export const Navbar: React.FC<NavbarProps> = ({
       {isMobileMenuOpen && (
         <div className="mobile-nav-drawer mobile-only">
           {/* Active Student Summary */}
-          <div className="mobile-student-summary" onClick={() => { setIsMobileMenuOpen(false); onOpenProfile(); }}>
-            <div className="avatar-circle">
-              <User size={20} />
-            </div>
-            <div className="mobile-student-info">
-              <div className="mobile-student-name">{displayName}</div>
-              <div className="mobile-student-stage">
-                <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
-                {' • '}
-                {stageLabel}
-                {' • '}
-                {gradeLabel}
+          {!isLoggedIn ? (
+            <div className="mobile-student-summary" onClick={() => { setIsMobileMenuOpen(false); onOpenAuth?.(); }}>
+              <div className="avatar-circle" style={{ background: 'linear-gradient(135deg, #06b6d4, #3b82f6)' }}>
+                <User size={20} />
+              </div>
+              <div className="mobile-student-info">
+                <div className="mobile-student-name">{isEn ? 'Log In / Register' : 'تسجيل الدخول / حساب جديد'}</div>
+                <div className="mobile-student-stage">
+                  <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
+                  {' • '}
+                  <span>{isEn ? 'Create student account' : 'اضغط لإنشاء حسابك الخاص'}</span>
+                </div>
               </div>
             </div>
-            <div className="student-score">
-              <Award size={14} className="score-icon" />
-              <span>{profile.masteryPoints} {t.pointsShort}</span>
+          ) : (
+            <div className="mobile-student-summary" onClick={() => { setIsMobileMenuOpen(false); onOpenProfile(); }}>
+              <div className="avatar-circle">
+                <User size={20} />
+              </div>
+              <div className="mobile-student-info">
+                <div className="mobile-student-name">{displayName}</div>
+                <div className="mobile-student-stage">
+                  <span className="mobile-country-tag">{countryInfo.flag} {isEn ? countryInfo.nameEn : countryInfo.nameAr}</span>
+                  {' • '}
+                  {stageLabel}
+                  {' • '}
+                  {gradeLabel}
+                </div>
+              </div>
+              <div className="student-score">
+                <Award size={14} className="score-icon" />
+                <span>{profile.masteryPoints} {t.pointsShort}</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Primary Quick Actions */}
           <div className="mobile-tools-grid">

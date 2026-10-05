@@ -80,8 +80,8 @@ export function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Clean up legacy static demo name 'عمر التميمي'
-        if (parsed.name === 'عمر التميمي') {
+        // Clean up legacy static demo names 'عمر التميمي' and 'احمد علي'
+        if (parsed.name === 'عمر التميمي' || parsed.name === 'احمد علي' || parsed.name === 'Ahmed Ali') {
           parsed.name = INITIAL_STUDENT_PROFILE.name;
           parsed.nameAr = INITIAL_STUDENT_PROFILE.nameAr;
           parsed.nameEn = INITIAL_STUDENT_PROFILE.nameEn;
@@ -313,7 +313,7 @@ export function App() {
   // Check active user from database on startup
   useEffect(() => {
     getActiveUserAccount().then((user) => {
-      if (user && user.name && user.name !== 'عمر التميمي') {
+      if (user && user.name && user.name !== 'عمر التميمي' && user.name !== 'احمد علي' && user.name !== 'Ahmed Ali') {
         setIsLoggedIn(true);
         setProfile((prev) => ({
           ...prev,
@@ -364,7 +364,7 @@ export function App() {
 
   // Sync profile to local storage & database
   useEffect(() => {
-    if (profile.name === 'عمر التميمي') return;
+    if (profile.name === 'عمر التميمي' || profile.name === 'احمد علي' || profile.name === 'Ahmed Ali') return;
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(profile));
     updateUserAccount(profile.id, { ...profile, lastLoginAt: Date.now() }).catch(() => {});
   }, [profile]);
@@ -537,15 +537,27 @@ export function App() {
   const handleSaveProfile = async (updated: StudentProfile) => {
     // Retain official registered name and ID from central database profile - cannot be modified from profile settings
     const activeDb = await getActiveUserAccount().catch(() => null);
-    const officialName = (activeDb?.name && activeDb.name !== 'عمر التميمي')
-      ? activeDb.name
-      : ((updated.name && updated.name !== 'عمر التميمي') ? updated.name : (profile.name !== 'عمر التميمي' ? profile.name : 'احمد علي'));
-    const officialNameAr = (activeDb?.nameAr && activeDb.nameAr !== 'عمر التميمي')
-      ? activeDb.nameAr
-      : ((updated.nameAr && updated.nameAr !== 'عمر التميمي') ? updated.nameAr : (profile.nameAr !== 'عمر التميمي' ? profile.nameAr : officialName));
-    const officialNameEn = (activeDb?.nameEn && activeDb.nameEn !== 'Omar Al-Tamimi')
-      ? activeDb.nameEn
-      : (updated.nameEn || profile.nameEn || officialName);
+    const guestLabelAr = 'طالب زائر';
+    const guestLabelEn = 'Guest Student';
+    const isEn = profile.language === 'en';
+
+    const cleanName = (val?: string) => (val && val !== 'عمر التميمي' && val !== 'احمد علي' && val !== 'Ahmed Ali') ? val : '';
+
+    const officialName = cleanName(activeDb?.name)
+      || cleanName(updated.name)
+      || cleanName(profile.name)
+      || (isEn ? guestLabelEn : guestLabelAr);
+
+    const officialNameAr = cleanName(activeDb?.nameAr)
+      || cleanName(updated.nameAr)
+      || cleanName(profile.nameAr)
+      || officialName;
+
+    const officialNameEn = cleanName(activeDb?.nameEn)
+      || cleanName(updated.nameEn)
+      || cleanName(profile.nameEn)
+      || guestLabelEn;
+
     const officialId = activeDb?.id || profile.id || updated.id;
 
     const sanitized: StudentProfile = {
