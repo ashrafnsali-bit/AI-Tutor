@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { AlertTriangle, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { reportStudentError } from '../services/errorReportingService';
 
 interface Props {
   children: ReactNode;
@@ -8,19 +9,35 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
+  reportedEmail: boolean;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
-    hasError: false
+    hasError: false,
+    reportedEmail: false
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+    return { hasError: true, error, reportedEmail: false };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error in UI component tree:', error, errorInfo);
+
+    // Automatically send an email report with student and error metadata
+    reportStudentError({
+      errorType: 'UI_RENDER_CRASH',
+      errorMessage: error?.message || 'Unknown UI Component Error',
+      errorStack: error?.stack,
+      componentStack: errorInfo?.componentStack || undefined
+    }).then((sent) => {
+      if (sent) {
+        this.setState({ reportedEmail: true });
+      }
+    }).catch(err => {
+      console.warn('Failed to send error notification email:', err);
+    });
   }
 
   private handleReset = () => {
@@ -85,9 +102,26 @@ export class ErrorBoundary extends Component<Props, State> {
               حدث خطأ أثناء تحميل الجلسة التعليمية
             </h2>
             
-            <p style={{ fontSize: '0.95rem', color: '#94a3b8', lineHeight: 1.6, marginBottom: '24px' }}>
+            <p style={{ fontSize: '0.95rem', color: '#94a3b8', lineHeight: 1.6, marginBottom: '20px' }}>
               تم استعادة النظام بنجاح. يمكنك الضغط على الزر أدناه لإعادة تحديث الجلسة والبدء في منصة المعلم الذكي مباشرة.
             </p>
+
+            <div style={{
+              background: 'rgba(16, 185, 129, 0.1)',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderRadius: '10px',
+              padding: '10px 14px',
+              marginBottom: '22px',
+              fontSize: '0.85rem',
+              color: '#34d399',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
+            }}>
+              <CheckCircle2 size={16} />
+              <span>تم إرسال تقرير فوري ببيانات الخطأ آلياً إلى إدارة المنصة للمتابعة</span>
+            </div>
 
             <button
               onClick={this.handleReset}
