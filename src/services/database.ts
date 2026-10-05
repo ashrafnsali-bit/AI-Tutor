@@ -456,27 +456,71 @@ export async function registerUserAccount(
 
 export async function loginUserAccount(identifier: string, password?: string): Promise<UserAccount> {
   const cleanId = identifier.trim().toLowerCase();
+  const cleanUsername = cleanId.startsWith('@') ? cleanId.slice(1) : cleanId;
 
+  // 1. Gather users from local IndexedDB
+  let dbUsers: UserAccount[] = [];
   try {
     const db = await getDB();
-    const allUsers = await new Promise<UserAccount[]>((resolve, reject) => {
+    dbUsers = await new Promise<UserAccount[]>((resolve) => {
       const tx = db.transaction(USERS_STORE, 'readonly');
       const req = tx.objectStore(USERS_STORE).getAll();
-      req.onsuccess = () => resolve(req.result as UserAccount[]);
-      req.onerror = () => reject(req.error);
+      req.onsuccess = () => resolve((req.result as UserAccount[]) || []);
+      req.onerror = () => resolve([]);
     });
+  } catch {
+    dbUsers = [];
+  }
 
-    const user = allUsers.find(u =>
-      u.username.toLowerCase() === cleanId || u.email.toLowerCase() === cleanId
-    );
-    if (!user) throw new Error('الحساب غير موجود');
-    if (password && user.password && user.password !== password) throw new Error('كلمة المرور غير صحيحة');
+  // 2. Gather from local storage & cached cloud sync
+  const localUsers = getLocalUsers();
+  const cloudUsers = getCachedCloudUsers();
 
-    user.lastLoginAt = Date.now();
+  const userMatches = (u: UserAccount) => {
+    if (!u) return false;
+    const uEmail = (u.email || '').trim().toLowerCase();
+    const uName = (u.username || '').trim().toLowerCase();
+    return uEmail === cleanId || uName === cleanId || uName === cleanUsername;
+  };
+
+  let user = [...dbUsers, ...localUsers, ...cloudUsers].find(userMatches);
+
+  // 3. If still not found, pull fresh live records from global cloud sync network
+  if (!user) {
+    try {
+      const freshCloud = await pullCloudData();
+      if (Array.isArray(freshCloud) && freshCloud.length > 0) {
+        user = freshCloud.find(userMatches);
+      }
+    } catch {
+      // ignore network errors
+    }
+  }
+
+  // 4. Validate user existence
+  if (!user) {
+    throw new Error('الحساب غير موجود');
+  }
+
+  // 5. Validate password if user has password recorded
+  if (password && user.password && user.password !== password) {
+    throw new Error('كلمة المرور غير صحيحة');
+  }
+
+  // If user registered via cloud without explicit password, attach provided password
+  if (password && !user.password) {
+    user.password = password;
+  }
+
+  user.lastLoginAt = Date.now();
+
+  // 6. Save active session to both IndexedDB and localStorage so current device remains logged in
+  try {
+    const db = await getDB();
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction([USERS_STORE, SESSION_STORE], 'readwrite');
-      tx.objectStore(USERS_STORE).put(user);
-      tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: user.id, user });
+      tx.objectStore(USERS_STORE).put(user!);
+      tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: user!.id, user: user! });
       tx.oncomplete = () => {
         try {
           localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
@@ -485,20 +529,17 @@ export async function loginUserAccount(identifier: string, password?: string): P
       };
       tx.onerror = () => reject(tx.error);
     });
-    localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
-    return user;
-  } catch (err) {
+  } catch {
     const existing = getLocalUsers();
-    const user = existing.find(u =>
-      u.username.toLowerCase() === cleanId || u.email.toLowerCase() === cleanId
-    );
-    if (!user) throw new Error((err as Error)?.message || 'فشل تسجيل الدخول');
-    if (password && user.password && user.password !== password) throw new Error('كلمة المرور غير صحيحة');
-    user.lastLoginAt = Date.now();
+    const idx = existing.findIndex(u => u.id === user!.id);
+    if (idx >= 0) existing[idx] = user!;
+    else existing.push(user!);
+    localStorage.setItem('TEACHER_AI_USERS_DB', JSON.stringify(existing));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
-    localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
-    return user;
   }
+
+  localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
+  return user;
 }
 
 export async function getActiveUserAccount(): Promise<UserAccount | null> {
