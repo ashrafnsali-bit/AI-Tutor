@@ -221,42 +221,45 @@ export function App() {
   useEffect(() => {
     const unsub = onCloudLectureGenerated((cloudLec) => {
       if (!cloudLec || !cloudLec.id) return;
-      const matchesCountry = !cloudLec.country || cloudLec.country === profile.country;
-      const matchesEducationType = !cloudLec.educationType || cloudLec.educationType === (profile.educationType || 'PUBLIC');
-      const matchesGrade = !cloudLec.gradeLevel || !profile.gradeLevel || cloudLec.gradeLevel === profile.gradeLevel;
-      const matchesSubject = !cloudLec.subject || cloudLec.subject === profile.subject || cloudLec.id.toLowerCase().includes(profile.subject.toLowerCase().replace('_', ''));
 
-      if (matchesCountry && matchesEducationType && matchesGrade && matchesSubject) {
-        setLectures((prev) => {
-          if (prev.some(l => l.id === cloudLec.id)) return prev;
-          const nextOrder = prev.length + 1;
-          const lastLec = prev[prev.length - 1];
-          const isPrecedingCompleted = lastLec ? !!lastLec.isCompleted : true;
+      // Strict 4D Isolation Guard: All four dimensions MUST match exactly, no loose fallbacks
+      if (!cloudLec.country || cloudLec.country !== profile.country) return;
+      if (!cloudLec.subject || cloudLec.subject !== profile.subject) return;
+      if (!cloudLec.gradeLevel || cloudLec.gradeLevel !== profile.gradeLevel) return;
+      const currentEduType = profile.educationType || 'PUBLIC';
+      if (cloudLec.educationType && cloudLec.educationType !== currentEduType) return;
 
-          const cleanTitleAr = (cloudLec.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
-          const cleanTitleEn = (cloudLec.titleEn || '').replace(/^(Lecture|Lesson)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      setLectures((prev) => {
+        if (prev.some(l => l.id === cloudLec.id)) return prev;
+        const nextOrder = prev.length + 1;
+        const lastLec = prev[prev.length - 1];
+        const isPrecedingCompleted = lastLec ? !!lastLec.isCompleted : true;
 
-          const formatted: Lecture = {
-            ...cloudLec,
-            country: profile.country,
-            subject: profile.subject,
-            gradeLevel: profile.gradeLevel,
-            educationType: profile.educationType || 'PUBLIC',
-            educationTrack: profile.educationTrack || 'GENERAL',
-            order: nextOrder,
-            titleAr: cleanTitleAr ? `المحاضرة ${nextOrder}: ${cleanTitleAr}` : `المحاضرة ${nextOrder}: درس جديد`,
-            titleEn: cleanTitleEn ? `Lecture ${nextOrder}: ${cleanTitleEn}` : `Lecture ${nextOrder}: New Lesson`,
-            lessonNumberAr: `الدرس ${nextOrder}`,
-            lessonNumberEn: `Lesson ${nextOrder}`,
-            prerequisiteLectureId: lastLec?.id,
-            prerequisiteTitleAr: lastLec?.titleAr,
-            prerequisiteTitleEn: lastLec?.titleEn,
-            isCompleted: false,
-            isLocked: !isPrecedingCompleted
-          };
-          return [...prev, formatted];
-        });
-      }
+        const cleanTitleAr = (cloudLec.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+        const cleanTitleEn = (cloudLec.titleEn || '').replace(/^(Lecture|Lesson)\s*\d+\s*[:\-–]\s*/i, '').trim();
+
+        const formatted: Lecture = {
+          ...cloudLec,
+          country: profile.country,
+          subject: profile.subject,
+          gradeLevel: profile.gradeLevel,
+          educationType: currentEduType,
+          educationTrack: profile.educationTrack || 'GENERAL',
+          order: nextOrder,
+          titleAr: cleanTitleAr ? `المحاضرة ${nextOrder}: ${cleanTitleAr}` : `المحاضرة ${nextOrder}: درس جديد`,
+          titleEn: cleanTitleEn ? `Lecture ${nextOrder}: ${cleanTitleEn}` : `Lecture ${nextOrder}: New Lesson`,
+          lessonNumberAr: `الدرس ${nextOrder}`,
+          lessonNumberEn: `Lesson ${nextOrder}`,
+          prerequisiteLectureId: lastLec?.id,
+          prerequisiteTitleAr: lastLec?.titleAr,
+          prerequisiteTitleEn: lastLec?.titleEn,
+          isCompleted: false,
+          isLocked: !isPrecedingCompleted
+        };
+        const updated = [...prev, formatted];
+        saveSubjectLectures(profile.subject, updated, profile.gradeLevel, profile.country, currentEduType);
+        return updated;
+      });
     });
 
     return () => unsub();

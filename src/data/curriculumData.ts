@@ -60,6 +60,12 @@ import { PRIMARY_MATH_G5_LECTURES } from './primaryMath5CurriculumData';
 import { PRIMARY_MATH_G6_LECTURES } from './primaryMath6CurriculumData';
 import { PRIMARY_SCIENCE_G5_LECTURES } from './primaryScience5CurriculumData';
 import { PRIMARY_SCIENCE_G6_LECTURES } from './primaryScience6CurriculumData';
+import {
+  EGYPT_HIGH_HISTORY_G10_LECTURES,
+  EGYPT_HIGH_GEOGRAPHY_G10_LECTURES,
+  SAUDI_HIGH_HISTORY_G10_LECTURES,
+  SAUDI_HIGH_GEOGRAPHY_G10_LECTURES
+} from './nationalHistoryGeographyData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -4457,8 +4463,8 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   ARABIC_LIT: ARABIC_LIT_LECTURES,
   ARABIC_LANG: ARABIC_LANG_LECTURES,
   GENERAL_SCIENCE: GENERAL_SCIENCE_LECTURES,
-  GEOGRAPHY: SUDAN_HIGH_GEOGRAPHY_G10_LECTURES,
-  HISTORY: SUDAN_HIGH_HISTORY_G10_LECTURES
+  GEOGRAPHY: SAUDI_HIGH_GEOGRAPHY_G10_LECTURES,
+  HISTORY: SAUDI_HIGH_HISTORY_G10_LECTURES
 };
 
 export function getCurriculumForSubject(
@@ -4638,12 +4644,26 @@ export function getCurriculumForSubject(
     return ARABIC_LIT_LECTURES;
   }
   if (subject === 'GEOGRAPHY') {
-    return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
+    if (country === 'SD') return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
+    if (country === 'EG') return EGYPT_HIGH_GEOGRAPHY_G10_LECTURES;
+    return SAUDI_HIGH_GEOGRAPHY_G10_LECTURES;
   }
   if (subject === 'HISTORY') {
-    return SUDAN_HIGH_HISTORY_G10_LECTURES;
+    if (country === 'SD') return SUDAN_HIGH_HISTORY_G10_LECTURES;
+    if (country === 'EG') return EGYPT_HIGH_HISTORY_G10_LECTURES;
+    return SAUDI_HIGH_HISTORY_G10_LECTURES;
   }
-  return SUBJECT_CURRICULA[subject] || MATH_LECTURES;
+  return SUBJECT_CURRICULA[subject] || (
+    subject === 'PHYSICS' ? HIGH_PHYSICS_G12_LECTURES :
+    subject === 'CHEMISTRY' ? HIGH_CHEMISTRY_G12_LECTURES :
+    subject === 'BIOLOGY' ? BIOLOGY_LECTURES :
+    subject === 'COMPUTER_SCIENCE' ? HIGH_COMP_G12_LECTURES :
+    subject === 'ARABIC_LIT' ? HIGH_ARABIC_LIT_G12_LECTURES :
+    subject === 'ARABIC_LANG' ? MIDDLE_ARABIC_G9_LECTURES :
+    subject === 'GENERAL_SCIENCE' ? GENERAL_SCIENCE_LECTURES :
+    subject === 'ISLAMIC_STUDIES' ? ISLAMIC_STUDIES_FULL :
+    MATH_LECTURES
+  );
 }
 
 export function loadSubjectLectures(
@@ -4656,22 +4676,13 @@ export function loadSubjectLectures(
 ): Lecture[] {
   const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country, educationType, track);
   
-  // Retrieve any community / AI-generated shared lectures for this subject, country, and educationType
-  const countryKey = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || ''}`;
-  const generalKey = `TEACHER_AI_SHARED_LECS_${educationType}_${subject}_${gradeLevel || ''}`;
-  const countryKeySimple = `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel || ''}`;
-  const generalKeySimple = `TEACHER_AI_SHARED_LECS_${subject}`;
+  // 1. Strict 4D Isolated Shared Lecture Key (No generic fallbacks)
+  const strictSharedKey = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
   const cloudKey = 'TEACHER_AI_CLOUD_SHARED_LECTURES';
 
   let sharedLecs: Lecture[] = [];
   try {
-    const rawKeys = [
-      countryKey,
-      generalKey,
-      countryKeySimple,
-      generalKeySimple,
-      cloudKey
-    ];
+    const rawKeys = [strictSharedKey, cloudKey];
     const map = new Map<string, Lecture>();
     rawKeys.forEach(k => {
       if (typeof localStorage === 'undefined') return;
@@ -4682,14 +4693,10 @@ export function loadSubjectLectures(
           if (Array.isArray(list)) {
             list.forEach(l => {
               if (!l || !l.id) return;
-              // Check country match
-              if (l.country && country && l.country !== country) return;
-              // Check educationType match
-              if (l.educationType && educationType && l.educationType !== educationType) return;
-              // Check subject match
-              if (l.subject && l.subject !== subject) return;
-              if (!l.subject && !l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')) && !l.id.startsWith('gen-') && !l.id.startsWith('ai-gen-')) return;
-              // Check gradeLevel match if specified on lecture
+              // Strict 4D Isolation Guard: All dimensions must strictly match
+              if (!l.country || l.country !== country) return;
+              if (l.educationType && l.educationType !== educationType) return;
+              if (!l.subject || l.subject !== subject) return;
               if (gradeLevel && l.gradeLevel && l.gradeLevel !== gradeLevel) return;
               map.set(l.id, l);
             });
@@ -4726,9 +4733,7 @@ export function loadSubjectLectures(
     }
   });
 
-  const storageKey = gradeLevel 
-    ? `TEACHER_AI_LECTURES_${country}_${educationType}_${subject}_${gradeLevel}` 
-    : `TEACHER_AI_LECTURES_${country}_${educationType}_${subject}`;
+  const storageKey = `TEACHER_AI_LECTURES_V3_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
   const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
   
   let rawList = combined;
@@ -4736,9 +4741,14 @@ export function loadSubjectLectures(
     try {
       const parsed = JSON.parse(saved) as Lecture[];
       if (Array.isArray(parsed)) {
-        // Validate that cached lectures match current curriculum IDs to prevent cross-country/cross-type cache bleeding
+        // Strict cache validation: all cached lectures must strictly match this country and subject to prevent cross-contamination
+        const isCacheValid = parsed.every(p => 
+          (!p.country || p.country === country) && 
+          (!p.subject || p.subject === subject)
+        );
         const hasMatchingCurriculum = combined.some(freshLec => parsed.some(p => p.id === freshLec.id));
-        if (hasMatchingCurriculum) {
+
+        if (isCacheValid && hasMatchingCurriculum) {
           rawList = combined.map((freshLec) => {
             const found = parsed.find((p) => p.id === freshLec.id);
             if (found) {
@@ -4751,9 +4761,13 @@ export function loadSubjectLectures(
             return freshLec;
           });
 
-          // Also preserve any newly AI-generated lectures saved in user session
+          // Also preserve any newly AI-generated lectures saved in user session strictly matching this context
           parsed.forEach(p => {
             if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
+              if (p.country && p.country !== country) return;
+              if (p.subject && p.subject !== subject) return;
+              if (gradeLevel && p.gradeLevel && p.gradeLevel !== gradeLevel) return;
+
               const pClean = (p.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
               const exists = rawList.some(r => r.id === p.id || (pClean && (r.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim() === pClean));
               if (!exists) {
@@ -4823,9 +4837,7 @@ export function saveSubjectLectures(
   educationType: EducationType = 'PUBLIC'
 ): void {
   if (typeof localStorage === 'undefined') return;
-  const storageKey = gradeLevel 
-    ? `TEACHER_AI_LECTURES_${country}_${educationType}_${subject}_${gradeLevel}` 
-    : `TEACHER_AI_LECTURES_${country}_${educationType}_${subject}`;
+  const storageKey = `TEACHER_AI_LECTURES_V3_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
   localStorage.setItem(storageKey, JSON.stringify(lectures));
 }
 
