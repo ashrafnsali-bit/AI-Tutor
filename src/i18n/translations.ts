@@ -112,7 +112,8 @@ export const translations = {
       ARABIC_LIT: 'اللغة العربية والبلاغة والأدب',
       ARABIC_LANG: 'اللغة العربية (المرحلة المتوسطة / الإعدادية)',
       GENERAL_SCIENCE: 'العلوم العامة (المرحلة المتوسطة / الإعدادية)',
-      GEOGRAPHY: 'الجغرافيا والدراسات البيئية'
+      GEOGRAPHY: 'الجغرافيا والدراسات البيئية',
+      HISTORY: 'التاريخ والحضارة الإنسانية'
     },
 
     // Roadmap
@@ -353,7 +354,8 @@ export const translations = {
       ARABIC_LIT: 'Arabic Literature & Rhetoric (High School)',
       ARABIC_LANG: 'Arabic Language (Grammar & Reading - Middle School)',
       GENERAL_SCIENCE: 'General Science (Middle School)',
-      GEOGRAPHY: 'Geography & Environmental Studies'
+      GEOGRAPHY: 'Geography & Environmental Studies',
+      HISTORY: 'History & Human Civilizations'
     },
 
     // Roadmap

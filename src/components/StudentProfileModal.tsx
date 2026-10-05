@@ -50,7 +50,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       }
     } else if (['G7', 'G8', 'G9'].includes(copy.gradeLevel)) {
       copy.specialization = 'GENERAL';
-      if (['ARABIC_LIT', 'GEOGRAPHY', 'PRIMARY_ARABIC'].includes(copy.subject)) copy.subject = 'ARABIC_LANG';
+      if (['ARABIC_LIT', 'GEOGRAPHY', 'HISTORY', 'PRIMARY_ARABIC'].includes(copy.subject)) copy.subject = 'ARABIC_LANG';
       if (['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'PRIMARY_SCIENCE'].includes(copy.subject)) copy.subject = 'GENERAL_SCIENCE';
       if (copy.subject === 'PRIMARY_MATH') copy.subject = 'MATH';
     } else {
@@ -185,9 +185,9 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   const handleSpecializationChange = (spec: Specialization) => {
     let nextSubject = formData.subject;
     if (spec === 'HUMANITIES') {
-      if (formData.subject !== 'GEOGRAPHY') nextSubject = 'ARABIC_LIT';
+      if (formData.subject !== 'GEOGRAPHY' && formData.subject !== 'HISTORY') nextSubject = 'ARABIC_LIT';
     } else if (spec === 'STEM') {
-      if (['ARABIC_LIT', 'GEOGRAPHY', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE'].includes(formData.subject)) {
+      if (['ARABIC_LIT', 'GEOGRAPHY', 'HISTORY', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE'].includes(formData.subject)) {
         nextSubject = 'PHYSICS';
       }
     } else if (spec === 'HEALTH') {
@@ -204,7 +204,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
   const handleSubjectChange = (subj: Subject) => {
     let nextSpec = formData.specialization;
-    if ((subj === 'ARABIC_LIT' || subj === 'GEOGRAPHY') && formData.specialization === 'STEM') {
+    if ((subj === 'ARABIC_LIT' || subj === 'GEOGRAPHY' || subj === 'HISTORY') && formData.specialization === 'STEM') {
       nextSpec = 'HUMANITIES';
     } else if (['PHYSICS', 'MATH', 'COMPUTER_SCIENCE'].includes(subj) && formData.specialization === 'HUMANITIES') {
       nextSpec = 'STEM';
@@ -628,6 +628,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                   <optgroup label={t.specLabels.HUMANITIES}>
                     <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', formData.country, formData.gradeLevel, formData.language)}</option>
                     <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="HISTORY">{getNationalSubjectLabel('HISTORY', formData.country, formData.gradeLevel, formData.language)}</option>
                   </optgroup>
                 ) : formData.specialization === 'HEALTH' ? (
                   <optgroup label={t.specLabels.HEALTH}>
@@ -646,6 +647,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                       <>
                         <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', formData.country, formData.gradeLevel, formData.language)}</option>
                         <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', formData.country, formData.gradeLevel, formData.language)}</option>
+                        <option value="HISTORY">{getNationalSubjectLabel('HISTORY', formData.country, formData.gradeLevel, formData.language)}</option>
                       </>
                     )}
                   </optgroup>

@@ -40,6 +40,7 @@ const SUBJECT_LABELS: Record<string, { ar: string; en: string }> = {
   GENERAL_SCIENCE:  { ar: "العلوم العامة", en: "General Science" },
   COMPUTER_SCIENCE: { ar: "الحاسب وتقنية المعلومات", en: "Computer Science" },
   GEOGRAPHY:        { ar: "الجغرافيا والدراسات البيئية", en: "Geography & Environmental Studies" },
+  HISTORY:          { ar: "التاريخ والحضارة", en: "History & Civilization" },
 };
 
 const GRADE_LABELS: Record<string, { ar: string; en: string }> = {

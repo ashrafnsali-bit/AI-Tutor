@@ -24,7 +24,8 @@ export type Subject =
   | 'ARABIC_LANG' 
   | 'GENERAL_SCIENCE' 
   | 'COMPUTER_SCIENCE'
-  | 'GEOGRAPHY';
+  | 'GEOGRAPHY'
+  | 'HISTORY';
 
 export type GradeLevel = 
   | 'G1' | 'G2' | 'G3' | 'G4' | 'G5' | 'G6' 

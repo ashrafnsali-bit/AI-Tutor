@@ -659,6 +659,8 @@ export function getNationalTextbookInfo(
           : 'الأدب والبلاغة والنقد وروائع الأدب السوداني والعربي (الشهادة الثانوية السودانية - 3 ثانوي)';
       } else if (subject === 'GEOGRAPHY') {
         textbookName = `كتاب الجغرافيا والدراسات البيئية (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
+      } else if (subject === 'HISTORY') {
+        textbookName = `كتاب التاريخ (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
       }
       break;
 
@@ -1110,6 +1112,8 @@ export function getNationalSubjectLabel(
         return isEn ? 'Islamic Studies (Quran & Fiqh)' : 'التربية الإسلامية (القرآن والفقه والسيرة)';
       case 'GEOGRAPHY':
         return isEn ? 'Geography & Environmental Studies (Bakht Al-Ruda)' : 'الجغرافيا والدراسات البيئية (بخت الرضا)';
+      case 'HISTORY':
+        return isEn ? 'History (Bakht Al-Ruda Secondary)' : 'التاريخ والحضارة (المرحلة الثانوية - بخت الرضا)';
     }
   }
 
@@ -1311,6 +1315,8 @@ export function getNationalSubjectLabel(
       return isEn ? 'Arabic Literature & Rhetoric' : 'اللغة العربية والبلاغة والأدب';
     case 'GEOGRAPHY':
       return isEn ? 'Geography & Environmental Studies' : 'الجغرافيا والدراسات البيئية';
+    case 'HISTORY':
+      return isEn ? 'History' : 'التاريخ';
     default:
       return subject;
   }

@@ -1,8 +1,9 @@
 import type { Lecture, LectureSection, Assessment } from '../types';
 import { SUDAN_PRIMARY_SCIENCE_G6_LECTURES } from './sudanPrimaryScience6CurriculumData';
 import { SUDAN_HIGH_GEOGRAPHY_G10_LECTURES } from './sudanHighGeography10CurriculumData';
+import { SUDAN_HIGH_HISTORY_G10_LECTURES } from './sudanHighHistory10CurriculumData';
 
-export { SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES };
+export { SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES };
 
 // ============================================================================
 // OFFICIAL REPUBLIC OF SUDAN NATIONAL CURRICULUM (المنهج القومي السوداني المحدث)
@@ -691,6 +692,9 @@ export function getSudanCurriculum(subject: string, gradeLevel?: string): Lectur
   }
   if (subject === 'GEOGRAPHY' && (gradeLevel === 'G10' || !gradeLevel)) {
     return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
+  }
+  if (subject === 'HISTORY' && (gradeLevel === 'G10' || !gradeLevel)) {
+    return SUDAN_HIGH_HISTORY_G10_LECTURES;
   }
   return null;
 }

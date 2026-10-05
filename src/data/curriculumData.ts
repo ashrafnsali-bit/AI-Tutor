@@ -23,7 +23,7 @@ import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
 import { HIGH_COMP_G12_LECTURES } from './highComp12CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
-import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES, SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, getSudanCurriculum } from './sudanCurriculumData';
+import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES, SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES, getSudanCurriculum } from './sudanCurriculumData';
 import { HIGH_CHEMISTRY_G10_LECTURES } from './highChemistry10CurriculumData';
 import { HIGH_CHEMISTRY_G11_LECTURES } from './highChemistry11CurriculumData';
 import { HIGH_CHEMISTRY_G12_LECTURES } from './highChemistry12CurriculumData';
@@ -87,6 +87,7 @@ export {
   PRIMARY_SCIENCE_G6_LECTURES,
   SUDAN_PRIMARY_SCIENCE_G6_LECTURES,
   SUDAN_HIGH_GEOGRAPHY_G10_LECTURES,
+  SUDAN_HIGH_HISTORY_G10_LECTURES,
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
@@ -4456,7 +4457,8 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   ARABIC_LIT: ARABIC_LIT_LECTURES,
   ARABIC_LANG: ARABIC_LANG_LECTURES,
   GENERAL_SCIENCE: GENERAL_SCIENCE_LECTURES,
-  GEOGRAPHY: SUDAN_HIGH_GEOGRAPHY_G10_LECTURES
+  GEOGRAPHY: SUDAN_HIGH_GEOGRAPHY_G10_LECTURES,
+  HISTORY: SUDAN_HIGH_HISTORY_G10_LECTURES
 };
 
 export function getCurriculumForSubject(
@@ -4637,6 +4639,9 @@ export function getCurriculumForSubject(
   }
   if (subject === 'GEOGRAPHY') {
     return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
+  }
+  if (subject === 'HISTORY') {
+    return SUDAN_HIGH_HISTORY_G10_LECTURES;
   }
   return SUBJECT_CURRICULA[subject] || MATH_LECTURES;
 }

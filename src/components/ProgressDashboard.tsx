@@ -68,6 +68,7 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ profile, l
     ARABIC_LANG: isEn ? 'Arabic Language' : 'اللغة العربية',
     GENERAL_SCIENCE: isEn ? 'General Science' : 'العلوم العامة',
     GEOGRAPHY: isEn ? 'Geography' : 'الجغرافيا والدراسات البيئية',
+    HISTORY: isEn ? 'History' : 'التاريخ',
   };
 
   return (
