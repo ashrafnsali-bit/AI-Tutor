@@ -20,8 +20,7 @@ import {
   ChevronDown,
   BookOpen,
   Mail,
-  Compass,
-  Share2
+  Compass
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -58,7 +57,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAdmin,
   onOpenContact,
   onOpenOnboarding,
-  onOpenShare,
   onReturnHome
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -198,18 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
-          {/* Quick Platform Share Trigger */}
-          {onOpenShare && (
-            <button
-              type="button"
-              className="btn-header-guide-glow desktop-extra-wide-only"
-              onClick={onOpenShare}
-              title={isEn ? "Share Platform Link & Summary" : "مشاركة رابط وشرح المنصة"}
-            >
-              <Share2 size={15} className="guide-compass-icon text-cyan-400" />
-              <span>{isEn ? 'Share' : 'مشاركة'}</span>
-            </button>
-          )}
+
 
           {/* Compact Language Toggle */}
           <button 
@@ -363,19 +350,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                   )}
 
-                  {onOpenShare && (
-                    <button 
-                      type="button" 
-                      className="dropdown-item"
-                      onClick={() => { setIsDropdownOpen(false); onOpenShare(); }}
-                    >
-                      <Share2 size={16} className="item-icon text-cyan-400" />
-                      <div className="item-text">
-                        <span className="item-title">{isEn ? 'Share Platform Link' : 'مشاركة رابط وشرح المنصة'}</span>
-                        <span className="item-subtitle">{isEn ? 'WhatsApp, Telegram & link preview' : 'شرح المنصة ومعاينة الرابط'}</span>
-                      </div>
-                    </button>
-                  )}
+
                 </div>
 
                 <div className="dropdown-divider"></div>
@@ -547,16 +522,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             )}
 
-            {onOpenShare && (
-              <button
-                type="button"
-                className="btn-mobile-tool"
-                onClick={() => { setIsMobileMenuOpen(false); onOpenShare(); }}
-              >
-                <Share2 size={18} className="text-cyan-400" />
-                <span>{isEn ? 'Share Platform' : 'مشاركة رابط وشرح المنصة'}</span>
-              </button>
-            )}
+
           </div>
 
           {/* Language Toggle */}

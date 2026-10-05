@@ -24,8 +24,7 @@ import {
   Award,
   Users,
   Mail,
-  Key,
-  Share2
+  Key
 } from 'lucide-react';
 
 interface PreparatoryLandingPageProps {
@@ -50,7 +49,6 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
   onOpenAdmin,
   onOpenApiKey,
   onOpenContact,
-  onOpenShare,
   onToggleLanguage
 }) => {
   const isEn = profile.language === 'en';
@@ -329,18 +327,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               <span>{isEn ? 'العربية' : 'English'}</span>
             </button>
 
-            {/* Platform Share Button */}
-            {onOpenShare && (
-              <button 
-                type="button" 
-                className="btn-prep-action" 
-                onClick={onOpenShare}
-                title={isEn ? 'Share Platform Link & Summary' : 'مشاركة رابط وشرح المنصة'}
-              >
-                <Share2 size={15} className="text-cyan-400" />
-                <span>{isEn ? 'Share' : 'مشاركة'}</span>
-              </button>
-            )}
+
 
             {/* Desktop Only Tools */}
             <button 
@@ -433,16 +420,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               <span>{isEn ? 'Admin' : 'المشرف'}</span>
             </button>
 
-            {onOpenShare && (
-              <button 
-                type="button" 
-                className="prep-mobile-tool-btn" 
-                onClick={onOpenShare}
-              >
-                <Share2 size={14} className="text-cyan-400" />
-                <span>{isEn ? 'Share' : 'مشاركة'}</span>
-              </button>
-            )}
+
           </div>
 
           {/* Quick Platform Pillars */}
@@ -788,29 +766,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               ? '© AI Tutor - Adaptive Socratic Educational Platform. Official Curriculum Standards.'
               : 'منصة المعلم الذكي | منصة التعلم التكيفي المعززة بـ Gemini AI وفق المناهج التعليمية المعتمدة.'}
           </p>
-          {onOpenShare && (
-            <button
-              type="button"
-              onClick={onOpenShare}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.4rem 0.9rem',
-                borderRadius: '8px',
-                background: 'rgba(15, 23, 42, 0.8)',
-                border: '1px solid rgba(6, 182, 212, 0.4)',
-                color: '#38bdf8',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              <Share2 size={14} />
-              <span>{isEn ? 'Share Platform & Link Preview' : 'مشاركة رابط وشرح المنصة'}</span>
-            </button>
-          )}
+
         </div>
       </footer>
     </div>
