@@ -53,7 +53,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [isAdminAuth, setIsAdminAuth] = useState<boolean>(() => {
     return sessionStorage.getItem('TEACHER_AI_ADMIN_AUTH') === 'true' || localStorage.getItem('TEACHER_AI_ADMIN_AUTH') === 'true';
   });
-  const [adminEmailInput, setAdminEmailInput] = useState<string>('admin@teacher.ai');
+  const [adminEmailInput, setAdminEmailInput] = useState<string>('');
   const [adminPasswordInput, setAdminPasswordInput] = useState<string>('');
   const [showAdminPassword, setShowAdminPassword] = useState<boolean>(false);
   const [adminAuthError, setAdminAuthError] = useState<string>('');
@@ -429,7 +429,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       type="email" 
                       value={adminEmailInput}
                       onChange={(e) => setAdminEmailInput(e.target.value)}
-                      placeholder="admin@teacher.ai"
+                      placeholder="admin@domain.com"
                       required
                       className="admin-gate-input"
                     />
@@ -467,11 +467,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     />
                     <span>تذكر جلسة المشرف على هذا الجهاز</span>
                   </label>
-                </div>
-
-                <div className="admin-demo-hint">
-                  <Sparkles size={14} className="text-amber-400" />
-                  <span>بيانات الدخول التجريبية: <code>admin@teacher.ai</code> / <code>admin123</code></span>
                 </div>
 
                 <div className="admin-auth-actions">
