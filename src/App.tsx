@@ -365,6 +365,19 @@ export function App() {
     }
   }, [selectedLectureId]);
 
+  // Guard: Ensure selectedLectureId always strictly points to a valid lecture in the current active curriculum
+  useEffect(() => {
+    if (!lectures || lectures.length === 0) return;
+    const exists = lectures.some(l => l.id === selectedLectureId);
+    if (!exists) {
+      const firstValid = lectures.find(l => !l.isCompleted && !l.isLocked) || lectures[0];
+      if (firstValid) {
+        setSelectedLectureId(firstValid.id);
+        localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', firstValid.id);
+      }
+    }
+  }, [lectures, selectedLectureId]);
+
   // Sync profile to local storage & database
   useEffect(() => {
     if (profile.name === 'عمر التميمي' || profile.name === 'احمد علي' || profile.name === 'Ahmed Ali') return;

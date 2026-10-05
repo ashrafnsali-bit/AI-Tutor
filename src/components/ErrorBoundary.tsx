@@ -28,6 +28,13 @@ export class ErrorBoundary extends Component<Props, State> {
       localStorage.removeItem('TEACHER_AI_STUDENT_PROFILE');
       localStorage.removeItem('TEACHER_AI_HAS_STUDIED');
       localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
+      localStorage.removeItem('TEACHER_AI_CLOUD_SHARED_LECTURES');
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith('TEACHER_AI_LECTURES') || k.startsWith('TEACHER_AI_SHARED_LECS'))) {
+          localStorage.removeItem(k);
+        }
+      }
     } catch {
       // ignore
     }

@@ -166,7 +166,15 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
     setOpenSections({ 0: true });
     setActiveExampleStep({});
     setShowAllSteps({});
-  }, [lecture.id]);
+  }, [lecture?.id]);
+
+  if (!lecture) {
+    return (
+      <div className="lecture-viewer-root" style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+        <p>{lang === 'en' ? 'Loading lesson content...' : 'جاري تحميل محتوى الدرس...'}</p>
+      </div>
+    );
+  }
 
   const title      = (isEn ? lecture.titleEn      : lecture.titleAr)      || lecture.titleAr  || '';
   const subtitle   = (isEn ? lecture.subtitleEn   : lecture.subtitleAr)   || lecture.subtitleAr|| '';
@@ -613,10 +621,10 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
                   {/* ── FORMATIVE CHECK ── */}
                   {check && (() => {
-                    const opts        = isEn ? check.optionsEn : check.optionsAr;
-                    const qText       = isEn ? check.questionEn : check.questionAr;
-                    const explanation = isEn ? check.explanationEn : check.explanationAr;
-                    const hint        = isEn ? check.hintEn : check.hintAr;
+                    const opts        = (isEn ? check.optionsEn : check.optionsAr) || check.optionsAr || check.optionsEn || [];
+                    const qText       = (isEn ? check.questionEn : check.questionAr) || check.questionAr || '';
+                    const explanation = (isEn ? check.explanationEn : check.explanationAr) || check.explanationAr || '';
+                    const hint        = (isEn ? check.hintEn : check.hintAr) || check.hintAr || '';
                     const selectedIdx = formativeSelected[check.id];
                     const isChecked   = formativeChecked[check.id];
                     const isCorrect   = isChecked && selectedIdx === check.correctIndex;
@@ -807,9 +815,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {lecture.formativeAssessment.map((q: any, qIdx: number) => {
-              const qText = isEn ? q.questionEn : q.questionAr;
-              const opts = isEn ? q.optionsEn : q.optionsAr;
-              const rationale = isEn ? q.rationaleEn : q.rationaleAr;
+              const qText = (isEn ? q.questionEn : q.questionAr) || q.questionAr || '';
+              const opts = (isEn ? q.optionsEn : q.optionsAr) || q.optionsAr || q.optionsEn || [];
+              const rationale = (isEn ? q.rationaleEn : q.rationaleAr) || q.rationaleAr || '';
               const selectedIdx = formativeSelected[q.id];
               const isChecked = formativeChecked[q.id];
               const isCorrect = isChecked && selectedIdx === q.correctIndex;
