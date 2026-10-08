@@ -1,8 +1,8 @@
 import type { Lecture } from '../types';
 
 // ============================================================================
-// MIDDLE SCHOOL ICT & WEB DEVELOPMENT (حاسب آلي وتكنولوجيا المعلومات - الصف الثاني الإعدادي / Prep 2)
-// Official Grade 8 / Prep 2 National Curriculum Alignment (Language & Public Schools):
+// MIDDLE SCHOOL ICT & WEB DEVELOPMENT (draft computer-science bank for Grade 8)
+// This content has not been verified against the current Saudi Ministry of Education textbook.
 // Unit 1: HTML Basics, Document Structure, Formatting, Tables, Images & Links
 // Unit 2: CSS Styling, Colors, Box Model & External Stylesheets
 // Unit 3: JavaScript Fundamentals (Variables, Conditionals, DOM & Events)
@@ -27,7 +27,7 @@ export const MIDDLE_COMPUTER_SCIENCE_G8_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الثاني الإعدادي (Grade 8) - مدارس اللغات والرسمية',
     gradeLevelNameEn: 'Grade 8 / Prep 2 - Middle School ICT & Web Development',
     termAr: 'الفصل الدراسي الأول',
-    termEn: 'Term 1 Official ICT Curriculum',
+    termEn: 'Term 1 - draft curriculum content',
     unitTitleAr: 'الوحدة الأولى: تصميم مواقع الويب بلغة HTML (Web Page Design with HTML)',
     unitTitleEn: 'Unit 1: HTML Web Page Construction & Layout',
     lessonNumberAr: 'الدرس 1: بنية مستند HTML والوسوم الأساسية للجداول والروابط',
@@ -468,7 +468,7 @@ export const MIDDLE_COMPUTER_SCIENCE_G8_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الثاني الإعدادي (Grade 8) - مدارس اللغات والرسمية',
     gradeLevelNameEn: 'Grade 8 / Prep 2 - Middle School ICT & Web Development',
     termAr: 'الفصل الدراسي الأول',
-    termEn: 'Term 1 Official ICT Curriculum',
+    termEn: 'Term 1 - draft curriculum content',
     unitTitleAr: 'الوحدة الثانية: تنسيق وتصميم صفحات الويب بـ CSS (CSS Styling & Layout)',
     unitTitleEn: 'Unit 2: CSS Styling & Web Presentation',
     lessonNumberAr: 'الدرس 2: محددات CSS ونموذج الصندوق وربط الملفات الخارجية',
@@ -877,7 +877,7 @@ export const MIDDLE_COMPUTER_SCIENCE_G8_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الثاني الإعدادي (Grade 8) - مدارس اللغات والرسمية',
     gradeLevelNameEn: 'Grade 8 / Prep 2 - Middle School ICT & Web Development',
     termAr: 'الفصل الدراسي الثاني',
-    termEn: 'Term 2 Official ICT Curriculum',
+    termEn: 'Term 2 - draft curriculum content',
     unitTitleAr: 'الوحدة الثالثة: برمجة صفحات الويب التفاعلية بـ JavaScript',
     unitTitleEn: 'Unit 3: JavaScript Interactive Web Programming',
     lessonNumberAr: 'الدرس 3: المتغيرات وجمل الشرط والتفاعل مع شجرة الـ DOM',
@@ -1285,7 +1285,7 @@ export const MIDDLE_COMPUTER_SCIENCE_G8_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الثاني الإعدادي (Grade 8) - مدارس اللغات والرسمية',
     gradeLevelNameEn: 'Grade 8 / Prep 2 - Middle School ICT & Web Development',
     termAr: 'الفصل الدراسي الثاني',
-    termEn: 'Term 2 Official ICT Curriculum',
+    termEn: 'Term 2 - draft curriculum content',
     unitTitleAr: 'الوحدة الرابعة: الوسائط المتعددة ونماذج الويب التفاعلية (Multimedia & Forms)',
     unitTitleEn: 'Unit 4: Multimedia & Interactive Web Forms',
     lessonNumberAr: 'الدرس 4: وسوم الصوت والفيديو ونماذج تسجيل البيانات والتحقق',
@@ -1715,7 +1715,7 @@ export const MIDDLE_COMPUTER_SCIENCE_G8_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الثاني الإعدادي (Grade 8) - مدارس اللغات والرسمية',
     gradeLevelNameEn: 'Grade 8 / Prep 2 - Middle School ICT & Web Development',
     termAr: 'الفصل الدراسي الثاني',
-    termEn: 'Term 2 Official ICT Curriculum',
+    termEn: 'Term 2 - draft curriculum content',
     unitTitleAr: 'الوحدة الخامسة: المواطنة الرقمية والأمان السيبراني ونشر المواقع',
     unitTitleEn: 'Unit 5: Digital Citizenship, Cyber Safety & Web Publishing',
     lessonNumberAr: 'الدرس 5: الأمان الرقمي واستضافة المواقع ونشرها',

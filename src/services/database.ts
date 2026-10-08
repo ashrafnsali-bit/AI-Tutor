@@ -633,24 +633,54 @@ export async function logoutUserAccount(): Promise<void> {
   localStorage.removeItem('TEACHER_AI_ACTIVE_USER');
 }
 
-export async function saveUserSubjectLectures(userId: string, subject: Subject, lectures: Lecture[]): Promise<void> {
-  const compositeKey = `${userId}_${subject}`;
+export async function saveUserSubjectLectures(
+  userId: string,
+  subject: Subject,
+  lectures: Lecture[],
+  country: CountryCode,
+  gradeLevel: GradeLevel,
+  educationType: EducationType,
+  educationTrack: EducationTrack
+): Promise<void> {
+  const compositeKey = `${userId}_${country}_${educationType}_${subject}_${gradeLevel}_${educationTrack}`;
   try {
     const db = await getDB();
     const tx = db.transaction(PROGRESS_STORE, 'readwrite');
-    tx.objectStore(PROGRESS_STORE).put({ compositeKey, userId, subject, lectures, updatedAt: Date.now() });
+    tx.objectStore(PROGRESS_STORE).put({
+      compositeKey, userId, country, subject, gradeLevel, educationType, educationTrack, lectures, updatedAt: Date.now()
+    });
   } catch { /* ignore */ }
-  localStorage.setItem(`TEACHER_AI_LECTURES_${subject}`, JSON.stringify(lectures));
+  localStorage.setItem(`TEACHER_AI_LECTURES_${compositeKey}`, JSON.stringify(lectures));
 }
 
-export async function loadUserSubjectLectures(userId: string, subject: Subject): Promise<Lecture[] | null> {
-  const compositeKey = `${userId}_${subject}`;
+export async function loadUserSubjectLectures(
+  userId: string,
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel,
+  educationType: EducationType,
+  educationTrack: EducationTrack
+): Promise<Lecture[] | null> {
+  const compositeKey = `${userId}_${country}_${educationType}_${subject}_${gradeLevel}_${educationTrack}`;
   try {
     const db = await getDB();
     return new Promise((resolve) => {
       const tx = db.transaction(PROGRESS_STORE, 'readonly');
       const req = tx.objectStore(PROGRESS_STORE).get(compositeKey);
-      req.onsuccess = () => resolve(req.result?.lectures as Lecture[] ?? null);
+      req.onsuccess = () => {
+        const savedLectures = req.result?.lectures as Lecture[] | undefined;
+        if (!savedLectures) {
+          resolve(null);
+          return;
+        }
+        resolve(savedLectures.filter(lecture =>
+          lecture.country === country &&
+          lecture.subject === subject &&
+          lecture.gradeLevel === gradeLevel &&
+          lecture.educationType === educationType &&
+          lecture.educationTrack === educationTrack
+        ));
+      };
       req.onerror = () => resolve(null);
     });
   } catch { return null; }
@@ -669,7 +699,8 @@ export async function saveSharedCurriculumLecture(
   country: CountryCode = 'SA',
   subject: Subject = 'MATH',
   gradeLevel: GradeLevel = 'G12',
-  educationType: EducationType = 'PUBLIC'
+  educationType: EducationType = 'PUBLIC',
+  educationTrack: EducationTrack = 'GENERAL'
 ): Promise<void> {
   const record: Lecture & { isSharedCommunity: boolean; savedAt: number } = {
     ...lecture,
@@ -677,6 +708,7 @@ export async function saveSharedCurriculumLecture(
     subject,
     gradeLevel,
     educationType,
+    educationTrack,
     isSharedCommunity: true,
     savedAt: Date.now()
   };
@@ -693,12 +725,7 @@ export async function saveSharedCurriculumLecture(
   } catch { /* ignore */ }
 
   // 2. Synchronize to LocalStorage shared arrays across all compatible key patterns
-  const keys = [
-    `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${educationType}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${subject}`
-  ];
+  const keys = [`TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}_${educationTrack}`];
 
   keys.forEach(k => {
     try {
@@ -728,7 +755,8 @@ export async function loadSharedCurriculumLectures(
   country: CountryCode = 'SA',
   subject: Subject = 'MATH',
   gradeLevel: GradeLevel = 'G12',
-  educationType: EducationType = 'PUBLIC'
+  educationType: EducationType = 'PUBLIC',
+  educationTrack: EducationTrack = 'GENERAL'
 ): Promise<Lecture[]> {
   let dbLectures: Lecture[] = [];
 
@@ -741,11 +769,12 @@ export async function loadSharedCurriculumLectures(
       const req = store.getAll();
       req.onsuccess = () => {
         const all = (req.result as Lecture[]) || [];
-        const filtered = all.filter(l => 
-          (!l.country || l.country === country) &&
-          (!l.educationType || l.educationType === educationType) &&
-          (!l.gradeLevel || l.gradeLevel === gradeLevel) &&
-          (!l.subject || l.subject === subject || l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')))
+        const filtered = all.filter(l =>
+          l.country === country &&
+          l.educationType === educationType &&
+          l.educationTrack === educationTrack &&
+          l.gradeLevel === gradeLevel &&
+          l.subject === subject
         );
         resolve(filtered);
       };
@@ -756,12 +785,7 @@ export async function loadSharedCurriculumLectures(
   }
 
   // Fallback / merge with localStorage
-  const keys = [
-    `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${country}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${educationType}_${subject}_${gradeLevel}`,
-    `TEACHER_AI_SHARED_LECS_${subject}`
-  ];
+  const keys = [`TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}_${educationTrack}`];
 
   const localLectures: Lecture[] = [];
   keys.forEach(k => {
@@ -772,14 +796,18 @@ export async function loadSharedCurriculumLectures(
   });
 
   // Pull globally synchronized lectures from cloud cache
-  const cloudLectures = getCachedCloudLectures(subject, country, gradeLevel);
+  const cloudLectures = getCachedCloudLectures(subject, country, gradeLevel, educationType, educationTrack);
 
   const combinedMap = new Map<string, Lecture>();
   [...dbLectures, ...localLectures, ...cloudLectures].forEach(l => {
-    if (l && l.id) {
-      if (l.country && country && l.country !== country) return;
-      if (l.educationType && educationType && l.educationType !== educationType) return;
-      if (l.gradeLevel && gradeLevel && l.gradeLevel !== gradeLevel) return;
+    if (
+      l?.id &&
+      l.country === country &&
+      l.subject === subject &&
+      l.educationType === educationType &&
+      l.educationTrack === educationTrack &&
+      l.gradeLevel === gradeLevel
+    ) {
       combinedMap.set(l.id, l);
     }
   });
@@ -1041,7 +1069,14 @@ export async function getAdminStudentsOverview(): Promise<import('../types').Adm
       const sessions = await loadAllSessions(user.id);
 
       // Determine real curriculum lectures for student's subject, country, grade & track
-      let userLectures = await loadUserSubjectLectures(user.id, user.subject) || [];
+      let userLectures = await loadUserSubjectLectures(
+        user.id,
+        user.subject,
+        user.country,
+        user.gradeLevel,
+        user.educationType || 'PUBLIC',
+        user.educationTrack || 'GENERAL'
+      ) || [];
       if (!userLectures || userLectures.length === 0) {
         userLectures = loadSubjectLectures(
           user.subject,

@@ -34,8 +34,8 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Saudi Arabia',
     ministryAr: 'وزارة التعليم بالمملكة العربية السعودية',
     ministryEn: 'Ministry of Education - Kingdom of Saudi Arabia',
-    systemNameAr: 'المنهج السعودي المعتمد (نظام الفصول الثلاثة والمسارات)',
-    systemNameEn: 'Official Saudi National Curriculum (Masarat System)',
+    systemNameAr: 'محتوى تعليمي مكيّف للسعودية (مطابقة المنهج الرسمي قيد التحقق)',
+    systemNameEn: 'Saudi-adapted learning content (official curriculum alignment under review)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Trimester / Term 2',
     termsCount: 3,
@@ -515,7 +515,11 @@ export function getNationalTextbookInfo(
           : 'الرياضيات 3 (مسار علوم الحاسب والهندسة والمسار العام)';
       } else if (subject === 'COMPUTER_SCIENCE') {
         textbookName = isMiddle
-          ? `المهارات الرقمية (${gradeAr}) - وزارة التعليم السعودية`
+          ? gradeLevel === 'G7'
+            ? 'المهارات الرقمية (الصف الأول المتوسط، طبعة 1448–2026) - عناوين الدروس مطابقة؛ الشرح من إعداد المنصة'
+            : gradeLevel === 'G8'
+            ? 'المهارات الرقمية (الصف الثاني المتوسط، طبعة 1448–2026) - عناوين الدروس مطابقة؛ الشرح من إعداد المنصة'
+            : 'المهارات الرقمية (الصف الثالث المتوسط، طبعة 1448–2026، الجزء الأول) - عناوين الدروس مطابقة؛ الشرح من إعداد المنصة'
           : gradeLevel === 'G10'
           ? 'التقنية الرقمية 1 (السنة الأولى المشتركة)'
           : gradeLevel === 'G11'

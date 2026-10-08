@@ -185,6 +185,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const vocab      = lecture.vocabulary || [];
   const warmup     = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || '';
   const unitTitle  = (isEn ? lecture.unitTitleEn : lecture.unitTitleAr) || '';
+  const hasFourInteractiveExamples =
+    (lecture.sections || []).filter((section) => (section.interactiveExample?.steps?.length || 0) > 0).length >= 4;
 
   const handleSelectFormativeOption = (checkId: string, oIdx: number) => {
     if (!formativeChecked[checkId]) setFormativeSelected(p => ({ ...p, [checkId]: oIdx }));
@@ -229,10 +231,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Flame size={13} />
               {lecture.durationMinutes} {t.minutesUnit}
             </span>
-            <span className="lesson-meta-badge badge-examples-guarantee" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.3)', fontWeight: 600 }}>
-              <Calculator size={13} />
-              {isEn ? '4 Step-by-Step Worked Examples' : '🎯 4 أمثلة توضيحية تفاعلية محلولة'}
-            </span>
+            {hasFourInteractiveExamples && (
+              <span className="lesson-meta-badge badge-examples-guarantee" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.3)', fontWeight: 600 }}>
+                <Calculator size={13} />
+                {isEn ? '4 Step-by-Step Worked Examples' : '🎯 4 أمثلة توضيحية تفاعلية محلولة'}
+              </span>
+            )}
             {passed !== undefined && (
               <span className={`lesson-meta-badge ${passed ? 'badge-passed' : 'badge-failed'}`}>
                 <Star size={13} />

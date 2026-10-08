@@ -30,6 +30,117 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
   // Render High-Precision Vector SVG scientific models
   const renderSvgModel = () => {
     switch (diagram.diagramType) {
+      case 'digital_skills': {
+        const steps = diagram.visualSteps || [];
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const positions = steps.map((_, index) => {
+          const visualIndex = isEn ? index : steps.length - index - 1;
+          return 28 + visualIndex * 184;
+        });
+
+        return (
+          <svg
+            viewBox="0 0 760 260"
+            className="scientific-svg digital-skills-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#101d37" />
+                <stop offset="100%" stopColor="#172554" />
+              </linearGradient>
+              <marker id={`${visualId}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#67e8f9" />
+              </marker>
+            </defs>
+            <rect width="760" height="260" rx="16" fill={`url(#${visualId}-background)`} />
+            <circle cx="54" cy="38" r="68" fill="#38bdf8" opacity="0.06" />
+            <circle cx="706" cy="232" r="94" fill="#a78bfa" opacity="0.07" />
+            {steps.slice(0, 4).map((step, index) => {
+              const x = positions[index] ?? 28;
+              const colors = ['#22d3ee', '#818cf8', '#34d399', '#fbbf24'];
+              const color = colors[index % colors.length];
+              const label = isEn ? step.labelEn : step.labelAr;
+
+              return (
+                <g key={`${label}-${index}`}>
+                  {index < Math.min(steps.length, 4) - 1 && (
+                    <path
+                      d={isEn
+                        ? `M ${x + 160} 133 L ${x + 178} 133`
+                        : `M ${x} 133 L ${x - 18} 133`}
+                      stroke="#67e8f9"
+                      strokeWidth="2.5"
+                      markerEnd={`url(#${visualId}-arrow)`}
+                      opacity="0.85"
+                    />
+                  )}
+                  <rect
+                    x={x}
+                    y="62"
+                    width="160"
+                    height="142"
+                    rx="14"
+                    fill="#1e293b"
+                    stroke={color}
+                    strokeOpacity="0.72"
+                    strokeWidth="1.5"
+                  />
+                  <circle cx={x + 80} cy="103" r="25" fill={color} opacity="0.16" />
+                  <circle cx={x + 80} cy="103" r="17" fill={color} opacity="0.28" />
+                  <text
+                    x={x + 80}
+                    y="109"
+                    textAnchor="middle"
+                    fill={color}
+                    fontSize="16"
+                    fontWeight="800"
+                    fontFamily="inherit"
+                  >
+                    {index + 1}
+                  </text>
+                  <text
+                    x={x + 80}
+                    y="157"
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#f8fafc"
+                    fontSize="13"
+                    fontWeight="700"
+                    fontFamily="inherit"
+                  >
+                    {label}
+                  </text>
+                  <text
+                    x={x + 80}
+                    y="181"
+                    textAnchor="middle"
+                    fill="#94a3b8"
+                    fontSize="10"
+                    fontFamily="inherit"
+                  >
+                    {isEn ? `Step ${index + 1}` : `الخطوة ${index + 1}`}
+                  </text>
+                </g>
+              );
+            })}
+            <text
+              x="380"
+              y="235"
+              textAnchor="middle"
+              fill="#cbd5e1"
+              fontSize="11"
+              fontFamily="inherit"
+            >
+              {isEn ? 'A visual guide to the lesson concept' : 'تصور بصري مبسط لمفهوم الدرس'}
+            </text>
+          </svg>
+        );
+      }
+
       case 'electric_field':
         return (
           <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">

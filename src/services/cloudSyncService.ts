@@ -11,7 +11,7 @@
  * 4. Automatic Heartbeat Pruning & State Transitions
  */
 
-import type { UserAccount, Lecture, Subject } from '../types';
+import type { UserAccount, Lecture, Subject, EducationTrack, EducationType } from '../types';
 import type { GradeRecord } from './database';
 import type { ActiveStudentPresence } from './presenceService';
 
@@ -487,16 +487,23 @@ export function cacheCloudLecture(lecture: Lecture): void {
   } catch { /* ignore */ }
 }
 
-export function getCachedCloudLectures(subject?: Subject, country?: string, gradeLevel?: string): Lecture[] {
+export function getCachedCloudLectures(
+  subject?: Subject,
+  country?: string,
+  gradeLevel?: string,
+  educationType?: EducationType,
+  educationTrack?: EducationTrack
+): Lecture[] {
   try {
     const raw = localStorage.getItem(CLOUD_LECTURES_CACHE_KEY);
     const list: Lecture[] = raw ? JSON.parse(raw) : [];
-    if (!subject && !country && !gradeLevel) return list;
+    if (!subject && !country && !gradeLevel && !educationType && !educationTrack) return list;
     return list.filter(l => {
-      if (country && l.country && l.country !== country) return false;
-      if (subject && l.id && !l.id.toLowerCase().includes(subject.toLowerCase().replace('_', '')) && !l.id.startsWith('gen-') && !l.id.startsWith('ai-gen-')) {
-        return false;
-      }
+      if (country && l.country !== country) return false;
+      if (subject && l.subject !== subject) return false;
+      if (gradeLevel && l.gradeLevel !== gradeLevel) return false;
+      if (educationType && l.educationType !== educationType) return false;
+      if (educationTrack && l.educationTrack !== educationTrack) return false;
       return true;
     });
   } catch {
@@ -512,4 +519,3 @@ export function onCloudLectureGenerated(callback: (lecture: Lecture) => void): (
     if (idx >= 0) lectureGeneratedListeners.splice(idx, 1);
   };
 }
-

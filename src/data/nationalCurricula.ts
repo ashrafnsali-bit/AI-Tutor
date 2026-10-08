@@ -2749,8 +2749,11 @@ export function getNationalLessonOverrides(
     }
   }
 
+  // International overrides must never replace a national public-school curriculum.
+  const canUseInternationalFallback = country === 'INTL' || educationType === 'INTERNATIONAL';
+
   // International education type explicit fallback to INTL standards
-  if (educationType === 'INTERNATIONAL' && NATIONAL_CURRICULA.INTL) {
+  if (canUseInternationalFallback && educationType === 'INTERNATIONAL' && NATIONAL_CURRICULA.INTL) {
     const intlKey = `${subject}_${gradeLevel}`;
     if (NATIONAL_CURRICULA.INTL[intlKey] && NATIONAL_CURRICULA.INTL[intlKey]!.length > 0) {
       return NATIONAL_CURRICULA.INTL[intlKey];
@@ -2761,7 +2764,7 @@ export function getNationalLessonOverrides(
   }
 
   // If International education type requested, fallback to INTL
-  if (NATIONAL_CURRICULA.INTL) {
+  if (canUseInternationalFallback && NATIONAL_CURRICULA.INTL) {
     const intlKey = `${subject}_${gradeLevel}`;
     if (NATIONAL_CURRICULA.INTL[intlKey] && NATIONAL_CURRICULA.INTL[intlKey]!.length > 0) {
       return NATIONAL_CURRICULA.INTL[intlKey];

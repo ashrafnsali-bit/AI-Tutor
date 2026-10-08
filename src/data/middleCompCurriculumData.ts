@@ -1,8 +1,8 @@
 import type { Lecture } from '../types';
 
 // ============================================================================
-// MIDDLE SCHOOL ICT & COMPUTER SCIENCE (حاسب آلي وتكنولوجيا المعلومات - الصف الأول الإعدادي / Prep 1)
-// Official Grade 7 / Prep 1 National Curriculum Alignment (Language & Public Schools):
+// MIDDLE SCHOOL ICT & COMPUTER SCIENCE (draft digital-literacy bank for Grade 7)
+// This content has not been verified against the current Saudi Ministry of Education textbook.
 // Unit 1: Basics of Computer System (Hardware, Software, Storage Units, Data & Information)
 // Unit 2: Operating Systems & File Management (GUI, Files, Folders, Extensions)
 // Unit 3: Computer Networks, Internet & Cloud Services (LAN/WAN, Cyber Safety, Cloud Storage)
@@ -27,7 +27,7 @@ export const MIDDLE_COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الأول الإعدادي (الصف السابع) - المرحلة الإعدادية / المتوسطة',
     gradeLevelNameEn: 'Grade 7 / Prep 1 - Middle School ICT & Computer Science',
     termAr: 'الفصل الدراسي الأول',
-    termEn: 'Term 1 Official ICT Curriculum',
+    termEn: 'Term 1 - draft curriculum content',
     unitTitleAr: 'الوحدة الأولى: أساسيات نظام الكمبيوتر (Basics of Computer System)',
     unitTitleEn: 'Unit 1: Fundamentals of Computer Systems & Hardware',
     lessonNumberAr: 'الدرس 1: البيانات والمعلومات ووحدات قياس الذاكرة',
@@ -494,7 +494,7 @@ export const MIDDLE_COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الأول الإعدادي (الصف السابع) - المرحلة الإعدادية / المتوسطة',
     gradeLevelNameEn: 'Grade 7 / Prep 1 - Middle School ICT & Computer Science',
     termAr: 'الفصل الدراسي الأول',
-    termEn: 'Term 1 Official ICT Curriculum',
+    termEn: 'Term 1 - draft curriculum content',
     unitTitleAr: 'الوحدة الثانية: أنظمة التشغيل وإدارة الملفات (Operating Systems & Files)',
     unitTitleEn: 'Unit 2: Operating Systems & File Management',
     lessonNumberAr: 'الدرس 2: نظام التشغيل والواجهة الرسومية والملفات',
@@ -945,7 +945,7 @@ export const MIDDLE_COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الأول الإعدادي (الصف السابع) - المرحلة الإعدادية / المتوسطة',
     gradeLevelNameEn: 'Grade 7 / Prep 1 - Middle School ICT & Computer Science',
     termAr: 'الفصل الدراسي الأول والثاني',
-    termEn: 'Term 1 & Term 2 Official ICT Curriculum',
+    termEn: 'Term 1 & Term 2 - draft curriculum content',
     unitTitleAr: 'الوحدة الثالثة: شبكات الكمبيوتر والإنترنت والأمان الرقمي (Networks & Cybersecurity)',
     unitTitleEn: 'Unit 3: Computer Networks, Cloud Computing & Cyber Safety',
     lessonNumberAr: 'الدرس 3: الشبكات والإنترنت والحوسبة السحابية والأمن السيبراني',
@@ -1402,7 +1402,7 @@ export const MIDDLE_COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الأول الإعدادي (الصف السابع) - المرحلة الإعدادية / المتوسطة',
     gradeLevelNameEn: 'Grade 7 / Prep 1 - Middle School ICT & Computer Science',
     termAr: 'الفصل الدراسي الثاني',
-    termEn: 'Term 2 Official ICT Curriculum',
+    termEn: 'Term 2 - draft curriculum content',
     unitTitleAr: 'الوحدة الرابعة: البرمجة والتفكير المنطقي ببرنامج سكراتش (Programming with Scratch)',
     unitTitleEn: 'Unit 4: Computational Logic, Flowcharts & Scratch Block Programming',
     lessonNumberAr: 'الدرس 4: الخوارزميات والبرمجة المرئية بسكراتش',
@@ -1863,7 +1863,7 @@ export const MIDDLE_COMPUTER_SCIENCE_LECTURES: Lecture[] = [
     gradeLevelNameAr: 'الصف الأول الإعدادي (الصف السابع) - المرحلة الإعدادية / المتوسطة',
     gradeLevelNameEn: 'Grade 7 / Prep 1 - Middle School ICT & Computer Science',
     termAr: 'الفصل الدراسي الأول والثاني',
-    termEn: 'Term 1 & Term 2 Official ICT Curriculum',
+    termEn: 'Term 1 & Term 2 - draft curriculum content',
     unitTitleAr: 'الوحدة الخامسة: معالجة الصور الرقمية وتصميم الجرافيك (Image Editing with GIMP)',
     unitTitleEn: 'Unit 5: Digital Graphics, Layers & Image Editing in GIMP',
     lessonNumberAr: 'الدرس 5: برنامج GIMP وتعديل الصور والطبقات والتصدير',

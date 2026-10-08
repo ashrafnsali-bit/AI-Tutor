@@ -212,6 +212,11 @@ export interface DiagramKeyLabel {
   color?: string;
 }
 
+export interface LectureDiagramStep {
+  labelAr: string;
+  labelEn: string;
+}
+
 export interface LectureDiagram {
   id: string;
   figureNumberAr: string; // e.g. "شكل (1-3)"
@@ -261,11 +266,13 @@ export interface LectureDiagram {
     | 'protein_translation_ribosome'
     | 'arabic_inna_kana_map'
     | 'arabic_parsing_tree'
+    | 'digital_skills'
     | 'polynomial_curve' 
     | 'apparatus' 
     | 'custom_svg';
   imageUrl?: string;
   svgContent?: string;
+  visualSteps?: LectureDiagramStep[];
   keyLabels?: DiagramKeyLabel[];
   takeawayFormulaAr?: string;
   takeawayFormulaEn?: string;

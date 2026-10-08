@@ -17,6 +17,9 @@ import { HIGH_MATH_G10_LECTURES } from './highMath10CurriculumData';
 import { HIGH_MATH_G11_LECTURES } from './highMath11CurriculumData';
 import { HIGH_MATH_G12_LECTURES } from './highMath12CurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
+import { SAUDI_G7_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG7CurriculumData';
+import { SAUDI_G8_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG8CurriculumData';
+import { SAUDI_G9_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG9CurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 import { HIGH_COMP_G10_LECTURES } from './highComp10CurriculumData';
 import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
@@ -4471,7 +4474,7 @@ export function getCurriculumForSubject(
   subject: Subject,
   gradeLevel?: string,
   country: string = 'SA',
-  _educationType: EducationType = 'PUBLIC',
+  educationType: EducationType = 'PUBLIC',
   _track: EducationTrack = 'GENERAL'
 ): Lecture[] {
   // Direct authentic Sudanese curriculum routing
@@ -4550,6 +4553,15 @@ export function getCurriculumForSubject(
     return HIGH_MATH_G12_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'COMPUTER_SCIENCE') {
+    if (country === 'SA' && gradeLevel === 'G7' && educationType === 'PUBLIC') {
+      return SAUDI_G7_DIGITAL_SKILLS_LECTURES;
+    }
+    if (country === 'SA' && gradeLevel === 'G8' && educationType === 'PUBLIC') {
+      return SAUDI_G8_DIGITAL_SKILLS_LECTURES;
+    }
+    if (country === 'SA' && gradeLevel === 'G9' && educationType === 'PUBLIC') {
+      return SAUDI_G9_DIGITAL_SKILLS_LECTURES;
+    }
     if (gradeLevel === 'G12') {
       return HIGH_COMP_G12_LECTURES;
     }
@@ -4674,10 +4686,13 @@ export function loadSubjectLectures(
   track: EducationTrack = 'GENERAL',
   lang: Language = 'ar'
 ): Lecture[] {
+  const isProtectedSaudiPublicMiddleComputerScience =
+    country === 'SA' && subject === 'COMPUTER_SCIENCE' &&
+    ['G7', 'G8', 'G9'].includes(gradeLevel || '') && educationType === 'PUBLIC';
   const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country, educationType, track);
   
   // 1. Strict 4D Isolated Shared Lecture Key (No generic fallbacks)
-  const strictSharedKey = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
+  const strictSharedKey = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${track}`;
   const cloudKey = 'TEACHER_AI_CLOUD_SHARED_LECTURES';
 
   let sharedLecs: Lecture[] = [];
@@ -4694,10 +4709,11 @@ export function loadSubjectLectures(
             list.forEach(l => {
               if (!l || !l.id) return;
               // Strict 4D Isolation Guard: All dimensions must strictly match
-              if (!l.country || l.country !== country) return;
-              if (l.educationType && l.educationType !== educationType) return;
-              if (!l.subject || l.subject !== subject) return;
-              if (gradeLevel && l.gradeLevel && l.gradeLevel !== gradeLevel) return;
+              if (l.country !== country) return;
+              if (l.educationType !== educationType) return;
+              if (l.educationTrack !== track) return;
+              if (l.subject !== subject) return;
+              if (!gradeLevel || l.gradeLevel !== gradeLevel) return;
               map.set(l.id, l);
             });
           }
@@ -4721,19 +4737,19 @@ export function loadSubjectLectures(
   );
 
   // Append community / shared lectures without duplicating existing topics
-  sharedLecs.forEach(sh => {
-    const shTitleClean = (sh.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
-    const alreadyExists = combined.some(c => {
-      if (c.id === sh.id) return true;
-      const cTitleClean = (c.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
-      return cTitleClean && shTitleClean && cTitleClean === shTitleClean;
+  if (!isProtectedSaudiPublicMiddleComputerScience) {
+    sharedLecs.forEach(sh => {
+      const shTitleClean = (sh.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      const alreadyExists = combined.some(c => {
+        if (c.id === sh.id) return true;
+        const cTitleClean = (c.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+        return cTitleClean && shTitleClean && cTitleClean === shTitleClean;
+      });
+      if (!alreadyExists) combined.push(sh);
     });
-    if (!alreadyExists) {
-      combined.push(sh);
-    }
-  });
+  }
 
-  const storageKey = `TEACHER_AI_LECTURES_V4_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
+  const storageKey = `TEACHER_AI_LECTURES_V5_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${track}`;
   const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
   
   let rawList = combined;
@@ -4742,9 +4758,12 @@ export function loadSubjectLectures(
       const parsed = JSON.parse(saved) as Lecture[];
       if (Array.isArray(parsed)) {
         // Strict cache validation: all cached lectures must strictly match this country and subject to prevent cross-contamination
-        const isCacheValid = parsed.every(p => 
-          (!p.country || p.country === country) && 
-          (!p.subject || p.subject === subject)
+        const isCacheValid = parsed.every(p =>
+          p.country === country &&
+          p.subject === subject &&
+          p.gradeLevel === gradeLevel &&
+          p.educationType === educationType &&
+          p.educationTrack === track
         );
         const hasMatchingCurriculum = combined.some(freshLec => parsed.some(p => p.id === freshLec.id));
 
@@ -4762,19 +4781,23 @@ export function loadSubjectLectures(
           });
 
           // Also preserve any newly AI-generated lectures saved in user session strictly matching this context
-          parsed.forEach(p => {
-            if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
-              if (p.country && p.country !== country) return;
-              if (p.subject && p.subject !== subject) return;
-              if (gradeLevel && p.gradeLevel && p.gradeLevel !== gradeLevel) return;
+          if (!isProtectedSaudiPublicMiddleComputerScience) {
+            parsed.forEach(p => {
+              if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
+                if (
+                  p.country !== country ||
+                  p.subject !== subject ||
+                  p.gradeLevel !== gradeLevel ||
+                  p.educationType !== educationType ||
+                  p.educationTrack !== track
+                ) return;
 
-              const pClean = (p.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
-              const exists = rawList.some(r => r.id === p.id || (pClean && (r.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim() === pClean));
-              if (!exists) {
-                rawList.push(p);
+                const pClean = (p.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+                const exists = rawList.some(r => r.id === p.id || (pClean && (r.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim() === pClean));
+                if (!exists) rawList.push(p);
               }
-            }
-          });
+            });
+          }
         }
       }
     } catch (e) {
@@ -4813,12 +4836,13 @@ export function loadSubjectLectures(
       order,
       titleAr,
       titleEn,
-      lessonNumberAr: `الدرس ${order}`,
-      lessonNumberEn: `Lesson ${order}`,
-      country: (lec.country || country) as any,
-      subject: (lec.subject || subject) as any,
-      gradeLevel: (lec.gradeLevel || gradeLevel) as any,
-      educationType: (lec.educationType || educationType) as any,
+      lessonNumberAr: isProtectedSaudiPublicMiddleComputerScience ? lec.lessonNumberAr : `الدرس ${order}`,
+      lessonNumberEn: isProtectedSaudiPublicMiddleComputerScience ? lec.lessonNumberEn : `Lesson ${order}`,
+      country: country as any,
+      subject,
+      gradeLevel: gradeLevel as any,
+      educationType,
+      educationTrack: track,
       prerequisiteLectureId: prevLec?.id,
       prerequisiteTitleAr: prevLec?.titleAr,
       prerequisiteTitleEn: prevLec?.titleEn,
@@ -4826,7 +4850,9 @@ export function loadSubjectLectures(
     });
   }
 
-  return formattedList.map(ensureFourExamplesForLecture);
+  return isProtectedSaudiPublicMiddleComputerScience
+    ? formattedList
+    : formattedList.map(ensureFourExamplesForLecture);
 }
 
 export function saveSubjectLectures(
@@ -4834,10 +4860,11 @@ export function saveSubjectLectures(
   lectures: Lecture[],
   gradeLevel?: string,
   country: string = 'SA',
-  educationType: EducationType = 'PUBLIC'
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
 ): void {
   if (typeof localStorage === 'undefined') return;
-  const storageKey = `TEACHER_AI_LECTURES_V4_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}`;
+  const storageKey = `TEACHER_AI_LECTURES_V5_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${track}`;
   localStorage.setItem(storageKey, JSON.stringify(lectures));
 }
 
@@ -4861,4 +4888,3 @@ export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   usedTodayMinutes: 0,
   masteryPoints: 0
 };
-

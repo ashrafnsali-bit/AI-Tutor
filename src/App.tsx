@@ -149,6 +149,12 @@ export function App() {
     return INITIAL_STUDENT_PROFILE;
   });
 
+  const isSaudiOfficialMiddleSchoolComputerScience =
+    profile.country === 'SA' &&
+    profile.subject === 'COMPUTER_SCIENCE' &&
+    ['G7', 'G8', 'G9'].includes(profile.gradeLevel) &&
+    (profile.educationType || 'PUBLIC') === 'PUBLIC';
+
   // Hydrate lectures corresponding to student's enrolled subject and grade
   const [lectures, setLectures] = useState<Lecture[]>(() => {
     return loadSubjectLectures(
@@ -222,12 +228,15 @@ export function App() {
     const unsub = onCloudLectureGenerated((cloudLec) => {
       if (!cloudLec || !cloudLec.id) return;
 
-      // Strict 4D Isolation Guard: All four dimensions MUST match exactly, no loose fallbacks
+      if (isSaudiOfficialMiddleSchoolComputerScience) return;
+
+      // Strict curriculum isolation requires every profile dimension to match.
       if (!cloudLec.country || cloudLec.country !== profile.country) return;
       if (!cloudLec.subject || cloudLec.subject !== profile.subject) return;
       if (!cloudLec.gradeLevel || cloudLec.gradeLevel !== profile.gradeLevel) return;
       const currentEduType = profile.educationType || 'PUBLIC';
-      if (cloudLec.educationType && cloudLec.educationType !== currentEduType) return;
+      if (cloudLec.educationType !== currentEduType) return;
+      if (cloudLec.educationTrack !== (profile.educationTrack || 'GENERAL')) return;
 
       setLectures((prev) => {
         if (prev.some(l => l.id === cloudLec.id)) return prev;
@@ -257,13 +266,23 @@ export function App() {
           isLocked: !isPrecedingCompleted
         };
         const updated = [...prev, formatted];
-        saveSubjectLectures(profile.subject, updated, profile.gradeLevel, profile.country, currentEduType);
+        saveSubjectLectures(
+          profile.subject, updated, profile.gradeLevel, profile.country, currentEduType,
+          profile.educationTrack || 'GENERAL'
+        );
         return updated;
       });
     });
 
     return () => unsub();
-  }, [profile.country, profile.educationType, profile.subject, profile.gradeLevel]);
+  }, [
+    profile.country,
+    profile.educationType,
+    profile.educationTrack,
+    profile.subject,
+    profile.gradeLevel,
+    isSaudiOfficialMiddleSchoolComputerScience
+  ]);
 
   // Dynamic Geolocation Detection on startup (unless user manually chose their country)
   useEffect(() => {
@@ -331,7 +350,10 @@ export function App() {
           localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
         } catch {}
         setCurrentView('workspace');
-        loadUserSubjectLectures(user.id, user.subject).then((savedLecs) => {
+        loadUserSubjectLectures(
+          user.id, user.subject, user.country, user.gradeLevel,
+          user.educationType || 'PUBLIC', user.educationTrack || 'GENERAL'
+        ).then((savedLecs) => {
           const freshLecs = loadSubjectLectures(
             user.subject,
             user.country,
@@ -387,9 +409,15 @@ export function App() {
 
   // Sync lectures progress per subject, country, and educationType to local storage & database
   useEffect(() => {
-    saveSubjectLectures(profile.subject, lectures, profile.gradeLevel, profile.country, profile.educationType || 'PUBLIC');
-    saveUserSubjectLectures(profile.id, profile.subject, lectures).catch(() => {});
-  }, [profile.id, profile.subject, profile.gradeLevel, profile.country, profile.educationType, lectures]);
+    saveSubjectLectures(
+      profile.subject, lectures, profile.gradeLevel, profile.country,
+      profile.educationType || 'PUBLIC', profile.educationTrack || 'GENERAL'
+    );
+    saveUserSubjectLectures(
+      profile.id, profile.subject, lectures, profile.country, profile.gradeLevel,
+      profile.educationType || 'PUBLIC', profile.educationTrack || 'GENERAL'
+    ).catch(() => {});
+  }, [profile.id, profile.subject, profile.gradeLevel, profile.country, profile.educationType, profile.educationTrack, lectures]);
 
   // Adjust HTML dir and title when language changes
   useEffect(() => {
@@ -645,7 +673,10 @@ export function App() {
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
 
-    const dbLecs = await loadUserSubjectLectures(user.id, user.subject);
+    const dbLecs = await loadUserSubjectLectures(
+      user.id, user.subject, user.country, user.gradeLevel,
+      user.educationType || 'PUBLIC', user.educationTrack || 'GENERAL'
+    );
     const freshLecs = loadSubjectLectures(
       user.subject,
       user.country,
@@ -721,6 +752,8 @@ export function App() {
 
   // Handle a newly AI-generated curriculum lecture added to roadmap
   const handleLectureGenerated = (newLecture: Lecture) => {
+    if (isSaudiOfficialMiddleSchoolComputerScience) return;
+
     setLectures((prev) => {
       const nextOrder = prev.length + 1;
       const lastLec = prev[prev.length - 1];
@@ -760,7 +793,8 @@ export function App() {
         profile.country, 
         profile.subject, 
         profile.gradeLevel,
-        profile.educationType || 'PUBLIC'
+        profile.educationType || 'PUBLIC',
+        profile.educationTrack || 'GENERAL'
       ).catch((err) => {
         console.warn('Could not save to shared curriculum store:', err);
       });
@@ -899,7 +933,11 @@ export function App() {
               selectedLectureId={selectedLectureId}
               lang={profile.language}
               profile={profile}
-              onGenerateLecture={() => setIsGenerateLectureOpen(true)}
+              onGenerateLecture={
+                isSaudiOfficialMiddleSchoolComputerScience
+                  ? undefined
+                  : () => setIsGenerateLectureOpen(true)
+              }
               onOpenProfile={() => setIsProfileOpen(true)}
               onSelectLecture={(id) => {
                 setSelectedLectureId(id);
@@ -996,7 +1034,7 @@ export function App() {
 
       {/* AI Generate Lecture Modal */}
       <GenerateLectureModal
-        isOpen={isGenerateLectureOpen}
+        isOpen={isGenerateLectureOpen && !isSaudiOfficialMiddleSchoolComputerScience}
         profile={profile}
         lang={profile.language}
         apiKey={apiKey}
@@ -1053,8 +1091,3 @@ export function App() {
 }
 
 export default App;
-
-
-
-
-
