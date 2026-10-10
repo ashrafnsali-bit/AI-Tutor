@@ -35,7 +35,14 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const gradeKey = profile?.gradeLevel || 'G11';
   const specKey = profile?.specialization || 'STEM';
   const countryKey = profile?.country || 'SA';
-  const courseSubject = getNationalSubjectLabel(subjectKey, countryKey, gradeKey, lang);
+  const courseSubject = getNationalSubjectLabel(
+    subjectKey,
+    countryKey,
+    gradeKey,
+    lang,
+    profile?.educationType,
+    profile?.educationTrack
+  );
   const courseGrade = t.gradeLabels[gradeKey] || gradeKey;
   const courseTrack = t.specLabels[specKey] || specKey;
 

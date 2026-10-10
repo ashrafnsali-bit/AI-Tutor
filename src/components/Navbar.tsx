@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
-import { getCountryInfo } from '../data/curriculumCountries';
+import { getCountryInfo, TRACK_LABELS } from '../data/curriculumCountries';
 import { getActiveUserAccount } from '../services/database';
 import { 
   GraduationCap, 
@@ -115,7 +115,9 @@ export const Navbar: React.FC<NavbarProps> = ({
     ? t.primarySchoolStage
     : isMiddleSchool
     ? t.middleSchoolStage
-    : (t.specLabels[profile.specialization] || profile.specialization);
+    : (isEn
+      ? TRACK_LABELS[profile.educationTrack || 'GENERAL'].en
+      : TRACK_LABELS[profile.educationTrack || 'GENERAL'].ar);
 
   const gradeLabel = t.gradeLabels[profile.gradeLevel] || profile.gradeLevel;
 

@@ -1,4 +1,4 @@
-import type { Lecture, Question } from '../types';
+import type { Lecture, LectureDiagramStep, Question } from '../types';
 
 type Lesson = {
   titleAr: string;
@@ -22,6 +22,34 @@ type Unit = {
 };
 
 const textbookUrl = 'https://iencontent.ien.edu.sa/books/1448-GE-ME-K07-SM1-mcomp.pdf';
+
+const lessonIllustrations: Record<number, [string, string][]> = {
+  14: [['أجهزة الحاسب', 'Computer devices'], ['المعالج والذاكرة', 'Processor and memory'], ['أجهزة الإدخال والإخراج', 'Input and output devices'], ['وسائط التخزين', 'Storage media']],
+  24: [['المستخدم', 'User'], ['نظام التشغيل', 'Operating system'], ['الملفات والمجلدات', 'Files and folders'], ['التطبيقات والأجهزة', 'Apps and devices']],
+  41: [['إعدادات العرض', 'Display settings'], ['الوقت واللغة', 'Time and language'], ['الأجهزة المتصلة', 'Connected devices'], ['خيارات النظام', 'System options']],
+  60: [['تنسيق النص', 'Format text'], ['تنسيق الفقرة', 'Format paragraphs'], ['إدراج صورة', 'Insert an image'], ['مستند واضح', 'A clear document']],
+  68: [['مستند رئيس', 'Main document'], ['مصدر البيانات', 'Data source'], ['حقول المستلمين', 'Recipient fields'], ['رسائل مخصصة', 'Personalized letters']],
+  78: [['معاينة البيانات', 'Preview data'], ['التحقق من الحقول', 'Check fields'], ['إتمام الدمج', 'Complete the merge'], ['مستندات المستلمين', 'Recipient documents']],
+  94: [['تنظيم الخلايا', 'Organize cells'], ['تنسيق القيم', 'Format values'], ['إضافة صورة أو رمز', 'Add an image or icon'], ['جدول أوضح', 'A clearer spreadsheet']],
+  104: [['اختر نوع البيانات', 'Choose a data type'], ['حدد الدالة', 'Select a function'], ['أدخل الوسيطات', 'Enter arguments'], ['تحقق من النتيجة', 'Check the result']],
+  121: [['حدد المشكلة', 'Define the problem'], ['رتب التعليمات', 'Order instructions'], ['مثل الخطوات', 'Represent the steps'], ['نفذ البرنامج', 'Run the program']],
+  130: [['اختر اسمًا', 'Choose a name'], ['حدد القيمة', 'Set a value'], ['خزنها في متغير', 'Store in a variable'], ['استخدمها في الحل', 'Use it in a solution']],
+  140: [['اطلب إدخالًا', 'Request input'], ['استقبل القيمة', 'Read the value'], ['حدد نوع البيانات', 'Identify the data type'], ['استخدم المدخل', 'Use the input']],
+  146: [['اختر القيم', 'Choose values'], ['حدد المعامل', 'Choose an operator'], ['نفذ العملية', 'Perform the operation'], ['اعرض الناتج', 'Show the result']],
+  152: [['حدد نقطة البداية', 'Set a starting point'], ['اختر أمر الرسم', 'Choose a drawing command'], ['حدد الاتجاه والمسافة', 'Set direction and distance'], ['أنشئ الشكل', 'Draw the shape']],
+  182: [['اكتب كلمات البحث', 'Enter search terms'], ['راجع النتائج', 'Review results'], ['اختر مصدرًا موثوقًا', 'Choose a reliable source'], ['تحقق من المعلومة', 'Check the information']],
+  194: [['اكتب عنوان المستلم', 'Enter recipient'], ['أضف موضوعًا', 'Add a subject'], ['اكتب الرسالة', 'Compose the message'], ['أرسل وتحقق', 'Send and check']],
+  208: [['افتح صندوق البريد', 'Open the mailbox'], ['استخدم المجلدات', 'Use folders'], ['رتب الرسائل', 'Sort messages'], ['اعثر عليها لاحقًا', 'Find them later']],
+  218: [['توقف قبل النقر', 'Pause before clicking'], ['تحقق من المرسل', 'Check the sender'], ['احمِ بياناتك', 'Protect your data'], ['أبلغ شخصًا موثوقًا', 'Tell a trusted adult']],
+  235: [['اختبر الشرط', 'Test the condition'], ['إذا تحقق', 'If true'], ['أعد النتيجة الأولى', 'Return the first result'], ['وإلا النتيجة البديلة', 'Otherwise return another']],
+  245: [['حدد البيانات', 'Select data'], ['اختر نوع المخطط', 'Choose a chart type'], ['نسق العناصر', 'Format the chart'], ['قارن القيم', 'Compare values']],
+  259: [['حدد الفكرة', 'Choose a message'], ['اختر تخطيط الشريحة', 'Choose a slide layout'], ['أضف نصًا وصورة', 'Add text and an image'], ['رتب الشرائح', 'Organize slides']],
+  271: [['اختر عنصرًا', 'Choose an object'], ['أضف حركة مناسبة', 'Add suitable animation'], ['أدرج صوتًا أو وسائط', 'Add audio or media'], ['عاين العرض', 'Preview the presentation']],
+  284: [['حدد الهدف', 'Define your goal'], ['اعرض البيانات بمخطط', 'Show data in a chart'], ['نظم الشرائح', 'Organize slides'], ['تدرب على التقديم', 'Practice presenting']],
+  303: [['ساحة العمل', 'Workspace'], ['روبوت افتراضي', 'Virtual robot'], ['أوامر وحساسات', 'Commands and sensors'], ['معاينة التنفيذ', 'Preview execution']],
+  319: [['حدد إحداثيات الموقع', 'Set position coordinates'], ['اختر نقطة الهدف', 'Choose a target point'], ['خطط للمسار', 'Plan the path'], ['تحقق من الموقع', 'Check the position']],
+  332: [['ابدأ الحركة', 'Start moving'], ['افحص المسار', 'Check the path'], ['اتخذ قرارًا', 'Make a decision'], ['توقف عند الهدف', 'Stop at the target']]
+};
 
 const units: Unit[] = [
   {
@@ -306,11 +334,22 @@ function createLecture(unit: Unit, order: number): Lecture {
     keyConceptsEn: unit.lessons.map((lesson) => lesson.titleEn),
     summaryAr: `تضم هذه الوحدة ${unit.lessons.length} دروس. الأهداف المعروضة هنا أهداف الوحدة كما لُخصت من الكتاب، وليست أهدافًا منفصلة منسوبة لكل درس.`,
     summaryEn: `This unit contains ${unit.lessons.length} lessons. The outcomes shown are unit-level summaries, not separately stated objectives for each lesson.`,
-    sections: unit.lessons.map((lesson) => ({
+    sections: unit.lessons.map((lesson, lessonIndex) => ({
       titleAr: lesson.titleAr,
       titleEn: lesson.titleEn,
       contentAr: `${lesson.focusAr}\n\nمرجع الكتاب: ص. ${lesson.page}. هذا شرح أصلي موجز للمنصة مبني على عنوان الدرس وأهداف الوحدة، وليس نقلًا لنص الكتاب.`,
       contentEn: `${lesson.focusEn}\n\nTextbook reference: p. ${lesson.page}. This is a brief original platform explanation based on the lesson title and unit objectives, not reproduced textbook text.`,
+      diagram: {
+        id: `${unit.id}-lesson-${lesson.page}-illustration`,
+        figureNumberAr: `شكل (${order}-${lessonIndex + 1})`,
+        figureNumberEn: `Figure (${order}-${lessonIndex + 1})`,
+        titleAr: `تصور بصري: ${lesson.titleAr}`,
+        titleEn: `Visual guide: ${lesson.titleEn}`,
+        captionAr: 'رسم تعليمي أصلي مرتبط بموضوع الدرس، من إعداد المنصة وليس صورة من الكتاب.',
+        captionEn: 'An original platform-created visual tied to this lesson, not an image copied from the textbook.',
+        diagramType: 'digital_skills',
+        visualSteps: (lessonIllustrations[lesson.page] || []).map(([labelAr, labelEn]): LectureDiagramStep => ({ labelAr, labelEn }))
+      }
     })),
     assessment: {
       id: `${lectureId}-assessment`,
@@ -330,7 +369,23 @@ SAUDI_G7_DIGITAL_SKILLS_LECTURES[7].sections?.push({
   titleAr: 'قسم الذكاء الاصطناعي (إثرائي، غير مرقم كدرس)',
   titleEn: 'Artificial Intelligence Section (Enrichment; not a numbered lesson)',
   contentAr: 'يعرض الكتاب موضوعات الذكاء الاصطناعي والذكاء الاصطناعي التوليدي، والإنصاف والخصوصية وحقوق النشر، وكتابة الموجهات. هذا قسم إثرائي إضافي وليس واحدًا من الدروس الخمسة والعشرين المرقمة.',
-  contentEn: 'The book includes artificial intelligence and generative AI, fairness, privacy, copyright, and prompt writing. This is an additional enrichment section, not one of the 25 numbered lessons.'
+  contentEn: 'The book includes artificial intelligence and generative AI, fairness, privacy, copyright, and prompt writing. This is an additional enrichment section, not one of the 25 numbered lessons.',
+  diagram: {
+    id: 'sa-ds7-ai-enrichment-illustration',
+    figureNumberAr: 'إثراء بصري',
+    figureNumberEn: 'Enrichment visual',
+    titleAr: 'استخدام مسؤول للذكاء الاصطناعي',
+    titleEn: 'Responsible use of artificial intelligence',
+    captionAr: 'رسم أصلي يوضح التحقق من المخرجات واحترام الخصوصية والإنصاف والملكية الفكرية.',
+    captionEn: 'An original illustration of checking outputs and respecting privacy, fairness, and intellectual property.',
+    diagramType: 'digital_skills',
+    visualSteps: [
+      { labelAr: 'اكتب موجهًا واضحًا', labelEn: 'Write a clear prompt' },
+      { labelAr: 'راجع المخرجات', labelEn: 'Review the output' },
+      { labelAr: 'تحقق من الدقة والإنصاف', labelEn: 'Check accuracy and fairness' },
+      { labelAr: 'احترم الخصوصية والحقوق', labelEn: 'Respect privacy and rights' }
+    ]
+  }
 });
 export const SAUDI_G7_DIGITAL_SKILLS_TEXTBOOK_URL = textbookUrl;
 export const SAUDI_G7_DIGITAL_SKILLS_LESSON_COUNT = units.reduce((count, unit) => count + unit.lessons.length, 0);

@@ -1,7 +1,53 @@
-import type { EducationTrack, EducationType, Language, Lecture, StudentProfile, Subject } from '../types';
+import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Lecture, StudentProfile, Subject } from '../types';
 import { BIOLOGY_LECTURES, COMPUTER_SCIENCE_LECTURES } from './stemCurriculumData';
 import { ISLAMIC_STUDIES_FULL } from './islamicArabicCurriculum';
-import { adaptCurriculumToCountry } from './curriculumCountries';
+import {
+  adaptCurriculumToCountry,
+  isActiveCurriculumCountry,
+  isSaudiPublicEnglishAvailable,
+  isSaudiPublicG2EnglishAvailable,
+  isSaudiPublicG3EnglishAvailable,
+  isSaudiPublicG5EnglishAvailable,
+  isSaudiPublicG11EnglishAvailable,
+  isSaudiPublicCommonYearEnglishAvailable,
+  isSaudiPublicG11BiologyAvailable,
+  isSaudiPublicG11PhysicsAvailable,
+  isSaudiPublicG11HealthScienceAvailable,
+  isSaudiPublicG5TajweedAvailable,
+  isSaudiPublicG6TajweedAvailable,
+  isSaudiPublicG4TajweedAvailable,
+  isSaudiPublicTajweedAvailable,
+  isSaudiPublicG6QuranRecitationAvailable,
+  isSaudiPublicG5QuranRecitationAvailable,
+  isSaudiPublicQuranRecitationAvailable,
+  isSaudiPublicG4VisualArtsAvailable,
+  isSaudiPublicG5VisualArtsAvailable,
+  isSaudiPublicG6VisualArtsAvailable,
+  isSaudiPublicG2VisualArtsAvailable,
+  isSaudiPublicG3VisualArtsAvailable,
+  isSaudiPublicG5IslamicStudiesAvailable,
+  isSaudiPublicG4IslamicStudiesAvailable,
+  isSaudiPublicG3IslamicStudiesAvailable,
+  isSaudiPublicG2IslamicStudiesAvailable,
+  isSaudiPublicG6IslamicStudiesAvailable,
+  isSaudiPublicG5PrimaryMathAvailable,
+  isSaudiPublicG6PrimaryMathAvailable,
+  isSaudiPublicG4PrimaryMathAvailable,
+  isSaudiPublicG3PrimaryMathAvailable,
+  isSaudiPublicG3PrimaryArabicAvailable,
+  isSaudiPublicG2PrimaryArabicAvailable,
+  isSaudiPublicG4PrimaryArabicAvailable,
+  isSaudiPublicG5DigitalSkillsAvailable,
+  isSaudiPublicG6DigitalSkillsAvailable,
+  isSaudiPublicG6LifeSkillsAvailable,
+  isSaudiPublicG5LifeSkillsAvailable,
+  isSaudiPublicG4LifeSkillsAvailable,
+  isSaudiPublicG3LifeSkillsAvailable,
+  isSaudiPublicLifeSkillsAvailable,
+  isSaudiPublicG4SocialStudiesAvailable,
+  isSaudiPublicG5SocialStudiesAvailable,
+  isSaudiPublicG6SocialStudiesAvailable
+} from './curriculumCountries';
 import { ensureFourExamplesForLecture } from '../services/lectureExampleEnricher';
 
 import {
@@ -16,10 +62,56 @@ import { MIDDLE_MATH_G9_LECTURES } from './middleMath9CurriculumData';
 import { HIGH_MATH_G10_LECTURES } from './highMath10CurriculumData';
 import { HIGH_MATH_G11_LECTURES } from './highMath11CurriculumData';
 import { HIGH_MATH_G12_LECTURES } from './highMath12CurriculumData';
+import { getSaudiMathG10Curriculum, getSaudiMathG11Curriculum } from './saudiMathCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
 import { SAUDI_G7_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG7CurriculumData';
+import { SAUDI_G6_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG6CurriculumData';
+import { SAUDI_G5_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG5CurriculumData';
+import { SAUDI_G6_LIFE_SKILLS_LECTURES } from './saudiGrade6LifeSkillsCurriculumData';
+import { SAUDI_G5_LIFE_SKILLS_LECTURES } from './saudiGrade5LifeSkillsCurriculumData';
+import { SAUDI_G4_LIFE_SKILLS_LECTURES } from './saudiGrade4LifeSkillsCurriculumData';
+import { SAUDI_G3_LIFE_SKILLS_LECTURES } from './saudiGrade3LifeSkillsCurriculumData';
 import { SAUDI_G8_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG8CurriculumData';
 import { SAUDI_G9_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG9CurriculumData';
+import { SAUDI_BUSINESS_G11_DIGITAL_TECHNOLOGY_LECTURES } from './saudiBusinessDigitalTechnologyG11CurriculumData';
+import { SAUDI_SCIENCE_CURRICULA } from './saudiScienceCurriculumData';
+import { SAUDI_G6_TAJWEED_CURRICULUM } from './saudiGrade6TajweedCurriculumData';
+import { SAUDI_G5_TAJWEED_CURRICULUM } from './saudiGrade5TajweedCurriculumData';
+import { SAUDI_G4_TAJWEED_CURRICULUM } from './saudiGrade4TajweedCurriculumData';
+import { SAUDI_G6_QURAN_RECITATION_CURRICULUM } from './saudiGrade6QuranRecitationCurriculumData';
+import { SAUDI_G5_QURAN_RECITATION_CURRICULUM } from './saudiGrade5QuranRecitationCurriculumData';
+import { SAUDI_G4_VISUAL_ARTS_CURRICULUM } from './saudiGrade4VisualArtsCurriculumData';
+import { SAUDI_G5_VISUAL_ARTS_CURRICULUM } from './saudiGrade5VisualArtsCurriculumData';
+import { SAUDI_G6_VISUAL_ARTS_CURRICULUM } from './saudiGrade6VisualArtsCurriculumData';
+import { SAUDI_G3_VISUAL_ARTS_CURRICULUM } from './saudiGrade3VisualArtsCurriculumData';
+import { SAUDI_G2_VISUAL_ARTS_CURRICULUM } from './saudiGrade2VisualArtsCurriculumData';
+import { SAUDI_G6_ISLAMIC_STUDIES_CURRICULUM } from './saudiGrade6IslamicStudiesCurriculumData';
+import { SAUDI_G5_ISLAMIC_STUDIES_CURRICULUM } from './saudiGrade5IslamicStudiesCurriculumData';
+import { SAUDI_G4_ISLAMIC_STUDIES_CURRICULUM } from './saudiGrade4IslamicStudiesCurriculumData';
+import { SAUDI_G3_ISLAMIC_STUDIES_CURRICULUM } from './saudiGrade3IslamicStudiesCurriculumData';
+import { SAUDI_G2_ISLAMIC_STUDIES_CURRICULUM } from './saudiGrade2IslamicStudiesCurriculumData';
+import { SAUDI_G6_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath6CurriculumData';
+import { SAUDI_G5_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath5CurriculumData';
+import { SAUDI_G4_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath4CurriculumData';
+import { SAUDI_G3_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath3CurriculumData';
+import { SAUDI_G3_PRIMARY_ARABIC_LECTURES } from './saudiPrimaryArabic3CurriculumData';
+import { SAUDI_G2_PRIMARY_ARABIC_LECTURES } from './saudiPrimaryArabic2CurriculumData';
+import {
+  getSaudiChemistryG10Curriculum,
+  getSaudiChemistryG11Curriculum
+} from './saudiChemistryCurriculumData';
+import { getSaudiBiologyG10Curriculum } from './saudiBiologyCurriculumData';
+import { getSaudiBiology2G11Curriculum } from './saudiBiology2G11CurriculumData';
+import { getSaudiPhysics2G11Curriculum } from './saudiPhysics2G11CurriculumData';
+import { getSaudiEnglishG10Curriculum } from './saudiEnglishG10CurriculumData';
+import { getSaudiEnglishG11Curriculum } from './saudiEnglishG11CurriculumData';
+import { getSaudiEnglishG5Curriculum } from './saudiEnglishG5CurriculumData';
+import { getSaudiEnglishG2Curriculum } from './saudiEnglishG2CurriculumData';
+import { getSaudiEnglishG3Curriculum } from './saudiEnglishG3CurriculumData';
+import {
+  SAUDI_PRIMARY_DIGITAL_SKILLS_SUPPLEMENTARY,
+  SAUDI_SECONDARY_DIGITAL_TECHNOLOGY_SUPPLEMENTARY
+} from './saudiDigitalSkillsSupplementaryCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_G8_LECTURES } from './middleComp8CurriculumData';
 import { HIGH_COMP_G10_LECTURES } from './highComp10CurriculumData';
 import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
@@ -59,6 +151,9 @@ import { UAE_ISLAMIC_G6_LECTURES } from './uaeIslamic6CurriculumData';
 import { PRIMARY_ARABIC_G4_LECTURES } from './primaryArabic4CurriculumData';
 import { PRIMARY_ARABIC_G5_LECTURES } from './primaryArabic5CurriculumData';
 import { PRIMARY_ARABIC_G6_LECTURES } from './primaryArabic6CurriculumData';
+import { SAUDI_PRIMARY_ARABIC_G4_LECTURES } from './saudiPrimaryArabic4CurriculumData';
+import { SAUDI_PRIMARY_ARABIC_G6_LECTURES } from './saudiPrimaryArabic6CurriculumData';
+import { getSaudiArabicCurriculum } from './saudiArabicCurriculumData';
 import { PRIMARY_MATH_G5_LECTURES } from './primaryMath5CurriculumData';
 import { PRIMARY_MATH_G6_LECTURES } from './primaryMath6CurriculumData';
 import { PRIMARY_SCIENCE_G5_LECTURES } from './primaryScience5CurriculumData';
@@ -69,6 +164,11 @@ import {
   SAUDI_HIGH_HISTORY_G10_LECTURES,
   SAUDI_HIGH_GEOGRAPHY_G10_LECTURES
 } from './nationalHistoryGeographyData';
+import {
+  SAUDI_SOCIAL_STUDIES_CURRICULUM
+} from './saudiSocialStudiesCurriculumData';
+import { SAUDI_G11_HISTORY_LECTURES } from './saudiHistoryG11CurriculumData';
+import { SAUDI_G11_HEALTH_SCIENCE_LECTURES } from './saudiHealthScienceG11CurriculumData';
 
 export {
   PRIMARY_MATH_LECTURES,
@@ -4467,8 +4567,94 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   ARABIC_LANG: ARABIC_LANG_LECTURES,
   GENERAL_SCIENCE: GENERAL_SCIENCE_LECTURES,
   GEOGRAPHY: SAUDI_HIGH_GEOGRAPHY_G10_LECTURES,
-  HISTORY: SAUDI_HIGH_HISTORY_G10_LECTURES
+  HISTORY: SAUDI_HIGH_HISTORY_G10_LECTURES,
+  HEALTH_SCIENCE: [],
+  LIFE_SKILLS: [],
+  ENGLISH: [],
+  SAUDI_SOCIAL_STUDIES: [],
+  TAJWEED: [],
+  QURAN_RECITATION: [],
+  VISUAL_ARTS: []
 };
+
+function isSaudiPublicScienceCourse(
+  subject: Subject,
+  gradeLevel: string | undefined,
+  country: string,
+  educationType: EducationType,
+  track: EducationTrack
+): boolean {
+  if (country !== 'SA' || educationType !== 'PUBLIC' || !gradeLevel) return false;
+  if (subject === 'CHEMISTRY' && gradeLevel === 'G12' && track !== 'GENERAL') return false;
+  if ((subject === 'PHYSICS' || subject === 'BIOLOGY') && gradeLevel === 'G11') return false;
+  if (subject === 'PRIMARY_SCIENCE') return ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel);
+  if (subject === 'GENERAL_SCIENCE') return ['G7', 'G8', 'G9'].includes(gradeLevel);
+  return ['PHYSICS', 'CHEMISTRY', 'BIOLOGY'].includes(subject) && ['G10', 'G11', 'G12'].includes(gradeLevel);
+}
+
+function isSaudiPublicGrade11MathCourse(
+  subject: Subject,
+  gradeLevel: string | undefined,
+  country: string,
+  educationType: EducationType,
+  track: EducationTrack
+): boolean {
+  return country === 'SA' &&
+    subject === 'MATH' &&
+    gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' &&
+    (track === 'GENERAL' || track === 'CS_ENGINEERING');
+}
+
+function isSaudiPublicGrade10MathCourse(
+  subject: Subject,
+  gradeLevel: string | undefined,
+  country: string,
+  educationType: EducationType
+): boolean {
+  return country === 'SA' &&
+    subject === 'MATH' &&
+    gradeLevel === 'G10' &&
+    educationType === 'PUBLIC';
+}
+
+export function isSaudiSocialStudiesAvailable(
+  gradeLevel: string,
+  country: string,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return isSaudiPublicG4SocialStudiesAvailable(country, gradeLevel, educationType, track) ||
+    isSaudiPublicG5SocialStudiesAvailable(country, gradeLevel, educationType, track) ||
+    isSaudiPublicG6SocialStudiesAvailable(country, gradeLevel, educationType, track);
+}
+
+function isSaudiSocialStudiesSubject(subject: Subject): boolean {
+  return subject === 'SAUDI_SOCIAL_STUDIES';
+}
+
+export function isBlockedGeographyHistoryRoute(
+  subject: Subject,
+  country: string,
+  educationType: EducationType,
+  track: EducationTrack
+): boolean {
+  if (subject !== 'GEOGRAPHY' && subject !== 'HISTORY') return false;
+  if (!['SA', 'EG', 'SD'].includes(country)) return true;
+  return educationType !== 'PUBLIC' || track !== 'GENERAL';
+}
+
+function isProtectedSaudiPublicSocialStudiesCourse(
+  subject: Subject,
+  gradeLevel: string | undefined,
+  country: string,
+  educationType: EducationType,
+  track: EducationTrack
+): boolean {
+  return isSaudiSocialStudiesSubject(subject) &&
+    !!gradeLevel &&
+    isSaudiSocialStudiesAvailable(gradeLevel, country, educationType, track);
+}
 
 export function getCurriculumForSubject(
   subject: Subject,
@@ -4477,13 +4663,238 @@ export function getCurriculumForSubject(
   educationType: EducationType = 'PUBLIC',
   _track: EducationTrack = 'GENERAL'
 ): Lecture[] {
+  if (!isActiveCurriculumCountry(country as CountryCode)) return [];
+  if (gradeLevel && !/^G(?:[1-9]|1[0-2])$/.test(gradeLevel)) return [];
+  if (
+    subject === 'PRIMARY_MATH' &&
+    isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
+  ) {
+    return SAUDI_G3_PRIMARY_MATH_CURRICULUM;
+  }
+
+  if (
+    subject === 'PRIMARY_MATH' &&
+    isSaudiPublicG4PrimaryMathAvailable(country, gradeLevel, educationType)
+  ) {
+    return SAUDI_G4_PRIMARY_MATH_CURRICULUM;
+  }
+
+  if (
+    subject === 'PRIMARY_ARABIC' &&
+    isSaudiPublicG4PrimaryArabicAvailable(country, gradeLevel, educationType, _track)
+  ) {
+    return SAUDI_PRIMARY_ARABIC_G4_LECTURES;
+  }
+
+  if (country === 'SA' && subject === 'MATH' && gradeLevel === 'G10') {
+    return isSaudiPublicGrade10MathCourse(subject, gradeLevel, country, educationType)
+      ? getSaudiMathG10Curriculum(_track)
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'MATH' && gradeLevel === 'G11') {
+    return isSaudiPublicGrade11MathCourse(subject, gradeLevel, country, educationType, _track)
+      ? getSaudiMathG11Curriculum(_track)
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'PHYSICS' && gradeLevel === 'G11') {
+    return isSaudiPublicG11PhysicsAvailable(country, gradeLevel, educationType, _track)
+      ? getSaudiPhysics2G11Curriculum(_track)
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'BIOLOGY' && gradeLevel === 'G11') {
+    return isSaudiPublicG11BiologyAvailable(country, gradeLevel, educationType, _track)
+      ? getSaudiBiology2G11Curriculum()
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'HEALTH_SCIENCE' && gradeLevel === 'G11') {
+    return isSaudiPublicG11HealthScienceAvailable(country, gradeLevel, educationType, _track)
+      ? SAUDI_G11_HEALTH_SCIENCE_LECTURES
+      : [];
+  }
+
+  if (subject === 'TAJWEED') {
+    if (isSaudiPublicG4TajweedAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G4_TAJWEED_CURRICULUM;
+    }
+    if (isSaudiPublicG5TajweedAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G5_TAJWEED_CURRICULUM;
+    }
+    return isSaudiPublicG6TajweedAvailable(country, gradeLevel, educationType)
+      ? SAUDI_G6_TAJWEED_CURRICULUM
+      : [];
+  }
+
+  if (subject === 'QURAN_RECITATION') {
+    if (isSaudiPublicG5QuranRecitationAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G5_QURAN_RECITATION_CURRICULUM;
+    }
+    return isSaudiPublicG6QuranRecitationAvailable(country, gradeLevel, educationType)
+      ? SAUDI_G6_QURAN_RECITATION_CURRICULUM
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'ISLAMIC_STUDIES') {
+    if (isSaudiPublicG2IslamicStudiesAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G2_ISLAMIC_STUDIES_CURRICULUM;
+    }
+    if (isSaudiPublicG3IslamicStudiesAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G3_ISLAMIC_STUDIES_CURRICULUM;
+    }
+    if (isSaudiPublicG4IslamicStudiesAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G4_ISLAMIC_STUDIES_CURRICULUM;
+    }
+    if (isSaudiPublicG5IslamicStudiesAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G5_ISLAMIC_STUDIES_CURRICULUM;
+    }
+    return isSaudiPublicG6IslamicStudiesAvailable(country, gradeLevel, educationType, _track)
+      ? SAUDI_G6_ISLAMIC_STUDIES_CURRICULUM
+      : [];
+  }
+
+  if (subject === 'VISUAL_ARTS') {
+    if (isSaudiPublicG2VisualArtsAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G2_VISUAL_ARTS_CURRICULUM;
+    }
+    if (isSaudiPublicG3VisualArtsAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G3_VISUAL_ARTS_CURRICULUM;
+    }
+    if (isSaudiPublicG4VisualArtsAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G4_VISUAL_ARTS_CURRICULUM;
+    }
+    if (isSaudiPublicG5VisualArtsAvailable(country, gradeLevel, educationType)) {
+      return SAUDI_G5_VISUAL_ARTS_CURRICULUM;
+    }
+    return isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType)
+      ? SAUDI_G6_VISUAL_ARTS_CURRICULUM
+      : [];
+  }
+
+  if (subject === 'LIFE_SKILLS') {
+    if (isSaudiPublicG3LifeSkillsAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G3_LIFE_SKILLS_LECTURES;
+    }
+    if (isSaudiPublicG4LifeSkillsAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G4_LIFE_SKILLS_LECTURES;
+    }
+    if (isSaudiPublicG5LifeSkillsAvailable(country, gradeLevel, educationType, _track)) {
+      return SAUDI_G5_LIFE_SKILLS_LECTURES;
+    }
+    return isSaudiPublicG6LifeSkillsAvailable(country, gradeLevel, educationType, _track)
+      ? SAUDI_G6_LIFE_SKILLS_LECTURES
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'CHEMISTRY' && gradeLevel === 'G10') {
+    return isSaudiPublicScienceCourse(subject, gradeLevel, country, educationType, _track)
+      ? getSaudiChemistryG10Curriculum(_track)
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'CHEMISTRY' && gradeLevel === 'G11') {
+    return isSaudiPublicScienceCourse(subject, gradeLevel, country, educationType, _track)
+      ? getSaudiChemistryG11Curriculum(_track)
+      : [];
+  }
+
+  if (country === 'SA' && subject === 'BIOLOGY' && gradeLevel === 'G10') {
+    return isSaudiPublicScienceCourse(subject, gradeLevel, country, educationType, _track)
+      ? getSaudiBiologyG10Curriculum(_track)
+      : [];
+  }
+
+  if (subject === 'ENGLISH') {
+    if (isSaudiPublicG2EnglishAvailable(country, gradeLevel, educationType)) {
+      return getSaudiEnglishG2Curriculum(_track);
+    }
+    if (isSaudiPublicG3EnglishAvailable(country, gradeLevel, educationType)) {
+      return getSaudiEnglishG3Curriculum(_track);
+    }
+    if (isSaudiPublicG5EnglishAvailable(country, gradeLevel, educationType)) {
+      return getSaudiEnglishG5Curriculum(_track);
+    }
+    if (isSaudiPublicCommonYearEnglishAvailable(country, gradeLevel, educationType)) {
+      return getSaudiEnglishG10Curriculum(_track);
+    }
+    return isSaudiPublicG11EnglishAvailable(country, gradeLevel, educationType)
+      ? getSaudiEnglishG11Curriculum(_track)
+      : [];
+  }
+
+  if (isSaudiSocialStudiesSubject(subject)) {
+    const isEligibleSocialStudiesCourse = isProtectedSaudiPublicSocialStudiesCourse(
+      subject,
+      gradeLevel,
+      country,
+      educationType,
+      _track
+    );
+    return isEligibleSocialStudiesCourse && gradeLevel
+      ? SAUDI_SOCIAL_STUDIES_CURRICULUM[gradeLevel as GradeLevel] ?? []
+      : [];
+  }
+  if (isBlockedGeographyHistoryRoute(subject, country, educationType, _track)) {
+    return [];
+  }
+  if (country === 'SA' && subject === 'PRIMARY_ARABIC' && gradeLevel === 'G2') {
+    return isSaudiPublicG2PrimaryArabicAvailable(country, gradeLevel, educationType, _track)
+      ? SAUDI_G2_PRIMARY_ARABIC_LECTURES
+      : [];
+  }
+  if (country === 'SA' && subject === 'PRIMARY_ARABIC' && gradeLevel === 'G3') {
+    return isSaudiPublicG3PrimaryArabicAvailable(country, gradeLevel, educationType, _track)
+      ? SAUDI_G3_PRIMARY_ARABIC_LECTURES
+      : [];
+  }
+  if (
+    country === 'SA' && educationType === 'PUBLIC' &&
+    subject === 'CHEMISTRY' && gradeLevel === 'G12' && _track !== 'GENERAL'
+  ) {
+    return [];
+  }
+  if (
+    country === 'SA' && ['PRIVATE', 'ISLAMIC'].includes(educationType) &&
+    subject === 'CHEMISTRY' && gradeLevel === 'G12'
+  ) {
+    return [];
+  }
+
+  if (country === 'SA' && educationType !== 'INTERNATIONAL' && gradeLevel) {
+    const saudiArabicCurriculum = educationType === 'PUBLIC'
+      ? getSaudiArabicCurriculum(gradeLevel as GradeLevel, subject)
+      : undefined;
+    if (saudiArabicCurriculum) return saudiArabicCurriculum;
+  }
+
   // Direct authentic Sudanese curriculum routing
   if (country === 'SD') {
     const sudanLecs = getSudanCurriculum(subject, gradeLevel);
     if (sudanLecs && sudanLecs.length > 0) return sudanLecs;
   }
 
+  if (isSaudiPublicScienceCourse(subject, gradeLevel, country, educationType, _track)) {
+    return SAUDI_SCIENCE_CURRICULA[gradeLevel as GradeLevel]?.[subject] ?? [];
+  }
+
+  if (
+    subject === 'PRIMARY_MATH' &&
+    isSaudiPublicG5PrimaryMathAvailable(country, gradeLevel, educationType)
+  ) {
+    return SAUDI_G5_PRIMARY_MATH_CURRICULUM;
+  }
+
+  if (
+    subject === 'PRIMARY_MATH' &&
+    isSaudiPublicG6PrimaryMathAvailable(country, gradeLevel, educationType)
+  ) {
+    return SAUDI_G6_PRIMARY_MATH_CURRICULUM;
+  }
+
   if (subject === 'PRIMARY_MATH') {
+    if (gradeLevel && !['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) return [];
     if (gradeLevel === 'G1') return PRIMARY_MATH_G1_LECTURES;
     if (gradeLevel === 'G2') return PRIMARY_MATH_G2_LECTURES;
     if (gradeLevel === 'G3') return PRIMARY_MATH_G3_LECTURES;
@@ -4498,10 +4909,15 @@ export function getCurriculumForSubject(
     if (gradeLevel === 'G3') return PRIMARY_ARABIC_G3_LECTURES;
     if (gradeLevel === 'G4') return PRIMARY_ARABIC_G4_LECTURES;
     if (gradeLevel === 'G5') return PRIMARY_ARABIC_G5_LECTURES;
-    if (gradeLevel === 'G6') return PRIMARY_ARABIC_G6_LECTURES;
+    if (gradeLevel === 'G6') {
+      if (country === 'SA' && educationType === 'PUBLIC') return SAUDI_PRIMARY_ARABIC_G6_LECTURES;
+      return PRIMARY_ARABIC_G6_LECTURES;
+    }
+    if (gradeLevel && !['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) return [];
     return PRIMARY_ARABIC_G4_LECTURES;
   }
   if (subject === 'PRIMARY_SCIENCE') {
+    if (gradeLevel && !['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) return [];
     if (gradeLevel === 'G1') return PRIMARY_SCIENCE_G1_LECTURES;
     if (gradeLevel === 'G2') return PRIMARY_SCIENCE_G2_LECTURES;
     if (gradeLevel === 'G3') return PRIMARY_SCIENCE_G3_LECTURES;
@@ -4553,6 +4969,27 @@ export function getCurriculumForSubject(
     return HIGH_MATH_G12_LECTURES; // Grade 12 Advanced / STEM
   }
   if (subject === 'COMPUTER_SCIENCE') {
+    if (country === 'SA' && gradeLevel === 'G11') {
+      return educationType === 'PUBLIC' && _track === 'BUSINESS'
+        ? SAUDI_BUSINESS_G11_DIGITAL_TECHNOLOGY_LECTURES
+        : [];
+    }
+    if (country === 'SA' && educationType === 'PUBLIC' && ['G1', 'G2', 'G3'].includes(gradeLevel || '')) {
+      return [];
+    }
+    if (country === 'SA' && educationType === 'PUBLIC' && gradeLevel === 'G4') {
+      return SAUDI_PRIMARY_DIGITAL_SKILLS_SUPPLEMENTARY.G4;
+    }
+    if (country === 'SA' && gradeLevel === 'G5') {
+      return isSaudiPublicG5DigitalSkillsAvailable(country, gradeLevel, educationType, _track)
+        ? SAUDI_G5_DIGITAL_SKILLS_LECTURES
+        : [];
+    }
+    if (country === 'SA' && educationType === 'PUBLIC' && gradeLevel === 'G6') {
+      return isSaudiPublicG6DigitalSkillsAvailable(country, gradeLevel, educationType, _track)
+        ? SAUDI_G6_DIGITAL_SKILLS_LECTURES
+        : [];
+    }
     if (country === 'SA' && gradeLevel === 'G7' && educationType === 'PUBLIC') {
       return SAUDI_G7_DIGITAL_SKILLS_LECTURES;
     }
@@ -4562,6 +4999,16 @@ export function getCurriculumForSubject(
     if (country === 'SA' && gradeLevel === 'G9' && educationType === 'PUBLIC') {
       return SAUDI_G9_DIGITAL_SKILLS_LECTURES;
     }
+    if (country === 'SA' && educationType === 'PUBLIC' && gradeLevel === 'G10') {
+      return SAUDI_SECONDARY_DIGITAL_TECHNOLOGY_SUPPLEMENTARY.G10;
+    }
+    if (country === 'SA' && educationType === 'PUBLIC' && gradeLevel === 'G11') {
+      return SAUDI_SECONDARY_DIGITAL_TECHNOLOGY_SUPPLEMENTARY.G11;
+    }
+    if (country === 'SA' && educationType === 'PUBLIC' && gradeLevel === 'G12') {
+      return SAUDI_SECONDARY_DIGITAL_TECHNOLOGY_SUPPLEMENTARY.G12;
+    }
+    if (gradeLevel && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) return [];
     if (gradeLevel === 'G12') {
       return HIGH_COMP_G12_LECTURES;
     }
@@ -4583,6 +5030,7 @@ export function getCurriculumForSubject(
     return HIGH_COMP_G12_LECTURES;
   }
   if (subject === 'GENERAL_SCIENCE') {
+    if (gradeLevel && ['G10', 'G11', 'G12'].includes(gradeLevel)) return [];
     if (country === 'SD' && gradeLevel === 'G9') return SUDAN_MIDDLE_SCIENCE_G9_LECTURES;
     if (gradeLevel === 'G1') return PRIMARY_SCIENCE_G1_LECTURES;
     if (gradeLevel === 'G2') return PRIMARY_SCIENCE_G2_LECTURES;
@@ -4605,7 +5053,7 @@ export function getCurriculumForSubject(
     if (gradeLevel === 'G12') {
       return HIGH_PHYSICS_G12_LECTURES;
     }
-    return HIGH_PHYSICS_G12_LECTURES; // Grade 12 National / Language Schools Physics
+    return gradeLevel ? [] : HIGH_PHYSICS_G12_LECTURES;
   }
   if (subject === 'CHEMISTRY') {
     if (gradeLevel === 'G12') {
@@ -4617,7 +5065,7 @@ export function getCurriculumForSubject(
     if (gradeLevel === 'G10') {
       return HIGH_CHEMISTRY_G10_LECTURES;
     }
-    return HIGH_CHEMISTRY_G12_LECTURES;
+    return gradeLevel ? [] : HIGH_CHEMISTRY_G12_LECTURES;
   }
   if (subject === 'BIOLOGY') {
     if (gradeLevel === 'G12') {
@@ -4629,7 +5077,7 @@ export function getCurriculumForSubject(
     if (gradeLevel === 'G10') {
       return HIGH_BIO_G10_LECTURES;
     }
-    return BIOLOGY_LECTURES; // Grade 12 Advanced / Molecular Genetics
+    return gradeLevel ? [] : BIOLOGY_LECTURES;
   }
   if (subject === 'ARABIC_LANG') {
     if (gradeLevel === 'G9') {
@@ -4641,7 +5089,7 @@ export function getCurriculumForSubject(
     if (gradeLevel === 'G7') {
       return ARABIC_LANG_LECTURES;
     }
-    return ARABIC_LANG_LECTURES;
+    return gradeLevel ? [] : ARABIC_LANG_LECTURES;
   }
   if (subject === 'ARABIC_LIT') {
     if (gradeLevel === 'G12') {
@@ -4653,29 +5101,28 @@ export function getCurriculumForSubject(
     if (gradeLevel === 'G10') {
       return HIGH_ARABIC_LIT_G10_LECTURES;
     }
-    return ARABIC_LIT_LECTURES;
+    return gradeLevel ? [] : ARABIC_LIT_LECTURES;
   }
   if (subject === 'GEOGRAPHY') {
+    if (gradeLevel && gradeLevel !== 'G10') return [];
     if (country === 'SD') return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
     if (country === 'EG') return EGYPT_HIGH_GEOGRAPHY_G10_LECTURES;
-    return SAUDI_HIGH_GEOGRAPHY_G10_LECTURES;
+    if (country === 'SA') return SAUDI_HIGH_GEOGRAPHY_G10_LECTURES;
+    return [];
   }
   if (subject === 'HISTORY') {
+    if (country === 'SA' && gradeLevel === 'G11') {
+      return educationType === 'PUBLIC' && _track === 'GENERAL'
+        ? SAUDI_G11_HISTORY_LECTURES
+        : [];
+    }
+    if (gradeLevel && gradeLevel !== 'G10') return [];
     if (country === 'SD') return SUDAN_HIGH_HISTORY_G10_LECTURES;
     if (country === 'EG') return EGYPT_HIGH_HISTORY_G10_LECTURES;
-    return SAUDI_HIGH_HISTORY_G10_LECTURES;
+    if (country === 'SA') return SAUDI_HIGH_HISTORY_G10_LECTURES;
+    return [];
   }
-  return SUBJECT_CURRICULA[subject] || (
-    subject === 'PHYSICS' ? HIGH_PHYSICS_G12_LECTURES :
-    subject === 'CHEMISTRY' ? HIGH_CHEMISTRY_G12_LECTURES :
-    subject === 'BIOLOGY' ? BIOLOGY_LECTURES :
-    subject === 'COMPUTER_SCIENCE' ? HIGH_COMP_G12_LECTURES :
-    subject === 'ARABIC_LIT' ? HIGH_ARABIC_LIT_G12_LECTURES :
-    subject === 'ARABIC_LANG' ? MIDDLE_ARABIC_G9_LECTURES :
-    subject === 'GENERAL_SCIENCE' ? GENERAL_SCIENCE_LECTURES :
-    subject === 'ISLAMIC_STUDIES' ? ISLAMIC_STUDIES_FULL :
-    MATH_LECTURES
-  );
+  return SUBJECT_CURRICULA[subject];
 }
 
 export function loadSubjectLectures(
@@ -4686,9 +5133,136 @@ export function loadSubjectLectures(
   track: EducationTrack = 'GENERAL',
   lang: Language = 'ar'
 ): Lecture[] {
-  const isProtectedSaudiPublicMiddleComputerScience =
-    country === 'SA' && subject === 'COMPUTER_SCIENCE' &&
-    ['G7', 'G8', 'G9'].includes(gradeLevel || '') && educationType === 'PUBLIC';
+  if (!isActiveCurriculumCountry(country as CountryCode)) return [];
+  const isProtectedSaudiEnglish = isSaudiPublicEnglishAvailable(country, gradeLevel, educationType);
+  if (subject === 'ENGLISH' && !isProtectedSaudiEnglish) return [];
+  const isProtectedSaudiTajweed =
+    subject === 'TAJWEED' &&
+    isSaudiPublicTajweedAvailable(country, gradeLevel, educationType);
+  if (subject === 'TAJWEED' && !isProtectedSaudiTajweed) return [];
+  const isProtectedSaudiQuranRecitation =
+    subject === 'QURAN_RECITATION' &&
+    isSaudiPublicQuranRecitationAvailable(country, gradeLevel, educationType);
+  if (subject === 'QURAN_RECITATION' && !isProtectedSaudiQuranRecitation) return [];
+  const isProtectedSaudiVisualArts =
+    subject === 'VISUAL_ARTS' &&
+    (
+      isSaudiPublicG3VisualArtsAvailable(country, gradeLevel, educationType) ||
+      isSaudiPublicG2VisualArtsAvailable(country, gradeLevel, educationType) ||
+      isSaudiPublicG5VisualArtsAvailable(country, gradeLevel, educationType) ||
+      isSaudiPublicG4VisualArtsAvailable(country, gradeLevel, educationType) ||
+      isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType)
+    );
+  if (subject === 'VISUAL_ARTS' && !isProtectedSaudiVisualArts) return [];
+  const isProtectedSaudiIslamicStudies =
+    subject === 'ISLAMIC_STUDIES' &&
+    (
+      isSaudiPublicG2IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG3IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG4IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG5IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG6IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+    );
+  if (country === 'SA' && subject === 'ISLAMIC_STUDIES' && !isProtectedSaudiIslamicStudies) return [];
+  const isProtectedSaudiLifeSkills =
+    subject === 'LIFE_SKILLS' &&
+    isSaudiPublicLifeSkillsAvailable(country, gradeLevel, educationType, track);
+  if (subject === 'LIFE_SKILLS' && !isProtectedSaudiLifeSkills) return [];
+  const isProtectedSaudiPrimaryVerifiedCourses =
+    isProtectedSaudiTajweed ||
+    isProtectedSaudiQuranRecitation ||
+    isProtectedSaudiVisualArts ||
+    isProtectedSaudiIslamicStudies ||
+    isProtectedSaudiLifeSkills ||
+    (subject === 'PRIMARY_MATH' &&
+      isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)) ||
+    (subject === 'PRIMARY_MATH' &&
+      isSaudiPublicG4PrimaryMathAvailable(country, gradeLevel, educationType)) ||
+    (subject === 'PRIMARY_MATH' &&
+      isSaudiPublicG5PrimaryMathAvailable(country, gradeLevel, educationType)) ||
+    (subject === 'PRIMARY_MATH' &&
+      isSaudiPublicG6PrimaryMathAvailable(country, gradeLevel, educationType));
+  const isProtectedSaudiPrimaryArabic =
+    country === 'SA' &&
+    subject === 'PRIMARY_ARABIC' &&
+    (isSaudiPublicG2PrimaryArabicAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG3PrimaryArabicAvailable(country, gradeLevel, educationType, track) ||
+      (['G5', 'G6'].includes(gradeLevel || '') && educationType === 'PUBLIC') ||
+      isSaudiPublicG4PrimaryArabicAvailable(country, gradeLevel, educationType, track));
+  if (
+    country === 'SA' &&
+    subject === 'PRIMARY_ARABIC' &&
+    ['G2', 'G3'].includes(gradeLevel || '') &&
+    !isProtectedSaudiPrimaryArabic
+  ) return [];
+  const isSaudiHighSchoolMathRoute = country === 'SA' && subject === 'MATH' &&
+    (gradeLevel === 'G10' || gradeLevel === 'G11');
+  const isProtectedSaudiMath =
+    isSaudiPublicGrade10MathCourse(subject, gradeLevel, country, educationType) ||
+    isSaudiPublicGrade11MathCourse(subject, gradeLevel, country, educationType, track);
+  if (isSaudiHighSchoolMathRoute && !isProtectedSaudiMath) return [];
+  const isProtectedSaudiPhysics =
+    subject === 'PHYSICS' &&
+    isSaudiPublicG11PhysicsAvailable(country, gradeLevel, educationType, track);
+  if (country === 'SA' && subject === 'PHYSICS' && gradeLevel === 'G11' && !isProtectedSaudiPhysics) {
+    return [];
+  }
+  const isProtectedSaudiBiology =
+    subject === 'BIOLOGY' &&
+    isSaudiPublicG11BiologyAvailable(country, gradeLevel, educationType, track);
+  if (country === 'SA' && subject === 'BIOLOGY' && gradeLevel === 'G11' && !isProtectedSaudiBiology) {
+    return [];
+  }
+  const isProtectedSaudiHealthScience =
+    subject === 'HEALTH_SCIENCE' &&
+    isSaudiPublicG11HealthScienceAvailable(country, gradeLevel, educationType, track);
+  if (subject === 'HEALTH_SCIENCE' && !isProtectedSaudiHealthScience) return [];
+  const isProtectedSaudiScience =
+    isSaudiPublicScienceCourse(subject, gradeLevel, country, educationType, track) ||
+    isProtectedSaudiPhysics ||
+    isProtectedSaudiBiology;
+  if (
+    country === 'SA' && subject === 'CHEMISTRY' && gradeLevel === 'G10' &&
+    !isProtectedSaudiScience
+  ) return [];
+  if (
+    country === 'SA' && subject === 'CHEMISTRY' && gradeLevel === 'G11' &&
+    !isProtectedSaudiScience
+  ) return [];
+  if (
+    country === 'SA' && subject === 'BIOLOGY' && gradeLevel === 'G10' &&
+    !isProtectedSaudiScience
+  ) return [];
+  const isProtectedSaudiComputerScience =
+    country === 'SA' &&
+    subject === 'COMPUTER_SCIENCE' &&
+    (gradeLevel === 'G11' ||
+      isSaudiPublicG5DigitalSkillsAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG6DigitalSkillsAvailable(country, gradeLevel, educationType, track) ||
+      (['G4', 'G7', 'G8', 'G9', 'G10', 'G12'].includes(gradeLevel || '') &&
+        educationType === 'PUBLIC'));
+  if (
+    country === 'SA' &&
+    subject === 'COMPUTER_SCIENCE' &&
+    gradeLevel === 'G5' &&
+    !isSaudiPublicG5DigitalSkillsAvailable(country, gradeLevel, educationType, track)
+  ) return [];
+  if (
+    country === 'SA' &&
+    subject === 'COMPUTER_SCIENCE' &&
+    gradeLevel === 'G6' &&
+    !isSaudiPublicG6DigitalSkillsAvailable(country, gradeLevel, educationType, track)
+  ) return [];
+  const isVerifiedSaudiG11History =
+    country === 'SA' && subject === 'HISTORY' && gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' && track === 'GENERAL';
+  const isSaudiVerifiedCurriculumIsolatedRoute =
+    isSaudiSocialStudiesSubject(subject) ||
+    isProtectedSaudiPrimaryVerifiedCourses ||
+    (country === 'SA' && subject === 'ISLAMIC_STUDIES') ||
+    subject === 'HEALTH_SCIENCE' ||
+    isVerifiedSaudiG11History ||
+    isBlockedGeographyHistoryRoute(subject, country, educationType, track);
   const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country, educationType, track);
   
   // 1. Strict 4D Isolated Shared Lecture Key (No generic fallbacks)
@@ -4726,18 +5300,20 @@ export function loadSubjectLectures(
   }
 
   // Deeply adapt curriculum to target country's national textbook, curriculum standards, currency, and local context
-  let combined = adaptCurriculumToCountry(
-    masterCurriculum,
-    (country as any) || 'SA',
-    subject,
-    (gradeLevel as any) || 'G4',
-    educationType,
-    track,
-    lang
-  );
+  let combined = isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute
+    ? masterCurriculum
+    : adaptCurriculumToCountry(
+      masterCurriculum,
+      (country as any) || 'SA',
+      subject,
+      (gradeLevel as any) || 'G4',
+      educationType,
+      track,
+      lang
+    );
 
   // Append community / shared lectures without duplicating existing topics
-  if (!isProtectedSaudiPublicMiddleComputerScience) {
+  if (!isProtectedSaudiMath && !isProtectedSaudiComputerScience && !isProtectedSaudiScience && !isProtectedSaudiEnglish && !isProtectedSaudiPrimaryVerifiedCourses && !isProtectedSaudiPrimaryArabic && !isSaudiVerifiedCurriculumIsolatedRoute) {
     sharedLecs.forEach(sh => {
       const shTitleClean = (sh.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
       const alreadyExists = combined.some(c => {
@@ -4781,7 +5357,7 @@ export function loadSubjectLectures(
           });
 
           // Also preserve any newly AI-generated lectures saved in user session strictly matching this context
-          if (!isProtectedSaudiPublicMiddleComputerScience) {
+          if (!isProtectedSaudiMath && !isProtectedSaudiComputerScience && !isProtectedSaudiScience && !isProtectedSaudiEnglish && !isProtectedSaudiPrimaryVerifiedCourses && !isProtectedSaudiPrimaryArabic && !isSaudiVerifiedCurriculumIsolatedRoute) {
             parsed.forEach(p => {
               if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
                 if (
@@ -4836,8 +5412,8 @@ export function loadSubjectLectures(
       order,
       titleAr,
       titleEn,
-      lessonNumberAr: isProtectedSaudiPublicMiddleComputerScience ? lec.lessonNumberAr : `الدرس ${order}`,
-      lessonNumberEn: isProtectedSaudiPublicMiddleComputerScience ? lec.lessonNumberEn : `Lesson ${order}`,
+      lessonNumberAr: isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute ? lec.lessonNumberAr : `الدرس ${order}`,
+      lessonNumberEn: isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute ? lec.lessonNumberEn : `Lesson ${order}`,
       country: country as any,
       subject,
       gradeLevel: gradeLevel as any,
@@ -4850,7 +5426,7 @@ export function loadSubjectLectures(
     });
   }
 
-  return isProtectedSaudiPublicMiddleComputerScience
+  return isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute
     ? formattedList
     : formattedList.map(ensureFourExamplesForLecture);
 }

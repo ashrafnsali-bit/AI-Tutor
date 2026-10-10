@@ -167,42 +167,6 @@ export const NATIONAL_CURRICULA: Partial<Record<CountryCode, Partial<Record<stri
       }
     ],
 
-    // ── الصف السادس: لغتي الجميلة ──
-    PRIMARY_ARABIC_G6: [
-      {
-        titleAr: 'لغتي الجميلة: قدوات ومثل عليا (شخصيات إسلامية ملهمة)',
-        subtitleAr: 'نصوص القراءة والفهم القرائي لشخصية الخليفة أبي بكر الصديق وعمر بن الخطاب رضي الله عنهما',
-        topicAr: 'الوحدة الأولى: قدوات ومثل عليا',
-        unitTitleAr: 'الوحدة 1: القيم والقدوة',
-        descriptionAr: 'كتاب لغتي الجميلة للصف السادس الابتدائي - وزارة التعليم السعودية.',
-        lessonNumberAr: 'الدرس 1'
-      },
-      {
-        titleAr: 'المشتقات: اسم الفاعل واسم المفعول والمصادر وصياغتها',
-        subtitleAr: 'صياغة اسم الفاعل واسم المفعول من الفعل الثلاثي وفوق الثلاثي واستخراج المشتقات وتوظيفها تعبيرياً',
-        topicAr: 'الصنف اللغوي: المشتقات العربية',
-        unitTitleAr: 'الوحدة 1: الصنف اللغوي',
-        descriptionAr: 'قواعد الصرف والاشتقاق المقررة في المنهج السعودي لتعزيز الفصاحة اللغوية.',
-        lessonNumberAr: 'الدرس 2'
-      },
-      {
-        titleAr: 'النحو: رفع الفعل المضارع ونصبه وجزمه، والأفعال الخمسة',
-        subtitleAr: 'حالات إعراب الفعل المضارع الصحيح والمعتل الآخر، وعلامات إعراب الأفعال الخمسة بثبوت النون وحذفها',
-        topicAr: 'الوظيفة النحوية: إعراب الأفعال',
-        unitTitleAr: 'الوحدة 2: الوظيفة النحوية',
-        descriptionAr: 'التدريبات الإعرابية التطبيقية وفق نماذج اختبارات نافس الوطنية بالسعودية.',
-        lessonNumberAr: 'الدرس 3'
-      },
-      {
-        titleAr: 'الظاهرة الإملائية: همزتا الوصل والقطع وهمزة ابن والهمزة المتطرفة',
-        subtitleAr: 'مواضع همزة الوصل والقطع، وحالات حذف همزة (ابن) وإثباتها، ورسم الهمزة المتطرفة على الألف والواو والياء والسطر',
-        topicAr: 'الظاهرة الإملائية والرسم الكتابي',
-        unitTitleAr: 'الوحدة 2: الرسم الإملائي',
-        descriptionAr: 'إتقان الكتابة الصحيحة وتجنب الأخطاء الإملائية الشائعة في اللغة العربية.',
-        lessonNumberAr: 'الدرس 4'
-      }
-    ],
-
     // ── المرحلة الثانوية (نظام المسارات): فيزياء 1 (الصف العاشر G10) ──
     PHYSICS_G10: [
       {
@@ -2725,10 +2689,12 @@ export function getNationalLessonOverrides(
       return countryData[keyWithGradeAndType];
     }
 
-    // 2. Try subject + grade + track (e.g. 'PHYSICS_G10_CS_ENGINEERING')
-    const keyWithGradeAndTrack = `${subject}_${gradeLevel}_${track}`;
-    if (countryData[keyWithGradeAndTrack] && countryData[keyWithGradeAndTrack]!.length > 0) {
-      return countryData[keyWithGradeAndTrack];
+    // Track-specific keys describe public national pathways; do not reuse them for other school types.
+    if (educationType === 'PUBLIC') {
+      const keyWithGradeAndTrack = `${subject}_${gradeLevel}_${track}`;
+      if (countryData[keyWithGradeAndTrack] && countryData[keyWithGradeAndTrack]!.length > 0) {
+        return countryData[keyWithGradeAndTrack];
+      }
     }
 
     // 3. Try subject + educationType (e.g. 'ISLAMIC_STUDIES_ISLAMIC' or 'ARABIC_LANG_ISLAMIC')
@@ -2737,15 +2703,16 @@ export function getNationalLessonOverrides(
       return countryData[keyWithType];
     }
 
-    // 4. Try exact subject and grade level match (e.g. 'ISLAMIC_STUDIES_G6' or 'PHYSICS_G10')
-    const specificKey = `${subject}_${gradeLevel}`;
-    if (countryData[specificKey] && countryData[specificKey]!.length > 0) {
-      return countryData[specificKey];
-    }
+    // Untyped national keys represent the public syllabus (the INTL system is explicit).
+    if (educationType === 'PUBLIC' || country === 'INTL') {
+      const specificKey = `${subject}_${gradeLevel}`;
+      if (countryData[specificKey] && countryData[specificKey]!.length > 0) {
+        return countryData[specificKey];
+      }
 
-    // 5. Try subject key fallback (e.g. 'PHYSICS' or 'ISLAMIC_STUDIES')
-    if (countryData[subject] && countryData[subject]!.length > 0) {
-      return countryData[subject];
+      if (countryData[subject] && countryData[subject]!.length > 0) {
+        return countryData[subject];
+      }
     }
   }
 

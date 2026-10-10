@@ -1,5 +1,13 @@
 import type { CountryCode, EducationTrack, EducationType, GradeLevel, StudentProfile, Subject } from '../types';
-import { SUPPORTED_COUNTRIES, getNationalTextbookInfo } from '../data/curriculumCountries';
+import {
+  ACTIVE_CURRICULUM_COUNTRIES,
+  SUPPORTED_COUNTRIES,
+  getActiveCurriculumCountry,
+  getNationalTextbookInfo,
+  isActiveCurriculumCountry,
+  normalizeEducationTrackForCountry,
+  normalizeEducationTypeForCountry
+} from '../data/curriculumCountries';
 
 export interface GeoDetectionResult {
   country: CountryCode;
@@ -46,7 +54,10 @@ export function getCachedGeoResult(): GeoDetectionResult | null {
   try {
     const cached = sessionStorage.getItem(CACHE_KEY) || localStorage.getItem(CACHE_KEY);
     if (cached) {
-      return JSON.parse(cached) as GeoDetectionResult;
+      const result = JSON.parse(cached) as GeoDetectionResult;
+      if (isActiveCurriculumCountry(result.country)) return result;
+      sessionStorage.removeItem(CACHE_KEY);
+      localStorage.removeItem(CACHE_KEY);
     }
   } catch {
     /* ignore */
@@ -101,7 +112,7 @@ export function detectCountryFromTimezone(): CountryCode {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz) {
       if (TIMEZONE_TO_COUNTRY[tz]) {
-        return TIMEZONE_TO_COUNTRY[tz];
+        return getActiveCurriculumCountry(TIMEZONE_TO_COUNTRY[tz]);
       }
       // If client timezone is clearly European/American/Asian international:
       if (
@@ -117,13 +128,13 @@ export function detectCountryFromTimezone(): CountryCode {
         tz === 'Asia/Hong_Kong' ||
         tz === 'Asia/Seoul'
       ) {
-        return 'INTL';
+        return 'SA';
       }
     }
   } catch {
     /* ignore */
   }
-  return 'SA';
+  return ACTIVE_CURRICULUM_COUNTRIES[0];
 }
 
 /**
@@ -132,20 +143,14 @@ export function detectCountryFromTimezone(): CountryCode {
 export async function detectStudentCountry(forceRefresh = false): Promise<GeoDetectionResult> {
   // Check cached detection
   if (!forceRefresh) {
-    try {
-      const cached = sessionStorage.getItem(CACHE_KEY) || localStorage.getItem(CACHE_KEY);
-      if (cached) {
-        return JSON.parse(cached) as GeoDetectionResult;
-      }
-    } catch {
-      /* ignore */
-    }
+    const cached = getCachedGeoResult();
+    if (cached) return cached;
   }
 
   // Fallback default
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const tzCountry = detectCountryFromTimezone();
-  let detectedCountry: CountryCode = tzCountry;
+  let detectedCountry: CountryCode = getActiveCurriculumCountry(tzCountry);
   let city: string | undefined;
   let ip: string | undefined;
 
@@ -156,11 +161,7 @@ export async function detectStudentCountry(forceRefresh = false): Promise<GeoDet
       const data = await res.json();
       if (data && data.success && data.country_code) {
         const cCode = data.country_code.toUpperCase() as CountryCode;
-        if (SUPPORTED_COUNTRIES[cCode]) {
-          detectedCountry = cCode;
-        } else {
-          detectedCountry = 'INTL';
-        }
+        detectedCountry = getActiveCurriculumCountry(cCode);
         city = data.city;
         ip = data.ip;
       }
@@ -173,11 +174,7 @@ export async function detectStudentCountry(forceRefresh = false): Promise<GeoDet
         const data2 = await res2.json();
         if (data2 && data2.countryCode) {
           const cCode = data2.countryCode.toUpperCase() as CountryCode;
-          if (SUPPORTED_COUNTRIES[cCode]) {
-            detectedCountry = cCode;
-          } else {
-            detectedCountry = 'INTL';
-          }
+          detectedCountry = getActiveCurriculumCountry(cCode);
           city = data2.cityName;
           ip = data2.ipAddress;
         }
@@ -215,9 +212,15 @@ export function adaptProfileToCountry(
   educationType?: EducationType,
   educationTrack?: EducationTrack
 ): StudentProfile {
-  const countryInfo = SUPPORTED_COUNTRIES[country] || SUPPORTED_COUNTRIES.SA;
-  const nextType: EducationType = educationType || profile.educationType || countryInfo.availableTypes[0] || 'PUBLIC';
-  const nextTrack: EducationTrack = educationTrack || profile.educationTrack || countryInfo.availableTracks[0] || 'GENERAL';
+  const activeCountry = getActiveCurriculumCountry(country);
+  const nextType = normalizeEducationTypeForCountry(
+    activeCountry,
+    educationType || profile.educationType
+  );
+  const nextTrack = normalizeEducationTrackForCountry(
+    activeCountry,
+    educationTrack || profile.educationTrack
+  );
 
   // Align specialization with high school track if applicable
   let specialization = profile.specialization;
@@ -235,7 +238,7 @@ export function adaptProfileToCountry(
 
   return {
     ...profile,
-    country,
+    country: activeCountry,
     educationType: nextType,
     educationTrack: nextTrack,
     specialization,

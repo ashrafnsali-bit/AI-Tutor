@@ -29,8 +29,616 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 
   // Render High-Precision Vector SVG scientific models
   const renderSvgModel = () => {
+    const isNeutralization = title.includes('التعادل') || title.toLowerCase().includes('neutralization');
+    const isElectrolysis = title.includes('التحليل الكهربائي') || title.toLowerCase().includes('electrolysis');
+
     switch (diagram.diagramType) {
-      case 'digital_skills': {
+      case 'primary_science_g3_unit': {
+        const unit = Number(diagram.id.match(/-unit-(\d+)-visual$/)?.[1] || 0);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg primary-science-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#f0fdf4" />
+                <stop offset="100%" stopColor="#eff6ff" />
+              </linearGradient>
+              <marker id={`${visualId}-arrow`} markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#0f766e" />
+              </marker>
+            </defs>
+            <rect width="760" height="320" rx="20" fill={`url(#${visualId}-background)`} />
+            <rect x="42" y="28" width="676" height="264" rx="18" fill="#fff" stroke="#86c7b2" strokeWidth="3" />
+            <text x="380" y="66" textAnchor="middle" fill="#164e63" fontSize="21" fontWeight="700" fontFamily="inherit">
+              {isEn ? 'Explore the science idea' : 'استكشف الفكرة العلمية'}
+            </text>
+            {unit === 0 && (
+              <g>
+                {[
+                  { x: 145, ar: 'سؤال', en: 'Question', color: '#bae6fd' },
+                  { x: 300, ar: 'ملاحظة', en: 'Observe', color: '#bbf7d0' },
+                  { x: 455, ar: 'اختبار', en: 'Test', color: '#fde68a' },
+                  { x: 610, ar: 'استنتاج', en: 'Conclude', color: '#ddd6fe' },
+                ].map((step, index) => (
+                  <g key={step.en}>
+                    <circle cx={step.x} cy="166" r="48" fill={step.color} stroke="#0f766e" strokeWidth="2" />
+                    <text x={step.x} y="171" textAnchor="middle" fill="#164e63" fontSize="16" fontWeight="700" fontFamily="inherit">
+                      {isEn ? step.en : step.ar}
+                    </text>
+                    {index < 3 && (
+                      <path d={`M${step.x + 53} 166 H${step.x + 91}`} stroke="#0f766e" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                    )}
+                  </g>
+                ))}
+                <text x="380" y="252" textAnchor="middle" fill="#475569" fontSize="15" fontFamily="inherit">
+                  {isEn ? 'Observe safely and use evidence to explain results' : 'لاحظ بأمان واستعمل الدليل لتفسير النتائج'}
+                </text>
+              </g>
+            )}
+            {unit === 1 && (
+              <g>
+                <circle cx="174" cy="137" r="31" fill="#fde68a" stroke="#f59e0b" strokeWidth="3" />
+                <text x="174" y="143" textAnchor="middle" fill="#78350f" fontSize="13" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Sun' : 'الشمس'}
+                </text>
+                <path d="M380 213 V126 M380 159 C346 143 334 126 332 108 C364 106 379 126 380 145 M382 173 C412 155 429 138 430 119 C400 119 384 139 382 158" fill="none" stroke="#15803d" strokeWidth="9" strokeLinecap="round" />
+                <path d="M380 212 C359 227 353 237 349 248 M380 212 C400 227 407 237 412 248 M380 212 V251" fill="none" stroke="#a16207" strokeWidth="4" strokeLinecap="round" />
+                <path d="M82 251 H680" stroke="#65a30d" strokeWidth="5" />
+                <text x="378" y="103" textAnchor="middle" fill="#166534" fontSize="15" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Leaves use light to make food' : 'الأوراق تستعمل الضوء لصنع الغذاء'}
+                </text>
+                <text x="475" y="239" textAnchor="middle" fill="#92400e" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Roots take in water' : 'الجذور تمتص الماء'}
+                </text>
+                <path d="M558 108 C548 124 546 129 546 136 A13 13 0 0 0 572 136 C572 129 568 122 558 108Z" fill="#38bdf8" />
+                <text x="602" y="143" textAnchor="middle" fill="#0369a1" fontSize="13" fontFamily="inherit">
+                  {isEn ? 'Water' : 'ماء'}
+                </text>
+              </g>
+            )}
+            {unit === 2 && (
+              <g>
+                {[
+                  { x: 145, labelAr: 'بذرة', labelEn: 'Seed', color: '#fde68a' },
+                  { x: 300, labelAr: 'بادرة', labelEn: 'Seedling', color: '#bbf7d0' },
+                  { x: 455, labelAr: 'نبات بالغ', labelEn: 'Adult plant', color: '#86efac' },
+                  { x: 610, labelAr: 'بذور جديدة', labelEn: 'New seeds', color: '#bfdbfe' },
+                ].map((stage, index) => (
+                  <g key={stage.labelEn}>
+                    <circle cx={stage.x} cy="160" r="44" fill={stage.color} stroke="#15803d" strokeWidth="2" />
+                    <text x={stage.x} y="166" textAnchor="middle" fill="#14532d" fontSize="14" fontWeight="700" fontFamily="inherit">
+                      {isEn ? stage.labelEn : stage.labelAr}
+                    </text>
+                    {index < 3 && (
+                      <path d={`M${stage.x + 48} 160 H${stage.x + 98}`} stroke="#0f766e" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                    )}
+                  </g>
+                ))}
+                <text x="380" y="246" textAnchor="middle" fill="#475569" fontSize="15" fontFamily="inherit">
+                  {isEn ? 'Life-cycle stages differ among plants and animals' : 'تختلف مراحل دورة الحياة بين النباتات والحيوانات'}
+                </text>
+              </g>
+            )}
+            {unit === 3 && (
+              <g>
+                <circle cx="135" cy="153" r="31" fill="#fde68a" stroke="#f59e0b" strokeWidth="2" />
+                <text x="135" y="158" textAnchor="middle" fill="#78350f" fontSize="12" fontFamily="inherit">
+                  {isEn ? 'Sun' : 'الشمس'}
+                </text>
+                <path d="M267 192 V143 M267 163 C248 151 245 137 246 126 C263 128 270 141 267 154 M268 171 C287 156 290 145 287 134 C273 137 267 150 268 163" fill="none" stroke="#15803d" strokeWidth="6" strokeLinecap="round" />
+                <text x="267" y="221" textAnchor="middle" fill="#166534" fontSize="13" fontFamily="inherit">
+                  {isEn ? 'Plant' : 'نبات'}
+                </text>
+                <ellipse cx="455" cy="167" rx="34" ry="23" fill="#d6a56d" stroke="#854d0e" strokeWidth="2" />
+                <circle cx="485" cy="150" r="15" fill="#d6a56d" stroke="#854d0e" strokeWidth="2" />
+                <text x="461" y="221" textAnchor="middle" fill="#7c2d12" fontSize="13" fontFamily="inherit">
+                  {isEn ? 'Consumer' : 'مستهلك'}
+                </text>
+                <path d="M590 178 Q614 137 638 178 Q614 166 590 178Z" fill="#64748b" stroke="#334155" strokeWidth="2" />
+                <circle cx="614" cy="159" r="11" fill="#64748b" />
+                <text x="614" y="221" textAnchor="middle" fill="#334155" fontSize="13" fontFamily="inherit">
+                  {isEn ? 'Another consumer' : 'مستهلك آخر'}
+                </text>
+                <path d={`M174 153 H220 M313 153 H408 M495 153 H564`} stroke="#0f766e" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <text x="380" y="259" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Arrows show energy transfer through a food web' : 'توضح الأسهم انتقال الطاقة في الشبكة الغذائية'}
+                </text>
+              </g>
+            )}
+            {unit === 4 && (
+              <g>
+                <rect x="86" y="98" width="256" height="140" rx="14" fill="#dcfce7" stroke="#16a34a" strokeWidth="2" />
+                <rect x="418" y="98" width="256" height="140" rx="14" fill="#ffedd5" stroke="#ea580c" strokeWidth="2" />
+                <circle cx="153" cy="143" r="17" fill="#fde68a" />
+                <path d="M243 192 V142 M243 159 C224 147 222 136 224 127 C239 127 244 139 243 151" fill="none" stroke="#15803d" strokeWidth="6" strokeLinecap="round" />
+                <text x="214" y="219" textAnchor="middle" fill="#166534" fontSize="14" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Habitat resources' : 'موارد الموطن'}
+                </text>
+                <path d="M466 193 H626 M487 173 L505 147 L523 173 M540 193 V150" fill="none" stroke="#b45309" strokeWidth="5" strokeLinecap="round" />
+                <path d="M549 106 C544 118 542 122 542 128 A10 10 0 0 0 562 128 C562 122 559 117 549 106Z" fill="#38bdf8" />
+                <text x="546" y="219" textAnchor="middle" fill="#9a3412" fontSize="14" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Change and response' : 'تغير واستجابة'}
+                </text>
+                <path d="M350 166 H408" stroke="#0f766e" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <text x="380" y="265" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Environmental changes affect living things and resources' : 'تؤثر تغيرات البيئة في المخلوقات الحية والموارد'}
+                </text>
+              </g>
+            )}
+            {unit === 5 && (
+              <g>
+                <path d="M94 226 L225 111 L321 194 L418 100 L572 226Z" fill="#cbd5e1" stroke="#64748b" strokeWidth="3" />
+                <path d="M225 111 L247 154 L265 144 L286 167 M418 100 L441 145 L460 133 L481 166" fill="none" stroke="#475569" strokeWidth="3" />
+                <path d="M111 234 H660" stroke="#92400e" strokeWidth="5" />
+                <path d="M330 121 C320 151 326 172 313 194 M344 131 C354 157 347 180 361 199" fill="none" stroke="#0284c7" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <circle cx="590" cy="113" r="25" fill="#fde68a" />
+                <text x="206" y="260" textAnchor="middle" fill="#334155" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Weathering breaks rock' : 'التجوية تفتت الصخور'}
+                </text>
+                <text x="491" y="260" textAnchor="middle" fill="#0369a1" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Erosion moves fragments' : 'التعرية تنقل الفتات'}
+                </text>
+              </g>
+            )}
+            {unit === 6 && (
+              <g>
+                <rect x="101" y="111" width="558" height="39" fill="#a16207" />
+                <rect x="101" y="150" width="558" height="40" fill="#d6a56d" />
+                <rect x="101" y="190" width="558" height="45" fill="#94a3b8" />
+                <path d="M101 235 H659" stroke="#475569" strokeWidth="3" />
+                <path d="M238 110 V67 M238 87 C220 77 218 66 220 59 C235 60 240 72 238 81 M239 95 C256 83 260 73 257 65 C245 67 238 79 239 87" fill="none" stroke="#15803d" strokeWidth="6" strokeLinecap="round" />
+                <path d="M428 166 C454 146 482 146 508 166 C482 184 454 184 428 166Z" fill="#f8fafc" stroke="#334155" strokeWidth="3" />
+                <circle cx="465" cy="164" r="5" fill="#334155" />
+                <text x="166" y="138" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Organic soil' : 'مواد عضوية'}
+                </text>
+                <text x="567" y="177" textAnchor="middle" fill="#422006" fontSize="14" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Soil and fossils' : 'تربة وأحافير'}
+                </text>
+                <text x="380" y="265" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Use Earth’s resources wisely and conserve them' : 'استخدم موارد الأرض بحكمة وحافظ عليها'}
+                </text>
+              </g>
+            )}
+          </svg>
+        );
+      }
+      case 'primary_math_g3_unit': {
+        const unit = Number(diagram.id.match(/-(\d+)$/)?.[1] || 1);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg primary-math-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#eff6ff" />
+                <stop offset="100%" stopColor="#ecfdf5" />
+              </linearGradient>
+            </defs>
+            <rect width="760" height="320" rx="20" fill={`url(#${visualId}-background)`} />
+            <rect x="78" y="42" width="604" height="236" rx="18" fill="#fff" stroke="#93c5fd" strokeWidth="3" />
+            {unit === 1 && (
+              <g>
+                <text x="380" y="78" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Place value: 23,157' : 'القيمة المنزلية: ٢٣١٥٧'}
+                </text>
+                {[
+                  { x: 112, digit: '2', ar: 'عشرات الألوف', en: 'Ten-thousands', color: '#38bdf8' },
+                  { x: 220, digit: '3', ar: 'الألوف', en: 'Thousands', color: '#34d399' },
+                  { x: 328, digit: '1', ar: 'المئات', en: 'Hundreds', color: '#fbbf24' },
+                  { x: 436, digit: '5', ar: 'العشرات', en: 'Tens', color: '#fb7185' },
+                  { x: 544, digit: '7', ar: 'الآحاد', en: 'Ones', color: '#a78bfa' },
+                ].map((place) => (
+                  <g key={place.en}>
+                    <rect x={place.x} y="104" width="96" height="92" rx="12" fill={place.color} opacity="0.2" stroke={place.color} strokeWidth="2" />
+                    <text x={place.x + 48} y="151" textAnchor="middle" fill="#1e3a8a" fontSize="30" fontWeight="800" fontFamily="inherit">{place.digit}</text>
+                    <text x={place.x + 48} y="221" textAnchor="middle" fill="#334155" fontSize="12" fontWeight="700" fontFamily="inherit">{isEn ? place.en : place.ar}</text>
+                  </g>
+                ))}
+                <text x="380" y="256" textAnchor="middle" fill="#1d4ed8" fontSize="17" fontWeight="700" fontFamily="inherit">
+                  {isEn ? '20,000 + 3,000 + 100 + 50 + 7' : '٢٠٠٠٠ + ٣٠٠٠ + ١٠٠ + ٥٠ + ٧'}
+                </text>
+              </g>
+            )}
+            {unit === 2 && (
+              <g>
+                <text x="380" y="86" textAnchor="middle" fill="#334155" fontSize="21" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Add by place value' : 'اجمع بحسب القيمة المنزلية'}
+                </text>
+                <text x="380" y="143" textAnchor="middle" fill="#1e3a8a" fontSize="32" fontWeight="800" fontFamily="inherit">268</text>
+                <text x="380" y="185" textAnchor="middle" fill="#047857" fontSize="32" fontWeight="800" fontFamily="inherit">+ 157</text>
+                <path d="M300 198 H460" stroke="#64748b" strokeWidth="3" />
+                <text x="380" y="239" textAnchor="middle" fill="#7c3aed" fontSize="32" fontWeight="800" fontFamily="inherit">425</text>
+                <text x="380" y="263" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'ones → tens → hundreds' : 'الآحاد ← العشرات ← المئات'}
+                </text>
+              </g>
+            )}
+            {unit === 3 && (
+              <g>
+                <text x="380" y="82" textAnchor="middle" fill="#334155" fontSize="21" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Regroup, subtract, and check' : 'أعد التجميع، واطرح، ثم تحقق'}
+                </text>
+                <rect x="154" y="104" width="452" height="70" rx="12" fill="#dbeafe" stroke="#2563eb" strokeWidth="2" />
+                <text x="380" y="149" textAnchor="middle" fill="#1e3a8a" fontSize="27" fontWeight="800" fontFamily="inherit">
+                  {isEn ? '503 − 178 = 325' : '٥٠٣ − ١٧٨ = ٣٢٥'}
+                </text>
+                <rect x="172" y="194" width="416" height="48" rx="10" fill="#dcfce7" stroke="#16a34a" strokeWidth="2" />
+                <text x="380" y="224" textAnchor="middle" fill="#166534" fontSize="18" fontWeight="700" fontFamily="inherit">
+                  {isEn ? '503 = 4 hundreds + 9 tens + 13 ones' : '٥٠٣ = ٤ مئات + ٩ عشرات + ١٣ آحادًا'}
+                </text>
+                <text x="380" y="264" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">
+                  {isEn ? 'Check the difference with addition' : 'تحقق من الفرق باستعمال الجمع'}
+                </text>
+              </g>
+            )}
+            {unit === 4 && (
+              <g>
+                <text x="380" y="78" textAnchor="middle" fill="#334155" fontSize="21" fontWeight="700" fontFamily="inherit">
+                  {isEn ? '4 rows of 6' : '٤ صفوف في كل منها ٦'}
+                </text>
+                {Array.from({ length: 24 }, (_, index) => (
+                  <rect
+                    key={index}
+                    x={270 + (index % 6) * 38}
+                    y={96 + Math.floor(index / 6) * 34}
+                    width="30"
+                    height="26"
+                    rx="5"
+                    fill={['#bfdbfe', '#bbf7d0', '#fde68a', '#fbcfe8'][Math.floor(index / 6)]}
+                    stroke="#475569"
+                    strokeWidth="1.5"
+                  />
+                ))}
+                <text x="380" y="252" textAnchor="middle" fill="#7c3aed" fontSize="24" fontWeight="800" fontFamily="inherit">4 × 6 = 24</text>
+                <text x="380" y="271" textAnchor="middle" fill="#475569" fontSize="13" fontFamily="inherit">
+                  {isEn ? '4 equal groups of 6' : '٤ مجموعات متساوية من ٦'}
+                </text>
+              </g>
+            )}
+            {unit === 5 && (
+              <g>
+                <text x="380" y="70" textAnchor="middle" fill="#334155" fontSize="21" fontWeight="700" fontFamily="inherit">
+                  {isEn ? '7 rows of 8' : '٧ صفوف في كل منها ٨'}
+                </text>
+                {Array.from({ length: 56 }, (_, index) => (
+                  <rect
+                    key={index}
+                    x={274 + (index % 8) * 28}
+                    y={84 + Math.floor(index / 8) * 22}
+                    width="21"
+                    height="16"
+                    rx="4"
+                    fill={['#bfdbfe', '#bbf7d0', '#fde68a', '#fbcfe8', '#ddd6fe', '#bae6fd', '#fed7aa'][Math.floor(index / 8)]}
+                    stroke="#475569"
+                    strokeWidth="1"
+                  />
+                ))}
+                <text x="380" y="262" textAnchor="middle" fill="#7c3aed" fontSize="24" fontWeight="800" fontFamily="inherit">7 × 8 = 56</text>
+                <text x="380" y="279" textAnchor="middle" fill="#475569" fontSize="13" fontFamily="inherit">
+                  {isEn ? 'Use an array to check a multiplication fact' : 'استعمل شبكة للتحقق من حقيقة الضرب'}
+                </text>
+              </g>
+            )}
+          </svg>
+        );
+      }
+      case 'primary_math_g5_unit': {
+        const unit = Number(diagram.id.match(/-(\d+)$/)?.[1] || 1);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg primary-math-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#eff6ff" />
+                <stop offset="100%" stopColor="#ecfdf5" />
+              </linearGradient>
+              <marker id={`${visualId}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#475569" />
+              </marker>
+            </defs>
+            <rect width="760" height="320" rx="20" fill={`url(#${visualId}-background)`} />
+            <rect x="112" y="48" width="536" height="222" rx="18" fill="#fff" stroke="#93c5fd" strokeWidth="3" />
+            {unit === 1 && (
+              <g>
+                <text x="380" y="86" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">{isEn ? 'Place value groups' : 'مجموعات القيمة المنزلية'}</text>
+                {[
+                  { x: 164, value: '3', ar: 'مليارات', en: 'Billions', color: '#38bdf8' },
+                  { x: 274, value: '742', ar: 'ملايين', en: 'Millions', color: '#34d399' },
+                  { x: 384, value: '000', ar: 'آلاف', en: 'Thousands', color: '#fbbf24' },
+                  { x: 494, value: '000', ar: 'آحاد', en: 'Ones', color: '#fb7185' },
+                ].map((group) => (
+                  <g key={group.ar}>
+                    <rect x={group.x} y="112" width="94" height="78" rx="10" fill={group.color} opacity="0.22" stroke={group.color} strokeWidth="2" />
+                    <text x={group.x + 47} y="153" textAnchor="middle" fill="#334155" fontSize="23" fontWeight="800" fontFamily="inherit">{group.value}</text>
+                    <text x={group.x + 47} y="218" textAnchor="middle" fill="#475569" fontSize="14" fontWeight="700" fontFamily="inherit">{isEn ? group.en : group.ar}</text>
+                  </g>
+                ))}
+                <text x="380" y="250" textAnchor="middle" fill="#1d4ed8" fontSize="17" fontWeight="700" fontFamily="inherit">3,742,000,000</text>
+              </g>
+            )}
+            {unit === 2 && (
+              <g>
+                <text x="380" y="88" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">{isEn ? 'Align decimal points' : 'حاذِ الفواصل العشرية'}</text>
+                <text x="380" y="140" textAnchor="middle" fill="#1e3a8a" fontSize="31" fontWeight="800" fontFamily="inherit">12.45</text>
+                <text x="380" y="182" textAnchor="middle" fill="#047857" fontSize="31" fontWeight="800" fontFamily="inherit">+ 3.70</text>
+                <path d="M292 198 H468" stroke="#64748b" strokeWidth="3" />
+                <text x="380" y="238" textAnchor="middle" fill="#7c3aed" fontSize="31" fontWeight="800" fontFamily="inherit">16.15</text>
+                <text x="380" y="260" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">{isEn ? 'estimate → calculate → check' : 'قدّر ← احسب ← تحقّق'}</text>
+              </g>
+            )}
+            {unit === 3 && (
+              <g>
+                <text x="380" y="84" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">{isEn ? 'Area model: 12 × 4' : 'نموذج المساحة: ١٢ × ٤'}</text>
+                <rect x="190" y="118" width="284" height="72" rx="10" fill="#bfdbfe" stroke="#2563eb" strokeWidth="2" />
+                <text x="332" y="162" textAnchor="middle" fill="#1e3a8a" fontSize="22" fontWeight="800" fontFamily="inherit">{isEn ? '10 × 4 = 40' : '١٠ × ٤ = ٤٠'}</text>
+                <rect x="486" y="118" width="84" height="72" rx="10" fill="#bbf7d0" stroke="#16a34a" strokeWidth="2" />
+                <text x="528" y="162" textAnchor="middle" fill="#166534" fontSize="18" fontWeight="800" fontFamily="inherit">{isEn ? '2 × 4' : '٢ × ٤'}</text>
+                <text x="380" y="232" textAnchor="middle" fill="#334155" fontSize="19" fontWeight="700" fontFamily="inherit">{isEn ? '40 + 8 = 48' : '٤٠ + ٨ = ٤٨'}</text>
+                <text x="380" y="257" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">{isEn ? 'split into easier products' : 'حلّل إلى نواتج ضرب أسهل'}</text>
+              </g>
+            )}
+            {unit === 4 && (
+              <g>
+                <text x="380" y="88" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">{isEn ? 'Share equally' : 'قسمة بالتساوي'}</text>
+                <text x="236" y="158" textAnchor="middle" fill="#1e3a8a" fontSize="30" fontWeight="800" fontFamily="inherit">84</text>
+                <path d="M288 150 H390" stroke="#64748b" strokeWidth="4" markerEnd={`url(#${visualId}-arrow)`} />
+                {[0, 1, 2, 3].map((group) => (
+                  <g key={group}>
+                    <rect x={412 + group * 48} y="118" width="40" height="66" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="2" />
+                    <text x={432 + group * 48} y="157" textAnchor="middle" fill="#1e3a8a" fontSize="19" fontWeight="800" fontFamily="inherit">21</text>
+                  </g>
+                ))}
+                <text x="380" y="230" textAnchor="middle" fill="#7c3aed" fontSize="23" fontWeight="800" fontFamily="inherit">84 ÷ 4 = 21</text>
+                <text x="380" y="256" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">{isEn ? 'check with multiplication' : 'تحقّق باستعمال الضرب'}</text>
+              </g>
+            )}
+            {unit === 5 && (
+              <g>
+                <text x="380" y="88" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">{isEn ? 'Function rule and equation' : 'قاعدة دالة ومعادلة'}</text>
+                <rect x="158" y="119" width="112" height="64" rx="12" fill="#dbeafe" stroke="#2563eb" strokeWidth="2" />
+                <text x="214" y="159" textAnchor="middle" fill="#1e3a8a" fontSize="21" fontWeight="800" fontFamily="inherit">{isEn ? 'input x' : 'المدخل س'}</text>
+                <path d="M278 151 H346" stroke="#64748b" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <rect x="356" y="119" width="132" height="64" rx="12" fill="#dcfce7" stroke="#16a34a" strokeWidth="2" />
+                <text x="422" y="159" textAnchor="middle" fill="#166534" fontSize="20" fontWeight="800" fontFamily="inherit">{isEn ? '× 3 + 2' : '× ٣ + ٢'}</text>
+                <path d="M496 151 H546" stroke="#64748b" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <rect x="554" y="119" width="74" height="64" rx="12" fill="#fef3c7" stroke="#d97706" strokeWidth="2" />
+                <text x="591" y="159" textAnchor="middle" fill="#92400e" fontSize="19" fontWeight="800" fontFamily="inherit">{isEn ? 'out' : 'ناتج'}</text>
+                <text x="380" y="230" textAnchor="middle" fill="#7c3aed" fontSize="24" fontWeight="800" fontFamily="inherit">3 × 4 + 2 = 14</text>
+                <text x="380" y="256" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">{isEn ? 'substitute, then evaluate' : 'عوّض ثم احسب'}</text>
+              </g>
+            )}
+            {unit === 6 && (
+              <g>
+                <text x="380" y="86" textAnchor="middle" fill="#334155" fontSize="20" fontWeight="700" fontFamily="inherit">{isEn ? 'Improper fraction and mixed number' : 'كسر غير فعلي وعدد كسري'}</text>
+                <text x="252" y="132" textAnchor="middle" fill="#1e3a8a" fontSize="29" fontWeight="800" fontFamily="inherit">7/4</text>
+                <path d="M302 124 H440" stroke="#64748b" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <text x="510" y="132" textAnchor="middle" fill="#7c3aed" fontSize="29" fontWeight="800" fontFamily="inherit">1 3/4</text>
+                {[0, 1, 2, 3, 4, 5, 6].map((part) => (
+                  <rect
+                    key={part}
+                    x={206 + part * 48}
+                    y="160"
+                    width="42"
+                    height="44"
+                    rx="4"
+                    fill={part < 4 ? '#60a5fa' : '#eff6ff'}
+                    stroke="#1d4ed8"
+                    strokeWidth="2"
+                  />
+                ))}
+                <text x="380" y="238" textAnchor="middle" fill="#475569" fontSize="16" fontWeight="700" fontFamily="inherit">{isEn ? 'one whole and three fourths' : 'واحد صحيح وثلاثة أرباع'}</text>
+                <text x="380" y="261" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">{isEn ? 'model → rename → compare' : 'مثّل ← حوّل ← قارن'}</text>
+              </g>
+            )}
+            <text x="380" y="300" textAnchor="middle" direction={isEn ? 'ltr' : 'rtl'} unicodeBidi="plaintext" fill="#334155" fontSize="14" fontWeight="700" fontFamily="inherit">
+              {isEn ? `Grade 5 math study ${unit}` : `تمثيل رياضي للصف الخامس ${unit}`}
+            </text>
+          </svg>
+        );
+      }
+      case 'primary_math_unit': {
+        const unit = Number(diagram.id.match(/-(\d+)$/)?.[1] || 1);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg primary-math-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#eff6ff" />
+                <stop offset="100%" stopColor="#ecfdf5" />
+              </linearGradient>
+              <marker id={`${visualId}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#475569" />
+              </marker>
+            </defs>
+            <rect width="760" height="320" rx="20" fill={`url(#${visualId}-background)`} />
+            <circle cx="80" cy="74" r="62" fill="#38bdf8" opacity="0.12" />
+            <circle cx="680" cy="255" r="80" fill="#a78bfa" opacity="0.10" />
+            {unit === 1 && (
+              <g>
+                <rect x="130" y="56" width="500" height="204" rx="16" fill="#fff" stroke="#93c5fd" strokeWidth="3" />
+                <text x="380" y="94" textAnchor="middle" fill="#334155" fontSize="19" fontWeight="700" fontFamily="inherit">{isEn ? 'Number pattern' : 'نمط عددي'}</text>
+                {[0, 1, 2, 3].map((index) => (
+                  <g key={index}>
+                    <circle cx={220 + index * 88} cy="146" r="24" fill={['#38bdf8', '#34d399', '#fbbf24', '#fb7185'][index]} />
+                    <text x={220 + index * 88} y="152" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="800" fontFamily="inherit">{index + 1}</text>
+                  </g>
+                ))}
+                <path d="M215 200 H525" stroke="#64748b" strokeWidth="3" strokeDasharray="7 7" markerEnd={`url(#${visualId}-arrow)`} />
+                <rect x="314" y="212" width="132" height="32" rx="10" fill="#ede9fe" />
+                <text x="380" y="233" textAnchor="middle" fill="#5b21b6" fontSize="15" fontWeight="700" fontFamily="inherit">{isEn ? 'rule → expression' : 'قاعدة ← عبارة'}</text>
+              </g>
+            )}
+            {unit === 2 && (
+              <g>
+                <rect x="124" y="52" width="512" height="214" rx="16" fill="#fff" stroke="#86efac" strokeWidth="3" />
+                <path d="M190 222 V104 M190 222 H566" stroke="#475569" strokeWidth="3" />
+                {[0, 1, 2, 3].map((index) => (
+                  <g key={index}>
+                    <path d={`M ${238 + index * 76} 222 V ${180 - [22, 60, 38, 88][index]}`} stroke={['#38bdf8', '#34d399', '#f59e0b', '#8b5cf6'][index]} strokeWidth="28" strokeLinecap="round" />
+                    <circle cx={238 + index * 76} cy={125 + [48, 10, 32, -18][index]} r="7" fill="#db2777" />
+                  </g>
+                ))}
+                <path d="M238 173 L314 135 L390 157 L466 107" fill="none" stroke="#db2777" strokeWidth="4" />
+                <text x="380" y="246" textAnchor="middle" fill="#334155" fontSize="14" fontWeight="700" fontFamily="inherit">{isEn ? 'Table → graph → interpretation' : 'جدول ← تمثيل بياني ← استنتاج'}</text>
+              </g>
+            )}
+            {unit === 3 && (
+              <g>
+                <rect x="150" y="58" width="460" height="204" rx="16" fill="#fff" stroke="#93c5fd" strokeWidth="3" />
+                <text x="380" y="105" textAnchor="middle" fill="#1e3a8a" fontSize="34" fontWeight="800" fontFamily="inherit">{isEn ? '3.47' : '٣٫٤٧'}</text>
+                {[0, 1, 2, 3].map((index) => (
+                  <g key={index}>
+                    <rect x={230 + index * 82} y="137" width="62" height="56" rx="8" fill={['#dbeafe', '#dcfce7', '#fef3c7', '#fce7f3'][index]} stroke={['#3b82f6', '#16a34a', '#d97706', '#db2777'][index]} strokeWidth="2" />
+                    <text x={261 + index * 82} y="172" textAnchor="middle" fill="#334155" fontSize="22" fontWeight="800" fontFamily="inherit">{['3', '.', '4', '7'][index]}</text>
+                  </g>
+                ))}
+                <path d="M258 205 H502" stroke="#64748b" strokeWidth="2" strokeDasharray="5 6" />
+                <text x="380" y="235" textAnchor="middle" fill="#475569" fontSize="14" fontFamily="inherit">{isEn ? 'estimate → calculate → check' : 'قدّر ← احسب ← تحقّق'}</text>
+              </g>
+            )}
+            {unit === 4 && (
+              <g>
+                <rect x="146" y="58" width="468" height="204" rx="16" fill="#fff" stroke="#c4b5fd" strokeWidth="3" />
+                <text x="280" y="104" textAnchor="middle" fill="#334155" fontSize="23" fontWeight="800" fontFamily="inherit">2/3</text>
+                <text x="480" y="104" textAnchor="middle" fill="#334155" fontSize="23" fontWeight="800" fontFamily="inherit">4/6</text>
+                {[0, 1, 2].map((index) => (
+                  <rect key={`third-${index}`} x={188 + index * 62} y="124" width="58" height="50" fill={index < 2 ? '#60a5fa' : '#eff6ff'} stroke="#1d4ed8" strokeWidth="2" />
+                ))}
+                {[0, 1, 2, 3, 4, 5].map((index) => (
+                  <rect key={`sixth-${index}`} x={386 + index * 34} y="124" width="32" height="50" fill={index < 4 ? '#34d399' : '#ecfdf5'} stroke="#047857" strokeWidth="2" />
+                ))}
+                <path d="M270 204 H490" stroke="#64748b" strokeWidth="3" markerEnd={`url(#${visualId}-arrow)`} />
+                <text x="380" y="237" textAnchor="middle" fill="#475569" fontSize="15" fontWeight="700" fontFamily="inherit">{isEn ? 'equivalent parts' : 'أجزاء متكافئة'}</text>
+              </g>
+            )}
+            {unit === 5 && (
+              <g>
+                <rect x="132" y="58" width="496" height="204" rx="16" fill="#fff" stroke="#7dd3fc" strokeWidth="3" />
+                <path d="M190 154 H560" stroke="#475569" strokeWidth="5" />
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
+                  <path key={index} d={`M ${205 + index * 42} 154 V ${index % 2 === 0 ? 120 : 136}`} stroke="#0f766e" strokeWidth="3" />
+                ))}
+                <path d="M238 122 V92 H414 V122" fill="none" stroke="#2563eb" strokeWidth="4" markerEnd={`url(#${visualId}-arrow)`} />
+                <path d="M464 114 C448 138 442 150 442 166 A34 34 0 0 0 510 166 C510 150 504 138 488 114 Z" fill="#bfdbfe" stroke="#2563eb" strokeWidth="3" />
+                <path d="M354 204 H520" stroke="#f59e0b" strokeWidth="4" markerEnd={`url(#${visualId}-arrow)`} />
+                <text x="255" y="225" textAnchor="middle" fill="#0f766e" fontSize="16" fontWeight="700" fontFamily="inherit">{isEn ? 'length' : 'طول'}</text>
+                <text x="476" y="225" textAnchor="middle" fill="#1d4ed8" fontSize="16" fontWeight="700" fontFamily="inherit">{isEn ? 'capacity' : 'سعة'}</text>
+              </g>
+            )}
+            <text x="380" y="300" textAnchor="middle" direction={isEn ? 'ltr' : 'rtl'} unicodeBidi="plaintext" fill="#334155" fontSize="14" fontWeight="700" fontFamily="inherit">
+              {isEn ? `Grade 6 math study ${unit}` : `تمثيل رياضي للصف السادس ${unit}`}
+            </text>
+          </svg>
+        );
+      }
+      case 'visual_arts': {
+        const unit = Number(diagram.id.match(/-(\d+)$/)?.[1] || 1);
+        const patternId = `${diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-')}-motif`;
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg visual-arts-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${patternId}-bg`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#fff7ed" />
+                <stop offset="100%" stopColor="#fce7f3" />
+              </linearGradient>
+              <pattern id={patternId} width="64" height="64" patternUnits="userSpaceOnUse">
+                <path d="M32 4 L60 32 L32 60 L4 32 Z" fill="none" stroke="#be185d" strokeWidth="2" />
+                <circle cx="32" cy="32" r="5" fill="#f59e0b" />
+                <circle cx="4" cy="4" r="3" fill="#7c3aed" />
+              </pattern>
+              <marker id={`${patternId}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#64748b" />
+              </marker>
+            </defs>
+            <rect width="760" height="320" rx="20" fill={`url(#${patternId}-bg)`} />
+            <circle cx="92" cy="68" r="60" fill="#fb7185" opacity="0.13" />
+            <circle cx="670" cy="258" r="86" fill="#8b5cf6" opacity="0.10" />
+            {unit === 1 && (
+              <g>
+                <rect x="168" y="42" width="424" height="228" rx="10" fill="#fff" stroke="#7c3aed" strokeWidth="3" />
+                <circle cx="470" cy="102" r="35" fill="#fbbf24" />
+                <path d="M188 226 L318 114 L420 226 Z" fill="#60a5fa" />
+                <path d="M316 226 L426 148 L566 226 Z" fill="#34d399" />
+                <path d="M190 238 H570" stroke="#334155" strokeWidth="4" />
+                <circle cx="250" cy="86" r="9" fill="#fb7185" />
+                <circle cx="280" cy="86" r="9" fill="#fb7185" />
+                <circle cx="310" cy="86" r="9" fill="#fb7185" />
+                <path d="M246 266 H514" stroke="#7c3aed" strokeWidth="2" strokeDasharray="7 7" />
+              </g>
+            )}
+            {unit === 2 && (
+              <g>
+                <rect x="162" y="42" width="436" height="230" rx="12" fill={`url(#${patternId})`} stroke="#7c3aed" strokeWidth="3" />
+                <rect x="290" y="98" width="180" height="120" rx="8" fill="#fff7ed" stroke="#0f766e" strokeWidth="3" />
+                <path d="M380 110 L446 158 L380 206 L314 158 Z" fill="none" stroke="#be185d" strokeWidth="4" />
+                <circle cx="380" cy="158" r="13" fill="#f59e0b" />
+              </g>
+            )}
+            {unit === 3 && (
+              <g>
+                <rect x="86" y="64" width="218" height="194" rx="14" fill="#fff" stroke="#64748b" strokeWidth="3" />
+                <rect x="118" y="94" width="154" height="120" rx="8" fill="#e2e8f0" />
+                <path d="M145 194 L194 118 L245 194 Z" fill="#7c3aed" />
+                <circle cx="194" cy="132" r="16" fill="#fbbf24" />
+                <path d="M325 160 H425" stroke="#64748b" strokeWidth="5" markerEnd={`url(#${patternId}-arrow)`} />
+                <rect x="456" y="64" width="218" height="194" rx="14" fill="#fff" stroke="#be185d" strokeWidth="3" />
+                <rect x="488" y="94" width="154" height="120" rx="8" fill="#fff1f2" />
+                <path d="M515 194 L564 118 L615 194 Z" fill="#be185d" />
+                <circle cx="564" cy="132" r="16" fill="#f59e0b" />
+                <path d="M146 238 H618" stroke="#94a3b8" strokeWidth="3" strokeDasharray="8 8" />
+              </g>
+            )}
+            {unit === 4 && (
+              <g>
+                <path d="M276 74 C288 102 285 121 260 150 C240 174 252 242 290 264 H470 C508 242 520 174 500 150 C475 121 472 102 484 74 Z" fill="#f5d0a9" stroke="#9a3412" strokeWidth="4" />
+                <ellipse cx="380" cy="76" rx="104" ry="22" fill="#fde68a" stroke="#9a3412" strokeWidth="4" />
+                <path d="M380 98 V254" stroke="#64748b" strokeWidth="2" strokeDasharray="6 6" />
+                <path d="M300 164 Q380 190 460 164 M280 204 Q380 232 480 204" fill="none" stroke="#be185d" strokeWidth="7" strokeLinecap="round" />
+                <circle cx="332" cy="130" r="8" fill="#0f766e" />
+                <circle cx="428" cy="130" r="8" fill="#0f766e" />
+                <circle cx="314" cy="230" r="7" fill="#7c3aed" />
+                <circle cx="446" cy="230" r="7" fill="#7c3aed" />
+              </g>
+            )}
+            <text x="380" y="300" textAnchor="middle" direction={isEn ? 'ltr' : 'rtl'} unicodeBidi="plaintext" fill="#334155" fontSize="14" fontWeight="700" fontFamily="inherit">
+              {isEn ? `Art study ${unit}` : `تطبيق فني تعليمي ${unit}`}
+            </text>
+          </svg>
+        );
+      }
+      case 'digital_skills':
+      case 'life_skills': {
+        const isLifeSkills = diagram.diagramType === 'life_skills';
         const steps = diagram.visualSteps || [];
         const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
         const positions = steps.map((_, index) => {
@@ -41,26 +649,28 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
         return (
           <svg
             viewBox="0 0 760 260"
-            className="scientific-svg digital-skills-svg"
+            className={`scientific-svg ${isLifeSkills ? 'life-skills-svg' : 'digital-skills-svg'}`}
             role="img"
             aria-label={title}
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
               <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#101d37" />
-                <stop offset="100%" stopColor="#172554" />
+                <stop offset="0%" stopColor={isLifeSkills ? '#3b2631' : '#101d37'} />
+                <stop offset="100%" stopColor={isLifeSkills ? '#263b35' : '#172554'} />
               </linearGradient>
               <marker id={`${visualId}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#67e8f9" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill={isLifeSkills ? '#fda4af' : '#67e8f9'} />
               </marker>
             </defs>
             <rect width="760" height="260" rx="16" fill={`url(#${visualId}-background)`} />
-            <circle cx="54" cy="38" r="68" fill="#38bdf8" opacity="0.06" />
-            <circle cx="706" cy="232" r="94" fill="#a78bfa" opacity="0.07" />
+            <circle cx="54" cy="38" r="68" fill={isLifeSkills ? '#fb7185' : '#38bdf8'} opacity="0.08" />
+            <circle cx="706" cy="232" r="94" fill={isLifeSkills ? '#4ade80' : '#a78bfa'} opacity="0.08" />
             {steps.slice(0, 4).map((step, index) => {
               const x = positions[index] ?? 28;
-              const colors = ['#22d3ee', '#818cf8', '#34d399', '#fbbf24'];
+              const colors = isLifeSkills
+                ? ['#fb7185', '#fbbf24', '#34d399', '#60a5fa']
+                : ['#22d3ee', '#818cf8', '#34d399', '#fbbf24'];
               const color = colors[index % colors.length];
               const label = isEn ? step.labelEn : step.labelAr;
 
@@ -71,7 +681,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
                       d={isEn
                         ? `M ${x + 160} 133 L ${x + 178} 133`
                         : `M ${x} 133 L ${x - 18} 133`}
-                      stroke="#67e8f9"
+                      stroke={isLifeSkills ? '#fda4af' : '#67e8f9'}
                       strokeWidth="2.5"
                       markerEnd={`url(#${visualId}-arrow)`}
                       opacity="0.85"
@@ -135,8 +745,130 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
               fontSize="11"
               fontFamily="inherit"
             >
-              {isEn ? 'A visual guide to the lesson concept' : 'تصور بصري مبسط لمفهوم الدرس'}
+              {isLifeSkills
+                ? isEn ? 'Everyday life skills' : 'مهارات حياتية في مواقف يومية'
+                : isEn ? 'A visual guide to the lesson concept' : 'تصور بصري مبسط لمفهوم الدرس'}
             </text>
+          </svg>
+        );
+      }
+
+      case 'social_studies': {
+        const steps = diagram.visualSteps || [];
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const cardWidth = 166;
+        const gap = 22;
+        const startX = 26;
+        return (
+          <svg
+            viewBox="0 0 780 240"
+            className="scientific-svg social-studies-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-bg`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#132b3e" />
+                <stop offset="100%" stopColor="#1e293b" />
+              </linearGradient>
+            </defs>
+            <rect width="780" height="240" rx="16" fill={`url(#${visualId}-bg)`} />
+            {steps.slice(0, 4).map((step, index) => {
+              const visualIndex = isEn ? index : steps.length - index - 1;
+              const x = startX + visualIndex * (cardWidth + gap);
+              const color = ['#38bdf8', '#34d399', '#fbbf24', '#c084fc'][index % 4];
+              const label = isEn ? step.labelEn : step.labelAr;
+              return (
+                <g key={`${label}-${index}`}>
+                  <rect x={x} y="42" width={cardWidth} height="150" rx="14" fill="#0f172a" stroke={color} strokeWidth="2" />
+                  <circle cx={x + cardWidth / 2} cy="88" r="25" fill={color} opacity="0.17" />
+                  <circle cx={x + cardWidth / 2} cy="88" r="16" fill={color} opacity="0.3" />
+                  <text x={x + cardWidth / 2} y="94" textAnchor="middle" fill={color} fontSize="17" fontWeight="800">{index + 1}</text>
+                  <text
+                    x={x + cardWidth / 2}
+                    y="143"
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#f8fafc"
+                    fontSize="13"
+                    fontWeight="700"
+                    fontFamily="inherit"
+                  >
+                    {label}
+                  </text>
+                  <text x={x + cardWidth / 2} y="169" textAnchor="middle" fill="#94a3b8" fontSize="10">
+                    {isEn ? 'Social studies concept' : 'مفهوم من الدراسات الاجتماعية'}
+                  </text>
+                </g>
+              );
+            })}
+            <text x="390" y="222" textAnchor="middle" fill="#bae6fd" fontSize="11" fontWeight="700">
+              {isEn ? 'Saudi society • place • history • responsible citizenship' : 'المجتمع السعودي • المكان • التاريخ • المواطنة المسؤولة'}
+            </text>
+          </svg>
+        );
+      }
+
+      case 'health_science': {
+        const steps = (diagram.visualSteps || []).slice(0, 4);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const colors = ['#fb7185', '#2dd4bf', '#fbbf24', '#60a5fa'];
+        return (
+          <svg
+            viewBox="0 0 780 240"
+            className="scientific-svg health-science-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#251b2b" />
+                <stop offset="100%" stopColor="#172b35" />
+              </linearGradient>
+            </defs>
+            <rect width="780" height="240" rx="16" fill={`url(#${visualId}-background)`} />
+            {steps.map((step, index) => {
+              const visualIndex = isEn ? index : steps.length - index - 1;
+              const x = 22 + visualIndex * 190;
+              const color = colors[index % colors.length];
+              const label = isEn ? step.labelEn : step.labelAr;
+              const lines: string[] = [];
+              label.split(' ').forEach((word) => {
+                const lastLine = lines.length - 1;
+                if (lastLine < 0 || `${lines[lastLine]} ${word}`.length > 18) {
+                  lines.push(word);
+                } else {
+                  lines[lastLine] = `${lines[lastLine]} ${word}`;
+                }
+              });
+              return (
+                <g key={`${label}-${index}`}>
+                  <rect x={x} y="38" width="166" height="164" rx="16" fill="#111827" stroke={color} strokeWidth="2" />
+                  <circle cx={x + 83} cy="82" r="25" fill={color} opacity="0.2" />
+                  <path
+                    d={`M ${x + 78} 68 h 10 v 9 h 9 v 10 h -9 v 9 h -10 v -9 h -9 v -10 h 9 z`}
+                    fill={color}
+                  />
+                  <text
+                    x={x + 83}
+                    y="132"
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#f8fafc"
+                    fontSize="13"
+                    fontWeight="700"
+                  >
+                    {lines.slice(0, 2).map((line, lineIndex) => (
+                      <tspan key={`${line}-${lineIndex}`} x={x + 83} dy={lineIndex === 0 ? 0 : 18}>{line}</tspan>
+                    ))}
+                  </text>
+                </g>
+              );
+            })}
           </svg>
         );
       }
@@ -542,6 +1274,101 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             {/* Disk Formula Box */}
             <rect x="180" y="15" width="240" height="35" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#0284c7" />
             <text x="300" y="38" textAnchor="middle" fill="#38bdf8" fontSize="14" fontWeight="900">V = π ∫ₐᵇ [f(x)]² dx</text>
+          </svg>
+        );
+
+      case 'chemistry_mixtures_solutions':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <text x="300" y="36" textAnchor="middle" fill="#e2e8f0" fontSize="18" fontWeight="bold">المخاليط والمحاليل</text>
+            <rect x="55" y="82" width="215" height="180" rx="14" fill="rgba(30,41,59,.72)" stroke="#38bdf8" strokeWidth="2" />
+            <text x="162" y="112" textAnchor="middle" fill="#7dd3fc" fontSize="15" fontWeight="bold">مخلوط غير متجانس</text>
+            <circle cx="110" cy="164" r="18" fill="#f59e0b" /><circle cx="185" cy="178" r="24" fill="#a78bfa" />
+            <circle cx="135" cy="224" r="12" fill="#34d399" /><circle cx="225" cy="132" r="10" fill="#fb7185" />
+            <text x="162" y="250" textAnchor="middle" fill="#cbd5e1" fontSize="12">مكونات متميزة</text>
+            <text x="300" y="185" textAnchor="middle" fill="#fbbf24" fontSize="27">→</text>
+            <rect x="330" y="82" width="215" height="180" rx="14" fill="rgba(30,41,59,.72)" stroke="#34d399" strokeWidth="2" />
+            <text x="437" y="112" textAnchor="middle" fill="#6ee7b7" fontSize="15" fontWeight="bold">محلول متجانس</text>
+            <circle cx="375" cy="150" r="7" fill="#f59e0b" /><circle cx="425" cy="150" r="7" fill="#38bdf8" />
+            <circle cx="475" cy="150" r="7" fill="#f59e0b" /><circle cx="515" cy="150" r="7" fill="#38bdf8" />
+            <circle cx="395" cy="190" r="7" fill="#38bdf8" /><circle cx="450" cy="190" r="7" fill="#f59e0b" />
+            <circle cx="500" cy="190" r="7" fill="#38bdf8" /><circle cx="375" cy="225" r="7" fill="#f59e0b" />
+            <circle cx="425" cy="225" r="7" fill="#38bdf8" /><circle cx="475" cy="225" r="7" fill="#f59e0b" />
+            <text x="437" y="250" textAnchor="middle" fill="#cbd5e1" fontSize="12">جسيمات موزعة بانتظام</text>
+          </svg>
+        );
+
+      case 'chemistry_acid_base':
+        if (isNeutralization) {
+          return (
+            <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+              <text x="300" y="50" textAnchor="middle" fill="#e2e8f0" fontSize="18" fontWeight="bold">التعادل الأيوني</text>
+              <rect x="55" y="102" width="190" height="100" rx="18" fill="rgba(127,29,29,.35)" stroke="#fb7185" strokeWidth="2" />
+              <text x="150" y="145" textAnchor="middle" fill="#fda4af" fontSize="19" fontWeight="bold">H₃O⁺</text>
+              <text x="150" y="175" textAnchor="middle" fill="#cbd5e1" fontSize="13">من الحمض</text>
+              <text x="300" y="160" textAnchor="middle" fill="#fbbf24" fontSize="25">+</text>
+              <rect x="355" y="102" width="190" height="100" rx="18" fill="rgba(30,64,175,.32)" stroke="#60a5fa" strokeWidth="2" />
+              <text x="450" y="145" textAnchor="middle" fill="#93c5fd" fontSize="19" fontWeight="bold">OH⁻</text>
+              <text x="450" y="175" textAnchor="middle" fill="#cbd5e1" fontSize="13">من القاعدة</text>
+              <text x="300" y="248" textAnchor="middle" fill="#6ee7b7" fontSize="19" fontWeight="bold">H₃O⁺ + OH⁻ → 2H₂O</text>
+              <text x="300" y="280" textAnchor="middle" fill="#cbd5e1" fontSize="13">وتبقى الأيونات الأخرى لتكوين الملح</text>
+            </svg>
+          );
+        }
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <text x="300" y="38" textAnchor="middle" fill="#e2e8f0" fontSize="18" fontWeight="bold">مقياس الرقم الهيدروجيني</text>
+            <rect x="70" y="96" width="153" height="44" rx="18" fill="#e11d48" />
+            <rect x="223" y="96" width="154" height="44" fill="#65a30d" />
+            <rect x="377" y="96" width="153" height="44" rx="18" fill="#0284c7" />
+            <line x1="300" y1="85" x2="300" y2="158" stroke="#fff" strokeWidth="3" />
+            <text x="300" y="182" textAnchor="middle" fill="#fef08a" fontSize="16" fontWeight="bold">7</text>
+            <text x="70" y="81" textAnchor="middle" fill="#fda4af" fontSize="14">0</text>
+            <text x="530" y="81" textAnchor="middle" fill="#7dd3fc" fontSize="14">14</text>
+            <text x="170" y="225" textAnchor="middle" fill="#fda4af" fontSize="15" fontWeight="bold">حمضي</text>
+            <text x="300" y="225" textAnchor="middle" fill="#bef264" fontSize="15" fontWeight="bold">متعادل</text>
+            <text x="430" y="225" textAnchor="middle" fill="#7dd3fc" fontSize="15" fontWeight="bold">قاعدي</text>
+            <text x="170" y="256" textAnchor="middle" fill="#cbd5e1" fontSize="12">H₃O⁺ أكبر نسبيًا</text>
+            <text x="430" y="256" textAnchor="middle" fill="#cbd5e1" fontSize="12">OH⁻ أكبر نسبيًا</text>
+            <text x="300" y="292" textAnchor="middle" fill="#94a3b8" fontSize="12">انخفاض pH يعني زيادة حمضية المحلول المائي</text>
+          </svg>
+        );
+
+      case 'chemistry_redox':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <text x="300" y="40" textAnchor="middle" fill="#e2e8f0" fontSize="18" fontWeight="bold">انتقال الإلكترونات في تفاعل أكسدة واختزال</text>
+            <rect x="55" y="90" width="205" height="140" rx="16" fill="rgba(127,29,29,.35)" stroke="#fb7185" strokeWidth="2" />
+            <text x="157" y="125" textAnchor="middle" fill="#fda4af" fontSize="18" fontWeight="bold">Zn → Zn²⁺ + 2e⁻</text>
+            <text x="157" y="166" textAnchor="middle" fill="#fecdd3" fontSize="16">أكسدة: فقد إلكترونات</text>
+            <text x="157" y="198" textAnchor="middle" fill="#cbd5e1" fontSize="13">يرتفع عدد التأكسد</text>
+            <text x="300" y="157" textAnchor="middle" fill="#fbbf24" fontSize="24">2e⁻ →</text>
+            <rect x="340" y="90" width="205" height="140" rx="16" fill="rgba(30,64,175,.32)" stroke="#60a5fa" strokeWidth="2" />
+            <text x="442" y="125" textAnchor="middle" fill="#93c5fd" fontSize="18" fontWeight="bold">Cu²⁺ + 2e⁻ → Cu</text>
+            <text x="442" y="166" textAnchor="middle" fill="#bfdbfe" fontSize="16">اختزال: اكتساب إلكترونات</text>
+            <text x="442" y="198" textAnchor="middle" fill="#cbd5e1" fontSize="13">ينخفض عدد التأكسد</text>
+            <text x="300" y="274" textAnchor="middle" fill="#e2e8f0" fontSize="15">الأكسدة والاختزال عمليتان متلازمتان</text>
+          </svg>
+        );
+
+      case 'chemistry_electrochemistry':
+        return (
+          <svg viewBox="0 0 600 320" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+            <text x="300" y="34" textAnchor="middle" fill="#e2e8f0" fontSize="18" fontWeight="bold">مخطط خلية كهروكيميائية</text>
+            <path d="M145 98 H455 V218 H145 Z" fill="rgba(30,41,59,.55)" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M300 130 C280 155 320 180 300 205" fill="none" stroke="#fbbf24" strokeWidth="12" strokeLinecap="round" />
+            <text x="300" y="232" textAnchor="middle" fill="#fde68a" fontSize="12">جسر ملحي</text>
+            <line x1="205" y1="90" x2="205" y2="183" stroke="#fb7185" strokeWidth="8" />
+            <line x1="395" y1="90" x2="395" y2="183" stroke="#60a5fa" strokeWidth="8" />
+            <path d="M205 90 V64 H395 V90" fill="none" stroke="#34d399" strokeWidth="3" />
+            <text x="300" y="59" textAnchor="middle" fill="#6ee7b7" fontSize="13">{isElectrolysis ? 'مصدر طاقة خارجي' : 'مسار الإلكترونات →'}</text>
+            <text x="205" y="202" textAnchor="middle" fill="#fda4af" fontSize="14" fontWeight="bold">المصعد</text>
+            <text x="205" y="251" textAnchor="middle" fill="#fecdd3" fontSize="12">أكسدة</text>
+            <text x="395" y="202" textAnchor="middle" fill="#93c5fd" fontSize="14" fontWeight="bold">المهبط</text>
+            <text x="395" y="251" textAnchor="middle" fill="#bfdbfe" fontSize="12">اختزال</text>
+            <text x="300" y="290" textAnchor="middle" fill="#cbd5e1" fontSize="12">
+              {isElectrolysis ? 'التحليل الكهربائي يدفع تفاعلًا غير تلقائي' : 'تفاعل أكسدة واختزال يحول الطاقة الكيميائية إلى كهربائية'}
+            </text>
           </svg>
         );
 
@@ -1876,6 +2703,83 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             </g>
           </svg>
         );
+
+      case 'arabic_learning_map': {
+        const steps = (diagram.visualSteps || []).slice(0, 4);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const colors = ['#22d3ee', '#818cf8', '#34d399', '#fbbf24'];
+
+        return (
+          <svg
+            viewBox="0 0 760 250"
+            className="scientific-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-background`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#101d37" />
+                <stop offset="100%" stopColor="#172554" />
+              </linearGradient>
+              <marker id={`${visualId}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#67e8f9" />
+              </marker>
+            </defs>
+            <rect width="760" height="250" rx="16" fill={`url(#${visualId}-background)`} />
+            {steps.map((step, index) => {
+              const visualIndex = isEn ? index : steps.length - index - 1;
+              const x = 28 + visualIndex * 184;
+              const color = colors[index % colors.length];
+              const label = isEn ? step.labelEn : step.labelAr;
+              const lines: string[] = [];
+              label.split(' ').forEach((word) => {
+                const lastLine = lines.length - 1;
+                if (lastLine < 0 || `${lines[lastLine]} ${word}`.length > 15) {
+                  lines.push(word);
+                } else {
+                  lines[lastLine] = `${lines[lastLine]} ${word}`;
+                }
+              });
+
+              return (
+                <g key={`${label}-${index}`}>
+                  {index < steps.length - 1 && (
+                    <path
+                      d={isEn ? `M ${x + 160} 120 L ${x + 178} 120` : `M ${x} 120 L ${x - 18} 120`}
+                      stroke="#67e8f9"
+                      strokeWidth="2.5"
+                      markerEnd={`url(#${visualId}-arrow)`}
+                    />
+                  )}
+                  <rect x={x} y="48" width="160" height="144" rx="14" fill="#1e293b" stroke={color} strokeWidth="1.5" />
+                  <circle cx={x + 80} cy="88" r="24" fill={color} opacity="0.18" />
+                  <text x={x + 80} y="94" textAnchor="middle" fill={color} fontSize="17" fontWeight="800">
+                    {index + 1}
+                  </text>
+                  <text
+                    x={x + 80}
+                    y={lines.length > 1 ? '137' : '144'}
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#f8fafc"
+                    fontSize="13"
+                    fontWeight="700"
+                    fontFamily="inherit"
+                  >
+                    {lines.map((line, lineIndex) => (
+                      <tspan key={`${line}-${lineIndex}`} x={x + 80} dy={lineIndex === 0 ? 0 : 18}>
+                        {line}
+                      </tspan>
+                    ))}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
+        );
+      }
     }
   };
 

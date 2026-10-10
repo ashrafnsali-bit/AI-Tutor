@@ -1,4 +1,4 @@
-import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Subject, Lecture, LectureSection, Assessment } from '../types';
+import type { CountryCode, EducationTrack, EducationType, GradeLevel, Language, Specialization, Subject, Lecture, LectureSection, Assessment } from '../types';
 import { getNationalLessonOverrides, type NationalLessonOverride } from './nationalCurricula';
 
 export interface CountryCurriculumInfo {
@@ -365,6 +365,8 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
   }
 };
 
+export const ACTIVE_CURRICULUM_COUNTRIES: readonly CountryCode[] = ['SA', 'EG', 'SD'];
+
 export const TRACK_LABELS: Record<EducationTrack, { ar: string; en: string; descAr: string }> = {
   GENERAL: {
     ar: 'المسار العام',
@@ -403,6 +405,23 @@ export const TRACK_LABELS: Record<EducationTrack, { ar: string; en: string; desc
   }
 };
 
+export function getSpecializationForEducationTrack(track: EducationTrack): Specialization {
+  switch (track) {
+    case 'CS_ENGINEERING':
+    case 'SCIENCE_MATH':
+      return 'STEM';
+    case 'HEALTH_LIFE':
+    case 'SCIENCE_BIO':
+      return 'HEALTH';
+    case 'SHARIA_HUMANITIES':
+      return 'HUMANITIES';
+    case 'BUSINESS':
+      return 'VOCATIONAL';
+    case 'GENERAL':
+      return 'GENERAL';
+  }
+}
+
 export const EDUCATION_TYPE_LABELS: Record<EducationType, { ar: string; en: string; descAr: string }> = {
   PUBLIC: {
     ar: 'تعليم حكومي معتمد',
@@ -431,6 +450,35 @@ export function getCountryInfo(code?: CountryCode): CountryCurriculumInfo {
     return SUPPORTED_COUNTRIES.SA;
   }
   return SUPPORTED_COUNTRIES[code];
+}
+
+export function isActiveCurriculumCountry(code?: CountryCode): boolean {
+  return !!code && ACTIVE_CURRICULUM_COUNTRIES.includes(code);
+}
+
+export function getActiveCurriculumCountry(code?: CountryCode): CountryCode {
+  if (code && isActiveCurriculumCountry(code)) return code;
+  return 'SA';
+}
+
+export function normalizeEducationTypeForCountry(
+  country: CountryCode,
+  preferredType?: EducationType
+): EducationType {
+  const availableTypes = getCountryInfo(country).availableTypes;
+  return preferredType && availableTypes.includes(preferredType)
+    ? preferredType
+    : availableTypes[0] || 'PUBLIC';
+}
+
+export function normalizeEducationTrackForCountry(
+  country: CountryCode,
+  preferredTrack?: EducationTrack
+): EducationTrack {
+  const availableTracks = getCountryInfo(country).availableTracks;
+  return preferredTrack && availableTracks.includes(preferredTrack)
+    ? preferredTrack
+    : availableTracks[0] || 'GENERAL';
 }
 
 export function getCountryDisplayLabel(code: CountryCode, lang: Language = 'ar'): string {
@@ -470,6 +518,453 @@ const GRADE_NAMES_EN: Record<GradeLevel, string> = {
   G12: 'Grade 12 / High 3'
 };
 
+export function isSaudiPublicCommonYearEnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G10' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG5EnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G5' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG3EnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G3' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG2EnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G2' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG11EnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G11' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicEnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return isSaudiPublicG2EnglishAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG3EnglishAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG5EnglishAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicCommonYearEnglishAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG11EnglishAvailable(country, gradeLevel, educationType);
+}
+
+export function isSaudiPublicG5TajweedAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G5' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG4TajweedAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G4' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG6TajweedAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G6' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicTajweedAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return isSaudiPublicG4TajweedAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG5TajweedAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG6TajweedAvailable(country, gradeLevel, educationType);
+}
+
+export function isSaudiPublicG6QuranRecitationAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G6' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG5QuranRecitationAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G5' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicQuranRecitationAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return isSaudiPublicG5QuranRecitationAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG6QuranRecitationAvailable(country, gradeLevel, educationType);
+}
+
+export function isSaudiPublicG6VisualArtsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G6' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG3VisualArtsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G3' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG2VisualArtsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G2' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG4VisualArtsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G4' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG5VisualArtsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G5' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG6IslamicStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G6' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG4IslamicStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G4' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG3IslamicStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G3' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG2IslamicStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G2' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG5IslamicStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G5' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG6PrimaryMathAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G6' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG5PrimaryMathAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G5' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG4PrimaryMathAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G4' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG3PrimaryMathAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G3' && educationType === 'PUBLIC';
+}
+
+export function isSaudiPublicG4PrimaryArabicAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G4' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG3PrimaryArabicAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G3' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG2PrimaryArabicAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G2' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG6DigitalSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G6' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG5DigitalSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G5' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG6LifeSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G6' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG4LifeSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G4' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG3LifeSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G3' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG5LifeSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G5' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicLifeSkillsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return isSaudiPublicG3LifeSkillsAvailable(country, gradeLevel, educationType, track) ||
+    isSaudiPublicG4LifeSkillsAvailable(country, gradeLevel, educationType, track) ||
+    isSaudiPublicG5LifeSkillsAvailable(country, gradeLevel, educationType, track) ||
+    isSaudiPublicG6LifeSkillsAvailable(country, gradeLevel, educationType, track);
+}
+
+export function isSaudiPublicG6SocialStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G6' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG4SocialStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G4' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG5SocialStudiesAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G5' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL';
+}
+
+export function isSaudiPublicG11PhysicsAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' &&
+    (track === 'CS_ENGINEERING' || track === 'HEALTH_LIFE');
+}
+
+export function isSaudiPublicG11BiologyAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' &&
+    track === 'HEALTH_LIFE';
+}
+
+export function isSaudiPublicG11HealthScienceAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' &&
+    track === 'HEALTH_LIFE';
+}
+
+export function isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined,
+  track: EducationTrack | undefined
+): boolean {
+  return country === 'SA' &&
+    gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' &&
+    track === 'BUSINESS';
+}
+
 /**
  * Returns accurate national textbook and chapter information tailored by Country, Subject, Grade & Track
  */
@@ -494,13 +989,169 @@ export function getNationalTextbookInfo(
   switch (country) {
     case 'SA': // Saudi Arabia
       if (subject === 'PRIMARY_MATH') {
-        textbookName = `الرياضيات (${gradeAr}) - وزارة التعليم السعودية (نظام الفصول الثلاثة)`;
+        textbookName = isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mathematics — Saudi public Grade 3, Part One of the curriculum; all five chapters and indexed titles and pages verified against PDF contents pp. 6–7; cover states 1448 AH/2026 CE and internal publication record states 1446 AH'
+            : 'الرياضيات — الصف الثالث الابتدائي الحكومي، الجزء الأول من المقرر؛ الفصول الخمسة وعناوينها وصفحاتها مطابقة لفهرسي PDF ص 6–7؛ الغلاف يذكر 1448هـ/2026م وبيانات النشر الداخلية تذكر 1446هـ'
+          : isSaudiPublicG4PrimaryMathAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mathematics — Saudi public Grade 4, Part One, 1448 AH/2026 edition as identified on the cover; printed contents pp. 6–7 verified; internal publication record states 1446 AH'
+            : 'الرياضيات — الصف الرابع الابتدائي الحكومي، الجزء الأول، طبعة 1448هـ/2026م بحسب الغلاف؛ الفهرس المطبوع ص 6–7 موثق، وسجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG5PrimaryMathAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mathematics — Saudi public Grade 5, Part One of the curriculum, 1448 AH/2026 edition; contents pages 6–7 verified; internal publication record states 1446 AH'
+            : 'الرياضيات — الصف الخامس الابتدائي، التعليم الحكومي، الجزء الأول من المقرر، طبعة 1448هـ/2026م؛ الفهرس ص 6–7 موثق، وسجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG6PrimaryMathAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mathematics — Saudi public Grade 6, Part One of the curriculum, 1448 AH/2026 edition; chapter and lesson titles and page references verified against PDF contents pp. 6–7'
+            : 'الرياضيات — الصف السادس الابتدائي، التعليم الحكومي، الجزء الأول من المقرر، طبعة 1448هـ/2026م؛ عناوين الفصول والدروس وأرقام الصفحات مطابقة للفهرس ص 6–7'
+          : gradeLevel === 'G3'
+          ? isEn
+            ? 'Saudi Grade 3 Mathematics — textbook edition for this education type has not been verified'
+            : 'رياضيات الصف الثالث السعودي — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم'
+          : `الرياضيات (${gradeAr}) - وزارة التعليم السعودية (نظام الفصول الثلاثة)`;
       } else if (subject === 'PRIMARY_ARABIC') {
-        textbookName = `لغتي الجميلة (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
+        textbookName = isSaudiPublicG2PrimaryArabicAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Lughati — Saudi public Grade 2, Part One of the curriculum; cover states 1448 AH/2026 and internal publication record states 1446 AH; printed contents p. 6 and main lesson openings reviewed'
+            : 'لغتي — الصف الثاني الابتدائي الحكومي، الجزء الأول من المقرر؛ الغلاف يذكر 1448هـ/2026م وسجل النشر الداخلي يذكر 1446هـ؛ الفهرس المطبوع ص 6 ومطالع الدروس الرئيسة موثقة'
+          : isSaudiPublicG3PrimaryArabicAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Lughati — Saudi public Grade 3, Part One of the curriculum; cover states 1448 AH/2026 and internal PDF publication record states 1446 AH; printed contents p. 6 and main lesson openings reviewed'
+            : 'لغتي — الصف الثالث الابتدائي الحكومي، الجزء الأول من المقرر؛ الغلاف يذكر 1448هـ/2026م وسجل النشر الداخلي يذكر 1446هـ؛ الفهرس المطبوع ص 6 ومطالع الدروس الرئيسة موثقة'
+          : isSaudiPublicG4PrimaryArabicAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Lughati Al-Jameelah — Saudi public Grade 4, Part One, 1448 AH/2026 edition as identified on the cover; printed contents pp. 9–10 verified; PDF metadata conflicts with the printed cover and contents'
+            : 'لغتي الجميلة — الصف الرابع الابتدائي الحكومي، الجزء الأول، طبعة 1448هـ/2026م بحسب الغلاف؛ الفهرس المطبوع ص 9–10 موثق، مع تعارض بيانات PDF الداخلية مع الغلاف والفهرس'
+          : gradeLevel === 'G5' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Lughati Al-Jameelah — Saudi public Grade 5, Part One, 1448 AH/2026 edition; component titles and page references verified against contents pp. 9–10'
+            : 'لغتي الجميلة — الصف الخامس الابتدائي، الجزء الأول، طبعة 1448هـ/2026م؛ عناوين المكونات وصفحاتها مطابقة للفهرس ص 9–10'
+          : gradeLevel === 'G6' && educationType === 'PUBLIC'
+            ? 'لغتي الجميلة — الصف السادس الابتدائي، الجزء الأول من المقرر، طبعة 1448هـ/2026م؛ عناوين المكونات وصفحاتها مطابقة للفهرس ص 9–10'
+            : `لغتي الجميلة (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
       } else if (subject === 'PRIMARY_SCIENCE') {
-        textbookName = `العلوم (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
+        textbookName = gradeLevel === 'G3' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Science — Saudi public Grade 3, Part One of the curriculum; 36 introductory, chapter, review, and test entries checked against the printed contents on pp. 4–5; cover states 1448 AH/2026 CE and internal publication record states 1446 AH; main lesson openings reviewed'
+            : 'العلوم — الصف الثالث الابتدائي الحكومي، الجزء الأول من المقرر؛ 36 موضوعًا للمقدمة والفصول والمراجعات والاختبارات مطابقة للفهرسين المطبوعين ص 4–5؛ الغلاف يذكر 1448هـ/2026م وبيانات النشر الداخلية تذكر 1446هـ؛ رُوجعت مطالع الدروس الرئيسة'
+          : gradeLevel === 'G3'
+          ? isEn
+            ? 'Saudi Grade 3 Science — textbook edition for this education type has not been verified'
+            : 'علوم الصف الثالث السعودي — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم'
+          : gradeLevel === 'G4' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Science — Saudi public Grade 4, Part One of the curriculum; cover states 1448 AH/2026 CE and internal publication record states 1446 AH; main lesson, review, and test titles and pages verified against contents pp. 5–6, and main lesson openings reviewed'
+            : 'العلوم — الصف الرابع الابتدائي، التعليم الحكومي، الجزء الأول من المقرر؛ الغلاف يذكر 1448هـ/2026م وسجل النشر الداخلي يذكر 1446هـ؛ عناوين الدروس الرئيسة والمراجعات والاختبارات وصفحاتها مطابقة للفهرس ص 5–6، ورُوجعت مطالع الدروس الرئيسة'
+          : gradeLevel === 'G5' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Science — Saudi Grade 5, Part One of the curriculum, 1448 AH/2026 edition; component titles and page references verified against contents pp. 5–6'
+            : 'العلوم — الصف الخامس الابتدائي، الجزء الأول من المقرر، طبعة 1448هـ/2026م؛ عناوين المكونات وصفحاتها مطابقة للفهرس ص 5–6'
+          : gradeLevel === 'G6' && educationType === 'PUBLIC'
+            ? isEn
+              ? 'Science — Saudi Grade 6, Part One of the curriculum, 1448 AH/2026 edition; component titles and page references verified against contents pp. 4–5'
+              : 'العلوم — الصف السادس الابتدائي، الجزء الأول من المقرر، طبعة 1448هـ/2026م؛ عناوين المكونات وصفحاتها مطابقة للفهرس ص 4–5'
+            : `العلوم (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`;
+      } else if (subject === 'TAJWEED') {
+        textbookName = isSaudiPublicG4TajweedAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Optional Tajweed course — Saudi public Grade 4, Qur’an Memorization Schools textbook; title page says Part One while the publication record describes it as undivided; cover states 1448 AH/2026 CE and the record states 1446 AH; lesson titles and pages verified against contents p. 7'
+            : 'مقرر تجويد اختياري — كتاب الصف الرابع لمدارس تحفيظ القرآن الكريم؛ صفحة العنوان تسميه الجزء الأول، بينما يصفه سجل النشر بأنه غير مجزأ؛ الغلاف يذكر 1448هـ/2026م وسجل النشر 1446هـ؛ عناوين الدروس وصفحاتها مطابقة للفهرس ص 7'
+          : isSaudiPublicG5TajweedAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Optional additional Tajweed course for Grade 5, based on the Qur’an Memorization Schools textbook, Part One, 1448 AH/2026 cover edition; lesson titles and page references verified against contents p. 7; internal publication record states 1446 AH'
+            : 'مقرر تجويد اختياري إضافي للصف الخامس، مستند إلى كتاب مدارس تحفيظ القرآن الكريم، الجزء الأول، طبعة الغلاف 1448هـ/2026م؛ عناوين الدروس وصفحاتها مطابقة للفهرس ص 7؛ بيانات النشر الداخلية تذكر 1446هـ'
+          : isSaudiPublicG6TajweedAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Optional additional Tajweed course for Grade 6, based on the Qur’an Memorization Schools textbook, Part One, 1448 AH/2026; lesson titles and page references verified against contents p. 7'
+            : 'مقرر تجويد اختياري إضافي للصف السادس، مستند إلى كتاب مدارس تحفيظ القرآن الكريم، الجزء الأول، طبعة 1448هـ/2026م؛ عناوين الدروس وصفحاتها مطابقة للفهرس ص 7'
+          : isEn
+            ? 'Tajweed (not available for this grade or education type)'
+            : 'التجويد (غير متاح لهذا الصف أو نوع التعليم)';
+      } else if (subject === 'QURAN_RECITATION') {
+        textbookName = isSaudiPublicG5QuranRecitationAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Recitation of the Holy Quran and Tajweed — Saudi public Grade 5, full undivided textbook; 1448 AH/2026 cover edition; contents headings and page references verified against PDF pp. 8–10; internal publication record states 1446 AH'
+            : 'تلاوة القرآن الكريم وتجويده — الصف الخامس الابتدائي، التعليم الحكومي، كتاب كامل غير مجزأ؛ طبعة الغلاف 1448هـ/2026م؛ عناوين الفهرس وأرقام الصفحات موثقة في PDF ص 8–10؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG6QuranRecitationAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Recitation of the Holy Quran and Tajweed — Saudi public Grade 6, Part One, 1448 AH/2026; contents headings and page references verified against PDF pp. 6–8'
+            : 'تلاوة القرآن الكريم وتجويده — الصف السادس الابتدائي، التعليم الحكومي، الجزء الأول، طبعة 1448هـ/2026م؛ عناوين الفهرس وأرقام الصفحات مطابقة للفهرس ص 6–8'
+          : isEn
+            ? 'Quran Recitation and Tajweed (not available for this grade or education type)'
+            : 'تلاوة القرآن الكريم وتجويده (غير متاح لهذا الصف أو نوع التعليم)';
+      } else if (subject === 'VISUAL_ARTS') {
+        textbookName = isSaudiPublicG2VisualArtsAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Art Education — Saudi public Grade 2, Part One of the curriculum; 4 units and 10 topics checked against PDF contents pp. 7–8; cover states 1448 AH/2026 CE and internal publication data states 1446 AH'
+            : 'التربية الفنية — الصف الثاني الابتدائي الحكومي، الجزء الأول من المقرر؛ 4 وحدات و10 موضوعات مطابقة لفهرس PDF ص 7–8؛ الغلاف يذكر 1448هـ/2026م وبيانات النشر الداخلية تذكر 1446هـ'
+          : isSaudiPublicG3VisualArtsAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Art Education — Saudi public Grade 3, Part One of the curriculum; 4 units and 8 topics verified against PDF contents p. 8; cover states 1448 AH/2026 CE and internal publication data states 1446 AH'
+            : 'التربية الفنية — الصف الثالث الابتدائي الحكومي، الجزء الأول من المقرر؛ 4 وحدات و8 موضوعات مطابقة لفهرس PDF ص 8؛ الغلاف يذكر 1448هـ/2026م وبيانات النشر الداخلية تذكر 1446هـ'
+          : isSaudiPublicG4VisualArtsAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Art Education — Saudi public Grade 4, Parts One and Two, 1448 AH/2026 cover edition; 9 units and 19 topics verified against PDF contents pp. 8–9 and 98–99; internal publication data on PDF p. 2 states 1446 AH'
+            : 'التربية الفنية — الصف الرابع الابتدائي، التعليم الحكومي، الجزآن الأول والثاني، طبعة الغلاف 1448هـ/2026م؛ 9 وحدات و19 موضوعًا مطابقة لفهارس PDF ص 8–9 و98–99؛ بيانات النشر الداخلية في PDF ص 2 تذكر 1446هـ'
+          : isSaudiPublicG5VisualArtsAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Art Education — Saudi public Grade 5, Parts One and Two, 1448 AH/2026 cover edition; 9 units and 20 topics verified against PDF contents pp. 10 and 115–116; internal publication data states 1446 AH'
+            : 'التربية الفنية — الصف الخامس الابتدائي، التعليم الحكومي، الجزآن الأول والثاني، طبعة الغلاف 1448هـ/2026م؛ 9 وحدات و20 موضوعًا مطابقة لفهارس PDF ص 10 و115–116؛ بيانات النشر الداخلية تذكر 1446هـ'
+          : isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Art Education — Saudi public Grade 6, 1448 AH/2026 edition; unit and topic titles and page references verified against PDF contents p. 8'
+            : 'التربية الفنية — الصف السادس الابتدائي، التعليم الحكومي، طبعة 1448هـ/2026م؛ عناوين الوحدات والموضوعات وأرقام الصفحات مطابقة للفهرس ص 8'
+          : isEn
+            ? 'Art Education (not available for this grade or education type)'
+            : 'التربية الفنية (غير متاحة لهذا الصف أو نوع التعليم)';
       } else if (subject === 'ISLAMIC_STUDIES') {
-        textbookName = `الدراسات الإسلامية (التوحيد والفقه والسلوك والحديث) (${gradeAr})`;
+        textbookName = isSaudiPublicG2IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Islamic Studies — Saudi public Grade 2, Part One of the curriculum; cover states 1448 AH/2026 and the internal publication record states 1446 AH; Quran plan and both contents indexes checked against PDF pp. 6–7'
+            : 'الدراسات الإسلامية — الصف الثاني الابتدائي الحكومي، الجزء الأول من المقرر؛ الغلاف يذكر 1448هـ/2026م وسجل النشر الداخلي يذكر 1446هـ؛ خطة القرآن وفهرسا PDF ص 6–7 موثقان'
+          : isSaudiPublicG3IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Islamic Studies — Saudi public Grade 3, Part One of the curriculum, 1448 AH/2026 cover edition; Quran plan and all 18 Tawheed and Fiqh and Conduct lessons checked against PDF contents pp. 6–7; internal publication record states 1446 AH'
+            : 'الدراسات الإسلامية — الصف الثالث الابتدائي الحكومي، الجزء الأول من المقرر، طبعة الغلاف 1448هـ/2026م؛ خطة القرآن و18 درسًا في التوحيد والفقه والسلوك مطابقة لفهرسي PDF ص 6–7؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG4IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Islamic Studies — Saudi public Grade 4, Parts One and Two, 1448 AH/2026 cover edition; Quran plan and 62 Tawheed, Hadith and Seerah, and Fiqh topics checked against PDF contents pp. 5–12 and 126–129; internal publication record states 1446 AH'
+            : 'الدراسات الإسلامية — الصف الرابع الابتدائي، التعليم الحكومي، الجزآن الأول والثاني، طبعة الغلاف 1448هـ/2026م؛ خطة القرآن و62 موضوعًا في التوحيد والحديث والسيرة والفقه مطابقة لفهارس PDF ص 5–12 و126–129؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG5IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Islamic Studies — Saudi public Grade 5, Part One, 1448 AH/2026 cover edition; Quran plan and Tawheed, Hadith and Seerah, and Fiqh contents and page references verified against the supplied PDF contents'
+            : 'الدراسات الإسلامية — الصف الخامس الابتدائي، الجزء الأول، التعليم الحكومي، طبعة الغلاف 1448هـ/2026م؛ خطة القرآن وفهارس التوحيد والحديث والسيرة والفقه وصفحاتها مطابقة لفهرس الكتاب المرفق'
+          : isSaudiPublicG6IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+            ? isEn
+              ? 'Islamic Studies — Saudi public Grade 6, 1448 AH/2026 cover edition; Quran, Tawheed, Hadith and Seerah, and Fiqh contents and page references verified against the supplied PDF; internal publication record states 1446 AH'
+              : 'الدراسات الإسلامية — الصف السادس الابتدائي، التعليم الحكومي، طبعة الغلاف 1448هـ/2026م؛ فهارس القرآن والتوحيد والحديث والسيرة والفقه وصفحاتها مطابقة للكتاب المرفق؛ سجل النشر الداخلي يذكر 1446هـ'
+            : isEn
+              ? 'Saudi Islamic Studies (not available: textbook not verified for this grade, track, or education type)'
+              : 'الدراسات الإسلامية السعودية (غير متاحة: لم يُتحقق من كتاب هذا الصف أو المسار أو نوع التعليم)';
+      } else if (subject === 'LIFE_SKILLS') {
+        textbookName = isSaudiPublicG3LifeSkillsAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills — Saudi public Grade 3, Part One, 1448 AH/2026 cover edition; two units and six lesson titles and printed page references checked against the unit topic lists on PDF pp. 8 and 44; openings on pp. 10, 18, 25, 35, 46, and 55 reviewed; internal publication record states 1446 AH'
+            : 'المهارات الحياتية والأسرية — الصف الثالث الابتدائي الحكومي، الجزء الأول، طبعة الغلاف 1448هـ/2026م؛ وحدتان وستة عناوين دروس وصفحاتها مطابقة لقائمتي موضوعات الوحدتين في PDF ص 8 و44؛ روجعت مطالع الدروس ص 10 و18 و25 و35 و46 و55؛ سجل النشر الداخلي يذكر 1446هـ'
+          : gradeLevel === 'G3'
+          ? isEn
+            ? 'Saudi Grade 3 Life and Family Skills — textbook edition for this education type and track has not been verified'
+            : 'المهارات الحياتية والأسرية للصف الثالث السعودي — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار'
+          : isSaudiPublicG4LifeSkillsAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills — Saudi public Grade 4, Part One, 1448 AH/2026 cover edition; 5 units and 10 lesson titles and page references checked against PDF contents p. 7; internal publication record states 1446 AH'
+            : 'المهارات الحياتية والأسرية — الصف الرابع الابتدائي، التعليم الحكومي، الجزء الأول، طبعة الغلاف 1448هـ/2026م؛ خمس وحدات وعشرة دروس وصفحاتها مطابقة لفهرس PDF ص 7؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG5LifeSkillsAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills — Saudi public Grade 5, full undivided textbook, 1448 AH/2026 cover edition; 5 units and 8 lesson titles and page references checked against PDF contents p. 7; internal publication record states 1446 AH'
+            : 'المهارات الحياتية والأسرية — الصف الخامس الابتدائي، التعليم الحكومي، كتاب كامل غير مجزأ، طبعة الغلاف 1448هـ/2026م؛ خمس وحدات وثمانية دروس وصفحاتها مطابقة لفهرس PDF ص 7؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG6LifeSkillsAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills — Saudi public Grade 6, Part One, 1448 AH/2026 cover edition; 5 units and 9 lesson titles and page references checked against PDF contents p. 7; internal publication record states 1446 AH'
+            : 'المهارات الحياتية والأسرية — الصف السادس الابتدائي، التعليم الحكومي، الجزء الأول، طبعة الغلاف 1448هـ/2026م؛ خمس وحدات وتسعة دروس وصفحاتها مطابقة لفهرس PDF ص 7؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isEn
+            ? `Life and Family Skills — textbook edition for ${gradeEn}, this track, and education type has not been verified`
+            : `المهارات الحياتية والأسرية — لم يتم التحقق من الكتاب المناسب لـ ${gradeAr} ونوع التعليم والمسار المحددين`;
       } else if (subject === 'ARABIC_LANG') {
         textbookName = `لغتي الخالدة (${gradeAr}) - وزارة التعليم السعودية`;
       } else if (subject === 'GENERAL_SCIENCE') {
@@ -508,13 +1159,46 @@ export function getNationalTextbookInfo(
       } else if (subject === 'MATH') {
         textbookName = isMiddle
           ? `الرياضيات (${gradeAr}) - وزارة التعليم بالمملكة العربية السعودية`
+          : gradeLevel === 'G10' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Mathematics 1-1 - common first year, Saudi pathways system, 1448 AH/2026 edition, Semester 1; chapter topics verified against the supplied contents'
+            : 'رياضيات 1-1 - السنة الأولى المشتركة، نظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ موضوعات الفصول مطابقة للفهرس المرفق'
           : gradeLevel === 'G10'
-          ? 'الرياضيات 1 (السنة الأولى المشتركة - نظام المسارات)'
+          ? isEn
+            ? 'Saudi Grade 10 Mathematics - textbook edition for this education type has not been verified'
+            : 'رياضيات الصف الأول الثانوي السعودية - لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم المحدد'
+          : gradeLevel === 'G11' && educationType === 'PUBLIC' &&
+            (track === 'GENERAL' || track === 'CS_ENGINEERING')
+          ? isEn
+            ? 'Mathematics 2-1 - Saudi pathways system, Grade 11, 1448 AH/2026 edition, Semester 1; chapter topics verified against the supplied contents'
+            : 'رياضيات 2-1 - نظام المسارات، الصف الثاني الثانوي، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ موضوعات الفصول مطابقة للفهرس المرفق'
           : gradeLevel === 'G11'
-          ? 'الرياضيات 2 (المسار العام ومسار علوم الحاسب والهندسة)'
+          ? isEn
+            ? 'Saudi Grade 11 Mathematics - textbook edition for this education type and track has not been verified'
+            : 'رياضيات الصف الثاني الثانوي السعودية - لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
           : 'الرياضيات 3 (مسار علوم الحاسب والهندسة والمسار العام)';
       } else if (subject === 'COMPUTER_SCIENCE') {
-        textbookName = isMiddle
+        textbookName = country === 'SA' && gradeLevel === 'G4' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Digital Skills — Saudi public Grade 4, Part One, 1448 AH/2026 cover edition; 4 units and 15 lesson titles and page references verified against PDF contents pp. 7–10; internal publication data on PDF p. 2 states 1447 AH'
+            : 'المهارات الرقمية — الصف الرابع الابتدائي، التعليم الحكومي، الجزء الأول، طبعة الغلاف 1448هـ/2026م؛ أربع وحدات و15 عنوان درس وصفحاتها مطابقة لفهرس PDF ص 7–10؛ بيانات النشر الداخلية في PDF ص 2 تذكر 1447هـ'
+          : country === 'SA' && gradeLevel === 'G5'
+          ? isSaudiPublicG5DigitalSkillsAvailable(country, gradeLevel, educationType, track)
+            ? isEn
+              ? 'Digital Skills — Saudi public Grade 5, Parts One and Two, 1448 AH/2026 cover edition; unit and lesson titles and page references verified against PDF contents pp. 7–11 and 239–241; internal publication record states 1447 AH'
+              : 'المهارات الرقمية — الصف الخامس الابتدائي، التعليم الحكومي، الجزآن الأول والثاني، طبعة الغلاف 1448هـ/2026م؛ عناوين الوحدات والدروس وصفحاتها مطابقة لفهارس PDF ص 7–11 و239–241؛ بيان النشر الداخلي يذكر 1447هـ'
+            : isEn
+              ? 'Saudi Grade 5 Digital Skills (not available: verified edition is restricted to public General-track students)'
+              : 'المهارات الرقمية للصف الخامس السعودي (غير متاحة: الكتاب المتحقق منه مخصص للتعليم الحكومي والمسار العام)'
+          : gradeLevel === 'G6'
+          ? isSaudiPublicG6DigitalSkillsAvailable(country, gradeLevel, educationType, track)
+            ? isEn
+              ? 'Digital Skills — Saudi public Grade 6, Parts One and Two, 1448 AH/2026 cover edition; unit and lesson titles and page references checked against PDF contents pp. 7–9 and 205–207; internal publication record states 1447 AH'
+              : 'المهارات الرقمية — الصف السادس الابتدائي، التعليم الحكومي، الجزآن الأول والثاني، طبعة الغلاف 1448هـ/2026م؛ عناوين الوحدات والدروس وصفحاتها مطابقة لفهرسي PDF ص 7–9 و205–207؛ سجل النشر الداخلي يذكر 1447هـ'
+            : isEn
+              ? 'Saudi Grade 6 Digital Skills (not available: verified edition is restricted to public General-track students)'
+              : 'المهارات الرقمية للصف السادس السعودي (غير متاحة: الكتاب المتحقق منه مخصص للتعليم الحكومي والمسار العام)'
+          : isMiddle
           ? gradeLevel === 'G7'
             ? 'المهارات الرقمية (الصف الأول المتوسط، طبعة 1448–2026) - عناوين الدروس مطابقة؛ الشرح من إعداد المنصة'
             : gradeLevel === 'G8'
@@ -523,32 +1207,136 @@ export function getNationalTextbookInfo(
           : gradeLevel === 'G10'
           ? 'التقنية الرقمية 1 (السنة الأولى المشتركة)'
           : gradeLevel === 'G11'
-          ? 'علم البيانات وهندسة البرمجيات (مسار علوم الحاسب والهندسة)'
+          ? isSaudiPublicBusinessG11DigitalTechnologyAvailable(country, gradeLevel, educationType, track)
+            ? isEn
+              ? 'Digital Technology 2 — Saudi public Grade 11, BM-coded Pathways edition, 1448 AH/2026, Semester 1; unit and lesson titles and page references verified against contents pp. 5–9'
+              : 'التقنية الرقمية 2 — التعليم الحكومي، الصف الثاني الثانوي، نسخة عين ذات الرمز BM بنظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الوحدات والدروس وأرقام صفحاتها مطابقة للفهرس ص 5–9'
+            : isEn
+              ? 'Saudi Grade 11 digital technology — textbook edition for this education type and track has not been verified'
+              : 'التقنية الرقمية للصف الثاني الثانوي — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
           : 'الذكاء الاصطناعي وإنترنت الأشياء (مسار علوم الحاسب والهندسة)';
       } else if (subject === 'PHYSICS') {
         textbookName = gradeLevel === 'G10'
           ? 'الفيزياء 1 (السنة الأولى المشتركة - نظام المسارات)'
+          : gradeLevel === 'G11' && isSaudiPublicG11PhysicsAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Physics 2 — Saudi public second secondary, CS & Engineering or Health & Life, 1448 AH/2026 edition, Semester 1; chapter and lesson headings checked against the supplied contents'
+            : 'الفيزياء 2 — التعليم الحكومي، الصف الثاني الثانوي، مسارا علوم الحاسب والهندسة والصحة والحياة، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الفصول والدروس مطابقة لفهرس الكتاب المرفق'
           : gradeLevel === 'G11'
-          ? 'الفيزياء 2 (مسار علوم الحاسب والهندسة والصحة)'
+          ? isEn
+            ? 'Saudi Grade 11 Physics 2 — textbook edition for this education type and track has not been verified'
+            : 'الفيزياء 2 السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
           : 'الفيزياء 3 (مسار علوم الحاسب والهندسة)';
       } else if (subject === 'CHEMISTRY') {
-        textbookName = gradeLevel === 'G10'
-          ? 'الكيمياء 1 (السنة الأولى المشتركة - نظام المسارات)'
+        textbookName = gradeLevel === 'G12' && educationType === 'PUBLIC' && track === 'GENERAL'
+          ? isEn
+            ? 'Chemistry 3 — Saudi public general course, 1448 AH edition, Semester 1; headings verified against the supplied textbook contents'
+            : 'الكيمياء 3 — التعليم الحكومي، المسار العام، طبعة 1448هـ، الفصل الدراسي الأول؛ العناوين مطابقة لفهرس الكتاب المرفق'
+          : gradeLevel === 'G12'
+          ? isEn
+            ? 'Saudi Chemistry 3 — textbook edition for this education type and track has not been verified'
+            : 'الكيمياء 3 السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
+          : gradeLevel === 'G10' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Chemistry 1 — Saudi public common first year, Pathways System, 1448 AH/2026 edition, Semester 1; chapter and lesson headings checked against the supplied contents'
+            : 'الكيمياء 1 — التعليم الحكومي، السنة الأولى المشتركة، نظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الفصول والدروس مطابقة لفهرس الكتاب المرفق'
+          : gradeLevel === 'G10'
+          ? isEn
+            ? 'Saudi Grade 10 Chemistry 1 — textbook edition for this education type and track has not been verified'
+            : 'الكيمياء 1 السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
+          : gradeLevel === 'G11' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Chemistry 2-1 — Saudi public second secondary, Pathways System, 1448 AH/2026 edition, Semester 1; chapter and lesson headings checked against the supplied contents'
+            : 'الكيمياء 2-1 — التعليم الحكومي، الصف الثاني الثانوي، نظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الفصول والدروس مطابقة لفهرس الكتاب المرفق'
           : gradeLevel === 'G11'
-          ? 'الكيمياء 2 (مسار الصحة والحياة والعلوم)'
-          : 'الكيمياء 3 (مسار الصحة والحياة)';
+          ? isEn
+            ? 'Saudi Grade 11 Chemistry 2-1 — textbook edition for this education type and track has not been verified'
+            : 'الكيمياء 2-1 السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
+          : 'الكيمياء 3 (لم يتم التحقق من طبعة هذا المسار)';
       } else if (subject === 'BIOLOGY') {
-        textbookName = gradeLevel === 'G10'
-          ? 'علم البيئة / الأحياء 1 (السنة الأولى المشتركة)'
+        textbookName = gradeLevel === 'G10' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Biology 1 — Saudi public common first year, Pathways System, 1448 AH/2026 edition, Semester 1; chapter and lesson headings checked against the supplied contents'
+            : 'الأحياء 1 — التعليم الحكومي، السنة الأولى المشتركة، نظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الفصول والدروس مطابقة لفهرس الكتاب المرفق'
+          : gradeLevel === 'G10'
+          ? isEn
+            ? 'Saudi Grade 10 Biology 1 — textbook edition for this education type and track has not been verified'
+            : 'الأحياء 1 السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
+          : gradeLevel === 'G11' && isSaudiPublicG11BiologyAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Biology 2-1 — Saudi public second secondary, Health & Life pathway, 1448 AH/2026 edition, Semester 1; chapter and lesson headings checked against the supplied contents'
+            : 'الأحياء 2-1 — التعليم الحكومي، الصف الثاني الثانوي، مسار الصحة والحياة، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الفصول والدروس مطابقة لفهرس الكتاب المرفق'
           : gradeLevel === 'G11'
-          ? 'الأحياء 2 (مسار الصحة والحياة)'
+          ? isEn
+            ? 'Saudi Grade 11 Biology 2-1 — textbook edition for this education type and track has not been verified'
+            : 'الأحياء 2-1 السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين'
           : 'الأحياء 3 (مسار الصحة والحياة)';
+      } else if (subject === 'HEALTH_SCIENCE') {
+        textbookName = isSaudiPublicG11HealthScienceAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Health Science Principles — Saudi public Grade 11, Health & Life pathway, 1448 AH/2026 edition, Semester 1; chapter and lesson titles and page references checked against the supplied contents'
+            : 'مبادئ العلوم الصحية — التعليم الحكومي، الصف الثاني الثانوي، مسار الصحة والحياة، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الفصول والدروس وصفحاتها مطابقة للفهرس المرفق'
+          : isEn
+            ? 'Saudi Health Science Principles — textbook edition for this education type, grade, and track has not been verified'
+            : 'مبادئ العلوم الصحية السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والصف والمسار المحددين';
+      } else if (subject === 'ENGLISH') {
+        textbookName = isSaudiPublicG2EnglishAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'We Can! Student’s Book 2, Part 1 — Saudi public Grade 2; five unit titles and page references verified against PDF p. 3; scope and sequence checked against PDF pp. 4–7; McGraw-Hill adaptation ©2025; 1448 code in the IEN resource URL'
+            : 'We Can! Student’s Book 2، الجزء الأول — اللغة الإنجليزية للصف الثاني الحكومي؛ عناوين الوحدات وصفحاتها مطابقة لفهرس PDF ص 3، ونطاق وتسلسل المحتوى موثق في PDF ص 4–7؛ سجل النشر يذكر حقوق التكييف ©2025، ورمز 1448 وارد في رابط مورد عين'
+          : isSaudiPublicG3EnglishAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'We Can! Student’s Book 3, Part 1 — Saudi public Grade 3; six unit titles and page references verified against PDF p. 3; scope and sequence checked against PDF pp. 4–7; McGraw-Hill adaptation ©2025; 1448 code in the IEN resource URL'
+            : 'We Can! Student’s Book 3، الجزء الأول — اللغة الإنجليزية للصف الثالث الحكومي؛ عناوين الوحدات وصفحاتها مطابقة لفهرس PDF ص 3، ونطاق وتسلسل المحتوى موثق في PDF ص 4–7؛ سجل النشر يذكر حقوق التكييف ©2025، ورمز 1448 وارد في رابط مورد عين'
+          : isSaudiPublicG5EnglishAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Top Goal, Student Book 2 — Saudi public Grade 5, Parts One and Two; 8 unit titles and printed page references verified against PDF p. 3, scope and sequence checked against PDF pp. 4–7; McGraw-Hill publication record states ©2025'
+            : 'Top Goal, Student Book 2 — اللغة الإنجليزية للصف الخامس الحكومي، الجزآن الأول والثاني؛ عناوين الوحدات وصفحات كتاب الطالب مطابقة لفهرس PDF ص 3، ونطاق وتسلسل المحتوى موثق في PDF ص 4–7؛ سجل النشر يذكر ©2025 لـ McGraw-Hill'
+          : isSaudiPublicCommonYearEnglishAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mega Goal 1 — Saudi public common first year, 1448 AH/2026 edition; unit titles and page spans verified against contents and scope sequence'
+            : 'Mega Goal 1 — التعليم الحكومي، السنة الأولى المشتركة، طبعة 1448هـ/2026م؛ عناوين الوحدات وصفحاتها مطابقة للفهرس وجدول النطاق'
+          : isSaudiPublicG11EnglishAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mega Goal 2 — Saudi public second secondary, GNRL-coded edition, 1448 AH/2026; unit titles and page spans verified against contents and functions/grammar checked against scope sequence'
+            : 'Mega Goal 2 — التعليم الحكومي، الصف الثاني الثانوي، نسخة المصدر ذات الرمز GNRL، طبعة 1448هـ/2026م؛ عناوين الوحدات وصفحاتها مطابقة للفهرس ومحاور الوظائف والقواعد مطابقة لجدول النطاق'
+          : isEn
+          ? 'Saudi English — textbook edition for this education type, grade, and track has not been verified'
+          : 'اللغة الإنجليزية السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والصف والمسار المحددين';
       } else if (subject === 'ARABIC_LIT') {
         textbookName = gradeLevel === 'G10'
-          ? 'الكفايات اللغوية 1 (السنة الأولى المشتركة - مسارات)'
+          ? 'اللغة العربية 1-1 (الكفايات اللغوية) - السنة الأولى المشتركة، نظام المسارات، طبعة 1448هـ/2026م، الفصل الأول'
+          : gradeLevel === 'G11' && educationType === 'PUBLIC'
+          ? isEn
+            ? 'Arabic Language 1-2 (Language Competencies) - Grade 11 pathways system, 1448 AH/2026 edition, Semester 1; headings verified against the supplied contents'
+            : 'اللغة العربية 1-2 (الكفايات اللغوية) - الصف الثاني الثانوي، نظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ العناوين مطابقة للفهرس المرفق'
           : gradeLevel === 'G11'
           ? 'الدراسات الأدبية واللغوية (المسار الشرعي والإنساني)'
           : 'البلاغة والنقد المتقدم (المسار الشرعي والإنساني)';
+      } else if (subject === 'SAUDI_SOCIAL_STUDIES' && educationType === 'PUBLIC') {
+        textbookName = isSaudiPublicG4SocialStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Saudi Social Studies — Grade 4 public education, Parts One and Two; 9 units and 34 lessons verified against PDF contents pp. 9 and 111; 1448 AH/2026 cover edition, internal publication record cites 1446 AH'
+            : 'الدراسات الاجتماعية السعودية — الصف الرابع الحكومي، الجزآن الأول والثاني؛ 9 وحدات و34 درسًا مطابقة لفهرسي PDF ص 9 و111؛ طبعة الغلاف 1448هـ/2026م، وسجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG5SocialStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Saudi Social Studies — Grade 5 public education, Parts One and Two, 1448 AH/2026 cover edition; 8 units and 30 lessons verified against PDF contents pp. 9 and 103; internal publication record cites 1446 AH'
+            : 'الدراسات الاجتماعية السعودية — الصف الخامس الحكومي، الجزآن الأول والثاني، طبعة الغلاف 1448هـ/2026م؛ 8 وحدات و30 درسًا مطابقة لفهرسي PDF ص 9 و103؛ سجل النشر الداخلي يذكر 1446هـ'
+          : isSaudiPublicG6SocialStudiesAvailable(country, gradeLevel, educationType, track)
+          ? isEn
+            ? 'Saudi Social Studies — Grade 6 public education; cover edition 1448 AH/2026, lesson titles and page references verified against contents PDF pp. 9 and 109; internal publication record still cites 1446 AH'
+            : 'الدراسات الاجتماعية السعودية — الصف السادس الحكومي؛ طبعة الغلاف 1448هـ/2026م، وعناوين الدروس وصفحاتها مطابقة للفهرسين ص 9 و109؛ سجل النشر الداخلي ما زال يذكر 1446هـ'
+          : isEn
+            ? 'Saudi Social Studies (not available: this grade and track have not been verified against an official textbook)'
+            : 'الدراسات الاجتماعية السعودية (غير متاحة: لم يُتحقق من كتاب هذا الصف والمسار)';
+      } else if (subject === 'HISTORY' && gradeLevel === 'G11') {
+        textbookName = educationType === 'PUBLIC' && track === 'GENERAL'
+          ? isEn
+            ? 'History — Saudi public Grade 11 Pathways System, 1448 AH/2026 edition, Semester 1; lesson titles and page numbers verified against the supplied contents; platform explanations, diagrams, and assessments are original'
+            : 'التاريخ — التعليم الحكومي، الصف الثاني الثانوي، نظام المسارات، طبعة 1448هـ/2026م، الفصل الدراسي الأول؛ عناوين الدروس وأرقام الصفحات مطابقة للفهرس المرفق، والشروح والرسوم والتقويمات من إعداد المنصة'
+          : isEn
+            ? 'Saudi Grade 11 History — textbook edition for this education type and track has not been verified'
+            : 'التاريخ السعودي للصف الثاني الثانوي — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والمسار المحددين';
       }
       break;
 
@@ -1036,6 +1824,50 @@ export function getNationalTextbookInfo(
 
   let ministry = isEn ? cInfo.ministryEn : cInfo.ministryAr;
 
+  if (country === 'SA' && educationType === 'PUBLIC' && subject === 'SAUDI_SOCIAL_STUDIES') {
+    ministry = isSaudiPublicG4SocialStudiesAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG5SocialStudiesAvailable(country, gradeLevel, educationType, track) ||
+      isSaudiPublicG6SocialStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn
+        ? 'Saudi Ministry of Education; cover edition and both contents pages checked; the internal publication record cites 1446 AH'
+        : 'وزارة التعليم السعودية؛ جرى فحص الغلاف وفهرسي الجزأين، مع ملاحظة أن سجل النشر الداخلي يذكر 1446هـ'
+      : isEn
+        ? 'Official textbook not verified for this grade and track'
+        : 'لم يتم التحقق من كتاب رسمي لهذا الصف والمسار';
+  }
+
+  if (country === 'SA' && subject === 'ISLAMIC_STUDIES') {
+    ministry = isSaudiPublicG2IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn
+        ? 'Saudi Ministry of Education; Grade 2 Part One cover states 1448 AH/2026, while the internal publication record states 1446 AH; Quran plan and both contents indexes checked'
+        : 'وزارة التعليم السعودية؛ غلاف الجزء الأول للصف الثاني يذكر 1448هـ/2026م، وسجل النشر الداخلي يذكر 1446هـ؛ تمت مطابقة خطة القرآن وفهرسي الكتاب'
+      : isSaudiPublicG3IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn
+        ? 'Saudi Ministry of Education; Grade 3 Part One cover states 1448 AH/2026, while the internal publication record states 1446 AH; Quran plan and both contents indexes checked'
+        : 'وزارة التعليم السعودية؛ غلاف الجزء الأول للصف الثالث يذكر 1448هـ/2026م، وسجل النشر الداخلي يذكر 1446هـ؛ تمت مطابقة خطة القرآن وفهرسي الكتاب'
+      : isSaudiPublicG4IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn
+        ? 'Saudi Ministry of Education; Grade 4 cover states 1448 AH/2026, while the internal publication record states 1446 AH; both parts’ contents checked'
+        : 'وزارة التعليم السعودية؛ غلاف الصف الرابع يذكر 1448هـ/2026م، وسجل النشر الداخلي يذكر 1446هـ؛ تمت مطابقة فهارس الجزأين'
+      : isSaudiPublicG5IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn
+        ? 'Saudi Ministry of Education; Grade 5 Part One cover states 1448 AH/2026; contents and page references checked against the supplied PDF'
+        : 'وزارة التعليم السعودية؛ غلاف الجزء الأول للصف الخامس يذكر 1448هـ/2026م؛ تمت مطابقة العناوين والصفحات مع فهرس الكتاب المرفق'
+      : isSaudiPublicG6IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn
+        ? 'Saudi Ministry of Education; Grade 6 cover states 1448 AH/2026, while the internal publication record states 1446 AH'
+        : 'وزارة التعليم السعودية؛ غلاف الصف السادس يذكر 1448هـ/2026م، بينما سجل النشر الداخلي يذكر 1446هـ'
+      : isEn
+        ? 'Official Islamic Studies textbook not verified for this grade, track, and education type'
+        : 'لم يتم التحقق من كتاب رسمي للدراسات الإسلامية لهذا الصف والمسار ونوع التعليم';
+  }
+
+  if (subject === 'ENGLISH' && country !== 'SA' && !textbookName) {
+    textbookName = isEn
+      ? `English Language - national textbook for ${gradeEn} has not been verified`
+      : `اللغة الإنجليزية - لم يتم التحقق من الكتاب الوطني المناسب لـ ${gradeAr}`;
+  }
+
   if (educationType === 'ISLAMIC') {
     if (country === 'EG') {
       ministry = isEn ? 'Al-Azhar Al-Sharif - Institutes Sector' : 'الأزهر الشريف - قطاع المعاهد الأزهرية';
@@ -1069,11 +1901,142 @@ export function getNationalTextbookInfo(
     }
   }
 
+  if (
+    educationType === 'PRIVATE' &&
+    !(country === 'EG' || country === 'AE')
+  ) {
+    ministry = isEn ? 'Private-school platform material; local syllabus not verified' : 'محتوى مساند للمدارس الخاصة؛ لم يتم التحقق من المنهج المحلي';
+    textbookName = isEn
+      ? `Supplementary ${subject} material for private schools - ${gradeEn}; not mapped to a national public textbook`
+      : `محتوى ${subject} مساند للمدارس الخاصة - ${gradeAr}؛ غير مطابق لكتاب حكومي وطني`;
+  } else if (
+    educationType === 'ISLAMIC' &&
+    !(country === 'EG' || country === 'SA') &&
+    subject !== 'ISLAMIC_STUDIES'
+  ) {
+    ministry = isEn ? 'Islamic-school platform material; local syllabus not verified' : 'محتوى مساند للتعليم الشرعي؛ لم يتم التحقق من المنهج المحلي';
+    textbookName = isEn
+      ? `Supplementary ${subject} material for Islamic schools - ${gradeEn}; not mapped to a national public textbook`
+      : `محتوى ${subject} مساند للتعليم الشرعي - ${gradeAr}؛ غير مطابق لكتاب حكومي وطني`;
+  } else if (country === 'SA' && educationType === 'ISLAMIC' && subject !== 'ISLAMIC_STUDIES') {
+    ministry = isEn ? 'Saudi scientific institutes; subject-specific book not verified' : 'المعاهد العلمية السعودية؛ لم يتم التحقق من كتاب هذه المادة';
+    textbookName = isEn
+      ? `Supplementary ${subject} material for Saudi scientific institutes - ${gradeEn}; not mapped to a public-school textbook`
+      : `محتوى ${subject} مساند للمعاهد العلمية السعودية - ${gradeAr}؛ غير مطابق لكتاب التعليم الحكومي`;
+  }
+
   return {
     textbookName,
     ministry,
     standardCode: `${country}-${educationType}-${subject}-${gradeLevel}-${track}`,
-    semester: isEn ? cInfo.termDefaultEn : cInfo.termDefaultAr
+    semester: country === 'SA' && educationType === 'PUBLIC' &&
+      subject === 'COMPUTER_SCIENCE' &&
+        (gradeLevel === 'G4' ||
+          isSaudiPublicG5DigitalSkillsAvailable(country, gradeLevel, educationType, track) ||
+          isSaudiPublicG6DigitalSkillsAvailable(country, gradeLevel, educationType, track))
+        ? gradeLevel === 'G4'
+          ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+          : isEn ? 'Full year (Parts One and Two)' : 'العام الدراسي (الجزآن الأول والثاني)'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'SAUDI_SOCIAL_STUDIES' &&
+        (isSaudiPublicG4SocialStudiesAvailable(country, gradeLevel, educationType, track) ||
+          isSaudiPublicG5SocialStudiesAvailable(country, gradeLevel, educationType, track) ||
+          isSaudiPublicG6SocialStudiesAvailable(country, gradeLevel, educationType, track))
+      ? isEn ? 'Full year (Parts One and Two)' : 'العام الدراسي (الجزآن الأول والثاني)'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'VISUAL_ARTS' &&
+        (isSaudiPublicG2VisualArtsAvailable(country, gradeLevel, educationType) ||
+          isSaudiPublicG3VisualArtsAvailable(country, gradeLevel, educationType))
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'VISUAL_ARTS' &&
+        (isSaudiPublicG4VisualArtsAvailable(country, gradeLevel, educationType) ||
+          isSaudiPublicG5VisualArtsAvailable(country, gradeLevel, educationType))
+      ? isEn ? 'Full year (Parts One and Two)' : 'العام الدراسي (الجزآن الأول والثاني)'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'QURAN_RECITATION' &&
+        isSaudiPublicG5QuranRecitationAvailable(country, gradeLevel, educationType)
+      ? isEn ? 'Full year (undivided textbook)' : 'العام الدراسي (كتاب كامل غير مجزأ)'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_ARABIC' &&
+        isSaudiPublicG2PrimaryArabicAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Part One of the curriculum' : 'الجزء الأول من المقرر'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_ARABIC' &&
+        isSaudiPublicG3PrimaryArabicAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Part One of the curriculum' : 'الجزء الأول من المقرر'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_SCIENCE' &&
+        gradeLevel === 'G3'
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_MATH' &&
+        isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_MATH' &&
+        isSaudiPublicG4PrimaryMathAvailable(country, gradeLevel, educationType)
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'ISLAMIC_STUDIES' &&
+        isSaudiPublicG2IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Part One of the curriculum' : 'الجزء الأول من المقرر'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'ISLAMIC_STUDIES' &&
+        isSaudiPublicG3IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Part One of the curriculum' : 'الجزء الأول من المقرر'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'ISLAMIC_STUDIES' &&
+        isSaudiPublicG4IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Full year (Parts One and Two)' : 'العام الدراسي (الجزآن الأول والثاني)'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_MATH' &&
+        isSaudiPublicG5PrimaryMathAvailable(country, gradeLevel, educationType)
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'LIFE_SKILLS' &&
+        isSaudiPublicG3LifeSkillsAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'LIFE_SKILLS' &&
+        isSaudiPublicG4LifeSkillsAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'LIFE_SKILLS' &&
+        isSaudiPublicG5LifeSkillsAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Full year (undivided textbook)' : 'العام الدراسي (كتاب كامل غير مجزأ)'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'LIFE_SKILLS' &&
+        isSaudiPublicG6LifeSkillsAvailable(country, gradeLevel, educationType, track)
+      ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+      subject === 'ENGLISH' && isSaudiPublicEnglishAvailable(country, gradeLevel, educationType)
+      ? ''
+      : country === 'SA' && educationType === 'PUBLIC' &&
+      (((subject === 'CHEMISTRY' || subject === 'BIOLOGY') && gradeLevel === 'G10') ||
+        (subject === 'BIOLOGY' &&
+          isSaudiPublicG11BiologyAvailable(country, gradeLevel, educationType, track)) ||
+        (subject === 'CHEMISTRY' && gradeLevel === 'G11') ||
+        (subject === 'CHEMISTRY' && gradeLevel === 'G12' && track === 'GENERAL') ||
+        (subject === 'PHYSICS' &&
+          isSaudiPublicG11PhysicsAvailable(country, gradeLevel, educationType, track)) ||
+        (subject === 'HEALTH_SCIENCE' &&
+          isSaudiPublicG11HealthScienceAvailable(country, gradeLevel, educationType, track)) ||
+        (subject === 'TAJWEED' &&
+          isSaudiPublicTajweedAvailable(country, gradeLevel, educationType)) ||
+        (subject === 'QURAN_RECITATION' &&
+          isSaudiPublicG6QuranRecitationAvailable(country, gradeLevel, educationType)) ||
+        (subject === 'COMPUTER_SCIENCE' &&
+          isSaudiPublicBusinessG11DigitalTechnologyAvailable(country, gradeLevel, educationType, track)) ||
+        (subject === 'COMPUTER_SCIENCE' &&
+          isSaudiPublicG6DigitalSkillsAvailable(country, gradeLevel, educationType, track)) ||
+        (subject === 'MATH' && gradeLevel === 'G10') ||
+        (subject === 'MATH' && gradeLevel === 'G11' &&
+          (track === 'GENERAL' || track === 'CS_ENGINEERING')) ||
+        (subject === 'HISTORY' && gradeLevel === 'G11' && track === 'GENERAL') ||
+        (subject === 'ARABIC_LIT' && ['G10', 'G11'].includes(gradeLevel)))
+      ? isEn ? 'Semester 1' : 'الفصل الدراسي الأول'
+      : isEn ? cInfo.termDefaultEn : cInfo.termDefaultAr
   };
 }
 
@@ -1084,9 +2047,148 @@ export function getNationalSubjectLabel(
   subject: Subject,
   country: CountryCode = 'SA',
   _gradeLevel?: GradeLevel,
-  lang: Language = 'ar'
+  lang: Language = 'ar',
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
 ): string {
   const isEn = lang === 'en';
+
+  if (subject === 'PRIMARY_MATH' && isSaudiPublicG3PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+    return isEn
+      ? 'Mathematics (Saudi public Grade 3, Part One)'
+      : 'الرياضيات (الصف الثالث الحكومي — الجزء الأول)';
+  }
+
+  if (subject === 'PRIMARY_MATH' && isSaudiPublicG4PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+    return isEn
+      ? 'Mathematics (Saudi public Grade 4, Part One)'
+      : 'الرياضيات (الصف الرابع الحكومي — الجزء الأول)';
+  }
+
+  if (subject === 'PRIMARY_MATH' && isSaudiPublicG5PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+    return isEn
+      ? 'Mathematics (Saudi public Grade 5, Part One)'
+      : 'الرياضيات (الصف الخامس الحكومي — الجزء الأول)';
+  }
+
+  if (subject === 'PRIMARY_MATH' && isSaudiPublicG6PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+    return isEn
+      ? 'Mathematics (Saudi public Grade 6, Part One)'
+      : 'الرياضيات (الصف السادس الحكومي — الجزء الأول)';
+  }
+
+  if (subject === 'SAUDI_SOCIAL_STUDIES') {
+    if (isSaudiPublicG4SocialStudiesAvailable(country, _gradeLevel, educationType, track)) {
+      return isEn
+        ? 'Saudi Social Studies (Public Grade 4 — verified contents)'
+        : 'الدراسات الاجتماعية السعودية (الصف الرابع الحكومي — فهرس موثق)';
+    }
+    if (isSaudiPublicG5SocialStudiesAvailable(country, _gradeLevel, educationType, track)) {
+      return isEn
+        ? 'Saudi Social Studies (Public Grade 5 — verified contents)'
+        : 'الدراسات الاجتماعية السعودية (الصف الخامس الحكومي — فهرس موثق)';
+    }
+    if (isSaudiPublicG6SocialStudiesAvailable(country, _gradeLevel, educationType, track)) {
+      return isEn
+        ? 'Saudi Social Studies (Public Grade 6 — verified contents)'
+        : 'الدراسات الاجتماعية السعودية (الصف السادس الحكومي — فهرس موثق)';
+    }
+    return isEn
+      ? 'Saudi Social Studies (not available for this grade, track, or education type)'
+      : 'الدراسات الاجتماعية السعودية (غير متاحة لهذا الصف أو المسار أو نوع التعليم)';
+  }
+
+  if (subject === 'ISLAMIC_STUDIES' && country === 'SA') {
+    return isSaudiPublicG2IslamicStudiesAvailable(country, _gradeLevel, educationType, track)
+      ? isEn
+        ? 'Islamic Studies (Saudi public Grade 2 — verified Part One contents)'
+        : 'الدراسات الإسلامية (الصف الثاني الحكومي — فهرسا الجزء الأول موثقان)'
+      : isSaudiPublicG3IslamicStudiesAvailable(country, _gradeLevel, educationType, track)
+      ? isEn
+        ? 'Islamic Studies (Saudi public Grade 3 — verified Part One contents)'
+        : 'الدراسات الإسلامية (الصف الثالث الحكومي — فهرس الجزء الأول موثق)'
+      : isSaudiPublicG4IslamicStudiesAvailable(country, _gradeLevel, educationType, track)
+      ? isEn
+        ? 'Islamic Studies (Saudi public Grade 4 — verified full-year contents)'
+        : 'الدراسات الإسلامية (الصف الرابع الحكومي — فهرسا العام الدراسي موثقان)'
+      : isSaudiPublicG5IslamicStudiesAvailable(country, _gradeLevel, educationType, track)
+      ? isEn
+        ? 'Islamic Studies (Saudi public Grade 5 — verified Part One textbook contents)'
+        : 'الدراسات الإسلامية (الصف الخامس الحكومي — فهرس الجزء الأول موثق)'
+      : isSaudiPublicG6IslamicStudiesAvailable(country, _gradeLevel, educationType, track)
+      ? isEn
+        ? 'Islamic Studies (Saudi public Grade 6 — verified textbook contents)'
+        : 'الدراسات الإسلامية (الصف السادس الحكومي — فهرس كتاب موثق)'
+      : isEn
+        ? 'Islamic Studies (not available: textbook not verified for this grade or education type)'
+        : 'الدراسات الإسلامية (غير متاحة: لم يُتحقق من كتاب هذا الصف أو نوع التعليم)';
+  }
+
+  if (subject === 'TAJWEED') {
+    if (isSaudiPublicG4TajweedAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Tajweed (Optional addition, Grade 4 — Qur’an Memorization Schools textbook)'
+        : 'التجويد (إضافة اختيارية — كتاب مدارس تحفيظ القرآن، الصف الرابع)';
+    }
+    if (isSaudiPublicG5TajweedAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Tajweed (Optional addition, Grade 5 — Memorization Schools textbook)'
+        : 'التجويد (إضافة اختيارية — كتاب مدارس تحفيظ القرآن، الصف الخامس)';
+    }
+    if (isSaudiPublicG6TajweedAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Tajweed (Optional addition, Grade 6 — Memorization Schools textbook)'
+        : 'التجويد (إضافة اختيارية — كتاب مدارس تحفيظ القرآن، الصف السادس)';
+    }
+    return isEn ? 'Tajweed (not available for this education type)' : 'التجويد (غير متاح لنوع التعليم المحدد)';
+  }
+
+  if (subject === 'QURAN_RECITATION') {
+    if (isSaudiPublicG5QuranRecitationAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Quran Recitation and Tajweed (Grade 5)'
+        : 'تلاوة القرآن الكريم وتجويده (الصف الخامس)';
+    }
+    if (isSaudiPublicG6QuranRecitationAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Quran Recitation and Tajweed (Grade 6)'
+        : 'تلاوة القرآن الكريم وتجويده (الصف السادس)';
+    }
+    return isEn
+      ? 'Quran Recitation and Tajweed (not available for this education type)'
+      : 'تلاوة القرآن الكريم وتجويده (غير متاح لنوع التعليم المحدد)';
+  }
+
+  if (subject === 'VISUAL_ARTS') {
+    if (isSaudiPublicG2VisualArtsAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Art Education (Grade 2)'
+        : 'التربية الفنية (الصف الثاني)';
+    }
+    if (isSaudiPublicG3VisualArtsAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Art Education (Grade 3)'
+        : 'التربية الفنية (الصف الثالث)';
+    }
+    if (isSaudiPublicG4VisualArtsAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Art Education (Grade 4)'
+        : 'التربية الفنية (الصف الرابع)';
+    }
+    if (isSaudiPublicG5VisualArtsAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Art Education (Grade 5)'
+        : 'التربية الفنية (الصف الخامس)';
+    }
+    if (isSaudiPublicG6VisualArtsAvailable(country, _gradeLevel, educationType)) {
+      return isEn
+        ? 'Art Education (Grade 6)'
+        : 'التربية الفنية (الصف السادس)';
+    }
+    return isEn
+      ? 'Art Education (not available for this grade or education type)'
+      : 'التربية الفنية (غير متاحة لهذا الصف أو نوع التعليم)';
+  }
 
   if (country === 'SD') {
     switch (subject) {
@@ -1158,28 +2260,189 @@ export function getNationalSubjectLabel(
   if (country === 'SA') {
     switch (subject) {
       case 'PRIMARY_ARABIC':
+        if (isSaudiPublicG2PrimaryArabicAvailable(country, _gradeLevel, educationType, track)) {
+          return isEn
+            ? 'Arabic Language (Saudi public Grade 2 — verified printed Part One contents)'
+            : 'لغتي (الصف الثاني الحكومي — فهرس الجزء الأول المطبوع موثق)';
+        }
+        if (isSaudiPublicG3PrimaryArabicAvailable(country, _gradeLevel, educationType, track)) {
+          return isEn
+            ? 'Arabic Language (Saudi public Grade 3 — verified printed Part One contents)'
+            : 'لغتي (الصف الثالث الحكومي — فهرس الجزء الأول المطبوع موثق)';
+        }
+        if (isSaudiPublicG4PrimaryArabicAvailable(country, _gradeLevel, educationType, track)) {
+          return isEn
+            ? 'Arabic Language (Saudi public Grade 4 — verified printed Part One contents)'
+            : 'لغتي الجميلة (الصف الرابع الحكومي — فهرس الجزء الأول المطبوع موثق)';
+        }
         return isEn ? 'Arabic Language (Lughati Al-Jameelah)' : 'لغتي الجميلة (المرحلة الابتدائية السعودية)';
       case 'ARABIC_LANG':
         return isEn ? 'Arabic Language (Lughati Al-Khalidah)' : 'لغتي الخالدة (المرحلة المتوسطة السعودية)';
       case 'ISLAMIC_STUDIES':
-        return isEn ? 'Islamic Studies (Masarat)' : 'الدراسات الإسلامية (التوحيد والفقه والسلوك)';
+        return isEn ? 'Islamic Studies' : 'الدراسات الإسلامية';
       case 'PRIMARY_MATH':
+        if (isSaudiPublicG3PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+          return isEn
+            ? 'Mathematics (Saudi public Grade 3 — verified printed Part One contents)'
+            : 'الرياضيات (الصف الثالث الحكومي — فهرس الجزء الأول المطبوع موثق)';
+        }
+        if (_gradeLevel === 'G3') {
+          return isEn
+            ? 'Mathematics (Saudi Grade 3 — unverified education type)'
+            : 'الرياضيات (الصف الثالث السعودي — نوع التعليم غير متحقق)';
+        }
         return isEn ? 'Primary Mathematics (Saudi)' : 'الرياضيات (المرحلة الابتدائية - فصول ثلاثة)';
       case 'PRIMARY_SCIENCE':
+        if (_gradeLevel === 'G3') {
+          return educationType === 'PUBLIC'
+            ? isEn
+              ? 'Science (Saudi public Grade 3 — verified printed Part One contents)'
+              : 'العلوم (الصف الثالث الحكومي — فهرس الجزء الأول المطبوع موثق)'
+            : isEn
+              ? 'Science (Saudi Grade 3 — unverified education type)'
+              : 'العلوم (الصف الثالث السعودي — نوع التعليم غير متحقق)';
+        }
         return isEn ? 'Primary Science (Saudi)' : 'العلوم (المرحلة الابتدائية السعودية)';
       case 'GENERAL_SCIENCE':
         return isEn ? 'Middle School Science' : 'العلوم (المرحلة المتوسطة السعودية)';
       case 'MATH':
+        if (_gradeLevel === 'G10' && educationType === 'PUBLIC') {
+          return isEn ? 'Mathematics 1-1 (Common First Year)' : 'رياضيات 1-1 (السنة الأولى المشتركة)';
+        }
+        if (_gradeLevel === 'G11' && educationType === 'PUBLIC') {
+          return isEn ? 'Mathematics 2-1 (Saudi Pathways)' : 'رياضيات 2-1 (نظام المسارات)';
+        }
         return isEn ? 'Mathematics (Masarat Track)' : 'الرياضيات (نظام مسارات الثانوية)';
       case 'PHYSICS':
+        if (_gradeLevel === 'G10') {
+          return educationType === 'PUBLIC'
+            ? isEn ? 'Physics 1 (Common First Year)' : 'الفيزياء 1 (السنة الأولى المشتركة)'
+            : isEn ? 'Physics 1 (Unverified Track)' : 'الفيزياء 1 (مسار غير متحقق)';
+        }
+        if (_gradeLevel === 'G11') {
+          return isSaudiPublicG11PhysicsAvailable(country, _gradeLevel, educationType, track)
+            ? isEn ? 'Physics 2 (Second Secondary)' : 'الفيزياء 2 (الصف الثاني الثانوي)'
+            : isEn ? 'Physics 2 (Unverified Track)' : 'الفيزياء 2 (مسار غير متحقق)';
+        }
         return isEn ? 'Physics (CS & Engineering)' : 'الفيزياء (مسار علوم الحاسب والهندسة)';
       case 'CHEMISTRY':
+        if (_gradeLevel === 'G10' && educationType === 'PUBLIC') {
+          return isEn ? 'Chemistry 1 (Common First Year)' : 'الكيمياء 1 (السنة الأولى المشتركة)';
+        }
+        if (_gradeLevel === 'G11' && educationType === 'PUBLIC') {
+          return isEn ? 'Chemistry 2-1 (Second Secondary)' : 'الكيمياء 2-1 (الصف الثاني الثانوي)';
+        }
+        if (_gradeLevel === 'G11') {
+          return isEn ? 'Chemistry 2-1 (Unverified Track)' : 'الكيمياء 2-1 (مسار غير متحقق)';
+        }
+        if (_gradeLevel === 'G12' && educationType === 'PUBLIC') {
+          return isEn ? 'Chemistry 3 (Third Secondary)' : 'الكيمياء 3 (الثالث الثانوي)';
+        }
         return isEn ? 'Chemistry (Health & Life)' : 'الكيمياء (مسار الصحة والحياة)';
       case 'BIOLOGY':
+        if (_gradeLevel === 'G10') {
+          return educationType === 'PUBLIC'
+            ? isEn ? 'Biology 1 (Common First Year)' : 'الأحياء 1 (السنة الأولى المشتركة)'
+            : isEn ? 'Biology 1 (Unverified Track)' : 'الأحياء 1 (مسار غير متحقق)';
+        }
+        if (_gradeLevel === 'G11') {
+          return isSaudiPublicG11BiologyAvailable(country, _gradeLevel, educationType, track)
+            ? isEn ? 'Biology 2-1 (Second Secondary)' : 'الأحياء 2-1 (الصف الثاني الثانوي)'
+            : isEn ? 'Biology 2-1 (Unverified Track)' : 'الأحياء 2-1 (مسار غير متحقق)';
+        }
         return isEn ? 'Biology (Health & Life)' : 'الأحياء (مسار الصحة والحياة)';
+      case 'HEALTH_SCIENCE':
+        return isSaudiPublicG11HealthScienceAvailable(country, _gradeLevel, educationType, track)
+          ? isEn ? 'Health Science Principles (Second Secondary)' : 'مبادئ العلوم الصحية (الصف الثاني الثانوي)'
+          : isEn ? 'Health Science Principles (Unverified Track)' : 'مبادئ العلوم الصحية (مسار غير متحقق)';
+      case 'HISTORY':
+        if (_gradeLevel === 'G11') {
+          return educationType === 'PUBLIC' && track === 'GENERAL'
+            ? isEn ? 'History (Second Secondary)' : 'التاريخ (الصف الثاني الثانوي)'
+            : isEn ? 'History (Unverified Track)' : 'التاريخ (مسار غير متحقق)';
+        }
+        break;
+      case 'ENGLISH':
+        return isSaudiPublicG2EnglishAvailable(country, _gradeLevel, educationType)
+          ? isEn ? 'English (We Can! Student’s Book 2 — Grade 2)' : 'اللغة الإنجليزية (We Can! كتاب الطالب 2 — الصف الثاني)'
+          : isSaudiPublicG3EnglishAvailable(country, _gradeLevel, educationType)
+          ? isEn ? 'English (We Can! Student’s Book 3 — Grade 3)' : 'اللغة الإنجليزية (We Can! كتاب الطالب 3 — الصف الثالث)'
+          : isSaudiPublicG5EnglishAvailable(country, _gradeLevel, educationType)
+          ? isEn ? 'English (Top Goal, Student Book 2 — Grade 5)' : 'اللغة الإنجليزية (Top Goal، كتاب الطالب 2 — الصف الخامس)'
+          : isSaudiPublicCommonYearEnglishAvailable(country, _gradeLevel, educationType)
+          ? isEn ? 'English 1 (Mega Goal)' : 'اللغة الإنجليزية 1 (Mega Goal)'
+          : _gradeLevel === 'G10'
+          ? isEn ? 'English 1 (Unverified Track)' : 'اللغة الإنجليزية 1 (مسار غير متحقق)'
+          : isSaudiPublicG11EnglishAvailable(country, _gradeLevel, educationType)
+          ? isEn ? 'English 2 (Mega Goal 2)' : 'اللغة الإنجليزية 2 (Mega Goal 2)'
+          : _gradeLevel === 'G11'
+          ? isEn ? 'English 2 (Unverified Track)' : 'اللغة الإنجليزية 2 (مسار غير متحقق)'
+          : isEn ? `English (Unverified ${_gradeLevel ?? 'Saudi'} edition)` : `اللغة الإنجليزية (${_gradeLevel ?? 'صف سعودي'} غير متحقق)`;
+      case 'LIFE_SKILLS':
+        return isSaudiPublicG3LifeSkillsAvailable(country, _gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills (Grade 3)'
+            : 'المهارات الحياتية والأسرية (الصف الثالث)'
+          : isSaudiPublicG4LifeSkillsAvailable(country, _gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills (Grade 4)'
+            : 'المهارات الحياتية والأسرية (الصف الرابع)'
+          : isSaudiPublicG5LifeSkillsAvailable(country, _gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills (Grade 5)'
+            : 'المهارات الحياتية والأسرية (الصف الخامس)'
+          : _gradeLevel === 'G6' &&
+          isSaudiPublicG6LifeSkillsAvailable(country, _gradeLevel, educationType, track)
+          ? isEn
+            ? 'Life and Family Skills (Grade 6)'
+            : 'المهارات الحياتية والأسرية (الصف السادس)'
+          : isEn
+            ? 'Life and Family Skills (not available for this grade, track, or education type)'
+            : 'المهارات الحياتية والأسرية (غير متاحة لهذا الصف أو المسار أو نوع التعليم)';
       case 'COMPUTER_SCIENCE':
+        if (_gradeLevel === 'G11') {
+          return isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+            country,
+            _gradeLevel,
+            educationType,
+            track
+          )
+            ? isEn ? 'Digital Technology 2 (Business Management)' : 'التقنية الرقمية 2 (مسار إدارة الأعمال)'
+            : isEn ? 'Digital Technology 2 (Unverified Track)' : 'التقنية الرقمية 2 (مسار غير متحقق)';
+        }
+        if (country === 'SA' && _gradeLevel === 'G4') {
+          return educationType === 'PUBLIC'
+            ? isEn ? 'Digital Skills (Grade 4)' : 'المهارات الرقمية (الصف الرابع)'
+            : isEn
+              ? 'Digital Skills (not available for this education type)'
+              : 'المهارات الرقمية (غير متاحة لنوع التعليم هذا)';
+        }
+        if (country === 'SA' && _gradeLevel === 'G5') {
+          return isSaudiPublicG5DigitalSkillsAvailable(country, _gradeLevel, educationType, track)
+            ? isEn ? 'Digital Skills (Grade 5)' : 'المهارات الرقمية (الصف الخامس)'
+            : isEn
+              ? 'Digital Skills (not available for this track or education type)'
+              : 'المهارات الرقمية (غير متاحة لهذا المسار أو نوع التعليم)';
+        }
+        if (_gradeLevel === 'G6') {
+          return isSaudiPublicG6DigitalSkillsAvailable(country, _gradeLevel, educationType, track)
+            ? isEn ? 'Digital Skills (Grade 6)' : 'المهارات الرقمية (الصف السادس)'
+            : isEn
+              ? 'Digital Skills (not available for this track or education type)'
+              : 'المهارات الرقمية (غير متاحة لهذا المسار أو نوع التعليم)';
+        }
         return isEn ? 'Digital Technology (Masarat)' : 'التقنية الرقمية وعلوم الحاسب';
       case 'ARABIC_LIT':
+        if (_gradeLevel === 'G10' && educationType === 'PUBLIC') {
+          return isEn
+            ? 'Arabic Language 1-1 (Language Competencies)'
+            : 'اللغة العربية 1-1 (الكفايات اللغوية)';
+        }
+        if (_gradeLevel === 'G11' && educationType === 'PUBLIC') {
+          return isEn
+            ? 'Arabic Language 1-2 (Language Competencies)'
+            : 'اللغة العربية 1-2 (الكفايات اللغوية)';
+        }
         return isEn ? 'Literary Studies (Sharia Track)' : 'الدراسات الأدبية واللغوية (المسار الشرعي)';
       default:
         break;
@@ -1313,6 +2576,8 @@ export function getNationalSubjectLabel(
       return isEn ? 'Chemistry' : 'الكيمياء';
     case 'BIOLOGY':
       return isEn ? 'Biology & Life Sciences' : 'علم الأحياء وعلوم الحياة';
+    case 'ENGLISH':
+      return isEn ? 'English Language (textbook not verified)' : 'اللغة الإنجليزية (كتاب غير متحقق منه)';
     case 'COMPUTER_SCIENCE':
       return isEn ? 'Computer Science & AI' : 'علوم الحاسب والذكاء الاصطناعي';
     case 'ARABIC_LIT':

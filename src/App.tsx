@@ -4,9 +4,26 @@ import { BookOpen, Map } from 'lucide-react';
 import { 
   INITIAL_STUDENT_PROFILE, 
   loadSubjectLectures, 
-  saveSubjectLectures 
+  saveSubjectLectures,
+  isBlockedGeographyHistoryRoute,
+  isSaudiSocialStudiesAvailable
 } from './data/curriculumData';
-import { getCountryInfo } from './data/curriculumCountries';
+import {
+  getActiveCurriculumCountry,
+  getCountryInfo,
+  getSpecializationForEducationTrack,
+  isSaudiPublicBusinessG11DigitalTechnologyAvailable,
+  isSaudiPublicEnglishAvailable,
+  isSaudiPublicG11BiologyAvailable,
+  isSaudiPublicG11PhysicsAvailable,
+  isSaudiPublicG11HealthScienceAvailable,
+  isSaudiPublicTajweedAvailable,
+  isSaudiPublicQuranRecitationAvailable,
+  isSaudiPublicG6VisualArtsAvailable,
+  isSaudiPublicLifeSkillsAvailable,
+  normalizeEducationTrackForCountry,
+  normalizeEducationTypeForCountry
+} from './data/curriculumCountries';
 import { 
   detectStudentCountry, 
   adaptProfileToCountry, 
@@ -87,10 +104,15 @@ export function App() {
           parsed.nameEn = INITIAL_STUDENT_PROFILE.nameEn;
         }
         const merged: StudentProfile = { ...INITIAL_STUDENT_PROFILE, ...parsed };
+        merged.country = getActiveCurriculumCountry(merged.country);
+        merged.educationType = normalizeEducationTypeForCountry(merged.country, merged.educationType);
+        merged.educationTrack = normalizeEducationTrackForCountry(merged.country, merged.educationTrack);
         
         // If user has NOT manually chosen a country, dynamically apply the detected country
         if (!isManual && defaultDynamicCountry && merged.country !== defaultDynamicCountry) {
           merged.country = defaultDynamicCountry;
+          merged.educationType = normalizeEducationTypeForCountry(merged.country, merged.educationType);
+          merged.educationTrack = normalizeEducationTrackForCountry(merged.country, merged.educationTrack);
           merged.isAutoDetectedCountry = true;
         }
 
@@ -101,7 +123,17 @@ export function App() {
         if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(merged.gradeLevel)) {
           // Primary School: Strictly GENERAL education
           merged.specialization = 'GENERAL';
-          if (!PRIMARY_SUBJS.includes(merged.subject)) {
+          if (!PRIMARY_SUBJS.includes(merged.subject) &&
+              !(merged.subject === 'TAJWEED' &&
+                isSaudiPublicTajweedAvailable(merged.country, merged.gradeLevel, merged.educationType)) &&
+              !(merged.subject === 'QURAN_RECITATION' &&
+                isSaudiPublicQuranRecitationAvailable(merged.country, merged.gradeLevel, merged.educationType)) &&
+              !(merged.subject === 'VISUAL_ARTS' &&
+                isSaudiPublicG6VisualArtsAvailable(merged.country, merged.gradeLevel, merged.educationType)) &&
+              !(merged.subject === 'LIFE_SKILLS' &&
+                isSaudiPublicLifeSkillsAvailable(merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack)) &&
+              !(merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
+                isSaudiSocialStudiesAvailable(merged.gradeLevel, merged.country, merged.educationType, merged.educationTrack))) {
             merged.subject = 'PRIMARY_ARABIC';
           }
           if (merged.gradeLevel === 'G1' && (merged.age < 6 || merged.age > 7)) merged.age = 7;
@@ -113,7 +145,9 @@ export function App() {
         } else if (['G7', 'G8', 'G9'].includes(merged.gradeLevel)) {
           // Middle School: No specialization tracks! Must be GENERAL
           merged.specialization = 'GENERAL';
-          if (!MIDDLE_SUBJS.includes(merged.subject)) {
+          if (!MIDDLE_SUBJS.includes(merged.subject) &&
+              !(merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
+                isSaudiSocialStudiesAvailable(merged.gradeLevel, merged.country, merged.educationType, merged.educationTrack))) {
             if (['PRIMARY_ARABIC', 'ARABIC_LIT', 'ISLAMIC_STUDIES'].includes(merged.subject)) merged.subject = 'ARABIC_LANG';
             else if (['PRIMARY_MATH'].includes(merged.subject)) merged.subject = 'MATH';
             else merged.subject = 'GENERAL_SCIENCE';
@@ -123,17 +157,69 @@ export function App() {
           if (merged.gradeLevel === 'G9' && (merged.age < 14 || merged.age > 16)) merged.age = 15;
         } else {
           // High School:
-          if (PRIMARY_SUBJS.includes(merged.subject) || merged.subject === 'ARABIC_LANG') {
+          merged.specialization = getSpecializationForEducationTrack(merged.educationTrack || 'GENERAL');
+          if (
+            merged.subject === 'COMPUTER_SCIENCE' &&
+            merged.country === 'SA' &&
+            merged.gradeLevel === 'G11' &&
+            !isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+              merged.country,
+              merged.gradeLevel,
+              merged.educationType,
+              merged.educationTrack
+            )
+          ) {
+            merged.subject = 'ARABIC_LIT';
+          }
+          if (merged.subject === 'ENGLISH' &&
+              !isSaudiPublicEnglishAvailable(merged.country, merged.gradeLevel, merged.educationType)) {
+            merged.subject = 'ARABIC_LIT';
+          }
+          if (merged.country === 'SA' && merged.gradeLevel === 'G11' &&
+              ((merged.subject === 'PHYSICS' &&
+                !isSaudiPublicG11PhysicsAvailable(
+                  merged.country,
+                  merged.gradeLevel,
+                  merged.educationType,
+                  merged.educationTrack
+                )) ||
+                (merged.subject === 'BIOLOGY' &&
+                  !isSaudiPublicG11BiologyAvailable(
+                    merged.country,
+                    merged.gradeLevel,
+                    merged.educationType,
+                    merged.educationTrack
+                  )))) {
+            merged.subject = 'ARABIC_LIT';
+          }
+          if (merged.subject === 'HEALTH_SCIENCE' &&
+              !isSaudiPublicG11HealthScienceAvailable(
+                merged.country,
+                merged.gradeLevel,
+                merged.educationType,
+                merged.educationTrack
+              )) {
+            merged.subject = 'ARABIC_LIT';
+          }
+          if ((merged.subject === 'GEOGRAPHY' || merged.subject === 'HISTORY') &&
+              isBlockedGeographyHistoryRoute(
+                merged.subject,
+                merged.country,
+                merged.educationType || 'PUBLIC',
+                merged.educationTrack || 'GENERAL'
+              )) {
+            merged.subject = 'ARABIC_LIT';
+          }
+          if (merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
+              !isSaudiSocialStudiesAvailable(merged.gradeLevel, merged.country, merged.educationType, merged.educationTrack)) {
+            merged.subject = 'ARABIC_LIT';
+          }
+          if (PRIMARY_SUBJS.includes(merged.subject) || merged.subject === 'ARABIC_LANG' || merged.subject === 'TAJWEED' || merged.subject === 'QURAN_RECITATION' || merged.subject === 'VISUAL_ARTS' || merged.subject === 'LIFE_SKILLS') {
             merged.subject = 'ARABIC_LIT';
           } else if (['GENERAL_SCIENCE', 'PRIMARY_SCIENCE'].includes(merged.subject)) {
             merged.subject = 'PHYSICS';
           } else if (merged.subject === 'PRIMARY_MATH') {
             merged.subject = 'MATH';
-          }
-          if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(merged.subject)) {
-            if (merged.specialization === 'HUMANITIES') {
-              merged.specialization = 'GENERAL';
-            }
           }
         }
         return merged;
@@ -154,6 +240,14 @@ export function App() {
     profile.subject === 'COMPUTER_SCIENCE' &&
     ['G7', 'G8', 'G9'].includes(profile.gradeLevel) &&
     (profile.educationType || 'PUBLIC') === 'PUBLIC';
+  const isSaudiGovernmentSocialStudies =
+    profile.subject === 'SAUDI_SOCIAL_STUDIES' ||
+    isBlockedGeographyHistoryRoute(
+      profile.subject,
+      profile.country,
+      profile.educationType || 'PUBLIC',
+      profile.educationTrack || 'GENERAL'
+    );
 
   // Hydrate lectures corresponding to student's enrolled subject and grade
   const [lectures, setLectures] = useState<Lecture[]>(() => {
@@ -229,6 +323,7 @@ export function App() {
       if (!cloudLec || !cloudLec.id) return;
 
       if (isSaudiOfficialMiddleSchoolComputerScience) return;
+      if (isSaudiGovernmentSocialStudies) return;
 
       // Strict curriculum isolation requires every profile dimension to match.
       if (!cloudLec.country || cloudLec.country !== profile.country) return;
@@ -281,7 +376,8 @@ export function App() {
     profile.educationTrack,
     profile.subject,
     profile.gradeLevel,
-    isSaudiOfficialMiddleSchoolComputerScience
+    isSaudiOfficialMiddleSchoolComputerScience,
+    isSaudiGovernmentSocialStudies
   ]);
 
   // Dynamic Geolocation Detection on startup (unless user manually chose their country)
@@ -611,6 +707,9 @@ export function App() {
       nameAr: officialNameAr,
       nameEn: officialNameEn
     };
+    sanitized.country = getActiveCurriculumCountry(sanitized.country);
+    sanitized.educationType = normalizeEducationTypeForCountry(sanitized.country, sanitized.educationType);
+    sanitized.educationTrack = normalizeEducationTrackForCountry(sanitized.country, sanitized.educationTrack);
 
     // Record or clear manual override based on whether it was auto-detected or explicitly picked
     if (sanitized.isAutoDetectedCountry) {
@@ -623,24 +722,87 @@ export function App() {
 
     if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(sanitized.gradeLevel)) {
       sanitized.specialization = 'GENERAL';
-      if (!PRIMARY_SUBJS.includes(sanitized.subject)) {
+      if (!PRIMARY_SUBJS.includes(sanitized.subject) &&
+          !(sanitized.subject === 'TAJWEED' &&
+            isSaudiPublicTajweedAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) &&
+          !(sanitized.subject === 'QURAN_RECITATION' &&
+            isSaudiPublicQuranRecitationAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) &&
+          !(sanitized.subject === 'VISUAL_ARTS' &&
+            isSaudiPublicG6VisualArtsAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) &&
+          !(sanitized.subject === 'LIFE_SKILLS' &&
+            isSaudiPublicLifeSkillsAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack)) &&
+          !(sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&
+            isSaudiSocialStudiesAvailable(sanitized.gradeLevel, sanitized.country, sanitized.educationType, sanitized.educationTrack))) {
         sanitized.subject = 'PRIMARY_ARABIC';
       }
     } else if (['G7', 'G8', 'G9'].includes(sanitized.gradeLevel)) {
       sanitized.specialization = 'GENERAL';
-      if (!MIDDLE_SUBJS.includes(sanitized.subject)) {
+      if (!MIDDLE_SUBJS.includes(sanitized.subject) &&
+          !(sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&
+            isSaudiSocialStudiesAvailable(sanitized.gradeLevel, sanitized.country, sanitized.educationType, sanitized.educationTrack))) {
         sanitized.subject = 'ARABIC_LANG';
       }
     } else {
-      if (PRIMARY_SUBJS.includes(sanitized.subject) || sanitized.subject === 'ARABIC_LANG') sanitized.subject = 'ARABIC_LIT';
+      sanitized.specialization = getSpecializationForEducationTrack(sanitized.educationTrack || 'GENERAL');
+      if (
+        sanitized.subject === 'COMPUTER_SCIENCE' &&
+        sanitized.country === 'SA' &&
+        sanitized.gradeLevel === 'G11' &&
+        !isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+          sanitized.country,
+          sanitized.gradeLevel,
+          sanitized.educationType,
+          sanitized.educationTrack
+        )
+      ) {
+        sanitized.subject = 'ARABIC_LIT';
+      }
+      if (sanitized.subject === 'ENGLISH' &&
+          !isSaudiPublicEnglishAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) {
+        sanitized.subject = 'ARABIC_LIT';
+      }
+      if (sanitized.country === 'SA' && sanitized.gradeLevel === 'G11' &&
+         ((sanitized.subject === 'PHYSICS' &&
+           !isSaudiPublicG11PhysicsAvailable(
+             sanitized.country,
+             sanitized.gradeLevel,
+             sanitized.educationType,
+             sanitized.educationTrack
+           )) ||
+           (sanitized.subject === 'BIOLOGY' &&
+             !isSaudiPublicG11BiologyAvailable(
+               sanitized.country,
+               sanitized.gradeLevel,
+               sanitized.educationType,
+               sanitized.educationTrack
+             )))) {
+       sanitized.subject = 'ARABIC_LIT';
+      }
+      if (sanitized.subject === 'HEALTH_SCIENCE' &&
+          !isSaudiPublicG11HealthScienceAvailable(
+            sanitized.country,
+            sanitized.gradeLevel,
+            sanitized.educationType,
+            sanitized.educationTrack
+          )) {
+        sanitized.subject = 'ARABIC_LIT';
+      }
+      if ((sanitized.subject === 'GEOGRAPHY' || sanitized.subject === 'HISTORY') &&
+          isBlockedGeographyHistoryRoute(
+            sanitized.subject,
+            sanitized.country,
+            sanitized.educationType || 'PUBLIC',
+            sanitized.educationTrack || 'GENERAL'
+          )) {
+        sanitized.subject = 'ARABIC_LIT';
+      }
+      if (sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&
+          !isSaudiSocialStudiesAvailable(sanitized.gradeLevel, sanitized.country, sanitized.educationType, sanitized.educationTrack)) {
+        sanitized.subject = 'ARABIC_LIT';
+      }
+      if (PRIMARY_SUBJS.includes(sanitized.subject) || sanitized.subject === 'ARABIC_LANG' || sanitized.subject === 'TAJWEED' || sanitized.subject === 'QURAN_RECITATION' || sanitized.subject === 'VISUAL_ARTS' || sanitized.subject === 'LIFE_SKILLS') sanitized.subject = 'ARABIC_LIT';
       if (['PRIMARY_SCIENCE', 'GENERAL_SCIENCE'].includes(sanitized.subject)) sanitized.subject = 'PHYSICS';
       if (sanitized.subject === 'PRIMARY_MATH') sanitized.subject = 'MATH';
-      if (['PHYSICS', 'MATH', 'CHEMISTRY', 'BIOLOGY', 'COMPUTER_SCIENCE'].includes(sanitized.subject)) {
-        if (sanitized.specialization === 'HUMANITIES') {
-          sanitized.specialization = 'GENERAL';
-        }
-      }
-      
     }
 
     const freshLecs = loadSubjectLectures(
@@ -666,24 +828,32 @@ export function App() {
   const [mobileTab, setMobileTab] = useState<'lecture' | 'roadmap'>('lecture');
 
   const handleAuthSuccess = async (user: UserAccount) => {
+    const country = getActiveCurriculumCountry(user.country);
+    const normalizedUser: UserAccount = {
+      ...user,
+      country,
+      educationType: normalizeEducationTypeForCountry(country, user.educationType),
+      educationTrack: normalizeEducationTrackForCountry(country, user.educationTrack)
+    };
     setIsLoggedIn(true);
-    setProfile(user);
+    setProfile(normalizedUser);
     localStorage.setItem('TEACHER_AI_HAS_STUDIED', 'true');
     localStorage.setItem('TEACHER_AI_ONBOARDING_SEEN', 'true');
-    localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
-    localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
+    localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(normalizedUser));
+    localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(normalizedUser));
+    updateUserAccount(normalizedUser.id, normalizedUser).catch(() => {});
 
     const dbLecs = await loadUserSubjectLectures(
-      user.id, user.subject, user.country, user.gradeLevel,
-      user.educationType || 'PUBLIC', user.educationTrack || 'GENERAL'
+      normalizedUser.id, normalizedUser.subject, normalizedUser.country, normalizedUser.gradeLevel,
+      normalizedUser.educationType || 'PUBLIC', normalizedUser.educationTrack || 'GENERAL'
     );
     const freshLecs = loadSubjectLectures(
-      user.subject,
-      user.country,
-      user.gradeLevel,
-      user.educationType || 'PUBLIC',
-      user.educationTrack || 'GENERAL',
-      user.language
+      normalizedUser.subject,
+      normalizedUser.country,
+      normalizedUser.gradeLevel,
+      normalizedUser.educationType || 'PUBLIC',
+      normalizedUser.educationTrack || 'GENERAL',
+      normalizedUser.language
     );
     const effectiveLecs = (dbLecs && dbLecs.length > 0)
       ? freshLecs.map((fl) => {
@@ -707,20 +877,26 @@ export function App() {
     // Save and record active session
     const currentLec = effectiveLecs.find(l => l.id === chosenId);
     saveLastSessionState({
-      userId: user.id,
-      userName: user.name,
-      subject: user.subject,
-      gradeLevel: user.gradeLevel,
-      country: user.country,
-      educationType: user.educationType || 'PUBLIC',
-      educationTrack: user.educationTrack || 'GENERAL',
+      userId: normalizedUser.id,
+      userName: normalizedUser.name,
+      subject: normalizedUser.subject,
+      gradeLevel: normalizedUser.gradeLevel,
+      country: normalizedUser.country,
+      educationType: normalizedUser.educationType || 'PUBLIC',
+      educationTrack: normalizedUser.educationTrack || 'GENERAL',
       lastLectureId: chosenId,
       lastLectureTitle: currentLec?.titleAr || '',
       completedLecturesCount: effectiveLecs.filter(l => l.isCompleted).length,
       totalLecturesCount: effectiveLecs.length,
       timestamp: Date.now()
     });
-    recordStudySession(user.id, user.subject, chosenId, currentLec?.titleAr || '', 'start').catch(() => {});
+    recordStudySession(
+      normalizedUser.id,
+      normalizedUser.subject,
+      chosenId,
+      currentLec?.titleAr || '',
+      'start'
+    ).catch(() => {});
 
     setCurrentView('workspace');
     setIsAuthOpen(false);
@@ -753,6 +929,7 @@ export function App() {
   // Handle a newly AI-generated curriculum lecture added to roadmap
   const handleLectureGenerated = (newLecture: Lecture) => {
     if (isSaudiOfficialMiddleSchoolComputerScience) return;
+    if (isSaudiGovernmentSocialStudies) return;
 
     setLectures((prev) => {
       const nextOrder = prev.length + 1;
@@ -934,7 +1111,7 @@ export function App() {
               lang={profile.language}
               profile={profile}
               onGenerateLecture={
-                isSaudiOfficialMiddleSchoolComputerScience
+                isSaudiOfficialMiddleSchoolComputerScience || isSaudiGovernmentSocialStudies
                   ? undefined
                   : () => setIsGenerateLectureOpen(true)
               }
@@ -1034,7 +1211,7 @@ export function App() {
 
       {/* AI Generate Lecture Modal */}
       <GenerateLectureModal
-        isOpen={isGenerateLectureOpen && !isSaudiOfficialMiddleSchoolComputerScience}
+        isOpen={isGenerateLectureOpen && !isSaudiOfficialMiddleSchoolComputerScience && !isSaudiGovernmentSocialStudies}
         profile={profile}
         lang={profile.language}
         apiKey={apiKey}

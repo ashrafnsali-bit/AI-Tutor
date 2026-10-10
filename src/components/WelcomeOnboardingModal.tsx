@@ -1,6 +1,22 @@
-import React, { useState } from 'react';
-import type { CountryCode, EducationTrack, GradeLevel, Specialization, StudentProfile, Subject } from '../types';
-import { SUPPORTED_COUNTRIES, getNationalSubjectLabel } from '../data/curriculumCountries';
+import React, { useEffect, useState } from 'react';
+import type { CountryCode, EducationTrack, GradeLevel, StudentProfile, Subject } from '../types';
+import {
+  ACTIVE_CURRICULUM_COUNTRIES,
+  SUPPORTED_COUNTRIES,
+  TRACK_LABELS,
+  getActiveCurriculumCountry,
+  getSpecializationForEducationTrack,
+  getNationalSubjectLabel,
+  isSaudiPublicBusinessG11DigitalTechnologyAvailable,
+  isSaudiPublicEnglishAvailable,
+  isSaudiPublicG11BiologyAvailable,
+  isSaudiPublicG11PhysicsAvailable,
+  isSaudiPublicTajweedAvailable,
+  isSaudiPublicQuranRecitationAvailable,
+  isSaudiPublicG6VisualArtsAvailable,
+  normalizeEducationTrackForCountry,
+  normalizeEducationTypeForCountry
+} from '../data/curriculumCountries';
 import { setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
   Sparkles, 
@@ -24,7 +40,8 @@ import {
   X,
   Target,
   ShieldCheck,
-  Award
+  Award,
+  Palette
 } from 'lucide-react';
 
 interface WelcomeOnboardingModalProps {
@@ -40,17 +57,53 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
   onFinish,
   onClose
 }) => {
-  if (!isOpen) return null;
-
   const isEn = profile.language === 'en';
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   // Configuration state for Step 3
-  const [selectedCountry, setSelectedCountry] = useState<CountryCode>(profile.country || 'SA');
+  const [selectedCountry, setSelectedCountry] = useState<CountryCode>(
+    getActiveCurriculumCountry(profile.country)
+  );
   const [selectedGrade, setSelectedGrade] = useState<GradeLevel>(profile.gradeLevel || 'G10');
-  const [selectedTrack, setSelectedTrack] = useState<EducationTrack>(profile.educationTrack || 'GENERAL');
-  const [selectedSpec, setSelectedSpec] = useState<Specialization>(profile.specialization || 'STEM');
+  const [selectedTrack, setSelectedTrack] = useState<EducationTrack>(
+    normalizeEducationTrackForCountry(getActiveCurriculumCountry(profile.country), profile.educationTrack)
+  );
   const [selectedSubject, setSelectedSubject] = useState<Subject>(profile.subject || 'PHYSICS');
+
+  useEffect(() => {
+    const educationType = normalizeEducationTypeForCountry(selectedCountry, profile.educationType);
+    if (
+      (selectedSubject === 'PHYSICS' &&
+        selectedCountry === 'SA' &&
+        selectedGrade === 'G11' &&
+        !isSaudiPublicG11PhysicsAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)) ||
+      (selectedSubject === 'BIOLOGY' &&
+        selectedCountry === 'SA' &&
+        selectedGrade === 'G11' &&
+        !isSaudiPublicG11BiologyAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)) ||
+      (selectedSubject === 'COMPUTER_SCIENCE' &&
+        selectedCountry === 'SA' &&
+        selectedGrade === 'G11' &&
+        !isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+          selectedCountry,
+          selectedGrade,
+          educationType,
+          selectedTrack
+        )) ||
+      (selectedSubject === 'TAJWEED' &&
+        !isSaudiPublicTajweedAvailable(selectedCountry, selectedGrade, educationType)) ||
+      (selectedSubject === 'QURAN_RECITATION' &&
+        !isSaudiPublicQuranRecitationAvailable(selectedCountry, selectedGrade, educationType)) ||
+      (selectedSubject === 'VISUAL_ARTS' &&
+        !isSaudiPublicG6VisualArtsAvailable(selectedCountry, selectedGrade, educationType))
+    ) {
+      setSelectedSubject(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade)
+        ? 'PRIMARY_ARABIC'
+        : 'ARABIC_LIT');
+    }
+  }, [selectedCountry, selectedGrade, selectedSubject, selectedTrack, profile.educationType]);
+
+  if (!isOpen) return null;
 
   // Determine stage category from grade
   const isPrimary = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade);
@@ -96,7 +149,50 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           descEn: 'Quran, values and Islamic foundation',
           icon: <Award size={24} />,
           color: '#fbbf24'
-        }
+        },
+        ...(isSaudiPublicTajweedAvailable(
+          selectedCountry,
+          selectedGrade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+        ) ? [{
+          id: 'TAJWEED' as const,
+          nameAr: 'التجويد (إضافة اختيارية — كتاب مدارس التحفيظ)',
+          nameEn: 'Tajweed (Optional addition — Memorization Schools book)',
+          descAr: 'مسار إضافي مستند إلى كتاب مدارس تحفيظ القرآن الكريم، منفصل عن مادة المنهج العام.',
+          descEn: 'Additional course based on the Qur’an Memorization Schools textbook, separate from the general curriculum.',
+          icon: <BookOpen size={24} />,
+          color: '#f59e0b'
+        }] : []),
+        ...(isSaudiPublicQuranRecitationAvailable(
+          selectedCountry,
+          selectedGrade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+        ) ? [{
+          id: 'QURAN_RECITATION' as const,
+          nameAr: 'تلاوة القرآن الكريم وتجويده',
+          nameEn: 'Quran Recitation and Tajweed',
+          descAr: selectedGrade === 'G5'
+            ? 'كتاب الصف الخامس الحكومي كامل غير مجزأ؛ عناوين الفهرس موثقة والشرح والرسوم من إعداد المنصة.'
+            : 'كتاب الصف السادس الحكومي، الجزء الأول؛ عناوين الفهرس موثقة والشرح والرسوم من إعداد المنصة.',
+          descEn: selectedGrade === 'G5'
+            ? 'Full undivided Saudi public Grade 5 textbook; contents headings verified, with platform-created explanations and diagrams.'
+            : 'Saudi public Grade 6 textbook, Part One; contents headings verified, with platform-created explanations and diagrams.',
+          icon: <BookOpen size={24} />,
+          color: '#d4a72c'
+        }] : []),
+        ...(isSaudiPublicG6VisualArtsAvailable(
+          selectedCountry,
+          selectedGrade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+        ) ? [{
+          id: 'VISUAL_ARTS' as const,
+          nameAr: 'التربية الفنية',
+          nameEn: 'Art Education',
+          descAr: 'منهج الصف السادس؛ فهرس الكتاب موثق، والشرح والرسوم من إعداد المنصة.',
+          descEn: 'Grade 6 textbook; contents verified, with platform-created explanations and illustrations.',
+          icon: <Palette size={24} />,
+          color: '#fb7185'
+        }] : [])
       ];
     }
 
@@ -143,17 +239,36 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
 
     // High School / STEM
     return [
-      {
-        id: 'PHYSICS',
+      ...(isSaudiPublicEnglishAvailable(
+        selectedCountry,
+        selectedGrade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+      ) ? [{
+        id: 'ENGLISH' as const,
+        nameAr: selectedGrade === 'G11' ? 'اللغة الإنجليزية 2 (Mega Goal 2)' : 'اللغة الإنجليزية 1 (Mega Goal)',
+        nameEn: selectedGrade === 'G11' ? 'English 2 (Mega Goal 2)' : 'English 1 (Mega Goal)',
+        descAr: 'الاستماع، المحادثة، القراءة، الكتابة والقواعد',
+        descEn: 'Listening, speaking, reading, writing, and grammar',
+        icon: <BookOpen size={24} />,
+        color: '#a78bfa'
+      }] : []),
+      ...(selectedCountry === 'SA' && selectedGrade === 'G11' &&
+        !isSaudiPublicG11PhysicsAvailable(
+          selectedCountry,
+          selectedGrade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+          selectedTrack
+        ) ? [] : [{
+        id: 'PHYSICS' as const,
         nameAr: 'الفيزياء',
         nameEn: 'Physics',
         descAr: 'الميكانيكا، الكهرومغناطيسية، والضوء والجسيمات',
         descEn: 'Mechanics, electromagnetism & modern physics',
         icon: <Atom size={24} />,
         color: '#38bdf8'
-      },
+      }]),
       {
-        id: 'MATH',
+        id: 'MATH' as const,
         nameAr: 'الرياضيات المتقدمة',
         nameEn: 'Advanced Mathematics',
         descAr: 'التفاضل والتكامل، الدوال، وحساب المثلثات',
@@ -162,7 +277,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         color: '#60a5fa'
       },
       {
-        id: 'CHEMISTRY',
+        id: 'CHEMISTRY' as const,
         nameAr: 'الكيمياء',
         nameEn: 'Chemistry',
         descAr: 'الروابط الكيميائية، التفاعلات، والحرارة الذرية',
@@ -170,26 +285,47 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         icon: <FlaskConical size={24} />,
         color: '#f472b6'
       },
-      {
-        id: 'BIOLOGY',
+      ...(selectedCountry === 'SA' && selectedGrade === 'G11' &&
+        !isSaudiPublicG11BiologyAvailable(
+          selectedCountry,
+          selectedGrade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+          selectedTrack
+        ) ? [] : [{
+        id: 'BIOLOGY' as const,
         nameAr: 'الأحياء',
         nameEn: 'Biology',
         descAr: 'الوراثة الجزيئية، الخلية، ووظائف الأعضاء',
         descEn: 'Genetics, cell biology & physiology',
         icon: <Dna size={24} />,
         color: '#34d399'
-      },
+      }]),
+      ...(selectedCountry === 'SA' && selectedGrade === 'G11'
+        ? isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+            selectedCountry,
+            selectedGrade,
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+            selectedTrack
+          ) ? [{
+            id: 'COMPUTER_SCIENCE' as const,
+            nameAr: 'التقنية الرقمية 2 (نسخة BM لمسار إدارة الأعمال)',
+            nameEn: 'Digital Technology 2 (BM Edition, Business Track)',
+            descAr: 'علم البيانات والذكاء الاصطناعي والتصميم والتسويق الإلكتروني وتطوير المواقع',
+            descEn: 'Data science, AI, graphic design, e-marketing, and web development',
+            icon: <Code2 size={24} />,
+            color: '#c084fc'
+          }] : []
+        : [{
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: 'علوم الحاسب وهياكل البيانات',
+          nameEn: 'Computer Science & STEM',
+          descAr: 'الخوارزميات، البرمجة، وبنى البيانات المتقدمة',
+          descEn: 'Data structures, Python & algorithms',
+          icon: <Code2 size={24} />,
+          color: '#c084fc'
+        }]),
       {
-        id: 'COMPUTER_SCIENCE',
-        nameAr: 'علوم الحاسب وهياكل البيانات',
-        nameEn: 'Computer Science & STEM',
-        descAr: 'الخوارزميات، البرمجة، وبنى البيانات المتقدمة',
-        descEn: 'Data structures, Python & algorithms',
-        icon: <Code2 size={24} />,
-        color: '#c084fc'
-      },
-      {
-        id: 'ARABIC_LIT',
+        id: 'ARABIC_LIT' as const,
         nameAr: 'الأدب والدراسات اللغوية',
         nameEn: 'Arabic Literature & Linguistics',
         descAr: 'البلاغة، النقد، وتاريخ الأدب العربي',
@@ -206,22 +342,45 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
     const inMiddle = ['G7', 'G8', 'G9'].includes(grade);
 
     if (inPrimary) {
-      setSelectedSpec('GENERAL');
       setSelectedTrack('GENERAL');
-      if (!['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'].includes(selectedSubject)) {
+      if (!['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'].includes(selectedSubject) &&
+          !(selectedSubject === 'TAJWEED' &&
+            isSaudiPublicTajweedAvailable(
+              selectedCountry,
+              grade,
+              normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+            )) &&
+          !(selectedSubject === 'QURAN_RECITATION' &&
+            isSaudiPublicQuranRecitationAvailable(
+              selectedCountry,
+              grade,
+              normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+            )) &&
+          !(selectedSubject === 'VISUAL_ARTS' &&
+            isSaudiPublicG6VisualArtsAvailable(
+              selectedCountry,
+              grade,
+              normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+            ))) {
         setSelectedSubject('PRIMARY_MATH');
       }
     } else if (inMiddle) {
-      setSelectedSpec('GENERAL');
       setSelectedTrack('GENERAL');
       if (!['MATH', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'].includes(selectedSubject)) {
         setSelectedSubject('GENERAL_SCIENCE');
       }
     } else {
-      setSelectedSpec('STEM');
-      if (['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES', 'ARABIC_LANG', 'GENERAL_SCIENCE'].includes(selectedSubject)) {
+      if (['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES', 'TAJWEED', 'QURAN_RECITATION', 'VISUAL_ARTS', 'ARABIC_LANG', 'GENERAL_SCIENCE'].includes(selectedSubject)) {
         setSelectedSubject('PHYSICS');
       }
+    }
+    if (selectedSubject === 'ENGLISH' &&
+        !isSaudiPublicEnglishAvailable(
+          selectedCountry,
+          grade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+        )) {
+      setSelectedSubject(inPrimary ? 'PRIMARY_MATH' : inMiddle ? 'GENERAL_SCIENCE' : 'PHYSICS');
     }
   };
 
@@ -243,13 +402,45 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
     else if (selectedGrade === 'G11') defaultAge = 17;
     else if (selectedGrade === 'G12') defaultAge = 18;
 
+    const educationType = normalizeEducationTypeForCountry(selectedCountry, profile.educationType);
+    const englishCourseAvailable = isSaudiPublicEnglishAvailable(
+      selectedCountry,
+      selectedGrade,
+      educationType
+    );
     const updated: StudentProfile = {
       ...profile,
       country: selectedCountry,
+      educationType,
       gradeLevel: selectedGrade,
       educationTrack: selectedTrack,
-      specialization: (isPrim || isMid) ? 'GENERAL' : selectedSpec,
-      subject: selectedSubject,
+      specialization: (isPrim || isMid) ? 'GENERAL' : getSpecializationForEducationTrack(selectedTrack),
+      subject: selectedSubject === 'ENGLISH' && !englishCourseAvailable
+        ? isPrim ? 'PRIMARY_MATH' : isMid ? 'GENERAL_SCIENCE' : 'PHYSICS'
+        : selectedSubject === 'PHYSICS' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
+          !isSaudiPublicG11PhysicsAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)
+        ? 'ARABIC_LIT'
+        : selectedSubject === 'BIOLOGY' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
+          !isSaudiPublicG11BiologyAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)
+        ? 'ARABIC_LIT'
+        : selectedSubject === 'COMPUTER_SCIENCE' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
+          !isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+            selectedCountry,
+            selectedGrade,
+            educationType,
+            selectedTrack
+          )
+        ? 'ARABIC_LIT'
+          : selectedSubject === 'TAJWEED' &&
+            !isSaudiPublicTajweedAvailable(selectedCountry, selectedGrade, educationType)
+          ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
+          : selectedSubject === 'QURAN_RECITATION' &&
+            !isSaudiPublicQuranRecitationAvailable(selectedCountry, selectedGrade, educationType)
+          ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
+          : selectedSubject === 'VISUAL_ARTS' &&
+            !isSaudiPublicG6VisualArtsAvailable(selectedCountry, selectedGrade, educationType)
+          ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
+          : selectedSubject,
       age: defaultAge,
       isAutoDetectedCountry: !isManualCountryOverride()
     };
@@ -537,7 +728,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                 <span>{isEn ? 'National Curriculum & Country:' : 'الدولة والمنهج الوطني المعتمد:'}</span>
               </label>
               <div className="country-chips-scroll">
-                {(Object.keys(SUPPORTED_COUNTRIES) as CountryCode[]).map((cCode) => {
+                {ACTIVE_CURRICULUM_COUNTRIES.map((cCode) => {
                   const country = SUPPORTED_COUNTRIES[cCode];
                   const isSelected = selectedCountry === cCode;
                   return (
@@ -548,6 +739,12 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                       onClick={() => {
                         setManualCountryOverride(true);
                         setSelectedCountry(cCode);
+                        setSelectedTrack(current => normalizeEducationTrackForCountry(cCode, current));
+                        const educationType = normalizeEducationTypeForCountry(cCode, profile.educationType);
+                        if (selectedSubject === 'ENGLISH' &&
+                            !isSaudiPublicEnglishAvailable(cCode, selectedGrade, educationType)) {
+                          setSelectedSubject(isPrimary ? 'PRIMARY_MATH' : isMiddle ? 'GENERAL_SCIENCE' : 'PHYSICS');
+                        }
                       }}
                     >
                       <span className="chip-flag">{country.flag}</span>
@@ -615,6 +812,26 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
               </div>
             </div>
 
+            {isHigh && (
+              <div className="onboarding-config-section">
+                <label className="config-section-label">
+                  <Layers size={16} />
+                  <span>{isEn ? 'Select education track:' : 'اختر المسار التعليمي:'}</span>
+                </label>
+                <select
+                  className="form-select"
+                  value={selectedTrack}
+                  onChange={(event) => setSelectedTrack(event.target.value as EducationTrack)}
+                >
+                  {SUPPORTED_COUNTRIES[selectedCountry].availableTracks.map((track) => (
+                    <option key={track} value={track}>
+                      {isEn ? TRACK_LABELS[track].en : TRACK_LABELS[track].ar}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             {/* Subject Selection Grid */}
             <div className="onboarding-config-section">
               <label className="config-section-label">
@@ -624,7 +841,14 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
               <div className="onboarding-subjects-grid">
                 {getAvailableSubjects().map((subj) => {
                   const isSelected = selectedSubject === subj.id;
-                  const localizedLabel = getNationalSubjectLabel(subj.id, selectedCountry, selectedGrade, isEn ? 'en' : 'ar');
+                  const localizedLabel = getNationalSubjectLabel(
+                    subj.id,
+                    selectedCountry,
+                    selectedGrade,
+                    isEn ? 'en' : 'ar',
+                    normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+                    selectedTrack
+                  );
                   return (
                     <button
                       key={subj.id}
@@ -694,8 +918,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                 <Rocket size={18} />
                 <span>
                   {isEn 
-                    ? `Launch ${getNationalSubjectLabel(selectedSubject, selectedCountry, selectedGrade, 'en') || selectedSubject}` 
-                    : `ابدأ رحلة التعلم في ${getNationalSubjectLabel(selectedSubject, selectedCountry, selectedGrade, 'ar') || selectedSubject}`}
+                    ? `Launch ${getNationalSubjectLabel(selectedSubject, selectedCountry, selectedGrade, 'en', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) || selectedSubject}`
+                    : `ابدأ رحلة التعلم في ${getNationalSubjectLabel(selectedSubject, selectedCountry, selectedGrade, 'ar', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) || selectedSubject}`}
                 </span>
               </button>
             )}

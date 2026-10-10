@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import type { AdminStudentView, Language } from '../types';
 import { getAdminStudentsOverview, deleteUserAccount, updateUserAccount } from '../services/database';
-import { getCountryInfo } from '../data/curriculumCountries';
+import { ACTIVE_CURRICULUM_COUNTRIES, getCountryInfo, TRACK_LABELS } from '../data/curriculumCountries';
 import { 
   subscribeToPresenceUpdates, 
   simulateStudentJoin, 
@@ -291,7 +291,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       'اسم المستخدم',
       'الدولة',
       'الصف الدراسي',
-      'التخصص',
+      'المسار التعليمي',
       'المادة',
       'المحاضرة الحالية/الجاري دراستها',
       'نسبة إتمام المنهج %',
@@ -316,7 +316,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       `"${s.username}"`,
       `"${s.country}"`,
       `"${s.gradeLevel}"`,
-      `"${s.specialization}"`,
+      `"${TRACK_LABELS[s.educationTrack || 'GENERAL'].ar}"`,
       `"${s.subject}"`,
       `"${s.currentLectureTitle}"`,
       s.progressPercentage,
@@ -816,14 +816,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 className="admin-filter-select"
               >
                 <option value="ALL">جميع الدول 🌍</option>
-                <option value="SA">🇸🇦 السعودية</option>
-                <option value="EG">🇪🇬 مصر</option>
-                <option value="SD">🇸🇩 السودان</option>
-                <option value="AE">🇦🇪 الإمارات</option>
-                <option value="KW">🇰🇼 الكويت</option>
-                <option value="JO">🇯🇴 الأردن</option>
-                <option value="OM">🇴🇲 عُمان</option>
-                <option value="QA">🇶🇦 قطر</option>
+                {ACTIVE_CURRICULUM_COUNTRIES.map(countryCode => {
+                  const country = getCountryInfo(countryCode);
+                  return (
+                    <option key={countryCode} value={countryCode}>
+                      {country.flag} {country.nameAr}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -956,7 +956,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <td>
                           <div className="academic-info-cell">
                             <span className="grade-badge">
-                              {s.gradeLevel} • {s.specialization}
+                              {s.gradeLevel} • {TRACK_LABELS[s.educationTrack || 'GENERAL'][s.language === 'en' ? 'en' : 'ar']}
                             </span>
                             <span className="subject-title">
                               {s.subject}
