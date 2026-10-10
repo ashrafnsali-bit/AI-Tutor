@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { CurriculumDiagramRenderer } from './CurriculumDiagramRenderer';
 import { RichContentRenderer } from './RichContentRenderer';
+import { sanitizeLectureForStudents } from '../services/studentContentSanitizer';
 
 interface LectureViewerProps {
   lecture: Lecture;
@@ -146,7 +147,10 @@ function renderMathFormattedText(text: string): React.ReactNode {
 export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
-  const lecture = useMemo(() => ensureFourExamplesForLecture(rawLecture), [rawLecture]);
+  const lecture = useMemo(
+    () => sanitizeLectureForStudents(ensureFourExamplesForLecture(rawLecture)),
+    [rawLecture]
+  );
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
   const [formativeHints, setFormativeHints]       = useState<Record<string, boolean>>({});
@@ -989,7 +993,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <FileCheck2 size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '✏️ Guided Exercises' : '✏️ تدريبات الكتاب المدرسي'}
+              {isEn ? '✏️ Guided Practice' : '✏️ تدريبات تطبيقية'}
             </h2>
           </div>
 

@@ -2567,8 +2567,6 @@ const lessonsByGrade: CourseSpec[] = [
 const createScienceLecture = (course: CourseSpec, lesson: SaudiScienceLesson, index: number): Lecture => {
   const courseId = course.idPrefix ?? `sa-science-${course.gradeLevel.toLowerCase()}-${course.subject.toLowerCase()}`;
   const lectureId = `${courseId}-${index + 1}`;
-  const pageReferenceAr = lesson.pages ? `مرجع المكوّن في الفهرس: ص ${lesson.pages}.\n\n` : '';
-  const pageReferenceEn = lesson.pages ? `Contents page reference: p. ${lesson.pages}.\n\n` : '';
   const question: Question = {
     id: `${lectureId}-q1`,
     textAr: lesson.questionAr,
@@ -2589,8 +2587,8 @@ const createScienceLecture = (course: CourseSpec, lesson: SaudiScienceLesson, in
   const section: LectureSection = {
     titleAr: lesson.titleAr,
     titleEn: lesson.titleEn,
-    contentAr: `${lesson.conceptsAr.join('\n\n')}\n\n${pageReferenceAr}${course.sourceNoteAr ?? 'هذا شرح تعليمي أصلي موجز لمفاهيم العلوم المناسبة للصف، وليس نقلًا حرفيًا من كتاب مدرسي. لم تتوفر نسخة قابلة للتحقق من كتاب العلوم الرسمي أثناء الإعداد؛ لذا فهذا المسار داعم ولم تطابق عناوينه مع فهرس طبعة وزارة بعينها.'}`,
-    contentEn: `${lesson.conceptsEn.join('\n\n')}\n\n${pageReferenceEn}${course.sourceNoteEn ?? 'This is an original concise explanation of grade-appropriate science concepts, not a verbatim textbook excerpt. An accessible official science textbook edition could not be verified during preparation, so this supplementary path has not been cross-checked against a specific Ministry contents page.'}`,
+    contentAr: lesson.conceptsAr.join('\n\n'),
+    contentEn: lesson.conceptsEn.join('\n\n'),
     diagram: {
       id: lesson.unitNumber === undefined
         ? `${lectureId}-visual`
@@ -2599,8 +2597,8 @@ const createScienceLecture = (course: CourseSpec, lesson: SaudiScienceLesson, in
       figureNumberEn: `Figure (${index + 1})`,
       titleAr: `رسم علمي توضيحي: ${lesson.titleAr}`,
       titleEn: `Science illustration: ${lesson.titleEn}`,
-      captionAr: 'رسم تعليمي أصلي من المنصة يوضح الفكرة العلمية؛ ليس صورة من كتاب الوزارة.',
-      captionEn: 'An original platform learning illustration of the science concept, not an image from a Ministry textbook.',
+      captionAr: 'رسم توضيحي للفكرة العلمية.',
+      captionEn: 'Illustration of the science concept.',
       diagramType: lesson.diagramType,
       visualSteps
     }

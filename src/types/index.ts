@@ -280,6 +280,7 @@ export interface LectureDiagram {
     | 'arabic_learning_map'
     | 'digital_skills'
     | 'visual_arts'
+    | 'primary_math_g2_unit'
     | 'primary_math_g3_unit'
     | 'primary_math_unit'
     | 'primary_math_g5_unit'

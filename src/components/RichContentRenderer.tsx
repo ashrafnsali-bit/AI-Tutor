@@ -1,4 +1,5 @@
 import React from 'react';
+import { removeExternalLinksFromText } from '../services/studentContentSanitizer';
 
 interface RichContentRendererProps {
   content: string;
@@ -7,6 +8,7 @@ interface RichContentRendererProps {
 
 export const RichContentRenderer: React.FC<RichContentRendererProps> = ({ content, isEn = false }) => {
   if (!content) return null;
+  content = removeExternalLinksFromText(content);
 
   // Split content into code blocks and normal markdown segments
   const codeBlockRegex = /```(?:xml|svg|html|text|jsx|tsx|css|json)?\s*\n([\s\S]*?)```/g;
@@ -32,7 +34,10 @@ export const RichContentRenderer: React.FC<RichContentRendererProps> = ({ conten
     if (codeContent.includes('<svg') && codeContent.includes('</svg>')) {
       const svgStart = codeContent.indexOf('<svg');
       const svgEnd = codeContent.lastIndexOf('</svg>') + 6;
-      const svgMarkup = codeContent.substring(svgStart, svgEnd);
+      const svgMarkup = codeContent
+        .substring(svgStart, svgEnd)
+        .replace(/<a\b[^>]*>/gi, '')
+        .replace(/<\/a\s*>/gi, '');
 
       segments.push(
         <div 
@@ -352,7 +357,11 @@ function renderMarkdownTable(lines: string[], key: number): React.ReactNode {
 // Helper: format inline bold, italic, and span highlights
 function formatInlineText(text: string): React.ReactNode {
   // Regex to split by bold **...** and math $...$
-  const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
+  const safeText = text.replace(
+    /!?\[([^\]]*)\]\(\s*(?:https?:\/\/|\/\/|www\.|mailto:)[^)]+\)/gi,
+    '$1'
+  );
+  const parts = safeText.split(/(\*\*.*?\*\*|\$.*?\$)/g);
 
   return parts.map((part, idx) => {
     if (part.startsWith('**') && part.endsWith('**')) {

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage, Lecture, StudentProfile } from '../types';
+import { removeExternalLinksFromText, sanitizeLectureForStudents } from '../services/studentContentSanitizer';
 import { askGeminiTutor } from '../services/geminiService';
 import { getTranslations } from '../i18n/translations';
 import { 
@@ -34,7 +35,8 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
 
   const t = getTranslations(profile.language);
   const isEn = profile.language === 'en';
-  const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
+  const studentLecture = sanitizeLectureForStudents(lecture);
+  const lectureTitle = removeExternalLinksFromText(isEn ? studentLecture.titleEn : studentLecture.titleAr);
 
   const initialWelcomeText = isEn
     ? `Hello, ${profile.name}! 👋 I am your Socratic AI Tutor for "${lectureTitle}".\n\nRemember, my goal is to guide you with targeted questions and hints so you discover the solution yourself rather than receiving ready-made answers. What mathematical concept would you like to explore today?`
@@ -105,7 +107,7 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
     setIsTyping(true);
 
     try {
-      const response = await askGeminiTutor(lecture, text, messages, profile, apiKey);
+      const response = await askGeminiTutor(studentLecture, text, messages, profile, apiKey);
 
       const aiMsg: ChatMessage = {
         id: `ai-${Date.now()}`,

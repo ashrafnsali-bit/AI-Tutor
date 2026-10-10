@@ -761,6 +761,14 @@ export function isSaudiPublicG3PrimaryMathAvailable(
   return country === 'SA' && gradeLevel === 'G3' && educationType === 'PUBLIC';
 }
 
+export function isSaudiPublicG2PrimaryMathAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G2' && educationType === 'PUBLIC';
+}
+
 export function isSaudiPublicG4PrimaryArabicAvailable(
   country: string,
   gradeLevel: string | undefined,
@@ -989,7 +997,11 @@ export function getNationalTextbookInfo(
   switch (country) {
     case 'SA': // Saudi Arabia
       if (subject === 'PRIMARY_MATH') {
-        textbookName = isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
+        textbookName = isSaudiPublicG2PrimaryMathAvailable(country, gradeLevel, educationType)
+          ? isEn
+            ? 'Mathematics — Saudi public Grade 2, Semester 1, 1448 AH/2026 CE cover edition (1446 AH publication record); six chapter headings and represented topics checked against printed contents pp. 6–7; the platform provides selected original supplementary instruction and does not replace the complete textbook'
+            : 'الرياضيات — الصف الثاني الابتدائي الحكومي، الفصل الدراسي الأول، طبعة الغلاف 1448هـ/2026م (سجل النشر 1446هـ)؛ روجعت عناوين الفصول والموضوعات المعروضة بمقابلتها مع فهرس الكتاب ص 6–7؛ تقدم المنصة شرحًا وأنشطة أصلية مساندة مختارة بخامات آمنة تحت إشراف المعلم، ولا تدعي أنها بديل عن تغطية الكتاب كاملًا'
+          : isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
           ? isEn
             ? 'Mathematics — Saudi public Grade 3, Part One of the curriculum; all five chapters and indexed titles and pages verified against PDF contents pp. 6–7; cover states 1448 AH/2026 CE and internal publication record states 1446 AH'
             : 'الرياضيات — الصف الثالث الابتدائي الحكومي، الجزء الأول من المقرر؛ الفصول الخمسة وعناوينها وصفحاتها مطابقة لفهرسي PDF ص 6–7؛ الغلاف يذكر 1448هـ/2026م وبيانات النشر الداخلية تذكر 1446هـ'
@@ -1005,6 +1017,10 @@ export function getNationalTextbookInfo(
           ? isEn
             ? 'Mathematics — Saudi public Grade 6, Part One of the curriculum, 1448 AH/2026 edition; chapter and lesson titles and page references verified against PDF contents pp. 6–7'
             : 'الرياضيات — الصف السادس الابتدائي، التعليم الحكومي، الجزء الأول من المقرر، طبعة 1448هـ/2026م؛ عناوين الفصول والدروس وأرقام الصفحات مطابقة للفهرس ص 6–7'
+          : gradeLevel === 'G2'
+          ? isEn
+            ? 'Saudi Grade 2 Mathematics — textbook edition for this education type has not been verified'
+            : 'رياضيات الصف الثاني السعودي — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم'
           : gradeLevel === 'G3'
           ? isEn
             ? 'Saudi Grade 3 Mathematics — textbook edition for this education type has not been verified'
@@ -1971,6 +1987,10 @@ export function getNationalTextbookInfo(
       ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
       : country === 'SA' && educationType === 'PUBLIC' &&
         subject === 'PRIMARY_MATH' &&
+        isSaudiPublicG2PrimaryMathAvailable(country, gradeLevel, educationType)
+      ? isEn ? 'Semester 1' : 'الفصل الدراسي الأول'
+      : country === 'SA' && educationType === 'PUBLIC' &&
+        subject === 'PRIMARY_MATH' &&
         isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
       ? isEn ? 'Semester 1 — Part One' : 'الفصل الدراسي الأول — الجزء الأول'
       : country === 'SA' && educationType === 'PUBLIC' &&
@@ -2052,6 +2072,12 @@ export function getNationalSubjectLabel(
   track: EducationTrack = 'GENERAL'
 ): string {
   const isEn = lang === 'en';
+
+  if (subject === 'PRIMARY_MATH' && isSaudiPublicG2PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+    return isEn
+      ? 'Mathematics (Saudi public Grade 2 — verified descriptive axes)'
+      : 'الرياضيات (الصف الثاني الحكومي — محاور وصفية موثقة)';
+  }
 
   if (subject === 'PRIMARY_MATH' && isSaudiPublicG3PrimaryMathAvailable(country, _gradeLevel, educationType)) {
     return isEn
@@ -2281,6 +2307,16 @@ export function getNationalSubjectLabel(
       case 'ISLAMIC_STUDIES':
         return isEn ? 'Islamic Studies' : 'الدراسات الإسلامية';
       case 'PRIMARY_MATH':
+        if (isSaudiPublicG2PrimaryMathAvailable(country, _gradeLevel, educationType)) {
+          return isEn
+            ? 'Mathematics (Saudi public Grade 2 — verified descriptive axes)'
+            : 'الرياضيات (الصف الثاني الحكومي — محاور وصفية موثقة)';
+        }
+        if (_gradeLevel === 'G2') {
+          return isEn
+            ? 'Mathematics (Saudi Grade 2 — unverified education type)'
+            : 'الرياضيات (الصف الثاني السعودي — نوع التعليم غير متحقق)';
+        }
         if (isSaudiPublicG3PrimaryMathAvailable(country, _gradeLevel, educationType)) {
           return isEn
             ? 'Mathematics (Saudi public Grade 3 — verified printed Part One contents)'

@@ -1,6 +1,7 @@
 import type { ChatMessage, Lecture, Question, StudentProfile } from '../types';
 import { getCountryInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/curriculumCountries';
 import { ensureFourExamplesForLecture } from './lectureExampleEnricher';
+import { removeExternalLinksFromText, sanitizeLectureForStudents } from './studentContentSanitizer';
 
 export interface GeminiEvaluationResponse {
   score: number;
@@ -229,7 +230,8 @@ Strict Pedagogical Directives:
 3. Follow the Socratic Method: ask ONE guiding micro-question or provide ONE targeted conceptual hint per turn.
 4. Strictly confine discussions to this active lecture. If student asks off-topic questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
 5. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
-6. Always converse in English.
+6. Never direct the student to an external website or include external URLs or hyperlinks. Keep instruction and resources inside the platform.
+7. Always converse in English.
     `.trim()
     : `
 أنت "المعلم الذكي" (AI Socratic Tutor) المعتمد والمخصص لمساعدة الطالب: ${profile.name}.
@@ -247,7 +249,8 @@ Strict Pedagogical Directives:
 3. اتبع المنهج السقراطي: اسأل الطالب سؤالاً استرشادياً صغيراً واحداً في كل رد يقوده للتفكير الذاتي.
 4. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية، وجهه بلطف للتركيز على إتقان ${lectureTitle}.
 5. استخدم لغة عربية فصحى مشجعة، ووضح الرموز الرياضية خطوة بخطوة.
-6. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
+6. لا توجه الطالب إلى أي موقع خارج المنصة، ولا تدرج روابط أو عناوين URL خارجية؛ قدّم الشرح والموارد داخل المنصة فقط.
+7. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
     `.trim();
 
   // If API Key is present, call Gemini API with fallback
@@ -277,14 +280,15 @@ Strict Pedagogical Directives:
 
     if ('text' in result && result.text) {
       return {
-        text: result.text,
+        text: removeExternalLinksFromText(result.text),
         scaffoldingType: 'socratic_question'
       };
     }
   }
 
   // Bilingual Simulation Fallback
-  return generateSimulatedSocraticResponse(studentQuery, lecture, isEn);
+  const fallback = generateSimulatedSocraticResponse(studentQuery, lecture, isEn);
+  return { ...fallback, text: removeExternalLinksFromText(fallback.text) };
 }
 
 /**
@@ -358,7 +362,16 @@ ${conceptAdvice.map((c) => `- مفهوم "${c.concept}": ${c.isCorrect ? 'إجا
     });
 
     if ('text' in result && result.text) {
-      return { score, passed, qualitativeFeedback: result.text, conceptAdvice };
+      return {
+        score,
+        passed,
+        qualitativeFeedback: removeExternalLinksFromText(result.text),
+        conceptAdvice: conceptAdvice.map((item) => ({
+          ...item,
+          concept: removeExternalLinksFromText(item.concept),
+          advice: removeExternalLinksFromText(item.advice)
+        }))
+      };
     }
   }
 
@@ -374,8 +387,12 @@ ${conceptAdvice.map((c) => `- مفهوم "${c.concept}": ${c.isCorrect ? 'إجا
   return {
     score,
     passed,
-    qualitativeFeedback: defaultFeedback,
-    conceptAdvice
+    qualitativeFeedback: removeExternalLinksFromText(defaultFeedback),
+    conceptAdvice: conceptAdvice.map((item) => ({
+      ...item,
+      concept: removeExternalLinksFromText(item.concept),
+      advice: removeExternalLinksFromText(item.advice)
+    }))
   };
 }
 
@@ -561,7 +578,8 @@ CRITICAL RULES:
 3. The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
 4. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
 5. Focus and conciseness: Keep each section explanation focused, direct, and impactful (approx. 100-150 words per section) so all 4 sections, worked examples, textbook exercises, and assessments generate completely without truncating.
-6. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
+6. Treat any official textbook URLs or source links supplied in the generation context as internal authoring references only. Do not put URLs, hyperlinks, or instructions to visit external sites in any student-facing lesson field; teach the material within the platform.
+7. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
 
 {
   "id": "gen-${profile.country.toLowerCase()}-${(profile.educationType || 'public').toLowerCase()}-${profile.subject.toLowerCase()}-${profile.gradeLevel.toLowerCase()}-${lectureNumber}-${Date.now()}",
@@ -814,11 +832,9 @@ CRITICAL RULES:
       }
     };
 
-    return { lecture: ensureFourExamplesForLecture(lecture) };
+    return { lecture: sanitizeLectureForStudents(ensureFourExamplesForLecture(lecture)) };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown generation error';
     return { lecture: null, error: message };
   }
 }
-
-

@@ -36,6 +36,7 @@ import {
   isSaudiPublicG6PrimaryMathAvailable,
   isSaudiPublicG4PrimaryMathAvailable,
   isSaudiPublicG3PrimaryMathAvailable,
+  isSaudiPublicG2PrimaryMathAvailable,
   isSaudiPublicG3PrimaryArabicAvailable,
   isSaudiPublicG2PrimaryArabicAvailable,
   isSaudiPublicG4PrimaryArabicAvailable,
@@ -219,6 +220,14 @@ import {
   SAUDI_G3_PRIMARY_MATH_UNIT_COUNT
 } from '../src/data/saudiPrimaryMath3CurriculumData';
 import {
+  SAUDI_G2_PRIMARY_MATH_CURRICULUM,
+  SAUDI_G2_PRIMARY_MATH_TABLE_OF_CONTENTS,
+  SAUDI_G2_PRIMARY_MATH_TEXTBOOK_URL,
+  SAUDI_G2_PRIMARY_MATH_TOPIC_COUNT,
+  SAUDI_G2_PRIMARY_MATH_UNIT_COUNT,
+  SAUDI_G2_PRIMARY_MATH_AXES_COMPARISON
+} from '../src/data/saudiPrimaryMath2CurriculumData';
+import {
   SAUDI_G5_PRIMARY_MATH_CURRICULUM,
   SAUDI_G5_PRIMARY_MATH_TABLE_OF_CONTENTS,
   SAUDI_G5_PRIMARY_MATH_TEXTBOOK_URL,
@@ -291,6 +300,7 @@ import {
   SAUDI_G11_HEALTH_SCIENCE_TEXTBOOK_URL
 } from '../src/data/saudiHealthScienceG11CurriculumData';
 import type { CountryCode, EducationTrack, Subject } from '../src/types';
+import { removeExternalLinksFromText, sanitizeLectureForStudents } from '../src/services/studentContentSanitizer';
 
 console.log('====================================================');
 console.log('TESTING MIDDLE & HIGH SCHOOL CURRICULUM INTEGRITY');
@@ -308,6 +318,81 @@ function assert(condition: boolean, msg: string) {
     console.error(`[FAIL] ${msg}`);
   }
 }
+
+function collectStringValues(value: unknown): string[] {
+  if (typeof value === 'string') return [value];
+  if (Array.isArray(value)) return value.flatMap(collectStringValues);
+  if (value && typeof value === 'object') {
+    return Object.values(value).flatMap(collectStringValues);
+  }
+  return [];
+}
+
+const sanitizedSampleLecture = sanitizeLectureForStudents({
+  id: 'test-link-removal',
+  order: 1,
+  titleAr: 'درس تجريبي',
+  titleEn: 'Sample lesson',
+  subtitleAr: '[المصدر الرسمي](https://iencontent.ien.edu.sa/books/sample.pdf)',
+  subtitleEn: 'Official textbook source: https://example.org/lesson.',
+  ministryAr: 'وزارة التعليم',
+  durationMinutes: 30,
+  isLocked: false,
+  isCompleted: false,
+  passingScoreRequired: 80,
+  keyConceptsAr: ['راجع الدرس: https://example.org/book.pdf'],
+  keyConceptsEn: ['Visit www.example.org for more'],
+  descriptionAr: 'المصدر المعتمد: كتاب رسمي ورابط خارجي.\n\nاشرح مفهوم الآحاد والعشرات باستخدام مكعبات آمنة.',
+  assessment: {
+    id: 'test-assessment',
+    titleAr: 'اختبار',
+    titleEn: 'Assessment',
+    passingScore: 80,
+    questions: []
+  }
+});
+assert(
+  !JSON.stringify(sanitizedSampleLecture).match(/https?:\/\/|www\./i) &&
+    sanitizedSampleLecture.subtitleAr === '' &&
+    sanitizedSampleLecture.ministryAr === '' &&
+    sanitizedSampleLecture.descriptionAr === 'اشرح مفهوم الآحاد والعشرات باستخدام مكعبات آمنة.',
+  'External sources, institutions, and comparison metadata are removed while lesson instruction remains'
+);
+assert(
+  !removeExternalLinksFromText('https://example.org/resource').includes('example.org') &&
+    removeExternalLinksFromText('xmlns="http://www.w3.org/2000/svg"').includes('http://www.w3.org/2000/svg') &&
+    removeExternalLinksFromText('مقارنة العنوان: عنوان المحور مقابل عنوان الكتاب المدرسي.').length === 0 &&
+    removeExternalLinksFromText('لم تتوفر نسخة قابلة للتحقق من كتاب العلوم؛ لذا لم تطابق عناوينه مع فهرس طبعة وزارة بعينها.').length === 0 &&
+    removeExternalLinksFromText('This is not a verbatim textbook excerpt.').length === 0,
+  'External URLs, source caveats, book comparisons, and citations are hidden without damaging SVG namespace declarations'
+);
+const allStudentCurriculumLectures = ACTIVE_CURRICULUM_COUNTRIES.flatMap((country) =>
+  (['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10', 'G11', 'G12'] as const)
+    .flatMap((gradeLevel) =>
+      ([
+        'PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES',
+        'TAJWEED', 'QURAN_RECITATION', 'VISUAL_ARTS', 'MATH', 'PHYSICS',
+        'CHEMISTRY', 'BIOLOGY', 'ENGLISH', 'ARABIC_LIT', 'ARABIC_LANG',
+        'GENERAL_SCIENCE', 'COMPUTER_SCIENCE', 'GEOGRAPHY', 'HISTORY',
+        'HEALTH_SCIENCE', 'LIFE_SKILLS', 'SAUDI_SOCIAL_STUDIES'
+      ] as const).flatMap((subject) =>
+        getCurriculumForSubject(subject, gradeLevel, country, 'PUBLIC')
+      )
+    )
+).map(sanitizeLectureForStudents);
+const externalStudentContentPattern =
+  /(?:https?:\/\/|ftp:\/\/|www\.)|\bIEN\b|وزارة التعليم|المصدر المعتمد|المصدر الرسمي|مرجع الفهرس|عنوان الكتاب المدرسي|مقارنة المحور|مقارنة العنوان|official source|official reference|contents reference|textbook/i;
+const externalStudentContentLeaks = allStudentCurriculumLectures.flatMap((lecture) =>
+  collectStringValues(lecture)
+    .map((text) => text.replace(/http:\/\/www\.w3\.org\/2000\/svg/gi, ''))
+    .filter((text) => externalStudentContentPattern.test(text))
+    .map((text) => `${lecture.id}: ${text}`)
+);
+assert(
+  allStudentCurriculumLectures.length > 0 &&
+    externalStudentContentLeaks.length === 0,
+  `All public curriculum routes hide external links, source attributions, institutions, and source-to-platform comparisons${externalStudentContentLeaks.length ? `: ${externalStudentContentLeaks.slice(0, 5).join(' | ')}` : ''}`
+);
 
 assert(
   ACTIVE_CURRICULUM_COUNTRIES.join(',') === 'SA,EG,SD' &&
@@ -2038,8 +2123,8 @@ assert(
     lecture.gradeLevelNameAr.includes('طبعة 1448هـ') &&
     lecture.termAr?.includes('الفصل الدراسي الأول') &&
     lecture.sections?.every((section) =>
-      section.contentAr.includes('فهرس كتاب الكيمياء 3 السعودي') &&
-      section.contentAr.includes('الشرح والرسم والتقويم من إعداد المنصة')
+      section.contentAr.trim().length > 0 &&
+      !/فهرس كتاب الكيمياء|إعداد المنصة|مصدر\s*:|source|textbook/i.test(section.contentAr)
     )
   ) &&
     getNationalTextbookInfo('SA', 'CHEMISTRY', 'G12', 'GENERAL', 'ar', 'PUBLIC').textbookName
@@ -2950,21 +3035,19 @@ const saudiPublicGrade3Science = getCurriculumForSubject(
 assert(
   saudiGrade3Science.length === saudiGrade3ScienceContents.length &&
     saudiGrade3Science.every((lecture, index) => {
-      const [chapter, titleAr, page] = saudiGrade3ScienceContents[index];
+      const [chapter, titleAr] = saudiGrade3ScienceContents[index];
       return lecture.id === `sa-primary-science-g3-1448-${index + 1}` &&
         lecture.order === index + 1 &&
         lecture.titleAr === titleAr &&
         lecture.unitTitleAr === grade3ScienceChapterTitles[chapter] &&
         lecture.sections?.length === 1 &&
-        lecture.sections[0].contentAr.includes(`مرجع المكوّن في الفهرس: ص ${page}`) &&
-        lecture.sections[0].contentAr.includes('الفهرسين المطبوعين ص 4–5') &&
-        lecture.sections[0].contentEn.includes('printed contents on pp. 4–5') &&
-        lecture.gradeLevelNameAr.includes('طبعة 1448هـ/2026م') &&
-        lecture.termAr.includes('الجزء الأول من المقرر') &&
+          lecture.sections[0].contentAr.trim().length > 0 &&
+          lecture.gradeLevelNameAr.includes('طبعة 1448هـ/2026م') &&
+          lecture.termAr.includes('الجزء الأول من المقرر') &&
         lecture.sections[0].diagram?.diagramType === 'primary_science_g3_unit' &&
         lecture.sections[0].diagram?.id.endsWith(`-unit-${chapter}-visual`) &&
         lecture.sections[0].diagram?.visualSteps?.length === 4 &&
-        lecture.sections[0].diagram?.captionAr.includes('ليس صورة من كتاب الوزارة') &&
+        lecture.sections[0].diagram?.captionAr === 'رسم توضيحي للفكرة العلمية.' &&
         lecture.assessment.questions.length === 1 &&
         lecture.assessment.questions[0].optionsAr.length === 4 &&
         lecture.assessment.questions[0].correctIndex === 0;
@@ -3038,11 +3121,6 @@ const saudiGrade6ScienceTitles = [
   'قراءة علمية: الطاقة النظيفة',
   'مراجعة الفصل السادس ونموذج الاختبار'
 ];
-const saudiGrade6SciencePages = [
-  '8', '14', '14', '18', '22', '30', '32', '42', '44', '50', '60', '62',
-  '70', '71', '78', '90', '92', '100', '102', '108', '118', '120', '127',
-  '129', '136', '144', '146', '158', '160', '166', '174', '176', '184', '186'
-];
 const saudiGrade6Science = SAUDI_SCIENCE_CURRICULA.G6?.PRIMARY_SCIENCE ?? [];
 const saudiPublicGrade6Science = getCurriculumForSubject(
   'PRIMARY_SCIENCE', 'G6', 'SA', 'PUBLIC', 'GENERAL'
@@ -3053,14 +3131,11 @@ assert(
       lecture.id === `sa-primary-science-g6-1448-${index + 1}` &&
       lecture.order === index + 1 &&
       lecture.titleAr === saudiGrade6ScienceTitles[index] &&
-      lecture.sections?.[0].contentAr.includes(
-        `مرجع المكوّن في الفهرس: ص ${saudiGrade6SciencePages[index]}`
-      ) &&
-      lecture.sections[0].contentAr.includes('مطابقة للفهرس ص 4–5') &&
+      lecture.sections?.[0].contentAr.trim().length > 0 &&
       lecture.gradeLevelNameAr.includes('طبعة 1448هـ/2026م') &&
       lecture.termAr.includes('الجزء الأول من المقرر') &&
       !!lecture.sections[0].diagram &&
-      lecture.sections[0].diagram.captionAr.includes('ليس صورة من كتاب الوزارة') &&
+      lecture.sections[0].diagram.captionAr === 'رسم توضيحي للفكرة العلمية.' &&
       lecture.sections[0].diagram.visualSteps?.length === 4 &&
       lecture.assessment.questions.length === 1 &&
       lecture.assessment.questions[0].optionsAr.length === 4
@@ -3113,10 +3188,6 @@ const saudiGrade4ScienceTitles = [
   'مراجعة الفصل الخامس ونموذج الاختبار (1)',
   'نموذج اختبار (2)'
 ];
-const saudiGrade4SciencePages = [
-  '8', '10', '18', '22', '26', '38', '50', '56', '66', '76', '86', '91',
-  '98', '108', '120', '131', '135', '140', '150', '159', '164', '172', '181', '185'
-];
 const saudiGrade4Science = SAUDI_SCIENCE_CURRICULA.G4?.PRIMARY_SCIENCE ?? [];
 const saudiPublicGrade4Science = getCurriculumForSubject(
   'PRIMARY_SCIENCE', 'G4', 'SA', 'PUBLIC', 'GENERAL'
@@ -3127,21 +3198,11 @@ assert(
       lecture.id === `sa-primary-science-g4-1448-${index + 1}` &&
       lecture.order === index + 1 &&
       lecture.titleAr === saudiGrade4ScienceTitles[index] &&
-      lecture.sections?.[0].contentAr.includes(
-        `مرجع المكوّن في الفهرس: ص ${saudiGrade4SciencePages[index]}`
-      ) &&
-      lecture.sections[0].contentAr.includes('مطابقة للفهرس ص 5–6') &&
-      lecture.sections[0].contentAr.includes('التعارض') &&
-      lecture.sections[0].contentAr.includes(
-        'رُوجعت مطالع الدروس الرئيسة في الصفحات المطبوعة 26، 38، 56، 66، 76، 98، 108، 120، 140، 150، 164، 172'
-      ) &&
-      lecture.sections[0].contentEn.includes(
-        'Openings of the main lessons on printed pp. 26, 38, 56, 66, 76, 98, 108, 120, 140, 150, 164, and 172 were reviewed.'
-      ) &&
+      lecture.sections?.[0].contentAr.trim().length > 0 &&
       lecture.gradeLevelNameAr.includes('1448هـ/2026م') &&
       lecture.termAr.includes('الجزء الأول من المقرر') &&
       !!lecture.sections[0].diagram &&
-      lecture.sections[0].diagram.captionAr.includes('ليس صورة من كتاب الوزارة') &&
+      lecture.sections[0].diagram.captionAr === 'رسم توضيحي للفكرة العلمية.' &&
       lecture.sections[0].diagram.visualSteps?.length === 4 &&
       lecture.assessment.questions.length === 1 &&
       lecture.assessment.questions[0].optionsAr.length === 4
@@ -3214,11 +3275,6 @@ const saudiGrade5ScienceTitles = [
   'مراجعة الفصل السادس ونموذج الاختبار',
   'مصطلحات العلوم'
 ];
-const saudiGrade5SciencePages = [
-  '9', '10', '17', '20', '24', '36', '38', '48', '50', '56', '64', '66',
-  '76', '77', '84', '94', '96', '106', '108', '114', '124', '126', '136',
-  '137', '144', '153', '154', '166', '168', '174', '181', '182', '192', '193', '197'
-];
 const saudiGrade5Science = SAUDI_SCIENCE_CURRICULA.G5?.PRIMARY_SCIENCE ?? [];
 const saudiPublicGrade5Science = getCurriculumForSubject(
   'PRIMARY_SCIENCE', 'G5', 'SA', 'PUBLIC', 'GENERAL'
@@ -3229,14 +3285,11 @@ assert(
       lecture.id === `sa-primary-science-g5-1448-${index + 1}` &&
       lecture.order === index + 1 &&
       lecture.titleAr === saudiGrade5ScienceTitles[index] &&
-      lecture.sections?.[0].contentAr.includes(
-        `مرجع المكوّن في الفهرس: ص ${saudiGrade5SciencePages[index]}`
-      ) &&
-      lecture.sections[0].contentAr.includes('مطابقة للفهرس ص 5–6') &&
+      lecture.sections?.[0].contentAr.trim().length > 0 &&
       lecture.gradeLevelNameAr.includes('طبعة 1448هـ/2026م') &&
       lecture.termAr.includes('الجزء الأول من المقرر') &&
       !!lecture.sections[0].diagram &&
-      lecture.sections[0].diagram.captionAr.includes('ليس صورة من كتاب الوزارة') &&
+      lecture.sections[0].diagram.captionAr === 'رسم توضيحي للفكرة العلمية.' &&
       lecture.sections[0].diagram.visualSteps?.length === 4 &&
       lecture.assessment.questions.length === 1 &&
       lecture.assessment.questions[0].optionsAr.length === 4
@@ -3271,37 +3324,28 @@ assert(
   'Saudi Grade 5 Science textbook metadata identifies the verified part, contents, and edition'
 );
 assert(
+  saudiScienceLectures.some((lecture) =>
+    lecture.titleAr === 'النباتات والحيوانات وبيئاتها' &&
+    lecture.sections?.[0].contentAr ===
+      'تتعرف المخلوقات الحية إلى موارد البيئة التي تحتاج إليها.\n\nتساعد أجزاء النبات والحيوان على أداء وظائف مختلفة.'
+  ),
+  'Grade 2 science displays the two instructional concepts without the preparation disclaimer'
+);
+assert(
   saudiScienceLectures.length === saudiScienceRoutes.length * 2 + 146 &&
     saudiScienceLectures.every((lecture) =>
       lecture.sections?.some((section) =>
         !!section.diagram &&
         supportedScienceDiagrams.has(section.diagram.diagramType) &&
         (section.diagram.visualSteps?.length ?? 0) === 4 &&
-        (lecture.id.startsWith('sa-chem3-1448-g12') ||
-          lecture.id.startsWith('sa-chemistry1-1448-g10') ||
-            lecture.id.startsWith('sa-chemistry2-1448-g11') ||
-            lecture.id.startsWith('sa-biology1-1448-g10')
-          ? section.contentAr.includes('طبعة 1448هـ') &&
-            section.contentAr.includes('الشرح والرسم والتقويم من إعداد المنصة')
-          : lecture.id.startsWith('sa-primary-science-g5-1448-')
-            ? section.contentAr.includes('مطابقة للفهرس ص 5–6') &&
-              section.contentAr.includes('مرجع المكوّن في الفهرس')
-            : lecture.id.startsWith('sa-primary-science-g3-1448-')
-              ? section.contentAr.includes('الفهرسين المطبوعين ص 4–5') &&
-                section.contentAr.includes('مرجع المكوّن في الفهرس') &&
-                section.contentAr.includes('1446هـ')
-            : lecture.id.startsWith('sa-primary-science-g4-1448-')
-            ? section.contentAr.includes('مطابقة للفهرس ص 5–6') &&
-              section.contentAr.includes('مرجع المكوّن في الفهرس') &&
-              section.contentAr.includes('التعارض')
-          : lecture.id.startsWith('sa-primary-science-g6-1448-')
-            ? section.contentAr.includes('مطابقة للفهرس ص 4–5') &&
-              section.contentAr.includes('مرجع المكوّن في الفهرس')
-            : section.contentAr.includes('لم تتوفر نسخة قابلة للتحقق'))
+        section.contentAr.trim().length > 0 &&
+        !/المصدر المعتمد|مرجع المكوّن|لم تتوفر نسخة قابلة للتحقق|طبعة وزارة بعينها|ليس صورة من كتاب الوزارة/i.test(
+          `${section.contentAr} ${section.diagram.captionAr}`
+        )
       ) &&
       (lecture.assessment.questions?.length ?? 0) > 0
     ),
-  'Every Saudi science lesson across G1–G12 has an illustration, assessment, and an honest source-verification note'
+  'Every Saudi science lesson across G1–G12 has clear instructional content, an illustration, and an assessment without source disclaimers'
 );
 assert(
   saudiScienceLectures.every((lecture) =>
@@ -6480,6 +6524,115 @@ assert(
     getNationalSubjectLabel('PRIMARY_MATH', 'SA', 'G3', 'ar', 'PRIVATE').includes('غير متحقق'),
   'Saudi Grade 3 Mathematics is limited to the public route with verified Part One metadata'
 );
+const saudiGrade2PrimaryMath = getCurriculumForSubject(
+  'PRIMARY_MATH', 'G2', 'SA', 'PUBLIC', 'GENERAL'
+);
+const primaryMathG2Textbook = getNationalTextbookInfo(
+  'SA', 'PRIMARY_MATH', 'G2', 'GENERAL', 'ar', 'PUBLIC'
+);
+const primaryMathG2TextbookEn = getNationalTextbookInfo(
+  'SA', 'PRIMARY_MATH', 'G2', 'GENERAL', 'en', 'PUBLIC'
+);
+assert(
+  SAUDI_G2_PRIMARY_MATH_TEXTBOOK_URL ===
+      'https://iencontent.ien.edu.sa/books/1448-GE-PE-K02-SM1-math.pdf' &&
+    SAUDI_G2_PRIMARY_MATH_UNIT_COUNT === 6 &&
+    SAUDI_G2_PRIMARY_MATH_TOPIC_COUNT === 84 &&
+    SAUDI_G2_PRIMARY_MATH_CURRICULUM.length === 6 &&
+    saudiGrade2PrimaryMath.length === 6 &&
+    SAUDI_G2_PRIMARY_MATH_AXES_COMPARISON.length === 6 &&
+    SAUDI_G2_PRIMARY_MATH_AXES_COMPARISON.every((ax) =>
+      ax.platformAxisTitleAr !== ax.bookChapterTitleAr &&
+      ax.comparisonRationaleAr.length > 20
+    ),
+  'Saudi Grade 2 Mathematics records the official textbook URL, 6 chapters, and descriptive platform axes distinct from book titles'
+);
+const expectedGrade2MathPages = [
+  [9, 10, 13, 15, 17, 19, 21, 22, 23, 25, 27, 28, 30, 32, 34],
+  [37, 38, 40, 42, 44, 46, 47, 48, 50, 52, 54, 56, 58],
+  [61, 62, 64, 66, 68, 70, 71, 72, 74, 76, 78, 80],
+  [83, 84, 86, 88, 90, 92, 93, 94, 96, 98, 99, 100, 102, 104, 106],
+  [109, 110, 112, 114, 116, 118, 120, 121, 122, 124, 126, 128, 130, 132, 134],
+  [137, 138, 140, 142, 144, 146, 148, 149, 150, 152, 154, 156, 158, 160]
+];
+assert(
+  SAUDI_G2_PRIMARY_MATH_CURRICULUM.every((chapter, index) =>
+    JSON.stringify(SAUDI_G2_PRIMARY_MATH_TABLE_OF_CONTENTS
+      .filter((topic) => topic.unitNumber === index + 1)
+      .map((topic) => topic.page)) === JSON.stringify(expectedGrade2MathPages[index]) &&
+    chapter.sections?.[0]?.titleAr === (index === 0
+      ? 'التهيئة التفاعلية: استرجاع العد ومقارنة المجموعات وقراءة الأعداد وترتيبها'
+      : chapter.sections?.[0]?.titleAr) &&
+    chapter.sections?.[0]?.contentAr.includes('تحت إشراف المعلم')
+  ),
+  'Saudi Grade 2 Mathematics represented topics and preparations follow the printed contents pages in sequence'
+);
+assert(
+  SAUDI_G2_PRIMARY_MATH_CURRICULUM[0].sections?.[0]?.contentAr.includes('يطابق العدد المكتوب بالكلمات') &&
+    SAUDI_G2_PRIMARY_MATH_CURRICULUM[0].sections?.[0]?.contentAr.includes('يرتب أعدادًا بسيطة') &&
+    SAUDI_G2_PRIMARY_MATH_CURRICULUM[0].subtitleAr.includes('الرياضيات'),
+  'The Grade 2 place-value preparation reflects the lesson activities without exposing source-page metadata'
+);
+assert(
+  SAUDI_G2_PRIMARY_MATH_CURRICULUM.every((lecture, chapterIndex) => {
+    return lecture.id === `saudi-g2-primary-math-1448-${chapterIndex + 1}` &&
+      lecture.order === chapterIndex + 1 &&
+      lecture.gradeLevel === 'G2' &&
+      lecture.subject === 'PRIMARY_MATH' &&
+      lecture.country === 'SA' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length > 0 &&
+      lecture.sections?.[0].diagram?.diagramType === 'primary_math_g2_unit' &&
+      lecture.sections?.[0].diagram?.captionAr.includes('رسم تعليمي أصلي') &&
+      lecture.sections?.[0].diagram?.captionAr.includes('تحت إشراف المعلم') &&
+      lecture.descriptionAr?.includes('إرشادات السلامة والخامات الآمنة') &&
+      lecture.descriptionAr?.includes('تحت إشراف المعلم') &&
+      lecture.termAr === 'الفصل الدراسي الأول' &&
+      lecture.sections?.every((section) =>
+        section.contentAr.includes('خامات آمنة تحت إشراف المعلم') &&
+        !section.contentAr.includes('مرجع الفهرس الرسمي')
+      ) &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].correctIndex === 0;
+  }) &&
+    saudiGrade2PrimaryMath.map((lecture) => lecture.id).join('|') ===
+      SAUDI_G2_PRIMARY_MATH_CURRICULUM.map((lecture) => lecture.id).join('|'),
+  'Saudi Grade 2 Mathematics lectures include child-safe activities, teacher supervision, original diagrams, and matching chapters'
+);
+const studentFacingGrade2Math = SAUDI_G2_PRIMARY_MATH_CURRICULUM.map(sanitizeLectureForStudents);
+assert(
+  studentFacingGrade2Math.every((lecture) =>
+    !JSON.stringify(lecture).match(/https?:\/\/|www\.|\bIEN\b|وزارة التعليم|المصدر المعتمد|المصدر الرسمي|مرجع الفهرس|عنوان الكتاب المدرسي|مقارنة المحور|مقارنة العنوان|textbook|official source|contents reference|(?:ص|p\.?)\s*\d+/i) &&
+    !lecture.descriptionAr?.includes('1448هـ/2026م') &&
+    !lecture.descriptionAr?.includes('1446هـ') &&
+    lecture.sections?.every((section) =>
+      !section.contentAr.includes('الكتاب المدرسي') &&
+      !section.contentAr.includes('مقارنة العنوان') &&
+      !section.contentEn.includes('textbook')
+    )
+  ),
+  'All Grade 2 mathematics lessons hide source, authority, textbook-comparison, and page-reference metadata from student display'
+);
+assert(
+  isSaudiPublicG2PrimaryMathAvailable('SA', 'G2', 'PUBLIC') &&
+    !isSaudiPublicG2PrimaryMathAvailable('SA', 'G1', 'PUBLIC') &&
+    !isSaudiPublicG2PrimaryMathAvailable('SA', 'G3', 'PUBLIC') &&
+    !isSaudiPublicG2PrimaryMathAvailable('SA', 'G2', 'PRIVATE') &&
+    !isSaudiPublicG2PrimaryMathAvailable('SA', 'G2', 'ISLAMIC') &&
+    !isSaudiPublicG2PrimaryMathAvailable('EG', 'G2', 'PUBLIC') &&
+    primaryMathG2Textbook.textbookName.includes('الفصول') &&
+    primaryMathG2Textbook.textbookName.includes('1448هـ/2026م') &&
+    primaryMathG2Textbook.textbookName.includes('1446هـ') &&
+    primaryMathG2Textbook.textbookName.includes('خامات آمنة تحت إشراف المعلم') &&
+    primaryMathG2Textbook.semester === 'الفصل الدراسي الأول' &&
+    primaryMathG2TextbookEn.textbookName.includes('six chapter headings') &&
+    getNationalSubjectLabel('PRIMARY_MATH', 'SA', 'G2', 'ar', 'PUBLIC') ===
+      'الرياضيات (الصف الثاني الحكومي — محاور وصفية موثقة)' &&
+    getNationalSubjectLabel('PRIMARY_MATH', 'SA', 'G2', 'ar', 'PRIVATE').includes('غير متحقق') &&
+    getCurriculumForSubject('PRIMARY_MATH', 'G2', 'SA', 'PRIVATE', 'GENERAL').length === 0,
+  'Saudi Grade 2 Mathematics is strictly restricted to public education and blocks unverified tracks'
+);
 const primaryMathG4Contents = [
   {
     titleAr: 'القيمة المنزلية',
@@ -6734,6 +6887,41 @@ assert(
       lecture.titleAr.includes('غير معتمد') || lecture.titleAr.includes('قديم')
     ),
   'Verified Saudi Grade 3 Mathematics ignores stale, shared, and generated cached lessons'
+);
+scienceIsolationStorage.set(
+  'TEACHER_AI_LECTURES_V5_SA_PUBLIC_PRIMARY_MATH_G2_GENERAL',
+  JSON.stringify([{
+    ...saudiGrade2PrimaryMath[0],
+    educationTrack: 'GENERAL',
+    titleAr: 'عنوان مخزن قديم غير معتمد',
+    isCompleted: true
+  }, {
+    ...saudiGrade2PrimaryMath[0],
+    id: 'ai-gen-stale-primary-math-g2',
+    educationTrack: 'GENERAL',
+    titleAr: 'درس مولد عشوائي قديم'
+  }])
+);
+scienceIsolationStorage.set(
+  'TEACHER_AI_SHARED_LECS_SA_PUBLIC_PRIMARY_MATH_G2_GENERAL',
+  JSON.stringify([{
+    id: 'shared-primary-math-g2-content',
+    titleAr: 'محتوى مشترك غير معتمد',
+    isSharedCommunity: true
+  }])
+);
+const isolatedSaudiGrade2PrimaryMath = loadSubjectLectures(
+  'PRIMARY_MATH', 'SA', 'G2', 'PUBLIC', 'GENERAL'
+);
+assert(
+  isolatedSaudiGrade2PrimaryMath.length === 6 &&
+    isolatedSaudiGrade2PrimaryMath.map((lecture) => lecture.id).join('|') ===
+      saudiGrade2PrimaryMath.map((lecture) => lecture.id).join('|') &&
+    !isolatedSaudiGrade2PrimaryMath.some((lecture) =>
+      lecture.id.includes('stale') || lecture.id.includes('shared') ||
+      lecture.titleAr.includes('غير معتمد') || lecture.titleAr.includes('قديم')
+    ),
+  'Verified Saudi Grade 2 Mathematics ignores stale, shared, and generated cached lessons'
 );
 scienceIsolationStorage.set(
   'TEACHER_AI_LECTURES_V5_SA_PUBLIC_PRIMARY_MATH_G5_GENERAL',

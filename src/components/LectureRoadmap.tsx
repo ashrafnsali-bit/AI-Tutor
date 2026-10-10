@@ -2,6 +2,7 @@ import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
+import { removeExternalLinksFromText } from '../services/studentContentSanitizer';
 import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock, Globe } from 'lucide-react';
 
 interface LectureRoadmapProps {
@@ -147,8 +148,8 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
           const isCompleted = lecture.isCompleted;
           const isNextTarget = nextLectureToSolve?.id === lecture.id;
 
-          const title = (isEn ? lecture.titleEn : lecture.titleAr) || lecture.titleAr || '';
-          const subtitle = (isEn ? lecture.subtitleEn : lecture.subtitleAr) || lecture.subtitleAr || '';
+          const title = removeExternalLinksFromText((isEn ? lecture.titleEn : lecture.titleAr) || lecture.titleAr || '');
+          const subtitle = removeExternalLinksFromText((isEn ? lecture.subtitleEn : lecture.subtitleAr) || lecture.subtitleAr || '');
 
           return (
             <div key={lecture.id} className="roadmap-item-wrapper">

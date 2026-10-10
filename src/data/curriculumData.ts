@@ -34,6 +34,7 @@ import {
   isSaudiPublicG6PrimaryMathAvailable,
   isSaudiPublicG4PrimaryMathAvailable,
   isSaudiPublicG3PrimaryMathAvailable,
+  isSaudiPublicG2PrimaryMathAvailable,
   isSaudiPublicG3PrimaryArabicAvailable,
   isSaudiPublicG2PrimaryArabicAvailable,
   isSaudiPublicG4PrimaryArabicAvailable,
@@ -94,6 +95,7 @@ import { SAUDI_G6_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath6CurriculumD
 import { SAUDI_G5_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath5CurriculumData';
 import { SAUDI_G4_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath4CurriculumData';
 import { SAUDI_G3_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath3CurriculumData';
+import { SAUDI_G2_PRIMARY_MATH_CURRICULUM } from './saudiPrimaryMath2CurriculumData';
 import { SAUDI_G3_PRIMARY_ARABIC_LECTURES } from './saudiPrimaryArabic3CurriculumData';
 import { SAUDI_G2_PRIMARY_ARABIC_LECTURES } from './saudiPrimaryArabic2CurriculumData';
 import {
@@ -4667,6 +4669,13 @@ export function getCurriculumForSubject(
   if (gradeLevel && !/^G(?:[1-9]|1[0-2])$/.test(gradeLevel)) return [];
   if (
     subject === 'PRIMARY_MATH' &&
+    isSaudiPublicG2PrimaryMathAvailable(country, gradeLevel, educationType)
+  ) {
+    return SAUDI_G2_PRIMARY_MATH_CURRICULUM;
+  }
+
+  if (
+    subject === 'PRIMARY_MATH' &&
     isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)
   ) {
     return SAUDI_G3_PRIMARY_MATH_CURRICULUM;
@@ -4891,6 +4900,12 @@ export function getCurriculumForSubject(
     isSaudiPublicG6PrimaryMathAvailable(country, gradeLevel, educationType)
   ) {
     return SAUDI_G6_PRIMARY_MATH_CURRICULUM;
+  }
+
+  if (country === 'SA' && subject === 'PRIMARY_MATH' && gradeLevel === 'G2') {
+    return isSaudiPublicG2PrimaryMathAvailable(country, gradeLevel, educationType)
+      ? SAUDI_G2_PRIMARY_MATH_CURRICULUM
+      : [];
   }
 
   if (subject === 'PRIMARY_MATH') {
@@ -5174,6 +5189,8 @@ export function loadSubjectLectures(
     isProtectedSaudiVisualArts ||
     isProtectedSaudiIslamicStudies ||
     isProtectedSaudiLifeSkills ||
+    (subject === 'PRIMARY_MATH' &&
+      isSaudiPublicG2PrimaryMathAvailable(country, gradeLevel, educationType)) ||
     (subject === 'PRIMARY_MATH' &&
       isSaudiPublicG3PrimaryMathAvailable(country, gradeLevel, educationType)) ||
     (subject === 'PRIMARY_MATH' &&

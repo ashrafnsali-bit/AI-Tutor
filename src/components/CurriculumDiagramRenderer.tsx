@@ -209,6 +209,258 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
           </svg>
         );
       }
+      case 'primary_math_g2_unit': {
+        const unit = Number(diagram.id.match(/-(\d+)$/)?.[1] || 1);
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg primary-math-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-bg`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#fdf4ff" />
+                <stop offset="50%" stopColor="#eff6ff" />
+                <stop offset="100%" stopColor="#f0fdf4" />
+              </linearGradient>
+            </defs>
+            <rect width="760" height="320" rx="20" fill={`url(#${visualId}-bg)`} />
+            <rect x="50" y="32" width="660" height="256" rx="16" fill="#ffffff" stroke="#93c5fd" strokeWidth="2.5" />
+            {unit === 1 && (
+              <g>
+                <text x="380" y="68" textAnchor="middle" fill="#1e293b" fontSize="18" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Place Value: 47 = 4 Tens and 7 Ones' : 'القيمة المنزلية: ٤٧ = ٤ عشرات و ٧ آحاد'}
+                </text>
+                {/* Tens Box */}
+                <rect x="130" y="88" width="220" height="120" rx="12" fill="#eff6ff" stroke="#3b82f6" strokeWidth="2" />
+                <text x="240" y="114" textAnchor="middle" fill="#1d4ed8" fontSize="15" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Tens (4 tens = 40)' : 'العشرات (٤ عشرات = ٤٠)'}
+                </text>
+                {[0, 1, 2, 3].map((r) => (
+                  <rect key={r} x={160 + r * 45} y="126" width="30" height="70" rx="4" fill="#60a5fa" stroke="#2563eb" strokeWidth="1.5" />
+                ))}
+                {/* Ones Box */}
+                <rect x="410" y="88" width="220" height="120" rx="12" fill="#fdf2f8" stroke="#ec4899" strokeWidth="2" />
+                <text x="520" y="114" textAnchor="middle" fill="#be185d" fontSize="15" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Ones (7 ones = 7)' : 'الآحاد (٧ آحاد = ٧)'}
+                </text>
+                {[0, 1, 2, 3, 4, 5, 6].map((c) => (
+                  <rect key={c} x={430 + (c % 4) * 48} y={130 + Math.floor(c / 4) * 36} width="28" height="28" rx="5" fill="#f472b6" stroke="#db2777" strokeWidth="1.5" />
+                ))}
+                {/* Pattern Strip */}
+                <rect x="130" y="222" width="500" height="48" rx="10" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="1.5" />
+                <text x="380" y="252" textAnchor="middle" fill="#0f172a" fontSize="15" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Counting by 10s Pattern:  10  →  20  →  30  →  40  →  50 (+10)' : 'نمط العد القفزي بالعشرات:  ١٠  ←  ٢٠  ←  ٣٠  ←  ٤٠  ←  ٥٠ (+١٠)'}
+                </text>
+              </g>
+            )}
+            {unit === 2 && (
+              <g>
+                <text x="380" y="66" textAnchor="middle" fill="#1e293b" fontSize="18" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Make a Ten Strategy: 8 + 5 = (8 + 2) + 3 = 10 + 3 = 13' : 'استراتيجية تكوين العشرة: ٨ + ٥ = (٨ + ٢) + ٣ = ١٠ + ٣ = ١٣'}
+                </text>
+                {/* First Ten Frame */}
+                <g transform="translate(100, 88)">
+                  <rect width="260" height="110" rx="10" fill="#f0f9ff" stroke="#0284c7" strokeWidth="2" />
+                  <text x="130" y="24" textAnchor="middle" fill="#0369a1" fontSize="13" fontWeight="700" fontFamily="inherit">
+                    {isEn ? 'First 10-Frame (Filled = 10)' : 'إطار العشرة الأول (مكتمل = ١٠)'}
+                  </text>
+                  {/* 8 Blue + 2 Red dots */}
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <circle
+                      key={i}
+                      cx={35 + (i % 5) * 48}
+                      cy={50 + Math.floor(i / 5) * 40}
+                      r="15"
+                      fill={i < 8 ? '#3b82f6' : '#ef4444'}
+                    />
+                  ))}
+                </g>
+                {/* Second Ten Frame */}
+                <g transform="translate(400, 88)">
+                  <rect width="260" height="110" rx="10" fill="#fef2f2" stroke="#dc2626" strokeWidth="2" />
+                  <text x="130" y="24" textAnchor="middle" fill="#b91c1c" fontSize="13" fontWeight="700" fontFamily="inherit">
+                    {isEn ? 'Second 10-Frame (Remainder = 3)' : 'إطار العشرة الثاني (المتبقي = ٣)'}
+                  </text>
+                  {/* 3 Red dots */}
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <circle
+                      key={i}
+                      cx={35 + (i % 5) * 48}
+                      cy={50 + Math.floor(i / 5) * 40}
+                      r="15"
+                      fill={i < 3 ? '#ef4444' : '#e2e8f0'}
+                      stroke={i < 3 ? 'none' : '#cbd5e1'}
+                      strokeWidth="1"
+                    />
+                  ))}
+                </g>
+                <rect x="140" y="216" width="480" height="52" rx="10" fill="#ecfdf5" stroke="#10b981" strokeWidth="2" />
+                <text x="380" y="248" textAnchor="middle" fill="#065f46" fontSize="17" fontWeight="800" fontFamily="inherit">
+                  {isEn ? '8 Blue + 2 Red = 10  |  10 + 3 Remaining = 13' : '٨ أزرق + ٢ أحمر = ١٠  |  ١٠ + ٣ متبقٍ = ١٣'}
+                </text>
+              </g>
+            )}
+            {unit === 3 && (
+              <g>
+                <text x="380" y="66" textAnchor="middle" fill="#1e293b" fontSize="18" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Fact Family Triangle: Related Addition & Subtraction' : 'مثلث عائلة الحقائق: الربط بين الجمع والطرح'}
+                </text>
+                {/* Triangle */}
+                <polygon points="380,86 280,220 480,220" fill="#fef3c7" stroke="#f59e0b" strokeWidth="3" />
+                {/* Top Number: 12 */}
+                <circle cx="380" cy="98" r="22" fill="#d97706" />
+                <text x="380" y="105" textAnchor="middle" fill="#ffffff" fontSize="18" fontWeight="800" fontFamily="inherit">12</text>
+                {/* Left Number: 7 */}
+                <circle cx="295" cy="210" r="20" fill="#2563eb" />
+                <text x="295" y="216" textAnchor="middle" fill="#ffffff" fontSize="16" fontWeight="800" fontFamily="inherit">7</text>
+                {/* Right Number: 5 */}
+                <circle cx="465" cy="210" r="20" fill="#16a34a" />
+                <text x="465" y="216" textAnchor="middle" fill="#ffffff" fontSize="16" fontWeight="800" fontFamily="inherit">5</text>
+                {/* Equations Box Left */}
+                <rect x="80" y="104" width="170" height="106" rx="10" fill="#eff6ff" stroke="#3b82f6" strokeWidth="1.5" />
+                <text x="165" y="132" textAnchor="middle" fill="#1e40af" fontSize="14" fontWeight="700" fontFamily="inherit">{isEn ? 'Addition Facts' : 'حقائق الجمع'}</text>
+                <text x="165" y="162" textAnchor="middle" fill="#1d4ed8" fontSize="16" fontWeight="800" fontFamily="inherit">7 + 5 = 12</text>
+                <text x="165" y="192" textAnchor="middle" fill="#1d4ed8" fontSize="16" fontWeight="800" fontFamily="inherit">5 + 7 = 12</text>
+                {/* Equations Box Right */}
+                <rect x="510" y="104" width="170" height="106" rx="10" fill="#f0fdf4" stroke="#22c55e" strokeWidth="1.5" />
+                <text x="595" y="132" textAnchor="middle" fill="#166534" fontSize="14" fontWeight="700" fontFamily="inherit">{isEn ? 'Subtraction Facts' : 'حقائق الطرح'}</text>
+                <text x="595" y="162" textAnchor="middle" fill="#15803d" fontSize="16" fontWeight="800" fontFamily="inherit">12 − 5 = 7</text>
+                <text x="595" y="192" textAnchor="middle" fill="#15803d" fontSize="16" fontWeight="800" fontFamily="inherit">12 − 7 = 5</text>
+                {/* Summary bar */}
+                <rect x="180" y="238" width="400" height="38" rx="8" fill="#f8fafc" stroke="#94a3b8" strokeWidth="1.5" />
+                <text x="380" y="262" textAnchor="middle" fill="#334155" fontSize="14" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Subtraction reverses addition with the same three numbers' : 'الطرح هو العملية العكسية للجمع باستخدام الأعداد الثلاثة نفسها'}
+                </text>
+              </g>
+            )}
+            {unit === 4 && (
+              <g>
+                <text x="380" y="66" textAnchor="middle" fill="#1e293b" fontSize="18" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Data Representation: Tally Table & Bar Graph' : 'تمثيل البيانات: جدول الإشارات والأعمدة البيانية'}
+                </text>
+                {/* Left: Tally Table */}
+                <g transform="translate(80, 88)">
+                  <rect width="270" height="170" rx="10" fill="#f8fafc" stroke="#64748b" strokeWidth="2" />
+                  <text x="135" y="26" textAnchor="middle" fill="#1e293b" fontSize="14" fontWeight="800" fontFamily="inherit">
+                    {isEn ? 'Tally Table (Favorite Fruits)' : 'جدول الإشارات (الفاكهة المفضلة)'}
+                  </text>
+                  <line x1="10" y1="36" x2="260" y2="36" stroke="#cbd5e1" strokeWidth="1.5" />
+                  {/* Apples */}
+                  <text x="25" y="66" fill="#0f172a" fontSize="13" fontWeight="700" fontFamily="inherit">{isEn ? 'Apple' : 'تفاح'}</text>
+                  <text x="140" y="66" fill="#dc2626" fontSize="16" fontWeight="800" fontFamily="inherit">||||  (4)</text>
+                  {/* Oranges */}
+                  <text x="25" y="112" fill="#0f172a" fontSize="13" fontWeight="700" fontFamily="inherit">{isEn ? 'Orange' : 'برتقال'}</text>
+                  <text x="140" y="112" fill="#ea580c" fontSize="16" fontWeight="800" fontFamily="inherit">|||| |  (6)</text>
+                  {/* Bananas */}
+                  <text x="25" y="154" fill="#0f172a" fontSize="13" fontWeight="700" fontFamily="inherit">{isEn ? 'Banana' : 'موز'}</text>
+                  <text x="140" y="154" fill="#ca8a04" fontSize="16" fontWeight="800" fontFamily="inherit">|||  (3)</text>
+                </g>
+                {/* Right: Bar Graph */}
+                <g transform="translate(390, 88)">
+                  <rect width="290" height="170" rx="10" fill="#f0fdf4" stroke="#16a34a" strokeWidth="2" />
+                  <text x="145" y="26" textAnchor="middle" fill="#14532d" fontSize="14" fontWeight="800" fontFamily="inherit">
+                    {isEn ? 'Bar Graph' : 'الأعمدة البيانية'}
+                  </text>
+                  <line x1="30" y1="140" x2="270" y2="140" stroke="#475569" strokeWidth="2" />
+                  {/* Apple Bar */}
+                  <rect x="55" y="68" width="45" height="72" rx="4" fill="#ef4444" />
+                  <text x="77" y="60" textAnchor="middle" fill="#991b1b" fontSize="13" fontWeight="800" fontFamily="inherit">4</text>
+                  <text x="77" y="156" textAnchor="middle" fill="#334155" fontSize="12" fontWeight="700" fontFamily="inherit">{isEn ? 'Apple' : 'تفاح'}</text>
+                  {/* Orange Bar */}
+                  <rect x="125" y="32" width="45" height="108" rx="4" fill="#f97316" />
+                  <text x="147" y="26" textAnchor="middle" fill="#c2410c" fontSize="13" fontWeight="800" fontFamily="inherit">6</text>
+                  <text x="147" y="156" textAnchor="middle" fill="#334155" fontSize="12" fontWeight="700" fontFamily="inherit">{isEn ? 'Orange' : 'برتقال'}</text>
+                  {/* Banana Bar */}
+                  <rect x="195" y="86" width="45" height="54" rx="4" fill="#eab308" />
+                  <text x="217" y="78" textAnchor="middle" fill="#a16207" fontSize="13" fontWeight="800" fontFamily="inherit">3</text>
+                  <text x="217" y="156" textAnchor="middle" fill="#334155" fontSize="12" fontWeight="700" fontFamily="inherit">{isEn ? 'Banana' : 'موز'}</text>
+                </g>
+              </g>
+            )}
+            {unit === 5 && (
+              <g>
+                <text x="380" y="64" textAnchor="middle" fill="#1e293b" fontSize="18" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Two-Digit Addition with Regrouping: 28 + 15 = 43' : 'جمع رقمين بإعادة التجميع: ٢٨ + ١٥ = ٤٣'}
+                </text>
+                {/* Place-value columns */}
+                <rect x="180" y="82" width="400" height="150" rx="12" fill="#f8fafc" stroke="#3b82f6" strokeWidth="2" />
+                <line x1="380" y1="82" x2="380" y2="232" stroke="#93c5fd" strokeWidth="2" strokeDasharray="4" />
+                {/* Headers */}
+                <text x="280" y="108" textAnchor="middle" fill="#1d4ed8" fontSize="16" fontWeight="800" fontFamily="inherit">{isEn ? 'Tens' : 'العشرات'}</text>
+                <text x="480" y="108" textAnchor="middle" fill="#be185d" fontSize="16" fontWeight="800" fontFamily="inherit">{isEn ? 'Ones' : 'الآحاد'}</text>
+                {/* Regrouping bubble */}
+                <circle cx="280" cy="132" r="14" fill="#dbeafe" stroke="#2563eb" strokeWidth="1.5" />
+                <text x="280" y="137" textAnchor="middle" fill="#1d4ed8" fontSize="13" fontWeight="800" fontFamily="inherit">1</text>
+                <text x="480" y="136" textAnchor="middle" fill="#64748b" fontSize="12" fontFamily="inherit">{isEn ? '(8+5=13 → 1 ten)' : '(٨+٥=١٣ ← ١ عشرة)'}</text>
+                {/* Numbers */}
+                <text x="280" y="166" textAnchor="middle" fill="#0f172a" fontSize="24" fontWeight="800" fontFamily="inherit">2</text>
+                <text x="480" y="166" textAnchor="middle" fill="#0f172a" fontSize="24" fontWeight="800" fontFamily="inherit">8</text>
+                <text x="220" y="196" fill="#2563eb" fontSize="24" fontWeight="800" fontFamily="inherit">+</text>
+                <text x="280" y="196" textAnchor="middle" fill="#0f172a" fontSize="24" fontWeight="800" fontFamily="inherit">1</text>
+                <text x="480" y="196" textAnchor="middle" fill="#0f172a" fontSize="24" fontWeight="800" fontFamily="inherit">5</text>
+                <line x1="200" y1="204" x2="560" y2="204" stroke="#475569" strokeWidth="3" />
+                {/* Result */}
+                <text x="280" y="228" textAnchor="middle" fill="#15803d" fontSize="26" fontWeight="900" fontFamily="inherit">4</text>
+                <text x="480" y="228" textAnchor="middle" fill="#15803d" fontSize="26" fontWeight="900" fontFamily="inherit">3</text>
+                <rect x="220" y="244" width="320" height="34" rx="8" fill="#dcfce7" stroke="#16a34a" strokeWidth="1.5" />
+                <text x="380" y="266" textAnchor="middle" fill="#166534" fontSize="14" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Sum = 43 (Regrouped 10 ones into 1 ten)' : 'الناتج = ٤٣ (أُعيد تجميع ١٠ آحاد إلى عشرة واحدة)'}
+                </text>
+              </g>
+            )}
+            {unit === 6 && (
+              <g>
+                <text x="380" y="62" textAnchor="middle" fill="#1e293b" fontSize="18" fontWeight="800" fontFamily="inherit">
+                  {isEn ? 'Two-Digit Subtraction with Regrouping: 52 − 27 = 25 & Check' : 'طرح رقمين بإعادة التجميع: ٥٢ − ٢٧ = ٢٥ والتحقق بالجمع'}
+                </text>
+                {/* Subtraction columns */}
+                <g transform="translate(140, 80)">
+                  <rect width="230" height="160" rx="10" fill="#f8fafc" stroke="#dc2626" strokeWidth="2" />
+                  <text x="65" y="26" textAnchor="middle" fill="#1d4ed8" fontSize="14" fontWeight="800" fontFamily="inherit">{isEn ? 'Tens' : 'العشرات'}</text>
+                  <text x="165" y="26" textAnchor="middle" fill="#be185d" fontSize="14" fontWeight="800" fontFamily="inherit">{isEn ? 'Ones' : 'الآحاد'}</text>
+                  {/* Crossing out and borrowing */}
+                  <text x="65" y="52" textAnchor="middle" fill="#2563eb" fontSize="14" fontWeight="800" fontFamily="inherit">4</text>
+                  <text x="165" y="52" textAnchor="middle" fill="#db2777" fontSize="14" fontWeight="800" fontFamily="inherit">12</text>
+                  <line x1="52" y1="78" x2="78" y2="64" stroke="#ef4444" strokeWidth="2" />
+                  <text x="65" y="80" textAnchor="middle" fill="#64748b" fontSize="22" fontWeight="700" fontFamily="inherit">5</text>
+                  <line x1="152" y1="78" x2="178" y2="64" stroke="#ef4444" strokeWidth="2" />
+                  <text x="165" y="80" textAnchor="middle" fill="#64748b" fontSize="22" fontWeight="700" fontFamily="inherit">2</text>
+                  <text x="25" y="112" fill="#dc2626" fontSize="22" fontWeight="800" fontFamily="inherit">−</text>
+                  <text x="65" y="112" textAnchor="middle" fill="#0f172a" fontSize="22" fontWeight="800" fontFamily="inherit">2</text>
+                  <text x="165" y="112" textAnchor="middle" fill="#0f172a" fontSize="22" fontWeight="800" fontFamily="inherit">7</text>
+                  <line x1="20" y1="124" x2="210" y2="124" stroke="#475569" strokeWidth="2.5" />
+                  <text x="65" y="150" textAnchor="middle" fill="#16a34a" fontSize="24" fontWeight="900" fontFamily="inherit">2</text>
+                  <text x="165" y="150" textAnchor="middle" fill="#16a34a" fontSize="24" fontWeight="900" fontFamily="inherit">5</text>
+                </g>
+                {/* Inverse Check Box */}
+                <g transform="translate(390, 80)">
+                  <rect width="240" height="160" rx="10" fill="#ecfdf5" stroke="#059669" strokeWidth="2" />
+                  <text x="120" y="28" textAnchor="middle" fill="#047857" fontSize="15" fontWeight="800" fontFamily="inherit">
+                    {isEn ? 'Inverse Check (Addition)' : 'التحقق بالعملية العكسية (الجمع)'}
+                  </text>
+                  <text x="120" y="70" textAnchor="middle" fill="#0f172a" fontSize="20" fontWeight="800" fontFamily="inherit">
+                    25 + 27 = 52  ✓
+                  </text>
+                  <rect x="25" y="94" width="190" height="50" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="1.5" />
+                  <text x="120" y="116" textAnchor="middle" fill="#065f46" fontSize="12" fontWeight="700" fontFamily="inherit">
+                    {isEn ? 'Difference + Subtrahend' : 'الناتج (٢٥) + المطروح (٢٧)'}
+                  </text>
+                  <text x="120" y="134" textAnchor="middle" fill="#047857" fontSize="13" fontWeight="800" fontFamily="inherit">
+                    {isEn ? '= Minuend (52)  Correct!' : '= المطروح منه (٥٢)  إجابة صحيحة'}
+                  </text>
+                </g>
+                <text x="380" y="262" textAnchor="middle" fill="#334155" fontSize="14" fontWeight="700" fontFamily="inherit">
+                  {isEn ? 'Unbundle 1 ten to make 12 ones, subtract, and verify with addition' : 'فُكّت عشرة واحدة لتصبح ١٢ آحادًا، ثم طُرحت الأعداد وتُحقّق منها بالجمع'}
+                </text>
+              </g>
+            )}
+          </svg>
+        );
+      }
       case 'primary_math_g3_unit': {
         const unit = Number(diagram.id.match(/-(\d+)$/)?.[1] || 1);
         const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');

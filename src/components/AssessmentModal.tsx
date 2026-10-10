@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { AssessmentResult, Lecture, StudentProfile } from '../types';
+import { sanitizeLectureForStudents } from '../services/studentContentSanitizer';
 import { evaluateAssessmentWithGemini } from '../services/geminiService';
 import { saveGrade, recordSession } from '../services/database';
 import { getTranslations } from '../i18n/translations';
@@ -41,13 +42,14 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const assessment = lecture.assessment;
+  const studentLecture = sanitizeLectureForStudents(lecture);
+  const assessment = studentLecture.assessment;
   const t = getTranslations(profile.language);
   const isEn = profile.language === 'en';
 
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<AssessmentResult | null>(lecture.lastAttempt || null);
+  const [result, setResult] = useState<AssessmentResult | null>(studentLecture.lastAttempt || null);
 
   // Clear answers when re-taking
   const handleRetake = () => {
@@ -73,7 +75,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
     setIsSubmitting(true);
     try {
       const evaluation = await evaluateAssessmentWithGemini(
-        lecture,
+        studentLecture,
         assessment.questions,
         selectedAnswers,
         profile,
@@ -94,7 +96,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
 
       // ── Persist grade to IndexedDB + localStorage ──
       try {
-        const lectureTitle = (profile.language === 'en' ? lecture.titleEn : lecture.titleAr) || lecture.titleAr || lecture.id;
+        const lectureTitle = (profile.language === 'en' ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleAr || studentLecture.id;
         await saveGrade(
           profile.id,
           lecture.id,
