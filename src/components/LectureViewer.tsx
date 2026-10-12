@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { ensureFourExamplesForLecture } from '../services/lectureExampleEnricher';
+import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
 import {
   BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
@@ -147,9 +148,12 @@ function renderMathFormattedText(text: string): React.ReactNode {
 export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
+  const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject);
   const lecture = useMemo(
-    () => sanitizeLectureForStudents(ensureFourExamplesForLecture(rawLecture)),
-    [rawLecture]
+    () => sanitizeLectureForStudents(
+      isForeignLanguageLesson ? rawLecture : ensureFourExamplesForLecture(rawLecture)
+    ),
+    [rawLecture, isForeignLanguageLesson]
   );
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
@@ -159,8 +163,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const [activeExampleStep, setActiveExampleStep] = useState<Record<string, number>>({});
   const [showAllSteps, setShowAllSteps]           = useState<Record<string, boolean>>({});
 
-  const t = getTranslations(lang);
-  const isEn = lang === 'en';
+  const isArabicLanguageLesson = ['ARABIC_LIT', 'ARABIC_LANG', 'PRIMARY_ARABIC'].includes(rawLecture?.subject || '');
+  const isEn = lang === 'en' || isForeignLanguageLesson;
+  const t = getTranslations(isEn ? 'en' : lang);
 
   useEffect(() => {
     setFormativeSelected({});
@@ -175,7 +180,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   if (!lecture) {
     return (
       <div className="lecture-viewer-root" style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
-        <p>{lang === 'en' ? 'Loading lesson content...' : 'جاري تحميل محتوى الدرس...'}</p>
+        <div style={{ display: 'inline-flex', padding: '16px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.08)', marginBottom: '1rem' }}>
+          <BookOpen size={36} style={{ color: '#38bdf8' }} />
+        </div>
+        <p style={{ fontSize: '1rem', fontWeight: 500 }}>
+          {lang === 'en' ? 'Select a lesson from the roadmap to start learning.' : 'اختر محاضرة من الخارطة لبدء الشرح والتفاعل.'}
+        </p>
       </div>
     );
   }
@@ -381,8 +391,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
             {vocab.map((v, i) => (
               <div key={i} className="vocab-card">
                 <div className="vocab-term-row">
-                  <span className="vocab-term-ar">{v.termAr}</span>
-                  {v.termEn !== v.termAr && (
+                  <span className="vocab-term-ar">{isEn ? v.termEn : v.termAr}</span>
+                  {!isArabicLanguageLesson && !isEn && v.termEn !== v.termAr && (
                     <span className="vocab-term-en">{v.termEn}</span>
                   )}
                 </div>
@@ -475,7 +485,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
                   {/* ── CURRICULUM ILLUSTRATION & SCIENTIFIC DIAGRAM ── */}
                   {sec.diagram && (
-                    <CurriculumDiagramRenderer diagram={sec.diagram} lang={lang} />
+                    <CurriculumDiagramRenderer diagram={sec.diagram} lang={isEn ? 'en' : lang} />
                   )}
 
                   {/* ── INTERACTIVE WORKED EXAMPLE (Step-by-Step) ── */}

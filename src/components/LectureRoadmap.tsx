@@ -28,7 +28,7 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const isEn = lang === 'en';
 
   const completedCount = lectures.filter((l) => l.isCompleted).length;
-  const progressPercent = Math.round((completedCount / lectures.length) * 100);
+  const progressPercent = lectures.length > 0 ? Math.round((completedCount / lectures.length) * 100) : 0;
   const nextLectureToSolve = lectures.find(l => !l.isCompleted && !l.isLocked) || null;
 
   // Dynamic Course Header matching student's active track, country and grade
@@ -132,12 +132,12 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
               </button>
             )}
           </div>
-        ) : (
+        ) : lectures.length > 0 && completedCount === lectures.length ? (
           <div className="guidance-all-completed">
             <Award size={16} className="text-amber-400" />
             <span>{isEn ? '🎉 All curriculum lectures solved!' : '🎉 تم حل واجتياز كافة المحاضرات بنجاح!'}</span>
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* Lectures List */}

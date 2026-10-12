@@ -6,14 +6,22 @@ import {
   loadSubjectLectures, 
   saveSubjectLectures,
   isBlockedGeographyHistoryRoute,
-  isSaudiSocialStudiesAvailable
+  isSaudiSocialStudiesAvailable,
+  isSudanPublicGrade4SubjectAvailable,
+  isSudanPublicGrade5SubjectAvailable,
+  isSudanPublicGrade6SubjectAvailable,
+  isSudanPublicMiddleSubjectAvailable,
+  isSudanPublicGrade10SubjectAvailable,
+  isSudanPublicGrade11SubjectAvailable,
+  getSudanPublicGrade12Subjects,
+  isSudanPublicGrade12SubjectAvailable,
+  isEnglishCourseAvailable
 } from './data/curriculumData';
 import {
   getActiveCurriculumCountry,
   getCountryInfo,
   getSpecializationForEducationTrack,
   isSaudiPublicBusinessG11DigitalTechnologyAvailable,
-  isSaudiPublicEnglishAvailable,
   isSaudiPublicG11BiologyAvailable,
   isSaudiPublicG11PhysicsAvailable,
   isSaudiPublicG11HealthScienceAvailable,
@@ -130,6 +138,9 @@ export function App() {
                 isSaudiPublicQuranRecitationAvailable(merged.country, merged.gradeLevel, merged.educationType)) &&
               !(merged.subject === 'VISUAL_ARTS' &&
                 isSaudiPublicG6VisualArtsAvailable(merged.country, merged.gradeLevel, merged.educationType)) &&
+              !isSudanPublicGrade4SubjectAvailable(merged.subject, merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack) &&
+              !isSudanPublicGrade5SubjectAvailable(merged.subject, merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack) &&
+              !isSudanPublicGrade6SubjectAvailable(merged.subject, merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack) &&
               !(merged.subject === 'LIFE_SKILLS' &&
                 isSaudiPublicLifeSkillsAvailable(merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack)) &&
               !(merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
@@ -145,7 +156,16 @@ export function App() {
         } else if (['G7', 'G8', 'G9'].includes(merged.gradeLevel)) {
           // Middle School: No specialization tracks! Must be GENERAL
           merged.specialization = 'GENERAL';
-          if (!MIDDLE_SUBJS.includes(merged.subject) &&
+          const validSudanMiddleSubject = isSudanPublicMiddleSubjectAvailable(
+            merged.subject,
+            merged.country,
+            merged.gradeLevel,
+            merged.educationType,
+            merged.educationTrack
+          );
+          if ((merged.country === 'SD' && ['G7', 'G8'].includes(merged.gradeLevel)
+            ? !validSudanMiddleSubject
+            : !MIDDLE_SUBJS.includes(merged.subject)) &&
               !(merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
                 isSaudiSocialStudiesAvailable(merged.gradeLevel, merged.country, merged.educationType, merged.educationTrack))) {
             if (['PRIMARY_ARABIC', 'ARABIC_LIT', 'ISLAMIC_STUDIES'].includes(merged.subject)) merged.subject = 'ARABIC_LANG';
@@ -158,6 +178,36 @@ export function App() {
         } else {
           // High School:
           merged.specialization = getSpecializationForEducationTrack(merged.educationTrack || 'GENERAL');
+          const isVerifiedSudanGrade12 = isSudanPublicGrade12SubjectAvailable(
+            merged.subject,
+            merged.country,
+            merged.gradeLevel,
+            merged.educationType,
+            merged.educationTrack
+          );
+          if (merged.country === 'SD' && merged.gradeLevel === 'G12' && !isVerifiedSudanGrade12) {
+            merged.subject = getSudanPublicGrade12Subjects(merged.educationTrack)[0] ?? 'ARABIC_LIT';
+          }
+          if (merged.country === 'SD' && merged.gradeLevel === 'G10' &&
+              !isSudanPublicGrade10SubjectAvailable(
+                merged.subject,
+                merged.country,
+                merged.gradeLevel,
+                merged.educationType,
+                merged.educationTrack
+              )) {
+            merged.subject = 'CHEMISTRY';
+          }
+          if (merged.country === 'SD' && merged.gradeLevel === 'G11' &&
+              !isSudanPublicGrade11SubjectAvailable(
+                merged.subject,
+                merged.country,
+                merged.gradeLevel,
+                merged.educationType,
+                merged.educationTrack
+              )) {
+            merged.subject = 'BIOLOGY';
+          }
           if (
             merged.subject === 'COMPUTER_SCIENCE' &&
             merged.country === 'SA' &&
@@ -172,7 +222,7 @@ export function App() {
             merged.subject = 'ARABIC_LIT';
           }
           if (merged.subject === 'ENGLISH' &&
-              !isSaudiPublicEnglishAvailable(merged.country, merged.gradeLevel, merged.educationType)) {
+              !isEnglishCourseAvailable(merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack)) {
             merged.subject = 'ARABIC_LIT';
           }
           if (merged.country === 'SA' && merged.gradeLevel === 'G11' &&
@@ -201,7 +251,7 @@ export function App() {
               )) {
             merged.subject = 'ARABIC_LIT';
           }
-          if ((merged.subject === 'GEOGRAPHY' || merged.subject === 'HISTORY') &&
+          if (!isVerifiedSudanGrade12 && (merged.subject === 'GEOGRAPHY' || merged.subject === 'HISTORY') &&
               isBlockedGeographyHistoryRoute(
                 merged.subject,
                 merged.country,
@@ -214,7 +264,7 @@ export function App() {
               !isSaudiSocialStudiesAvailable(merged.gradeLevel, merged.country, merged.educationType, merged.educationTrack)) {
             merged.subject = 'ARABIC_LIT';
           }
-          if (PRIMARY_SUBJS.includes(merged.subject) || merged.subject === 'ARABIC_LANG' || merged.subject === 'TAJWEED' || merged.subject === 'QURAN_RECITATION' || merged.subject === 'VISUAL_ARTS' || merged.subject === 'LIFE_SKILLS') {
+          if (!isVerifiedSudanGrade12 && (PRIMARY_SUBJS.includes(merged.subject) || merged.subject === 'ARABIC_LANG' || merged.subject === 'TAJWEED' || merged.subject === 'QURAN_RECITATION' || merged.subject === 'VISUAL_ARTS' || merged.subject === 'LIFE_SKILLS')) {
             merged.subject = 'ARABIC_LIT';
           } else if (['GENERAL_SCIENCE', 'PRIMARY_SCIENCE'].includes(merged.subject)) {
             merged.subject = 'PHYSICS';
@@ -729,6 +779,9 @@ export function App() {
             isSaudiPublicQuranRecitationAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) &&
           !(sanitized.subject === 'VISUAL_ARTS' &&
             isSaudiPublicG6VisualArtsAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) &&
+          !isSudanPublicGrade4SubjectAvailable(sanitized.subject, sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack) &&
+          !isSudanPublicGrade5SubjectAvailable(sanitized.subject, sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack) &&
+          !isSudanPublicGrade6SubjectAvailable(sanitized.subject, sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack) &&
           !(sanitized.subject === 'LIFE_SKILLS' &&
             isSaudiPublicLifeSkillsAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack)) &&
           !(sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&
@@ -737,13 +790,52 @@ export function App() {
       }
     } else if (['G7', 'G8', 'G9'].includes(sanitized.gradeLevel)) {
       sanitized.specialization = 'GENERAL';
-      if (!MIDDLE_SUBJS.includes(sanitized.subject) &&
+      const validSudanMiddleSubject = isSudanPublicMiddleSubjectAvailable(
+        sanitized.subject,
+        sanitized.country,
+        sanitized.gradeLevel,
+        sanitized.educationType,
+        sanitized.educationTrack
+      );
+      if ((sanitized.country === 'SD' && ['G7', 'G8'].includes(sanitized.gradeLevel)
+        ? !validSudanMiddleSubject
+        : !MIDDLE_SUBJS.includes(sanitized.subject)) &&
           !(sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&
             isSaudiSocialStudiesAvailable(sanitized.gradeLevel, sanitized.country, sanitized.educationType, sanitized.educationTrack))) {
         sanitized.subject = 'ARABIC_LANG';
       }
     } else {
       sanitized.specialization = getSpecializationForEducationTrack(sanitized.educationTrack || 'GENERAL');
+      const isVerifiedSudanGrade12 = isSudanPublicGrade12SubjectAvailable(
+        sanitized.subject,
+        sanitized.country,
+        sanitized.gradeLevel,
+        sanitized.educationType,
+        sanitized.educationTrack
+      );
+      if (sanitized.country === 'SD' && sanitized.gradeLevel === 'G12' && !isVerifiedSudanGrade12) {
+        sanitized.subject = getSudanPublicGrade12Subjects(sanitized.educationTrack)[0] ?? 'ARABIC_LIT';
+      }
+      if (sanitized.country === 'SD' && sanitized.gradeLevel === 'G10' &&
+          !isSudanPublicGrade10SubjectAvailable(
+            sanitized.subject,
+            sanitized.country,
+            sanitized.gradeLevel,
+            sanitized.educationType,
+            sanitized.educationTrack
+          )) {
+        sanitized.subject = 'CHEMISTRY';
+      }
+      if (sanitized.country === 'SD' && sanitized.gradeLevel === 'G11' &&
+          !isSudanPublicGrade11SubjectAvailable(
+            sanitized.subject,
+            sanitized.country,
+            sanitized.gradeLevel,
+            sanitized.educationType,
+            sanitized.educationTrack
+          )) {
+        sanitized.subject = 'BIOLOGY';
+      }
       if (
         sanitized.subject === 'COMPUTER_SCIENCE' &&
         sanitized.country === 'SA' &&
@@ -758,7 +850,7 @@ export function App() {
         sanitized.subject = 'ARABIC_LIT';
       }
       if (sanitized.subject === 'ENGLISH' &&
-          !isSaudiPublicEnglishAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) {
+          !isEnglishCourseAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack)) {
         sanitized.subject = 'ARABIC_LIT';
       }
       if (sanitized.country === 'SA' && sanitized.gradeLevel === 'G11' &&
@@ -787,7 +879,7 @@ export function App() {
           )) {
         sanitized.subject = 'ARABIC_LIT';
       }
-      if ((sanitized.subject === 'GEOGRAPHY' || sanitized.subject === 'HISTORY') &&
+      if (!isVerifiedSudanGrade12 && (sanitized.subject === 'GEOGRAPHY' || sanitized.subject === 'HISTORY') &&
           isBlockedGeographyHistoryRoute(
             sanitized.subject,
             sanitized.country,
@@ -800,7 +892,7 @@ export function App() {
           !isSaudiSocialStudiesAvailable(sanitized.gradeLevel, sanitized.country, sanitized.educationType, sanitized.educationTrack)) {
         sanitized.subject = 'ARABIC_LIT';
       }
-      if (PRIMARY_SUBJS.includes(sanitized.subject) || sanitized.subject === 'ARABIC_LANG' || sanitized.subject === 'TAJWEED' || sanitized.subject === 'QURAN_RECITATION' || sanitized.subject === 'VISUAL_ARTS' || sanitized.subject === 'LIFE_SKILLS') sanitized.subject = 'ARABIC_LIT';
+      if (!isVerifiedSudanGrade12 && (PRIMARY_SUBJS.includes(sanitized.subject) || sanitized.subject === 'ARABIC_LANG' || sanitized.subject === 'TAJWEED' || sanitized.subject === 'QURAN_RECITATION' || sanitized.subject === 'VISUAL_ARTS' || sanitized.subject === 'LIFE_SKILLS')) sanitized.subject = 'ARABIC_LIT';
       if (['PRIMARY_SCIENCE', 'GENERAL_SCIENCE'].includes(sanitized.subject)) sanitized.subject = 'PHYSICS';
       if (sanitized.subject === 'PRIMARY_MATH') sanitized.subject = 'MATH';
     }

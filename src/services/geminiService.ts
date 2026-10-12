@@ -212,6 +212,13 @@ export async function askGeminiTutor(
 
   const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
   const keyConcepts = isEn ? lecture.keyConceptsEn.join(', ') : lecture.keyConceptsAr.join('، ');
+  const targetLanguage = profile.subject === 'FRENCH' ? 'French' : profile.subject === 'GERMAN' ? 'German' : profile.subject === 'ITALIAN' ? 'Italian' : profile.subject === 'ENGLISH' ? 'English' : '';
+  const languageDirectiveEn = targetLanguage
+    ? `\n8. This is a ${targetLanguage} language lesson: conduct the whole lesson and all explanations only in ${targetLanguage}. Do not explain in Arabic.`
+    : '';
+  const languageDirectiveAr = targetLanguage
+    ? `\n8. هذا درس لغة (${targetLanguage}): قدّم الشرح والتفاعل كاملًا باللغة ${targetLanguage} فقط ولا تشرح بالعربية، واستخدم عبارات بسيطة تناسب مستوى الطالب.`
+    : '';
 
   const systemInstruction = isEn
     ? `
@@ -231,7 +238,7 @@ Strict Pedagogical Directives:
 4. Strictly confine discussions to this active lecture. If student asks off-topic questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
 5. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
 6. Never direct the student to an external website or include external URLs or hyperlinks. Keep instruction and resources inside the platform.
-7. Always converse in English.
+7. Always converse in English.${languageDirectiveEn}
     `.trim()
     : `
 أنت "المعلم الذكي" (AI Socratic Tutor) المعتمد والمخصص لمساعدة الطالب: ${profile.name}.
@@ -250,7 +257,7 @@ Strict Pedagogical Directives:
 4. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية، وجهه بلطف للتركيز على إتقان ${lectureTitle}.
 5. استخدم لغة عربية فصحى مشجعة، ووضح الرموز الرياضية خطوة بخطوة.
 6. لا توجه الطالب إلى أي موقع خارج المنصة، ولا تدرج روابط أو عناوين URL خارجية؛ قدّم الشرح والموارد داخل المنصة فقط.
-7. لا تتجاوز 3 فقرات قصيرة لكل إجابة.
+7. لا تتجاوز 3 فقرات قصيرة لكل إجابة.${languageDirectiveAr}
     `.trim();
 
   // If API Key is present, call Gemini API with fallback

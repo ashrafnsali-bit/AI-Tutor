@@ -33,6 +33,62 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
     const isElectrolysis = title.includes('التحليل الكهربائي') || title.toLowerCase().includes('electrolysis');
 
     switch (diagram.diagramType) {
+      case 'prayer_sequence': {
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const steps = diagram.visualSteps ?? [];
+        const xForStep = (index: number) =>
+          82 + 118 * (isEn ? index : steps.length - index - 1);
+
+        return (
+          <svg
+            viewBox="0 0 760 320"
+            className="scientific-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <marker id={`${visualId}-arrow`} markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#0f766e" />
+              </marker>
+            </defs>
+            <rect width="760" height="320" rx="20" fill="#f0fdfa" />
+            <rect x="28" y="24" width="704" height="272" rx="18" fill="#fff" stroke="#99f6e4" strokeWidth="2" />
+            <text x="380" y="66" textAnchor="middle" fill="#134e4a" fontSize="21" fontWeight="700" fontFamily="inherit">
+              {title}
+            </text>
+            {steps.map((step, index) => {
+              const center = xForStep(index);
+              const nextCenter = index < steps.length - 1 ? xForStep(index + 1) : null;
+              const direction = nextCenter === null ? 0 : Math.sign(nextCenter - center);
+
+              return (
+                <g key={`${step.labelEn}-${index}`}>
+                  <rect x={center - 47} y="118" width="94" height="86" rx="14" fill={index % 2 === 0 ? '#ccfbf1' : '#dbeafe'} stroke="#0f766e" strokeWidth="2" />
+                  <circle cx={center} cy="137" r="13" fill="#0f766e" />
+                  <text x={center} y="142" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" fontFamily="inherit">
+                    {index + 1}
+                  </text>
+                  <text x={center} y="177" textAnchor="middle" fill="#134e4a" fontSize="14" fontWeight="700" fontFamily="inherit">
+                    {isEn ? step.labelEn : step.labelAr}
+                  </text>
+                  {nextCenter !== null && (
+                    <path
+                      d={`M${center + direction * 51} 161 H${nextCenter - direction * 51}`}
+                      stroke="#0f766e"
+                      strokeWidth="3"
+                      markerEnd={`url(#${visualId}-arrow)`}
+                    />
+                  )}
+                </g>
+              );
+            })}
+            <text x="380" y="252" textAnchor="middle" fill="#475569" fontSize="15" fontFamily="inherit">
+              {isEn ? 'Follow the sequence and learn each movement calmly' : 'رتب الحركات وتعلم أداء كل حركة بهدوء'}
+            </text>
+          </svg>
+        );
+      }
       case 'primary_science_g3_unit': {
         const unit = Number(diagram.id.match(/-unit-(\d+)-visual$/)?.[1] || 0);
         const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
@@ -1005,6 +1061,190 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
         );
       }
 
+      case 'primary_geography_g3': {
+        const steps = diagram.visualSteps ?? [];
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const cardWidth = 166;
+        const gap = 22;
+        const startX = 26;
+        return (
+          <svg
+            viewBox="0 0 780 240"
+            className="scientific-svg primary-geography-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-bg`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#ecfeff" />
+                <stop offset="100%" stopColor="#f0fdf4" />
+              </linearGradient>
+            </defs>
+            <rect width="780" height="240" rx="16" fill={`url(#${visualId}-bg)`} />
+            {steps.slice(0, 4).map((step, index) => {
+              const visualIndex = isEn ? index : steps.length - index - 1;
+              const x = startX + visualIndex * (cardWidth + gap);
+              const color = ['#0e7490', '#15803d', '#b45309', '#6d28d9'][index % 4];
+              const label = isEn ? step.labelEn : step.labelAr;
+              return (
+                <g key={`${label}-${index}`}>
+                  <rect x={x} y="34" width={cardWidth} height="146" rx="14" fill="#fff" stroke={color} strokeWidth="2" />
+                  <circle cx={x + cardWidth / 2} cy="80" r="25" fill={color} opacity="0.15" />
+                  <circle cx={x + cardWidth / 2} cy="80" r="16" fill={color} opacity="0.28" />
+                  <text x={x + cardWidth / 2} y="86" textAnchor="middle" fill={color} fontSize="17" fontWeight="800">
+                    {index + 1}
+                  </text>
+                  <text
+                    x={x + cardWidth / 2}
+                    y="137"
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#164e63"
+                    fontSize="13"
+                    fontWeight="700"
+                    fontFamily="inherit"
+                  >
+                    {label}
+                  </text>
+                </g>
+              );
+            })}
+            <text x="390" y="216" textAnchor="middle" fill="#155e75" fontSize="12" fontWeight="700">
+              {isEn ? 'Place • environment • people • responsible care' : 'المكان • البيئة • السكان • المحافظة على المكان'}
+            </text>
+          </svg>
+        );
+      }
+      case 'primary_history_g3': {
+        const steps = diagram.visualSteps ?? [];
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const cardWidth = 166;
+        const gap = 22;
+        const startX = 26;
+        return (
+          <svg
+            viewBox="0 0 780 240"
+            className="scientific-svg primary-history-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-bg`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#fff7ed" />
+                <stop offset="100%" stopColor="#eff6ff" />
+              </linearGradient>
+            </defs>
+            <rect width="780" height="240" rx="16" fill={`url(#${visualId}-bg)`} />
+            <path d="M 105 99 H 675" stroke="#94a3b8" strokeWidth="3" strokeDasharray="5 8" />
+            {steps.slice(0, 4).map((step, index) => {
+              const visualIndex = isEn ? index : steps.length - index - 1;
+              const x = startX + visualIndex * (cardWidth + gap);
+              const color = ['#9a3412', '#1d4ed8', '#047857', '#7e22ce'][index % 4];
+              const label = isEn ? step.labelEn : step.labelAr;
+              return (
+                <g key={`${label}-${index}`}>
+                  <rect x={x} y="42" width={cardWidth} height="124" rx="14" fill="#fff" stroke={color} strokeWidth="2" />
+                  <circle cx={x + cardWidth / 2} cy="99" r="23" fill="#fff" stroke={color} strokeWidth="3" />
+                  <text x={x + cardWidth / 2} y="105" textAnchor="middle" fill={color} fontSize="16" fontWeight="800">
+                    {index + 1}
+                  </text>
+                  <text
+                    x={x + cardWidth / 2}
+                    y="145"
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#334155"
+                    fontSize="13"
+                    fontWeight="700"
+                    fontFamily="inherit"
+                  >
+                    {label}
+                  </text>
+                </g>
+              );
+            })}
+            <text x="390" y="207" textAnchor="middle" fill="#475569" fontSize="12" fontWeight="700">
+              {isEn ? 'People • places • events • heritage' : 'الناس • الأماكن • الأحداث • التراث'}
+            </text>
+          </svg>
+        );
+      }
+      case 'primary_lesson_sequence': {
+        const steps = diagram.visualSteps ?? [];
+        const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const cardWidth = 166;
+        const gap = 22;
+        const startX = 26;
+        const wrapLabel = (label: string) => {
+          const maxLineLength = isEn ? 24 : 20;
+          return label.split(/\s+/).reduce<string[]>((lines, word) => {
+            const lastLine = lines.at(-1);
+            if (lastLine && `${lastLine} ${word}`.length <= maxLineLength) {
+              lines[lines.length - 1] = `${lastLine} ${word}`;
+            } else {
+              lines.push(word);
+            }
+            return lines;
+          }, []);
+        };
+        return (
+          <svg
+            viewBox="0 0 780 280"
+            className="scientific-svg primary-lesson-sequence-svg"
+            role="img"
+            aria-label={title}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id={`${visualId}-bg`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#f5f3ff" />
+                <stop offset="100%" stopColor="#ecfeff" />
+              </linearGradient>
+            </defs>
+            <rect width="780" height="280" rx="16" fill={`url(#${visualId}-bg)`} />
+            {steps.slice(0, 4).map((step, index) => {
+              const visualIndex = isEn ? index : steps.length - index - 1;
+              const x = startX + visualIndex * (cardWidth + gap);
+              const color = ['#6d28d9', '#0369a1', '#15803d', '#b45309'][index % 4];
+              const label = isEn ? step.labelEn : step.labelAr;
+              const labelLines = wrapLabel(label);
+              return (
+                <g key={`${label}-${index}`}>
+                  <rect x={x} y="24" width={cardWidth} height="218" rx="14" fill="#fff" stroke={color} strokeWidth="2" />
+                  <circle cx={x + cardWidth / 2} cy="68" r="23" fill={color} opacity="0.14" />
+                  <text x={x + cardWidth / 2} y="74" textAnchor="middle" fill={color} fontSize="16" fontWeight="800">
+                    {index + 1}
+                  </text>
+                  <text
+                    x={x + cardWidth / 2}
+                    y="116"
+                    textAnchor="middle"
+                    direction={isEn ? 'ltr' : 'rtl'}
+                    unicodeBidi="plaintext"
+                    fill="#334155"
+                    fontSize="12"
+                    fontWeight="700"
+                    fontFamily="inherit"
+                  >
+                    {labelLines.map((line, lineIndex) => (
+                      <tspan key={`${line}-${lineIndex}`} x={x + cardWidth / 2} dy={lineIndex === 0 ? 0 : 16}>
+                        {line}
+                      </tspan>
+                    ))}
+                  </text>
+                </g>
+              );
+            })}
+            <text x="390" y="264" textAnchor="middle" fill="#475569" fontSize="12" fontWeight="700">
+              {isEn ? 'Explore • understand • practise • review' : 'استكشف • افهم • طبّق • راجع'}
+            </text>
+          </svg>
+        );
+      }
       case 'social_studies': {
         const steps = diagram.visualSteps || [];
         const visualId = diagram.id.replace(/[^a-zA-Z0-9_-]/g, '-');

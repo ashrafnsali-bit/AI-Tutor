@@ -67,35 +67,47 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isEn = profile.language === 'en';
 
   // Fetch official authenticated student name directly from central database (preventing any mismatch)
-  const isInvalidDemoName = (n?: string) => !n || n === 'عمر التميمي' || n === 'احمد علي' || n === 'Ahmed Ali';
+  const isInvalidDemoName = (n?: string) =>
+    !n ||
+    ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب مسجل', 'Registered Student', 'طالب زائر', 'Guest Student']
+      .includes(n.trim());
 
-  const [dbOfficialName, setDbOfficialName] = useState<string>(() => {
+  const [dbOfficialName, setDbOfficialName] = useState('');
+  let storedOfficialName = '';
+  if (isLoggedIn) {
     try {
       const activeStored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
-      if (activeStored) {
-        const parsed = JSON.parse(activeStored);
-        if (parsed?.name && !isInvalidDemoName(parsed.name)) {
-          return isEn ? (parsed.nameEn || parsed.name) : (parsed.nameAr || parsed.name);
-        }
-      }
-    } catch {}
-    const pName = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
-    return !isInvalidDemoName(pName) ? pName : '';
-  });
+      const parsed = activeStored ? JSON.parse(activeStored) : null;
+      const storedName = isEn
+        ? (parsed?.nameEn || parsed?.name)
+        : (parsed?.nameAr || parsed?.name);
+      if (!isInvalidDemoName(storedName)) storedOfficialName = storedName;
+    } catch (error) {
+      console.error('Unable to read the active student name from local storage.', error);
+    }
+  }
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+    let isCurrent = true;
     getActiveUserAccount().then(user => {
-      if (user && user.name && !isInvalidDemoName(user.name)) {
+      if (isCurrent && user && user.name && !isInvalidDemoName(user.name)) {
         setDbOfficialName(isEn ? (user.nameEn || user.name) : (user.nameAr || user.name));
       }
-    }).catch(() => {});
-  }, [profile.name, isEn]);
+    }).catch((error) => {
+      console.error('Unable to load the active student name from the database.', error);
+    });
+    return () => {
+      isCurrent = false;
+    };
+  }, [isLoggedIn, profile.id, profile.name, profile.nameAr, profile.nameEn, isEn]);
 
   const defaultFallback = isEn ? (profile.nameEn || profile.name) : (profile.nameAr || profile.name);
+  const cleanStoredName = !isInvalidDemoName(storedOfficialName) ? storedOfficialName : '';
   const cleanDbName = !isInvalidDemoName(dbOfficialName) ? dbOfficialName : '';
   const cleanDefault = !isInvalidDemoName(defaultFallback) ? defaultFallback : '';
   const guestLabel = isEn ? 'Guest Student' : 'طالب زائر';
-  const displayName = cleanDbName || cleanDefault || guestLabel;
+  const displayName = cleanStoredName || cleanDefault || (isLoggedIn ? cleanDbName : '') || guestLabel;
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(profile.gradeLevel);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(profile.gradeLevel);
   const countryInfo = getCountryInfo(profile.country);

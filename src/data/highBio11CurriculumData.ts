@@ -860,8 +860,8 @@ export const HIGH_BIO_G11_LECTURES: Lecture[] = [
     gradeLevelNameEn: 'Grade 11 / Secondary 2 - High School Biology',
     termAr: 'الفصل الدراسي الثاني',
     termEn: 'Term 2 Official Curriculum',
-    unitTitleAr: 'الوحدة الخامسة: الإحساس في الكائنات الحية',
-    unitTitleEn: 'Unit 5: Sensation in Living Organisms',
+    unitTitleAr: 'الوحدة الخامسة: التنسيق في الكائنات الحية',
+    unitTitleEn: 'Unit 5: Coordination in Living Organisms',
     lessonNumberAr: 'الدرس 5: الإحساس في النبات والإنسان',
     lessonNumberEn: 'Lesson 5: Sensation, Nervous System & Plant Tropisms',
 

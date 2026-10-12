@@ -116,7 +116,10 @@ export const translations = {
       ARABIC_LANG: 'اللغة العربية (المرحلة المتوسطة / الإعدادية)',
       GENERAL_SCIENCE: 'العلوم العامة (المرحلة المتوسطة / الإعدادية)',
       GEOGRAPHY: 'الجغرافيا والدراسات البيئية',
-      HISTORY: 'التاريخ والحضارة الإنسانية'
+      HISTORY: 'التاريخ والحضارة الإنسانية',
+      PHILOSOPHY: 'الفلسفة والمنطق',
+      NATIONAL_EDUCATION: 'التربية الوطنية',
+      TECHNICAL_EDUCATION: 'أساسيات التربية التقنية'
     },
 
     // Roadmap
@@ -361,7 +364,10 @@ export const translations = {
       ARABIC_LANG: 'Arabic Language (Grammar & Reading - Middle School)',
       GENERAL_SCIENCE: 'General Science (Middle School)',
       GEOGRAPHY: 'Geography & Environmental Studies',
-      HISTORY: 'History & Human Civilizations'
+      HISTORY: 'History & Human Civilizations',
+      PHILOSOPHY: 'Philosophy and Logic',
+      NATIONAL_EDUCATION: 'National Education',
+      TECHNICAL_EDUCATION: 'Foundations of Technical Education'
     },
 
     // Roadmap

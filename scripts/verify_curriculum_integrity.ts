@@ -1,4 +1,31 @@
-import { getCurriculumForSubject, loadSubjectLectures } from '../src/data/curriculumData';
+import {
+  getCurriculumForSubject,
+  isSudanPublicGrade6SubjectAvailable,
+  isSudanPublicGrade7SubjectAvailable,
+  isSudanPublicGrade8SubjectAvailable,
+  isSudanPublicGrade9SubjectAvailable,
+  isSudanPublicGrade10SubjectAvailable,
+  isSudanPublicGrade11SubjectAvailable,
+  getSudanPublicGrade12Subjects,
+  isSudanPublicGrade12SubjectAvailable,
+  loadSubjectLectures
+} from '../src/data/curriculumData';
+import {
+  isEgyptG11SubjectAvailable,
+  getEgyptG11Subjects
+} from '../src/data/egyptSecondaryG11CurriculumData';
+import {
+  isEgyptG12SubjectAvailable,
+  getEgyptG12Subjects
+} from '../src/data/egyptSecondaryG12CurriculumData';
+import {
+  isEgyptPrepSubjectAvailable,
+  getEgyptPrepSubjects
+} from '../src/data/egyptPrepCurriculumData';
+import {
+  isEgyptPrimarySubjectAvailable,
+  getEgyptPrimarySubjects
+} from '../src/data/egyptPrimaryCurriculumData';
 import {
   ACTIVE_CURRICULUM_COUNTRIES,
   getSpecializationForEducationTrack,
@@ -55,6 +82,213 @@ import {
   SUPPORTED_COUNTRIES
 } from '../src/data/curriculumCountries';
 import { getNationalLessonOverrides } from '../src/data/nationalCurricula';
+import {
+  SUDAN_PRIMARY_ENGLISH_G1_BOOK,
+  SUDAN_PRIMARY_ENGLISH_G1_LECTURES
+} from '../src/data/sudanPrimaryEnglish1CurriculumData';
+import {
+  SUDAN_PRIMARY_ENGLISH_G2_BOOK,
+  SUDAN_PRIMARY_ENGLISH_G2_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G2_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryEnglish2CurriculumData';
+import {
+  SUDAN_PRIMARY_ARABIC_G1_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G1_TABLE_OF_CONTENTS,
+  SUDAN_PRIMARY_ARABIC_G1_TEXTBOOK_PAGES
+} from '../src/data/sudanPrimaryArabic1CurriculumData';
+import {
+  SUDAN_PRIMARY_ARABIC_G2_BOOK,
+  SUDAN_PRIMARY_ARABIC_G2_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G2_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArabic2CurriculumData';
+import {
+  SUDAN_PRIMARY_MATH_G1_BOOK,
+  SUDAN_PRIMARY_MATH_G1_LECTURES,
+  SUDAN_PRIMARY_MATH_G1_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryMath1CurriculumData';
+import {
+  SUDAN_PRIMARY_MATH_G2_BOOK,
+  SUDAN_PRIMARY_MATH_G2_LECTURES,
+  SUDAN_PRIMARY_MATH_G2_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryMath2CurriculumData';
+import {
+  SUDAN_PRIMARY_GEOGRAPHY_G3_BOOK,
+  SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES,
+  SUDAN_PRIMARY_GEOGRAPHY_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryGeography3CurriculumData';
+import {
+  SUDAN_PRIMARY_HISTORY_G3_BOOK,
+  SUDAN_PRIMARY_HISTORY_G3_LECTURES,
+  SUDAN_PRIMARY_HISTORY_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryHistory3CurriculumData';
+import {
+  SUDAN_PRIMARY_ARABIC_G3_BOOK,
+  SUDAN_PRIMARY_ARABIC_G3_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArabic3CurriculumData';
+import {
+  SUDAN_PRIMARY_ENGLISH_G3_BOOK,
+  SUDAN_PRIMARY_ENGLISH_G3_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryEnglish3CurriculumData';
+import {
+  SUDAN_PRIMARY_ISLAMIC_G3_BOOK,
+  SUDAN_PRIMARY_ISLAMIC_G3_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIslamic3CurriculumData';
+import {
+  SUDAN_PRIMARY_MATH_G3_BOOK,
+  SUDAN_PRIMARY_MATH_G3_LECTURES,
+  SUDAN_PRIMARY_MATH_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryMath3CurriculumData';
+import {
+  SUDAN_PRIMARY_SCIENCE_G3_BOOK,
+  SUDAN_PRIMARY_SCIENCE_G3_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G3_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryScience3CurriculumData';
+import {
+  SUDAN_PRIMARY_ARABIC_G4_BOOK,
+  SUDAN_PRIMARY_ARABIC_G4_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArabic4CurriculumData';
+import {
+  SUDAN_PRIMARY_ENGLISH_G4_BOOK,
+  SUDAN_PRIMARY_ENGLISH_G4_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryEnglish4CurriculumData';
+import {
+  SUDAN_PRIMARY_ISLAMIC_G4_BOOK,
+  SUDAN_PRIMARY_ISLAMIC_G4_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIslamic4CurriculumData';
+import {
+  SUDAN_PRIMARY_MATH_G4_BOOK,
+  SUDAN_PRIMARY_MATH_G4_LECTURES,
+  SUDAN_PRIMARY_MATH_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryMath4CurriculumData';
+import {
+  SUDAN_PRIMARY_SCIENCE_G4_BOOK,
+  SUDAN_PRIMARY_SCIENCE_G4_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryScience4CurriculumData';
+import {
+  SUDAN_PRIMARY_ICT_G4_BOOK,
+  SUDAN_PRIMARY_ICT_G4_LECTURES,
+  SUDAN_PRIMARY_ICT_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIct4CurriculumData';
+import {
+  SUDAN_PRIMARY_ART_G4_BOOK,
+  SUDAN_PRIMARY_ART_G4_LECTURES,
+  SUDAN_PRIMARY_ART_G4_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArt4CurriculumData';
+import {
+  SUDAN_PRIMARY_ARABIC_G5_BOOK,
+  SUDAN_PRIMARY_ARABIC_G5_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArabic5CurriculumData';
+import {
+  SUDAN_PRIMARY_ENGLISH_G5_BOOK,
+  SUDAN_PRIMARY_ENGLISH_G5_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryEnglish5CurriculumData';
+import {
+  SUDAN_PRIMARY_ISLAMIC_G5_BOOK,
+  SUDAN_PRIMARY_ISLAMIC_G5_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIslamic5CurriculumData';
+import {
+  SUDAN_PRIMARY_MATH_G5_BOOK,
+  SUDAN_PRIMARY_MATH_G5_LECTURES,
+  SUDAN_PRIMARY_MATH_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryMath5CurriculumData';
+import {
+  SUDAN_PRIMARY_SCIENCE_G5_BOOK,
+  SUDAN_PRIMARY_SCIENCE_G5_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryScience5CurriculumData';
+import {
+  SUDAN_PRIMARY_GEOGRAPHY_G5_BOOK,
+  SUDAN_PRIMARY_GEOGRAPHY_G5_LECTURES,
+  SUDAN_PRIMARY_GEOGRAPHY_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryGeography5CurriculumData';
+import {
+  SUDAN_PRIMARY_HISTORY_G5_BOOK,
+  SUDAN_PRIMARY_HISTORY_G5_LECTURES,
+  SUDAN_PRIMARY_HISTORY_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryHistory5CurriculumData';
+import {
+  SUDAN_PRIMARY_ICT_G5_BOOK,
+  SUDAN_PRIMARY_ICT_G5_LECTURES,
+  SUDAN_PRIMARY_ICT_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIct5CurriculumData';
+import {
+  SUDAN_PRIMARY_ART_G5_BOOK,
+  SUDAN_PRIMARY_ART_G5_LECTURES,
+  SUDAN_PRIMARY_ART_G5_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArt5CurriculumData';
+import {
+  SUDAN_PRIMARY_ARABIC_G6_BOOK,
+  SUDAN_PRIMARY_ARABIC_G6_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryArabic6CurriculumData';
+import {
+  SUDAN_PRIMARY_ENGLISH_G6_BOOK,
+  SUDAN_PRIMARY_ENGLISH_G6_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryEnglish6CurriculumData';
+import {
+  SUDAN_PRIMARY_ISLAMIC_G6_BOOK,
+  SUDAN_PRIMARY_ISLAMIC_G6_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIslamic6CurriculumData';
+import {
+  SUDAN_PRIMARY_MATH_G6_BOOK,
+  SUDAN_PRIMARY_MATH_G6_LECTURES,
+  SUDAN_PRIMARY_MATH_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryMath6CurriculumData';
+import {
+  SUDAN_PRIMARY_GEOGRAPHY_G6_BOOK,
+  SUDAN_PRIMARY_GEOGRAPHY_G6_LECTURES,
+  SUDAN_PRIMARY_GEOGRAPHY_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryGeography6CurriculumData';
+import {
+  SUDAN_PRIMARY_HISTORY_G6_BOOK,
+  SUDAN_PRIMARY_HISTORY_G6_LECTURES,
+  SUDAN_PRIMARY_HISTORY_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryHistory6CurriculumData';
+import {
+  SUDAN_PRIMARY_ICT_G6_BOOK,
+  SUDAN_PRIMARY_ICT_G6_LECTURES,
+  SUDAN_PRIMARY_ICT_G6_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIct6CurriculumData';
+import { SUDAN_MIDDLE_ARABIC_G7_LECTURES } from '../src/data/sudanMiddleArabic7CurriculumData';
+import { SUDAN_MIDDLE_ENGLISH_G7_LECTURES } from '../src/data/sudanMiddleEnglish7CurriculumData';
+import { SUDAN_MIDDLE_GEOGRAPHY_G7_LECTURES } from '../src/data/sudanMiddleGeography7CurriculumData';
+import { SUDAN_MIDDLE_HISTORY_G7_LECTURES } from '../src/data/sudanMiddleHistory7CurriculumData';
+import {
+  SUDAN_MIDDLE_ICT_G7_BOOK,
+  SUDAN_MIDDLE_ICT_G7_LECTURES,
+  SUDAN_MIDDLE_ICT_G7_TABLE_OF_CONTENTS
+} from '../src/data/sudanMiddleIct7CurriculumData';
+import { SUDAN_MIDDLE_ISLAMIC_G7_LECTURES } from '../src/data/sudanMiddleIslamic7CurriculumData';
+import {
+  SUDAN_MIDDLE_MATH_G7_BOOK,
+  SUDAN_MIDDLE_MATH_G7_LECTURES
+} from '../src/data/sudanMiddleMath7CurriculumData';
+import { SUDAN_MIDDLE_SCIENCE_G7_LECTURES } from '../src/data/sudanMiddleScience7CurriculumData';
+import { SUDAN_MIDDLE_G8_LECTURES } from '../src/data/sudanMiddleGrade8CurriculumData';
+import { SUDAN_MIDDLE_G9_LECTURES } from '../src/data/sudanMiddleGrade9CurriculumData';
+import { SUDAN_HIGH_CHEMISTRY_G10_LECTURES } from '../src/data/sudanHighChemistry10CurriculumData';
+import {
+  SUDAN_PRIMARY_ISLAMIC_G1_BOOK,
+  SUDAN_PRIMARY_ISLAMIC_G1_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G1_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIslamic1CurriculumData';
+import {
+  SUDAN_PRIMARY_ISLAMIC_G2_BOOK,
+  SUDAN_PRIMARY_ISLAMIC_G2_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G2_TABLE_OF_CONTENTS
+} from '../src/data/sudanPrimaryIslamic2CurriculumData';
 import { SAUDI_G4_PRIMARY_ARABIC_TABLE_OF_CONTENTS } from '../src/data/saudiPrimaryArabic4CurriculumData';
 import {
   SAUDI_G3_PRIMARY_ARABIC_LECTURES,
@@ -406,6 +640,941 @@ assert(
     normalizeEducationTrackForCountry('SD', 'CS_ENGINEERING') === 'GENERAL',
   'Inactive countries and unsupported country-specific study options normalize safely'
 );
+const sudanGrade1ArabicRoute = getCurriculumForSubject(
+  'PRIMARY_ARABIC', 'G1', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_ARABIC_G1_LECTURES.length === 55 &&
+    SUDAN_PRIMARY_ARABIC_G1_TABLE_OF_CONTENTS.length === 55 &&
+    SUDAN_PRIMARY_ARABIC_G1_TEXTBOOK_PAGES.length === 55 &&
+    sudanGrade1ArabicRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_ARABIC_G1_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_ARABIC_G1_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-ar-g1-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'PRIMARY_ARABIC' &&
+      lecture.gradeLevel === 'G1' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      SUDAN_PRIMARY_ARABIC_G1_TABLE_OF_CONTENTS[index].page ===
+        SUDAN_PRIMARY_ARABIC_G1_TEXTBOOK_PAGES[index]
+    ) &&
+    SUDAN_PRIMARY_ARABIC_G1_TABLE_OF_CONTENTS[0].page === 6 &&
+    SUDAN_PRIMARY_ARABIC_G1_TABLE_OF_CONTENTS[54].page === 120 &&
+    SUDAN_PRIMARY_ARABIC_G1_LECTURES[0].titleAr.includes('الأسد') &&
+    SUDAN_PRIMARY_ARABIC_G1_LECTURES[54].titleAr.includes('حديقة الحيوان'),
+  'Sudanese Grade 1 Arabic routes to all 55 lessons in the supplied textbook order and page sequence'
+);
+assert(
+  !getCurriculumForSubject('PRIMARY_ARABIC', 'G1', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-ar-g1-')) &&
+    !getCurriculumForSubject('PRIMARY_ARABIC', 'G1', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-ar-g1-')) &&
+    getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G1', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة الأولى 2020م') &&
+    getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G1', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('55 درسًا'),
+  'Sudanese Grade 1 Arabic textbook details stay country-specific and identify the attached edition accurately'
+);
+const sudanGrade2ArabicRoute = getCurriculumForSubject(
+  'PRIMARY_ARABIC', 'G2', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_ARABIC_G2_BOOK.edition === 'الطبعة الأولى 2021م' &&
+    SUDAN_PRIMARY_ARABIC_G2_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'مراجعة|أسرتي|مدرستي|ألعب وأتعلم|صحتي|بلادي' &&
+    SUDAN_PRIMARY_ARABIC_G2_BOOK.units.map((unit) => `${unit.firstPage}-${unit.lastPage}`).join('|') ===
+      '1-8|9-25|26-40|41-61|62-77|78-96' &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.length === 45 &&
+    SUDAN_PRIMARY_ARABIC_G2_TABLE_OF_CONTENTS.length === 45 &&
+    sudanGrade2ArabicRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_ARABIC_G2_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-ar-g2-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'PRIMARY_ARABIC' &&
+      lecture.gradeLevel === 'G2' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_ARABIC_G2_TABLE_OF_CONTENTS[index].page >= 1 &&
+      SUDAN_PRIMARY_ARABIC_G2_TABLE_OF_CONTENTS[index].page <= 96
+    ) &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'مراجعة').length === 5 &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'أسرتي').length === 8 &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'مدرستي').length === 6 &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'ألعب وأتعلم').length === 9 &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'صحتي').length === 8 &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'بلادي').length === 9 &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES[5].titleAr.includes('أسرة نفيسة') &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES[13].titleAr.includes('مدرستي') &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES[19].titleAr.includes('الرياضة البدنية') &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES[36].titleAr.includes('سوداننا') &&
+    SUDAN_PRIMARY_ARABIC_G2_LECTURES[44].titleAr.includes('لا للحرب') &&
+    getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G2', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة الأولى 2021م'),
+  'Sudanese Grade 2 Arabic follows all six textbook units, lesson topics, and printed page ranges'
+);
+assert(
+  !getCurriculumForSubject('PRIMARY_ARABIC', 'G2', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-ar-g2-')) &&
+    !getCurriculumForSubject('PRIMARY_ARABIC', 'G2', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-ar-g2-')) &&
+    !getCurriculumForSubject('PRIMARY_ARABIC', 'G1', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-ar-g2-')) &&
+    !getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G2', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('وزارة'),
+  'Sudanese Grade 2 Arabic remains country- and grade-specific without exposing source attribution'
+);
+const sudanGrade1EnglishRoute = getCurriculumForSubject(
+  'ENGLISH', 'G1', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_ENGLISH_G1_BOOK.edition === '2nd Edition 2020' &&
+    SUDAN_PRIMARY_ENGLISH_G1_BOOK.units.map((unit) => unit.title).join('|') ===
+      'Hello!|Numbers|Colours|About Me|My School' &&
+    SUDAN_PRIMARY_ENGLISH_G1_BOOK.units.map((unit) => unit.activityPage).join(',') ===
+      '41,49,57,65,73' &&
+    SUDAN_PRIMARY_ENGLISH_G1_LECTURES.length === 45 &&
+    sudanGrade1EnglishRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_ENGLISH_G1_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_ENGLISH_G1_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-en-g1-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'ENGLISH' &&
+      lecture.gradeLevel === 'G1' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsEn.length === 3
+    ) &&
+    SUDAN_PRIMARY_ENGLISH_G1_LECTURES[0].subtitleEn.includes('Hello!') &&
+    SUDAN_PRIMARY_ENGLISH_G1_LECTURES[8].topicEn.includes('p. 41') &&
+    SUDAN_PRIMARY_ENGLISH_G1_LECTURES[9].subtitleEn.includes('Numbers') &&
+    SUDAN_PRIMARY_ENGLISH_G1_LECTURES[44].titleEn.includes('My School'),
+  'Sudanese Grade 1 English matches the SMILE Starter 1 five-unit, 40-lesson sequence plus five unit-activity sections'
+);
+assert(
+  !getCurriculumForSubject('ENGLISH', 'G1', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-en-g1-')) &&
+    !getCurriculumForSubject('ENGLISH', 'G1', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-en-g1-')) &&
+    getNationalTextbookInfo('SD', 'ENGLISH', 'G1', 'GENERAL', 'en', 'PUBLIC')
+      .textbookName.includes('2nd Edition 2020') &&
+    getNationalTextbookInfo('SD', 'ENGLISH', 'G2', 'GENERAL', 'en', 'PUBLIC')
+      .textbookName.includes('SMILE Starter 2'),
+  'Sudanese Grade 1 English remains country-specific while Grade 2 has its own verified edition'
+);
+const sudanGrade2EnglishRoute = getCurriculumForSubject(
+  'ENGLISH', 'G2', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_ENGLISH_G2_BOOK.title === 'SMILE Starter 2 Pupil’s Book' &&
+    SUDAN_PRIMARY_ENGLISH_G2_BOOK.edition === '2nd Edition 2020' &&
+    SUDAN_PRIMARY_ENGLISH_G2_BOOK.units.map((unit) => unit.title).join('|') ===
+      'Home|My Family|Toys and Games|Animals|Food and Drink' &&
+    SUDAN_PRIMARY_ENGLISH_G2_BOOK.units.map((unit) => unit.page).join(',') ===
+      '1,9,17,25,33' &&
+    SUDAN_PRIMARY_ENGLISH_G2_BOOK.units.map((unit) => unit.activityPage).join(',') ===
+      '41,49,57,65,73' &&
+    SUDAN_PRIMARY_ENGLISH_G2_LECTURES.length === 45 &&
+    SUDAN_PRIMARY_ENGLISH_G2_TABLE_OF_CONTENTS.length === 40 &&
+    sudanGrade2EnglishRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_ENGLISH_G2_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_ENGLISH_G2_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-en-g2-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'ENGLISH' &&
+      lecture.gradeLevel === 'G2' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsEn.length === 3
+    ) &&
+    SUDAN_PRIMARY_ENGLISH_G2_TABLE_OF_CONTENTS[0].page === 1 &&
+    SUDAN_PRIMARY_ENGLISH_G2_TABLE_OF_CONTENTS[39].page === 40 &&
+    SUDAN_PRIMARY_ENGLISH_G2_LECTURES[8].topicEn.includes('p. 41') &&
+    SUDAN_PRIMARY_ENGLISH_G2_LECTURES[9].subtitleEn.includes('My Family') &&
+    SUDAN_PRIMARY_ENGLISH_G2_LECTURES[44].titleEn.includes('Food and Drink'),
+  'Sudanese Grade 2 English follows SMILE Starter 2 five units, forty lessons, and five unit activities'
+);
+assert(
+  !getCurriculumForSubject('ENGLISH', 'G2', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-en-g2-')) &&
+    !getCurriculumForSubject('ENGLISH', 'G2', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-en-g2-')) &&
+    !getCurriculumForSubject('ENGLISH', 'G3', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-en-g2-')) &&
+    !getCurriculumForSubject('ENGLISH', 'G1', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-en-g2-')) &&
+    getNationalTextbookInfo('SD', 'ENGLISH', 'G3', 'GENERAL', 'en', 'PUBLIC')
+      .textbookName.includes('48 lessons'),
+  'Sudanese Grade 2 English remains isolated to Sudan and Grade 2'
+);
+const sudanGrade1PrimaryMathRoute = getCurriculumForSubject(
+  'PRIMARY_MATH', 'G1', 'SD', 'PUBLIC', 'GENERAL'
+);
+const sudanGrade1MathRoute = getCurriculumForSubject(
+  'MATH', 'G1', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_MATH_G1_BOOK.edition === 'الطبعة الأولى 2020م' &&
+    SUDAN_PRIMARY_MATH_G1_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'الأعداد (٠–٩)|الجمع ضمن العدد ٩|الطرح ضمن العدد ٩|الأعداد (١٠–٩٩) وعمليات الجمع والطرح عليها|القياس' &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES.length === 47 &&
+    SUDAN_PRIMARY_MATH_G1_TABLE_OF_CONTENTS.length === 47 &&
+    sudanGrade1PrimaryMathRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_MATH_G1_LECTURES.map((lecture) => lecture.id).join('|') &&
+    sudanGrade1MathRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_MATH_G1_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-math-g1-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'PRIMARY_MATH' &&
+      lecture.gradeLevel === 'G1' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_MATH_G1_TABLE_OF_CONTENTS[index].page ===
+        Number(lecture.topicAr?.replace('ص ', ''))
+    ) &&
+    SUDAN_PRIMARY_MATH_G1_TABLE_OF_CONTENTS[0].page === 6 &&
+    SUDAN_PRIMARY_MATH_G1_TABLE_OF_CONTENTS[46].page === 83 &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES[15].unitTitleAr === 'الأعداد (٠–٩)' &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES[16].unitTitleAr === 'الجمع ضمن العدد ٩' &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES[25].unitTitleAr === 'الطرح ضمن العدد ٩' &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES[29].unitTitleAr === 'الأعداد (١٠–٩٩) وعمليات الجمع والطرح عليها' &&
+    SUDAN_PRIMARY_MATH_G1_LECTURES[43].unitTitleAr === 'القياس' &&
+    getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G1', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة الأولى 2020م'),
+  'Sudanese Grade 1 mathematics routes to the five textbook units and all 47 lessons in page order'
+);
+assert(
+  !getCurriculumForSubject('PRIMARY_MATH', 'G1', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-math-g1-')) &&
+    !getCurriculumForSubject('PRIMARY_MATH', 'G1', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-math-g1-')) &&
+    getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G4', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الصف الرابع الابتدائي'),
+  'Sudanese Grade 1 mathematics remains isolated while Grade 4 keeps its specific textbook metadata'
+);
+const sudanGrade2PrimaryMathRoute = getCurriculumForSubject(
+  'PRIMARY_MATH', 'G2', 'SD', 'PUBLIC', 'GENERAL'
+);
+const sudanGrade2MathRoute = getCurriculumForSubject(
+  'MATH', 'G2', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_MATH_G2_BOOK.edition === 'الطبعة المنقحة 2021م' &&
+    SUDAN_PRIMARY_MATH_G2_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'الأعداد حتى ١٠٠٠|الجمع والطرح ضمن الأعداد ٩٩٩|جداول الضرب|القسمة|القياس|الهندسة' &&
+    SUDAN_PRIMARY_MATH_G2_LECTURES.length === 26 &&
+    SUDAN_PRIMARY_MATH_G2_TABLE_OF_CONTENTS.length === 26 &&
+    sudanGrade2PrimaryMathRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_MATH_G2_LECTURES.map((lecture) => lecture.id).join('|') &&
+    sudanGrade2MathRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_MATH_G2_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_MATH_G2_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-math-g2-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'PRIMARY_MATH' &&
+      lecture.gradeLevel === 'G2' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_MATH_G2_TABLE_OF_CONTENTS[index].page ===
+        Number(lecture.topicAr?.replace('ص ', ''))
+    ) &&
+    SUDAN_PRIMARY_MATH_G2_TABLE_OF_CONTENTS[0].page === 4 &&
+    SUDAN_PRIMARY_MATH_G2_TABLE_OF_CONTENTS[25].page === 70 &&
+    SUDAN_PRIMARY_MATH_G2_LECTURES[6].titleAr.includes('مفهوم الضرب') &&
+    SUDAN_PRIMARY_MATH_G2_LECTURES[12].titleAr.includes('جدول الضرب') &&
+    SUDAN_PRIMARY_MATH_G2_LECTURES[20].unitTitleAr === 'القياس' &&
+    SUDAN_PRIMARY_MATH_G2_LECTURES[24].unitTitleAr === 'الهندسة' &&
+    getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G2', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة المنقحة 2021م'),
+  'Sudanese Grade 2 mathematics routes to the revised 2021 textbook sequence and all 26 lessons'
+);
+assert(
+  !getCurriculumForSubject('PRIMARY_MATH', 'G2', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-math-g2-')) &&
+    !getCurriculumForSubject('PRIMARY_MATH', 'G2', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-math-g2-')) &&
+    !getCurriculumForSubject('PRIMARY_MATH', 'G3', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-math-g2-')) &&
+    !getCurriculumForSubject('MATH', 'G1', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-math-g2-')) &&
+    getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G4', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الصف الرابع الابتدائي'),
+  'Verified Sudanese Grade 2 mathematics remains isolated while Grade 4 keeps its own metadata'
+);
+const sudanGrade1IslamicRoute = getCurriculumForSubject(
+  'ISLAMIC_STUDIES', 'G1', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_ISLAMIC_G1_BOOK.edition === '2020م' &&
+    SUDAN_PRIMARY_ISLAMIC_G1_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'سور من القرآن الكريم|أحاديث من الحديث النبوي الشريف|الإسلام والإيمان|الطهارة والوضوء|التهذيب والآداب|السيرة النبوية الشريفة' &&
+    SUDAN_PRIMARY_ISLAMIC_G1_BOOK.units.map((unit) => `${unit.firstPage}-${unit.lastPage}`).join('|') ===
+      '1-9|10-13|14-16|17-22|23-30|31-32' &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.length === 25 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_TABLE_OF_CONTENTS.length === 25 &&
+    sudanGrade1IslamicRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-islamic-g1-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'ISLAMIC_STUDIES' &&
+      lecture.gradeLevel === 'G1' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_ISLAMIC_G1_TABLE_OF_CONTENTS[index].page >= 1 &&
+      SUDAN_PRIMARY_ISLAMIC_G1_TABLE_OF_CONTENTS[index].page <= 32
+    ) &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.filter((lecture) => lecture.unitTitleAr === 'سور من القرآن الكريم').length === 6 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.filter((lecture) => lecture.unitTitleAr === 'أحاديث من الحديث النبوي الشريف').length === 7 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.filter((lecture) => lecture.unitTitleAr === 'الإسلام والإيمان').length === 2 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.filter((lecture) => lecture.unitTitleAr === 'الطهارة والوضوء').length === 5 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.filter((lecture) => lecture.unitTitleAr === 'التهذيب والآداب').length === 4 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES.filter((lecture) => lecture.unitTitleAr === 'السيرة النبوية الشريفة').length === 1 &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES[0].titleAr.includes('الفلق') &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES[12].titleAr.includes('الإحسان إلى الأم') &&
+    SUDAN_PRIMARY_ISLAMIC_G1_LECTURES[24].titleAr.includes('مولد النبي') &&
+    getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G1', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('ست وحدات تعليمية'),
+  'Sudanese Grade 1 Islamic Studies follows all six textbook units and the printed page sequence'
+);
+assert(
+  !getCurriculumForSubject('ISLAMIC_STUDIES', 'G1', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g1-')) &&
+    !getCurriculumForSubject('ISLAMIC_STUDIES', 'G1', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g1-')) &&
+    !getCurriculumForSubject('ISLAMIC_STUDIES', 'G2', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g1-')) &&
+    !getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G1', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('وزارة'),
+  'Sudanese Grade 1 Islamic Studies remains country- and grade-specific without exposing source attribution'
+);
+const sudanGrade2IslamicRoute = getCurriculumForSubject(
+  'ISLAMIC_STUDIES', 'G2', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_ISLAMIC_G2_BOOK.edition === 'الطبعة الأولى 2021م' &&
+    SUDAN_PRIMARY_ISLAMIC_G2_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'من القرآن الكريم|الحديث النبوي ومكارم الأخلاق|الصلاة|من أركان الإيمان|من السيرة النبوية الشريفة' &&
+    SUDAN_PRIMARY_ISLAMIC_G2_BOOK.units.map((unit) => `${unit.firstPage}-${unit.lastPage}`).join('|') ===
+      '5-14|15-26|27-32|33-42|43-54' &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.length === 23 &&
+    SUDAN_PRIMARY_ISLAMIC_G2_TABLE_OF_CONTENTS.length === 23 &&
+    sudanGrade2IslamicRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-islamic-g2-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'ISLAMIC_STUDIES' &&
+      lecture.gradeLevel === 'G2' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_ISLAMIC_G2_TABLE_OF_CONTENTS[index].page ===
+        Number(lecture.topicAr?.replace('ص ', ''))
+    ) &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'من القرآن الكريم').length === 2 &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'الحديث النبوي ومكارم الأخلاق').length === 8 &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'الصلاة').length === 3 &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'من أركان الإيمان').length === 5 &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES.filter((lecture) => lecture.unitTitleAr === 'من السيرة النبوية الشريفة').length === 5 &&
+    SUDAN_PRIMARY_ISLAMIC_G2_LECTURES[10].sections?.[0].diagram?.diagramType === 'prayer_sequence' &&
+    getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G2', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة الأولى 2021م'),
+  'Sudanese Grade 2 Islamic Studies follows the five 2021 textbook units and lesson pages'
+);
+assert(
+  !getCurriculumForSubject('ISLAMIC_STUDIES', 'G2', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g2-')) &&
+    !getCurriculumForSubject('ISLAMIC_STUDIES', 'G2', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g2-')) &&
+    !getCurriculumForSubject('ISLAMIC_STUDIES', 'G3', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g2-')) &&
+    !getCurriculumForSubject('ISLAMIC_STUDIES', 'G1', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-islamic-g2-')) &&
+    getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G4', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الصف الرابع الابتدائي'),
+  'Sudanese Grade 2 Islamic Studies remains isolated while Grade 4 keeps its own metadata'
+);
+const sudanGrade3GeographyRoute = getCurriculumForSubject(
+  'GEOGRAPHY', 'G3', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_GEOGRAPHY_G3_BOOK.edition === 'الطبعة الأولى 2016م' &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'البيئة من حولنا|بيئتي المدرسية|بيئتي الأسرية' &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_BOOK.units.map((unit) => `${unit.firstPage}-${unit.lastPage}`).join('|') ===
+      '1-52|53-74|75-124' &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES.length === 21 &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_TABLE_OF_CONTENTS.length === 21 &&
+    sudanGrade3GeographyRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-geography-g3-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'GEOGRAPHY' &&
+      lecture.gradeLevel === 'G3' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.sections[0].diagram?.diagramType === 'primary_geography_g3' &&
+      lecture.sections?.[0]?.diagram?.visualSteps?.length === 4 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_GEOGRAPHY_G3_TABLE_OF_CONTENTS[index].page ===
+        Number(lecture.topicAr?.replace('ص ', ''))
+    ) &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_TABLE_OF_CONTENTS.map((lesson) => lesson.page).join(',') ===
+      '2,11,18,21,32,38,46,54,56,61,64,65,67,73,76,80,86,97,106,110,122' &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'البيئة من حولنا').length === 7 &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'بيئتي المدرسية').length === 7 &&
+    SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'بيئتي الأسرية').length === 7 &&
+    getNationalTextbookInfo('SD', 'GEOGRAPHY', 'G3', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة الأولى 2016م'),
+  'Sudanese Grade 3 geography follows all three textbook units and 21 lessons in printed page order'
+);
+assert(
+  !getCurriculumForSubject('GEOGRAPHY', 'G3', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-geography-g3-')) &&
+    !getCurriculumForSubject('GEOGRAPHY', 'G3', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-geography-g3-')) &&
+    !getCurriculumForSubject('GEOGRAPHY', 'G4', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-geography-g3-')) &&
+    getCurriculumForSubject('GEOGRAPHY', 'G3', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject('GEOGRAPHY', 'G3', 'SD', 'PUBLIC', 'HEALTH_LIFE').length === 0,
+  'Sudanese Grade 3 geography remains isolated to the verified public Sudanese route'
+);
+const sudanGrade3HistoryRoute = getCurriculumForSubject(
+  'HISTORY', 'G3', 'SD', 'PUBLIC', 'GENERAL'
+);
+assert(
+  SUDAN_PRIMARY_HISTORY_G3_BOOK.edition === 'الطبعة الأولى 2016م' &&
+    SUDAN_PRIMARY_HISTORY_G3_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'نحن والكون والعالم|وطننا السودان|دولتنا الإسلامية|قارتنا إفريقيا|أوربا وآسيا|أنا سوداني' &&
+    SUDAN_PRIMARY_HISTORY_G3_BOOK.units.map((unit) => `${unit.firstPage}-${unit.lastPage}`).join('|') ===
+      '1-12|13-19|20-28|29-35|36-40|41-48' &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.length === 22 &&
+    SUDAN_PRIMARY_HISTORY_G3_TABLE_OF_CONTENTS.length === 22 &&
+    sudanGrade3HistoryRoute.map((lecture) => lecture.id).join('|') ===
+      SUDAN_PRIMARY_HISTORY_G3_LECTURES.map((lecture) => lecture.id).join('|') &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.every((lecture, index) =>
+      lecture.order === index + 1 &&
+      lecture.id === `sd-primary-history-g3-${index + 1}` &&
+      lecture.country === 'SD' &&
+      lecture.subject === 'HISTORY' &&
+      lecture.gradeLevel === 'G3' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.sections?.length === 1 &&
+      lecture.sections[0].diagram?.diagramType === 'primary_history_g3' &&
+      lecture.sections[0].diagram?.visualSteps?.length === 4 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].optionsEn.length === 3 &&
+      SUDAN_PRIMARY_HISTORY_G3_TABLE_OF_CONTENTS[index].page ===
+        Number(lecture.topicAr?.replace('ص ', ''))
+    ) &&
+    SUDAN_PRIMARY_HISTORY_G3_TABLE_OF_CONTENTS.map((lesson) => lesson.page).join(',') ===
+      '7,7,10,14,15,16,21,21,22,22,30,32,32,37,37,37,38,39,39,42,45,46' &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'نحن والكون والعالم').length === 3 &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'وطننا السودان').length === 3 &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'دولتنا الإسلامية').length === 4 &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'قارتنا إفريقيا').length === 3 &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'أوربا وآسيا').length === 6 &&
+    SUDAN_PRIMARY_HISTORY_G3_LECTURES.filter((lecture) => lecture.unitTitleAr === 'أنا سوداني').length === 3 &&
+    getNationalTextbookInfo('SD', 'HISTORY', 'G3', 'GENERAL', 'ar', 'PUBLIC')
+      .textbookName.includes('الطبعة الأولى 2016م'),
+  'Sudanese Grade 3 history follows all six textbook units and 22 lessons in printed page order'
+);
+assert(
+  !getCurriculumForSubject('HISTORY', 'G3', 'EG', 'PUBLIC', 'GENERAL')
+    .some((lecture) => lecture.id.startsWith('sd-primary-history-g3-')) &&
+    !getCurriculumForSubject('HISTORY', 'G3', 'SA', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-history-g3-')) &&
+    !getCurriculumForSubject('HISTORY', 'G4', 'SD', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith('sd-primary-history-g3-')) &&
+    getCurriculumForSubject('HISTORY', 'G3', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject('HISTORY', 'G3', 'SD', 'PUBLIC', 'HEALTH_LIFE').length === 0,
+  'Sudanese Grade 3 history remains isolated to the verified public Sudanese route'
+);
+const sudanGrade3BookRoutes = [
+  {
+    subject: 'PRIMARY_ARABIC' as const,
+    prefix: 'sd-primary-arabic-g3-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_ARABIC_G3_BOOK,
+    contents: SUDAN_PRIMARY_ARABIC_G3_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ARABIC_G3_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_ARABIC', 'G3', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G3', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ENGLISH' as const,
+    prefix: 'sd-primary-english-g3-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_ENGLISH_G3_BOOK,
+    contents: SUDAN_PRIMARY_ENGLISH_G3_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ENGLISH_G3_LECTURES,
+    route: getCurriculumForSubject('ENGLISH', 'G3', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'ENGLISH', 'G3', 'GENERAL', 'en', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ISLAMIC_STUDIES' as const,
+    prefix: 'sd-primary-islamic-g3-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_ISLAMIC_G3_BOOK,
+    contents: SUDAN_PRIMARY_ISLAMIC_G3_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ISLAMIC_G3_LECTURES,
+    route: getCurriculumForSubject('ISLAMIC_STUDIES', 'G3', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G3', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'PRIMARY_MATH' as const,
+    prefix: 'sd-primary-math-g3-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_MATH_G3_BOOK,
+    contents: SUDAN_PRIMARY_MATH_G3_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_MATH_G3_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_MATH', 'G3', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G3', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'GENERAL_SCIENCE' as const,
+    prefix: 'sd-primary-science-g3-',
+    expectedUnits: 3,
+    book: SUDAN_PRIMARY_SCIENCE_G3_BOOK,
+    contents: SUDAN_PRIMARY_SCIENCE_G3_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_SCIENCE_G3_LECTURES,
+    route: getCurriculumForSubject('GENERAL_SCIENCE', 'G3', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'GENERAL_SCIENCE', 'G3', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  }
+];
+for (const entry of sudanGrade3BookRoutes) {
+  assert(
+    entry.book.units.length === entry.expectedUnits &&
+      entry.lectures.length > 0 &&
+      entry.contents.length === entry.lectures.length &&
+      entry.route.map((lecture) => lecture.id).join('|') ===
+        entry.lectures.map((lecture) => lecture.id).join('|') &&
+      entry.lectures.every((lecture, index) =>
+        lecture.order === index + 1 &&
+        lecture.id === `${entry.prefix}${index + 1}` &&
+        lecture.subject === entry.subject &&
+        lecture.country === 'SD' &&
+        lecture.gradeLevel === 'G3' &&
+        lecture.educationType === 'PUBLIC' &&
+        lecture.sections?.[0]?.diagram?.diagramType === 'primary_lesson_sequence' &&
+        lecture.sections[0].diagram?.visualSteps?.length === 4 &&
+        lecture.assessment.questions.length > 0 &&
+        lecture.assessment.questions[0].optionsAr.length === 3 &&
+        lecture.assessment.questions[0].optionsEn.length === 3 &&
+        entry.contents[index].page === Number(lecture.topicAr?.match(/\d+/)?.[0])
+      ) &&
+      entry.textbookName.length > 0,
+    `Sudanese Grade 3 ${entry.subject} matches its textbook structure, lesson pages, and route`
+  );
+  assert(
+    !getCurriculumForSubject(entry.subject, 'G3', 'EG', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      !getCurriculumForSubject(entry.subject, 'G3', 'SA', 'PUBLIC', 'GENERAL')
+        .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      !getCurriculumForSubject(entry.subject, 'G4', 'SD', 'PUBLIC', 'GENERAL')
+        .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      getCurriculumForSubject(entry.subject, 'G3', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+      getCurriculumForSubject(entry.subject, 'G3', 'SD', 'PUBLIC', 'HEALTH_LIFE').length === 0,
+    `Sudanese Grade 3 ${entry.subject} remains isolated to its verified public route`
+  );
+}
+assert(
+  getCurriculumForSubject('MATH', 'G3', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    SUDAN_PRIMARY_MATH_G3_LECTURES.map((lecture) => lecture.id).join('|') &&
+    getCurriculumForSubject('PRIMARY_SCIENCE', 'G3', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    SUDAN_PRIMARY_SCIENCE_G3_LECTURES.map((lecture) => lecture.id).join('|'),
+  'Sudanese Grade 3 math and science remain available through their equivalent subject aliases'
+);
+const sudanGrade4BookRoutes = [
+  {
+    subject: 'PRIMARY_ARABIC' as const,
+    prefix: 'sd-primary-arabic-g4-',
+    expectedUnits: 5,
+    book: SUDAN_PRIMARY_ARABIC_G4_BOOK,
+    contents: SUDAN_PRIMARY_ARABIC_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ARABIC_G4_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_ARABIC', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G4', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ENGLISH' as const,
+    prefix: 'sd-primary-english-g4-',
+    expectedUnits: 12,
+    book: SUDAN_PRIMARY_ENGLISH_G4_BOOK,
+    contents: SUDAN_PRIMARY_ENGLISH_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ENGLISH_G4_LECTURES,
+    route: getCurriculumForSubject('ENGLISH', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'ENGLISH', 'G4', 'GENERAL', 'en', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ISLAMIC_STUDIES' as const,
+    prefix: 'sd-primary-islamic-g4-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_ISLAMIC_G4_BOOK,
+    contents: SUDAN_PRIMARY_ISLAMIC_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ISLAMIC_G4_LECTURES,
+    route: getCurriculumForSubject('ISLAMIC_STUDIES', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G4', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'PRIMARY_MATH' as const,
+    prefix: 'sd-primary-math-g4-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_MATH_G4_BOOK,
+    contents: SUDAN_PRIMARY_MATH_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_MATH_G4_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_MATH', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G4', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'PRIMARY_SCIENCE' as const,
+    prefix: 'sd-primary-science-g4-',
+    expectedUnits: 8,
+    book: SUDAN_PRIMARY_SCIENCE_G4_BOOK,
+    contents: SUDAN_PRIMARY_SCIENCE_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_SCIENCE_G4_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_SCIENCE', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_SCIENCE', 'G4', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'COMPUTER_SCIENCE' as const,
+    prefix: 'sd-primary-ict-g4-',
+    expectedUnits: 6,
+    book: SUDAN_PRIMARY_ICT_G4_BOOK,
+    contents: SUDAN_PRIMARY_ICT_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ICT_G4_LECTURES,
+    route: getCurriculumForSubject('COMPUTER_SCIENCE', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'COMPUTER_SCIENCE', 'G4', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'VISUAL_ARTS' as const,
+    prefix: 'sd-primary-art-g4-',
+    expectedUnits: 3,
+    book: SUDAN_PRIMARY_ART_G4_BOOK,
+    contents: SUDAN_PRIMARY_ART_G4_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ART_G4_LECTURES,
+    route: getCurriculumForSubject('VISUAL_ARTS', 'G4', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'VISUAL_ARTS', 'G4', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  }
+];
+for (const entry of sudanGrade4BookRoutes) {
+  assert(
+    entry.book.units.length === entry.expectedUnits &&
+      entry.lectures.length > 0 &&
+      entry.contents.length === entry.lectures.length &&
+      entry.route.map((lecture) => lecture.id).join('|') ===
+        entry.lectures.map((lecture) => lecture.id).join('|') &&
+      entry.lectures.every((lecture, index) =>
+        lecture.order === index + 1 &&
+        lecture.id === `${entry.prefix}${index + 1}` &&
+        lecture.subject === entry.subject &&
+        lecture.country === 'SD' &&
+        lecture.gradeLevel === 'G4' &&
+        lecture.educationType === 'PUBLIC' &&
+        lecture.sections?.[0]?.diagram?.diagramType === 'primary_lesson_sequence' &&
+        lecture.sections?.[0]?.diagram?.visualSteps?.length === 4 &&
+        lecture.assessment.questions.length > 0 &&
+        lecture.assessment.questions[0].optionsAr.length === 3 &&
+        lecture.assessment.questions[0].optionsEn.length === 3 &&
+        entry.contents[index].page === Number(lecture.topicAr?.match(/\d+/)?.[0])
+      ) &&
+      entry.textbookName.length > 0,
+    `Sudanese Grade 4 ${entry.subject} matches its textbook structure, lesson pages, and route`
+  );
+  assert(
+    !getCurriculumForSubject(entry.subject, 'G4', 'EG', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      !getCurriculumForSubject(entry.subject, 'G4', 'SA', 'PUBLIC', 'GENERAL')
+        .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      !getCurriculumForSubject(entry.subject, 'G5', 'SD', 'PUBLIC', 'GENERAL')
+        .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      getCurriculumForSubject(entry.subject, 'G4', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+      getCurriculumForSubject(entry.subject, 'G4', 'SD', 'PUBLIC', 'HEALTH_LIFE').length === 0,
+    `Sudanese Grade 4 ${entry.subject} remains isolated to its verified public route`
+  );
+}
+const sudanGrade5BookRoutes = [
+  {
+    subject: 'PRIMARY_ARABIC' as const,
+    prefix: 'sd-primary-arabic-g5-',
+    expectedUnits: 5,
+    expectedLessons: 31,
+    book: SUDAN_PRIMARY_ARABIC_G5_BOOK,
+    contents: SUDAN_PRIMARY_ARABIC_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ARABIC_G5_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_ARABIC', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ENGLISH' as const,
+    prefix: 'sd-primary-english-g5-',
+    expectedUnits: 6,
+    expectedLessons: 48,
+    book: SUDAN_PRIMARY_ENGLISH_G5_BOOK,
+    contents: SUDAN_PRIMARY_ENGLISH_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ENGLISH_G5_LECTURES,
+    route: getCurriculumForSubject('ENGLISH', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'ENGLISH', 'G5', 'GENERAL', 'en', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ISLAMIC_STUDIES' as const,
+    prefix: 'sd-primary-islamic-g5-',
+    expectedUnits: 6,
+    expectedLessons: 30,
+    book: SUDAN_PRIMARY_ISLAMIC_G5_BOOK,
+    contents: SUDAN_PRIMARY_ISLAMIC_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ISLAMIC_G5_LECTURES,
+    route: getCurriculumForSubject('ISLAMIC_STUDIES', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'PRIMARY_MATH' as const,
+    prefix: 'sd-primary-math-g5-',
+    expectedUnits: 6,
+    expectedLessons: 58,
+    book: SUDAN_PRIMARY_MATH_G5_BOOK,
+    contents: SUDAN_PRIMARY_MATH_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_MATH_G5_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_MATH', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'PRIMARY_SCIENCE' as const,
+    prefix: 'sd-primary-science-g5-',
+    expectedUnits: 7,
+    expectedLessons: 25,
+    book: SUDAN_PRIMARY_SCIENCE_G5_BOOK,
+    contents: SUDAN_PRIMARY_SCIENCE_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_SCIENCE_G5_LECTURES,
+    route: getCurriculumForSubject('PRIMARY_SCIENCE', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_SCIENCE', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'GEOGRAPHY' as const,
+    prefix: 'sd-primary-geography-g5-',
+    expectedUnits: 3,
+    expectedLessons: 13,
+    book: SUDAN_PRIMARY_GEOGRAPHY_G5_BOOK,
+    contents: SUDAN_PRIMARY_GEOGRAPHY_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_GEOGRAPHY_G5_LECTURES,
+    route: getCurriculumForSubject('GEOGRAPHY', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'GEOGRAPHY', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'HISTORY' as const,
+    prefix: 'sd-primary-history-g5-',
+    expectedUnits: 5,
+    expectedLessons: 29,
+    book: SUDAN_PRIMARY_HISTORY_G5_BOOK,
+    contents: SUDAN_PRIMARY_HISTORY_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_HISTORY_G5_LECTURES,
+    route: getCurriculumForSubject('HISTORY', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'HISTORY', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'COMPUTER_SCIENCE' as const,
+    prefix: 'sd-primary-ict-g5-',
+    expectedUnits: 4,
+    expectedLessons: 16,
+    book: SUDAN_PRIMARY_ICT_G5_BOOK,
+    contents: SUDAN_PRIMARY_ICT_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ICT_G5_LECTURES,
+    route: getCurriculumForSubject('COMPUTER_SCIENCE', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'COMPUTER_SCIENCE', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'VISUAL_ARTS' as const,
+    prefix: 'sd-primary-art-g5-',
+    expectedUnits: 3,
+    expectedLessons: 21,
+    book: SUDAN_PRIMARY_ART_G5_BOOK,
+    contents: SUDAN_PRIMARY_ART_G5_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ART_G5_LECTURES,
+    route: getCurriculumForSubject('VISUAL_ARTS', 'G5', 'SD', 'PUBLIC', 'GENERAL'),
+    textbookName: getNationalTextbookInfo('SD', 'VISUAL_ARTS', 'G5', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  }
+];
+for (const entry of sudanGrade5BookRoutes) {
+  assert(
+    entry.book.units.length === entry.expectedUnits &&
+      entry.lectures.length === entry.expectedLessons &&
+      entry.contents.length === entry.lectures.length &&
+      entry.route.map((lecture) => lecture.id).join('|') ===
+        entry.lectures.map((lecture) => lecture.id).join('|') &&
+      entry.lectures.every((lecture, index) =>
+        lecture.order === index + 1 &&
+        lecture.id === `${entry.prefix}${index + 1}` &&
+        lecture.subject === entry.subject &&
+        lecture.country === 'SD' &&
+        lecture.gradeLevel === 'G5' &&
+        lecture.educationType === 'PUBLIC' &&
+        lecture.sections?.[0]?.diagram?.diagramType === 'primary_lesson_sequence' &&
+        lecture.sections?.[0]?.diagram?.visualSteps?.length === 4 &&
+        lecture.assessment.questions.length > 0 &&
+        lecture.assessment.questions[0].optionsAr.length === 3 &&
+        lecture.assessment.questions[0].optionsEn.length === 3 &&
+        entry.contents[index].page === Number(lecture.topicAr?.match(/\d+/)?.[0])
+      ) &&
+      entry.textbookName.length > 0,
+    `Sudanese Grade 5 ${entry.subject} matches its textbook structure, lesson pages, and route`
+  );
+  assert(
+    !getCurriculumForSubject(entry.subject, 'G5', 'EG', 'PUBLIC', 'GENERAL')
+      .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      !getCurriculumForSubject(entry.subject, 'G5', 'SA', 'PUBLIC', 'GENERAL')
+        .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      !getCurriculumForSubject(entry.subject, 'G4', 'SD', 'PUBLIC', 'GENERAL')
+        .some((lecture) => lecture.id.startsWith(entry.prefix)) &&
+      getCurriculumForSubject(entry.subject, 'G5', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+      getCurriculumForSubject(entry.subject, 'G5', 'SD', 'PUBLIC', 'HEALTH_LIFE').length === 0,
+    `Sudanese Grade 5 ${entry.subject} remains isolated to its verified public route`
+  );
+}
+assert(
+  getCurriculumForSubject('MATH', 'G5', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    SUDAN_PRIMARY_MATH_G5_LECTURES.map((lecture) => lecture.id).join('|') &&
+    getCurriculumForSubject('GENERAL_SCIENCE', 'G5', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    SUDAN_PRIMARY_SCIENCE_G5_LECTURES.map((lecture) => lecture.id).join('|'),
+  'Sudanese Grade 5 math and science remain available through their equivalent subject aliases'
+);
+const sudanGrade6BookRoutes = [
+  {
+    subject: 'PRIMARY_ARABIC' as const, prefix: 'sd-primary-arabic-g6-', expectedUnits: 5, expectedLessons: 17,
+    book: SUDAN_PRIMARY_ARABIC_G6_BOOK, contents: SUDAN_PRIMARY_ARABIC_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ARABIC_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_ARABIC', 'G6', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ENGLISH' as const, prefix: 'sd-primary-english-g6-', expectedUnits: 7, expectedLessons: 14,
+    book: SUDAN_PRIMARY_ENGLISH_G6_BOOK, contents: SUDAN_PRIMARY_ENGLISH_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ENGLISH_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'ENGLISH', 'G6', 'GENERAL', 'en', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'ISLAMIC_STUDIES' as const, prefix: 'sd-primary-islamic-g6-', expectedUnits: 6, expectedLessons: 18,
+    book: SUDAN_PRIMARY_ISLAMIC_G6_BOOK, contents: SUDAN_PRIMARY_ISLAMIC_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ISLAMIC_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'ISLAMIC_STUDIES', 'G6', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'PRIMARY_MATH' as const, prefix: 'sd-primary-math-g6-', expectedUnits: 7, expectedLessons: 21,
+    book: SUDAN_PRIMARY_MATH_G6_BOOK, contents: SUDAN_PRIMARY_MATH_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_MATH_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'PRIMARY_MATH', 'G6', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'GEOGRAPHY' as const, prefix: 'sd-primary-geography-g6-', expectedUnits: 3, expectedLessons: 10,
+    book: SUDAN_PRIMARY_GEOGRAPHY_G6_BOOK, contents: SUDAN_PRIMARY_GEOGRAPHY_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_GEOGRAPHY_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'GEOGRAPHY', 'G6', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'HISTORY' as const, prefix: 'sd-primary-history-g6-', expectedUnits: 5, expectedLessons: 20,
+    book: SUDAN_PRIMARY_HISTORY_G6_BOOK, contents: SUDAN_PRIMARY_HISTORY_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_HISTORY_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'HISTORY', 'G6', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  },
+  {
+    subject: 'COMPUTER_SCIENCE' as const, prefix: 'sd-primary-ict-g6-', expectedUnits: 5, expectedLessons: 21,
+    book: SUDAN_PRIMARY_ICT_G6_BOOK, contents: SUDAN_PRIMARY_ICT_G6_TABLE_OF_CONTENTS,
+    lectures: SUDAN_PRIMARY_ICT_G6_LECTURES,
+    textbookName: getNationalTextbookInfo('SD', 'COMPUTER_SCIENCE', 'G6', 'GENERAL', 'ar', 'PUBLIC').textbookName
+  }
+];
+for (const entry of sudanGrade6BookRoutes) {
+  const route = getCurriculumForSubject(entry.subject, 'G6', 'SD', 'PUBLIC', 'GENERAL');
+  assert(
+    entry.book.units.length === entry.expectedUnits &&
+      entry.lectures.length === entry.expectedLessons &&
+      entry.contents.length === entry.lectures.length &&
+      route.map((lecture) => lecture.id).join('|') === entry.lectures.map((lecture) => lecture.id).join('|') &&
+      entry.lectures.every((lecture, index) =>
+        lecture.order === index + 1 &&
+        lecture.id === `${entry.prefix}${index + 1}` &&
+        lecture.subject === entry.subject &&
+        lecture.country === 'SD' &&
+        lecture.gradeLevel === 'G6' &&
+        lecture.educationType === 'PUBLIC' &&
+        lecture.sections?.[0]?.diagram?.diagramType === 'primary_lesson_sequence' &&
+        lecture.sections?.[0]?.diagram?.visualSteps?.length === 4 &&
+        lecture.assessment.questions.length > 0 &&
+        lecture.assessment.questions[0].optionsAr.length === 3 &&
+        lecture.assessment.questions[0].optionsEn.length === 3 &&
+        lecture.assessment.questions[0].correctIndex >= 0 &&
+        lecture.assessment.questions[0].correctIndex < 3 &&
+        entry.contents[index].page === Number(lecture.topicAr?.match(/\d+/)?.[0])
+      ) &&
+      entry.textbookName.length > 0,
+    `Sudanese Grade 6 ${entry.subject} follows its book structure and public route`
+  );
+  assert(
+    getCurriculumForSubject(entry.subject, 'G6', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+      getCurriculumForSubject(entry.subject, 'G6', 'SD', 'PUBLIC', 'HEALTH_LIFE').length === 0 &&
+      getCurriculumForSubject(entry.subject, 'G5', 'SD', 'PUBLIC', 'GENERAL')
+        .every((lecture) => !lecture.id.startsWith(entry.prefix)) &&
+      getCurriculumForSubject(entry.subject, 'G6', 'EG', 'PUBLIC', 'GENERAL')
+        .every((lecture) => !lecture.id.startsWith(entry.prefix)),
+    `Sudanese Grade 6 ${entry.subject} remains isolated to its public Grade 6 route`
+  );
+}
+assert(
+  getCurriculumForSubject('PRIMARY_SCIENCE', 'G6', 'SD', 'PUBLIC', 'GENERAL').length > 0 &&
+    getCurriculumForSubject('GENERAL_SCIENCE', 'G6', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    getCurriculumForSubject('PRIMARY_SCIENCE', 'G6', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') &&
+    isSudanPublicGrade6SubjectAvailable('PRIMARY_SCIENCE', 'SD', 'G6', 'PUBLIC', 'GENERAL') &&
+    isSudanPublicGrade6SubjectAvailable('PRIMARY_ARABIC', 'SD', 'G6', 'PUBLIC', 'GENERAL') &&
+    !isSudanPublicGrade6SubjectAvailable('GEOGRAPHY', 'SD', 'G6', 'PRIVATE', 'GENERAL'),
+  'Sudanese Grade 6 science aliases and public subject availability are consistent'
+);
+assert(
+  getCurriculumForSubject('MATH', 'G4', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    SUDAN_PRIMARY_MATH_G4_LECTURES.map((lecture) => lecture.id).join('|') &&
+    getCurriculumForSubject('GENERAL_SCIENCE', 'G4', 'SD', 'PUBLIC', 'GENERAL')
+      .map((lecture) => lecture.id).join('|') ===
+    SUDAN_PRIMARY_SCIENCE_G4_LECTURES.map((lecture) => lecture.id).join('|'),
+  'Sudanese Grade 4 math and science remain available through their equivalent subject aliases'
+);
 assert(
   getSpecializationForEducationTrack('GENERAL') === 'GENERAL' &&
     getSpecializationForEducationTrack('CS_ENGINEERING') === 'STEM' &&
@@ -475,6 +1644,72 @@ for (const subj of highSubjects) {
   assert(g10Title !== g12Title, `${subj}: G10 != G12`);
 }
 
+const sudanGrade12MathScience = getCurriculumForSubject('MATH', 'G12', 'SD', 'PUBLIC', 'SCIENCE_MATH');
+const sudanGrade12MathHumanities = getCurriculumForSubject('MATH', 'G12', 'SD', 'PUBLIC', 'SHARIA_HUMANITIES');
+assert(sudanGrade12MathScience[0]?.titleAr.includes('الدوال') &&
+  sudanGrade12MathScience.some((lesson) => lesson.titleAr.includes('الأعداد المركبة')),
+'Sudan Grade 12 science-math track uses the specialized mathematics book');
+assert(sudanGrade12MathHumanities[0]?.titleAr.includes('الدوال') &&
+  sudanGrade12MathHumanities.some((lesson) => lesson.titleAr.includes('الإحصاء')),
+'Sudan Grade 12 humanities track uses the basic mathematics book');
+assert(getSudanPublicGrade12Subjects('SCIENCE_MATH').includes('TECHNICAL_EDUCATION') &&
+  !getSudanPublicGrade12Subjects('SHARIA_HUMANITIES').includes('TECHNICAL_EDUCATION'),
+'Sudan Grade 12 engineering sciences are limited to the science-math track');
+assert(getSudanPublicGrade12Subjects('GENERAL').includes('FRENCH') &&
+  !getSudanPublicGrade12Subjects('GENERAL').includes('PHYSICS') &&
+  getSudanPublicGrade12Subjects('SCIENCE_MATH').includes('PHYSICS') &&
+  getSudanPublicGrade12Subjects('SCIENCE_BIO').includes('PHYSICS') &&
+  !getSudanPublicGrade12Subjects('SHARIA_HUMANITIES').includes('PHYSICS'),
+'Sudan Grade 12 exposes attached language and physics books only on suitable tracks');
+assert(isSudanPublicGrade12SubjectAvailable('FRENCH', 'SD', 'G12', 'PUBLIC', 'GENERAL') &&
+  isSudanPublicGrade12SubjectAvailable('PHYSICS', 'SD', 'G12', 'PUBLIC', 'SCIENCE_MATH') &&
+  !isSudanPublicGrade12SubjectAvailable('PHYSICS', 'SD', 'G12', 'PUBLIC', 'SHARIA_HUMANITIES') &&
+  !isSudanPublicGrade12SubjectAvailable('CHEMISTRY', 'SD', 'G12', 'PRIVATE', 'GENERAL'),
+'Sudan Grade 12 routes require a supported public textbook course');
+const sudanPhysics = loadSubjectLectures('PHYSICS', 'SD', 'G12', 'PUBLIC', 'SCIENCE_MATH');
+const sudanPhysicsBiologyTrack = loadSubjectLectures('PHYSICS', 'SD', 'G12', 'PUBLIC', 'SCIENCE_BIO');
+const sudanPhysicsTitles = [
+  'المجال التثاقلي',
+  'الحركة الدائرية',
+  'حركة الكواكب والأقمار الاصطناعية',
+  'الحركة التوافقية البسيطة',
+  'الموجات',
+  'الضوء',
+  'الانكسار',
+  'العدسات',
+  'المجموعات البصرية',
+  'المرايا الكرية',
+  'المغناطيسية',
+  'الكهرباء الساكنة',
+  'الكهرباء التيارية',
+  'المجال المغناطيسي للتيار الكهربائي',
+  'الذرة',
+  'الاتصالات'
+];
+assert(sudanPhysics.length === sudanPhysicsTitles.length &&
+  sudanPhysics.every((lesson, index) =>
+    lesson.titleAr.includes(sudanPhysicsTitles[index]) &&
+    lesson.lessonNumberAr === `الفصل ${index + 1}` &&
+    lesson.subject === 'PHYSICS' &&
+    lesson.country === 'SD' &&
+    lesson.gradeLevel === 'G12' &&
+    lesson.educationTrack === 'SCIENCE_MATH'
+  ) &&
+  sudanPhysicsBiologyTrack.length === sudanPhysicsTitles.length &&
+  getCurriculumForSubject('PHYSICS', 'G12', 'SD', 'PUBLIC', 'SCIENCE_MATH').length === sudanPhysicsTitles.length &&
+  getCurriculumForSubject('PHYSICS', 'G12', 'SD', 'PUBLIC', 'SCIENCE_BIO').length === sudanPhysicsTitles.length &&
+  getCurriculumForSubject('PHYSICS', 'G12', 'SD', 'PUBLIC', 'SHARIA_HUMANITIES').length === 0 &&
+  getNationalTextbookInfo('SD', 'PHYSICS', 'G12', 'SCIENCE_MATH', 'ar', 'PUBLIC').textbookName.includes('الفيزياء'),
+'Sudan Grade 12 Physics maps all 16 textbook chapters and is limited to science tracks');
+for (const subject of getSudanPublicGrade12Subjects('GENERAL')) {
+  const lectures = loadSubjectLectures(subject, 'SD', 'G12', 'PUBLIC', 'GENERAL');
+  assert(lectures.length > 0, `Sudan G12 ${subject} has a textbook-aligned course`);
+  assert(lectures.length > 0 && lectures.every((lesson) =>
+    lesson.sections?.length && lesson.assessment.questions.length &&
+    lesson.country === 'SD' && lesson.gradeLevel === 'G12' && lesson.subject === subject
+  ), `Sudan G12 ${subject} lessons have content, assessment, and isolated metadata`);
+}
+
 // 3. Test Specific High School G10 Physics Real Topics vs G12
 console.log('\n--- 3. Verifying G10 Physics is Kinematics & Dimensions (NOT Grade 12) ---');
 const physG10 = getCurriculumForSubject('PHYSICS', 'G10');
@@ -506,20 +1741,26 @@ for (const country of testCountries) {
 
   // Test loadSubjectLectures country injection
   const adaptedLecs = loadSubjectLectures('PHYSICS', country, 'G10');
-  assert(adaptedLecs[0].country === country, `loadSubjectLectures sets country to ${country}`);
-  assert(adaptedLecs[0].gradeLevelNameAr?.includes(SUPPORTED_COUNTRIES[country].nameAr), `gradeLevelNameAr includes country name for ${country}`);
+  if (country === 'SD') {
+    const sudanChemistry = loadSubjectLectures('CHEMISTRY', country, 'G10');
+    assert(adaptedLecs.length === 0, 'Sudan G10 does not fall back to generic Physics');
+    assert(sudanChemistry.length === 6 && sudanChemistry.every((lecture) => lecture.country === 'SD'),
+      'Sudan G10 loads its verified national Chemistry units');
+  } else {
+    assert(adaptedLecs[0].country === country, `loadSubjectLectures sets country to ${country}`);
+    assert(adaptedLecs[0].gradeLevelNameAr?.includes(SUPPORTED_COUNTRIES[country].nameAr), `gradeLevelNameAr includes country name for ${country}`);
+  }
 }
 
 // 5. Test active-country differentiation and inactive-country isolation
 console.log('\n--- 5. Testing active-country differentiation and inactive-country isolation ---');
 const lecsSA = loadSubjectLectures('PHYSICS', 'SA', 'G10');
 const lecsEG = loadSubjectLectures('PHYSICS', 'EG', 'G10');
-const lecsSD = loadSubjectLectures('PHYSICS', 'SD', 'G10');
 const inactiveCountryLecs = ['AE', 'JO', 'KW', 'MA', 'DZ', 'TN', 'OM', 'QA', 'BH', 'IQ', 'INTL']
   .map(country => loadSubjectLectures('PHYSICS', country, 'G10'));
 
 assert(lecsEG[0]?.titleAr.includes('القياس الفيزيائي والكميات الأساسية'), 'Egypt G10 Physics uses its configured national lesson title');
-assert(lecsSA.length > 0 && lecsEG.length > 0 && lecsSD.length > 0, 'Active countries retain their curriculum routing');
+assert(lecsSA.length > 0 && lecsEG.length > 0, 'Saudi and Egyptian G10 Physics retain their curriculum routing');
 assert(
   inactiveCountryLecs.every(lectures => lectures.length === 0) &&
     getCurriculumForSubject('PHYSICS', 'G10', 'INTL').length === 0,
@@ -2385,8 +3626,8 @@ assert(
     !loadSubjectLectures('ENGLISH', 'SA', 'G10', 'PRIVATE').length &&
     !loadSubjectLectures('ENGLISH', 'SA', 'G10', 'INTERNATIONAL').length &&
     !getCurriculumForSubject('ENGLISH', 'G12', 'SA', 'PUBLIC').length &&
-    !getCurriculumForSubject('ENGLISH', 'G10', 'EG', 'PUBLIC').length,
-  'Mega Goal 1 remains limited to Saudi public common-year G10 and is isolated from unverified G12, foreign, and non-public routes'
+    !getCurriculumForSubject('ENGLISH', 'G1', 'EG', 'PUBLIC').some((l) => l.id.startsWith('sa-')),
+  'Mega Goal 1 remains limited to Saudi public common-year G10 and is isolated from unverified grades, countries, and education types'
 );
 const saudiEnglishG5 = getCurriculumForSubject('ENGLISH', 'G5', 'SA', 'PUBLIC', 'GENERAL');
 const saudiEnglishG2 = getCurriculumForSubject('ENGLISH', 'G2', 'SA', 'PUBLIC', 'GENERAL');
@@ -2474,7 +3715,7 @@ assert(
       ) &&
     !getCurriculumForSubject('ENGLISH', 'G2', 'SA', 'PRIVATE').length &&
     !getCurriculumForSubject('ENGLISH', 'G2', 'SA', 'INTERNATIONAL').length &&
-    !getCurriculumForSubject('ENGLISH', 'G2', 'EG', 'PUBLIC').length &&
+    !getCurriculumForSubject('ENGLISH', 'G2', 'EG', 'PUBLIC').some((l) => l.id.startsWith('sa-')) &&
     !getCurriculumForSubject('ENGLISH', 'G1', 'SA', 'PUBLIC').length,
   'We Can! Grade 2 is available only on the Saudi public route with verified book metadata and labels'
 );
@@ -2552,7 +3793,7 @@ assert(
       ) &&
     !getCurriculumForSubject('ENGLISH', 'G3', 'SA', 'PRIVATE').length &&
     !getCurriculumForSubject('ENGLISH', 'G3', 'SA', 'INTERNATIONAL').length &&
-    !getCurriculumForSubject('ENGLISH', 'G3', 'EG', 'PUBLIC').length,
+    !getCurriculumForSubject('ENGLISH', 'G3', 'EG', 'PUBLIC').some((l) => l.id.startsWith('sa-')),
   'We Can! Grade 3 is available only on the Saudi public route with book metadata and labels'
 );
 const saudiEnglishG5Contents = [
@@ -2624,7 +3865,7 @@ assert(
       ) &&
     !getCurriculumForSubject('ENGLISH', 'G5', 'SA', 'PRIVATE').length &&
     !getCurriculumForSubject('ENGLISH', 'G5', 'SA', 'INTERNATIONAL').length &&
-    !getCurriculumForSubject('ENGLISH', 'G5', 'EG', 'PUBLIC').length,
+    !getCurriculumForSubject('ENGLISH', 'G5', 'EG', 'PUBLIC').some((l) => l.id.startsWith('sa-')),
   'Top Goal Grade 5 is offered only for the Saudi public route, with book metadata and labels'
 );
 const saudiEnglish2 = getCurriculumForSubject('ENGLISH', 'G11', 'SA', 'PUBLIC', 'GENERAL');
@@ -2692,10 +3933,211 @@ assert(
     !loadSubjectLectures('ENGLISH', 'SA', 'G11', 'PRIVATE').length &&
     !loadSubjectLectures('ENGLISH', 'SA', 'G11', 'INTERNATIONAL').length &&
     !getCurriculumForSubject('ENGLISH', 'G12', 'SA', 'PUBLIC').length &&
-    !getCurriculumForSubject('ENGLISH', 'G11', 'EG', 'PUBLIC').length,
+    !getCurriculumForSubject('ENGLISH', 'G1', 'EG', 'PUBLIC').some((l) => l.id.startsWith('sa-')),
   'Mega Goal 2 is available only to Saudi public G11 profiles across tracks and blocked from unverified education contexts'
 );
 const saudiArabic1 = loadSubjectLectures('ARABIC_LIT', 'SA', 'G10', 'PUBLIC', 'GENERAL');
+const egyptArabic10 = loadSubjectLectures('ARABIC_LIT', 'EG', 'G10', 'PUBLIC', 'GENERAL');
+const egyptEnglish10 = loadSubjectLectures('ENGLISH', 'EG', 'G10', 'PUBLIC', 'GENERAL');
+const egyptFrench10 = loadSubjectLectures('FRENCH', 'EG', 'G10', 'PRIVATE', 'GENERAL');
+const egyptFrenchPublic10 = loadSubjectLectures('FRENCH', 'EG', 'G10', 'PUBLIC', 'GENERAL');
+const egyptEnglish10Units = [
+  'Life in a Digital World',
+  'Learning to Learn',
+  'Role Models',
+  'Smart Choices',
+  'Future Dreams',
+  'Global Citizens'
+];
+const egyptFrench10Units = [
+  'Vacances et voyages',
+  'Le sport',
+  'Spectacles et sorties',
+  'L’alimentation',
+  'La mode et les vêtements',
+  'Le logement'
+];
+assert(
+  [...egyptEnglish10, ...egyptFrench10].every(lecture =>
+    !/[\u0600-\u06FF]/.test(JSON.stringify({
+      t: lecture.titleAr, d: lecture.descriptionAr, m: lecture.mainContentAr,
+      s: lecture.sections, o: lecture.learningOutcomesAr, v: lecture.vocabulary,
+      f: lecture.formativeAssessment, q: lecture.assessment.questions
+    }))
+  ),
+  'Foreign-language lessons are explained in the target language only, never in Arabic'
+);
+assert(
+  egyptEnglish10.length === egyptEnglish10Units.length &&
+    egyptEnglish10.every((lecture, index) =>
+      lecture.titleEn === egyptEnglish10Units[index] &&
+      lecture.country === 'EG' &&
+      lecture.gradeLevel === 'G10' &&
+      lecture.subject === 'ENGLISH' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.assessment.questions[0]?.optionsEn[lecture.assessment.questions[0].correctIndex]
+    ) &&
+    getCurriculumForSubject('ENGLISH', 'G10', 'EG', 'PRIVATE').length === 6 &&
+    !loadSubjectLectures('ENGLISH', 'EG', 'G10', 'INTERNATIONAL').length,
+  'Egyptian Secondary 1 English covers the six Ministry-book units and remains isolated by education type'
+);
+assert(
+  egyptFrench10.length === egyptFrench10Units.length &&
+    egyptFrench10.every((lecture, index) =>
+      lecture.titleEn === egyptFrench10Units[index] &&
+      lecture.titleAr === lecture.titleEn &&
+      !/[\u0600-\u06FF]/.test(`${lecture.mainContentAr}${lecture.summaryAr}${lecture.sections?.map(s => s.contentAr).join('')}`) &&
+      lecture.country === 'EG' &&
+      lecture.gradeLevel === 'G10' &&
+      lecture.subject === 'FRENCH' &&
+      lecture.educationType === 'PRIVATE' &&
+      lecture.topicEn?.includes('soutien scolaire') &&
+      lecture.assessment.questions[0]?.optionsEn[lecture.assessment.questions[0].correctIndex]
+    ) &&
+    egyptFrenchPublic10.length === egyptFrench10.length &&
+    egyptFrenchPublic10.every((lecture, index) =>
+      lecture.titleAr === egyptFrench10[index].titleAr &&
+      lecture.educationType === 'PUBLIC'
+    ) &&
+    !loadSubjectLectures('FRENCH', 'EG', 'G10', 'INTERNATIONAL').length,
+  'Champion 1 themes are available as a school-selected support course for Egyptian public and private profiles, not as a verified Ministry textbook'
+);
+assert(
+  getNationalTextbookInfo('EG', 'ENGLISH', 'G10', 'GENERAL', 'ar', 'PUBLIC').textbookName.includes('كتاب وزارة التربية والتعليم المصرية') &&
+    getNationalSubjectLabel('ENGLISH', 'EG', 'G10', 'ar', 'PUBLIC').includes('لغة ثانية') &&
+    getNationalTextbookInfo('EG', 'FRENCH', 'G10', 'GENERAL', 'ar', 'PRIVATE').textbookName.includes('لا يُعرض ككتاب وزاري') &&
+    getNationalTextbookInfo('EG', 'FRENCH', 'G10', 'GENERAL', 'ar', 'PRIVATE').ministry.includes('لا يثبت اعتماده') &&
+    getNationalTextbookInfo('EG', 'FRENCH', 'G10', 'GENERAL', 'ar', 'PUBLIC').ministry.includes('لا يثبت اعتماده') &&
+    getNationalSubjectLabel('FRENCH', 'EG', 'G10', 'ar', 'PUBLIC').includes('مسار دعم مدرسي'),
+  'Egyptian English and French book metadata distinguishes the Ministry textbook from the school-selected Champion 1 support course'
+);
+for (const secondLanguage of ['GERMAN', 'ITALIAN'] as const) {
+  const lectures = loadSubjectLectures(secondLanguage, 'EG', 'G10', 'PUBLIC', 'GENERAL');
+  const arabic = /[\u0600-\u06FF]/;
+  assert(
+    lectures.length === 6 &&
+      lectures.every(lecture => lecture.subject === secondLanguage && lecture.country === 'EG' && lecture.gradeLevel === 'G10') &&
+      !loadSubjectLectures(secondLanguage, 'EG', 'G10', 'INTERNATIONAL').length &&
+      !loadSubjectLectures(secondLanguage, 'SA', 'G10', 'PUBLIC').length &&
+      lectures.every(lecture => !arabic.test(JSON.stringify({
+        ...lecture,
+        ministryAr: '', gradeLevelNameAr: '', termAr: '', lessonNumberAr: ''
+      }))) &&
+      getNationalTextbookInfo('EG', secondLanguage, 'G10', 'GENERAL', 'ar', 'PUBLIC').ministry.includes('لا يُعرض ككتاب وزاري موثق'),
+    `${secondLanguage} is a six-unit Egyptian Secondary 1 second-language support course taught only in the target language`
+  );
+}
+const egyptArabic10Titles = [
+  'مكارم الأخلاق وحاتم الطائي',
+  'شباب تسامى للعلا',
+  'قيم الحياة الزوجية',
+  'قيم اجتماعية',
+  'العفو مأمول',
+  'من أجل حياة كريمة',
+  'تكنولوجيا المعلومات',
+  'ابدأ بنفسك',
+  'آداب صناعة الكتاب'
+];
+const egyptArabic10Units = [
+  'الوحدة الأولى: قيم عربية',
+  'الوحدة الأولى: قيم عربية',
+  'الوحدة الأولى: قيم عربية',
+  'الوحدة الثانية: التسامح والسلام',
+  'الوحدة الثانية: التسامح والسلام',
+  'الوحدة الثانية: التسامح والسلام',
+  'الوحدة الثالثة: العلم والأخلاق',
+  'الوحدة الثالثة: العلم والأخلاق',
+  'الوحدة الثالثة: العلم والأخلاق'
+];
+assert(
+  egyptArabic10.length === egyptArabic10Titles.length &&
+    egyptArabic10.every((lecture, index) =>
+      lecture.titleAr === egyptArabic10Titles[index] &&
+      lecture.unitTitleAr === egyptArabic10Units[index]
+    ),
+  'Egyptian Grade 10 Arabic lessons match the supplied unit and lesson sequence'
+);
+assert(
+  egyptArabic10.every((lecture) =>
+    lecture.country === 'EG' &&
+    lecture.gradeLevel === 'G10' &&
+    lecture.subject === 'ARABIC_LIT' &&
+    lecture.termAr === 'الفصل الدراسي الأول 2026–2027' &&
+    lecture.assessment.questions.length > 0 &&
+    lecture.assessment.questions.every((question) =>
+      !!question.textEn &&
+      !!question.optionsEn[question.correctIndex]
+    ) &&
+    lecture.sections?.length === 2
+  ) &&
+    !egyptArabic10.some((lecture) =>
+      ['الأدب الجاهلي', 'المعلقات', 'أسلوب الاستثناء'].some((topic) =>
+        `${lecture.titleAr} ${lecture.mainContentAr}`.includes(topic)
+      )
+    ),
+  'Egyptian Arabic lessons retain term metadata, learning content, assessment, and avoid generic mismatched topics'
+);
+assert(
+  loadSubjectLectures('ARABIC_LANG', 'EG', 'G10', 'PUBLIC', 'GENERAL')
+    .map((lecture) => lecture.titleAr).join('|') === egyptArabic10Titles.join('|') &&
+    loadSubjectLectures('ARABIC_LIT', 'EG', 'G10', 'PRIVATE', 'GENERAL').length === 9,
+  'Egyptian Arabic subject aliases and private profiles use the verified Grade 10 course'
+);
+assert(
+  getNationalTextbookInfo('EG', 'ARABIC_LIT', 'G10', 'GENERAL', 'ar', 'PUBLIC').textbookName.includes('الفصل الدراسي الأول 2026–2027') &&
+    getNationalTextbookInfo('EG', 'ARABIC_LIT', 'G10', 'GENERAL', 'ar', 'PUBLIC').semester === 'الفصل الدراسي الأول 2026–2027' &&
+    getNationalSubjectLabel('ARABIC_LIT', 'EG', 'G10', 'ar', 'PUBLIC').includes('الصف الأول الثانوي'),
+  'Egyptian Grade 10 Arabic metadata identifies the supplied term and course'
+);
+const egyptG10BookSubjects = [
+  'MATH',
+  'HISTORY',
+  'GENERAL_SCIENCE',
+  'PHILOSOPHY',
+  'ISLAMIC_STUDIES',
+  'COMPUTER_SCIENCE'
+] as const;
+const egyptG10BookCourses = egyptG10BookSubjects.map((subject) => ({
+  subject,
+  lectures: loadSubjectLectures(subject, 'EG', 'G10', 'PUBLIC', 'GENERAL')
+}));
+assert(
+  egyptG10BookCourses.every(({ subject, lectures }) =>
+    lectures.length > 0 &&
+    new Set(lectures.map((lecture) => lecture.id)).size === lectures.length &&
+    lectures.every((lecture) =>
+      lecture.country === 'EG' &&
+      lecture.gradeLevel === 'G10' &&
+      lecture.subject === subject &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.educationTrack === 'GENERAL' &&
+      lecture.id.startsWith(`eg-${subject.toLowerCase()}-g10-`) &&
+      !!lecture.unitTitleAr &&
+      !!lecture.topicAr &&
+      !!lecture.mainContentAr &&
+      !!lecture.assessment.questions[0]?.optionsAr[lecture.assessment.questions[0].correctIndex]
+    )
+  ) &&
+    egyptG10BookCourses
+      .filter(({ subject }) => subject !== 'ISLAMIC_STUDIES')
+      .every(({ lectures }) => lectures.every((lecture) => lecture.termAr === 'الفصل الدراسي الأول')) &&
+    new Set(egyptG10BookCourses.find(({ subject }) => subject === 'ISLAMIC_STUDIES')?.lectures.map((lecture) => lecture.termAr)).size === 2,
+  'Egyptian Secondary 1 core book courses preserve textbook scope, country/grade isolation, assessments, and Islamic Studies semester coverage'
+);
+assert(
+  !getCurriculumForSubject('HISTORY', 'G10', 'EG', 'PRIVATE', 'GENERAL').length &&
+    !loadSubjectLectures('HISTORY', 'EG', 'G10', 'PRIVATE', 'GENERAL').length &&
+    !getCurriculumForSubject('HISTORY', 'G10', 'EG', 'PUBLIC', 'BUSINESS').length &&
+    egyptG10BookSubjects
+      .filter((subject) => subject !== 'HISTORY')
+      .every((subject) =>
+        getCurriculumForSubject(subject, 'G10', 'EG', 'PRIVATE', 'GENERAL').length > 0
+      ) &&
+    getNationalTextbookInfo('EG', 'COMPUTER_SCIENCE', 'G10', 'GENERAL', 'ar', 'PUBLIC').textbookName.includes('نسخة الكتاب الإنجليزية') &&
+    getNationalSubjectLabel('PHILOSOPHY', 'EG', 'G10', 'ar', 'PUBLIC').includes('الفلسفة والمنطق') &&
+    getNationalTextbookInfo('EG', 'ISLAMIC_STUDIES', 'G10', 'GENERAL', 'ar', 'PUBLIC').semester === 'الفصلان الدراسيان الأول والثاني',
+  'Egyptian book routing enforces verified education contexts and labels ICT edition, philosophy, and semester coverage accurately'
+);
 const saudiArabic1Titles = [
   'الكفاية النحوية',
   'الكفاية الإملائية',
@@ -4223,7 +5665,7 @@ assert(
     !getCurriculumForSubject('CHEMISTRY', 'G7', 'EG', 'PUBLIC').length &&
     !getCurriculumForSubject('BIOLOGY', 'G6', 'SD', 'PUBLIC').length &&
     !getCurriculumForSubject('GEOGRAPHY', 'G9', 'SA', 'PUBLIC').length &&
-    !getCurriculumForSubject('HISTORY', 'G12', 'EG', 'PUBLIC').length &&
+    !getCurriculumForSubject('PHILOSOPHY', 'G8', 'EG', 'PUBLIC').length &&
     !getCurriculumForSubject('GENERAL_SCIENCE', 'G10', 'SA', 'PUBLIC').length,
   'Subjects without a curriculum for the selected grade return no unrelated fallback grade'
 );
@@ -8375,6 +9817,357 @@ try {
     delete (globalThis as typeof globalThis & { localStorage?: Storage }).localStorage;
   }
 }
+
+const sudanGrade7Courses = [
+  ['ARABIC_LANG', SUDAN_MIDDLE_ARABIC_G7_LECTURES],
+  ['ENGLISH', SUDAN_MIDDLE_ENGLISH_G7_LECTURES],
+  ['GEOGRAPHY', SUDAN_MIDDLE_GEOGRAPHY_G7_LECTURES],
+  ['HISTORY', SUDAN_MIDDLE_HISTORY_G7_LECTURES],
+  ['COMPUTER_SCIENCE', SUDAN_MIDDLE_ICT_G7_LECTURES],
+  ['ISLAMIC_STUDIES', SUDAN_MIDDLE_ISLAMIC_G7_LECTURES],
+  ['MATH', SUDAN_MIDDLE_MATH_G7_LECTURES],
+  ['GENERAL_SCIENCE', SUDAN_MIDDLE_SCIENCE_G7_LECTURES]
+] as const;
+assert(
+  sudanGrade7Courses.every(([subject, lectures]) =>
+    isSudanPublicGrade7SubjectAvailable(subject, 'SD', 'G7', 'PUBLIC', 'GENERAL') &&
+    getCurriculumForSubject(subject, 'G7', 'SD', 'PUBLIC', 'GENERAL').length === lectures.length &&
+    loadSubjectLectures(subject, 'SD', 'G7', 'PUBLIC', 'GENERAL').length === lectures.length &&
+    lectures.every((lecture) =>
+      lecture.country === 'SD' &&
+      lecture.gradeLevel === 'G7' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.educationTrack === 'GENERAL' &&
+      lecture.sections?.length === 1 &&
+      lecture.sections[0].diagram?.diagramType === 'primary_lesson_sequence' &&
+      lecture.sections[0].diagram?.visualSteps?.length === 4 &&
+      lecture.assessment.questions.length === 1 &&
+      lecture.assessment.questions[0].optionsAr.length === 3 &&
+      lecture.assessment.questions[0].correctIndex >= 0 &&
+      lecture.assessment.questions[0].correctIndex < 3
+    )
+  ) &&
+  SUDAN_MIDDLE_ENGLISH_G7_LECTURES.length === 64 &&
+  SUDAN_MIDDLE_GEOGRAPHY_G7_LECTURES.length === 21 &&
+  SUDAN_MIDDLE_HISTORY_G7_LECTURES.length === 29 &&
+  SUDAN_MIDDLE_ICT_G7_LECTURES.length === 19 &&
+  SUDAN_MIDDLE_MATH_G7_LECTURES.length === 8 &&
+  SUDAN_MIDDLE_SCIENCE_G7_LECTURES.length === 6,
+  'Sudan Grade 7 has all eight routed public curriculum courses with verified lesson counts, learning diagrams, and assessments'
+);
+assert(
+  SUDAN_MIDDLE_MATH_G7_BOOK.edition === 'الطبعة الأولى 2021م' &&
+    SUDAN_MIDDLE_MATH_G7_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'مجموعة الأعداد النسبية|الجمل الرياضية والمعادلات|المضلعات|الزوج المرتب والعلاقات|التكافؤ|النظام الثنائي|التشابه|الإحصاء' &&
+    SUDAN_MIDDLE_MATH_G7_BOOK.units.map((unit) => `${unit.firstPage}-${unit.lastPage}`).join('|') ===
+      '2-32|33-48|49-59|60-78|79-91|92-104|105-114|115-140' &&
+    SUDAN_MIDDLE_ICT_G7_BOOK.edition === 'الطبعة الأولى 2021م' &&
+    SUDAN_MIDDLE_ICT_G7_BOOK.units.map((unit) => unit.titleAr).join('|') ===
+      'مدخل إلى قواعد البيانات|تطبيقات قواعد البيانات باستخدام مايكروسوفت أكسس|أساسيات الإنترنت|الإنترنت في حياتنا' &&
+    SUDAN_MIDDLE_ICT_G7_TABLE_OF_CONTENTS.length === 19 &&
+    SUDAN_MIDDLE_ICT_G7_TABLE_OF_CONTENTS.map((lesson) => lesson.titleAr).join('|') ===
+      'جداول البيانات|الجداول المرتبطة|قواعد البيانات|الواجهة الرئيسة للبرنامج|الجداول|العلاقات بين الجداول|النماذج|الاستعلامات|التقارير|مفاهيم أساسية في الإنترنت|مزايا وخدمات الإنترنت|عناوين ونطاقات الإنترنت|متصفحات الإنترنت|محركات البحث|الاستخدام الآمن للإنترنت|التعليم الإلكتروني|الحكومة الإلكترونية|التجارة الإلكترونية|إنترنت الأشياء',
+  'Sudan Grade 7 math and ICT match the linked books’ editions, unit indexes, pages, and ICT lesson contents'
+);
+assert(
+  sudanGrade7Courses.every(([subject]) =>
+    !isSudanPublicGrade7SubjectAvailable(subject, 'SD', 'G6', 'PUBLIC', 'GENERAL') &&
+    !isSudanPublicGrade7SubjectAvailable(subject, 'SD', 'G7', 'PRIVATE', 'GENERAL') &&
+    !isSudanPublicGrade7SubjectAvailable(subject, 'SD', 'G7', 'PUBLIC', 'CS_ENGINEERING') &&
+    !isSudanPublicGrade7SubjectAvailable(subject, 'EG', 'G7', 'PUBLIC', 'GENERAL') &&
+    getCurriculumForSubject(subject, 'G7', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject(subject, 'G8', 'SD', 'PUBLIC', 'GENERAL')
+      .every((lecture) => lecture.gradeLevel === 'G8' && !lecture.id.includes('-g7-')) &&
+    getCurriculumForSubject(subject, 'G7', 'EG', 'PUBLIC', 'GENERAL')
+      .every((lecture) => !lecture.id.startsWith('sd-middle-'))
+  ),
+  'Sudan Grade 7 textbooks are restricted to public general education in Sudan and the matching grade'
+);
+const sudanGrade8Courses = Object.entries(SUDAN_MIDDLE_G8_LECTURES) as [Subject, Lecture[]][];
+assert(
+  sudanGrade8Courses.length === 10 &&
+    sudanGrade8Courses.every(([subject, lectures]) =>
+      isSudanPublicGrade8SubjectAvailable(subject, 'SD', 'G8', 'PUBLIC', 'GENERAL') &&
+      getCurriculumForSubject(subject, 'G8', 'SD', 'PUBLIC', 'GENERAL').length === lectures.length &&
+      loadSubjectLectures(subject, 'SD', 'G8', 'PUBLIC', 'GENERAL').length === lectures.length &&
+      lectures.every((lecture) =>
+        lecture.country === 'SD' &&
+        lecture.gradeLevel === 'G8' &&
+        lecture.educationType === 'PUBLIC' &&
+        lecture.educationTrack === 'GENERAL' &&
+        lecture.id.includes('-g8-') &&
+        lecture.sections?.length === 1 &&
+        lecture.sections[0].diagram?.visualSteps?.length === 4 &&
+        lecture.assessment.questions.length === 1
+      )
+    ) &&
+    SUDAN_MIDDLE_G8_LECTURES.ENGLISH?.length === 8 &&
+    SUDAN_MIDDLE_G8_LECTURES.GEOGRAPHY?.length === 19 &&
+    SUDAN_MIDDLE_G8_LECTURES.HISTORY?.length === 25 &&
+    SUDAN_MIDDLE_G8_LECTURES.COMPUTER_SCIENCE?.length === 23 &&
+    SUDAN_MIDDLE_G8_LECTURES.MATH?.length === 8 &&
+    SUDAN_MIDDLE_G8_LECTURES.GENERAL_SCIENCE?.length === 6 &&
+    SUDAN_MIDDLE_G8_LECTURES.ARABIC_LANG?.length === 15 &&
+    SUDAN_MIDDLE_G8_LECTURES.ISLAMIC_STUDIES?.length === 6 &&
+    SUDAN_MIDDLE_G8_LECTURES.NATIONAL_EDUCATION?.length === 13 &&
+    SUDAN_MIDDLE_G8_LECTURES.TECHNICAL_EDUCATION?.length === 12,
+  'Sudan Grade 8 routes all ten public curriculum courses with diagrams, assessments, and textbook lesson counts'
+);
+assert(
+  sudanGrade8Courses.every(([subject]) =>
+    !isSudanPublicGrade8SubjectAvailable(subject, 'SD', 'G7', 'PUBLIC', 'GENERAL') &&
+    !isSudanPublicGrade8SubjectAvailable(subject, 'SD', 'G8', 'PRIVATE', 'GENERAL') &&
+    !isSudanPublicGrade8SubjectAvailable(subject, 'SD', 'G8', 'PUBLIC', 'CS_ENGINEERING') &&
+    !isSudanPublicGrade8SubjectAvailable(subject, 'EG', 'G8', 'PUBLIC', 'GENERAL') &&
+    getCurriculumForSubject(subject, 'G8', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject(subject, 'G8', 'EG', 'PUBLIC', 'GENERAL')
+      .every((lecture) => lecture.country !== 'SD' && !lecture.id.includes('sd-middle-')) &&
+    loadSubjectLectures(subject, 'SD', 'G8', 'PRIVATE', 'GENERAL').length === 0
+  ) &&
+    getNationalTextbookInfo('SD', 'TECHNICAL_EDUCATION', 'G8').textbookName.includes('أساسيات التربية التقنية') &&
+    getNationalSubjectLabel('NATIONAL_EDUCATION', 'SD', 'G8').includes('التربية الوطنية'),
+  'Sudan Grade 8 access is restricted to Sudanese public general education, with accurate new subject labels'
+);
+const sudanGrade9Courses = Object.entries(SUDAN_MIDDLE_G9_LECTURES) as [Subject, Lecture[]][];
+assert(
+  sudanGrade9Courses.length === 2 &&
+    sudanGrade9Courses.every(([subject, lectures]) =>
+      isSudanPublicGrade9SubjectAvailable(subject, 'SD', 'G9', 'PUBLIC', 'GENERAL') &&
+      getCurriculumForSubject(subject, 'G9', 'SD', 'PUBLIC', 'GENERAL').length === lectures.length &&
+      loadSubjectLectures(subject, 'SD', 'G9', 'PUBLIC', 'GENERAL').length === lectures.length &&
+      lectures.every((lecture) =>
+        lecture.country === 'SD' &&
+        lecture.gradeLevel === 'G9' &&
+        lecture.educationType === 'PUBLIC' &&
+        lecture.educationTrack === 'GENERAL' &&
+        lecture.id.includes('-g9-') &&
+        (subject !== 'HISTORY' || (lecture.topicAr === undefined && lecture.topicEn === undefined)) &&
+        lecture.sections?.length === 1 &&
+        lecture.sections[0].diagram?.visualSteps?.length === 4 &&
+        lecture.assessment.questions.length === 1
+      )
+    ) &&
+    SUDAN_MIDDLE_G9_LECTURES.ENGLISH?.length === 8 &&
+    SUDAN_MIDDLE_G9_LECTURES.HISTORY?.length === 7,
+  'Sudan Grade 9 routes only the verified English and History courses with diagrams, assessments, and no unverified page references'
+);
+assert(
+  sudanGrade9Courses.every(([subject]) =>
+    !isSudanPublicGrade9SubjectAvailable(subject, 'SD', 'G8', 'PUBLIC', 'GENERAL') &&
+    !isSudanPublicGrade9SubjectAvailable(subject, 'SD', 'G9', 'PRIVATE', 'GENERAL') &&
+    !isSudanPublicGrade9SubjectAvailable(subject, 'SD', 'G9', 'PUBLIC', 'CS_ENGINEERING') &&
+    !isSudanPublicGrade9SubjectAvailable(subject, 'EG', 'G9', 'PUBLIC', 'GENERAL') &&
+    getCurriculumForSubject(subject, 'G9', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject(subject, 'G9', 'SD', 'PUBLIC', 'CS_ENGINEERING').length === 0 &&
+    getCurriculumForSubject(subject, 'G9', 'EG', 'PUBLIC', 'GENERAL')
+      .every((lecture) => lecture.country !== 'SD' && !lecture.id.includes('sd-middle-')) &&
+    loadSubjectLectures(subject, 'SD', 'G9', 'PRIVATE', 'GENERAL').length === 0
+  ) &&
+    !isSudanPublicGrade9SubjectAvailable('MATH', 'SD', 'G9', 'PUBLIC', 'GENERAL'),
+  'Sudan Grade 9 verified routes are restricted to Sudanese public general education and do not expose unverified subjects'
+);
+assert(
+  ['CHEMISTRY', 'GEOGRAPHY', 'HISTORY'].every((subject) =>
+    isSudanPublicGrade10SubjectAvailable(subject as Subject, 'SD', 'G10', 'PUBLIC', 'GENERAL')
+  ) &&
+    getCurriculumForSubject('GEOGRAPHY', 'G10', 'SD', 'PUBLIC', 'GENERAL').length === 4 &&
+    getCurriculumForSubject('HISTORY', 'G10', 'SD', 'PUBLIC', 'GENERAL').length === 11 &&
+    loadSubjectLectures('GEOGRAPHY', 'SD', 'G10', 'PUBLIC', 'GENERAL').length === 4 &&
+    loadSubjectLectures('HISTORY', 'SD', 'G10', 'PUBLIC', 'GENERAL').length === 11 &&
+    SUDAN_HIGH_CHEMISTRY_G10_LECTURES.length === 6 &&
+    getCurriculumForSubject('CHEMISTRY', 'G10', 'SD', 'PUBLIC', 'GENERAL').length === 6 &&
+    loadSubjectLectures('CHEMISTRY', 'SD', 'G10', 'PUBLIC', 'GENERAL').length === 6 &&
+    SUDAN_HIGH_CHEMISTRY_G10_LECTURES.every((lecture, index) =>
+      lecture.country === 'SD' &&
+      lecture.gradeLevel === 'G10' &&
+      lecture.educationType === 'PUBLIC' &&
+      lecture.educationTrack === 'GENERAL' &&
+      lecture.id === `sd-g10-chem-${index + 1}` &&
+      lecture.sections?.[0]?.diagram?.visualSteps?.length === 4 &&
+      lecture.assessment.questions.length === 1
+    ) &&
+    ['التركيب الذري للمادة', 'الروابط الكيميائية', 'المعادلات الكيميائية', 'التفاعلات الكيميائية', 'أسس الحساب الكيميائي', 'قوانين الاتحاد الكيميائي']
+      .every((unitTitle) => SUDAN_HIGH_CHEMISTRY_G10_LECTURES.some((lecture) =>
+        lecture.unitTitleAr.includes(unitTitle)
+      )),
+  'Sudan Grade 10 Chemistry covers all six textbook units with diagrams and assessments'
+);
+assert(
+  !isSudanPublicGrade10SubjectAvailable('CHEMISTRY', 'SD', 'G10', 'PRIVATE', 'GENERAL') &&
+    !isSudanPublicGrade10SubjectAvailable('CHEMISTRY', 'SD', 'G10', 'PUBLIC', 'CS_ENGINEERING') &&
+    !isSudanPublicGrade10SubjectAvailable('CHEMISTRY', 'EG', 'G10', 'PUBLIC', 'GENERAL') &&
+    !isSudanPublicGrade10SubjectAvailable('PHYSICS', 'SD', 'G10', 'PUBLIC', 'GENERAL') &&
+    getCurriculumForSubject('PHYSICS', 'G10', 'SD', 'PUBLIC', 'GENERAL').length === 0 &&
+    getCurriculumForSubject('BIOLOGY', 'G10', 'SD', 'PUBLIC', 'GENERAL').length === 0 &&
+    getCurriculumForSubject('CHEMISTRY', 'G10', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject('CHEMISTRY', 'G10', 'SD', 'PUBLIC', 'CS_ENGINEERING').length === 0 &&
+    getCurriculumForSubject('GEOGRAPHY', 'G10', 'SD', 'PRIVATE', 'GENERAL').length === 0 &&
+    getCurriculumForSubject('HISTORY', 'G10', 'SD', 'PUBLIC', 'CS_ENGINEERING').length === 0 &&
+    loadSubjectLectures('CHEMISTRY', 'SD', 'G10', 'PRIVATE', 'GENERAL').length === 0 &&
+    loadSubjectLectures('CHEMISTRY', 'SD', 'G10', 'PUBLIC', 'CS_ENGINEERING').length === 0,
+  'Sudan Grade 10 routes only verified public general subjects without generic curriculum fallbacks'
+);
+assert(
+  isSudanPublicGrade11SubjectAvailable('BIOLOGY', 'SD', 'G11', 'PUBLIC', 'GENERAL') &&
+    getCurriculumForSubject('BIOLOGY', 'G11', 'SD', 'PUBLIC', 'GENERAL').length === 5 &&
+    loadSubjectLectures('BIOLOGY', 'SD', 'G11', 'PUBLIC', 'GENERAL').length === 5 &&
+    getCurriculumForSubject('BIOLOGY', 'G11', 'SD', 'PUBLIC', 'GENERAL').map((lecture) => lecture.unitTitleAr).join('|') ===
+      'الوحدة الأولى: التغذية والهضم في الكائنات الحية|الوحدة الثانية: النقل في الكائنات الحية|الوحدة الثالثة: التنفس الخلوي في الكائنات الحية|الوحدة الرابعة: الإخراج في الكائنات الحية|الوحدة الخامسة: التنسيق في الكائنات الحية' &&
+    getCurriculumForSubject('BIOLOGY', 'G11', 'SD', 'PUBLIC', 'GENERAL')
+      .every((lecture) => (lecture.keyConceptsAr?.length ?? 0) > 0 && (lecture.learningOutcomesAr?.length ?? 0) > 0),
+  'Sudan Grade 11 biology follows the textbook’s five verified units with lesson content and learning outcomes'
+);
+assert(
+  ['MATH', 'CHEMISTRY', 'PHYSICS', 'COMPUTER_SCIENCE', 'ARABIC_LIT', 'HISTORY', 'GEOGRAPHY', 'ISLAMIC_STUDIES']
+    .every((subject) =>
+      !isSudanPublicGrade11SubjectAvailable(subject as Subject, 'SD', 'G11', 'PUBLIC', 'GENERAL') &&
+      getCurriculumForSubject(subject as Subject, 'G11', 'SD', 'PUBLIC', 'GENERAL').length === 0 &&
+      loadSubjectLectures(subject as Subject, 'SD', 'G11', 'PUBLIC', 'GENERAL').length === 0
+    ) &&
+    !isSudanPublicGrade11SubjectAvailable('BIOLOGY', 'SD', 'G11', 'PRIVATE', 'GENERAL') &&
+    !isSudanPublicGrade11SubjectAvailable('BIOLOGY', 'SD', 'G11', 'PUBLIC', 'CS_ENGINEERING') &&
+    !isSudanPublicGrade11SubjectAvailable('BIOLOGY', 'EG', 'G11', 'PUBLIC', 'GENERAL'),
+  'Sudan Grade 11 exposes no unverified subjects or generic curriculum fallbacks'
+);
+
+assert(
+  isEgyptG11SubjectAvailable('BIOLOGY', 'GENERAL', 'PUBLIC') &&
+    getCurriculumForSubject('BIOLOGY', 'G11', 'EG', 'PUBLIC', 'GENERAL').length === 5 &&
+    loadSubjectLectures('BIOLOGY', 'EG', 'G11', 'PUBLIC', 'GENERAL').length === 5 &&
+    getCurriculumForSubject('BIOLOGY', 'G11', 'EG', 'PUBLIC', 'GENERAL')[0].titleAr.includes('التغذية والهضم') &&
+    getCurriculumForSubject('BIOLOGY', 'G11', 'EG', 'PUBLIC', 'GENERAL').every((l) => (l.keyConceptsAr?.length ?? 0) > 0),
+  'Egypt Grade 11 Biology loads official 5 lectures with key concepts and outcomes'
+);
+
+assert(
+  isEgyptG11SubjectAvailable('PHYSICS', 'GENERAL', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('CHEMISTRY', 'GENERAL', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('MATH', 'GENERAL', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('ENGLISH', 'GENERAL', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('ARABIC_LIT', 'GENERAL', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('ISLAMIC_STUDIES', 'GENERAL', 'PUBLIC') &&
+    !isEgyptG11SubjectAvailable('HISTORY', 'GENERAL', 'PUBLIC') &&
+    !isEgyptG11SubjectAvailable('GEOGRAPHY', 'GENERAL', 'PUBLIC') &&
+    !isEgyptG11SubjectAvailable('PHILOSOPHY', 'GENERAL', 'PUBLIC'),
+  'Egypt Grade 11 Scientific Track includes science subjects and excludes literary subjects'
+);
+
+assert(
+  isEgyptG11SubjectAvailable('HISTORY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('GEOGRAPHY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG11SubjectAvailable('PHILOSOPHY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    !isEgyptG11SubjectAvailable('BIOLOGY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    !isEgyptG11SubjectAvailable('PHYSICS', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    !isEgyptG11SubjectAvailable('CHEMISTRY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    getCurriculumForSubject('HISTORY', 'G11', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES').length > 0 &&
+    getCurriculumForSubject('GEOGRAPHY', 'G11', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES').length > 0,
+  'Egypt Grade 11 Literary Track includes humanities and excludes scientific subjects'
+);
+
+// ── Egypt Grade 12 (الثانوية العامة المصرية) Verification ──
+assert(
+  isEgyptG12SubjectAvailable('BIOLOGY', 'SCIENCE_BIO', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('CHEMISTRY', 'SCIENCE_BIO', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('PHYSICS', 'SCIENCE_BIO', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('MATH', 'SCIENCE_BIO', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('ARABIC_LIT', 'SCIENCE_BIO', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('ENGLISH', 'SCIENCE_BIO', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('GERMAN', 'SCIENCE_BIO', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('HISTORY', 'SCIENCE_BIO', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('GEOGRAPHY', 'SCIENCE_BIO', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('PHILOSOPHY', 'SCIENCE_BIO', 'PUBLIC') &&
+    getCurriculumForSubject('BIOLOGY', 'G12', 'EG', 'PUBLIC', 'SCIENCE_BIO').length === 13 &&
+    loadSubjectLectures('BIOLOGY', 'EG', 'G12', 'PUBLIC', 'SCIENCE_BIO').length === 13 &&
+    getCurriculumForSubject('BIOLOGY', 'G12', 'EG', 'PUBLIC', 'SCIENCE_BIO')[0].titleAr.includes('الدعامة في النبات'),
+  'Egypt Grade 12 Scientific Biology Track includes biology and science subjects with 13 textbook lessons and excludes literary subjects'
+);
+
+assert(
+  isEgyptG12SubjectAvailable('MATH', 'SCIENCE_MATH', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('COMPUTER_SCIENCE', 'SCIENCE_MATH', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('PHYSICS', 'SCIENCE_MATH', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('CHEMISTRY', 'SCIENCE_MATH', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('ARABIC_LIT', 'SCIENCE_MATH', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('ENGLISH', 'SCIENCE_MATH', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('BIOLOGY', 'SCIENCE_MATH', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('HISTORY', 'SCIENCE_MATH', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('GEOGRAPHY', 'SCIENCE_MATH', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('PHILOSOPHY', 'SCIENCE_MATH', 'PUBLIC') &&
+    getCurriculumForSubject('MATH', 'G12', 'EG', 'PUBLIC', 'SCIENCE_MATH').length > 0 &&
+    getCurriculumForSubject('COMPUTER_SCIENCE', 'G12', 'EG', 'PUBLIC', 'SCIENCE_MATH').length === 7 &&
+    getCurriculumForSubject('COMPUTER_SCIENCE', 'G12', 'EG', 'PUBLIC', 'SCIENCE_MATH')[0].titleAr.includes('مستوى'),
+  'Egypt Grade 12 Scientific Math Track includes pure math and applied math (statics/dynamics) with 7 textbook lessons and excludes biology and literary subjects'
+);
+
+assert(
+  isEgyptG12SubjectAvailable('HISTORY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('GEOGRAPHY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('PHILOSOPHY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('MATH', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('ARABIC_LIT', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    isEgyptG12SubjectAvailable('ENGLISH', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('BIOLOGY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('PHYSICS', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    !isEgyptG12SubjectAvailable('CHEMISTRY', 'SHARIA_HUMANITIES', 'PUBLIC') &&
+    getCurriculumForSubject('HISTORY', 'G12', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES').length === 6 &&
+    getCurriculumForSubject('GEOGRAPHY', 'G12', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES').length === 4 &&
+    getCurriculumForSubject('PHILOSOPHY', 'G12', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES').length === 4 &&
+    getCurriculumForSubject('MATH', 'G12', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES').length === 5 &&
+    getCurriculumForSubject('MATH', 'G12', 'EG', 'PUBLIC', 'SHARIA_HUMANITIES')[0].titleAr.includes('بيرسون'),
+  'Egypt Grade 12 Literary Track includes history, political geography, philosophy & statistics, and excludes experimental science subjects'
+);
+
+// ── Egypt Preparatory School (المرحلة الإعدادية المصرية) Verification ──
+assert(
+  isEgyptPrepSubjectAvailable('ARABIC_LANG', 'G7', 'PUBLIC') &&
+    isEgyptPrepSubjectAvailable('MATH', 'G7', 'PUBLIC') &&
+    isEgyptPrepSubjectAvailable('GENERAL_SCIENCE', 'G7', 'PUBLIC') &&
+    isEgyptPrepSubjectAvailable('ENGLISH', 'G7', 'PUBLIC') &&
+    isEgyptPrepSubjectAvailable('COMPUTER_SCIENCE', 'G7', 'PUBLIC') &&
+    isEgyptPrepSubjectAvailable('ISLAMIC_STUDIES', 'G7', 'PUBLIC') &&
+    getCurriculumForSubject('ARABIC_LANG', 'G7', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('MATH', 'G7', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('GENERAL_SCIENCE', 'G7', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('ENGLISH', 'G7', 'EG', 'PUBLIC').length > 0 &&
+    getNationalSubjectLabel('ENGLISH', 'EG', 'G7', 'ar').includes('New Hello') &&
+    loadSubjectLectures('ENGLISH', 'EG', 'G7', 'PUBLIC').length > 0,
+  'Egypt Preparatory Grade 7 loads official Ministry curriculum for core subjects including New Hello English'
+);
+
+assert(
+  isEgyptPrepSubjectAvailable('MATH', 'G9', 'PUBLIC') &&
+    isEgyptPrepSubjectAvailable('GENERAL_SCIENCE', 'G9', 'PUBLIC') &&
+    getCurriculumForSubject('MATH', 'G9', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('GENERAL_SCIENCE', 'G9', 'EG', 'PUBLIC').length > 0 &&
+    getNationalSubjectLabel('ENGLISH', 'EG', 'G9', 'ar').includes('New Hello'),
+  'Egypt Preparatory Grade 9 (Third Prep / الشهادة الإعدادية) loads authentic Ministry curriculum'
+);
+
+// ── Egypt Primary School (المرحلة الابتدائية المصرية - منظومة 2.0) Verification ──
+assert(
+  isEgyptPrimarySubjectAvailable('PRIMARY_ARABIC', 'G1', 'PUBLIC') &&
+    isEgyptPrimarySubjectAvailable('PRIMARY_MATH', 'G1', 'PUBLIC') &&
+    isEgyptPrimarySubjectAvailable('ENGLISH', 'G1', 'PUBLIC') &&
+    isEgyptPrimarySubjectAvailable('ISLAMIC_STUDIES', 'G1', 'PUBLIC') &&
+    getCurriculumForSubject('PRIMARY_ARABIC', 'G1', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('PRIMARY_MATH', 'G1', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('ENGLISH', 'G1', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('ENGLISH', 'G1', 'EG', 'PUBLIC')[0].titleAr.includes('Hello') &&
+    getCurriculumForSubject('ISLAMIC_STUDIES', 'G1', 'EG', 'PUBLIC').length > 0,
+  'Egypt Primary Grade 1 loads official Edu 2.0 curriculum: Tawasol Arabic, Math, Connect English, and Islamic Studies'
+);
+
+assert(
+  isEgyptPrimarySubjectAvailable('PRIMARY_ARABIC', 'G4', 'PUBLIC') &&
+    isEgyptPrimarySubjectAvailable('PRIMARY_SCIENCE', 'G4', 'PUBLIC') &&
+    isEgyptPrimarySubjectAvailable('COMPUTER_SCIENCE', 'G4', 'PUBLIC') &&
+    isEgyptPrimarySubjectAvailable('ENGLISH', 'G4', 'PUBLIC') &&
+    getCurriculumForSubject('PRIMARY_SCIENCE', 'G4', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('COMPUTER_SCIENCE', 'G4', 'EG', 'PUBLIC').length > 0 &&
+    getCurriculumForSubject('COMPUTER_SCIENCE', 'G4', 'EG', 'PUBLIC')[0].titleAr.includes('ألبرت لين') &&
+    (getCurriculumForSubject('ENGLISH', 'G4', 'EG', 'PUBLIC')[0].titleAr.includes('Connect') || getCurriculumForSubject('ENGLISH', 'G4', 'EG', 'PUBLIC')[0].titleAr.includes('أشعر')),
+  'Egypt Primary Grade 4 loads authentic Edu 2.0 curriculum including Science, ICT, and Connect 4'
+);
 
 // Verify that changing country changes lesson title
 assert(lecsEG[0].titleAr !== lecsSA[0].titleAr, `Country change transforms curriculum: Egypt title != Saudi title`);

@@ -22,9 +22,57 @@ import {
   normalizeEducationTrackForCountry,
   normalizeEducationTypeForCountry
 } from '../data/curriculumCountries';
-import { isBlockedGeographyHistoryRoute, isSaudiSocialStudiesAvailable } from '../data/curriculumData';
+import {
+  isBlockedGeographyHistoryRoute,
+  isSaudiSocialStudiesAvailable,
+  isSudanPublicGrade4SubjectAvailable,
+  isSudanPublicGrade5SubjectAvailable,
+  isSudanPublicGrade6SubjectAvailable,
+  isSudanPublicMiddleSubjectAvailable,
+  isSudanPublicGrade10SubjectAvailable,
+  isSudanPublicGrade11SubjectAvailable,
+  getSudanPublicGrade12Subjects,
+  isSudanPublicGrade12SubjectAvailable,
+  isEnglishCourseAvailable
+} from '../data/curriculumData';
+import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
+import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
+import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
+import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
+import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
 import { getActiveUserAccount } from '../services/database';
 import { X, User, ShieldAlert, CheckCircle2, Users, ShieldCheck, Lock, Globe } from 'lucide-react';
+
+const isEgyptG10SubjectAvailable = (
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel,
+  educationType: StudentProfile['educationType'] = 'PUBLIC',
+  educationTrack: StudentProfile['educationTrack'] = 'GENERAL'
+): boolean => {
+  if (country !== 'EG') return true;
+  if (gradeLevel === 'G10') {
+    if (subject === 'PHILOSOPHY') {
+      return isEgyptG10BookCourseAvailable(subject, educationType, educationTrack);
+    }
+    return (['ARABIC_LIT', 'ARABIC_LANG', 'ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(subject) &&
+        (educationType === 'PUBLIC' || educationType === 'PRIVATE')) ||
+      isEgyptG10BookCourseAvailable(subject, educationType, educationTrack);
+  }
+  if (gradeLevel === 'G11') {
+    return isEgyptG11SubjectAvailable(subject, educationTrack || 'GENERAL', educationType || 'PUBLIC');
+  }
+  if (gradeLevel === 'G12') {
+    return isEgyptG12SubjectAvailable(subject, educationTrack || 'GENERAL', educationType || 'PUBLIC');
+  }
+  if (['G7', 'G8', 'G9'].includes(gradeLevel)) {
+    return isEgyptPrepSubjectAvailable(subject, gradeLevel, educationType || 'PUBLIC');
+  }
+  if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) {
+    return isEgyptPrimarySubjectAvailable(subject, gradeLevel, educationType || 'PUBLIC');
+  }
+  return true;
+};
 
 interface StudentProfileModalProps {
   isOpen: boolean;
@@ -91,27 +139,100 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     country: CountryCode,
     educationType?: StudentProfile['educationType'],
     educationTrack?: StudentProfile['educationTrack']
-  ) => PRIMARY_SUBJECTS.includes(subject) ||
+  ) => {
+    if (country === 'EG') {
+      return isEgyptPrimarySubjectAvailable(subject, gradeLevel, educationType || 'PUBLIC');
+    }
+    return PRIMARY_SUBJECTS.includes(subject) ||
+    isSudanPublicGrade4SubjectAvailable(
+      subject,
+      country,
+      gradeLevel,
+      educationType || 'PUBLIC',
+      educationTrack || 'GENERAL'
+    ) ||
+    isSudanPublicGrade5SubjectAvailable(
+      subject,
+      country,
+      gradeLevel,
+      educationType || 'PUBLIC',
+      educationTrack || 'GENERAL'
+    ) ||
+    isSudanPublicGrade6SubjectAvailable(
+      subject,
+      country,
+      gradeLevel,
+      educationType || 'PUBLIC',
+      educationTrack || 'GENERAL'
+    ) ||
     (subject === 'TAJWEED' && isSaudiPublicTajweedAvailable(country, gradeLevel, educationType || 'PUBLIC')) ||
     (subject === 'QURAN_RECITATION' && isSaudiPublicQuranRecitationAvailable(country, gradeLevel, educationType || 'PUBLIC')) ||
     (subject === 'VISUAL_ARTS' && isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType || 'PUBLIC')) ||
     (subject === 'LIFE_SKILLS' && isSaudiPublicLifeSkillsAvailable(country, gradeLevel, educationType || 'PUBLIC', educationTrack || 'GENERAL')) ||
     (subject === 'COMPUTER_SCIENCE' && isSaudiPrimaryDigitalSkillsAvailable(gradeLevel, country, educationType)) ||
     (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack));
+  };
   const isMiddleSubjectAvailable = (
     subject: Subject,
     gradeLevel: GradeLevel,
     country: CountryCode,
     educationType?: StudentProfile['educationType'],
     educationTrack?: StudentProfile['educationTrack']
-  ) => MIDDLE_SUBJECTS.includes(subject) ||
-    (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack));
+  ) => {
+    if (country === 'EG') {
+      return isEgyptPrepSubjectAvailable(subject, gradeLevel, educationType || 'PUBLIC');
+    }
+    return country === 'SD' && (gradeLevel === 'G7' || gradeLevel === 'G8')
+    ? isSudanPublicMiddleSubjectAvailable(
+      subject,
+      country,
+      gradeLevel,
+      educationType || 'PUBLIC',
+      educationTrack || 'GENERAL'
+    )
+    : MIDDLE_SUBJECTS.includes(subject) ||
+      (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack));
+  };
 
   const [formData, setFormData] = useState<StudentProfile>(() => {
     const copy = { ...profile };
     copy.country = getActiveCurriculumCountry(copy.country);
     copy.educationType = normalizeEducationTypeForCountry(copy.country, copy.educationType);
     copy.educationTrack = normalizeEducationTrackForCountry(copy.country, copy.educationTrack);
+    if (!isEgyptG10SubjectAvailable(
+      copy.subject,
+      copy.country,
+      copy.gradeLevel,
+      copy.educationType,
+      copy.educationTrack
+    )) {
+      copy.subject = 'ARABIC_LIT';
+    }
+    const isEgyptG10BookSubject =
+      copy.country === 'EG' &&
+      copy.gradeLevel === 'G10' &&
+      ['MATH', 'HISTORY', 'GENERAL_SCIENCE', 'PHILOSOPHY', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE'].includes(copy.subject) &&
+      isEgyptG10BookCourseAvailable(copy.subject, copy.educationType, copy.educationTrack);
+    if (copy.country === 'SD' && copy.gradeLevel === 'G11' &&
+        !isSudanPublicGrade11SubjectAvailable(
+          copy.subject,
+          copy.country,
+          copy.gradeLevel,
+          copy.educationType,
+          copy.educationTrack
+        )) {
+      copy.subject = 'BIOLOGY';
+    }
+    if (copy.country === 'SD' && copy.gradeLevel === 'G12' &&
+        !isSudanPublicGrade12SubjectAvailable(
+          copy.subject,
+          copy.country,
+          copy.gradeLevel,
+          copy.educationType,
+          copy.educationTrack
+        )) {
+      copy.subject = getSudanPublicGrade12Subjects(copy.educationTrack)[0] ?? 'ARABIC_LIT';
+    }
     if (!['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9'].includes(copy.gradeLevel)) {
       copy.specialization = getSpecializationForEducationTrack(copy.educationTrack);
     }
@@ -122,15 +243,34 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       }
     } else if (['G7', 'G8', 'G9'].includes(copy.gradeLevel)) {
       copy.specialization = 'GENERAL';
-      if (['ARABIC_LIT', 'GEOGRAPHY', 'HISTORY', 'PRIMARY_ARABIC', 'TAJWEED', 'QURAN_RECITATION', 'VISUAL_ARTS', 'LIFE_SKILLS'].includes(copy.subject) ||
-          (copy.subject === 'SAUDI_SOCIAL_STUDIES' &&
-            !isSaudiSocialStudies(copy.gradeLevel, copy.country, copy.educationType, copy.educationTrack))) copy.subject = 'ARABIC_LANG';
-      if (['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'HEALTH_SCIENCE', 'PRIMARY_SCIENCE'].includes(copy.subject)) copy.subject = 'GENERAL_SCIENCE';
       if (copy.subject === 'PRIMARY_MATH') copy.subject = 'MATH';
+      if (['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'HEALTH_SCIENCE', 'PRIMARY_SCIENCE'].includes(copy.subject)) {
+        copy.subject = 'GENERAL_SCIENCE';
+      }
+      if (!isMiddleSubjectAvailable(copy.subject, copy.gradeLevel, copy.country, copy.educationType, copy.educationTrack)) {
+        copy.subject = 'ARABIC_LANG';
+      }
     } else {
+      const isVerifiedSudanGrade12 = isSudanPublicGrade12SubjectAvailable(
+        copy.subject,
+        copy.country,
+        copy.gradeLevel,
+        copy.educationType,
+        copy.educationTrack
+      );
+      if (copy.country === 'SD' && copy.gradeLevel === 'G10' &&
+          !isSudanPublicGrade10SubjectAvailable(
+            copy.subject,
+            copy.country,
+            copy.gradeLevel,
+            copy.educationType,
+            copy.educationTrack
+          )) {
+        copy.subject = 'CHEMISTRY';
+      }
       if (copy.subject === 'TAJWEED' || copy.subject === 'QURAN_RECITATION' || copy.subject === 'VISUAL_ARTS' || copy.subject === 'LIFE_SKILLS') copy.subject = 'ARABIC_LIT';
       if (copy.subject === 'ENGLISH' &&
-          !isSaudiPublicEnglishAvailable(copy.country, copy.gradeLevel, copy.educationType)) {
+          !isEnglishCourseAvailable(copy.country, copy.gradeLevel, copy.educationType, copy.educationTrack)) {
         copy.subject = 'ARABIC_LIT';
       }
       if (copy.subject === 'PHYSICS' && copy.country === 'SA' && copy.gradeLevel === 'G11' &&
@@ -154,12 +294,12 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
           )) {
         copy.subject = 'ARABIC_LIT';
       }
-      if (copy.subject === 'ARABIC_LANG' || copy.subject === 'PRIMARY_ARABIC') copy.subject = 'ARABIC_LIT';
+      if (!isVerifiedSudanGrade12 && (copy.subject === 'ARABIC_LANG' || copy.subject === 'PRIMARY_ARABIC')) copy.subject = 'ARABIC_LIT';
       if (copy.subject === 'SAUDI_SOCIAL_STUDIES' &&
           !isSaudiSocialStudies(copy.gradeLevel, copy.country, copy.educationType, copy.educationTrack)) copy.subject = 'ARABIC_LIT';
-      if ((copy.subject === 'GEOGRAPHY' || copy.subject === 'HISTORY') &&
+      if (!isVerifiedSudanGrade12 && (copy.subject === 'GEOGRAPHY' || copy.subject === 'HISTORY') &&
           !isLegacyGeographyHistoryAvailable(copy.country, copy.educationType, copy.educationTrack)) copy.subject = 'ARABIC_LIT';
-      if (copy.subject === 'GENERAL_SCIENCE' || copy.subject === 'PRIMARY_SCIENCE') copy.subject = 'PHYSICS';
+      if (!isEgyptG10BookSubject && (copy.subject === 'GENERAL_SCIENCE' || copy.subject === 'PRIMARY_SCIENCE')) copy.subject = 'PHYSICS';
       if (copy.subject === 'PRIMARY_MATH') copy.subject = 'MATH';
       
     }
@@ -212,7 +352,21 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
         (formData.subject === 'QURAN_RECITATION' &&
           !isSaudiPublicQuranRecitationAvailable(formData.country, formData.gradeLevel, formData.educationType)) ||
         (formData.subject === 'VISUAL_ARTS' &&
-          !isSaudiPublicG6VisualArtsAvailable(formData.country, formData.gradeLevel, formData.educationType)) ||
+          !isSaudiPublicG6VisualArtsAvailable(formData.country, formData.gradeLevel, formData.educationType) &&
+          !isSudanPublicGrade4SubjectAvailable(
+            formData.subject,
+            formData.country,
+            formData.gradeLevel,
+            formData.educationType,
+            formData.educationTrack
+          ) &&
+          !isSudanPublicGrade5SubjectAvailable(
+            formData.subject,
+            formData.country,
+            formData.gradeLevel,
+            formData.educationType,
+            formData.educationTrack
+          )) ||
         (formData.subject === 'LIFE_SKILLS' &&
           !isSaudiPublicLifeSkillsAvailable(formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack)))
     ) {
@@ -287,18 +441,33 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     } else if (age === 16) {
       nextGrade = 'G10';
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'VISUAL_ARTS' || nextSubj === 'LIFE_SKILLS' || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
-      if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
+      if (!(formData.country === 'EG' && age === 16) &&
+          (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE')) nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
+      if (nextSubj === 'PHILOSOPHY' && !(formData.country === 'EG' && nextGrade === 'G10')) nextSubj = 'ARABIC_LIT';
     } else if (age === 17) {
       nextGrade = 'G11';
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'VISUAL_ARTS' || nextSubj === 'LIFE_SKILLS' || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
+      if (formData.country === 'SD') nextSubj = 'BIOLOGY';
     } else if (age >= 18) {
       nextGrade = 'G12';
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'VISUAL_ARTS' || nextSubj === 'LIFE_SKILLS' || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
+    }
+    if (formData.country === 'SD' && nextGrade === 'G10' &&
+        !isSudanPublicGrade10SubjectAvailable(nextSubj, formData.country, nextGrade, formData.educationType, nextTrack)) {
+      nextSubj = 'CHEMISTRY';
+    }
+    if (formData.country === 'SD' && nextGrade === 'G11' &&
+        !isSudanPublicGrade11SubjectAvailable(nextSubj, formData.country, nextGrade, formData.educationType, nextTrack)) {
+      nextSubj = 'BIOLOGY';
+    }
+    if (formData.country === 'SD' && nextGrade === 'G12' &&
+        !isSudanPublicGrade12SubjectAvailable(nextSubj, formData.country, nextGrade, formData.educationType, nextTrack)) {
+      nextSubj = getSudanPublicGrade12Subjects(nextTrack)[0] ?? 'ARABIC_LIT';
     }
     if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9'].includes(nextGrade)) {
       nextTrack = 'GENERAL';
@@ -307,9 +476,16 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       ? 'GENERAL'
       : getSpecializationForEducationTrack(nextTrack);
     if (nextSubj === 'ENGLISH' &&
-        !isSaudiPublicEnglishAvailable(formData.country, nextGrade, formData.educationType)) {
+        !isEnglishCourseAvailable(formData.country, nextGrade, formData.educationType || 'PUBLIC', nextTrack)) {
       nextSubj = 'ARABIC_LIT';
     }
+    if (!isEgyptG10SubjectAvailable(
+      nextSubj,
+      formData.country,
+      nextGrade,
+      formData.educationType,
+      nextTrack
+    )) nextSubj = 'ARABIC_LIT';
 
     setFormData((prev) => ({
       ...prev,
@@ -362,13 +538,32 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
     }
+    if (formData.country === 'SD' && grade === 'G10' &&
+        !isSudanPublicGrade10SubjectAvailable(nextSubj, formData.country, grade, formData.educationType, nextTrack)) {
+      nextSubj = 'CHEMISTRY';
+    }
+    if (formData.country === 'SD' && grade === 'G11' &&
+        !isSudanPublicGrade11SubjectAvailable(nextSubj, formData.country, grade, formData.educationType, nextTrack)) {
+      nextSubj = 'BIOLOGY';
+    }
+    if (formData.country === 'SD' && grade === 'G12' &&
+        !isSudanPublicGrade12SubjectAvailable(nextSubj, formData.country, grade, formData.educationType, nextTrack)) {
+      nextSubj = getSudanPublicGrade12Subjects(nextTrack)[0] ?? 'ARABIC_LIT';
+    }
     if (nextSubj === 'ENGLISH' &&
-        !isSaudiPublicEnglishAvailable(formData.country, grade, formData.educationType)) {
+        !isEnglishCourseAvailable(formData.country, grade, formData.educationType || 'PUBLIC', nextTrack)) {
       nextSubj = 'ARABIC_LIT';
     }
     nextSpec = isPrimary || isMiddle
       ? 'GENERAL'
       : getSpecializationForEducationTrack(nextTrack);
+    if (!isEgyptG10SubjectAvailable(
+      nextSubj,
+      formData.country,
+      grade,
+      formData.educationType,
+      nextTrack
+    )) nextSubj = 'ARABIC_LIT';
 
     setFormData((prev) => ({
       ...prev,
@@ -381,6 +576,30 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   };
 
   const handleSubjectChange = (subj: Subject) => {
+    if (formData.country === 'SD' && formData.gradeLevel === 'G10' &&
+        !isSudanPublicGrade10SubjectAvailable(
+          subj,
+          formData.country,
+          formData.gradeLevel,
+          formData.educationType,
+          formData.educationTrack
+        )) return;
+    if (formData.country === 'SD' && formData.gradeLevel === 'G11' &&
+        !isSudanPublicGrade11SubjectAvailable(
+          subj,
+          formData.country,
+          formData.gradeLevel,
+          formData.educationType,
+          formData.educationTrack
+        )) return;
+    if (formData.country === 'SD' && formData.gradeLevel === 'G12' &&
+        !isSudanPublicGrade12SubjectAvailable(
+          subj,
+          formData.country,
+          formData.gradeLevel,
+          formData.educationType,
+          formData.educationTrack
+        )) return;
     setFormData((prev) => ({
       ...prev,
       subject: subj
@@ -402,7 +621,24 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       id: finalId,
       name: finalName,
       nameAr: finalNameAr,
-      nameEn: finalNameEn
+      nameEn: finalNameEn,
+      subject: formData.country === 'SD' && formData.gradeLevel === 'G11'
+        ? isSudanPublicGrade11SubjectAvailable(
+            formData.subject,
+            formData.country,
+            formData.gradeLevel,
+            formData.educationType,
+            formData.educationTrack
+          ) ? formData.subject : 'BIOLOGY'
+        : formData.country === 'SD' && formData.gradeLevel === 'G12'
+          ? isSudanPublicGrade12SubjectAvailable(
+              formData.subject,
+              formData.country,
+              formData.gradeLevel,
+              formData.educationType,
+              formData.educationTrack
+            ) ? formData.subject : getSudanPublicGrade12Subjects(formData.educationTrack)[0] ?? 'ARABIC_LIT'
+        : formData.subject
     });
     onClose();
   };
@@ -623,7 +859,14 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                         isLegacyGeographyHistoryAvailable(country, educationType, educationTrack);
                       const keepEnglish =
                         formData.subject !== 'ENGLISH' ||
-                        isSaudiPublicEnglishAvailable(country, formData.gradeLevel, educationType);
+                        isEnglishCourseAvailable(country, formData.gradeLevel, educationType, formData.educationTrack);
+                      const keepEgyptBookCourse = isEgyptG10SubjectAvailable(
+                        formData.subject,
+                        country,
+                        formData.gradeLevel,
+                        educationType,
+                        educationTrack
+                      );
                       setFormData(prev => ({
                         ...prev,
                         country,
@@ -632,7 +875,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                         specialization: isPrimarySchool || isMiddleSchool
                           ? 'GENERAL'
                           : getSpecializationForEducationTrack(educationTrack),
-                        subject: keepSubject && keepSaudiSocialStudies && keepLegacyGeographyHistory && keepEnglish
+                        subject: keepSubject && keepSaudiSocialStudies && keepLegacyGeographyHistory && keepEnglish && keepEgyptBookCourse
                           ? prev.subject
                           : isPrimarySchool ? 'PRIMARY_ARABIC' : isMiddleSchool ? 'ARABIC_LANG' : 'ARABIC_LIT',
                         detectedCity: res.city,
@@ -668,7 +911,14 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                     isLegacyGeographyHistoryAvailable(chosenCountry, educationType, educationTrack);
                   const keepEnglish =
                     formData.subject !== 'ENGLISH' ||
-                    isSaudiPublicEnglishAvailable(chosenCountry, formData.gradeLevel, educationType);
+                    isEnglishCourseAvailable(chosenCountry, formData.gradeLevel, educationType, formData.educationTrack);
+                  const keepEgyptBookCourse = isEgyptG10SubjectAvailable(
+                    formData.subject,
+                    chosenCountry,
+                    formData.gradeLevel,
+                    educationType,
+                    educationTrack
+                  );
                   setFormData({
                     ...formData,
                     country: chosenCountry,
@@ -677,7 +927,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                     specialization: isPrimarySchool || isMiddleSchool
                       ? 'GENERAL'
                       : getSpecializationForEducationTrack(educationTrack),
-                    subject: keepSubject && keepSaudiSocialStudies && keepLegacyGeographyHistory && keepEnglish
+                    subject: keepSubject && keepSaudiSocialStudies && keepLegacyGeographyHistory && keepEnglish && keepEgyptBookCourse
                       ? formData.subject
                       : isPrimarySchool ? 'PRIMARY_ARABIC' : isMiddleSchool ? 'ARABIC_LANG' : 'ARABIC_LIT',
                     isAutoDetectedCountry: false
@@ -718,11 +968,18 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                     isLegacyGeographyHistoryAvailable(formData.country, educationType, formData.educationTrack);
                   const keepEnglish =
                     formData.subject !== 'ENGLISH' ||
-                    isSaudiPublicEnglishAvailable(formData.country, formData.gradeLevel, educationType);
+                    isEnglishCourseAvailable(formData.country, formData.gradeLevel, educationType, formData.educationTrack);
+                  const keepEgyptBookCourse = isEgyptG10SubjectAvailable(
+                    formData.subject,
+                    formData.country,
+                    formData.gradeLevel,
+                    educationType,
+                    formData.educationTrack
+                  );
                   setFormData({
                     ...formData,
                     educationType,
-                    subject: keepSubject && keepLegacyGeographyHistory && keepEnglish ? formData.subject : isPrimarySchool
+                    subject: keepSubject && keepLegacyGeographyHistory && keepEnglish && keepEgyptBookCourse ? formData.subject : isPrimarySchool
                       ? 'PRIMARY_ARABIC'
                       : isMiddleSchool ? 'ARABIC_LANG' : 'ARABIC_LIT'
                   });
@@ -783,7 +1040,13 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
             {isPrimarySchool || isMiddleSchool ? (
               <div className="form-group">
                 <label className="form-label">{t.labelSpecialization}</label>
-                {isPrimarySchool ? (
+                {formData.country === 'SD' && formData.gradeLevel === 'G10' ? (
+                  <optgroup label={formData.language === 'en' ? 'Grade 10 subjects' : 'مواد الصف الأول الثانوي'}>
+                    <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                    <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                    <option value="HISTORY">{getNationalSubjectLabel('HISTORY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                  </optgroup>
+                ) : isPrimarySchool ? (
                 <div>
                   <select
                     className="form-select select-locked"
@@ -844,13 +1107,20 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                         formData.educationType || 'PUBLIC',
                         educationTrack || 'GENERAL'
                       );
+                    const keepEgyptBookCourse = isEgyptG10SubjectAvailable(
+                      formData.subject,
+                      formData.country,
+                      formData.gradeLevel,
+                      formData.educationType,
+                      educationTrack || 'GENERAL'
+                    );
                     setFormData({
                       ...formData,
                       educationTrack,
                       specialization: getSpecializationForEducationTrack(
                         educationTrack || 'GENERAL'
                       ),
-                      subject: keepSocialStudies && keepLegacyGeographyHistory
+                      subject: keepSocialStudies && keepLegacyGeographyHistory && keepEgyptBookCourse
                         ? formData.subject
                         : 'ARABIC_LIT'
                     });
@@ -874,29 +1144,171 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 onChange={(e) => handleSubjectChange(e.target.value as Subject)}
               >
                 {isPrimarySchool ? (
-                  <optgroup label={formData.language === 'en' ? "Elementary Core Subjects" : "المواد الأساسية للمرحلة الابتدائية"}>
-                    <option value="PRIMARY_ARABIC">{getNationalSubjectLabel('PRIMARY_ARABIC', formData.country, formData.gradeLevel, formData.language)}</option>
-                    <option value="PRIMARY_MATH">{getNationalSubjectLabel('PRIMARY_MATH', formData.country, formData.gradeLevel, formData.language)}</option>
-                    <option value="PRIMARY_SCIENCE">{getNationalSubjectLabel('PRIMARY_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
-                    <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', formData.country, formData.gradeLevel, formData.language)}</option>
-                    {isSaudiPublicTajweedAvailable(formData.country, formData.gradeLevel, formData.educationType) && (
-                      <option value="TAJWEED">{getNationalSubjectLabel('TAJWEED', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
-                    )}
-                    {isSaudiPublicQuranRecitationAvailable(formData.country, formData.gradeLevel, formData.educationType) && (
-                      <option value="QURAN_RECITATION">{getNationalSubjectLabel('QURAN_RECITATION', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
-                    )}
-                    {isSaudiPublicG6VisualArtsAvailable(formData.country, formData.gradeLevel, formData.educationType) && (
-                      <option value="VISUAL_ARTS">{getNationalSubjectLabel('VISUAL_ARTS', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
-                    )}
-                    {isSaudiPublicLifeSkillsAvailable(
-                      formData.country,
-                      formData.gradeLevel,
-                      formData.educationType,
-                      formData.educationTrack
-                    ) && (
-                      <option value="LIFE_SKILLS">
+                  formData.country === 'EG' ? (
+                    <optgroup label={formData.language === 'en' ? "Egyptian Primary Core Subjects (Ministry Edu 2.0)" : "مقررات المرحلة الابتدائية المصرية (منظومة التعليم 2.0 المطورة)"}>
+                      {getEgyptPrimarySubjects(formData.gradeLevel).map((subj) => (
+                        <option key={subj} value={subj}>
+                          {getNationalSubjectLabel(subj, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : (
+                    <optgroup label={formData.language === 'en' ? "Elementary Core Subjects" : "المواد الأساسية للمرحلة الابتدائية"}>
+                      <option value="PRIMARY_ARABIC">{getNationalSubjectLabel('PRIMARY_ARABIC', formData.country, formData.gradeLevel, formData.language)}</option>
+                      <option value="PRIMARY_MATH">{getNationalSubjectLabel('PRIMARY_MATH', formData.country, formData.gradeLevel, formData.language)}</option>
+                      <option value="PRIMARY_SCIENCE">{getNationalSubjectLabel('PRIMARY_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
+                      <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', formData.country, formData.gradeLevel, formData.language)}</option>
+                      {isSaudiPublicTajweedAvailable(formData.country, formData.gradeLevel, formData.educationType) && (
+                        <option value="TAJWEED">{getNationalSubjectLabel('TAJWEED', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
+                      )}
+                      {isSaudiPublicQuranRecitationAvailable(formData.country, formData.gradeLevel, formData.educationType) && (
+                        <option value="QURAN_RECITATION">{getNationalSubjectLabel('QURAN_RECITATION', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
+                      )}
+                      {(isSaudiPublicG6VisualArtsAvailable(formData.country, formData.gradeLevel, formData.educationType) ||
+                        isSudanPublicGrade4SubjectAvailable('VISUAL_ARTS', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade5SubjectAvailable('VISUAL_ARTS', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack)) && (
+                        <option value="VISUAL_ARTS">{getNationalSubjectLabel('VISUAL_ARTS', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
+                      )}
+                      {isSaudiPublicLifeSkillsAvailable(
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.educationType,
+                        formData.educationTrack
+                      ) && (
+                        <option value="LIFE_SKILLS">
+                          {getNationalSubjectLabel(
+                            'LIFE_SKILLS',
+                            formData.country,
+                            formData.gradeLevel,
+                            formData.language,
+                            formData.educationType,
+                            formData.educationTrack
+                          )}
+                        </option>
+                      )}
+                      {(isSaudiPrimaryDigitalSkillsAvailable(formData.gradeLevel, formData.country, formData.educationType) ||
+                        isSudanPublicGrade4SubjectAvailable('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade5SubjectAvailable('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade6SubjectAvailable('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack)) && (
+                        <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
+                      )}
+                      {(isSudanPublicGrade4SubjectAvailable('ENGLISH', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade5SubjectAvailable('ENGLISH', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade6SubjectAvailable('ENGLISH', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack)) && (
+                        <option value="ENGLISH">{getNationalSubjectLabel('ENGLISH', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {(isSudanPublicGrade5SubjectAvailable('GEOGRAPHY', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade6SubjectAvailable('GEOGRAPHY', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack)) && (
+                        <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {(isSudanPublicGrade5SubjectAvailable('HISTORY', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) ||
+                        isSudanPublicGrade6SubjectAvailable('HISTORY', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack)) && (
+                        <option value="HISTORY">{getNationalSubjectLabel('HISTORY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSaudiSocialStudies(formData.gradeLevel, formData.country, formData.educationType, formData.educationTrack) && (
+                        <option value="SAUDI_SOCIAL_STUDIES">{getNationalSubjectLabel('SAUDI_SOCIAL_STUDIES', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
+                      )}
+                    </optgroup>
+                  )
+                ) : isMiddleSchool ? (
+                  formData.country === 'EG' ? (
+                    <optgroup label={formData.language === 'en' ? "Egyptian Preparatory Core Subjects (Ministry)" : "مقررات المرحلة الإعدادية المصرية (وزارة التربية والتعليم)"}>
+                      {getEgyptPrepSubjects(formData.gradeLevel).map((subj) => (
+                        <option key={subj} value={subj}>
+                          {getNationalSubjectLabel(subj, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : (
+                    <optgroup label={formData.language === 'en' ? "Middle School Subjects" : "مواد المرحلة المتوسطة"}>
+                      <option value="ARABIC_LANG">{getNationalSubjectLabel('ARABIC_LANG', formData.country, formData.gradeLevel, formData.language)}</option>
+                      <option value="MATH">{getNationalSubjectLabel('MATH', formData.country, formData.gradeLevel, formData.language)}</option>
+                      <option value="GENERAL_SCIENCE">{getNationalSubjectLabel('GENERAL_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
+                      <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
+                      {isSudanPublicMiddleSubjectAvailable('ENGLISH', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) && (
+                        <option value="ENGLISH">{getNationalSubjectLabel('ENGLISH', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSudanPublicMiddleSubjectAvailable('ISLAMIC_STUDIES', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) && (
+                        <option value="ISLAMIC_STUDIES">{getNationalSubjectLabel('ISLAMIC_STUDIES', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSudanPublicMiddleSubjectAvailable('GEOGRAPHY', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) && (
+                        <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSudanPublicMiddleSubjectAvailable('HISTORY', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) && (
+                        <option value="HISTORY">{getNationalSubjectLabel('HISTORY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSudanPublicMiddleSubjectAvailable('NATIONAL_EDUCATION', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) && (
+                        <option value="NATIONAL_EDUCATION">{getNationalSubjectLabel('NATIONAL_EDUCATION', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSudanPublicMiddleSubjectAvailable('TECHNICAL_EDUCATION', formData.country, formData.gradeLevel, formData.educationType, formData.educationTrack) && (
+                        <option value="TECHNICAL_EDUCATION">{getNationalSubjectLabel('TECHNICAL_EDUCATION', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
+                      )}
+                      {isSaudiSocialStudies(formData.gradeLevel, formData.country, formData.educationType, formData.educationTrack) && (
+                        <option value="SAUDI_SOCIAL_STUDIES">{getNationalSubjectLabel('SAUDI_SOCIAL_STUDIES', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
+                      )}
+                    </optgroup>
+                  )
+                ) : formData.country === 'SD' &&
+                  formData.gradeLevel === 'G11' ? (
+                  <optgroup label={formData.language === 'en' ? 'Verified Grade 11 subject' : 'المادة الموثقة للصف الثاني الثانوي'}>
+                    <option value="BIOLOGY">
+                      {getNationalSubjectLabel(
+                        'BIOLOGY',
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.language,
+                        formData.educationType,
+                        formData.educationTrack
+                      )}
+                    </option>
+                  </optgroup>
+                ) : formData.country === 'EG' &&
+                  formData.gradeLevel === 'G10' ? (
+                  <optgroup label={formData.language === 'en' ? 'Egypt Secondary 1 textbook courses' : 'مقررات كتب الصف الأول الثانوي المصري'}>
+                    <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="ENGLISH">{getNationalSubjectLabel('ENGLISH', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="FRENCH">{getNationalSubjectLabel('FRENCH', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="GERMAN">{getNationalSubjectLabel('GERMAN', formData.country, formData.gradeLevel, formData.language)}</option>
+                    <option value="ITALIAN">{getNationalSubjectLabel('ITALIAN', formData.country, formData.gradeLevel, formData.language)}</option>
+                    {(['MATH', 'HISTORY', 'GENERAL_SCIENCE', 'PHILOSOPHY', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE'] as Subject[])
+                      .filter((subject) => isEgyptG10SubjectAvailable(
+                        subject,
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.educationType,
+                        formData.educationTrack
+                      ))
+                      .map((subject) => (
+                        <option key={subject} value={subject}>
+                          {getNationalSubjectLabel(subject, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                        </option>
+                      ))}
+                  </optgroup>
+                ) : formData.country === 'EG' &&
+                  formData.gradeLevel === 'G11' ? (
+                  <optgroup label={formData.language === 'en' ? 'Egypt Secondary 2 textbook courses' : 'مقررات كتب الصف الثاني الثانوي المصري'}>
+                    {getEgyptG11Subjects(formData.educationTrack).map((subject) => (
+                      <option key={subject} value={subject}>
+                        {getNationalSubjectLabel(subject, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                      </option>
+                    ))}
+                  </optgroup>
+                ) : formData.country === 'EG' &&
+                  formData.gradeLevel === 'G12' ? (
+                  <optgroup label={formData.language === 'en' ? 'Egypt Secondary 3 (Thanawya Amma) courses' : 'مقررات الصف الثالث الثانوي (الثانوية العامة المصرية)'}>
+                    {getEgyptG12Subjects(formData.educationTrack).map((subject) => (
+                      <option key={subject} value={subject}>
+                        {getNationalSubjectLabel(subject, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                      </option>
+                    ))}
+                  </optgroup>
+                ) : formData.country === 'SD' &&
+                  formData.gradeLevel === 'G12' ? (
+                  <optgroup label={formData.language === 'en' ? 'Grade 12 textbook courses' : 'مقررات الصف الثالث الثانوي'}>
+                    {getSudanPublicGrade12Subjects(formData.educationTrack).map((subject) => (
+                      <option key={subject} value={subject}>
                         {getNationalSubjectLabel(
-                          'LIFE_SKILLS',
+                          subject,
                           formData.country,
                           formData.gradeLevel,
                           formData.language,
@@ -904,23 +1316,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                           formData.educationTrack
                         )}
                       </option>
-                    )}
-                    {isSaudiPrimaryDigitalSkillsAvailable(formData.gradeLevel, formData.country, formData.educationType) && (
-                      <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
-                    )}
-                    {isSaudiSocialStudies(formData.gradeLevel, formData.country, formData.educationType, formData.educationTrack) && (
-                      <option value="SAUDI_SOCIAL_STUDIES">{getNationalSubjectLabel('SAUDI_SOCIAL_STUDIES', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
-                    )}
-                  </optgroup>
-                ) : isMiddleSchool ? (
-                  <optgroup label={formData.language === 'en' ? "Middle School Subjects" : "مواد المرحلة المتوسطة"}>
-                    <option value="ARABIC_LANG">{getNationalSubjectLabel('ARABIC_LANG', formData.country, formData.gradeLevel, formData.language)}</option>
-                    <option value="MATH">{getNationalSubjectLabel('MATH', formData.country, formData.gradeLevel, formData.language)}</option>
-                    <option value="GENERAL_SCIENCE">{getNationalSubjectLabel('GENERAL_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
-                    <option value="COMPUTER_SCIENCE">{getNationalSubjectLabel('COMPUTER_SCIENCE', formData.country, formData.gradeLevel, formData.language)}</option>
-                    {isSaudiSocialStudies(formData.gradeLevel, formData.country, formData.educationType, formData.educationTrack) && (
-                      <option value="SAUDI_SOCIAL_STUDIES">{getNationalSubjectLabel('SAUDI_SOCIAL_STUDIES', formData.country, formData.gradeLevel, formData.language, formData.educationType)}</option>
-                    )}
+                    ))}
                   </optgroup>
                 ) : formData.country === 'SA' &&
                   formData.gradeLevel === 'G11' &&

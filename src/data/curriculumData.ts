@@ -50,6 +50,7 @@ import {
   isSaudiPublicG6SocialStudiesAvailable
 } from './curriculumCountries';
 import { ensureFourExamplesForLecture } from '../services/lectureExampleEnricher';
+import { localizeForeignLanguageLectures } from './foreignLanguageLessonLocalization';
 
 import {
   PRIMARY_MATH_LECTURES,
@@ -63,6 +64,47 @@ import { MIDDLE_MATH_G9_LECTURES } from './middleMath9CurriculumData';
 import { HIGH_MATH_G10_LECTURES } from './highMath10CurriculumData';
 import { HIGH_MATH_G11_LECTURES } from './highMath11CurriculumData';
 import { HIGH_MATH_G12_LECTURES } from './highMath12CurriculumData';
+import { getEgyptArabicG10Curriculum } from './egyptArabicG10CurriculumData';
+import {
+  getEgyptG10BookCurriculum,
+  isEgyptG10BookCourseAvailable
+} from './egyptSecondaryCoreCurriculumData';
+import {
+  getEgyptFrenchChampion1G10Curriculum,
+  getEgyptSecondLanguageG10Curriculum,
+  getEgyptSecondaryEnglishG10Curriculum
+} from './egyptSecondaryLanguageCurriculumData';
+import {
+  getEgyptG11Curriculum,
+  isEgyptG11SubjectAvailable
+} from './egyptSecondaryG11CurriculumData';
+export {
+  getEgyptG12Curriculum,
+  isEgyptG12SubjectAvailable,
+  getEgyptG12Subjects
+} from './egyptSecondaryG12CurriculumData';
+import {
+  getEgyptG12Curriculum,
+  isEgyptG12SubjectAvailable
+} from './egyptSecondaryG12CurriculumData';
+export {
+  getEgyptPrepCurriculum,
+  isEgyptPrepSubjectAvailable,
+  getEgyptPrepSubjects
+} from './egyptPrepCurriculumData';
+import {
+  getEgyptPrepCurriculum,
+  isEgyptPrepSubjectAvailable
+} from './egyptPrepCurriculumData';
+export {
+  getEgyptPrimaryCurriculum,
+  isEgyptPrimarySubjectAvailable,
+  getEgyptPrimarySubjects
+} from './egyptPrimaryCurriculumData';
+import {
+  getEgyptPrimaryCurriculum,
+  isEgyptPrimarySubjectAvailable
+} from './egyptPrimaryCurriculumData';
 import { getSaudiMathG10Curriculum, getSaudiMathG11Curriculum } from './saudiMathCurriculumData';
 import { MIDDLE_COMPUTER_SCIENCE_LECTURES } from './middleCompCurriculumData';
 import { SAUDI_G7_DIGITAL_SKILLS_LECTURES } from './saudiDigitalSkillsG7CurriculumData';
@@ -120,7 +162,11 @@ import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
 import { HIGH_COMP_G12_LECTURES } from './highComp12CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
-import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES, SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES, getSudanCurriculum } from './sudanCurriculumData';
+import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES, SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES, SUDAN_PRIMARY_HISTORY_G3_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES, getSudanCurriculum } from './sudanCurriculumData';
+import {
+  getSudanGrade12Curriculum,
+  getSudanGrade12Subjects
+} from './sudanHighGrade12CurriculumData';
 import { HIGH_CHEMISTRY_G10_LECTURES } from './highChemistry10CurriculumData';
 import { HIGH_CHEMISTRY_G11_LECTURES } from './highChemistry11CurriculumData';
 import { HIGH_CHEMISTRY_G12_LECTURES } from './highChemistry12CurriculumData';
@@ -4573,10 +4619,16 @@ export const SUBJECT_CURRICULA: Record<Subject, Lecture[]> = {
   HEALTH_SCIENCE: [],
   LIFE_SKILLS: [],
   ENGLISH: [],
+  FRENCH: [],
+  GERMAN: [],
+  ITALIAN: [],
+  PHILOSOPHY: [],
   SAUDI_SOCIAL_STUDIES: [],
   TAJWEED: [],
   QURAN_RECITATION: [],
-  VISUAL_ARTS: []
+  VISUAL_ARTS: [],
+  NATIONAL_EDUCATION: [],
+  TECHNICAL_EDUCATION: []
 };
 
 function isSaudiPublicScienceCourse(
@@ -4658,6 +4710,208 @@ function isProtectedSaudiPublicSocialStudiesCourse(
     isSaudiSocialStudiesAvailable(gradeLevel, country, educationType, track);
 }
 
+export function isSudanPublicGrade4SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G4' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'ENGLISH' ||
+      subject === 'COMPUTER_SCIENCE' ||
+      subject === 'VISUAL_ARTS' ||
+      subject === 'MATH' ||
+      subject === 'GENERAL_SCIENCE');
+}
+
+export function isSudanPublicGrade5SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G5' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'ENGLISH' ||
+      subject === 'COMPUTER_SCIENCE' ||
+      subject === 'VISUAL_ARTS' ||
+      subject === 'GEOGRAPHY' ||
+      subject === 'HISTORY' ||
+      subject === 'MATH' ||
+      subject === 'GENERAL_SCIENCE');
+}
+
+export function isSudanPublicGrade6SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G6' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'PRIMARY_ARABIC' ||
+      subject === 'ENGLISH' ||
+      subject === 'ISLAMIC_STUDIES' ||
+      subject === 'PRIMARY_MATH' ||
+      subject === 'MATH' ||
+      subject === 'PRIMARY_SCIENCE' ||
+      subject === 'GENERAL_SCIENCE' ||
+      subject === 'GEOGRAPHY' ||
+      subject === 'HISTORY' ||
+      subject === 'COMPUTER_SCIENCE');
+}
+
+export function isSudanPublicGrade7SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G7' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'ARABIC_LANG' ||
+      subject === 'ENGLISH' ||
+      subject === 'MATH' ||
+      subject === 'ISLAMIC_STUDIES' ||
+      subject === 'GENERAL_SCIENCE' ||
+      subject === 'GEOGRAPHY' ||
+      subject === 'HISTORY' ||
+      subject === 'COMPUTER_SCIENCE');
+}
+
+export function isSudanPublicGrade8SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G8' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'ARABIC_LANG' ||
+      subject === 'ENGLISH' ||
+      subject === 'MATH' ||
+      subject === 'ISLAMIC_STUDIES' ||
+      subject === 'GENERAL_SCIENCE' ||
+      subject === 'GEOGRAPHY' ||
+      subject === 'HISTORY' ||
+      subject === 'COMPUTER_SCIENCE' ||
+      subject === 'NATIONAL_EDUCATION' ||
+      subject === 'TECHNICAL_EDUCATION');
+}
+
+export function isSudanPublicGrade9SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G9' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'ENGLISH' || subject === 'HISTORY');
+}
+
+export function isSudanPublicGrade10SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G10' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    (subject === 'CHEMISTRY' || subject === 'GEOGRAPHY' || subject === 'HISTORY');
+}
+
+export function isSudanPublicGrade11SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G11' &&
+    educationType === 'PUBLIC' &&
+    track === 'GENERAL' &&
+    subject === 'BIOLOGY';
+}
+
+export function isSudanPublicGrade12SubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return country === 'SD' &&
+    gradeLevel === 'G12' &&
+    educationType === 'PUBLIC' &&
+    getSudanGrade12Subjects(track).includes(subject);
+}
+
+export function getSudanPublicGrade12Subjects(track: EducationTrack = 'GENERAL'): Subject[] {
+  return getSudanGrade12Subjects(track);
+}
+
+export function isSudanPublicMiddleSubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return isSudanPublicGrade7SubjectAvailable(subject, country, gradeLevel, educationType, track) ||
+    isSudanPublicGrade8SubjectAvailable(subject, country, gradeLevel, educationType, track) ||
+    isSudanPublicGrade9SubjectAvailable(subject, country, gradeLevel, educationType, track);
+}
+
+export function isSudanPublicPrimaryCurriculumSubjectAvailable(
+  subject: Subject,
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return isSudanPublicGrade4SubjectAvailable(subject, country, gradeLevel, educationType, track) ||
+    isSudanPublicGrade5SubjectAvailable(subject, country, gradeLevel, educationType, track) ||
+    isSudanPublicGrade6SubjectAvailable(subject, country, gradeLevel, educationType, track);
+}
+
+export function isEnglishCourseAvailable(
+  country: CountryCode,
+  gradeLevel: GradeLevel | undefined,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): boolean {
+  return isSaudiPublicEnglishAvailable(country, gradeLevel, educationType) ||
+    (country === 'EG' &&
+      (educationType === 'PUBLIC' || educationType === 'PRIVATE')) ||
+    isSudanPublicGrade12SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
+    isSudanPublicMiddleSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
+    isSudanPublicPrimaryCurriculumSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track);
+}
+
 export function getCurriculumForSubject(
   subject: Subject,
   gradeLevel?: string,
@@ -4667,6 +4921,144 @@ export function getCurriculumForSubject(
 ): Lecture[] {
   if (!isActiveCurriculumCountry(country as CountryCode)) return [];
   if (gradeLevel && !/^G(?:[1-9]|1[0-2])$/.test(gradeLevel)) return [];
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    ['MATH', 'HISTORY', 'GENERAL_SCIENCE', 'PHILOSOPHY', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE']
+      .includes(subject) &&
+    !isEgyptG10BookCourseAvailable(subject, educationType, _track)
+  ) return [];
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    (subject === 'ARABIC_LIT' || subject === 'ARABIC_LANG') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    return getEgyptArabicG10Curriculum(subject, educationType, _track);
+  }
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    isEgyptG10BookCourseAvailable(subject, educationType, _track)
+  ) {
+    return getEgyptG10BookCurriculum(subject, educationType, _track);
+  }
+  if (country === 'EG' && gradeLevel === 'G10' && subject === 'ENGLISH') {
+    return getEgyptSecondaryEnglishG10Curriculum(subject, educationType, _track);
+  }
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    subject === 'FRENCH' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    return getEgyptFrenchChampion1G10Curriculum(subject, educationType, _track);
+  }
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    (subject === 'GERMAN' || subject === 'ITALIAN') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    return getEgyptSecondLanguageG10Curriculum(subject, educationType, _track);
+  }
+  if (country === 'EG' && gradeLevel === 'G11') {
+    return getEgyptG11Curriculum(subject, _track, educationType);
+  }
+  if (country === 'EG' && gradeLevel === 'G12') {
+    return getEgyptG12Curriculum(subject, _track, educationType);
+  }
+  if (country === 'EG' && ['G7', 'G8', 'G9'].includes(gradeLevel || '')) {
+    return getEgyptPrepCurriculum(subject, gradeLevel as GradeLevel, educationType, _track);
+  }
+  if (country === 'EG' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel || '')) {
+    return getEgyptPrimaryCurriculum(subject, gradeLevel as GradeLevel, educationType, _track);
+  }
+  if (country === 'SD' && gradeLevel === 'G10') {
+    return isSudanPublicGrade10SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )
+      ? getSudanCurriculum(subject, gradeLevel) ?? []
+      : [];
+  }
+  if (country === 'SD' && gradeLevel === 'G11') {
+    return isSudanPublicGrade11SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )
+      ? HIGH_BIO_G11_LECTURES
+      : [];
+  }
+  if (country === 'SD' && gradeLevel === 'G12') {
+    return isSudanPublicGrade12SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )
+      ? getSudanGrade12Curriculum(subject, _track) ?? []
+      : [];
+  }
+  if (country === 'SD' && gradeLevel === 'G7') {
+    if (!isSudanPublicGrade7SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )) {
+      return [];
+    }
+    return getSudanCurriculum(subject, gradeLevel) ?? [];
+  }
+  if (country === 'SD' && gradeLevel === 'G8') {
+    if (!isSudanPublicGrade8SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )) {
+      return [];
+    }
+    return getSudanCurriculum(subject, gradeLevel) ?? [];
+  }
+  if (
+    country === 'SD' &&
+    gradeLevel === 'G9' &&
+    isSudanPublicGrade9SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )
+  ) {
+    return getSudanCurriculum(subject, gradeLevel) ?? [];
+  }
+  if (country === 'SD' && gradeLevel === 'G9' && (subject === 'ENGLISH' || subject === 'HISTORY')) {
+    return [];
+  }
+  if (country === 'SD' && gradeLevel === 'G6') {
+    if (!isSudanPublicGrade6SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel,
+      educationType,
+      _track
+    )) {
+      return [];
+    }
+    return getSudanCurriculum(subject, gradeLevel) ?? [];
+  }
   if (
     subject === 'PRIMARY_MATH' &&
     isSaudiPublicG2PrimaryMathAvailable(country, gradeLevel, educationType)
@@ -4765,6 +5157,24 @@ export function getCurriculumForSubject(
   }
 
   if (subject === 'VISUAL_ARTS') {
+    if (isSudanPublicGrade5SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel | undefined,
+      educationType,
+      _track
+    )) {
+      return getSudanCurriculum(subject, gradeLevel) ?? [];
+    }
+    if (isSudanPublicGrade4SubjectAvailable(
+      subject,
+      country as CountryCode,
+      gradeLevel as GradeLevel | undefined,
+      educationType,
+      _track
+    )) {
+      return getSudanCurriculum(subject, gradeLevel) ?? [];
+    }
     if (isSaudiPublicG2VisualArtsAvailable(country, gradeLevel, educationType)) {
       return SAUDI_G2_VISUAL_ARTS_CURRICULUM;
     }
@@ -4815,7 +5225,19 @@ export function getCurriculumForSubject(
       : [];
   }
 
+  if (
+    country === 'SD' &&
+    ['G3', 'G4', 'G5'].includes(gradeLevel ?? '') &&
+    ['PRIMARY_ARABIC', 'ENGLISH', 'ISLAMIC_STUDIES', 'PRIMARY_MATH', 'MATH', 'PRIMARY_SCIENCE', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE', 'VISUAL_ARTS', 'GEOGRAPHY', 'HISTORY'].includes(subject) &&
+    (educationType !== 'PUBLIC' || _track !== 'GENERAL')
+  ) {
+    return [];
+  }
+
   if (subject === 'ENGLISH') {
+    if (country === 'SD') {
+      return getSudanCurriculum(subject, gradeLevel) ?? [];
+    }
     if (isSaudiPublicG2EnglishAvailable(country, gradeLevel, educationType)) {
       return getSaudiEnglishG2Curriculum(_track);
     }
@@ -5119,6 +5541,14 @@ export function getCurriculumForSubject(
     return gradeLevel ? [] : ARABIC_LIT_LECTURES;
   }
   if (subject === 'GEOGRAPHY') {
+    if (
+      country === 'SD' &&
+      gradeLevel === 'G3' &&
+      educationType === 'PUBLIC' &&
+      _track === 'GENERAL'
+    ) {
+      return SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES;
+    }
     if (gradeLevel && gradeLevel !== 'G10') return [];
     if (country === 'SD') return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
     if (country === 'EG') return EGYPT_HIGH_GEOGRAPHY_G10_LECTURES;
@@ -5126,6 +5556,14 @@ export function getCurriculumForSubject(
     return [];
   }
   if (subject === 'HISTORY') {
+    if (
+      country === 'SD' &&
+      gradeLevel === 'G3' &&
+      educationType === 'PUBLIC' &&
+      _track === 'GENERAL'
+    ) {
+      return SUDAN_PRIMARY_HISTORY_G3_LECTURES;
+    }
     if (country === 'SA' && gradeLevel === 'G11') {
       return educationType === 'PUBLIC' && _track === 'GENERAL'
         ? SAUDI_G11_HISTORY_LECTURES
@@ -5149,8 +5587,108 @@ export function loadSubjectLectures(
   lang: Language = 'ar'
 ): Lecture[] {
   if (!isActiveCurriculumCountry(country as CountryCode)) return [];
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    ['MATH', 'HISTORY', 'GENERAL_SCIENCE', 'PHILOSOPHY', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE']
+      .includes(subject) &&
+    !isEgyptG10BookCourseAvailable(subject, educationType, track)
+  ) return [];
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    subject === 'ENGLISH' &&
+    educationType !== 'PUBLIC' &&
+    educationType !== 'PRIVATE'
+  ) return [];
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    (subject === 'FRENCH' || subject === 'GERMAN' || subject === 'ITALIAN') &&
+    educationType !== 'PUBLIC' &&
+    educationType !== 'PRIVATE'
+  ) return [];
+  const isProtectedSudanGrade7Course = isSudanPublicGrade7SubjectAvailable(
+    subject,
+    country as CountryCode,
+    gradeLevel as GradeLevel | undefined,
+    educationType,
+    track
+  );
+  const isProtectedSudanGrade8Course = isSudanPublicGrade8SubjectAvailable(
+    subject,
+    country as CountryCode,
+    gradeLevel as GradeLevel | undefined,
+    educationType,
+    track
+  );
+  const isProtectedSudanGrade9Course = isSudanPublicGrade9SubjectAvailable(
+    subject,
+    country as CountryCode,
+    gradeLevel as GradeLevel | undefined,
+    educationType,
+    track
+  );
+  const isProtectedSudanGrade10Course = isSudanPublicGrade10SubjectAvailable(
+    subject,
+    country as CountryCode,
+    gradeLevel as GradeLevel | undefined,
+    educationType,
+    track
+  );
+  const isSudanGrade10Route = country === 'SD' && gradeLevel === 'G10';
+  const isEgyptSecondaryEnglishG10Route =
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    subject === 'ENGLISH' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  const isEgyptSecondaryEnglishG11Route =
+    country === 'EG' &&
+    gradeLevel === 'G11' &&
+    subject === 'ENGLISH' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  const isEgyptFrenchChampion1G10Route =
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    (subject === 'FRENCH' || subject === 'GERMAN' || subject === 'ITALIAN') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  const isEgyptSecondaryLanguagesG11Route =
+    country === 'EG' &&
+    gradeLevel === 'G11' &&
+    (subject === 'FRENCH' || subject === 'GERMAN' || subject === 'ITALIAN') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  if (isSudanGrade10Route && !isProtectedSudanGrade10Course) return [];
+  const isProtectedSudanGrade11Course = isSudanPublicGrade11SubjectAvailable(
+    subject,
+    country as CountryCode,
+    gradeLevel as GradeLevel | undefined,
+    educationType,
+    track
+  );
+  const isSudanGrade11Route = country === 'SD' && gradeLevel === 'G11';
+  if (isSudanGrade11Route && !isProtectedSudanGrade11Course) return [];
+  const isProtectedSudanGrade12Course = isSudanPublicGrade12SubjectAvailable(
+    subject,
+    country as CountryCode,
+    gradeLevel as GradeLevel | undefined,
+    educationType,
+    track
+  );
+  const isSudanGrade12Route = country === 'SD' && gradeLevel === 'G12';
+  if (isSudanGrade12Route && !isProtectedSudanGrade12Course) return [];
+  const isSudanGrade8Route = country === 'SD' && gradeLevel === 'G8';
+  const isSudanGrade9Route = country === 'SD' && gradeLevel === 'G9';
   const isProtectedSaudiEnglish = isSaudiPublicEnglishAvailable(country, gradeLevel, educationType);
-  if (subject === 'ENGLISH' && !isProtectedSaudiEnglish) return [];
+  const isProtectedEgyptEnglish = country === 'EG' && (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  const isProtectedEnglish = isProtectedSaudiEnglish ||
+    isProtectedEgyptEnglish ||
+    isEgyptSecondaryEnglishG10Route ||
+    isEgyptSecondaryEnglishG11Route ||
+    isProtectedSudanGrade7Course ||
+    isProtectedSudanGrade8Course ||
+    isProtectedSudanGrade9Course ||
+    isProtectedSudanGrade12Course;
+  if (subject === 'ENGLISH' && !isProtectedEnglish) return [];
   const isProtectedSaudiTajweed =
     subject === 'TAJWEED' &&
     isSaudiPublicTajweedAvailable(country, gradeLevel, educationType);
@@ -5273,11 +5811,57 @@ export function loadSubjectLectures(
   const isVerifiedSaudiG11History =
     country === 'SA' && subject === 'HISTORY' && gradeLevel === 'G11' &&
     educationType === 'PUBLIC' && track === 'GENERAL';
+  const isEgyptVerifiedArabicG10Route =
+    country === 'EG' &&
+    gradeLevel === 'G10' &&
+    (subject === 'ARABIC_LIT' || subject === 'ARABIC_LANG') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  const isEgyptVerifiedSecondaryLanguageRoute =
+    isEgyptSecondaryEnglishG10Route ||
+    isEgyptSecondaryEnglishG11Route ||
+    isEgyptFrenchChampion1G10Route ||
+    isEgyptSecondaryLanguagesG11Route;
+  const isEgyptVerifiedG11Course =
+    country === 'EG' &&
+    gradeLevel === 'G11' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    isEgyptG11SubjectAvailable(subject, track, educationType);
+  const isEgyptVerifiedG12Course =
+    country === 'EG' &&
+    gradeLevel === 'G12' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    isEgyptG12SubjectAvailable(subject, track, educationType);
+  const isEgyptVerifiedPrepCourse =
+    country === 'EG' &&
+    ['G7', 'G8', 'G9'].includes(gradeLevel || '') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    isEgyptPrepSubjectAvailable(subject, gradeLevel as GradeLevel, educationType);
+  const isEgyptVerifiedPrimaryCourse =
+    country === 'EG' &&
+    ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel || '') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    isEgyptPrimarySubjectAvailable(subject, gradeLevel as GradeLevel, educationType);
+  const isEgyptVerifiedBookCourse = (
+    isEgyptG10BookCourseAvailable(
+      subject,
+      educationType,
+      track
+    ) && country === 'EG' && gradeLevel === 'G10'
+  ) || isEgyptVerifiedG11Course || isEgyptVerifiedG12Course || isEgyptVerifiedPrepCourse || isEgyptVerifiedPrimaryCourse;
   const isSaudiVerifiedCurriculumIsolatedRoute =
     isSaudiSocialStudiesSubject(subject) ||
+    isProtectedSudanGrade7Course ||
+    isSudanGrade8Route ||
+    isSudanGrade9Route ||
+    isSudanGrade10Route ||
+    isProtectedSudanGrade11Course ||
+    isProtectedSudanGrade12Course ||
     isProtectedSaudiPrimaryVerifiedCourses ||
     (country === 'SA' && subject === 'ISLAMIC_STUDIES') ||
     subject === 'HEALTH_SCIENCE' ||
+    isEgyptVerifiedArabicG10Route ||
+    isEgyptVerifiedSecondaryLanguageRoute ||
+    isEgyptVerifiedBookCourse ||
     isVerifiedSaudiG11History ||
     isBlockedGeographyHistoryRoute(subject, country, educationType, track);
   const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country, educationType, track);
@@ -5443,9 +6027,10 @@ export function loadSubjectLectures(
     });
   }
 
-  return isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute
+  const finalList = isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute
     ? formattedList
     : formattedList.map(ensureFourExamplesForLecture);
+  return localizeForeignLanguageLectures(subject, finalList);
 }
 
 export function saveSubjectLectures(

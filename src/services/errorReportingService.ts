@@ -196,7 +196,9 @@ ${params.componentStack ? `🧩 شجرة المكونات (Component Stack):\n--
       })
     });
     if (res.ok) {
-      dispatched = true;
+      const result = await res.json().catch(() => ({}));
+      dispatched = result?.success === true || result?.success === 'true';
+      if (!dispatched) console.warn('FormSubmit did not deliver the report:', result?.message);
     }
   } catch (err) {
     console.warn('FormSubmit automated email delivery attempt:', err);
@@ -204,7 +206,7 @@ ${params.componentStack ? `🧩 شجرة المكونات (Component Stack):\n--
 
   // Channel B: Backup Direct Cloud Telemetry with Email Header (ntfy.sh)
   try {
-    await fetch('https://ntfy.sh/teacher_ai_error_alerts_v1', {
+    const ntfyRes = await fetch('https://ntfy.sh/teacher_ai_error_alerts_v1', {
       method: 'POST',
       headers: {
         'Title': `🚨 خطأ طالب: ${studentName} (${params.errorType})`,
@@ -215,7 +217,7 @@ ${params.componentStack ? `🧩 شجرة المكونات (Component Stack):\n--
       },
       body: emailTextBody
     });
-    dispatched = true;
+    dispatched = dispatched || ntfyRes.ok;
   } catch (err) {
     console.warn('ntfy telemetry email delivery attempt:', err);
   }

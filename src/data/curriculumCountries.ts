@@ -1372,16 +1372,42 @@ export function getNationalTextbookInfo(
           textbookName = `العلوم والمفاهيم العلمية المطورة (التعليم 2.0) - ${gradeAr}`;
         }
       } else if (subject === 'ISLAMIC_STUDIES') {
-        textbookName = `التربية الدينية الإسلامية (كتاب الوزارة المعتمد) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? isEn
+            ? 'Islamic Religious Education — Secondary 1, Ministry textbook; First and Second Semesters'
+            : 'التربية الدينية الإسلامية — كتاب الوزارة للصف الأول الثانوي، الفصلان الدراسيان الأول والثاني'
+          : `التربية الدينية الإسلامية (كتاب الوزارة المعتمد) - ${gradeAr}`;
       } else if (subject === 'ARABIC_LANG') {
-        textbookName = `اللغة العربية (المرحلة الإعدادية - وزارة التربية والتعليم) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? isEn
+            ? 'Arabic Language — Grade 10, First Semester 2026–2027'
+            : 'اللغة العربية — الصف الأول الثانوي، الفصل الدراسي الأول 2026–2027'
+          : `اللغة العربية (المرحلة الإعدادية - وزارة التربية والتعليم) - ${gradeAr}`;
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G10') {
+        textbookName = isEn
+          ? 'English — Secondary 1, Second Language; Egyptian Ministry textbook, 2025; six units'
+          : 'اللغة الإنجليزية — الصف الأول الثانوي، لغة ثانية؛ كتاب وزارة التربية والتعليم المصرية، حقوق نشر 2025؛ ست وحدات';
+      } else if ((subject === 'GERMAN' || subject === 'ITALIAN') && gradeLevel === 'G10') {
+        textbookName = isEn
+          ? `${subject === 'GERMAN' ? 'German' : 'Italian'} second foreign language (A1); school-support course, not verified as an Egyptian Ministry textbook`
+          : `${subject === 'GERMAN' ? 'الألمانية' : 'الإيطالية'} لغة أجنبية ثانية (A1)؛ مقرر دعم مدرسي لم يثبت أنه كتاب وزاري مصري`;
+      } else if (subject === 'FRENCH' && gradeLevel === 'G10') {
+        textbookName = isEn
+          ? 'French First Language — Champion 1; school-selected course, not verified as an Egyptian Ministry textbook'
+          : 'الفرنسية لغة أولى — Champion 1؛ مقرر تختاره المدرسة، ولم يثبت أنه كتاب تابع لوزارة التعليم المصرية';
       } else if (subject === 'GENERAL_SCIENCE') {
-        textbookName = `العلوم العامة (المرحلة الإعدادية - التعليم المصري) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G10'
+          ? isEn
+            ? 'Integrated Science — Secondary 1, First Semester'
+            : 'العلوم المتكاملة — الصف الأول الثانوي، الفصل الدراسي الأول'
+          : `العلوم العامة (المرحلة الإعدادية - التعليم المصري) - ${gradeAr}`;
       } else if (subject === 'MATH') {
         textbookName = isMiddle
           ? `الرياضيات (الجبر والإحصاء والهندسة وحساب المثلثات) - ${gradeAr}`
           : gradeLevel === 'G10'
-          ? 'الرياضيات العامة (الجبر وحساب المثلثات والهندسة المستوية - 1 ثانوي)'
+          ? isEn
+            ? 'Mathematics — Secondary 1 Arabic edition, First Semester'
+            : 'الرياضيات — كتاب الصف الأول الثانوي، النسخة العربية، الفصل الدراسي الأول'
           : gradeLevel === 'G11'
           ? 'الرياضيات البحتة والتطبيقية (الميكانيكا والتفاضل - 2 ثانوي)'
           : 'الرياضيات للثانوية العامة (التفاضل والتكامل والجبر والهندسة الفراغية - 3 ثانوي)';
@@ -1406,69 +1432,241 @@ export function getNationalTextbookInfo(
       } else if (subject === 'COMPUTER_SCIENCE') {
         textbookName = isMiddle
           ? `الكمبيوتر وتكنولوجيا المعلومات والاتصالات (${gradeAr})`
+          : gradeLevel === 'G10'
+          ? isEn
+            ? 'Information and Communication Technology — Secondary 1, English edition, First Semester'
+            : 'تكنولوجيا المعلومات والاتصالات — الصف الأول الثانوي، نسخة الكتاب الإنجليزية، الفصل الدراسي الأول'
           : 'تكنولوجيا المعلومات والاتصالات والحاسب الآلي (ICT - الثانوية العامة)';
       } else if (subject === 'ARABIC_LIT') {
         textbookName = gradeLevel === 'G10'
-          ? 'اللغة العربية والأدب والبلاغة والنصوص (الصف الأول الثانوي)'
+          ? isEn
+            ? 'Arabic Language — Grade 10, First Semester 2026–2027'
+            : 'اللغة العربية — الصف الأول الثانوي، الفصل الدراسي الأول 2026–2027'
           : gradeLevel === 'G11'
           ? 'اللغة العربية وتاريخ الأدب والبلاغة (الصف الثاني الثانوي)'
           : 'اللغة العربية ومدارس الشعر الحديث والبلاغة (الثانوية العامة - 3 ثانوي)';
+      } else if (subject === 'HISTORY' && gradeLevel === 'G10') {
+        textbookName = isEn
+          ? 'History — Civilization of Egypt and the Ancient World, Secondary 1, First Semester'
+          : 'التاريخ — حضارة مصر والعالم القديم، الصف الأول الثانوي، الفصل الدراسي الأول';
+      } else if (subject === 'PHILOSOPHY' && gradeLevel === 'G10') {
+        textbookName = isEn
+          ? 'Philosophy and Logic — Secondary 1, First Semester'
+          : 'الفلسفة والمنطق — الصف الأول الثانوي، الفصل الدراسي الأول';
       }
       break;
 
     case 'SD': // Sudan (جمهورية السودان - المنهج القومي بخت الرضا والسلم 6-3-3)
-      if (subject === 'PRIMARY_MATH') {
-        textbookName = `الرياضيات والحساب (سلسلة بخت الرضا المطورة) - ${gradeAr}`;
+      if (gradeLevel === 'G12') {
+        const grade12Textbooks: Partial<Record<Subject, string>> = {
+          MATH: track === 'SCIENCE_MATH'
+            ? 'الرياضيات المتخصصة — الصف الثالث الثانوي'
+            : 'الرياضيات الأساسية — الصف الثالث الثانوي',
+          PHYSICS: 'الفيزياء — الصف الثالث الثانوي',
+          CHEMISTRY: 'الكيمياء — الصف الثالث الثانوي',
+          BIOLOGY: 'علم الأحياء — الصف الثالث الثانوي',
+          ISLAMIC_STUDIES: 'التربية الإسلامية — الصف الثالث الثانوي',
+          HISTORY: 'التاريخ — الصف الثالث الثانوي',
+          GEOGRAPHY: 'الجغرافيا والدراسات البيئية — الصف الثالث الثانوي',
+          COMPUTER_SCIENCE: 'علوم الحاسوب — الصف الثالث الثانوي',
+          ARABIC_LIT: 'المطالعة والأدب وقواعد النحو والبلاغة والتعبير واللغة العربية الخاصة — الصف الثالث الثانوي',
+          ENGLISH: 'اللغة الإنجليزية SPINE 6 — الصف الثالث الثانوي',
+          FRENCH: 'اللغة الفرنسية — الصف الثالث الثانوي',
+          TECHNICAL_EDUCATION: 'العلوم الهندسية — الصف الثالث الثانوي'
+        };
+        textbookName = grade12Textbooks[subject] ?? `مقرر ${subject} — الصف الثالث الثانوي`;
+      } else if (subject === 'PRIMARY_MATH') {
+        textbookName = gradeLevel === 'G1'
+          ? 'الرياضيات — الصف الأول الأساسي، الطبعة الأولى 2020م؛ خمس وحدات و47 درسًا ضمن كتاب من 84 صفحة'
+          : gradeLevel === 'G2'
+          ? 'الرياضيات — الصف الثاني الأساسي، الطبعة المنقحة 2021م؛ ست وحدات تعليمية في الصفحات المطبوعة 3–71'
+          : gradeLevel === 'G3'
+          ? 'الرياضيات — الصف الثالث الابتدائي؛ ست وحدات في الصفحات المطبوعة 5–114'
+          : gradeLevel === 'G4'
+          ? 'الرياضيات — الصف الرابع الابتدائي؛ ست وحدات تشمل الأعداد والعمليات والقياس والكسور والنسبة والهندسة'
+          : gradeLevel === 'G5'
+          ? 'الرياضيات — الصف الخامس الابتدائي؛ ست وحدات و58 درسًا في الصفحات المطبوعة 1–151'
+          : gradeLevel === 'G6'
+          ? 'الرياضيات — الصف السادس الابتدائي؛ سبع وحدات في المجموعات والأعداد والنسبة والجبر والهندسة'
+          : `الرياضيات والحساب (سلسلة بخت الرضا المطورة) - ${gradeAr}`;
       } else if (subject === 'PRIMARY_ARABIC') {
-        textbookName = `اللغة العربية (العربية لغتي - كتاب بخت الرضا القومي) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G1'
+          ? 'اللغة العربية، الصف الأول الابتدائي — وزارة التربية والتعليم، المركز القومي للمناهج والبحث التربوي ببخت الرضا؛ الطبعة الأولى 2020م؛ يتضمن الفهرس 55 درسًا في الصفحات المطبوعة 6–120'
+          : gradeLevel === 'G2'
+          ? 'اللغة العربية — الصف الثاني الابتدائي، الطبعة الأولى 2021م؛ ست وحدات تعليمية'
+          : gradeLevel === 'G3'
+          ? 'اللغة العربية — الصف الثالث الابتدائي؛ ست وحدات في الصفحات المطبوعة 5–130'
+          : gradeLevel === 'G4'
+          ? 'اللغة العربية — الصف الرابع الابتدائي؛ خمس وحدات للقراءة واللغة والتعبير'
+          : gradeLevel === 'G5'
+          ? 'اللغة العربية — الصف الخامس الابتدائي؛ خمس وحدات و31 درسًا في الصفحات المطبوعة 5–151'
+          : gradeLevel === 'G6'
+          ? 'اللغة العربية — الصف السادس الابتدائي؛ خمس وحدات للقراءة واللغة والتعبير'
+          : `اللغة العربية (العربية لغتي - كتاب بخت الرضا القومي) - ${gradeAr}`;
       } else if (subject === 'PRIMARY_SCIENCE') {
-        textbookName = `العلوم الطبيعية والبيئة (المركز القومي للمناهج بخت الرضا) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G6'
+          ? 'العلوم الطبيعية — الصف السادس الابتدائي؛ وحدات في جسم الإنسان والكائنات الحية والبيئة'
+          : gradeLevel === 'G5'
+          ? 'العلوم — الصف الخامس الابتدائي؛ سبع وحدات و25 درسًا، وتشمل موضوعات تصنيف الكائنات الحية والماء والقوى والكهرباء والمغناطيس'
+          : gradeLevel === 'G4'
+          ? 'العلوم — الصف الرابع الابتدائي؛ ثماني وحدات و27 درسًا في الصفحات المطبوعة 1–90'
+          : gradeLevel === 'G3'
+          ? 'العلوم — الصف الثالث الابتدائي؛ ثلاث وحدات في الصفحات المطبوعة 1–54'
+          : `العلوم الطبيعية والبيئة (المركز القومي للمناهج بخت الرضا) - ${gradeAr}`;
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G1') {
+        textbookName = 'SMILE Starter 1 Pupil’s Book — Republic of the Sudan, Grade 1 Basic Level, 2nd Edition 2020; five units with eight lessons each plus five unit-activity sections, verified against contents page 5 and book map page 81';
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G2') {
+        textbookName = 'SMILE Starter 2 Pupil’s Book — Grade 2 Basic Level, 2nd Edition 2020; five units with eight lessons each and activity sections, with unit lessons on printed pages 1–40 and activities on pages 41–80';
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G3') {
+        textbookName = 'SMILE Book 3 Pupil’s Book — Grade 3 Basic Level, 2nd Edition; six units and 48 lessons on printed pages 1–48, with practice activities on pages 49–96';
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G4') {
+        textbookName = 'SMILE Book 2 Pupil’s Book — Grade 4 Basic Level; twelve units of eight lessons each';
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G5') {
+        textbookName = 'SMILE Book 3 (A) Pupil’s Book — Grade 5 Basic Level; six units and 48 lessons on printed pages 1–48';
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G6') {
+        textbookName = 'اللغة الإنجليزية — الصف السادس الابتدائي؛ سبع وحدات وأنشطة للمراجعة والتطبيق';
+      } else if (subject === 'ENGLISH' && gradeLevel === 'G7') {
+        textbookName = 'SMILE Book 7 Pupil’s Book — الصف الأول المتوسط؛ الطبعة الثانية 2021م؛ ثماني وحدات و64 درسًا في الصفحات المطبوعة 1–64';
+      } else if (subject === 'ENGLISH') {
+        textbookName = `Sudanese English textbook not yet verified for ${gradeAr}`;
       } else if (subject === 'ISLAMIC_STUDIES') {
-        textbookName = `التربية الإسلامية المعتمدة (القرآن والفقه والسيرة) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G1'
+          ? 'التربية الإسلامية — الصف الأول الأساسي؛ ست وحدات تعليمية'
+          : gradeLevel === 'G2'
+          ? 'التربية الإسلامية — الصف الثاني الأساسي؛ الطبعة الأولى 2021م؛ خمس وحدات في الصفحات المطبوعة 5–54'
+          : gradeLevel === 'G3'
+          ? 'التربية الإسلامية — الصف الثالث الابتدائي؛ الطبعة الأولى 2021م؛ ست وحدات في الصفحات المطبوعة 4–70'
+          : gradeLevel === 'G4'
+          ? 'التربية الإسلامية — الصف الرابع الابتدائي؛ الطبعة الأولى 2021م؛ ست وحدات في القرآن والحديث والإيمان والفقه والأخلاق والسيرة'
+          : gradeLevel === 'G5'
+          ? 'التربية الإسلامية — الصف الخامس الابتدائي؛ ست وحدات و30 درسًا في الصفحات المطبوعة 1–99'
+          : gradeLevel === 'G6'
+          ? 'التربية الإسلامية — الصف السادس الابتدائي؛ ست وحدات في القرآن والحديث والعقيدة والفقه والسيرة'
+          : gradeLevel === 'G7'
+          ? 'التربية الإسلامية — الصف الأول المتوسط؛ وحدات التجويد والقرآن والحديث والعقيدة والفقه والسيرة'
+          : gradeLevel === 'G8'
+          ? 'التربية الإسلامية — الصف الثاني المتوسط؛ ست وحدات في التجويد والقرآن والحديث والعقيدة والفقه والسيرة'
+          : `التربية الإسلامية المعتمدة (القرآن والفقه والسيرة) - ${gradeAr}`;
       } else if (subject === 'ARABIC_LANG') {
-        textbookName = `اللغة العربية للمرحلة المتوسطة (النحو والصرف والقراءة والنصوص - بخت الرضا) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G7'
+          ? 'اللغة العربية — الصف الأول المتوسط؛ 15 وحدة للقراءة والأدب والنحو والإملاء والتعبير'
+          : gradeLevel === 'G8'
+          ? 'اللغة العربية — الصف الثاني المتوسط؛ 15 وحدة'
+          : `اللغة العربية للمرحلة المتوسطة (النحو والصرف والقراءة والنصوص - بخت الرضا) - ${gradeAr}`;
       } else if (subject === 'GENERAL_SCIENCE') {
-        textbookName = `العلوم العامة للمرحلة المتوسطة (الكيمياء والفيزياء والأحياء والبيئة) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G6'
+          ? 'العلوم الطبيعية — الصف السادس الابتدائي'
+          : gradeLevel === 'G7'
+          ? 'العلوم الطبيعية — الصف الأول المتوسط؛ ست وحدات من العلم والقياس والقوة والضغط إلى الكائنات الحية وبيئاتها'
+          : gradeLevel === 'G8'
+          ? 'العلوم الطبيعية — الصف الثاني المتوسط؛ ست وحدات في طبيعة العلم والشغل والمادة والفقاريات والنبات والبيئة'
+          : gradeLevel === 'G5'
+          ? 'العلوم — الصف الخامس الابتدائي'
+          : gradeLevel === 'G4'
+          ? 'العلوم — الصف الرابع الابتدائي؛ ثماني وحدات و27 درسًا في الصفحات المطبوعة 1–90'
+          : gradeLevel === 'G3'
+          ? 'العلوم — الصف الثالث الابتدائي؛ ثلاث وحدات في الصفحات المطبوعة 1–54'
+          : `العلوم العامة للمرحلة المتوسطة (الكيمياء والفيزياء والأحياء والبيئة) - ${gradeAr}`;
       } else if (subject === 'MATH') {
         textbookName = isMiddle
-          ? `الرياضيات للمرحلة المتوسطة (الجبر والهندسة والإحصاء - المنهج القومي الجديد) - ${gradeAr}`
+          ? gradeLevel === 'G7'
+            ? 'الرياضيات — الصف الأول المتوسط؛ ثماني وحدات في الأعداد النسبية والمعادلات والهندسة والنظام الثنائي والإحصاء'
+            : gradeLevel === 'G8'
+            ? 'الرياضيات — الصف الثاني المتوسط؛ ثماني وحدات في الأعداد الحقيقية والنسبة والهندسة والحركة والمتباينات والمجسمات وحساب المثلثات'
+            : `الرياضيات للمرحلة المتوسطة (الجبر والهندسة والإحصاء - المنهج القومي الجديد) - ${gradeAr}`
+          : gradeLevel === 'G3'
+          ? 'الرياضيات — الصف الثالث الابتدائي؛ ست وحدات في الصفحات المطبوعة 5–114'
+          : gradeLevel === 'G4'
+          ? 'الرياضيات — الصف الرابع الابتدائي؛ ست وحدات تشمل الأعداد والعمليات والقياس والكسور والنسبة والهندسة'
+          : gradeLevel === 'G5'
+          ? 'الرياضيات — الصف الخامس الابتدائي؛ ست وحدات و58 درسًا في الصفحات المطبوعة 1–151'
+          : gradeLevel === 'G6'
+          ? 'الرياضيات — الصف السادس الابتدائي؛ سبع وحدات تشمل المجموعات والأعداد والجبر والهندسة'
           : gradeLevel === 'G10'
           ? 'الرياضيات العامة (الجبر والهندسة التحليلية وحساب المثلثات - 1 ثانوي سوداني)'
           : gradeLevel === 'G11'
-          ? 'الرياضيات (المتخصصة والأساسية - 2 ثانوي سوداني)'
+          ? 'الرياضيات — الصف الثاني الثانوي؛ ثماني وحدات في الدوال الأسية واللوغاريتمية والهندسة التحليلية والبرمجة الخطية والإحصاء والمثلثات والتحويلات والأعداد المركبة والمتتاليات'
           : 'الرياضيات المتخصصة للشهادة الثانوية السودانية (التفاضل والتكامل والجبر والهندسة - 3 ثانوي)';
       } else if (subject === 'PHYSICS') {
         textbookName = gradeLevel === 'G10'
           ? 'الفيزياء العامة والقياس والميكانيكا (الصف الأول الثانوي السوداني)'
           : gradeLevel === 'G11'
-          ? 'الفيزياء (الموجات والحرارة والموائع والضوء - 2 ثانوي سوداني)'
+          ? 'الفيزياء — الصف الثاني الثانوي، الطبعة الأولى 2026م؛ ثلاث وحدات في الميكانيكا والديناميكا الحرارية والاهتزازات والموجات والصوت'
           : 'الفيزياء للشهادة الثانوية السودانية (الكهربائية والمغناطيسية والفيزياء الذرية والنووية - 3 ثانوي)';
       } else if (subject === 'CHEMISTRY') {
         textbookName = gradeLevel === 'G10'
-          ? 'الكيمياء العامة وبنية المادة والجدول الدوري (الصف الأول الثانوي السوداني)'
+          ? 'الكيمياء — الصف الأول الثانوي؛ ست وحدات في التركيب الذري للمادة والروابط والمعادلات والتفاعلات والحساب الكيميائي وقوانين الاتحاد'
           : gradeLevel === 'G11'
-          ? 'الكيمياء (الروابط والحساب الكيميائي والمحاليل والاتزان - 2 ثانوي سوداني)'
+          ? 'الكيمياء — الصف الثاني الثانوي؛ ست وحدات في الترتيب الدوري وفلزات المجموعة الأولى والكيمياء العضوية والنيتروجين والهالوجينات والعناصر الانتقالية'
           : 'الكيمياء للشهادة الثانوية السودانية (الكيمياء العضوية والتحليلية والحرارية - 3 ثانوي)';
       } else if (subject === 'BIOLOGY') {
         textbookName = gradeLevel === 'G10'
           ? 'الأحياء والبيئة والخلية الحية (الصف الأول الثانوي السوداني)'
           : gradeLevel === 'G11'
-          ? 'الأحياء (التغذية والنقل والتنفس والتكاثر - 2 ثانوي سوداني)'
+          ? 'الأحياء — الصف الثاني الثانوي؛ خمس وحدات في التغذية والنقل والتنفس والإخراج والتنسيق في الكائنات الحية'
           : 'الأحياء للشهادة الثانوية السودانية (الوراثة وعلم البيئة وأجهزة الجسم - 3 ثانوي)';
       } else if (subject === 'COMPUTER_SCIENCE') {
-        textbookName = isMiddle
+        textbookName = gradeLevel === 'G7'
+          ? 'تكنولوجيا المعلومات والاتصالات — الصف الأول المتوسط؛ أربع وحدات و19 درسًا في قواعد البيانات والإنترنت، الصفحات المطبوعة 5–81'
+          : gradeLevel === 'G8'
+          ? 'تكنولوجيا المعلومات والاتصالات — الصف الثاني المتوسط'
+          : gradeLevel === 'G6'
+          ? 'تكنولوجيا المعلومات والاتصالات — الصف السادس الابتدائي؛ خمس وحدات في الشبكات وأمن المعلومات والعروض التقديمية والبرمجيات وقواعد البيانات'
+          : gradeLevel === 'G5'
+          ? 'تكنولوجيا المعلومات والاتصالات — الصف الخامس الابتدائي؛ أربع وحدات و16 درسًا في الصفحات المطبوعة 1–50'
+          : gradeLevel === 'G4'
+          ? 'تكنولوجيا المعلومات والاتصالات — الصف الرابع الابتدائي؛ ست وحدات في الصفحات المطبوعة 1–61'
+          : isMiddle
           ? `تكنولوجيا المعلومات والاتصالات والحاسوب (المرحلة المتوسطة السودانية) - ${gradeAr}`
           : 'علوم الحاسوب وتقنية المعلومات (المرحلة الثانوية السودانية)';
+      } else if (subject === 'VISUAL_ARTS') {
+        textbookName = gradeLevel === 'G5'
+          ? 'التربية الفنية — الصف الخامس الابتدائي؛ ثلاثة مجالات و21 موضوعًا في الصفحات المطبوعة 2–55'
+          : gradeLevel === 'G4'
+          ? 'التربية الفنية — الصف الرابع الابتدائي؛ ثلاثة مجالات تطبيقية في الصفحات المطبوعة 2–41'
+          : `التربية الفنية (منهج السودان) - ${gradeAr}`;
       } else if (subject === 'ARABIC_LIT') {
         textbookName = gradeLevel === 'G10'
           ? 'الأدب العربي والبلاغة والنصوص (الصف الأول الثانوي السوداني)'
           : gradeLevel === 'G11'
-          ? 'تاريخ الأدب العربي والنصوص والبلاغة (الصف الثاني الثانوي سوداني)'
+          ? 'اللغة العربية — الصف الثاني الثانوي؛ النحو والأفعال والبلاغة والأدب والمطالعة'
           : 'الأدب والبلاغة والنقد وروائع الأدب السوداني والعربي (الشهادة الثانوية السودانية - 3 ثانوي)';
       } else if (subject === 'GEOGRAPHY') {
-        textbookName = `كتاب الجغرافيا والدراسات البيئية (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G7'
+          ? 'الجغرافيا — الصف الأول المتوسط؛ ثلاث وحدات و21 موضوعًا عن إفريقيا وآسيا وأوروبا، الصفحات المطبوعة 2–100'
+          : gradeLevel === 'G8'
+          ? 'الجغرافيا — الصف الثاني المتوسط؛ ثلاث وحدات عن أمريكا الشمالية وأمريكا الجنوبية وأستراليا'
+          : gradeLevel === 'G5'
+          ? 'الجغرافيا — الصف الخامس الابتدائي؛ ثلاث وحدات و13 درسًا في الصفحات المطبوعة 5–37'
+          : gradeLevel === 'G6'
+          ? 'الجغرافيا — الصف السادس الابتدائي؛ ثلاث وحدات في البيئة الطبيعية للوطن والموارد الإنتاجية والجغرافيا البشرية'
+          : gradeLevel === 'G3'
+          ? 'الجغرافيا — الصف الثالث من مرحلة التعليم الأساسي، الطبعة الأولى 2016م؛ ثلاث وحدات و21 درسًا في الصفحات المطبوعة 1–124'
+          : gradeLevel === 'G10'
+          ? 'الجغرافيا والدراسات البيئية — الصف الأول الثانوي؛ أربع وحدات في الجغرافيا الطبيعية والمناخ والنبات الطبيعي وعلم الخرائط ونظم المعلومات الجغرافية'
+          : `كتاب الجغرافيا والدراسات البيئية (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
       } else if (subject === 'HISTORY') {
-        textbookName = `كتاب التاريخ (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
+        textbookName = gradeLevel === 'G7'
+          ? 'التاريخ — الصف الأول المتوسط؛ أربع وحدات و29 درسًا عن تاريخ السودان والدولة الإسلامية وإفريقيا وأوروبا القديمة'
+          : gradeLevel === 'G8'
+          ? 'التاريخ — الصف الثاني المتوسط؛ أربع وحدات عن تاريخ السودان والدولة الأموية وإفريقيا وأوروبا'
+          : gradeLevel === 'G5'
+          ? 'التاريخ — الصف الخامس الابتدائي؛ خمس وحدات و29 موضوعًا في الصفحات المطبوعة 7–120'
+          : gradeLevel === 'G6'
+          ? 'التاريخ — الصف السادس الابتدائي؛ خمس وحدات عن تاريخ السودان والدولة العباسية وإفريقيا والنهضة الأوروبية والتربية الوطنية'
+          : gradeLevel === 'G3'
+          ? 'التاريخ والتربية الوطنية — الصف الثالث للتعليم الأساسي، الطبعة الأولى 2016م؛ ست وحدات و22 موضوعًا في الصفحات المطبوعة 1–48'
+          : gradeLevel === 'G10'
+          ? 'التاريخ — الصف الأول الثانوي؛ أربع وحدات في تاريخ السودان والإسلام وأفريقيا والتاريخ الإنساني'
+          : `كتاب التاريخ (المركز القومي للمناهج والبحث التربوي بخت الرضا) - ${gradeAr}`;
+      } else if (subject === 'NATIONAL_EDUCATION') {
+        textbookName = gradeLevel === 'G8'
+          ? 'التربية الوطنية — الصف الثاني المتوسط؛ أربع وحدات في الوطن والوطنية والسودان والمجتمع والدولة'
+          : `التربية الوطنية — ${gradeAr}`;
+      } else if (subject === 'TECHNICAL_EDUCATION') {
+        textbookName = gradeLevel === 'G8'
+          ? 'أساسيات التربية التقنية — الصف الثاني المتوسط؛ أربعة مجالات تطبيقية'
+          : `التربية التقنية — ${gradeAr}`;
       }
       break;
 
@@ -1941,11 +2139,50 @@ export function getNationalTextbookInfo(
       : `محتوى ${subject} مساند للمعاهد العلمية السعودية - ${gradeAr}؛ غير مطابق لكتاب التعليم الحكومي`;
   }
 
+  if (
+    country === 'EG' &&
+    (subject === 'GERMAN' || subject === 'ITALIAN') &&
+    gradeLevel === 'G10' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    ministry = isEn
+      ? 'School-selected second foreign language course; not represented as a verified Ministry textbook'
+      : 'مقرر لغة أجنبية ثانية تختاره المدرسة؛ لا يُعرض ككتاب وزاري موثق';
+    textbookName = isEn
+      ? `${subject === 'GERMAN' ? 'German' : 'Italian'} A1 — six themes; school support`
+      : `${subject === 'GERMAN' ? 'الألمانية' : 'الإيطالية'} A1 — ستة موضوعات؛ دعم مدرسي`;
+  }
+
+  if (
+    country === 'EG' &&
+    subject === 'FRENCH' &&
+    gradeLevel === 'G10' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    ministry = isEn
+      ? 'School-selected French first-language course; the supplied book does not establish ministry approval'
+      : 'مقرر فرنسية لغة أولى تختاره المدرسة؛ الكتاب المرفق لا يثبت اعتماده من الوزارة';
+    textbookName = isEn
+      ? 'Champion 1 — French first-language school support; six themes; not represented as a Ministry textbook'
+      : 'Champion 1 — دعم مدرسي للفرنسية لغة أولى؛ ستة موضوعات؛ لا يُعرض ككتاب وزاري';
+  }
+
   return {
     textbookName,
     ministry,
     standardCode: `${country}-${educationType}-${subject}-${gradeLevel}-${track}`,
-    semester: country === 'SA' && educationType === 'PUBLIC' &&
+    semester: country === 'EG' &&
+      gradeLevel === 'G10' &&
+      (subject === 'ARABIC_LIT' || subject === 'ARABIC_LANG' ||
+        subject === 'MATH' || subject === 'HISTORY' || subject === 'GENERAL_SCIENCE' ||
+        subject === 'PHILOSOPHY' || subject === 'ISLAMIC_STUDIES' ||
+        subject === 'COMPUTER_SCIENCE' || subject === 'ENGLISH' || subject === 'FRENCH' ||
+        subject === 'GERMAN' || subject === 'ITALIAN') &&
+      (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+      ? subject === 'ISLAMIC_STUDIES'
+        ? isEn ? 'First and Second Semesters' : 'الفصلان الدراسيان الأول والثاني'
+        : isEn ? 'First Semester 2026–2027' : 'الفصل الدراسي الأول 2026–2027'
+      : country === 'SA' && educationType === 'PUBLIC' &&
       subject === 'COMPUTER_SCIENCE' &&
         (gradeLevel === 'G4' ||
           isSaudiPublicG5DigitalSkillsAvailable(country, gradeLevel, educationType, track) ||
@@ -2073,6 +2310,151 @@ export function getNationalSubjectLabel(
 ): string {
   const isEn = lang === 'en';
 
+  if (country === 'EG' && _gradeLevel === 'G10' && subject === 'ENGLISH') {
+    return isEn
+      ? 'English — Secondary 1 (Second Language)'
+      : 'اللغة الإنجليزية — الصف الأول الثانوي (لغة ثانية)';
+  }
+  if (country === 'EG' && _gradeLevel === 'G10') {
+    const grade10Labels: Partial<Record<Subject, [string, string]>> = {
+      MATH: ['Mathematics — Secondary 1, First Semester', 'الرياضيات — الصف الأول الثانوي، الفصل الدراسي الأول'],
+      HISTORY: ['History — Civilization of Egypt and the Ancient World', 'التاريخ — حضارة مصر والعالم القديم'],
+      GENERAL_SCIENCE: ['Integrated Science — Secondary 1', 'العلوم المتكاملة — الصف الأول الثانوي'],
+      PHILOSOPHY: ['Philosophy and Logic — Secondary 1', 'الفلسفة والمنطق — الصف الأول الثانوي'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education — Ministry textbook', 'التربية الدينية الإسلامية — كتاب الوزارة'],
+      COMPUTER_SCIENCE: ['Information and Communication Technology — English edition', 'تكنولوجيا المعلومات والاتصالات — نسخة الكتاب الإنجليزية']
+    };
+    const label = grade10Labels[subject];
+    if (label) return isEn ? label[0] : label[1];
+  }
+  if (
+    country === 'EG' &&
+    _gradeLevel === 'G10' &&
+    subject === 'FRENCH' &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    return isEn
+      ? 'French First Language — Champion 1 (school support)'
+      : 'الفرنسية لغة أولى — Champion 1 (مسار دعم مدرسي)';
+  }
+  if (
+    country === 'EG' &&
+    _gradeLevel === 'G10' &&
+    (subject === 'GERMAN' || subject === 'ITALIAN') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+  ) {
+    return subject === 'GERMAN'
+      ? isEn ? 'German — second foreign language (school support)' : 'الألمانية — لغة أجنبية ثانية (دعم مدرسي)'
+      : isEn ? 'Italian — second foreign language (school support)' : 'الإيطالية — لغة أجنبية ثانية (دعم مدرسي)';
+  }
+
+  if (country === 'EG' && _gradeLevel === 'G11') {
+    const egyptG11Labels: Partial<Record<Subject, [string, string]>> = {
+      ARABIC_LIT: ['Arabic Language — Secondary 2', 'اللغة العربية — الصف الثاني الثانوي'],
+      ENGLISH: ['English (First Language) — Secondary 2', 'اللغة الإنجليزية (لغة أولى) — الصف الثاني الثانوي'],
+      FRENCH: ['French (Second Language) — Secondary 2', 'اللغة الفرنسية (لغة ثانية) — الصف الثاني الثانوي'],
+      GERMAN: ['German (Second Language) — Secondary 2', 'اللغة الألمانية (لغة ثانية) — الصف الثاني الثانوي'],
+      ITALIAN: ['Italian (Second Language) — Secondary 2', 'اللغة الإيطالية (لغة ثانية) — الصف الثاني الثانوي'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education — Secondary 2', 'التربية الدينية الإسلامية — الصف الثاني الثانوي'],
+      PHYSICS: ['Physics — Secondary 2 (Scientific Track)', 'الفيزياء — الصف الثاني الثانوي (الشعبة العلمية)'],
+      CHEMISTRY: ['Chemistry — Secondary 2 (Scientific Track)', 'الكيمياء — الصف الثاني الثانوي (الشعبة العلمية)'],
+      MATH: track === 'SHARIA_HUMANITIES'
+        ? ['General Mathematics — Secondary 2 (Literary Track)', 'الرياضيات العامة — الصف الثاني الثانوي (الشعبة الأدبية)']
+        : ['Pure Mathematics & Applications — Secondary 2 (Scientific Track)', 'الرياضيات البحتة وتطبيقاتها — الصف الثاني الثانوي (الشعبة العلمية)'],
+      PHILOSOPHY: ['Psychology & Sociology — Secondary 2 (Literary Track)', 'علم النفس والاجتماع — الصف الثاني الثانوي (الشعبة الأدبية)'],
+      HISTORY: ['History — Secondary 2 (Literary Track)', 'التاريخ — الصف الثاني الثانوي (الشعبة الأدبية)'],
+      GEOGRAPHY: ['Geography — Secondary 2 (Literary Track)', 'الجغرافيا — الصف الثاني الثانوي (الشعبة الأدبية)'],
+      BIOLOGY: ['Biology — Secondary 2 (Scientific Track)', 'الأحياء — الصف الثاني الثانوي (الشعبة العلمية)']
+    };
+    const egLabel = egyptG11Labels[subject];
+    if (egLabel) return isEn ? egLabel[0] : egLabel[1];
+  }
+
+  if (country === 'EG' && _gradeLevel === 'G12') {
+    const egyptG12Labels: Partial<Record<Subject, [string, string]>> = {
+      ARABIC_LIT: ['Arabic Language & Literature — Secondary 3', 'اللغة العربية وآدابها — الصف الثالث الثانوي'],
+      ENGLISH: ['English (First Language) — Secondary 3', 'اللغة الإنجليزية (لغة أولى) — الصف الثالث الثانوي'],
+      FRENCH: ['French (Second Language) — Secondary 3', 'اللغة الفرنسية (لغة ثانية) — الصف الثالث الثانوي'],
+      GERMAN: ['German (Second Language) — Secondary 3', 'اللغة الألمانية (لغة ثانية) — الصف الثالث الثانوي'],
+      ITALIAN: ['Italian (Second Language) — Secondary 3', 'اللغة الإيطالية (لغة ثانية) — الصف الثالث الثانوي'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education — Secondary 3', 'التربية الدينية الإسلامية — الصف الثالث الثانوي'],
+      PHYSICS: ['Physics — Secondary 3 (Scientific Track)', 'الفيزياء — الصف الثالث الثانوي (الشعبة العلمية)'],
+      CHEMISTRY: ['Chemistry — Secondary 3 (Scientific Track)', 'الكيمياء — الصف الثالث الثانوي (الشعبة العلمية)'],
+      BIOLOGY: ['Biology — Secondary 3 (Scientific Track: Biological)', 'الأحياء — الصف الثالث الثانوي (شعبة علمي علوم)'],
+      MATH: track === 'SHARIA_HUMANITIES' || track === 'SCIENCE_BIO'
+        ? ['Statistics & Probability — Secondary 3', 'الإحصاء والاحتمال — الصف الثالث الثانوي']
+        : ['Pure Mathematics (Calculus, Algebra & Solid Geometry) — Secondary 3', 'الرياضيات البحتة (تفاضل وتكامل وجبر وهندسة فراغية) — شعبة علمي رياضة'],
+      COMPUTER_SCIENCE: ['Applied Mathematics (Statics & Dynamics) — Secondary 3', 'الرياضيات التطبيقية (الاستاتيكا والديناميكا) — شعبة علمي رياضة'],
+      HISTORY: ['Modern & Contemporary History of Egypt & Arabs — Secondary 3', 'التاريخ الحديث والمعاصر لمصر والعرب — الصف الثالث الثانوي (الشعبة الأدبية)'],
+      GEOGRAPHY: ['Political Geography — Secondary 3', 'الجغرافيا السياسية — الصف الثالث الثانوي (الشعبة الأدبية)'],
+      PHILOSOPHY: ['Philosophy & Logic — Secondary 3', 'الفلسفة والمنطق — الصف الثالث الثانوي (الشعبة الأدبية)']
+    };
+    const egLabel = egyptG12Labels[subject];
+    if (egLabel) return isEn ? egLabel[0] : egLabel[1];
+  }
+
+  if (country === 'EG' && ['G7', 'G8', 'G9'].includes(_gradeLevel || '')) {
+    const prepGradeAr = _gradeLevel === 'G7' ? 'الأول الإعدادي' : (_gradeLevel === 'G8' ? 'الثاني الإعدادي' : 'الثالث الإعدادي (الشهادة الإعدادية)');
+    const prepGradeEn = _gradeLevel === 'G7' ? 'Prep 1' : (_gradeLevel === 'G8' ? 'Prep 2' : 'Prep 3');
+    const egyptPrepLabels: Partial<Record<Subject, [string, string]>> = {
+      ARABIC_LANG: [`Arabic Language — ${prepGradeEn}`, `اللغة العربية — الصف ${prepGradeAr}`],
+      MATH: [`Mathematics — ${prepGradeEn}`, `الرياضيات — الصف ${prepGradeAr}`],
+      GENERAL_SCIENCE: [`Science — ${prepGradeEn}`, `العلوم — الصف ${prepGradeAr}`],
+      ENGLISH: [`English (New Hello!) — ${prepGradeEn}`, `اللغة الإنجليزية (New Hello!) — الصف ${prepGradeAr}`],
+      GEOGRAPHY: [`Social Studies (Geography) — ${prepGradeEn}`, `الدراسات الاجتماعية (الجغرافيا) — الصف ${prepGradeAr}`],
+      HISTORY: [`Social Studies (History) — ${prepGradeEn}`, `الدراسات الاجتماعية (التاريخ) — الصف ${prepGradeAr}`],
+      COMPUTER_SCIENCE: [`Computer & Information Technology — ${prepGradeEn}`, `الحاسب الآلي وتكنولوجيا المعلومات — الصف ${prepGradeAr}`],
+      ISLAMIC_STUDIES: [`Islamic Religious Education — ${prepGradeEn}`, `التربية الدينية الإسلامية — الصف ${prepGradeAr}`]
+    };
+    const prepLabel = egyptPrepLabels[subject];
+    if (prepLabel) return isEn ? prepLabel[0] : prepLabel[1];
+  }
+
+  if (country === 'EG' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(_gradeLevel || '')) {
+    const gNum = _gradeLevel?.replace('G', '') || '1';
+    const primaryLabels: Partial<Record<Subject, [string, string]>> = {
+      PRIMARY_ARABIC: [`Arabic Language (Tawasol) — Primary ${gNum}`, `اللغة العربية (تواصل) — الصف ${gNum} الابتدائي`],
+      ARABIC_LANG: [`Arabic Language (Tawasol) — Primary ${gNum}`, `اللغة العربية (تواصل) — الصف ${gNum} الابتدائي`],
+      PRIMARY_MATH: [`Mathematics — Primary ${gNum}`, `الرياضيات — الصف ${gNum} الابتدائي`],
+      MATH: [`Mathematics — Primary ${gNum}`, `الرياضيات — الصف ${gNum} الابتدائي`],
+      PRIMARY_SCIENCE: [`Science — Primary ${gNum}`, `العلوم — الصف ${gNum} الابتدائي`],
+      GENERAL_SCIENCE: [`Science — Primary ${gNum}`, `العلوم — الصف ${gNum} الابتدائي`],
+      ENGLISH: [`English (Connect) — Primary ${gNum}`, `اللغة الإنجليزية (Connect) — الصف ${gNum} الابتدائي`],
+      COMPUTER_SCIENCE: [`ICT & Computer Skills — Primary ${gNum}`, `تكنولوجيا المعلومات والاتصالات (ICT) — الصف ${gNum} الابتدائي`],
+      GEOGRAPHY: [`Social Studies (Geography) — Primary ${gNum}`, `الدراسات الاجتماعية (الجغرافيا) — الصف ${gNum} الابتدائي`],
+      HISTORY: [`Social Studies (History) — Primary ${gNum}`, `الدراسات الاجتماعية (التاريخ) — الصف ${gNum} الابتدائي`],
+      ISLAMIC_STUDIES: [`Islamic Religious Education — Primary ${gNum}`, `التربية الدينية الإسلامية — الصف ${gNum} الابتدائي`]
+    };
+    const primLabel = primaryLabels[subject];
+    if (primLabel) return isEn ? primLabel[0] : primLabel[1];
+  }
+
+  if (subject === 'FRENCH') {
+    return isEn ? 'French' : 'اللغة الفرنسية';
+  }
+  if (subject === 'GERMAN') return isEn ? 'German' : 'اللغة الألمانية';
+  if (subject === 'ITALIAN') return isEn ? 'Italian' : 'اللغة الإيطالية';
+
+  if (country === 'SD' && _gradeLevel === 'G12') {
+    const grade12Labels: Partial<Record<Subject, [string, string]>> = {
+      ARABIC_LIT: ['Arabic Language, Literature, Grammar and Rhetoric', 'اللغة العربية وآدابها وقواعدها وبلاغتها'],
+      BIOLOGY: ['Biology', 'علم الأحياء'],
+      CHEMISTRY: ['Chemistry', 'الكيمياء'],
+      COMPUTER_SCIENCE: ['Computer Science', 'علوم الحاسوب'],
+      ENGLISH: ['English', 'اللغة الإنجليزية'],
+      FRENCH: ['French', 'اللغة الفرنسية'],
+      GEOGRAPHY: ['Geography and Environmental Studies', 'الجغرافيا والدراسات البيئية'],
+      HISTORY: ['History', 'التاريخ'],
+      ISLAMIC_STUDIES: ['Islamic Studies', 'التربية الإسلامية'],
+      MATH: track === 'SCIENCE_MATH'
+        ? ['Specialized Mathematics', 'الرياضيات المتخصصة']
+        : ['Basic Mathematics', 'الرياضيات الأساسية'],
+      TECHNICAL_EDUCATION: ['Engineering Sciences', 'العلوم الهندسية']
+    };
+    const label = grade12Labels[subject];
+    if (label) return isEn ? label[0] : label[1];
+  }
+
   if (subject === 'PRIMARY_MATH' && isSaudiPublicG2PrimaryMathAvailable(country, _gradeLevel, educationType)) {
     return isEn
       ? 'Mathematics (Saudi public Grade 2 — verified descriptive axes)'
@@ -2186,6 +2568,14 @@ export function getNationalSubjectLabel(
   }
 
   if (subject === 'VISUAL_ARTS') {
+    if (country === 'SD' && _gradeLevel === 'G5' && educationType === 'PUBLIC' && track === 'GENERAL') {
+      return isEn ? 'Art Education (Grade 5)' : 'التربية الفنية (الصف الخامس الأساسي)';
+    }
+    if (country === 'SD' && _gradeLevel === 'G4' && educationType === 'PUBLIC' && track === 'GENERAL') {
+      return isEn
+        ? 'Art Education (Grade 4)'
+        : 'التربية الفنية (الصف الرابع الأساسي)';
+    }
     if (isSaudiPublicG2VisualArtsAvailable(country, _gradeLevel, educationType)) {
       return isEn
         ? 'Art Education (Grade 2)'
@@ -2219,33 +2609,153 @@ export function getNationalSubjectLabel(
   if (country === 'SD') {
     switch (subject) {
       case 'PRIMARY_ARABIC':
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Arabic Language (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `اللغة العربية (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
         return isEn ? 'Arabic Language (Bakht Al-Ruda)' : 'اللغة العربية (العربية لغتي - بخت الرضا)';
+      case 'ENGLISH':
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `English (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `اللغة الإنجليزية (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
+        if (_gradeLevel === 'G4') {
+          return isEn ? 'English (Grade 4 Basic)' : 'اللغة الإنجليزية (الصف الرابع الأساسي)';
+        }
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'English (SMILE Book 7 — Grade 1 Intermediate)' : 'اللغة الإنجليزية (SMILE Book 7 — الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'English (SMILE Book 8 — Grade 2 Intermediate)' : 'اللغة الإنجليزية (SMILE Book 8 — الصف الثاني المتوسط)';
+        }
+        return isEn ? 'English (SMILE Starter 1 — Grade 1)' : 'اللغة الإنجليزية (SMILE Starter 1 — الصف الأول الأساسي)';
       case 'ARABIC_LANG':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Arabic Language (Grade 7 / Middle 1)' : 'اللغة العربية (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Arabic Language (Grade 8 / Middle 2)' : 'اللغة العربية (الصف الثاني المتوسط)';
+        }
         return isEn ? 'Arabic Language (Intermediate Stage)' : 'اللغة العربية (المرحلة المتوسطة السودانية)';
       case 'PRIMARY_MATH':
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Mathematics (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `الرياضيات (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
         return isEn ? 'Mathematics (Bakht Al-Ruda Primary)' : 'الرياضيات والحساب (المرحلة الابتدائية - بخت الرضا)';
       case 'PRIMARY_SCIENCE':
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Natural Science (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `العلوم الطبيعية (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
         return isEn ? 'Natural Science & Environment (Primary)' : 'العلوم الطبيعية والبيئة (المرحلة الابتدائية)';
       case 'GENERAL_SCIENCE':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Natural Science (Grade 7 / Middle 1)' : 'العلوم الطبيعية (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Natural Science (Grade 8 / Middle 2)' : 'العلوم الطبيعية (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G4' || _gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Natural Science (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `العلوم الطبيعية (الصف ${_gradeLevel.slice(1)} الأساسي)`;
+        }
         return isEn ? 'General Science (Intermediate Stage)' : 'العلوم العامة (المرحلة المتوسطة السودانية)';
       case 'COMPUTER_SCIENCE':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Information and Communication Technology (Grade 7 / Middle 1)' : 'تكنولوجيا المعلومات والاتصالات (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Information and Communication Technology (Grade 8 / Middle 2)' : 'تكنولوجيا المعلومات والاتصالات (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Information and Communication Technology (Grade ${_gradeLevel.slice(1)})`
+            : `تكنولوجيا المعلومات والاتصالات (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
+        if (_gradeLevel === 'G4') {
+          return isEn ? 'Information and Communication Technology (Grade 4)' : 'تكنولوجيا المعلومات والاتصالات (الصف الرابع الأساسي)';
+        }
         return isEn ? 'ICT & Computer Studies' : 'الحاسوب والتعليم الرقمي';
       case 'MATH':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Mathematics (Grade 7 / Middle 1)' : 'الرياضيات (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Mathematics (Grade 8 / Middle 2)' : 'الرياضيات (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G5') {
+          return isEn ? 'Mathematics (Grade 5 Basic)' : 'الرياضيات (الصف الخامس الأساسي)';
+        }
         return isEn ? 'Mathematics (Sudanese Curriculum)' : 'الرياضيات (المنهج القومي السوداني)';
       case 'PHYSICS':
         return isEn ? 'Physics (Sudanese Secondary)' : 'الفيزياء (المرحلة الثانوية السودانية)';
       case 'CHEMISTRY':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Chemistry (Sudan Grade 10)' : 'الكيمياء (الصف الأول الثانوي السوداني)';
+        }
         return isEn ? 'Chemistry (Sudanese Secondary)' : 'الكيمياء (المرحلة الثانوية السودانية)';
       case 'BIOLOGY':
         return isEn ? 'Biology (Sudanese Secondary)' : 'الأحياء (المرحلة الثانوية السودانية)';
       case 'ARABIC_LIT':
         return isEn ? 'Arabic Literature & Sudanese Poetry' : 'الأدب العربي وروائع الشعر السوداني';
       case 'ISLAMIC_STUDIES':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Islamic Studies (Grade 7 / Middle 1)' : 'التربية الإسلامية (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Islamic Studies (Grade 8 / Middle 2)' : 'التربية الإسلامية (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Islamic Studies (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `التربية الإسلامية (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
         return isEn ? 'Islamic Studies (Quran & Fiqh)' : 'التربية الإسلامية (القرآن والفقه والسيرة)';
       case 'GEOGRAPHY':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Geography & Environmental Studies (Sudan Grade 10)' : 'الجغرافيا والدراسات البيئية (الصف الأول الثانوي السوداني)';
+        }
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Geography (Grade 7 / Middle 1)' : 'الجغرافيا (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Geography (Grade 8 / Middle 2)' : 'الجغرافيا (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `Geography (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `الجغرافيا (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
         return isEn ? 'Geography & Environmental Studies (Bakht Al-Ruda)' : 'الجغرافيا والدراسات البيئية (بخت الرضا)';
       case 'HISTORY':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'History (Sudan Grade 10)' : 'التاريخ (الصف الأول الثانوي السوداني)';
+        }
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'History (Grade 7 / Middle 1)' : 'التاريخ (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'History (Grade 8 / Middle 2)' : 'التاريخ (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G5' || _gradeLevel === 'G6') {
+          return isEn
+            ? `History (Grade ${_gradeLevel.slice(1)} Basic)`
+            : `التاريخ (الصف ${_gradeLevel.slice(1)} الابتدائي)`;
+        }
         return isEn ? 'History (Bakht Al-Ruda Secondary)' : 'التاريخ والحضارة (المرحلة الثانوية - بخت الرضا)';
+      case 'NATIONAL_EDUCATION':
+        return isEn ? 'National Education (Grade 8 / Middle 2)' : 'التربية الوطنية (الصف الثاني المتوسط)';
+      case 'TECHNICAL_EDUCATION':
+        if (_gradeLevel === 'G12') {
+          return isEn ? 'Engineering Sciences' : 'العلوم الهندسية';
+        }
+        return isEn ? 'Foundations of Technical Education (Grade 8 / Middle 2)' : 'أساسيات التربية التقنية (الصف الثاني المتوسط)';
     }
   }
 
@@ -2254,6 +2764,9 @@ export function getNationalSubjectLabel(
       case 'PRIMARY_ARABIC':
         return isEn ? 'Arabic Language (Edu 2.0)' : 'اللغة العربية (التعليم 2.0 - تواصل)';
       case 'ARABIC_LANG':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Arabic Language (Grade 10, First Semester)' : 'اللغة العربية (الصف الأول الثانوي، الفصل الدراسي الأول)';
+        }
         return isEn ? 'Arabic Language (Middle School)' : 'اللغة العربية (المرحلة الإعدادية)';
       case 'PRIMARY_MATH':
         return isEn ? 'Mathematics (Primary Edu 2.0)' : 'الرياضيات والحساب (المرحلة الابتدائية المطورة)';
@@ -2277,6 +2790,9 @@ export function getNationalSubjectLabel(
       case 'COMPUTER_SCIENCE':
         return isEn ? 'ICT & Computer Science' : 'تكنولوجيا المعلومات والحاسب الآلي';
       case 'ARABIC_LIT':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Arabic Language (Grade 10, First Semester)' : 'اللغة العربية (الصف الأول الثانوي، الفصل الدراسي الأول)';
+        }
         return isEn ? 'Arabic Rhetoric & Grammar' : 'اللغة العربية والنحو والأدب (الثانوية العامة)';
       default:
         break;
@@ -2622,6 +3138,8 @@ export function getNationalSubjectLabel(
       return isEn ? 'Geography & Environmental Studies' : 'الجغرافيا والدراسات البيئية';
     case 'HISTORY':
       return isEn ? 'History' : 'التاريخ';
+    case 'PHILOSOPHY':
+      return isEn ? 'Philosophy and Logic' : 'الفلسفة والمنطق';
     default:
       return subject;
   }

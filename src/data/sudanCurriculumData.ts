@@ -1,9 +1,111 @@
-import type { Lecture, LectureSection, Assessment } from '../types';
+import type { Lecture, LectureSection, Assessment, Subject } from '../types';
 import { SUDAN_PRIMARY_SCIENCE_G6_LECTURES } from './sudanPrimaryScience6CurriculumData';
+import { SUDAN_PRIMARY_ARABIC_G6_LECTURES } from './sudanPrimaryArabic6CurriculumData';
+import { SUDAN_PRIMARY_ENGLISH_G6_LECTURES } from './sudanPrimaryEnglish6CurriculumData';
+import { SUDAN_PRIMARY_ISLAMIC_G6_LECTURES } from './sudanPrimaryIslamic6CurriculumData';
+import { SUDAN_PRIMARY_MATH_G6_LECTURES } from './sudanPrimaryMath6CurriculumData';
+import { SUDAN_PRIMARY_GEOGRAPHY_G6_LECTURES } from './sudanPrimaryGeography6CurriculumData';
+import { SUDAN_PRIMARY_HISTORY_G6_LECTURES } from './sudanPrimaryHistory6CurriculumData';
+import { SUDAN_PRIMARY_ICT_G6_LECTURES } from './sudanPrimaryIct6CurriculumData';
+import { SUDAN_MIDDLE_ARABIC_G7_LECTURES } from './sudanMiddleArabic7CurriculumData';
+import { SUDAN_MIDDLE_ENGLISH_G7_LECTURES } from './sudanMiddleEnglish7CurriculumData';
+import { SUDAN_MIDDLE_GEOGRAPHY_G7_LECTURES } from './sudanMiddleGeography7CurriculumData';
+import { SUDAN_MIDDLE_HISTORY_G7_LECTURES } from './sudanMiddleHistory7CurriculumData';
+import { SUDAN_MIDDLE_ICT_G7_LECTURES } from './sudanMiddleIct7CurriculumData';
+import { SUDAN_MIDDLE_ISLAMIC_G7_LECTURES } from './sudanMiddleIslamic7CurriculumData';
+import { SUDAN_MIDDLE_MATH_G7_LECTURES } from './sudanMiddleMath7CurriculumData';
+import { SUDAN_MIDDLE_SCIENCE_G7_LECTURES } from './sudanMiddleScience7CurriculumData';
+import { SUDAN_MIDDLE_G8_LECTURES, getSudanMiddleGrade8Curriculum } from './sudanMiddleGrade8CurriculumData';
+import { SUDAN_MIDDLE_G9_LECTURES, getSudanMiddleGrade9Curriculum } from './sudanMiddleGrade9CurriculumData';
+import { SUDAN_PRIMARY_ARABIC_G1_LECTURES } from './sudanPrimaryArabic1CurriculumData';
+import { SUDAN_PRIMARY_ARABIC_G2_LECTURES } from './sudanPrimaryArabic2CurriculumData';
+import { SUDAN_PRIMARY_ENGLISH_G1_LECTURES } from './sudanPrimaryEnglish1CurriculumData';
+import { SUDAN_PRIMARY_ENGLISH_G2_LECTURES } from './sudanPrimaryEnglish2CurriculumData';
+import { SUDAN_PRIMARY_ISLAMIC_G1_LECTURES } from './sudanPrimaryIslamic1CurriculumData';
+import { SUDAN_PRIMARY_ISLAMIC_G2_LECTURES } from './sudanPrimaryIslamic2CurriculumData';
+import { SUDAN_PRIMARY_MATH_G1_LECTURES } from './sudanPrimaryMath1CurriculumData';
+import { SUDAN_PRIMARY_MATH_G2_LECTURES } from './sudanPrimaryMath2CurriculumData';
+import { SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES } from './sudanPrimaryGeography3CurriculumData';
+import { SUDAN_PRIMARY_HISTORY_G3_LECTURES } from './sudanPrimaryHistory3CurriculumData';
+import { SUDAN_PRIMARY_ARABIC_G3_LECTURES } from './sudanPrimaryArabic3CurriculumData';
+import { SUDAN_PRIMARY_ENGLISH_G3_LECTURES } from './sudanPrimaryEnglish3CurriculumData';
+import { SUDAN_PRIMARY_ISLAMIC_G3_LECTURES } from './sudanPrimaryIslamic3CurriculumData';
+import { SUDAN_PRIMARY_MATH_G3_LECTURES } from './sudanPrimaryMath3CurriculumData';
+import { SUDAN_PRIMARY_SCIENCE_G3_LECTURES } from './sudanPrimaryScience3CurriculumData';
+import { SUDAN_PRIMARY_ARABIC_G4_LECTURES } from './sudanPrimaryArabic4CurriculumData';
+import { SUDAN_PRIMARY_ENGLISH_G4_LECTURES } from './sudanPrimaryEnglish4CurriculumData';
+import { SUDAN_PRIMARY_ISLAMIC_G4_LECTURES } from './sudanPrimaryIslamic4CurriculumData';
+import { SUDAN_PRIMARY_MATH_G4_LECTURES } from './sudanPrimaryMath4CurriculumData';
+import { SUDAN_PRIMARY_SCIENCE_G4_LECTURES } from './sudanPrimaryScience4CurriculumData';
+import { SUDAN_PRIMARY_ICT_G4_LECTURES } from './sudanPrimaryIct4CurriculumData';
+import { SUDAN_PRIMARY_ART_G4_LECTURES } from './sudanPrimaryArt4CurriculumData';
+import { SUDAN_PRIMARY_ARABIC_G5_LECTURES } from './sudanPrimaryArabic5CurriculumData';
+import { SUDAN_PRIMARY_ENGLISH_G5_LECTURES } from './sudanPrimaryEnglish5CurriculumData';
+import { SUDAN_PRIMARY_ISLAMIC_G5_LECTURES } from './sudanPrimaryIslamic5CurriculumData';
+import { SUDAN_PRIMARY_MATH_G5_LECTURES } from './sudanPrimaryMath5CurriculumData';
+import { SUDAN_PRIMARY_SCIENCE_G5_LECTURES } from './sudanPrimaryScience5CurriculumData';
+import { SUDAN_PRIMARY_GEOGRAPHY_G5_LECTURES } from './sudanPrimaryGeography5CurriculumData';
+import { SUDAN_PRIMARY_HISTORY_G5_LECTURES } from './sudanPrimaryHistory5CurriculumData';
+import { SUDAN_PRIMARY_ICT_G5_LECTURES } from './sudanPrimaryIct5CurriculumData';
+import { SUDAN_PRIMARY_ART_G5_LECTURES } from './sudanPrimaryArt5CurriculumData';
 import { SUDAN_HIGH_GEOGRAPHY_G10_LECTURES } from './sudanHighGeography10CurriculumData';
 import { SUDAN_HIGH_HISTORY_G10_LECTURES } from './sudanHighHistory10CurriculumData';
+import { SUDAN_HIGH_CHEMISTRY_G10_LECTURES } from './sudanHighChemistry10CurriculumData';
 
-export { SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES };
+export {
+  SUDAN_PRIMARY_ARABIC_G1_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G2_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G1_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G2_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G1_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G2_LECTURES,
+  SUDAN_PRIMARY_MATH_G1_LECTURES,
+  SUDAN_PRIMARY_MATH_G2_LECTURES,
+  SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES,
+  SUDAN_PRIMARY_HISTORY_G3_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G3_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G3_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G3_LECTURES,
+  SUDAN_PRIMARY_MATH_G3_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G3_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G4_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G4_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G4_LECTURES,
+  SUDAN_PRIMARY_MATH_G4_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G4_LECTURES,
+  SUDAN_PRIMARY_ICT_G4_LECTURES,
+  SUDAN_PRIMARY_ART_G4_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G5_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G5_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G5_LECTURES,
+  SUDAN_PRIMARY_MATH_G5_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G5_LECTURES,
+  SUDAN_PRIMARY_GEOGRAPHY_G5_LECTURES,
+  SUDAN_PRIMARY_HISTORY_G5_LECTURES,
+  SUDAN_PRIMARY_ICT_G5_LECTURES,
+  SUDAN_PRIMARY_ART_G5_LECTURES,
+  SUDAN_PRIMARY_ARABIC_G6_LECTURES,
+  SUDAN_PRIMARY_ENGLISH_G6_LECTURES,
+  SUDAN_PRIMARY_ISLAMIC_G6_LECTURES,
+  SUDAN_PRIMARY_MATH_G6_LECTURES,
+  SUDAN_PRIMARY_GEOGRAPHY_G6_LECTURES,
+  SUDAN_PRIMARY_HISTORY_G6_LECTURES,
+  SUDAN_PRIMARY_ICT_G6_LECTURES,
+  SUDAN_PRIMARY_SCIENCE_G6_LECTURES,
+  SUDAN_MIDDLE_ARABIC_G7_LECTURES,
+  SUDAN_MIDDLE_ENGLISH_G7_LECTURES,
+  SUDAN_MIDDLE_GEOGRAPHY_G7_LECTURES,
+  SUDAN_MIDDLE_HISTORY_G7_LECTURES,
+  SUDAN_MIDDLE_ICT_G7_LECTURES,
+  SUDAN_MIDDLE_ISLAMIC_G7_LECTURES,
+  SUDAN_MIDDLE_MATH_G7_LECTURES,
+  SUDAN_MIDDLE_SCIENCE_G7_LECTURES,
+  SUDAN_MIDDLE_G8_LECTURES,
+  SUDAN_MIDDLE_G9_LECTURES,
+  SUDAN_HIGH_GEOGRAPHY_G10_LECTURES,
+  SUDAN_HIGH_HISTORY_G10_LECTURES,
+  SUDAN_HIGH_CHEMISTRY_G10_LECTURES
+};
 
 // ============================================================================
 // OFFICIAL REPUBLIC OF SUDAN NATIONAL CURRICULUM (المنهج القومي السوداني المحدث)
@@ -673,13 +775,146 @@ export const SUDAN_HIGH_PHYSICS_G12_LECTURES: Lecture[] = [
 // 6. CENTRAL SUDAN CURRICULUM ROUTER (الموجّه المركزي لمناهج السودان)
 // ────────────────────────────────────────────────────────────────────────────
 export function getSudanCurriculum(subject: string, gradeLevel?: string): Lecture[] | null {
+  if (gradeLevel === 'G8') {
+    return getSudanMiddleGrade8Curriculum(subject as Subject);
+  }
+  if (gradeLevel === 'G9') {
+    const verifiedMiddleCurriculum = getSudanMiddleGrade9Curriculum(subject as Subject);
+    if (verifiedMiddleCurriculum) return verifiedMiddleCurriculum;
+  }
+  if (gradeLevel === 'G7') {
+    if (subject === 'ARABIC_LANG') return SUDAN_MIDDLE_ARABIC_G7_LECTURES;
+    if (subject === 'ENGLISH') return SUDAN_MIDDLE_ENGLISH_G7_LECTURES;
+    if (subject === 'GEOGRAPHY') return SUDAN_MIDDLE_GEOGRAPHY_G7_LECTURES;
+    if (subject === 'HISTORY') return SUDAN_MIDDLE_HISTORY_G7_LECTURES;
+    if (subject === 'COMPUTER_SCIENCE') return SUDAN_MIDDLE_ICT_G7_LECTURES;
+    if (subject === 'ISLAMIC_STUDIES') return SUDAN_MIDDLE_ISLAMIC_G7_LECTURES;
+    if (subject === 'MATH') return SUDAN_MIDDLE_MATH_G7_LECTURES;
+    if (subject === 'GENERAL_SCIENCE') return SUDAN_MIDDLE_SCIENCE_G7_LECTURES;
+  }
+  if (subject === 'PRIMARY_ARABIC' && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_ARABIC_G6_LECTURES;
+  }
+  if (subject === 'ENGLISH' && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_ENGLISH_G6_LECTURES;
+  }
+  if (subject === 'ISLAMIC_STUDIES' && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_ISLAMIC_G6_LECTURES;
+  }
+  if ((subject === 'PRIMARY_MATH' || subject === 'MATH') && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_MATH_G6_LECTURES;
+  }
+  if ((subject === 'PRIMARY_SCIENCE' || subject === 'GENERAL_SCIENCE') && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_SCIENCE_G6_LECTURES;
+  }
+  if (subject === 'GEOGRAPHY' && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_GEOGRAPHY_G6_LECTURES;
+  }
+  if (subject === 'HISTORY' && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_HISTORY_G6_LECTURES;
+  }
+  if (subject === 'COMPUTER_SCIENCE' && gradeLevel === 'G6') {
+    return SUDAN_PRIMARY_ICT_G6_LECTURES;
+  }
+  if (subject === 'PRIMARY_ARABIC' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_ARABIC_G5_LECTURES;
+  }
+  if (subject === 'ENGLISH' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_ENGLISH_G5_LECTURES;
+  }
+  if (subject === 'ISLAMIC_STUDIES' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_ISLAMIC_G5_LECTURES;
+  }
+  if ((subject === 'PRIMARY_MATH' || subject === 'MATH') && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_MATH_G5_LECTURES;
+  }
+  if (subject === 'PRIMARY_SCIENCE' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_SCIENCE_G5_LECTURES;
+  }
+  if (subject === 'GENERAL_SCIENCE' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_SCIENCE_G5_LECTURES;
+  }
+  if (subject === 'GEOGRAPHY' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_GEOGRAPHY_G5_LECTURES;
+  }
+  if (subject === 'HISTORY' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_HISTORY_G5_LECTURES;
+  }
+  if (subject === 'COMPUTER_SCIENCE' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_ICT_G5_LECTURES;
+  }
+  if (subject === 'VISUAL_ARTS' && gradeLevel === 'G5') {
+    return SUDAN_PRIMARY_ART_G5_LECTURES;
+  }
+  if (subject === 'PRIMARY_ARABIC' && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_ARABIC_G4_LECTURES;
+  }
+  if (subject === 'PRIMARY_ARABIC' && gradeLevel === 'G3') {
+    return SUDAN_PRIMARY_ARABIC_G3_LECTURES;
+  }
+  if (subject === 'PRIMARY_ARABIC' && gradeLevel === 'G1') {
+    return SUDAN_PRIMARY_ARABIC_G1_LECTURES;
+  }
+  if (subject === 'PRIMARY_ARABIC' && gradeLevel === 'G2') {
+    return SUDAN_PRIMARY_ARABIC_G2_LECTURES;
+  }
+  if (subject === 'ENGLISH' && gradeLevel === 'G1') {
+    return SUDAN_PRIMARY_ENGLISH_G1_LECTURES;
+  }
+  if (subject === 'ENGLISH' && gradeLevel === 'G2') {
+    return SUDAN_PRIMARY_ENGLISH_G2_LECTURES;
+  }
+  if (subject === 'ENGLISH' && gradeLevel === 'G3') {
+    return SUDAN_PRIMARY_ENGLISH_G3_LECTURES;
+  }
+  if (subject === 'ENGLISH' && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_ENGLISH_G4_LECTURES;
+  }
+  if (subject === 'ISLAMIC_STUDIES' && gradeLevel === 'G1') {
+    return SUDAN_PRIMARY_ISLAMIC_G1_LECTURES;
+  }
+  if (subject === 'ISLAMIC_STUDIES' && gradeLevel === 'G2') {
+    return SUDAN_PRIMARY_ISLAMIC_G2_LECTURES;
+  }
+  if (subject === 'ISLAMIC_STUDIES' && gradeLevel === 'G3') {
+    return SUDAN_PRIMARY_ISLAMIC_G3_LECTURES;
+  }
+  if (subject === 'ISLAMIC_STUDIES' && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_ISLAMIC_G4_LECTURES;
+  }
+  if ((subject === 'PRIMARY_MATH' || subject === 'MATH') && gradeLevel === 'G1') {
+    return SUDAN_PRIMARY_MATH_G1_LECTURES;
+  }
+  if ((subject === 'PRIMARY_MATH' || subject === 'MATH') && gradeLevel === 'G2') {
+    return SUDAN_PRIMARY_MATH_G2_LECTURES;
+  }
+  if ((subject === 'PRIMARY_MATH' || subject === 'MATH') && gradeLevel === 'G3') {
+    return SUDAN_PRIMARY_MATH_G3_LECTURES;
+  }
+  if ((subject === 'PRIMARY_MATH' || subject === 'MATH') && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_MATH_G4_LECTURES;
+  }
+  if (subject === 'PRIMARY_SCIENCE' && gradeLevel === 'G3') {
+    return SUDAN_PRIMARY_SCIENCE_G3_LECTURES;
+  }
+  if (subject === 'PRIMARY_SCIENCE' && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_SCIENCE_G4_LECTURES;
+  }
   if (subject === 'PRIMARY_SCIENCE' && (gradeLevel === 'G6' || !gradeLevel)) {
     return SUDAN_PRIMARY_SCIENCE_G6_LECTURES;
   }
   if (subject === 'GENERAL_SCIENCE') {
+    if (gradeLevel === 'G3') return SUDAN_PRIMARY_SCIENCE_G3_LECTURES;
+    if (gradeLevel === 'G4') return SUDAN_PRIMARY_SCIENCE_G4_LECTURES;
     if (gradeLevel === 'G6') return SUDAN_PRIMARY_SCIENCE_G6_LECTURES;
     if (gradeLevel === 'G9') return SUDAN_MIDDLE_SCIENCE_G9_LECTURES;
     if (gradeLevel === 'G8') return SUDAN_MIDDLE_SCIENCE_G8_LECTURES;
+  }
+  if (subject === 'COMPUTER_SCIENCE' && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_ICT_G4_LECTURES;
+  }
+  if (subject === 'VISUAL_ARTS' && gradeLevel === 'G4') {
+    return SUDAN_PRIMARY_ART_G4_LECTURES;
   }
   if (subject === 'MATH') {
     if (gradeLevel === 'G9') return SUDAN_MIDDLE_MATH_G9_LECTURES;
@@ -695,6 +930,9 @@ export function getSudanCurriculum(subject: string, gradeLevel?: string): Lectur
   }
   if (subject === 'HISTORY' && (gradeLevel === 'G10' || !gradeLevel)) {
     return SUDAN_HIGH_HISTORY_G10_LECTURES;
+  }
+  if (subject === 'CHEMISTRY' && gradeLevel === 'G10') {
+    return SUDAN_HIGH_CHEMISTRY_G10_LECTURES;
   }
   return null;
 }
