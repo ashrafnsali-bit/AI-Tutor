@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import type { Language, Lecture } from '../types';
+import React, { useState, useEffect } from 'react';
+import type { Language, Lecture, StudentProfile } from '../types';
+import { getActiveUserAccount } from '../services/database';
 import { 
   Mail, 
   Send, 
@@ -17,25 +18,78 @@ interface ContactModalProps {
   onClose: () => void;
   language?: Language;
   currentLecture?: Lecture;
+  profile?: StudentProfile;
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({
   isOpen,
   onClose,
   language = 'ar',
-  currentLecture
+  currentLecture,
+  profile
 }) => {
   const isEn = language === 'en';
   const recipientEmail = 'ashraf.nsali@gmail.com';
 
   const [name, setName] = useState('');
   const [senderEmail, setSenderEmail] = useState('');
+  const [isAutoFilled, setIsAutoFilled] = useState(false);
   const [category, setCategory] = useState<'feedback' | 'inquiry' | 'feature' | 'bug' | 'other'>('feedback');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedDraft, setCopiedDraft] = useState(false);
   const [isSent, setIsSent] = useState(false);
+
+  // Automatically fetch logged-in user name and email from central database or profile
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const isInvalid = (val?: string) =>
+      !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+    const cleanName = (val?: string) => (!isInvalid(val) ? val!.trim() : '');
+
+    const applyUserData = (u: any) => {
+      if (!u) return;
+      const resolvedName = isEn
+        ? (cleanName(u.nameEn) || cleanName(u.name) || cleanName(u.nameAr))
+        : (cleanName(u.nameAr) || cleanName(u.name) || cleanName(u.nameEn));
+
+      if (resolvedName) {
+        setName((prev) => (!prev || isInvalid(prev) ? resolvedName : prev));
+        setIsAutoFilled(true);
+      }
+
+      const validEmail = (u.email && u.email.includes('@') && !u.email.endsWith('@student.ai'))
+        ? u.email.trim()
+        : (u.parentEmail && u.parentEmail.includes('@') ? u.parentEmail.trim() : '');
+
+      if (validEmail) {
+        setSenderEmail((prev) => (!prev ? validEmail : prev));
+        setIsAutoFilled(true);
+      }
+    };
+
+    // 1. Check profile prop
+    if (profile) {
+      applyUserData(profile);
+    }
+
+    // 2. Check localStorage
+    try {
+      const activeStored = localStorage.getItem('TEACHER_AI_ACTIVE_USER');
+      if (activeStored) {
+        applyUserData(JSON.parse(activeStored));
+      }
+    } catch {}
+
+    // 3. Check central database
+    getActiveUserAccount().then((user) => {
+      if (user) {
+        applyUserData(user);
+      }
+    }).catch(() => {});
+  }, [isOpen, isEn, profile]);
 
   if (!isOpen) return null;
 
@@ -159,12 +213,41 @@ export const ContactModal: React.FC<ContactModalProps> = ({
           </div>
         )}
 
+        {/* Logged in User Auto-fill Badge */}
+        {isAutoFilled && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.45rem 0.85rem',
+            background: 'rgba(16, 185, 129, 0.12)',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
+            borderRadius: '10px',
+            color: '#34d399',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            marginBottom: '0.85rem'
+          }}>
+            <CheckCircle2 size={15} style={{ flexShrink: 0 }} />
+            <span>
+              {isEn
+                ? 'Verified Account: Name & Email automatically loaded from database.'
+                : 'حساب مسجل وموثق: تم جلب الاسم والبريد الإلكتروني تلقائياً من قاعدة البيانات.'}
+            </span>
+          </div>
+        )}
+
         {/* Form */}
         <form onSubmit={handleSendEmail} className="contact-form">
           <div className="contact-form-grid">
             <div className="contact-form-group">
-              <label className="contact-form-label">
-                {isEn ? 'Your Name' : 'اسمك الكريم'}
+              <label className="contact-form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>{isEn ? 'Your Name' : 'اسمك الكريم'}</span>
+                {name && isAutoFilled && (
+                  <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
+                    {isEn ? '✓ Verified' : '✓ معتمد'}
+                  </span>
+                )}
               </label>
               <input
                 type="text"
@@ -176,8 +259,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({
             </div>
 
             <div className="contact-form-group">
-              <label className="contact-form-label">
-                {isEn ? 'Your Email (for replies)' : 'بريدك الإلكتروني (للرد عليك)'}
+              <label className="contact-form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>{isEn ? 'Your Email (for replies)' : 'بريدك الإلكتروني (للرد عليك)'}</span>
+                {senderEmail && isAutoFilled && (
+                  <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
+                    {isEn ? '✓ Verified' : '✓ معتمد'}
+                  </span>
+                )}
               </label>
               <input
                 type="email"

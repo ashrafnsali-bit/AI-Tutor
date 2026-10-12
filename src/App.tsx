@@ -1358,6 +1358,7 @@ export function App() {
         onClose={() => setIsContactOpen(false)}
         language={profile.language}
         currentLecture={activeLecture}
+        profile={profile}
       />
 
       {/* First-Time Welcome & Learning Roadmap Onboarding Modal */}
