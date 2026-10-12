@@ -609,11 +609,14 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const guestLabel = isEn ? 'Guest Student' : 'طالب زائر';
-    const cleanName = (val?: string) => (val && val !== 'عمر التميمي' && val !== 'احمد علي' && val !== 'Ahmed Ali') ? val : '';
+    const isInvalid = (val?: string) =>
+      !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+    const cleanName = (val?: string) => (!isInvalid(val) ? val!.trim() : '');
 
-    const finalName = cleanName(activeDbUser?.name) || cleanName(profile.name) || guestLabel;
-    const finalNameAr = cleanName(activeDbUser?.nameAr) || cleanName(profile.nameAr) || finalName;
-    const finalNameEn = cleanName(activeDbUser?.nameEn) || cleanName(profile.nameEn) || (isEn ? finalName : 'Guest Student');
+    const resolvedRealName = cleanName(activeDbUser?.name) || cleanName(profile.name) || '';
+    const finalName = resolvedRealName || guestLabel;
+    const finalNameAr = cleanName(activeDbUser?.nameAr) || cleanName(profile.nameAr) || resolvedRealName || (isEn ? 'Guest Student' : 'طالب زائر');
+    const finalNameEn = cleanName(activeDbUser?.nameEn) || cleanName(profile.nameEn) || resolvedRealName || 'Guest Student';
     const finalId = activeDbUser?.id || profile.id;
 
     onSave({
@@ -645,8 +648,12 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
 
   const isMinorUnder13 = formData.age > 0 && formData.age < 13;
   const guestLabel = isEn ? 'Guest Student' : 'طالب زائر';
-  const cleanName = (val?: string) => (val && val !== 'عمر التميمي' && val !== 'احمد علي' && val !== 'Ahmed Ali') ? val : '';
-  const officialStudentName = cleanName(activeDbUser?.name) || cleanName(profile.name) || guestLabel;
+  const isInvalid = (val?: string) =>
+    !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+  const cleanName = (val?: string) => (!isInvalid(val) ? val!.trim() : '');
+  const officialStudentName = isEn
+    ? (cleanName(activeDbUser?.nameEn) || cleanName(activeDbUser?.name) || cleanName(profile.nameEn) || cleanName(profile.name) || guestLabel)
+    : (cleanName(activeDbUser?.nameAr) || cleanName(activeDbUser?.name) || cleanName(profile.nameAr) || cleanName(profile.name) || guestLabel);
   const officialStudentId = activeDbUser?.username ? `@${activeDbUser.username}` : (activeDbUser?.id || profile.id || '@student');
 
   return (

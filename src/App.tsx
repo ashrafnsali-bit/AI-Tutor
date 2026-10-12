@@ -481,19 +481,26 @@ export function App() {
   // Check active user from database on startup
   useEffect(() => {
     getActiveUserAccount().then((user) => {
-      if (user && user.name && user.name !== 'عمر التميمي' && user.name !== 'احمد علي' && user.name !== 'Ahmed Ali') {
+      const isInvalid = (val?: string) =>
+        !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+      if (user && !isInvalid(user.name)) {
         setIsLoggedIn(true);
+        const resolvedNameAr = (!isInvalid(user.nameAr)) ? user.nameAr! : user.name;
+        const resolvedNameEn = (!isInvalid(user.nameEn)) ? user.nameEn! : user.name;
+        const normalized = {
+          ...user,
+          name: user.name,
+          nameAr: resolvedNameAr,
+          nameEn: resolvedNameEn
+        };
         setProfile((prev) => ({
           ...prev,
-          ...user,
-          id: user.id || prev.id,
-          name: user.name,
-          nameAr: user.nameAr || user.name,
-          nameEn: user.nameEn || user.name
+          ...normalized,
+          id: user.id || prev.id
         }));
         try {
-          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
-          localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(user));
+          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(normalized));
+          localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(normalized));
         } catch {}
         setCurrentView('workspace');
         loadUserSubjectLectures(
@@ -731,21 +738,36 @@ export function App() {
     const guestLabelEn = 'Guest Student';
     const isEn = profile.language === 'en';
 
-    const cleanName = (val?: string) => (val && val !== 'عمر التميمي' && val !== 'احمد علي' && val !== 'Ahmed Ali') ? val : '';
+    const isInvalid = (val?: string) =>
+      !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+    const cleanName = (val?: string) => (!isInvalid(val) ? val!.trim() : '');
 
-    const officialName = cleanName(activeDb?.name)
+    const resolvedRealName = cleanName(activeDb?.name)
+      || cleanName(activeDb?.nameAr)
       || cleanName(updated.name)
+      || cleanName(updated.nameAr)
       || cleanName(profile.name)
-      || (isEn ? guestLabelEn : guestLabelAr);
+      || cleanName(profile.nameAr)
+      || '';
+
+    const officialName = resolvedRealName || (isEn ? guestLabelEn : guestLabelAr);
 
     const officialNameAr = cleanName(activeDb?.nameAr)
+      || cleanName(activeDb?.name)
       || cleanName(updated.nameAr)
+      || cleanName(updated.name)
       || cleanName(profile.nameAr)
-      || officialName;
+      || cleanName(profile.name)
+      || resolvedRealName
+      || (isEn ? guestLabelEn : guestLabelAr);
 
     const officialNameEn = cleanName(activeDb?.nameEn)
+      || cleanName(activeDb?.name)
       || cleanName(updated.nameEn)
+      || cleanName(updated.name)
       || cleanName(profile.nameEn)
+      || cleanName(profile.name)
+      || resolvedRealName
       || guestLabelEn;
 
     const officialId = activeDb?.id || profile.id || updated.id;
@@ -913,6 +935,10 @@ export function App() {
     localStorage.setItem('TEACHER_AI_LAST_LECTURE_ID', chosenLecId);
 
     setProfile(sanitized);
+    try {
+      localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(sanitized));
+      localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(sanitized));
+    } catch {}
     updateUserAccount(sanitized.id, sanitized).catch(() => {});
   };
 

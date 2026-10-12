@@ -410,9 +410,20 @@ export async function registerUserAccount(
     studentData = profileData || {};
   }
 
+  const isInvalidName = (val?: string) =>
+    !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+
+  const rawName = studentData.name || (typeof usernameOrData === 'object' ? usernameOrData.name : undefined) || '';
+  const validName = (!isInvalidName(rawName)) ? rawName.trim() : '';
+  const validNameAr = (!isInvalidName(studentData.nameAr)) ? studentData.nameAr!.trim() : (validName || 'طالب مسجل');
+  const validNameEn = (!isInvalidName(studentData.nameEn)) ? studentData.nameEn!.trim() : (validName || 'Student');
+
   const newUser: UserAccount = {
     ...INITIAL_STUDENT_PROFILE,
     ...studentData,
+    name: validName || validNameAr,
+    nameAr: validNameAr,
+    nameEn: validNameEn,
     id: `usr-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     username: cleanUsername,
     email: cleanEmail,
@@ -543,6 +554,22 @@ export async function loginUserAccount(identifier: string, password?: string): P
 }
 
 export async function getActiveUserAccount(): Promise<UserAccount | null> {
+  const isInvalid = (val?: string) =>
+    !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+
+  const normalizeAccount = (u: UserAccount): UserAccount => {
+    const rawName = u.name || '';
+    const validName = (!isInvalid(rawName)) ? rawName.trim() : '';
+    const validNameAr = (!isInvalid(u.nameAr)) ? u.nameAr!.trim() : (validName || 'طالب مسجل');
+    const validNameEn = (!isInvalid(u.nameEn)) ? u.nameEn!.trim() : (validName || 'Student');
+    return {
+      ...u,
+      name: validName || validNameAr,
+      nameAr: validNameAr,
+      nameEn: validNameEn
+    };
+  };
+
   try {
     const db = await getDB();
     const rec = await new Promise<{ key: string; userId: string; user: UserAccount } | null>((resolve) => {
@@ -551,14 +578,13 @@ export async function getActiveUserAccount(): Promise<UserAccount | null> {
       req.onsuccess = () => resolve(req.result || null);
       req.onerror = () => resolve(null);
     });
-    if (rec?.user) {
-      if (rec.user.name && rec.user.name !== 'عمر التميمي') {
-        try {
-          localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(rec.user));
-          localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(rec.user));
-        } catch {}
-        return rec.user;
-      }
+    if (rec?.user && !isInvalid(rec.user.name)) {
+      const normalized = normalizeAccount(rec.user);
+      try {
+        localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(normalized));
+        localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(normalized));
+      } catch {}
+      return normalized;
     }
   } catch { /* ignore */ }
 
@@ -566,8 +592,8 @@ export async function getActiveUserAccount(): Promise<UserAccount | null> {
   if (stored) {
     try {
       const parsed = JSON.parse(stored) as UserAccount;
-      if (parsed && parsed.id && parsed.name && parsed.name !== 'عمر التميمي') {
-        return parsed;
+      if (parsed && parsed.id && !isInvalid(parsed.name)) {
+        return normalizeAccount(parsed);
       }
     } catch { /* ignore */ }
   }
@@ -576,8 +602,8 @@ export async function getActiveUserAccount(): Promise<UserAccount | null> {
   if (profileStored) {
     try {
       const parsed = JSON.parse(profileStored) as UserAccount;
-      if (parsed && parsed.id && parsed.name && parsed.name !== 'عمر التميمي') {
-        return parsed;
+      if (parsed && parsed.id && !isInvalid(parsed.name)) {
+        return normalizeAccount(parsed);
       }
     } catch { /* ignore */ }
   }
@@ -586,6 +612,22 @@ export async function getActiveUserAccount(): Promise<UserAccount | null> {
 }
 
 export async function updateUserAccount(id: string, updates: Partial<UserAccount>): Promise<UserAccount> {
+  const isInvalid = (val?: string) =>
+    !val || ['عمر التميمي', 'احمد علي', 'Ahmed Ali', 'طالب زائر', 'Guest Student', 'طالب مسجل', 'Registered Student'].includes(val.trim());
+
+  const normalizeAccount = (u: UserAccount): UserAccount => {
+    const rawName = u.name || '';
+    const validName = (!isInvalid(rawName)) ? rawName.trim() : '';
+    const validNameAr = (!isInvalid(u.nameAr)) ? u.nameAr!.trim() : (validName || 'طالب مسجل');
+    const validNameEn = (!isInvalid(u.nameEn)) ? u.nameEn!.trim() : (validName || 'Student');
+    return {
+      ...u,
+      name: validName || validNameAr,
+      nameAr: validNameAr,
+      nameEn: validNameEn
+    };
+  };
+
   try {
     const db = await getDB();
     const updated = await new Promise<UserAccount>((resolve, reject) => {
@@ -595,7 +637,7 @@ export async function updateUserAccount(id: string, updates: Partial<UserAccount
       req.onsuccess = () => {
         const user = req.result as UserAccount;
         if (!user) { reject(new Error('User not found')); return; }
-        const merged = { ...user, ...updates };
+        const merged = normalizeAccount({ ...user, ...updates });
         store.put(merged);
         tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: id, user: merged });
         resolve(merged);
@@ -611,11 +653,11 @@ export async function updateUserAccount(id: string, updates: Partial<UserAccount
     const idx = users.findIndex(u => u.id === id);
     let updated: UserAccount;
     if (idx !== -1) {
-      updated = { ...users[idx], ...updates };
+      updated = normalizeAccount({ ...users[idx], ...updates });
       users[idx] = updated;
       localStorage.setItem('TEACHER_AI_USERS_DB', JSON.stringify(users));
     } else {
-      updated = { ...INITIAL_STUDENT_PROFILE, username: 'student', email: 'student@example.com', createdAt: Date.now(), lastLoginAt: Date.now(), ...updates };
+      updated = normalizeAccount({ ...INITIAL_STUDENT_PROFILE, username: 'student', email: 'student@example.com', createdAt: Date.now(), lastLoginAt: Date.now(), ...updates });
     }
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(updated));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(updated));
