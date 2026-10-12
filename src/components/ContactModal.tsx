@@ -10,7 +10,10 @@ import {
   Sparkles, 
   ExternalLink,
   HeartHandshake,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  RotateCcw
 } from 'lucide-react';
 
 interface ContactModalProps {
@@ -39,7 +42,14 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const [message, setMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedDraft, setCopiedDraft] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMeta, setSuccessMeta] = useState<{
+    subject: string;
+    sender: string;
+    date: string;
+  } | null>(null);
 
   // Automatically fetch logged-in user name and email from central database or profile
   useEffect(() => {
@@ -108,32 +118,138 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   };
 
   const getFormattedEmailBody = () => {
+    const categoryLabel = categories.find(c => c.id === category)?.labelAr;
     const lectureContext = currentLecture 
       ? `\n\n--- السياق التعليمي ---\nالمحاضرة: ${currentLecture.titleAr} (${currentLecture.id})\nالمرحلة: ${currentLecture.gradeLevelNameAr}`
       : '';
     
-    return `اسم المرسل: ${name || 'زائر للمنصة'}\nالبريد الإلكتروني للرد: ${senderEmail || 'غير محدد'}\nنوع الملاحظة: ${categories.find(c => c.id === category)?.labelAr}\n\nنص الرسالة:\n${message}${lectureContext}\n\n---\nتم الإرسال عبر منصة المعلم الذكي (AI Tutor Platform)`;
+    return `اسم المرسل: ${name.trim() || 'زائر للمنصة'}\nالبريد الإلكتروني للرد: ${senderEmail.trim() || 'غير محدد'}\nنوع الملاحظة: ${categoryLabel}\n\nنص الرسالة:\n${message.trim()}${lectureContext}\n\n---\nتم الإرسال عبر منصة المعلم الذكي (AI Tutor Platform)`;
   };
 
-  const handleSendEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-    const finalSubject = encodeURIComponent(subject ? `[منصة المعلم الذكي] ${subject}` : `[منصة المعلم الذكي] رسالة من ${name || 'زائر'}`);
-    const finalBody = encodeURIComponent(getFormattedEmailBody());
-    
-    const mailtoUrl = `mailto:${recipientEmail}?subject=${finalSubject}&body=${finalBody}`;
-    window.open(mailtoUrl, '_blank');
-    
-    setIsSent(true);
-    setTimeout(() => {
-      setIsSent(false);
-      onClose();
-    }, 2000);
+  const getEmailSubject = () => {
+    return subject.trim() 
+      ? `[منصة المعلم الذكي] ${subject.trim()}` 
+      : `[منصة المعلم الذكي] رسالة من ${name.trim() || (isEn ? 'Visitor' : 'زائر')}`;
+  };
+
+  const getGmailComposeUrl = () => {
+    const sub = encodeURIComponent(getEmailSubject());
+    const body = encodeURIComponent(getFormattedEmailBody());
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${sub}&body=${body}`;
+  };
+
+  const getMailtoUrl = () => {
+    const sub = encodeURIComponent(getEmailSubject());
+    const body = encodeURIComponent(getFormattedEmailBody());
+    return `mailto:${recipientEmail}?subject=${sub}&body=${body}`;
   };
 
   const handleCopyDraft = () => {
     navigator.clipboard.writeText(getFormattedEmailBody());
     setCopiedDraft(true);
     setTimeout(() => setCopiedDraft(false), 2500);
+  };
+
+  const handleResetForm = () => {
+    setIsSuccess(false);
+    setErrorMessage(null);
+    setSubject('');
+    setMessage('');
+  };
+
+  const handleSendEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim() || isSending) return;
+
+    setIsSending(true);
+    setErrorMessage(null);
+
+    const categoryObj = categories.find((c) => c.id === category);
+    const categoryLabel = isEn ? categoryObj?.labelEn : categoryObj?.labelAr;
+    const emailSubject = getEmailSubject();
+    const lectureContext = currentLecture
+      ? `المحاضرة: ${currentLecture.titleAr} (${currentLecture.id}) - المرحلة: ${currentLecture.gradeLevelNameAr}`
+      : 'الصفحة العامة للمنصة';
+
+    const timestampStr = new Date().toLocaleString(isEn ? 'en-US' : 'ar-SA');
+
+    // 1. Archive in local storage so message history is safely kept
+    try {
+      const STORAGE_KEY = 'TEACHER_AI_CONTACT_MESSAGES';
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const list = raw ? JSON.parse(raw) : [];
+      list.unshift({
+        id: `contact-${Date.now()}`,
+        name: name.trim() || (isEn ? 'Platform Visitor' : 'زائر للمنصة'),
+        email: senderEmail.trim() || (isEn ? 'Not specified' : 'غير محدد'),
+        category,
+        subject: subject.trim() || (isEn ? 'No subject' : 'بدون عنوان'),
+        message: message.trim(),
+        lectureContext,
+        timestamp: Date.now(),
+        date: timestampStr
+      });
+      if (list.length > 50) list.length = 50;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    } catch {}
+
+    // 2. HTTP Dispatch to FormSubmit AJAX endpoint
+    let delivered = false;
+    let failureDetail = '';
+
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: emailSubject,
+          _replyto: senderEmail.trim() || recipientEmail,
+          _template: 'table',
+          _captcha: 'false',
+          'اسم المرسل': name.trim() || 'زائر للمنصة',
+          'البريد الإلكتروني للرد': senderEmail.trim() || 'غير محدد',
+          'نوع الملاحظة': categoryLabel,
+          'عنوان الرسالة': subject.trim() || 'بدون عنوان',
+          'تفاصيل الرسالة': message.trim(),
+          'السياق التعليمي': lectureContext,
+          'تاريخ ووقت الإرسال': timestampStr
+        })
+      });
+
+      if (res.ok) {
+        const json = await res.json().catch(() => ({}));
+        if (json?.success === true || json?.success === 'true') {
+          delivered = true;
+        } else if (json?.message) {
+          failureDetail = json.message;
+        }
+      } else {
+        failureDetail = `HTTP ${res.status}`;
+      }
+    } catch (err: any) {
+      failureDetail = err?.message || 'Network connection failed';
+    }
+
+    setIsSending(false);
+
+    if (delivered) {
+      setIsSuccess(true);
+      setSuccessMeta({
+        subject: emailSubject,
+        sender: name.trim() || (isEn ? 'Visitor' : 'زائر للمنصة'),
+        date: timestampStr
+      });
+    } else {
+      setErrorMessage(
+        failureDetail ||
+        (isEn
+          ? 'Direct delivery server was unreachable. You can still send instantly via Gmail below!'
+          : 'تعذر الاتصال المباشر بخادم الإرسال الخارجي. يمكنك إرسال الرسالة فوراً عبر بريد Gmail بضغطة زر أدناه!')
+      );
+    }
   };
 
   return (
@@ -167,7 +283,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
           <div className="contact-direct-info">
             <span className="contact-direct-label">
               <HeartHandshake size={15} className="text-pink-400" />
-              {isEn ? 'Direct Contact Email:' : 'البريد الإلكتروني المباشر للتواصل:'}
+              {isEn ? 'Direct Admin Email:' : 'البريد الإلكتروني المباشر للإدارة:'}
             </span>
             <span className="contact-direct-email">{recipientEmail}</span>
           </div>
@@ -191,14 +307,24 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               )}
             </button>
             <a 
-              href={`mailto:${recipientEmail}`} 
+              href={getGmailComposeUrl()} 
+              className="btn-contact-action btn-open-gmail"
+              target="_blank" 
+              rel="noreferrer"
+              title={isEn ? "Open in Gmail Web" : "فتح في بريد Gmail"}
+            >
+              <ExternalLink size={14} />
+              <span>{isEn ? 'Gmail' : 'بريد Gmail'}</span>
+            </a>
+            <a 
+              href={getMailtoUrl()} 
               className="btn-contact-action btn-open-mail"
               target="_blank" 
               rel="noreferrer"
               title={isEn ? "Open in Mail App" : "فتح تطبيق البريد"}
             >
               <ExternalLink size={14} />
-              <span>{isEn ? 'Open Mail' : 'إرسال مباشر'}</span>
+              <span>{isEn ? 'Mail App' : 'تطبيق البريد'}</span>
             </a>
           </div>
         </div>
@@ -220,13 +346,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.45rem 0.85rem',
+            margin: '0.75rem 1.5rem 0',
             background: 'rgba(16, 185, 129, 0.12)',
             border: '1px solid rgba(16, 185, 129, 0.3)',
             borderRadius: '10px',
             color: '#34d399',
             fontSize: '0.8rem',
-            fontWeight: 600,
-            marginBottom: '0.85rem'
+            fontWeight: 600
           }}>
             <CheckCircle2 size={15} style={{ flexShrink: 0 }} />
             <span>
@@ -237,132 +363,236 @@ export const ContactModal: React.FC<ContactModalProps> = ({
           </div>
         )}
 
-        {/* Form */}
-        <form onSubmit={handleSendEmail} className="contact-form">
-          <div className="contact-form-grid">
-            <div className="contact-form-group">
-              <label className="contact-form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>{isEn ? 'Your Name' : 'اسمك الكريم'}</span>
-                {name && isAutoFilled && (
-                  <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
-                    {isEn ? '✓ Verified' : '✓ معتمد'}
-                  </span>
-                )}
-              </label>
-              <input
-                type="text"
-                className="contact-form-input"
-                placeholder={isEn ? 'e.g. Sarah Ahmad' : 'مثال: أحمد عبد الله'}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+        {/* Success View */}
+        {isSuccess ? (
+          <div className="contact-success-panel">
+            <div style={{
+              width: '60px',
+              height: '60px',
+              borderRadius: '50%',
+              background: 'rgba(16, 185, 129, 0.15)',
+              border: '2px solid rgba(16, 185, 129, 0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#10b981'
+            }}>
+              <CheckCircle2 size={36} />
             </div>
 
-            <div className="contact-form-group">
-              <label className="contact-form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>{isEn ? 'Your Email (for replies)' : 'بريدك الإلكتروني (للرد عليك)'}</span>
-                {senderEmail && isAutoFilled && (
-                  <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
-                    {isEn ? '✓ Verified' : '✓ معتمد'}
-                  </span>
-                )}
-              </label>
-              <input
-                type="email"
-                className="contact-form-input"
-                placeholder={isEn ? 'yourname@example.com' : 'بريدك الإلكتروني الشخصي'}
-                value={senderEmail}
-                onChange={(e) => setSenderEmail(e.target.value)}
-              />
+            <div>
+              <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#f8fafc', margin: '0 0 0.35rem' }}>
+                {isEn ? 'Message Delivered Successfully!' : 'تم إرسال رسالتك وملاحظتك بنجاح ومباشرة!'}
+              </h4>
+              <p style={{ fontSize: '0.86rem', color: '#94a3b8', margin: 0, maxWidth: '440px', lineHeight: 1.5 }}>
+                {isEn
+                  ? `Your message was delivered to administration (${recipientEmail}) and safely recorded in platform storage.`
+                  : `تم إرسال الرسالة إلى بريد إدارة المنصة (${recipientEmail}) وتسجيلها بنجاح في سجلات المنصة.`}
+              </p>
+            </div>
+
+            <div className="contact-success-details">
+              <div><strong>{isEn ? 'Sender:' : 'المُرسل:'}</strong> {successMeta?.sender}</div>
+              {senderEmail && <div><strong>{isEn ? 'Reply Email:' : 'بريد الرد:'}</strong> {senderEmail}</div>}
+              <div><strong>{isEn ? 'Subject:' : 'الموضوع:'}</strong> {successMeta?.subject}</div>
+              <div><strong>{isEn ? 'Time:' : 'التوقيت:'}</strong> {successMeta?.date}</div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
+              <a
+                href={getGmailComposeUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-contact-action btn-open-gmail"
+                style={{ padding: '0.65rem 1.1rem', fontSize: '0.86rem' }}
+                title={isEn ? "Open copy in Gmail" : "فتح نسخة في Gmail"}
+              >
+                <ExternalLink size={15} />
+                <span>{isEn ? 'Open personal copy in Gmail' : 'فتح نسخة في Gmail للتأكيد الشخصي'}</span>
+              </a>
+
+              <button
+                type="button"
+                className="btn-draft-copy"
+                onClick={handleResetForm}
+              >
+                <RotateCcw size={15} />
+                <span>{isEn ? 'Send Another Message' : 'إرسال ملاحظة أخرى'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="btn-contact-submit"
+                onClick={onClose}
+              >
+                <Check size={16} />
+                <span>{isEn ? 'Done & Close' : 'تم وإغلاق'}</span>
+              </button>
             </div>
           </div>
+        ) : (
+          <>
+            {/* Error / Fallback Banner */}
+            {errorMessage && (
+              <div className="contact-error-banner">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}>
+                  <AlertCircle size={18} className="text-red-400" />
+                  <span>{isEn ? 'Notice:' : 'تنبيه الاتصال بالخادم المباشر:'}</span>
+                </div>
+                <div style={{ fontSize: '0.82rem', lineHeight: 1.5 }}>
+                  {errorMessage}
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
+                  <a
+                    href={getGmailComposeUrl()}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-contact-action btn-open-gmail"
+                  >
+                    <ExternalLink size={14} />
+                    <span>{isEn ? 'Send via Gmail Web now' : 'إرسال عبر بريد Gmail الآن (مضمون 100%)'}</span>
+                  </a>
+                  <a
+                    href={getMailtoUrl()}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-contact-action btn-open-mail"
+                  >
+                    <ExternalLink size={14} />
+                    <span>{isEn ? 'Open Mail App' : 'فتح تطبيق البريد'}</span>
+                  </a>
+                </div>
+              </div>
+            )}
 
-          <div className="contact-form-group">
-            <label className="contact-form-label">
-              {isEn ? 'Feedback Type' : 'نوع الملاحظة أو الاستفسار'}
-            </label>
-            <select
-              className="contact-form-select"
-              value={category}
-              onChange={(e) => setCategory(e.target.value as any)}
-            >
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {isEn ? c.labelEn : c.labelAr}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* Form */}
+            <form onSubmit={handleSendEmail} className="contact-form">
+              <div className="contact-form-grid">
+                <div className="contact-form-group">
+                  <label className="contact-form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span>{isEn ? 'Your Name' : 'اسمك الكريم'}</span>
+                    {name && isAutoFilled && (
+                      <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
+                        {isEn ? '✓ Verified' : '✓ معتمد'}
+                      </span>
+                    )}
+                  </label>
+                  <input
+                    type="text"
+                    className="contact-form-input"
+                    placeholder={isEn ? 'e.g. Sarah Ahmad' : 'مثال: أحمد عبد الله'}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
 
-          <div className="contact-form-group">
-            <label className="contact-form-label">
-              {isEn ? 'Subject' : 'عنوان الرسالة / الملاحظة'}
-            </label>
-            <input
-              type="text"
-              className="contact-form-input"
-              placeholder={isEn ? 'Brief summary of your note' : 'ملخص سريع لملاحظتك'}
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </div>
+                <div className="contact-form-group">
+                  <label className="contact-form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span>{isEn ? 'Your Email (for replies)' : 'بريدك الإلكتروني (للرد عليك)'}</span>
+                    {senderEmail && isAutoFilled && (
+                      <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
+                        {isEn ? '✓ Verified' : '✓ معتمد'}
+                      </span>
+                    )}
+                  </label>
+                  <input
+                    type="email"
+                    className="contact-form-input"
+                    placeholder={isEn ? 'yourname@example.com' : 'بريدك الإلكتروني الشخصي'}
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
+                  />
+                </div>
+              </div>
 
-          <div className="contact-form-group">
-            <label className="contact-form-label">
-              {isEn ? 'Message Details' : 'تفاصيل الملاحظة أو الاستفسار'}
-            </label>
-            <textarea
-              className="contact-form-textarea"
-              rows={4}
-              required
-              placeholder={isEn 
-                ? 'Please describe your feedback, question, or note in detail...' 
-                : 'اكتب تفاصيل ملاحظتك أو استفسارك هنا بكل وضوح...'}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </div>
+              <div className="contact-form-group">
+                <label className="contact-form-label">
+                  {isEn ? 'Feedback Type' : 'نوع الملاحظة أو الاستفسار'}
+                </label>
+                <select
+                  className="contact-form-select"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as any)}
+                >
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {isEn ? c.labelEn : c.labelAr}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Action Buttons */}
-          <div className="contact-form-footer">
-            <button
-              type="button"
-              className="btn-draft-copy"
-              onClick={handleCopyDraft}
-              disabled={!message.trim()}
-            >
-              {copiedDraft ? (
-                <>
-                  <Check size={16} className="text-emerald-400" />
-                  <span>{isEn ? 'Draft Copied!' : 'تم نسخ نص الرسالة!'}</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={16} />
-                  <span>{isEn ? 'Copy Draft Text' : 'نسخ نص الرسالة'}</span>
-                </>
-              )}
-            </button>
+              <div className="contact-form-group">
+                <label className="contact-form-label">
+                  {isEn ? 'Subject' : 'عنوان الرسالة / الملاحظة'}
+                </label>
+                <input
+                  type="text"
+                  className="contact-form-input"
+                  placeholder={isEn ? 'Brief summary of your note' : 'ملخص سريع لملاحظتك'}
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </div>
 
-            <button
-              type="submit"
-              className="btn-contact-submit"
-              disabled={!message.trim() || isSent}
-            >
-              {isSent ? (
-                <>
-                  <CheckCircle2 size={18} className="text-emerald-400" />
-                  <span>{isEn ? 'Opening Email...' : 'جاري فتح البريد...'}</span>
-                </>
-              ) : (
-                <>
-                  <Send size={18} />
-                  <span>{isEn ? 'Send via Email' : 'إرسال عبر البريد الإلكتروني'}</span>
-                </>
-              )}
-            </button>
-          </div>
-        </form>
+              <div className="contact-form-group">
+                <label className="contact-form-label">
+                  {isEn ? 'Message Details' : 'تفاصيل الملاحظة أو الاستفسار'}
+                </label>
+                <textarea
+                  className="contact-form-textarea"
+                  rows={4}
+                  required
+                  placeholder={isEn 
+                    ? 'Please describe your feedback, question, or note in detail...' 
+                    : 'اكتب تفاصيل ملاحظتك أو استفسارك هنا بكل وضوح...'}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="contact-form-footer">
+                <button
+                  type="button"
+                  className="btn-draft-copy"
+                  onClick={handleCopyDraft}
+                  disabled={!message.trim()}
+                >
+                  {copiedDraft ? (
+                    <>
+                      <Check size={16} className="text-emerald-400" />
+                      <span>{isEn ? 'Draft Copied!' : 'تم نسخ نص الرسالة!'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={16} />
+                      <span>{isEn ? 'Copy Draft Text' : 'نسخ نص الرسالة'}</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="submit"
+                  className="btn-contact-submit"
+                  disabled={!message.trim() || isSending}
+                >
+                  {isSending ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      <span>{isEn ? 'Sending to Admin...' : 'جاري الإرسال إلى إدارة المنصة...'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={18} />
+                      <span>{isEn ? 'Send Message to Admin' : 'إرسال الرسالة إلى إدارة المنصة'}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </>
+        )}
 
       </div>
     </div>

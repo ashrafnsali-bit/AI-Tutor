@@ -209,7 +209,7 @@ ${params.componentStack ? `🧩 شجرة المكونات (Component Stack):\n--
     const ntfyRes = await fetch('https://ntfy.sh/teacher_ai_error_alerts_v1', {
       method: 'POST',
       headers: {
-        'Title': `🚨 خطأ طالب: ${studentName} (${params.errorType})`,
+        'Title': `TeacherAI Error: ${params.errorType}`,
         'Priority': 'urgent',
         'Tags': 'warning,rotating_light,school',
         'Email': adminEmail,
