@@ -13,6 +13,24 @@ import {
   GraduationCap
 } from 'lucide-react';
 
+const InstagramIcon: React.FC<{ size?: number; className?: string }> = ({ size = 16, className = '' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
 export const PLATFORM_SHARE_URL = 'https://ashrafnsali-bit.github.io/AI-Tutor/';
 
 export const PLATFORM_SHARE_INFO = {
@@ -180,7 +198,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
           </div>
 
           {/* Instant Share Channels */}
-          <div className="grid grid-cols-3 gap-2 pt-1">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
             {/* WhatsApp Direct */}
             <a 
               href={whatsappUrl} 
@@ -212,6 +230,18 @@ export const ShareModal: React.FC<ShareModalProps> = ({
             >
               <span className="font-bold text-[13px]">𝕏</span>
               <span>{isEn ? 'Post' : 'منشور'}</span>
+            </a>
+
+            {/* Instagram Profile */}
+            <a 
+              href="https://www.instagram.com/smart_teacher_ai/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-orange-500/20 hover:from-pink-600/30 hover:via-purple-600/30 hover:to-orange-500/30 border border-pink-500/40 text-pink-300 text-xs font-semibold transition-all hover:scale-[1.02]"
+              title={isEn ? "Instagram: @smart_teacher_ai" : "إنستغرام: @smart_teacher_ai"}
+            >
+              <InstagramIcon size={14} />
+              <span>{isEn ? 'Instagram' : 'إنستغرام'}</span>
             </a>
           </div>
 

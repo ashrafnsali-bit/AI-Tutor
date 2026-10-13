@@ -10688,6 +10688,19 @@ input:checked + .slider.round:before {
   color: #ffffff;
 }
 
+.btn-open-instagram {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(168, 85, 247, 0.18) 50%, rgba(249, 115, 22, 0.18) 100%);
+  border: 1px solid rgba(236, 72, 153, 0.35);
+  color: #f472b6;
+  text-decoration: none;
+}
+
+.btn-open-instagram:hover {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(168, 85, 247, 0.3) 50%, rgba(249, 115, 22, 0.3) 100%);
+  border-color: #ec4899;
+  color: #ffffff;
+}
+
 .contact-success-panel {
   padding: 2.25rem 1.5rem;
   display: flex;
