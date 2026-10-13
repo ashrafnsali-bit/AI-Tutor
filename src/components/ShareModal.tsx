@@ -234,11 +234,11 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
             {/* Instagram Profile */}
             <a 
-              href="https://www.instagram.com/smart_teacher_ai/" 
+              href="https://www.instagram.com/ai_tutor_blog/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-orange-500/20 hover:from-pink-600/30 hover:via-purple-600/30 hover:to-orange-500/30 border border-pink-500/40 text-pink-300 text-xs font-semibold transition-all hover:scale-[1.02]"
-              title={isEn ? "Instagram: @smart_teacher_ai" : "إنستغرام: @smart_teacher_ai"}
+              title={isEn ? "Instagram: @ai_tutor_blog" : "إنستغرام: @ai_tutor_blog"}
             >
               <InstagramIcon size={14} />
               <span>{isEn ? 'Instagram' : 'إنستغرام'}</span>

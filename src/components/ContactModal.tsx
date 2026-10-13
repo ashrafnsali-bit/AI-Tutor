@@ -345,11 +345,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <span>{isEn ? 'Mail App' : 'تطبيق البريد'}</span>
             </a>
             <a 
-              href="https://www.instagram.com/smart_teacher_ai/" 
+              href="https://www.instagram.com/ai_tutor_blog/" 
               className="btn-contact-action btn-open-instagram"
               target="_blank" 
               rel="noreferrer"
-              title={isEn ? "Instagram: @smart_teacher_ai" : "إنستغرام: @smart_teacher_ai"}
+              title={isEn ? "Instagram: @ai_tutor_blog" : "إنستغرام: @ai_tutor_blog"}
             >
               <InstagramIcon size={14} />
               <span>{isEn ? 'Instagram' : 'إنستغرام'}</span>
