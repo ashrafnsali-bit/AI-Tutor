@@ -1920,7 +1920,7 @@ h4 {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 1.5rem;
   overflow-y: auto;
@@ -1952,12 +1952,14 @@ h4 {
 .modal-profile-container {
   max-width: 820px;
   width: 95%;
-  max-height: 90vh;
+  max-height: min(90vh, 920px);
   background: linear-gradient(180deg, #0d1527 0%, #090e1a 100%);
   border: 1px solid rgba(56, 189, 248, 0.25);
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.12);
   border-radius: 24px;
-  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* Official Student Academic Identity Card */
@@ -2280,6 +2282,8 @@ h4 {
   padding: 1.5rem;
   overflow-y: auto;
   overflow-x: hidden;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
