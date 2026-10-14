@@ -1082,14 +1082,26 @@ export function App() {
       if (prev.some(l => l.id === formattedLec.id)) return prev;
       const updated = [...prev, formattedLec];
 
-      // Persist in shared community curriculum store with country and educationType matching
+      // 1. Immediately persist to student's active subject lectures storage
+      const currentEduType = profile.educationType || 'PUBLIC';
+      const currentTrack = profile.educationTrack || 'GENERAL';
+      saveSubjectLectures(
+        profile.subject,
+        updated,
+        profile.gradeLevel,
+        profile.country,
+        currentEduType,
+        currentTrack
+      );
+
+      // 2. Persist in shared community curriculum store with country and educationType matching
       saveSharedCurriculumLecture(
         formattedLec, 
         profile.country, 
         profile.subject, 
         profile.gradeLevel,
-        profile.educationType || 'PUBLIC',
-        profile.educationTrack || 'GENERAL'
+        currentEduType,
+        currentTrack
       ).catch((err) => {
         console.warn('Could not save to shared curriculum store:', err);
       });

@@ -767,7 +767,11 @@ export async function saveSharedCurriculumLecture(
   } catch { /* ignore */ }
 
   // 2. Synchronize to LocalStorage shared arrays across all compatible key patterns
-  const keys = [`TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}_${educationTrack}`];
+  const keys = [
+    `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}_${educationTrack}`,
+    `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${educationTrack}`,
+    'TEACHER_AI_CLOUD_SHARED_LECTURES'
+  ];
 
   keys.forEach(k => {
     try {

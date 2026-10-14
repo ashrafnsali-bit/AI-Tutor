@@ -5868,11 +5868,12 @@ export function loadSubjectLectures(
   
   // 1. Strict 4D Isolated Shared Lecture Key (No generic fallbacks)
   const strictSharedKey = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${track}`;
+  const strictSharedKeyExact = `TEACHER_AI_SHARED_LECS_${country}_${educationType}_${subject}_${gradeLevel}_${track}`;
   const cloudKey = 'TEACHER_AI_CLOUD_SHARED_LECTURES';
 
   let sharedLecs: Lecture[] = [];
   try {
-    const rawKeys = [strictSharedKey, cloudKey];
+    const rawKeys = [strictSharedKey, strictSharedKeyExact, cloudKey];
     const map = new Map<string, Lecture>();
     rawKeys.forEach(k => {
       if (typeof localStorage === 'undefined') return;
@@ -5885,10 +5886,10 @@ export function loadSubjectLectures(
               if (!l || !l.id) return;
               // Strict 4D Isolation Guard: All dimensions must strictly match
               if (l.country !== country) return;
-              if (l.educationType !== educationType) return;
-              if (l.educationTrack !== track) return;
+              if (l.educationType && l.educationType !== educationType) return;
+              if (l.educationTrack && l.educationTrack !== track) return;
               if (l.subject !== subject) return;
-              if (!gradeLevel || l.gradeLevel !== gradeLevel) return;
+              if (gradeLevel && l.gradeLevel && l.gradeLevel !== gradeLevel) return;
               map.set(l.id, l);
             });
           }
@@ -5913,9 +5914,17 @@ export function loadSubjectLectures(
       lang
     );
 
-  // Append community / shared lectures without duplicating existing topics
-  if (!isProtectedSaudiMath && !isProtectedSaudiComputerScience && !isProtectedSaudiScience && !isProtectedSaudiEnglish && !isProtectedSaudiPrimaryVerifiedCourses && !isProtectedSaudiPrimaryArabic && !isSaudiVerifiedCurriculumIsolatedRoute) {
-    sharedLecs.forEach(sh => {
+  // Append community / shared / newly AI-generated lectures without duplicating existing topics
+  sharedLecs.forEach(sh => {
+    if (
+      sh &&
+      sh.id &&
+      sh.country === country &&
+      sh.subject === subject &&
+      (!gradeLevel || !sh.gradeLevel || sh.gradeLevel === gradeLevel) &&
+      (!sh.educationType || sh.educationType === educationType) &&
+      (!sh.educationTrack || sh.educationTrack === track)
+    ) {
       const shTitleClean = (sh.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
       const alreadyExists = combined.some(c => {
         if (c.id === sh.id) return true;
@@ -5923,8 +5932,8 @@ export function loadSubjectLectures(
         return cTitleClean && shTitleClean && cTitleClean === shTitleClean;
       });
       if (!alreadyExists) combined.push(sh);
-    });
-  }
+    }
+  });
 
   const storageKey = `TEACHER_AI_LECTURES_V5_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${track}`;
   const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
@@ -5934,19 +5943,18 @@ export function loadSubjectLectures(
     try {
       const parsed = JSON.parse(saved) as Lecture[];
       if (Array.isArray(parsed)) {
-        // Strict cache validation: all cached lectures must strictly match this country and subject to prevent cross-contamination
-        const isCacheValid = parsed.every(p =>
+        const matchingParsed = parsed.filter(p =>
+          p &&
           p.country === country &&
           p.subject === subject &&
-          p.gradeLevel === gradeLevel &&
-          p.educationType === educationType &&
-          p.educationTrack === track
+          (!gradeLevel || !p.gradeLevel || p.gradeLevel === gradeLevel) &&
+          (!p.educationType || p.educationType === educationType) &&
+          (!p.educationTrack || p.educationTrack === track)
         );
-        const hasMatchingCurriculum = combined.some(freshLec => parsed.some(p => p.id === freshLec.id));
 
-        if (isCacheValid && hasMatchingCurriculum) {
+        if (matchingParsed.length > 0) {
           rawList = combined.map((freshLec) => {
-            const found = parsed.find((p) => p.id === freshLec.id);
+            const found = matchingParsed.find((p) => p.id === freshLec.id);
             if (found) {
               return {
                 ...freshLec,
@@ -5958,23 +5966,13 @@ export function loadSubjectLectures(
           });
 
           // Also preserve any newly AI-generated lectures saved in user session strictly matching this context
-          if (!isProtectedSaudiMath && !isProtectedSaudiComputerScience && !isProtectedSaudiScience && !isProtectedSaudiEnglish && !isProtectedSaudiPrimaryVerifiedCourses && !isProtectedSaudiPrimaryArabic && !isSaudiVerifiedCurriculumIsolatedRoute) {
-            parsed.forEach(p => {
-              if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
-                if (
-                  p.country !== country ||
-                  p.subject !== subject ||
-                  p.gradeLevel !== gradeLevel ||
-                  p.educationType !== educationType ||
-                  p.educationTrack !== track
-                ) return;
-
-                const pClean = (p.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
-                const exists = rawList.some(r => r.id === p.id || (pClean && (r.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim() === pClean));
-                if (!exists) rawList.push(p);
-              }
-            });
-          }
+          matchingParsed.forEach(p => {
+            if (p.id && (p.id.startsWith('ai-gen-') || p.id.startsWith('gen-') || (p as any).isSharedCommunity)) {
+              const pClean = (p.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+              const exists = rawList.some(r => r.id === p.id || (pClean && (r.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim() === pClean));
+              if (!exists) rawList.push(p);
+            }
+          });
         }
       }
     } catch (e) {
