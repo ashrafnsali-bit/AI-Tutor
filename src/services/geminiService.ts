@@ -1,5 +1,6 @@
 import type { ChatMessage, Lecture, Question, StudentProfile } from '../types';
 import { getCountryInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/curriculumCountries';
+import { getNationalLessonOverrides } from '../data/nationalCurricula';
 import { ensureFourExamplesForLecture } from './lectureExampleEnricher';
 import { removeExternalLinksFromText, sanitizeLectureForStudents } from './studentContentSanitizer';
 
@@ -566,6 +567,50 @@ export async function generateCurriculumLecture(
   }
 
   const cInfo = getCountryInfo(profile.country);
+
+  // Retrieve official national curriculum outline for this country, subject, and grade
+  const officialSyllabus = getNationalLessonOverrides(
+    profile.country,
+    profile.subject,
+    profile.gradeLevel,
+    profile.educationType || 'PUBLIC',
+    profile.educationTrack || 'GENERAL'
+  );
+
+  let syllabusPromptContext = '';
+  let effectiveUnit = unitTitle;
+  let effectiveTopic = lessonTopic;
+
+  if (officialSyllabus && officialSyllabus.length > 0) {
+    const syllabusList = officialSyllabus.slice(0, 16).map((item, idx) => 
+      `${idx + 1}. [${item.unitTitleAr || item.topicAr || 'الوحدة المقررة'}] ${item.titleAr}`
+    );
+
+    // If topic was not explicitly specified, find the next uncovered lesson from the official textbook sequence
+    if (!effectiveTopic) {
+      const nextUncovered = officialSyllabus.find(item => {
+        const itemClean = item.titleAr.replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+        return !existingTitles.some(t => {
+          const tClean = t.replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+          return tClean.includes(itemClean) || itemClean.includes(tClean);
+        });
+      });
+
+      if (nextUncovered) {
+        effectiveTopic = nextUncovered.titleAr;
+        if (!effectiveUnit) {
+          effectiveUnit = nextUncovered.unitTitleAr || nextUncovered.topicAr;
+        }
+      }
+    }
+
+    syllabusPromptContext = `
+OFFICIAL APPROVED CURRICULUM SYLLABUS OUTLINE FOR THIS COURSE (${cInfo.nameAr} - ${profile.gradeLevel}):
+The official Ministry of Education textbook follows this approved chapter and lesson sequence:
+${syllabusList.join('\n')}
+`;
+  }
+
   const prompt = `You are a Senior National Curriculum Author, Pedagogical Expert, and Textbook Lead for ${cInfo.nameAr} (${cInfo.ministryAr}).
 Generate an authentic, high-caliber, comprehensive academic lesson strictly aligned with national standards for:
 - Country & Standard: ${cInfo.nameAr} (${cInfo.systemNameAr}) [Country Code: ${profile.country}]
@@ -575,18 +620,30 @@ Generate an authentic, high-caliber, comprehensive academic lesson strictly alig
 - Educational Track / Specialization: ${profile.educationTrack || profile.specialization || 'GENERAL'}
 - Subject: ${profile.subject}
 - Sequence Order / Dynamic Lecture Number: ${lectureNumber} (This MUST be titled Lecture ${lectureNumber} / المحاضرة ${lectureNumber})
-${unitTitle ? `- Unit: ${unitTitle}` : ''}
-${lessonTopic ? `- Focus Topic: ${lessonTopic}` : ''}
+${effectiveUnit ? `- Target Unit: ${effectiveUnit}` : ''}
+${effectiveTopic ? `- Focus Lesson Topic: ${effectiveTopic}` : ''}
 ${existingTitles.length > 0 ? `- Already covered topics in this curriculum (DO NOT duplicate): ${existingTitles.join(' | ')}` : ''}
+${syllabusPromptContext}
 
-CRITICAL RULES:
-1. Adhere strictly to the official educational guidelines, textbook terminology, and symbols of ${cInfo.nameAr} for Grade ${profile.gradeLevel} and Education Type ${profile.educationType || 'PUBLIC'}.
-2. The title MUST explicitly begin with: "المحاضرة ${lectureNumber}: " in Arabic and "Lecture ${lectureNumber}: " in English.
-3. The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
-4. Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
-5. Focus and conciseness: Keep each section explanation focused, direct, and impactful (approx. 100-150 words per section) so all 4 sections, worked examples, textbook exercises, and assessments generate completely without truncating.
-6. Treat any official textbook URLs or source links supplied in the generation context as internal authoring references only. Do not put URLs, hyperlinks, or instructions to visit external sites in any student-facing lesson field; teach the material within the platform.
-7. Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
+CRITICAL RULES & CURRICULUM BOUNDARIES (ضوابط الالتزام الصارم بالمنهج المدرسي الرسمي وعدم الخروج عنه):
+1. STRICT CURRICULUM SCOPE ENFORCEMENT:
+   - Teach strictly within the approved Ministry of Education syllabus and textbook for Grade ${profile.gradeLevel} in ${cInfo.nameAr}.
+   - ABSOLUTELY NO UNIVERSITY SCOPE CREEP: Do NOT introduce advanced college, post-graduate, or university-level theories, abstract proofs, multi-variable calculus, or complex academic mechanisms outside the high school/middle school syllabus.
+   - NO FOREIGN CURRICULUM CREEP: Do NOT import topics, notation, or terminology from British (IGCSE/A-Level), American (AP/SAT), or other foreign systems unless educationType is INTERNATIONAL.
+   - AGE & GRADE APPROPRIATENESS: Match the vocabulary, explanations, and cognitive level precisely to students in Grade ${profile.gradeLevel}.
+2. OFFICIAL TEXTBOOK CONCEPTS & TERMINOLOGY:
+   - Use only the terminology, definitions, symbols, and conventions approved in the official ministry textbook for ${cInfo.nameAr} (${cInfo.ministryAr}).
+   - For science and math: formulas, constants, and unit symbols must match the standard textbook conventions.
+3. OFFICIAL EXAM-STYLE QUESTIONS & EXAMPLES:
+   - The 4 interactive worked examples and 3 assessment quiz questions must strictly reflect the format, difficulty, and problem-solving style of official ministerial exams (مثل امتحانات الثانوية العامة في مصر، أو اختبارات التحصيلي والقدرات في السعودية، أو الشهادة السودانية).
+   - Passing threshold must be strictly 80%.
+4. SEQUENCE CONTINUITY & FORMAT:
+   - The title MUST explicitly begin with: "المحاضرة ${lectureNumber}: " in Arabic and "Lecture ${lectureNumber}: " in English.
+   - The lecture MUST contain strictly 4 distinct, comprehensive sections, and EACH section MUST contain a step-by-step interactive worked example (interactiveExample) with detailed solution steps, equations/rules, and a golden takeaway. That is strictly 4 worked examples in total (4 أمثلة توضيحية تفاعلية محلولة خطوة بخطوة لتوصيل المعلومة وترسيخ الفهم للطالب).
+   - Provide a full, rich lesson with a real-world warmup hook, targeted learning outcomes, scientific vocabulary, 4 in-depth explanation sections with formative checks and 4 step-by-step interactive examples, a concept map summary, guided textbook exercises with detailed solutions, and a 3-question assessment with a passing threshold of 80%.
+   - Focus and conciseness: Keep each section explanation focused, direct, and impactful (approx. 100-150 words per section) so all 4 sections, worked examples, textbook exercises, and assessments generate completely without truncating.
+   - Treat any official textbook URLs or source links supplied in the generation context as internal authoring references only. Do not put URLs, hyperlinks, or instructions to visit external sites in any student-facing lesson field; teach the material within the platform.
+   - Return ONLY a valid JSON object strictly matching this schema with NO markdown fences, no explanatory preambles:
 
 {
   "id": "gen-${profile.country.toLowerCase()}-${(profile.educationType || 'public').toLowerCase()}-${profile.subject.toLowerCase()}-${profile.gradeLevel.toLowerCase()}-${lectureNumber}-${Date.now()}",
@@ -606,8 +663,8 @@ CRITICAL RULES:
   "gradeLevelNameEn": "Grade ${profile.gradeLevel}",
   "termAr": "${cInfo.termDefaultAr}",
   "termEn": "${cInfo.termDefaultEn}",
-  "unitTitleAr": "${unitTitle ? unitTitle : 'الوحدة الدراسية المقررة'}",
-  "unitTitleEn": "${unitTitle ? unitTitle : 'Curriculum Unit'}",
+  "unitTitleAr": "${effectiveUnit ? effectiveUnit : 'الوحدة الدراسية المقررة'}",
+  "unitTitleEn": "${effectiveUnit ? effectiveUnit : 'Curriculum Unit'}",
   "lessonNumberAr": "الدرس ${lectureNumber}",
   "lessonNumberEn": "Lesson ${lectureNumber}",
   "warmupHookAr": "فقرة تهيئة ذهنية مشوقة تربط مفهوم الدرس بالحياة اليومية والتطبيقات العملية المعاصرة (3-4 أسطر)",

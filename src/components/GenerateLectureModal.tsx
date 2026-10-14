@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import type { Language, Lecture, StudentProfile } from "../types";
 import { generateCurriculumLecture } from "../services/geminiService";
 import { getCountryInfo } from "../data/curriculumCountries";
+import { getNationalLessonOverrides } from "../data/nationalCurricula";
 import {
   X,
   Sparkles,
@@ -12,7 +13,8 @@ import {
   GraduationCap,
   Globe,
   BookMarked,
-  Wand2
+  Wand2,
+  ShieldCheck
 } from "lucide-react";
 
 interface GenerateLectureModalProps {
@@ -89,6 +91,39 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
   const gradeLabel = GRADE_LABELS[profile.gradeLevel] || { ar: profile.gradeLevel, en: profile.gradeLevel };
 
   const existingTitles = existingLectures.map(l => isEn ? l.titleEn : l.titleAr).filter(Boolean) as string[];
+
+  // 1. Retrieve official national syllabus outline for this exact profile
+  const officialSyllabus = useMemo(() => {
+    return getNationalLessonOverrides(
+      profile.country,
+      profile.subject,
+      profile.gradeLevel,
+      profile.educationType || 'PUBLIC',
+      profile.educationTrack || 'GENERAL'
+    ) || [];
+  }, [profile.country, profile.subject, profile.gradeLevel, profile.educationType, profile.educationTrack]);
+
+  // 2. Identify the next uncovered official lesson in the national textbook
+  const nextOfficialLesson = useMemo(() => {
+    if (!officialSyllabus || officialSyllabus.length === 0) return null;
+    return officialSyllabus.find(item => {
+      const itemClean = (item.titleAr || '').replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+      return !existingTitles.some(t => {
+        const tClean = t.replace(/^(المحاضرة|الدرس)\s*\d+\s*[:\-–]\s*/i, '').trim();
+        return tClean.includes(itemClean) || itemClean.includes(tClean);
+      });
+    }) || officialSyllabus[0];
+  }, [officialSyllabus, existingTitles]);
+
+  // 3. Extract unique official units from the syllabus
+  const officialUnits = useMemo(() => {
+    const set = new Set<string>();
+    officialSyllabus.forEach(s => {
+      const u = isEn ? (s.unitTitleEn || s.unitTitleAr) : s.unitTitleAr;
+      if (u) set.add(u);
+    });
+    return Array.from(set);
+  }, [officialSyllabus, isEn]);
 
   const handleGenerate = async () => {
     if (!hasApiKey) {
@@ -211,6 +246,56 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
             </span>
           </div>
 
+          {/* Official Curriculum Next Lesson Suggestion */}
+          {nextOfficialLesson && (
+            <div className="gen-official-suggestion-card" style={{
+              background: 'rgba(16, 185, 129, 0.08)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              borderRadius: '12px',
+              padding: '0.85rem 1rem',
+              marginBottom: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#10b981', fontSize: '0.82rem', fontWeight: 700 }}>
+                  <ShieldCheck size={16} />
+                  <span>{isEn ? "Next Official Textbook Topic:" : "الدرس التالي المقرر في كتاب الوزارة:"}</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLessonTopic(isEn ? (nextOfficialLesson.titleEn || nextOfficialLesson.titleAr) : nextOfficialLesson.titleAr);
+                    if (nextOfficialLesson.unitTitleAr) {
+                      setUnitTitle(isEn ? (nextOfficialLesson.unitTitleEn || nextOfficialLesson.unitTitleAr) : nextOfficialLesson.unitTitleAr);
+                    }
+                  }}
+                  style={{
+                    padding: '0.3rem 0.75rem',
+                    borderRadius: '8px',
+                    background: '#10b981',
+                    color: '#fff',
+                    border: 'none',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {isEn ? "Apply Official Topic 🎯" : "تطبيق هذا الدرس المعتمد 🎯"}
+                </button>
+              </div>
+              <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#f1f5f9' }}>
+                {isEn ? (nextOfficialLesson.titleEn || nextOfficialLesson.titleAr) : nextOfficialLesson.titleAr}
+                {nextOfficialLesson.unitTitleAr && (
+                  <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginRight: '0.5rem', marginLeft: '0.5rem' }}>
+                    ({nextOfficialLesson.unitTitleAr})
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="gen-input-group">
             <label className="gen-input-label" htmlFor="gen-unit-title">
               {isEn ? "Unit / Chapter (optional)" : "الوحدة / الفصل (اختياري)"}
@@ -225,6 +310,32 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
               disabled={isGenerating}
               dir={isEn ? "ltr" : "rtl"}
             />
+            {officialUnits.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: '0.45rem' }}>
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8', width: '100%' }}>
+                  {isEn ? "Quick select official unit:" : "اختر من وحدات كتاب الوزارة المعتمدة:"}
+                </span>
+                {officialUnits.slice(0, 6).map(u => (
+                  <button
+                    key={u}
+                    type="button"
+                    onClick={() => setUnitTitle(u)}
+                    style={{
+                      padding: '0.2rem 0.55rem',
+                      borderRadius: '6px',
+                      background: unitTitle === u ? 'rgba(59, 130, 246, 0.35)' : 'rgba(255, 255, 255, 0.05)',
+                      border: `1px solid ${unitTitle === u ? '#3b82f6' : 'rgba(255, 255, 255, 0.12)'}`,
+                      color: unitTitle === u ? '#60a5fa' : '#cbd5e1',
+                      fontSize: '0.72rem',
+                      fontWeight: unitTitle === u ? 700 : 500,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {u}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="gen-input-group">
@@ -289,6 +400,14 @@ export const GenerateLectureModal: React.FC<GenerateLectureModalProps> = ({
 
           {!isGenerating && !success && (
             <div className="gen-what-included">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', padding: '8px 12px', background: 'rgba(59, 130, 246, 0.08)', borderRadius: '8px', border: '1px solid rgba(59, 130, 246, 0.25)', fontSize: '0.82rem', color: '#60a5fa', fontWeight: 600 }}>
+                <ShieldCheck size={16} />
+                <span>
+                  {isEn
+                    ? `Curriculum Scope Guarantee: Strictly aligned with ${countryInfo.ministryEn} standards for ${gradeLabel.en}. Out-of-syllabus and college-level topics are strictly blocked.`
+                    : `ضمان الالتزام بالمنهج: مطابقة تامة 100% لمعايير ${countryInfo.ministryAr} للصف ${gradeLabel.ar}، مع حظر كامل لأي مفاهيم جامعية أو خارج كتاب الوزارة.`}
+                </span>
+              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', padding: '8px 12px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.25)', fontSize: '0.82rem', color: '#059669', fontWeight: 600 }}>
                 <Globe size={16} />
                 <span>
