@@ -4,6 +4,11 @@ import './index.css'
 import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 import { reportStudentError } from './services/errorReportingService'
+import { loadSubjectLectures } from './data/curriculumData'
+
+if (typeof window !== 'undefined') {
+  (window as any).loadSubjectLectures = loadSubjectLectures;
+}
 
 // Global Uncaught Error Telemetry Listener for automatic administrator alerts
 if (typeof window !== 'undefined') {

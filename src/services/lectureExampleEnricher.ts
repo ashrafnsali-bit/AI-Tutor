@@ -522,20 +522,9 @@ Focuses on higher-order analytical reasoning and compound questions to achieve c
       });
     }
   } else {
-    // We have 4 or more sections: ensure the first 4 sections each have their example
+    // We have 4 or more sections: assign each of the 4 finalized examples to the first 4 sections
     for (let i = 0; i < 4; i++) {
-      if (!enriched.sections[i].interactiveExample) {
-        enriched.sections[i].interactiveExample = finalizedExamples[i];
-      } else {
-        // Ensure numbering says "من 4" for clarity
-        const curr = enriched.sections[i].interactiveExample!;
-        if (!curr.titleAr?.includes('من 4')) {
-          curr.titleAr = `مثال تطبيقي ${i + 1} من 4: ${curr.titleAr.replace(/^مثال\s*\d*[:\s-]*/i, '')}`;
-        }
-        if (!curr.titleEn?.includes('of 4')) {
-          curr.titleEn = `Worked Example ${i + 1} of 4: ${curr.titleEn.replace(/^Example\s*\d*[:\s-]*/i, '')}`;
-        }
-      }
+      enriched.sections[i].interactiveExample = finalizedExamples[i];
     }
   }
 

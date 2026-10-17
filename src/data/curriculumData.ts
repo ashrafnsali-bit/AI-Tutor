@@ -6025,9 +6025,7 @@ export function loadSubjectLectures(
     });
   }
 
-  const finalList = isProtectedSaudiMath || isProtectedSaudiComputerScience || isProtectedSaudiScience || isProtectedSaudiEnglish || isProtectedSaudiPrimaryVerifiedCourses || isProtectedSaudiPrimaryArabic || isSaudiVerifiedCurriculumIsolatedRoute
-    ? formattedList
-    : formattedList.map(ensureFourExamplesForLecture);
+  const finalList = formattedList.map(ensureFourExamplesForLecture);
   return localizeForeignLanguageLectures(subject, finalList);
 }
 
