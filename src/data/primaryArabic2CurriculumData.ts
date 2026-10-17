@@ -149,7 +149,6 @@ export const PRIMARY_ARABIC_G2_LECTURES: Lecture[] = [
 ---
 
 ### 4. Interactive Visual Grammar Map
-\`\`\`xml
 <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family:system-ui, sans-serif;">
   <rect width="720" height="240" fill="#0f172a" rx="16"/>
   <!-- Box 1: Speaker Pronouns -->
@@ -173,7 +172,6 @@ export const PRIMARY_ARABIC_G2_LECTURES: Lecture[] = [
     <text x="30" y="170" fill="#f8fafc" font-size="13">🔹 <tspan fill="#34d399" font-weight="bold">هَؤُلَاءِ:</tspan> لجمع العاقل (هؤلاء أطباءُ / معلماتٌ)</text>
   </g>
 </svg>
-\`\`\`
 `,
     mainContentEn: `
 ### 1. Narrative & Comprehension: "I Can" (أنا أستطيع)

@@ -6,20 +6,115 @@ interface RichContentRendererProps {
   isEn?: boolean;
 }
 
+export function cleanLatexMath(mathStr: string): string {
+  return mathStr
+    .replace(/\\text\{([^}]+)\}/g, '$1')
+    .replace(/\\int_\{([^}]+)\}\^\{([^}]+)\}/g, '∫[$1→$2] ')
+    .replace(/\\int_([a-zA-Z0-9]+)\^([a-zA-Z0-9]+)/g, '∫[$1→$2] ')
+    .replace(/\\int_\{([^}]+)\}/g, '∫[$1] ')
+    .replace(/\\int_([a-zA-Z0-9]+)/g, '∫[$1] ')
+    .replace(/\\int\b/g, '∫ ')
+    .replace(/\\pi\b/g, 'π')
+    .replace(/\\times\b/g, ' × ')
+    .replace(/\\div\b/g, ' ÷ ')
+    .replace(/\\pm\b/g, ' ± ')
+    .replace(/\\leq?\b/g, ' ≤ ')
+    .replace(/\\geq?\b/g, ' ≥ ')
+    .replace(/\\neq\b/g, ' ≠ ')
+    .replace(/\\approx\b/g, ' ≈ ')
+    .replace(/\\infty\b/g, '∞')
+    .replace(/\\alpha\b/g, 'α')
+    .replace(/\\beta\b/g, 'β')
+    .replace(/\\theta\b/g, 'θ')
+    .replace(/\\lambda\b/g, 'λ')
+    .replace(/\\Delta\b/g, 'Δ')
+    .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    .replace(/\\cdot\b/g, '·')
+    .replace(/\\,/g, ' ')
+    .replace(/\\quad/g, '  ')
+    .replace(/\\qquad/g, '   ')
+    .replace(/[\$]/g, '')
+    .replace(/\^2\b/g, '²')
+    .replace(/\^3\b/g, '³')
+    .replace(/\^4\b/g, '⁴')
+    .replace(/\^n\b/g, 'ⁿ')
+    .replace(/_0\b/g, '₀')
+    .replace(/_1\b/g, '₁')
+    .replace(/_2\b/g, '₂')
+    .trim();
+}
+
 export const RichContentRenderer: React.FC<RichContentRendererProps> = ({ content, isEn = false }) => {
   if (!content) return null;
-  content = removeExternalLinksFromText(content);
+  // Cleanly unwrap any SVGs that are wrapped in escaped or raw code fences (\```xml <svg... </svg> \```)
+  let normalizedContent = content.replace(/`?\\?`?\\?`?[a-zA-Z0-9_-]*\s*(<svg[\s\S]*?<\/svg>)\s*`?\\?`?\\?`?/gi, '\n\n$1\n\n');
+  normalizedContent = normalizedContent.replace(/\\`{3}/g, '```');
+  normalizedContent = removeExternalLinksFromText(normalizedContent);
 
-  // Split content into code blocks and normal markdown segments
-  const codeBlockRegex = /```(?:xml|svg|html|text|jsx|tsx|css|json)?\s*\n([\s\S]*?)```/g;
+  // Match either inline <svg>...</svg> blocks FIRST, OR fenced code blocks (```...```)
+  const blockRegex = /(<svg[\s\S]*?<\/svg>)|(?:```(?:[a-zA-Z0-9_-]+)?\s*[\r\n]+([\s\S]*?)```)/gi;
   const segments: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
   let segmentKey = 0;
 
-  while ((match = codeBlockRegex.exec(content)) !== null) {
-    const textBefore = content.substring(lastIndex, match.index);
+  const renderSvgElement = (rawSvg: string) => {
+    const lowerSvg = rawSvg.toLowerCase();
+    const svgStart = lowerSvg.indexOf('<svg');
+    const svgEnd = lowerSvg.lastIndexOf('</svg>') + 6;
+    if (svgStart === -1 || svgEnd <= svgStart) return null;
+
+    const svgMarkup = rawSvg
+      .substring(svgStart, svgEnd)
+      .replace(/<a\b[^>]*>/gi, '')
+      .replace(/<\/a\s*>/gi, '');
+
+    return (
+      <div 
+        key={`svg-${segmentKey++}`} 
+        className="lecture-svg-diagram-wrapper"
+        style={{
+          margin: '2rem 0',
+          background: 'linear-gradient(145deg, #0b1329 0%, #0f172a 100%)',
+          borderRadius: '16px',
+          border: '1px solid rgba(56, 189, 248, 0.25)',
+          padding: '1.25rem',
+          overflow: 'hidden',
+          boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.08)',
+          direction: 'ltr',
+          textAlign: 'center'
+        }}
+      >
+        <div 
+          style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            marginBottom: '1rem', 
+            color: '#38bdf8', 
+            fontSize: '0.85rem', 
+            fontWeight: 700,
+            background: 'rgba(56, 189, 248, 0.1)',
+            padding: '0.35rem 0.9rem',
+            borderRadius: '20px',
+            border: '1px solid rgba(56, 189, 248, 0.2)'
+          }}
+        >
+          <span>📊</span>
+          <span>{isEn ? 'Interactive Visual Map & Educational Diagram' : 'مخطط توضيحي بصري للمفاهيم'}</span>
+        </div>
+        <div 
+          style={{ width: '100%', overflowX: 'auto', display: 'flex', justifyContent: 'center' }}
+          dangerouslySetInnerHTML={{ __html: svgMarkup }} 
+        />
+      </div>
+    );
+  };
+
+  while ((match = blockRegex.exec(normalizedContent)) !== null) {
+    const textBefore = normalizedContent.substring(lastIndex, match.index);
     if (textBefore.trim()) {
       segments.push(
         <div key={`text-${segmentKey++}`} className="rich-markdown-block">
@@ -28,65 +123,46 @@ export const RichContentRenderer: React.FC<RichContentRendererProps> = ({ conten
       );
     }
 
-    const codeContent = match[1].trim();
+    if (match[1] !== undefined) {
+      // It's a raw or unwrapped <svg>...</svg> block
+      segments.push(renderSvgElement(match[1]));
+    } else if (match[2] !== undefined) {
+      // It's a fenced code block (```...```)
+      const codeContent = match[2].trim();
 
-    // Check if the code block is an SVG graphic
-    if (codeContent.includes('<svg') && codeContent.includes('</svg>')) {
-      const svgStart = codeContent.indexOf('<svg');
-      const svgEnd = codeContent.lastIndexOf('</svg>') + 6;
-      const svgMarkup = codeContent
-        .substring(svgStart, svgEnd)
-        .replace(/<a\b[^>]*>/gi, '')
-        .replace(/<\/a\s*>/gi, '');
-
-      segments.push(
-        <div 
-          key={`svg-${segmentKey++}`} 
-          className="lecture-svg-diagram-wrapper"
-          style={{
-            margin: '1.75rem 0',
-            background: 'linear-gradient(145deg, #0b1329, #0f172a)',
-            borderRadius: '16px',
-            border: '1px solid #334155',
-            padding: '1.25rem',
-            overflow: 'hidden',
-            boxShadow: '0 8px 30px rgba(0, 0, 0, 0.35)',
-            direction: 'ltr',
-            textAlign: 'center'
-          }}
-          dangerouslySetInnerHTML={{ __html: svgMarkup }}
-        />
-      );
-    } else {
-      // Regular code/text block
-      segments.push(
-        <pre 
-          key={`code-${segmentKey++}`}
-          className="lecture-code-block"
-          style={{
-            background: '#090d16',
-            color: '#38bdf8',
-            padding: '1.25rem',
-            borderRadius: '12px',
-            border: '1px solid #1e293b',
-            overflowX: 'auto',
-            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-            fontSize: '0.95rem',
-            lineHeight: '1.6',
-            direction: 'ltr',
-            textAlign: 'left',
-            margin: '1.25rem 0'
-          }}
-        >
-          <code>{codeContent}</code>
-        </pre>
-      );
+      if (codeContent.toLowerCase().includes('<svg') && codeContent.toLowerCase().includes('</svg>')) {
+        segments.push(renderSvgElement(codeContent));
+      } else {
+        // Regular code/text block
+        segments.push(
+          <pre 
+            key={`code-${segmentKey++}`}
+            className="lecture-code-block"
+            style={{
+              background: '#090d16',
+              color: '#38bdf8',
+              padding: '1.25rem',
+              borderRadius: '12px',
+              border: '1px solid #1e293b',
+              overflowX: 'auto',
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              direction: 'ltr',
+              textAlign: 'left',
+              margin: '1.25rem 0'
+            }}
+          >
+            <code>{codeContent}</code>
+          </pre>
+        );
+      }
     }
 
     lastIndex = match.index + match[0].length;
   }
 
-  const remainingText = content.substring(lastIndex);
+  const remainingText = normalizedContent.substring(lastIndex);
   if (remainingText.trim()) {
     segments.push(
       <div key={`text-${segmentKey++}`} className="rich-markdown-block">
@@ -142,10 +218,60 @@ function renderMarkdownParagraphs(text: string, _isEn?: boolean): React.ReactNod
   for (let i = 0; i < lines.length; i++) {
     const rawLine = lines[i];
     const trimmed = rawLine.trim();
-
-    if (!trimmed) {
+    if (!trimmed || /^[`\\s]+$/.test(trimmed)) {
       flushList();
       flushTable();
+      continue;
+    }
+
+    // Skip stray code fence lines
+    if (trimmed === '```' || trimmed.startsWith('```') || trimmed.startsWith('\\`\\`\\`') || trimmed.endsWith('```')) {
+      continue;
+    }
+
+    // Skip stray SVG/XML markup lines from leaking into paragraph text
+    if (
+      trimmed.startsWith('<svg') ||
+      trimmed.startsWith('</svg>') ||
+      trimmed.startsWith('<g') ||
+      trimmed.startsWith('</g>') ||
+      trimmed.startsWith('<rect') ||
+      trimmed.startsWith('<text') ||
+      trimmed.startsWith('</text>') ||
+      trimmed.startsWith('<circle') ||
+      trimmed.startsWith('<line') ||
+      trimmed.startsWith('<path') ||
+      trimmed.startsWith('<tspan') ||
+      trimmed.startsWith('</tspan>') ||
+      trimmed.startsWith('<!--') ||
+      trimmed.endsWith('-->')
+    ) {
+      continue;
+    }
+
+    // Display Math ($$...$$)
+    if (trimmed.startsWith('$$') && trimmed.endsWith('$$')) {
+      flushList();
+      nodes.push(
+        <div 
+          key={`disp-math-${nodeKey++}`} 
+          className="math-formula-display" 
+          dir="ltr"
+          style={{
+            margin: '1.25rem 0',
+            textAlign: 'center',
+            background: 'rgba(56, 189, 248, 0.08)',
+            padding: '0.85rem',
+            borderRadius: '10px',
+            border: '1px solid rgba(56, 189, 248, 0.2)',
+            color: '#38bdf8',
+            fontFamily: 'serif',
+            fontSize: '1.1rem'
+          }}
+        >
+          {cleanLatexMath(trimmed.slice(2, -2).trim())}
+        </div>
+      );
       continue;
     }
 
@@ -356,12 +482,11 @@ function renderMarkdownTable(lines: string[], key: number): React.ReactNode {
 
 // Helper: format inline bold, italic, and span highlights
 function formatInlineText(text: string): React.ReactNode {
-  // Regex to split by bold **...** and math $...$
   const safeText = text.replace(
     /!?\[([^\]]*)\]\(\s*(?:https?:\/\/|\/\/|www\.|mailto:)[^)]+\)/gi,
     '$1'
   );
-  const parts = safeText.split(/(\*\*.*?\*\*|\$.*?\$)/g);
+  const parts = safeText.split(/(\*\*[\s\S]*?\*\*|\$[^$]+?\$)/g);
 
   return parts.map((part, idx) => {
     if (part.startsWith('**') && part.endsWith('**')) {
@@ -377,16 +502,21 @@ function formatInlineText(text: string): React.ReactNode {
       return (
         <span
           key={idx}
+          className="math-formula-inline"
+          dir="ltr"
           style={{
             fontFamily: 'serif',
             fontStyle: 'italic',
-            color: '#fbbf24',
-            padding: '0 3px',
+            color: '#38bdf8',
+            padding: '0.1rem 0.45rem',
+            background: 'rgba(56, 189, 248, 0.12)',
+            borderRadius: '6px',
+            border: '1px solid rgba(56, 189, 248, 0.28)',
             direction: 'ltr',
             display: 'inline-block'
           }}
         >
-          {inner}
+          {cleanLatexMath(inner)}
         </span>
       );
     }

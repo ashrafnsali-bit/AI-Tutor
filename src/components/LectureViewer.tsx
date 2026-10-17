@@ -117,14 +117,19 @@ function renderMathFormattedText(text: string): React.ReactNode {
             );
           }
 
-          if (/(\\[a-zA-Z]+|\b[a-zA-Z]\s*=\s*[^,;.]+)/.test(part) && (part.includes('\\') || part.includes('^') || part.includes('='))) {
+          // Skip XML/HTML/SVG tags or attributes
+          if (part.includes('<') || part.includes('>') || part.includes('"') || part.includes("'") || /\b(xmlns|fill|stroke|width|height|font|text|rx|ry|cx|cy|d|transform|style)\b/i.test(part)) {
+            return <span key={idx}>{part}</span>;
+          }
+
+          if (/(\\[a-zA-Z]+|\b[a-zA-Z]\s*=\s*[^,;.]+)/.test(part) && (part.includes('\\') || part.includes('^') || (part.includes('=') && !part.includes('"') && !part.includes("'")))) {
             const tokens = part.split(/(\\[a-zA-Z]+(?:\^\{?[^}]*\}?|_\{?[^}]*\}?)?|[a-zA-Z]\s*=\s*[^,;.\s]+)/g);
             if (tokens.length > 1) {
               return (
                 <React.Fragment key={idx}>
                   {tokens.map((tk, tIdx) => {
                     if (!tk) return null;
-                    if (tk.startsWith('\\') || (tk.includes('=') && !/[\u0600-\u06FF]/.test(tk))) {
+                    if (tk.startsWith('\\') || (tk.includes('=') && !/[\u0600-\u06FF]/.test(tk) && !tk.includes('"') && !tk.includes("'") && !/[<>#/]/.test(tk))) {
                       return (
                         <span key={tIdx} className="math-formula-inline" dir="ltr">
                           {cleanLatexMath(tk)}
@@ -476,11 +481,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
                   {/* Main Explanation Text */}
                   <div className="section-explanation">
-                    {secContent.split('\n').filter(Boolean).map((para, pi) => (
-                      <div key={pi} className="section-para">
-                        {renderMathFormattedText(para)}
-                      </div>
-                    ))}
+                    <RichContentRenderer content={secContent} isEn={isEn} />
                   </div>
 
                   {/* ── CURRICULUM ILLUSTRATION & SCIENTIFIC DIAGRAM ── */}
