@@ -200,7 +200,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const summary    = (isEn ? lecture.summaryEn     : lecture.summaryAr)    || lecture.summaryAr || '';
   const keyConcepts= (isEn ? lecture.keyConceptsEn: lecture.keyConceptsAr)|| [];
   const conceptMap = (isEn ? lecture.conceptMapEn : lecture.conceptMapAr) || [];
-  const outcomes   = (isEn ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || [];
+  const outcomes   = ((isEn ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || []).filter(o => o && o.trim().length > 0);
   const vocab      = lecture.vocabulary || [];
   const warmup     = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || '';
   const unitTitle  = (isEn ? lecture.unitTitleEn : lecture.unitTitleAr) || '';
@@ -397,12 +397,17 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <div key={i} className="vocab-card">
                 <div className="vocab-term-row">
                   <span className="vocab-term-ar">{isEn ? v.termEn : v.termAr}</span>
+                  {isForeignLanguageLesson && v.termAr && v.termAr !== v.termEn && (
+                    <span className="vocab-term-translation" style={{ fontSize: '0.9rem', color: '#38bdf8', marginInlineStart: '0.5rem', fontWeight: 600 }}>
+                      ({v.termAr})
+                    </span>
+                  )}
                   {!isArabicLanguageLesson && !isEn && v.termEn !== v.termAr && (
                     <span className="vocab-term-en">{v.termEn}</span>
                   )}
                 </div>
                 <p className="vocab-definition">
-                  {isEn ? v.definitionEn : v.definitionAr}
+                  {(isEn ? v.definitionEn : v.definitionAr) || v.definitionEn || v.definitionAr || (isForeignLanguageLesson ? `المعنى والترجمة: ${v.termAr}` : '')}
                 </p>
               </div>
             ))}
@@ -426,7 +431,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           lecture.sections.map((sec, secIdx) => {
             const secTitle   = isEn ? sec.titleEn   : sec.titleAr;
             const secContent = isEn ? sec.contentEn : sec.contentAr;
-            const tips       = isEn ? sec.tipsEn    : sec.tipsAr;
+            const tips       = ((isEn ? sec.tipsEn    : sec.tipsAr) || []).filter(t => t && t.trim().length > 0);
             const check      = sec.formativeCheck;
             const ex         = sec.interactiveExample;
             const isOpen     = openSections[secIdx] !== false;

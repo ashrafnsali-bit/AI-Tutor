@@ -140,8 +140,8 @@ function buildPrimaryLectures(
         unitTitleEn: unit.unitTitleEn,
         lessonNumberAr: `الدرس ${order}: ${lesson.titleAr}`,
         lessonNumberEn: `Lesson ${order}: ${lesson.titleEn}`,
-        warmupHookAr: `مرحباً بك يا بطل! استعد لاكتشاف عالم المعرفة في ${lesson.titleAr} وفق كتاب الوزارة المدرسي الممتع.`,
-        warmupHookEn: `Welcome hero! Get ready to explore the exciting world of ${lesson.titleEn} aligned with the official textbook.`,
+        warmupHookAr: `مرحباً بك يا بطل! استعد لاكتشاف عالم المعرفة في ${lesson.titleAr} بأسلوب شيق وتطبيقات تفاعلية ممتعة.`,
+        warmupHookEn: `Welcome hero! Get ready to explore the exciting world of ${lesson.titleEn} through engaging activities.`,
         keyConceptsAr: [
           lesson.focusAr,
           'التطبيق العملي والممارسة اليومية لترسيخ الفهم والمهارات.',
@@ -154,30 +154,30 @@ function buildPrimaryLectures(
         ],
         learningOutcomesAr: [
           lesson.focusAr,
-          `حل تدريبات وأنشطة كتاب الوزارة لدرس «${lesson.titleAr}» بإتقان تام.`
+          `إتقان حل التدريبات والأنشطة التطبيقية لدرس «${lesson.titleAr}» بالكامل.`
         ],
         learningOutcomesEn: [
           lesson.focusEn,
-          `Solve all official textbook activities and exercises for "${lesson.titleEn}".`
+          `Master all activities, questions, and practical exercises for "${lesson.titleEn}".`
         ],
         vocabulary: lesson.vocabulary.map(([ar, en]) => ({
           termAr: ar,
           termEn: en,
-          definitionAr: `مفردة ومصطلح أساسي في كتاب الوزارة لدرس «${lesson.titleAr}».`,
-          definitionEn: `Core curriculum term from the official textbook for "${lesson.titleEn}".`
+          definitionAr: `المعنى: ${ar} — مفردة أساسية في درس «${lesson.titleAr}».`,
+          definitionEn: `Meaning: ${ar} — Essential vocabulary word in "${lesson.titleEn}".`
         })),
         summaryAr: lesson.focusAr,
         summaryEn: lesson.focusEn,
-        mainContentAr: `${lesson.focusAr}\n\nالنشاط العملي: ${lesson.activityAr}\n\nهذا الدرس مصمم ومطابق تماماً لكتاب وزارة التربية والتعليم والتعليم الفني المصرية (منظومة التعليم 2.0).`,
-        mainContentEn: `${lesson.focusEn}\n\nPractical Activity: ${lesson.activityEn}\n\nThis lesson is strictly aligned with the Egyptian Ministry of Education 2.0 reformed textbooks.`,
+        mainContentAr: `${lesson.focusAr}\n\nالنشاط العملي: ${lesson.activityAr}\n\nهذا الدرس مصمم لتعزيز الفهم والاستيعاب عبر التطبيق العملي والمحادثة التفاعلية.`,
+        mainContentEn: `${lesson.focusEn}\n\nPractical Activity: ${lesson.activityEn}\n\nThis lesson is designed to enhance understanding through interactive practice and conversational skills.`,
         sections: [
           {
             titleAr: 'الشرح والمفاهيم الأساسية',
             titleEn: 'Core Concepts & Explanation',
             contentAr: lesson.focusAr,
             contentEn: lesson.focusEn,
-            tipsAr: ['اقرأ نص الدرس بعناية من كتاب الوزارة المدرسي.', 'طبق المفاهيم من خلال حل الأنشطة والتطبيقات.'],
-            tipsEn: ['Read the official textbook carefully.', 'Apply concepts through hands-on practice.']
+            tipsAr: ['اقرأ الكلمات والعبارات بعناية ورددها بصوت واضح.', 'طبق المفاهيم من خلال حل الأنشطة والتطبيقات.'],
+            tipsEn: ['Read and practice the words aloud with clear pronunciation.', 'Apply concepts through hands-on practice.']
           },
           {
             titleAr: 'النشاط التطبيقي العملي',
@@ -194,8 +194,8 @@ function buildPrimaryLectures(
             optionsAr: [...lesson.optionsAr],
             optionsEn: [...lesson.optionsEn],
             correctIndex: lesson.correctIndex,
-            explanationAr: `الإجابة الصحيحة هي "${lesson.optionsAr[lesson.correctIndex]}"؛ وفق شروحات وتدريبات كتاب الوزارة.`,
-            explanationEn: `Correct answer is "${lesson.optionsEn[lesson.correctIndex]}" based on official textbook guidelines.`
+            explanationAr: `الإجابة الصحيحة هي "${lesson.optionsAr[lesson.correctIndex]}" لتعزيز الاستيعاب الصحيح للدرس.`,
+            explanationEn: `Correct answer is "${lesson.optionsEn[lesson.correctIndex]}" following the lesson guidelines.`
           }
         ],
         assessment: {
@@ -214,8 +214,8 @@ function buildPrimaryLectures(
               correctIndex: lesson.correctIndex,
               conceptTestedAr: lesson.titleAr,
               conceptTestedEn: lesson.titleEn,
-              explanationAr: `الإجابة الصحيحة هي "${lesson.optionsAr[lesson.correctIndex]}"؛ وفق شروحات وتدريبات كتاب الوزارة.`,
-              explanationEn: `Correct answer is "${lesson.optionsEn[lesson.correctIndex]}" based on official textbook guidelines.`,
+              explanationAr: `الإجابة الصحيحة هي "${lesson.optionsAr[lesson.correctIndex]}" لتعزيز الاستيعاب الصحيح للدرس.`,
+              explanationEn: `Correct answer is "${lesson.optionsEn[lesson.correctIndex]}" following the lesson guidelines.`,
               difficulty: 'easy'
             }
           ]
