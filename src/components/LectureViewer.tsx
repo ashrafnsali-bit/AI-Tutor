@@ -156,9 +156,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject);
   const lecture = useMemo(
     () => sanitizeLectureForStudents(
-      isForeignLanguageLesson ? rawLecture : ensureFourExamplesForLecture(rawLecture)
+      ensureFourExamplesForLecture(rawLecture)
     ),
-    [rawLecture, isForeignLanguageLesson]
+    [rawLecture]
   );
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
@@ -169,8 +169,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const [showAllSteps, setShowAllSteps]           = useState<Record<string, boolean>>({});
 
   const isArabicLanguageLesson = ['ARABIC_LIT', 'ARABIC_LANG', 'PRIMARY_ARABIC'].includes(rawLecture?.subject || '');
-  const isEn = lang === 'en' || isForeignLanguageLesson;
-  const t = getTranslations(isEn ? 'en' : lang);
+  const isEn = lang === 'en';
+  const t = getTranslations(isEn ? 'en' : 'ar');
 
   useEffect(() => {
     setFormativeSelected({});
@@ -242,8 +242,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               </div>
             )}
           </div>
-          <h1 className="lesson-hero-title">{title}</h1>
-          <p className="lesson-hero-subtitle">{subtitle}</p>
+          <h1 className="lesson-hero-title" dir="auto">{title}</h1>
+          <p className="lesson-hero-subtitle" dir="auto">{subtitle}</p>
 
           <div className="lesson-hero-meta">
             <span className="lesson-meta-badge">
@@ -352,7 +352,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
             </h2>
           </div>
           <div className="warmup-bubble">
-            <p className="warmup-text">{warmup}</p>
+            <p className="warmup-text" dir="auto">{warmup}</p>
           </div>
         </section>
       )}
@@ -374,7 +374,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                 <div className="outcome-check-circle">
                   <CheckCircle2 size={14} />
                 </div>
-                <span className="outcome-text">{out}</span>
+                <span className="outcome-text" dir="auto">{out}</span>
               </div>
             ))}
           </div>
@@ -406,7 +406,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                     <span className="vocab-term-en">{v.termEn}</span>
                   )}
                 </div>
-                <p className="vocab-definition">
+                <p className="vocab-definition" dir="auto">
                   {(isEn ? v.definitionEn : v.definitionAr) || v.definitionEn || v.definitionAr || (isForeignLanguageLesson ? `المعنى والترجمة: ${v.termAr}` : '')}
                 </p>
               </div>
@@ -508,7 +508,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                               <Sparkles size={13} />
                               {isEn ? `Interactive Example ${secIdx + 1} of 4` : `مثال توضيحي تفاعلي (${secIdx + 1} من 4)`}
                             </span>
-                            <h4 className="we-title">
+                            <h4 className="we-title" dir="auto">
                               {cleanExampleTitle(isEn ? ex.titleEn : ex.titleAr)}
                             </h4>
                           </div>
@@ -529,7 +529,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             <BookOpen size={14} />
                             <span>{isEn ? 'Problem / Governing Rule' : 'نص المسألة / القاعدة الرياضية'}</span>
                           </div>
-                          <div className="we-problem-content">
+                          <div className="we-problem-content" dir="auto">
                             {renderMathFormattedText(ex.equation)}
                           </div>
                         </div>
@@ -560,11 +560,11 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             >
                               <div className="we-step-num">{step.stepNumber}</div>
                               <div className="we-step-content">
-                                <p className="we-step-text">
+                                <p className="we-step-text" dir="auto">
                                   {renderMathFormattedText(stepText)}
                                 </p>
                                 {stepNote && (
-                                  <span className="we-step-note">
+                                  <span className="we-step-note" dir="auto">
                                     <Lightbulb size={12} /> {stepNote}
                                   </span>
                                 )}
@@ -616,7 +616,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             <div className="takeaway-title" style={{ fontSize: '0.78rem', color: '#fbbf24', fontWeight: 800, marginBottom: '0.2rem' }}>
                               {isEn ? 'Golden Pedagogical Takeaway' : 'الفائدة التربوية الذهبية'}
                             </div>
-                            <p className="takeaway-text">
+                            <p className="takeaway-text" dir="auto">
                               {renderMathFormattedText(isEn ? ex.takeawayEn : ex.takeawayAr)}
                             </p>
                           </div>
@@ -636,7 +636,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                         {tips.map((tip, ti) => (
                           <li key={ti} className="tips-v2-item">
                             <span className="tip-dot">◆</span>
-                            <span>{tip}</span>
+                            <span dir="auto">{tip}</span>
                           </li>
                         ))}
                       </ul>
@@ -662,7 +662,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             <span className="fc-label-v2">
                               {isEn ? 'Check Your Understanding' : 'تحقق من فهمك'}
                             </span>
-                            <p className="fc-question-v2">{qText}</p>
+                            <p className="fc-question-v2" dir="auto">{qText}</p>
                           </div>
                         </div>
 
@@ -686,7 +686,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                                 <span className="fc-opt-letter">
                                   {['أ', 'ب', 'ج', 'د'][oIdx] || String.fromCharCode(65 + oIdx)}
                                 </span>
-                                <span className="fc-opt-text">{opt}</span>
+                                <span className="fc-opt-text" dir="auto">{opt}</span>
                                 {isChecked && oIdx === check.correctIndex && (
                                   <CheckCircle2 size={14} className="fc-opt-icon-ok" />
                                 )}

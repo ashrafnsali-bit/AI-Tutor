@@ -29,7 +29,8 @@ function mirror(node: unknown, depth: number): unknown {
       const enKey = `${key.slice(0, -2)}En`;
       const enValue = source[enKey];
       const keep = depth === 0 && KEEP_ARABIC_TOP_LEVEL.has(key);
-      if (!keep && hasContent(enValue) && typeof enValue === typeof value) {
+      // Only fallback to English if Arabic is missing/empty
+      if (!keep && !hasContent(value) && hasContent(enValue) && typeof enValue === typeof value) {
         result[key] = enValue;
         continue;
       }

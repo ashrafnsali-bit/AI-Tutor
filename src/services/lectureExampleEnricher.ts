@@ -28,7 +28,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
     ? lecture.keyConceptsEn
     : [titleEn, 'Practical Application', 'Analysis & Deduction', 'Verification & Problem Solving'];
   
-  const subject = lecture.id?.toLowerCase() || '';
+  const subject = (lecture.subject || lecture.id || '').toLowerCase();
 
   // 1. Math / Primary Math
   if (subject.includes('math') || subject.includes('calculus') || subject.includes('algebra') || subject.includes('geometry')) {
@@ -247,7 +247,61 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
     ];
   }
 
-  // 5. Default General / Computer Science / Social Studies / General Curriculum
+  // 5. English & Foreign Languages (اللغة الإنجليزية واللغات الأجنبية)
+  if (subject.includes('english') || subject.includes('french') || subject.includes('german') || subject.includes('italian')) {
+    return [
+      {
+        titleAr: `مثال تطبيقي 1 من 4: المحادثة والتواصل اللغوي لـ (${concepts[0] || title})`,
+        titleEn: `Worked Example 1 of 4: Conversational Fluency & Dialogue for (${conceptsEn[0] || titleEn})`,
+        equation: 'Linguistic Model: Greeting / Introduction  -->  Response & Active Exchange',
+        steps: [
+          { stepNumber: 1, textAr: 'الاستماع إلى المحادثة وتحديد عبارة البدء والتحية المناسبة للموقف.', textEn: 'Listen to the dialogue and identify the appropriate opening greeting for the context.', noteAr: 'بدء المحادثة', noteEn: 'Conversation opening' },
+          { stepNumber: 2, textAr: 'استخدام العبارة النموذجية لتقديم النفس أو السؤال بنطق سليم وواضح.', textEn: 'Use the target sentence structure to introduce oneself or ask a question with clear pronunciation.', noteAr: 'التحدث بوضوح', noteEn: 'Clear articulation' },
+          { stepNumber: 3, textAr: 'الرد على الطرف الآخر والتفاعل الإيجابي مع مراعاة قواعد اللباقة.', textEn: 'Respond appropriately and engage in active, polite exchange.', noteAr: 'الرد والتفاعل', noteEn: 'Active response' }
+        ],
+        takeawayAr: 'المحادثة المستمرة وتكرار العبارات اليومية بصوت مسموع يكسبك الثقة والطلاقة اللغوية السريعة.',
+        takeawayEn: 'Consistent conversational practice and speaking aloud builds confidence and fluency quickly.'
+      },
+      {
+        titleAr: `مثال تطبيقي 2 من 4: القواعد والتراكيب اللغوية (Grammar & Structure) لـ (${concepts[1] || concepts[0] || title})`,
+        titleEn: `Worked Example 2 of 4: Grammar & Sentence Structure for (${conceptsEn[1] || conceptsEn[0] || titleEn})`,
+        equation: 'Grammar Rule: Subject + Verb + Complement / Question Formation',
+        steps: [
+          { stepNumber: 1, textAr: 'تحديد الفاعل (Subject) واختيار الفعل المساعد أو الصيغة المناسبة للزمن.', textEn: 'Identify the subject pronoun and select the matching auxiliary or verb form.', noteAr: 'تحديد الفاعل', noteEn: 'Subject identification' },
+          { stepNumber: 2, textAr: 'ترتيب أركان الجملة وفق القاعدة النحوية الصحيحة دون ترجمة حرفية.', textEn: 'Arrange sentence elements in standard English order without literal translation.', noteAr: 'ترتيب الجملة', noteEn: 'Word order' },
+          { stepNumber: 3, textAr: 'التحقق من التوافق بين الفاعل والفعل والتأكد من علامات الترقيم (Punctuation).', textEn: 'Ensure subject-verb agreement and verify correct capitalization and punctuation.', noteAr: 'التحقق والضبط', noteEn: 'Agreement & punctuation' }
+        ],
+        takeawayAr: 'فهم منطق قواعد اللغة الإنجليزية وترتيب الكلمات يمنع الأخطاء الشائعة ويمنحك كتابة سليمة ومتقنة.',
+        takeawayEn: 'Understanding sentence structure and word order ensures accurate written and spoken English.'
+      },
+      {
+        titleAr: `مثال تطبيقي 3 من 4: الصوتيات والنطق السليم (Phonics & Pronunciation) لـ (${concepts[2] || concepts[0] || title})`,
+        titleEn: `Worked Example 3 of 4: Phonics & Pronunciation Practice for (${conceptsEn[2] || conceptsEn[0] || titleEn})`,
+        equation: 'Phonetic Drill: Letter Sound /b/ /s/ /t/  -->  Word Blending  -->  Fluent Reading',
+        steps: [
+          { stepNumber: 1, textAr: 'التركيز على مخرج صوت الحرف المستهدف وتمييزه عن الحروف المتقاربة.', textEn: 'Focus on the target phoneme sound and distinguish it from similar sounds.', noteAr: 'تمييز الصوت', noteEn: 'Sound recognition' },
+          { stepNumber: 2, textAr: 'دمج الصوت في بداية الكلمات ووسطها ونهايتها مع التكرار الإيقاعي.', textEn: 'Blend the target sound in word initial, medial, and final positions.', noteAr: 'دمج الأصوات', noteEn: 'Sound blending' },
+          { stepNumber: 3, textAr: 'قراءة كلمات كاملة تبدأ بالصوت المستهدف (مثل: book, bag, busy bee) بطلاقة.', textEn: 'Read complete words featuring the sound with rhythm and accuracy.', noteAr: 'القراءة الطليقة', noteEn: 'Fluent reading' }
+        ],
+        takeawayAr: 'إتقان الصوتيات (Phonics) هو المفتاح السحري لتعلم القراءة الصحيحة والتهجئة الدقيقة للكلمات.',
+        takeawayEn: 'Mastering phonics is the foundation for accurate reading, clear pronunciation, and confident spelling.'
+      },
+      {
+        titleAr: `مثال تطبيقي 4 من 4: المفردات وسياقات الاستخدام (Vocabulary & Context) لـ (${concepts[3] || concepts[1] || title})`,
+        titleEn: `Worked Example 4 of 4: Vocabulary in Context & Daily Life for (${conceptsEn[3] || conceptsEn[1] || titleEn})`,
+        equation: 'Vocabulary Application: Word Meaning  -->  Sentence Context  -->  Everyday Situations',
+        steps: [
+          { stepNumber: 1, textAr: 'معرفة معنى الكلمة الجديدة وربطها بالصورة أو الموقف المعبر عنها.', textEn: 'Learn the new word meaning and associate it with its visual or situational representation.', noteAr: 'فهم المعنى', noteEn: 'Contextual meaning' },
+          { stepNumber: 2, textAr: 'توظيف الكلمة في جملة مفيدة بسيطة تصف شيئاً في غرفتك أو مدرستك.', textEn: 'Place the word into a simple, meaningful sentence describing everyday surroundings.', noteAr: 'التوظيف في جملة', noteEn: 'Sentence formation' },
+          { stepNumber: 3, textAr: 'استخدام الكلمة في إجابة سؤال أو حوار مع زميل أو ولي الأمر.', textEn: 'Use the word actively when answering questions or conversing with peers.', noteAr: 'الممارسة الحية', noteEn: 'Active usage' }
+        ],
+        takeawayAr: 'حفظ الكلمات داخل جمل ومواقف حقيقية يرسخها في الذاكرة طويلة الأمد ويمنع نسيانها نهائياً.',
+        takeawayEn: 'Learning vocabulary in authentic context cements retention and makes recall effortless.'
+      }
+    ];
+  }
+
+  // 6. Default General / Computer Science / Social Studies / General Curriculum
   return [
     {
       titleAr: `مثال تطبيقي 1 من 4: تأسيس المفهوم والتحليل الأولي لـ (${concepts[0] || title})`,
