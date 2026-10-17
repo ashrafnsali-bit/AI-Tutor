@@ -15,7 +15,9 @@ import {
   isSudanPublicGrade11SubjectAvailable,
   getSudanPublicGrade12Subjects,
   isSudanPublicGrade12SubjectAvailable,
-  isEnglishCourseAvailable
+  isEnglishCourseAvailable,
+  isEgyptPrimarySubjectAvailable,
+  isEgyptPrepSubjectAvailable
 } from './data/curriculumData';
 import {
   getActiveCurriculumCountry,
@@ -131,7 +133,9 @@ export function App() {
         if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(merged.gradeLevel)) {
           // Primary School: Strictly GENERAL education
           merged.specialization = 'GENERAL';
-          if (!PRIMARY_SUBJS.includes(merged.subject) &&
+          const validEgyptPrimary = merged.country === 'EG' && isEgyptPrimarySubjectAvailable(merged.subject, merged.gradeLevel, merged.educationType);
+          const validEnglish = merged.subject === 'ENGLISH' && isEnglishCourseAvailable(merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack);
+          if (!validEgyptPrimary && !validEnglish && !PRIMARY_SUBJS.includes(merged.subject) &&
               !(merged.subject === 'TAJWEED' &&
                 isSaudiPublicTajweedAvailable(merged.country, merged.gradeLevel, merged.educationType)) &&
               !(merged.subject === 'QURAN_RECITATION' &&
@@ -156,6 +160,8 @@ export function App() {
         } else if (['G7', 'G8', 'G9'].includes(merged.gradeLevel)) {
           // Middle School: No specialization tracks! Must be GENERAL
           merged.specialization = 'GENERAL';
+          const validEgyptPrep = merged.country === 'EG' && isEgyptPrepSubjectAvailable(merged.subject, merged.gradeLevel, merged.educationType);
+          const validEnglish = merged.subject === 'ENGLISH' && isEnglishCourseAvailable(merged.country, merged.gradeLevel, merged.educationType, merged.educationTrack);
           const validSudanMiddleSubject = isSudanPublicMiddleSubjectAvailable(
             merged.subject,
             merged.country,
@@ -163,7 +169,7 @@ export function App() {
             merged.educationType,
             merged.educationTrack
           );
-          if ((merged.country === 'SD' && ['G7', 'G8'].includes(merged.gradeLevel)
+          if (!validEgyptPrep && !validEnglish && (merged.country === 'SD' && ['G7', 'G8'].includes(merged.gradeLevel)
             ? !validSudanMiddleSubject
             : !MIDDLE_SUBJS.includes(merged.subject)) &&
               !(merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
@@ -794,7 +800,9 @@ export function App() {
 
     if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(sanitized.gradeLevel)) {
       sanitized.specialization = 'GENERAL';
-      if (!PRIMARY_SUBJS.includes(sanitized.subject) &&
+      const validEgyptPrimary = sanitized.country === 'EG' && isEgyptPrimarySubjectAvailable(sanitized.subject, sanitized.gradeLevel, sanitized.educationType);
+      const validEnglish = sanitized.subject === 'ENGLISH' && isEnglishCourseAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack);
+      if (!validEgyptPrimary && !validEnglish && !PRIMARY_SUBJS.includes(sanitized.subject) &&
           !(sanitized.subject === 'TAJWEED' &&
             isSaudiPublicTajweedAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType)) &&
           !(sanitized.subject === 'QURAN_RECITATION' &&
@@ -812,6 +820,8 @@ export function App() {
       }
     } else if (['G7', 'G8', 'G9'].includes(sanitized.gradeLevel)) {
       sanitized.specialization = 'GENERAL';
+      const validEgyptPrep = sanitized.country === 'EG' && isEgyptPrepSubjectAvailable(sanitized.subject, sanitized.gradeLevel, sanitized.educationType);
+      const validEnglish = sanitized.subject === 'ENGLISH' && isEnglishCourseAvailable(sanitized.country, sanitized.gradeLevel, sanitized.educationType, sanitized.educationTrack);
       const validSudanMiddleSubject = isSudanPublicMiddleSubjectAvailable(
         sanitized.subject,
         sanitized.country,
@@ -819,7 +829,7 @@ export function App() {
         sanitized.educationType,
         sanitized.educationTrack
       );
-      if ((sanitized.country === 'SD' && ['G7', 'G8'].includes(sanitized.gradeLevel)
+      if (!validEgyptPrep && !validEnglish && (sanitized.country === 'SD' && ['G7', 'G8'].includes(sanitized.gradeLevel)
         ? !validSudanMiddleSubject
         : !MIDDLE_SUBJS.includes(sanitized.subject)) &&
           !(sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&

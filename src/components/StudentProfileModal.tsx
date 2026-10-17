@@ -171,7 +171,8 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     (subject === 'VISUAL_ARTS' && isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType || 'PUBLIC')) ||
     (subject === 'LIFE_SKILLS' && isSaudiPublicLifeSkillsAvailable(country, gradeLevel, educationType || 'PUBLIC', educationTrack || 'GENERAL')) ||
     (subject === 'COMPUTER_SCIENCE' && isSaudiPrimaryDigitalSkillsAvailable(gradeLevel, country, educationType)) ||
-    (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack));
+    (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack)) ||
+    (subject === 'ENGLISH' && isEnglishCourseAvailable(country, gradeLevel, educationType || 'PUBLIC', educationTrack || 'GENERAL'));
   };
   const isMiddleSubjectAvailable = (
     subject: Subject,
@@ -192,7 +193,8 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       educationTrack || 'GENERAL'
     )
     : MIDDLE_SUBJECTS.includes(subject) ||
-      (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack));
+      (subject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(gradeLevel, country, educationType, educationTrack)) ||
+      (subject === 'ENGLISH' && isEnglishCourseAvailable(country, gradeLevel, educationType || 'PUBLIC', educationTrack || 'GENERAL'));
   };
 
   const [formData, setFormData] = useState<StudentProfile>(() => {

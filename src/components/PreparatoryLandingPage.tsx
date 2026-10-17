@@ -27,7 +27,10 @@ import {
   isSudanPublicGrade10SubjectAvailable,
   isSudanPublicGrade11SubjectAvailable,
   getSudanPublicGrade12Subjects,
-  isSudanPublicGrade12SubjectAvailable
+  isSudanPublicGrade12SubjectAvailable,
+  isEgyptPrimarySubjectAvailable,
+  isEgyptPrepSubjectAvailable,
+  isEnglishCourseAvailable
 } from '../data/curriculumData';
 import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
 import { getSubjectVisual, getStageVisual } from '../data/subjectVisuals';
@@ -318,7 +321,9 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
 
     if (inPrimary) {
       setSelectedTrack('GENERAL');
-      if (!['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'].includes(selectedSubject) &&
+      const validEgyptPrimary = selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
+      const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
+      if (!validEgyptPrimary && !validEnglish && !['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'].includes(selectedSubject) &&
           !(selectedSubject === 'TAJWEED' &&
             isSaudiPublicTajweedAvailable(
               selectedCountry,
@@ -362,7 +367,9 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       }
     } else if (inMiddle) {
       setSelectedTrack('GENERAL');
-      if (!['MATH', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'].includes(selectedSubject) &&
+      const validEgyptPrep = selectedCountry === 'EG' && isEgyptPrepSubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
+      const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
+      if (!validEgyptPrep && !validEnglish && !['MATH', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'].includes(selectedSubject) &&
           !(selectedCountry === 'SD' &&
             isSudanPublicMiddleSubjectAvailable(
               selectedSubject,
@@ -556,17 +563,12 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           icon: <Award size={28} />,
           color: '#fbbf24'
         },
-        ...(isSudanPublicGrade4SubjectAvailable('ENGLISH', selectedCountry, selectedGrade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
-          isSudanPublicGrade5SubjectAvailable('ENGLISH', selectedCountry, selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
-          isSudanPublicGrade6SubjectAvailable('ENGLISH', selectedCountry, selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
+        ...(isEnglishCourseAvailable(selectedCountry, selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
           id: 'ENGLISH' as const,
-          nameAr: 'اللغة الإنجليزية',
-          nameEn: 'English',
-          descAr: 'الاستماع والتحدث والقراءة والكتابة',
-          descEn: 'Listening, speaking, reading and writing',
+          nameAr: getNationalSubjectLabel('ENGLISH', selectedCountry, selectedGrade, 'ar', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack),
+          nameEn: getNationalSubjectLabel('ENGLISH', selectedCountry, selectedGrade, 'en', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack),
+          descAr: selectedCountry === 'EG' ? 'منهج Connect المعتمد - محادثة وقراءة واستماع وكتابة' : 'الاستماع والتحدث والقراءة والكتابة',
+          descEn: selectedCountry === 'EG' ? 'Official Connect curriculum - speaking, reading & writing' : 'Listening, speaking, reading and writing',
           icon: <BookOpen size={28} />,
           color: '#a78bfa'
         }] : []),
@@ -575,7 +577,8 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           isSudanPublicGrade5SubjectAvailable('COMPUTER_SCIENCE', selectedCountry, selectedGrade,
             normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           isSudanPublicGrade6SubjectAvailable('COMPUTER_SCIENCE', selectedCountry, selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
+          (selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable('COMPUTER_SCIENCE', selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType))) ? [{
           id: 'COMPUTER_SCIENCE' as const,
           nameAr: 'تكنولوجيا المعلومات والاتصالات',
           nameEn: 'Information and Communication Technology',
@@ -587,24 +590,26 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         ...((isSudanPublicGrade5SubjectAvailable('GEOGRAPHY', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           isSudanPublicGrade6SubjectAvailable('GEOGRAPHY', selectedCountry, selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack)) ? [{
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
+          (selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable('GEOGRAPHY', selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))) ? [{
           id: 'GEOGRAPHY' as const,
-          nameAr: 'الجغرافيا',
+          nameAr: selectedCountry === 'EG' ? 'الدراسات الاجتماعية (الجغرافيا)' : 'الجغرافيا',
           nameEn: 'Geography',
-          descAr: 'الخرائط والبيئات والموارد في السودان',
-          descEn: 'Maps, environments and resources in Sudan',
+          descAr: selectedCountry === 'EG' ? 'البيئات والموارد الطبيعية والموقع الجغرافي' : 'الخرائط والبيئات والموارد في السودان',
+          descEn: 'Maps, environments and resources',
           icon: <Globe2 size={28} />,
           color: '#38bdf8'
         }] : []),
         ...((isSudanPublicGrade5SubjectAvailable('HISTORY', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           isSudanPublicGrade6SubjectAvailable('HISTORY', selectedCountry, selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack)) ? [{
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
+          (selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable('HISTORY', selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))) ? [{
           id: 'HISTORY' as const,
-          nameAr: 'التاريخ',
+          nameAr: selectedCountry === 'EG' ? 'الدراسات الاجتماعية (التاريخ)' : 'التاريخ',
           nameEn: 'History',
-          descAr: 'محطات وشخصيات من تاريخ السودان',
-          descEn: 'People and events from Sudan’s history',
+          descAr: selectedCountry === 'EG' ? 'شخصيات وأحداث وحضارات عبر العصور' : 'محطات وشخصيات من تاريخ السودان',
+          descEn: 'Historical figures and civilizations',
           icon: <BookOpen size={28} />,
           color: '#f59e0b'
         }] : []),
@@ -695,12 +700,11 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           icon: <Code2 size={28} />,
           color: '#c084fc'
         },
-        ...(isSudanPublicMiddleSubjectAvailable('ENGLISH', selectedCountry, selectedGrade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
+        ...(isEnglishCourseAvailable(selectedCountry, selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
           id: 'ENGLISH' as const,
-          nameAr: `اللغة الإنجليزية (SMILE Book ${selectedGrade === 'G8' ? '8' : '7'})`,
-          nameEn: `English (SMILE Book ${selectedGrade === 'G8' ? '8' : '7'})`,
-          descAr: 'ثماني وحدات في مهارات اللغة والتواصل',
+          nameAr: getNationalSubjectLabel('ENGLISH', selectedCountry, selectedGrade, 'ar', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack),
+          nameEn: getNationalSubjectLabel('ENGLISH', selectedCountry, selectedGrade, 'en', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack),
+          descAr: selectedCountry === 'EG' ? 'منهج Prep Connect - لغة وقواعد وكتابة متقدمة' : selectedCountry === 'SD' ? `ثماني وحدات في مهارات اللغة والتواصل (SMILE Book ${selectedGrade === 'G8' ? '8' : '7'})` : 'مهارات اللغة الإنجليزية والتواصل',
           descEn: 'Eight units in language and communication skills',
           icon: <BookOpen size={28} />,
           color: '#a78bfa'
