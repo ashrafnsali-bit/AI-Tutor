@@ -79,6 +79,19 @@ export function getEgyptPrimarySubjects(gradeLevel: GradeLevel = 'G4'): Subject[
 // ---------------------------------------------------------------------------
 // Helper Builder for Custom Egyptian Primary Courses (Connect English, ICT, Geography, History)
 // ---------------------------------------------------------------------------
+interface PrimaryWorkedExample {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  problemAr: string;
+  problemEn: string;
+  stepsAr: string[];
+  stepsEn?: string[];
+  solutionAr: string;
+  takeawayAr: string;
+  takeawayEn?: string;
+}
+
 interface PrimaryLessonDefinition {
   titleAr: string;
   titleEn: string;
@@ -94,6 +107,12 @@ interface PrimaryLessonDefinition {
   optionsEn: string[];
   correctIndex: number;
   vocabulary: [string, string][];
+  imageUrl?: string;
+  diagramTitleAr?: string;
+  diagramTitleEn?: string;
+  diagramCaptionAr?: string;
+  diagramCaptionEn?: string;
+  workedExamples?: PrimaryWorkedExample[];
 }
 
 interface PrimaryUnitDefinition {
@@ -116,6 +135,29 @@ function buildPrimaryLectures(
     unit.lessons.map((lesson) => {
       const order = runningOrder++;
       const id = `eg-prim-${gradeLevel.toLowerCase()}-${subject.toLowerCase().replace(/_/g, '-')}-${order}`;
+      const defaultImageUrl = subject === 'ENGLISH' && gradeLevel === 'G1'
+        ? '/curriculum_covers/egypt_primary_1_english.png'
+        : lesson.imageUrl;
+
+      const diagramObj = defaultImageUrl ? {
+        id: `diag-${id}`,
+        figureNumberAr: `نموذج الكتاب (${order})`,
+        figureNumberEn: `Textbook Model (${order})`,
+        titleAr: lesson.diagramTitleAr || `كتاب الوزارة المعتمد: ${lesson.titleAr}`,
+        titleEn: lesson.diagramTitleEn || `Official Curriculum: ${lesson.titleEn}`,
+        captionAr: lesson.diagramCaptionAr || `نموذج مصور من كتاب وزارة التربية والتعليم الرسمي - Connect 1`,
+        captionEn: lesson.diagramCaptionEn || `Illustrated model from the official Ministry of Education textbook - Connect 1`,
+        diagramType: 'custom_svg' as any,
+        imageUrl: defaultImageUrl,
+        keyLabels: [
+          { tagAr: 'كتاب الوزارة الرسمي', tagEn: 'Official MOE Book', color: '#10b981' },
+          { tagAr: 'نماذج وتطبيقات', tagEn: 'Worked Models', color: '#6366f1' },
+          { tagAr: 'صوتيات واستماع', tagEn: 'Phonics & Audio', color: '#f59e0b' }
+        ],
+        takeawayFormulaAr: 'تطبيق مباشر يطابق نماذج وتمارين الكتاب المدرسي.',
+        takeawayFormulaEn: 'Direct application matching official textbook exercises.'
+      } : undefined;
+
       return {
         id,
         order,
@@ -176,6 +218,7 @@ function buildPrimaryLectures(
             titleEn: 'Core Concepts & Explanation',
             contentAr: lesson.focusAr,
             contentEn: lesson.focusEn,
+            diagram: diagramObj,
             tipsAr: ['اقرأ الكلمات والعبارات بعناية ورددها بصوت واضح.', 'طبق المفاهيم من خلال حل الأنشطة والتطبيقات.'],
             tipsEn: ['Read and practice the words aloud with clear pronunciation.', 'Apply concepts through hands-on practice.']
           },
@@ -184,8 +227,23 @@ function buildPrimaryLectures(
             titleEn: 'Hands-on Activity',
             contentAr: lesson.activityAr,
             contentEn: lesson.activityEn
+          },
+          {
+            titleAr: 'الصوتيات والتدريب على النطق السليم',
+            titleEn: 'Phonics & Pronunciation Practice',
+            contentAr: 'تدريبات صوتية مكثفة للتمييز بين أصوات الحروف ومخارجها الصحيحة، مع أمثلة من كلمات الكتاب المدرسي المقررة.',
+            contentEn: 'Focused phonics drills distinguishing letter sounds and standard pronunciation using textbook vocabulary.'
+          },
+          {
+            titleAr: 'المحادثة والتواصل اليومي',
+            titleEn: 'Conversational Communication & Role Play',
+            contentAr: 'محاكاة المحادثات الواقعية في الفصل والمنزل باستخدام الجمل والأنماط اللغوية المستفادة من الدرس.',
+            contentEn: 'Real-world dialogue simulation applying targeted sentence patterns in class and home environments.'
           }
         ],
+        diagramType: defaultImageUrl ? ('custom_svg' as any) : undefined,
+        diagramData: diagramObj,
+        workedExamples: lesson.workedExamples,
         formativeAssessment: [
           {
             id: `${id}-check`,
@@ -226,115 +284,1142 @@ function buildPrimaryLectures(
 }
 
 // ---------------------------------------------------------------------------
-// 1. Egyptian Primary English (Connect Series - كونكت 1 إلى 6)
+// 1. Egyptian Primary English (Connect 1 - الكتاب الوزاري الرسمي المحدث 2024/2025)
 // ---------------------------------------------------------------------------
 
 const connectG1Units: PrimaryUnitDefinition[] = [
   {
-    unitTitleAr: 'المحور الأول: من أكون؟ (Theme 1: Who Am I?)',
-    unitTitleEn: 'Theme 1: Who Am I?',
+    unitTitleAr: 'الوحدة 1: أهلاً بكم في مدرستي (Unit 1: Welcome to My School)',
+    unitTitleEn: 'Unit 1: Welcome to My School',
     lessons: [
       {
-        titleAr: 'الوحدة 1: أهلاً! (Hello!) - التحيات والتعارف',
-        titleEn: 'Unit 1: Hello! - Greetings and Introductions',
-        subtitleAr: 'التحيات: Hello, Goodbye, My name is... ونطق حرف B',
-        subtitleEn: 'Greetings, personal introduction, and phonics sound /b/',
-        focusAr: 'يتعلم التلميذ تقديم نفسه باللغة الإنجليزية: Hello! I am Hany. I am Amira. ونطق كلمات تبدأ بصوت /b/ مثل book, bag, bee.',
-        focusEn: 'Students learn to introduce themselves: Hello! I am Hany. Phonics /b/: book, bag, blue, busy bee.',
-        activityAr: 'تدريب المحادثة مع الأصدقاء: قل Hello! ثم اذكر اسمك، وحدد الأشياء التي تبدأ بحرف B.',
-        activityEn: 'Practice speaking with peers: Say Hello, state your name, identify /b/ items.',
-        questionAr: 'ما العبارة الصحيحة لتقديم نفسك بالإنجليزية؟',
-        questionEn: 'What is the correct sentence to introduce yourself?',
-        optionsAr: ['Hello, I am Adam.', 'Goodbye car.', 'Open the bag book.'],
-        optionsEn: ['Hello, I am Adam.', 'Goodbye car.', 'Open the bag book.'],
+        titleAr: 'التحيات وتكوين الصداقات والأدوات المدرسية',
+        titleEn: 'Greetings, Friends & Classroom Objects',
+        subtitleAr: 'التحيات: Hello, Goodbye, My name is... والأدوات: Bag, Book, Pencil, Desk',
+        subtitleEn: 'Greetings, names, friendship, and essential classroom tools',
+        focusAr: 'يتعلم التلميذ التحية والتعارف: Hello, I am Adam. What is your name? وتسمية الأدوات المدرسية: book, pencil, bag, desk, chair.',
+        focusEn: 'Students learn introductions: Hello, I am Adam. What is your name? and identify classroom items: book, pencil, bag, desk, chair.',
+        activityAr: 'تدريب ثنائي مع زميلك: قل مرحباً وعرفه باسمك ثم أشر إلى حقيبتك وكتابك بالإنجليزية.',
+        activityEn: 'Pair practice: Greet your partner, introduce yourself, and point to your bag and book.',
+        questionAr: 'ما العبارة الصحيحة عندما تسأل صديقك الجديد عن اسمه؟',
+        questionEn: 'What is the correct question to ask a new friend their name?',
+        optionsAr: ['What is your name?', 'How old are you?', 'Where is the book?'],
+        optionsEn: ['What is your name?', 'How old are you?', 'Where is the book?'],
         correctIndex: 0,
-        vocabulary: [['مرحباً', 'Hello'], ['اسمي', 'My name is'], ['حقيبة', 'Bag'], ['كتاب', 'Book']]
+        vocabulary: [
+          ['مرحباً', 'Hello'],
+          ['إلى اللقاء', 'Goodbye'],
+          ['أصدقاء', 'Friends'],
+          ['يصافح باليد', 'Shake hands'],
+          ['حقيبة مدرسية', 'Bag'],
+          ['كتاب', 'Book'],
+          ['قلم رصاص', 'Pencil'],
+          ['معلم', 'Teacher']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'الوحدة الأولى: أهلاً بكم في مدرستي (Connect 1)',
+        diagramTitleEn: 'Unit 1: Welcome to My School (Connect 1)',
+        diagramCaptionAr: 'الغلاف الرسمي المعتمد من وزارة التربية والتعليم لكتاب Connect 1 وتطبيقات الوحدة الأولى',
+        diagramCaptionEn: 'Official Ministry of Education Connect 1 curriculum textbook and Unit 1 activities',
+        workedExamples: [
+          {
+            id: 'we-g1-u1-1',
+            titleAr: 'النموذج 1 من 4: محادثة التعارف وتقديم النفس',
+            titleEn: 'Worked Example 1 of 4: Introduction and Greetings',
+            problemAr: 'كيف تقدم نفسك لزميلك الجديد وتسأله عن اسمه بأسلوب مهذب؟',
+            problemEn: 'How do you introduce yourself and politely ask a new friend their name?',
+            stepsAr: [
+              'الخطوة 1: ابدأ بالتحية الودودة: "Hello!" مع الابتسامة.',
+              'الخطوة 2: اذكر اسمك بوضوح: "I am Adam" أو "My name is Adam".',
+              'الخطوة 3: وجه السؤال لزميلك: "What is your name?" وصافحه باليد.'
+            ],
+            stepsEn: [
+              'Step 1: Start with a friendly greeting: "Hello!".',
+              'Step 2: State your name clearly: "I am Adam" or "My name is Adam".',
+              'Step 3: Ask politely: "What is your name?" and shake hands.'
+            ],
+            solutionAr: '"Hello! My name is Adam. What is your name?" — نموذج معتمد من كتاب الوزارة.',
+            takeawayAr: 'التحية والمصافحة تصنع صداقات رائعة وتساعد على التعلم التعاوني في الفصل.',
+            takeawayEn: 'Greeting and shaking hands build wonderful friendships in class.'
+          },
+          {
+            id: 'we-g1-u1-2',
+            titleAr: 'النموذج 2 من 4: تسمية الأدوات المدرسية المحيطة',
+            titleEn: 'Worked Example 2 of 4: Naming Classroom Objects',
+            problemAr: 'أمامك قلم وحقيبة وكتاب، كيف تصف كل أداة باللغة الإنجليزية؟',
+            problemEn: 'You have a pencil, bag, and book. How do you identify each in English?',
+            stepsAr: [
+              'الخطوة 1: أشر للقلم وقل: "It is a pencil".',
+              'الخطوة 2: أشر للكتاب وقل: "It is a book".',
+              'الخطوة 3: أشر للحقيبة وقل: "It is a bag".'
+            ],
+            solutionAr: 'استخدام أداة النكرة "a" مع المفرد المعدود: a book, a pencil, a bag.',
+            takeawayAr: 'أداة النكرة "a" تسبق الأسماء المفردة التي تبدأ بصوت ساكن.',
+            takeawayEn: 'The indefinite article "a" precedes singular countable nouns.'
+          },
+          {
+            id: 'we-g1-u1-3',
+            titleAr: 'النموذج 3 من 4: التمييز بين التحية وتوديع الفصل',
+            titleEn: 'Worked Example 3 of 4: Distinguishing Hello vs Goodbye',
+            problemAr: 'متى نستخدم "Hello" ومتى نستخدم "Goodbye" خلال اليوم الدراسي؟',
+            problemEn: 'When do we use "Hello" and when do we use "Goodbye" during the school day?',
+            stepsAr: [
+              'الخطوة 1: عند دخول الفصل في الصباح نلتقي بالمعلم والزملاء فنقول: "Hello".',
+              'الخطوة 2: عند انتهاء اليوم الدراسي والاستعداد للمغادرة نقول: "Goodbye".'
+            ],
+            solutionAr: 'Hello للترحيب واللقاء، و Goodbye للوداع عند المغادرة.',
+            takeawayAr: 'اختيار العبارة الصحيحة بحسب التوقيت يعكس اللباقة والاحترام.',
+            takeawayEn: 'Using the right expression at the right time shows politeness and awareness.'
+          },
+          {
+            id: 'we-g1-u1-4',
+            titleAr: 'النموذج 4 من 4: الأوامر المدرسية وتنفيذ التوجيهات',
+            titleEn: 'Worked Example 4 of 4: Following Classroom Commands',
+            problemAr: 'عندما يقول المعلم: "Open your book"، كيف يستجيب التلميذ بدقة؟',
+            problemEn: 'When the teacher says "Open your book", how does the student respond correctly?',
+            stepsAr: [
+              'الخطوة 1: الاستماع باهتمام للأمر الصوتي: "Open your book".',
+              'الخطوة 2: فتح الكتاب المدرسي أمامك على الصفحة المطلوبة.',
+              'الخطوة 3: المقارنة مع عكس الأمر: "Close your book" (أغلق كتابك).'
+            ],
+            solutionAr: 'فعل الأمر في اللغة الإنجليزية يبدأ بالفعل في المصدر: Open your book / Stand up.',
+            takeawayAr: 'اتباع تعليمات المعلم بدقة يضمن تنظيماً ممتازاً داخل غرفة الصف.',
+            takeawayEn: 'Following teacher instructions ensures an orderly and focused classroom.'
+          }
+        ]
       },
       {
-        titleAr: 'الوحدة 2: هذا أنا وجسمي (This is me!)',
-        titleEn: 'Unit 2: This is me! - Parts of the Body',
-        subtitleAr: 'أجزاء الجسم: Nose, Eye, Ear, Hand, Mouth ونطق حرف N',
-        subtitleEn: 'Body parts: Nose, Eye, Ear, Hand, Mouth and phonics /n/',
-        focusAr: 'التعرف على أجزاء الوجه والجسم واستخدام: Touch your nose! Touch your mouth!',
-        focusEn: 'Identify body parts and respond to commands: Touch your nose! Touch your ear!',
-        activityAr: 'لعبة الأوامر الحركية: المس أنفك ثم أشر لعينيك وأذنك مع تكرار الكلمات بالإنجليزية.',
-        activityEn: 'Simon says game: Touch your nose, point to eyes and ears while repeating English terms.',
-        questionAr: 'ما الكلمة الإنجليزية التي تعني "أنف"؟',
-        questionEn: 'Which English word means "أنف"?',
-        optionsAr: ['Nose', 'Hand', 'Eye'],
-        optionsEn: ['Nose', 'Hand', 'Eye'],
+        titleAr: 'الأوامر الصفية وصوتيات حرفي T و I',
+        titleEn: 'Classroom Commands & Phonics: Letters Tt and Ii',
+        subtitleAr: 'تعليمات: Stand up, Sit down وصوت /t/ (table, tree) وصوت /ɪ/ (ink, insect)',
+        subtitleEn: 'Classroom commands and phonics sounds /t/ (tree, table) and /ɪ/ (ink, insect)',
+        focusAr: 'اتباع تعليمات الفصل: Stand up, Sit down, Open your book, Close your bag، وإتقان نطق حرف Tt (/t/) وحرف Ii (/ɪ/).',
+        focusEn: 'Following instructions: Stand up, Sit down, and mastering phonics /t/ (tomato, table, tree) and /ɪ/ (ink, insect, ill).',
+        activityAr: 'لعبة الأوامر الحركية السريعة: استجب فوراً لأوامر Stand up و Sit down مع تكرار أصوات الحروف.',
+        activityEn: 'Action game: Respond quickly to Stand up and Sit down commands while practicing phonics sounds.',
+        questionAr: 'أي من الكلمات التالية تبدأ بصوت حرف Tt (/t/)؟',
+        questionEn: 'Which of the following words begins with the /t/ sound?',
+        optionsAr: ['Table (طاولة)', 'Ink (حبر)', 'Bag (حقيبة)'],
+        optionsEn: ['Table', 'Ink', 'Bag'],
         correctIndex: 0,
-        vocabulary: [['أنف', 'Nose'], ['عين', 'Eye'], ['أذن', 'Ear'], ['يد', 'Hand']]
+        vocabulary: [
+          ['قف', 'Stand up'],
+          ['اجلس', 'Sit down'],
+          ['افتح', 'Open'],
+          ['أغلق', 'Close'],
+          ['طاولة', 'Table'],
+          ['شجرة', 'Tree'],
+          ['حبر', 'Ink'],
+          ['حشرة', 'Insect']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'صوتيات وأوامر الوحدة الأولى (Connect 1)',
+        diagramTitleEn: 'Unit 1 Phonics and Commands (Connect 1)',
+        diagramCaptionAr: 'التدريبات الصوتية المقررة لحرفي Tt و Ii مع الأوامر الصفية من كتاب الوزارة',
+        diagramCaptionEn: 'Targeted phonics drills for letters Tt and Ii with classroom imperatives from the MOE book',
+        workedExamples: [
+          {
+            id: 'we-g1-u1-2-1',
+            titleAr: 'النموذج 1 من 4: صوت حرف Tt ومخارجه الصوتية',
+            titleEn: 'Worked Example 1 of 4: Phonics Sound /t/',
+            problemAr: 'كيف ننطق صوت حرف Tt في كلمات: Table, Tree, Tomato؟',
+            problemEn: 'How do we pronounce the /t/ sound in Table, Tree, Tomato?',
+            stepsAr: [
+              'الخطوة 1: ضع طرف اللسان خلف الأسنان العلوية مباشرة.',
+              'الخطوة 2: اخرج الهواء برفق لإصدار صوت /t/ النقي.',
+              'الخطوة 3: انطق: Table ... Tree ... Tomato.'
+            ],
+            solutionAr: 'صوت /t/ هو صوت ساكن مهموس يظهر في أول كلمة Table.',
+            takeawayAr: 'النطق السليم لمخارج الحروف يبني القراءة الصحيحة والتهجئة الدقيقة.',
+            takeawayEn: 'Clear articulation builds correct reading and spelling habits.'
+          },
+          {
+            id: 'we-g1-u1-2-2',
+            titleAr: 'النموذج 2 من 4: صوت حرف Ii القصير (Short /ɪ/)',
+            titleEn: 'Worked Example 2 of 4: Phonics Sound /ɪ/',
+            problemAr: 'ما الفرق بين نطق صوت /ɪ/ القصير في Ink و Insect وبين نطق الحروف الأخرى؟',
+            problemEn: 'How do we articulate the short /ɪ/ sound in Ink and Insect?',
+            stepsAr: [
+              'الخطوة 1: افتح الفم قليلاً واجعل الشفتين منبسطتين ومسترخيتين.',
+              'الخطوة 2: انطق صوتاً قصيراً وخفيفاً: /ɪ/.',
+              'الخطوة 3: طبق على الكلمات: /ɪ/.. Ink، /ɪ/.. Insect.'
+            ],
+            solutionAr: 'صوت حرف I في منهج أولى ابتدائي هو صوت العلة القصير Short /ɪ/.',
+            takeawayAr: 'أصوات العلة القصيرة تُنطق سريعة وموجزة داخل الكلمة.',
+            takeawayEn: 'Short vowel sounds are quick and crisp within words.'
+          },
+          {
+            id: 'we-g1-u1-2-3',
+            titleAr: 'النموذج 3 من 4: مطابقة الصوت مع الصورة والكلمة',
+            titleEn: 'Worked Example 3 of 4: Matching Sounds with Visuals',
+            problemAr: 'أمامك صورة شجرة وصورة حبر، أي كلمة ترتبط بصوت /t/ وأيها بصوت /ɪ/؟',
+            problemEn: 'Given pictures of a tree and ink, which matches /t/ and which matches /ɪ/?',
+            stepsAr: [
+              'الخطوة 1: صورة الشجرة = Tree، تبدأ بصوت /t/.',
+              'الخطوة 2: صورة زجاجة الحبر = Ink، تبدأ بصوت /ɪ/.'
+            ],
+            solutionAr: 'Tree -> /t/، و Ink -> /ɪ/. المطابقة مطابقة لمعايير كتاب الوزارة.',
+            takeawayAr: 'ربط الحرف بالصورة يرسخ الكلمة في الذاكرة البصرية والسمعية معاً.',
+            takeawayEn: 'Linking letters with images reinforces both visual and auditory memory.'
+          },
+          {
+            id: 'we-g1-u1-2-4',
+            titleAr: 'النموذج 4 من 4: التفاعل مع الأوامر المتعاكسة',
+            titleEn: 'Worked Example 4 of 4: Interacting with Opposite Commands',
+            problemAr: 'فهم الثنائيات المتضادة: Stand up مقابل Sit down، و Open مقابل Close.',
+            problemEn: 'Understanding action antonyms: Stand up vs Sit down, and Open vs Close.',
+            stepsAr: [
+              'الخطوة 1: Stand up (قف) عكسها Sit down (اجلس).',
+              'الخطوة 2: Open your bag (افتح حقيبتك) عكسها Close your bag (أغلق حقيبتك).'
+            ],
+            solutionAr: 'تعلم الأضداد يضاعف الحصيلة اللغوية للتلميذ في وقت قصير.',
+            takeawayAr: 'الأضداد الحركية تساعد الصغار على تذكر معاني الأفعال بسلاسة ومرح.',
+            takeawayEn: 'Opposite pairs help young learners remember verb meanings joyfully.'
+          }
+        ]
       }
     ]
   },
   {
-    unitTitleAr: 'المحور الثاني: العالم من حولي (Theme 2: The World Around Me)',
-    unitTitleEn: 'Theme 2: The World Around Me',
+    unitTitleAr: 'الوحدة 2: حديقة الألوان والأشكال (Unit 2: The Garden of Colors and Shapes)',
+    unitTitleEn: 'Unit 2: The Garden of Colors and Shapes',
     lessons: [
       {
-        titleAr: 'الوحدة 3: في حقيبتي المدرسية (My School Bag)',
-        titleEn: 'Unit 3: My School Bag - School Items & Numbers',
-        subtitleAr: 'الأدوات المدرسية والأرقام من 1 إلى 5: Pen, Pencil, Ruler',
-        subtitleEn: 'Classroom supplies and counting 1 to 5',
-        focusAr: 'تسمية الأدوات المدرسية وعدها: One pen, two pencils, three rulers. استخدام: What is this? It is a pencil.',
-        focusEn: 'Naming and counting school items: One pen, two pencils. Asking: What is this? It is a pen.',
-        activityAr: 'أخرج أدواتك المدرسية وعدّها بالإنجليزية بصوت مرتفع.',
-        activityEn: 'Take out your school items and count them aloud in English.',
-        questionAr: 'ماذا نقول عند السؤال عن شيء غير عاقل قريب؟',
-        questionEn: 'What do we ask about a near classroom object?',
-        optionsAr: ['What is this?', 'Who are you?', 'Where do you go?'],
-        optionsEn: ['What is this?', 'Who are you?', 'Where do you go?'],
+        titleAr: 'عناصر الطبيعة في الحديقة وتسمية الألوان',
+        titleEn: 'Garden Nature & Colors: I can see...',
+        subtitleAr: 'عناصر الحديقة: Grass, Flower, Tree, Sky والألوان: Red, Green, Blue, Yellow',
+        subtitleEn: 'Garden elements and colors with the pattern: I can see a...',
+        focusAr: 'وصف الطبيعة والتعبير عن المشاهدات: I can see green grass. The sky is blue. The sun is yellow. The flower is red.',
+        focusEn: 'Describing nature and using "I can see...": The grass is green, the sky is blue, the flower is red.',
+        activityAr: 'انظر من النافذة أو في فناء المدرسة، وعد 3 أشياء ملونة تستطيع رؤيتها مستخدماً I can see.',
+        activityEn: 'Look outside and name three colored objects using "I can see a...".',
+        questionAr: 'ما اللون الحقيقي للعشب (Grass) في الحديقة باللغة الإنجليزية؟',
+        questionEn: 'What is the color of grass in the garden?',
+        optionsAr: ['Green (أخضر)', 'Red (أحمر)', 'Blue (أزرق)'],
+        optionsEn: ['Green', 'Red', 'Blue'],
         correctIndex: 0,
-        vocabulary: [['قلم رصاص', 'Pencil'], ['مسطرة', 'Ruler'], ['واحد', 'One'], ['اثنان', 'Two']]
+        vocabulary: [
+          ['عشب', 'Grass'],
+          ['زهرة', 'Flower'],
+          ['شجرة', 'Tree'],
+          ['سماء', 'Sky'],
+          ['عصفور', 'Bird'],
+          ['فراشة', 'Butterfly'],
+          ['أخضر', 'Green'],
+          ['أزرق', 'Blue'],
+          ['أحمر', 'Red'],
+          ['أصفر', 'Yellow']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'حديقة الألوان والأشكال (Connect 1)',
+        diagramTitleEn: 'The Garden of Colors and Shapes (Connect 1)',
+        diagramCaptionAr: 'مخطط الطبيعة والألوان الأساسية من كتاب وزارة التربية والتعليم الرسمي',
+        diagramCaptionEn: 'Primary colors and garden nature diagram from the official MOE textbook',
+        workedExamples: [
+          {
+            id: 'we-g1-u2-1',
+            titleAr: 'النموذج 1 من 4: استخدام نمط "I can see..."',
+            titleEn: 'Worked Example 1 of 4: Using "I can see..." Pattern',
+            problemAr: 'أنت في الحديقة وترى شجرة خضراء وعصفوراً يطير، كيف تعبر عن ذلك؟',
+            problemEn: 'You are in the garden and see a green tree and a bird. How do you describe this?',
+            stepsAr: [
+              'الخطوة 1: ابدأ بعبارة التعبير عن الرؤية: "I can see".',
+              'الخطوة 2: ضع اللون قبل الاسم: "a green tree".',
+              'الخطوة 3: ركب الجملة كاملة: "I can see a green tree".'
+            ],
+            solutionAr: '"I can see a green tree and a flying bird" — نمط كتاب الوزارة المعتمد.',
+            takeawayAr: 'في اللغة الإنجليزية تأتي صفة اللون قبل الاسم الموصوف دائماً: red flower, blue sky.',
+            takeawayEn: 'Color adjectives always precede the noun in English.'
+          },
+          {
+            id: 'we-g1-u2-2',
+            titleAr: 'النموذج 2 من 4: ربط السماء والشمس بالألوان الصحيحة',
+            titleEn: 'Worked Example 2 of 4: Matching Nature with Colors',
+            problemAr: 'صياغة جمل صحيحة عن الطبيعة: ما لون السماء وما لون الشمس؟',
+            problemEn: 'Forming accurate nature descriptions: What color is the sky and the sun?',
+            stepsAr: [
+              'الخطوة 1: السماء = Sky، ولونها أزرق = Blue: "The sky is blue".',
+              'الخطوة 2: الشمس = Sun، ولونها أصفر = Yellow: "The sun is yellow".'
+            ],
+            solutionAr: 'الجمل تعتمد على الفعل is مع المفرد: The sky is blue / The sun is yellow.',
+            takeawayAr: 'استخدام Verb to be (is) لوصف حالة أو لون الشيء المفرد.',
+            takeawayEn: 'Use verb to be "is" when describing singular subjects.'
+          },
+          {
+            id: 'we-g1-u2-3',
+            titleAr: 'النموذج 3 من 4: كشف الخطأ الشائع في ترتيب الصفة والاسم',
+            titleEn: 'Worked Example 3 of 4: Correcting Adjective Order',
+            problemAr: 'قارن بين "flower red" و "red flower"، أيهما الصواب باللغة الإنجليزية؟',
+            problemEn: 'Compare "flower red" vs "red flower". Which is correct in English?',
+            stepsAr: [
+              'الخطوة 1: في اللغة العربية نقول "زهرة حمراء" (الاسم أولاً ثم الصفة).',
+              'الخطوة 2: في اللغة الإنجليزية نعكس الترتيب فتأتي الصفة أولاً: "red flower".'
+            ],
+            solutionAr: 'الصواب هو "a red flower" وليس "flower red".',
+            takeawayAr: 'الانتباه للفارق بين اللغتين يمنع الخطأ الشائع في ترجمة التراكيب.',
+            takeawayEn: 'Paying attention to language structure differences prevents common translation mistakes.'
+          },
+          {
+            id: 'we-g1-u2-4',
+            titleAr: 'النموذج 4 من 4: تحدي استكشاف الحديقة',
+            titleEn: 'Worked Example 4 of 4: Garden Explorer Challenge',
+            problemAr: 'عد أربعة عناصر طبيعية مختلفة بألوانها الأربعة المقررة.',
+            problemEn: 'Name four distinct natural objects using all four targeted colors.',
+            stepsAr: [
+              'الخطوة 1: Green -> "green grass" (عشب أخضر).',
+              'الخطوة 2: Blue -> "blue sky" (سماء زرقاء).',
+              'الخطوة 3: Red -> "red flower" (زهرة حمراء).',
+              'الخطوة 4: Yellow -> "yellow sun" (شمس صفراء).'
+            ],
+            solutionAr: 'إتقان الألوان الأربعة وتطبيقها على عناصر البيئة بنجاح.',
+            takeawayAr: 'التكرار والربط بالبيئة يمنح المتعلم الصغير ثقة تامة في التعبير.',
+            takeawayEn: 'Regular repetition connected to real life gives young learners complete confidence.'
+          }
+        ]
       },
       {
-        titleAr: 'الوحدة 4: عيد ميلادي! (It\'s my birthday!)',
-        titleEn: 'Unit 4: It\'s my birthday! - Age, Numbers 6-10 & Colors',
-        subtitleAr: 'السؤال عن العمر والأرقام من 6 إلى 10: How old are you? I am six ونطق حرف C',
-        subtitleEn: 'Age inquiries, numbers 6 to 10, birthday vocabulary, and phonics sound /k/',
-        focusAr: 'يتعلم التلميذ السؤال والإجابة عن العمر بالإنجليزية: How old are you? I am six. وعد الشموع على كعكة عيد الميلاد من 6 إلى 10، وتسمية الألوان (Red, Blue, Green, Yellow, Orange). نطق الكلمات التي تبدأ بصوت /k/ مثل cake, candle, card.',
-        focusEn: 'Students learn asking and answering age: How old are you? I am six. Counting birthday candles (6 to 10), colors, and phonics /k/ (cake, candle, card).',
-        activityAr: 'ارسم كعكة عيد ميلادك وضع عليها عدداً من الشموع يطابق عمرك، ثم قل لزميلك: I am six years old!',
-        activityEn: 'Draw a birthday cake with candles matching your age and practice saying: I am six years old!',
-        questionAr: 'ما هو السؤال الصحيح لتسأل صديقك عن عمره باللغة الإنجليزية؟',
-        questionEn: 'What is the correct question to ask a peer their age?',
-        optionsAr: ['How old are you?', 'What is your name?', 'Where is your bag?'],
-        optionsEn: ['How old are you?', 'What is your name?', 'Where is your bag?'],
+        titleAr: 'الأشكال الهندسية وصوتيات حرفي S و A',
+        titleEn: 'Geometric Shapes & Phonics: Letters Ss and Aa',
+        subtitleAr: 'الأشكال: Circle, Square, Triangle وصوت /s/ (sun, star) وصوت /æ/ (ant, apple)',
+        subtitleEn: 'Shapes: Circle, Square, Triangle and phonics /s/ (sun, star) and /æ/ (ant, apple)',
+        focusAr: 'التعرف على الأشكال الهندسية الأساسية وتسميتها، وإتقان نطق حرف Ss (/s/) في sun, star, snake وحرف Aa (/æ/) في ant, apple.',
+        focusEn: 'Naming shapes (circle, square, triangle, rectangle) and phonics /s/ (sun, star, snake) and /æ/ (ant, axe, apple).',
+        activityAr: 'ارسم دائرة ومربعاً ومثلثاً ولون كل شكل بلون مختلف واذكر اسمه بالإنجليزية.',
+        activityEn: 'Draw a circle, square, and triangle. Color each and say its English name.',
+        questionAr: 'ما الشكل الهندسي الذي يعني "دائرة" باللغة الإنجليزية؟',
+        questionEn: 'Which English word means "دائرة"?',
+        optionsAr: ['Circle (دائرة)', 'Square (مربع)', 'Triangle (مثلث)'],
+        optionsEn: ['Circle', 'Square', 'Triangle'],
         correctIndex: 0,
-        vocabulary: [['عيد ميلاد', 'Birthday'], ['كعكة', 'Cake'], ['شمعة', 'Candle'], ['كم عمرك؟', 'How old are you?']]
+        vocabulary: [
+          ['دائرة', 'Circle'],
+          ['مربع', 'Square'],
+          ['مثلث', 'Triangle'],
+          ['مستطيل', 'Rectangle'],
+          ['شمس', 'Sun'],
+          ['نجمة', 'Star'],
+          ['نملة', 'Ant'],
+          ['تفاحة', 'Apple']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'الأشكال الهندسية والصوتيات (Connect 1)',
+        diagramTitleEn: 'Shapes and Phonics (Connect 1)',
+        diagramCaptionAr: 'نماذج الأشكال الهندسية وصوتيات حرفي Ss و Aa من كتاب الوزارة',
+        diagramCaptionEn: 'Shapes and phonics models for letters Ss and Aa from the MOE book',
+        workedExamples: [
+          {
+            id: 'we-g1-u2-2-1',
+            titleAr: 'النموذج 1 من 4: التمييز البصري واللفظي بين الأشكال',
+            titleEn: 'Worked Example 1 of 4: Visual & Oral Shape Identification',
+            problemAr: 'كيف نميز بين المربع والمثلث والدائرة باللغة الإنجليزية؟',
+            problemEn: 'How do we distinguish between a circle, square, and triangle in English?',
+            stepsAr: [
+              'الخطوة 1: الشكل الدائري بدون زوايا: "It is a circle".',
+              'الخطوة 2: الشكل ذو الأربعة أضلاع المتساوية: "It is a square".',
+              'الخطوة 3: الشكل ذو الثلاثة أضلاع: "It is a triangle".'
+            ],
+            solutionAr: 'تسمية دقيقة لكل شكل: a circle, a square, a triangle.',
+            takeawayAr: 'ربط الرياضيات باللغة الإنجليزية ينمي التفكير المنطقي والمهارات المتكاملة.',
+            takeawayEn: 'Integrating math with English develops logical thinking and cross-curricular skills.'
+          },
+          {
+            id: 'we-g1-u2-2-2',
+            titleAr: 'النموذج 2 من 4: صوت حرف Ss ومخارجه الصوتية',
+            titleEn: 'Worked Example 2 of 4: Phonics Sound /s/',
+            problemAr: 'كيف يخرج صوت الصفير النقي /s/ في كلمات: Sun, Star, Snake؟',
+            problemEn: 'How do we produce the clear /s/ sound in Sun, Star, Snake?',
+            stepsAr: [
+              'الخطوة 1: اقفل الأسنان برفق واجعل طرف اللسان قرب سقف الحلق.',
+              'الخطوة 2: ادفع الهواء بشكل مستمر لإصدار صوت الصفير: /s/.',
+              'الخطوة 3: انطق: /s/.. Sun، /s/.. Star.'
+            ],
+            solutionAr: 'صوت /s/ هو صوت صفيري غير جهري يظهر في أول كلمة Sun.',
+            takeawayAr: 'التدريب المستمر أمام المرآة يساعد الأطفال على ضبط مخارج الحروف بدقة.',
+            takeawayEn: 'Practicing in front of a mirror helps children master articulation points.'
+          },
+          {
+            id: 'we-g1-u2-2-3',
+            titleAr: 'النموذج 3 من 4: صوت حرف Aa القصير (Short /æ/)',
+            titleEn: 'Worked Example 3 of 4: Phonics Sound /æ/',
+            problemAr: 'ما الطريقة المثالية لنطق صوت /æ/ القصير في Apple و Ant؟',
+            problemEn: 'What is the optimal way to pronounce short /æ/ in Apple and Ant?',
+            stepsAr: [
+              'الخطوة 1: افتح الفم إلى الأسفل بدرجة متوسطة.',
+              'الخطوة 2: انطق صوتاً منفتحاً وواضحاً: /æ/.',
+              'الخطوة 3: ردد: /æ/.. Apple، /æ/.. Ant.'
+            ],
+            solutionAr: 'صوت Aa في أولى ابتدائي هو الصوت القصير /æ/.',
+            takeawayAr: 'التمييز بين صوت الحرف واسم الحرف هو المفتاح الذهبي لتعلم القراءة الإنجليزية.',
+            takeawayEn: 'Distinguishing letter name from letter sound is the golden key to early reading.'
+          },
+          {
+            id: 'we-g1-u2-2-4',
+            titleAr: 'النموذج 4 من 4: دمج الأشكال مع الألوان في جمل مركبة',
+            titleEn: 'Worked Example 4 of 4: Combining Shapes & Colors',
+            problemAr: 'صف مثلثاً أحمر ودائرة زرقاء ومربعاً أصفر بأسلوب صحيح.',
+            problemEn: 'Describe a red triangle, a blue circle, and a yellow square correctly.',
+            stepsAr: [
+              'الخطوة 1: المثلث الأحمر -> "a red triangle".',
+              'الخطوة 2: الدائرة الزرقاء -> "a blue circle".',
+              'الخطوة 3: المربع الأصفر -> "a yellow square".'
+            ],
+            solutionAr: 'القاعدة: أداة النكرة + صفة اللون + اسم الشكل الهندسي.',
+            takeawayAr: 'بناء الجمل المتكاملة يعزز الطلاقة اللغوية المبكرة لدى تلاميذ الصف الأول.',
+            takeawayEn: 'Building compound descriptive phrases fosters early English fluency.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الوحدة 3: أنا أحب عائلتي (Unit 3: I Love My Family)',
+    unitTitleEn: 'Unit 3: I Love My Family',
+    lessons: [
+      {
+        titleAr: 'أفراد الأسرة وتقديم العائلة',
+        titleEn: 'Family Members & Introducing Relatives',
+        subtitleAr: 'أفراد الأسرة: Father, Mother, Brother, Sister, Grandfather, Grandmother',
+        subtitleEn: 'Family members and introducing them with: This is my...',
+        focusAr: 'التعرف على أفراد العائلة واستخدام نمط التقديم: This is my mother. This is my father. والتعبير عن المشاعر: I love my family.',
+        focusEn: 'Identifying family members and introducing them: This is my mum, This is my dad. Expressing feelings: I love my family.',
+        activityAr: 'احضر صورة عائلتك أو ارسمها، وقدم كل فرد لزملائك قائلاً: This is my...',
+        activityEn: 'Draw your family and present each member saying: This is my...',
+        questionAr: 'ما العبارة الصحيحة لتقديم والدتك لزميلك بالإنجليزية؟',
+        questionEn: 'How do you correctly introduce your mother in English?',
+        optionsAr: ['This is my mother.', 'This is my bag.', 'Goodbye mother.'],
+        optionsEn: ['This is my mother.', 'This is my bag.', 'Goodbye mother.'],
+        correctIndex: 0,
+        vocabulary: [
+          ['أم', 'Mother (Mum)'],
+          ['أب', 'Father (Dad)'],
+          ['أخ', 'Brother'],
+          ['أخت', 'Sister'],
+          ['جد', 'Grandfather'],
+          ['جدة', 'Grandmother'],
+          ['طفل رضيع', 'Baby'],
+          ['يحب', 'Love']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'شجرة العائلة والمشاعر الإيجابية (Connect 1)',
+        diagramTitleEn: 'Family Tree and Positive Emotions (Connect 1)',
+        diagramCaptionAr: 'نموذج تقديم أفراد الأسرة من كتاب وزارة التربية والتعليم الرسمي',
+        diagramCaptionEn: 'Family presentation model from the official MOE Connect 1 textbook',
+        workedExamples: [
+          {
+            id: 'we-g1-u3-1',
+            titleAr: 'النموذج 1 من 4: تقديم أفراد العائلة بعبارة "This is my..."',
+            titleEn: 'Worked Example 1 of 4: Presenting Family Members',
+            problemAr: 'تريد أن تعرف صديقك على والدك ووالدتك، ماذا تقول؟',
+            problemEn: 'You want to introduce your father and mother to a friend. What do you say?',
+            stepsAr: [
+              'الخطوة 1: أشر لوالدك وقل: "This is my father".',
+              'الخطوة 2: أشر لوالدتك وقل: "This is my mother".',
+              'الخطوة 3: أضف عبارة المحبة: "I love my family".'
+            ],
+            solutionAr: '"This is my father. This is my mother. I love my family." — نمط معتمد.',
+            takeawayAr: 'عبارة "This is my..." هي النمط الأساسي للإشارة وتقديم الأشخاص المقربين.',
+            takeawayEn: '"This is my..." is the foundational structure for introducing close relatives.'
+          },
+          {
+            id: 'we-g1-u3-2',
+            titleAr: 'النموذج 2 من 4: التمييز بين الأخ والأخت (Brother & Sister)',
+            titleEn: 'Worked Example 2 of 4: Distinguishing Brother vs Sister',
+            problemAr: 'كيف تفرق باللغة الإنجليزية عند التحدث عن أخيك وعن أختك؟',
+            problemEn: 'How do you differentiate between your brother and your sister in English?',
+            stepsAr: [
+              'الخطوة 1: المذكر (الأخ) = Brother: "He is my brother".',
+              'الخطوة 2: المؤنث (الأخت) = Sister: "She is my sister".'
+            ],
+            solutionAr: 'Brother للأخ الذكر، و Sister للأخت المؤنثة.',
+            takeawayAr: 'الربط بين المفردة والضمير (He / She) يمهد للقواعد اللغوية السليمة.',
+            takeawayEn: 'Connecting family terms to subject pronouns (He/She) builds grammatical precision.'
+          },
+          {
+            id: 'we-g1-u3-3',
+            titleAr: 'النموذج 3 من 4: احترام الجد والجدة (Grandfather & Grandmother)',
+            titleEn: 'Worked Example 3 of 4: Introducing Grandparents',
+            problemAr: 'ما التعبير المناسب لتقديم الجد والجدة وإظهار التقدير لهما؟',
+            problemEn: 'What is the appropriate way to introduce grandparents and express appreciation?',
+            stepsAr: [
+              'الخطوة 1: الجد = Grandfather: "This is my grandfather".',
+              'الخطوة 2: الجدة = Grandmother: "This is my grandmother".',
+              'الخطوة 3: التعبير عن الرعاية: "I help my grandparents".'
+            ],
+            solutionAr: 'تسمية الجد والجدة والاعتزاز بدورهما في الأسرة.',
+            takeawayAr: 'القيم الأخلاقية واحترام كبار السن جزء لا يتجزأ من المنهج التعليمي المصري.',
+            takeawayEn: 'Respecting elders and moral values are core pillars of the national curriculum.'
+          },
+          {
+            id: 'we-g1-u3-4',
+            titleAr: 'النموذج 4 من 4: كتابة بطاقة محبة للأسرة',
+            titleEn: 'Worked Example 4 of 4: Family Love Card Project',
+            problemAr: 'صمم بطاقة قصيرة تعبر فيها عن حبك لعائلتك باللغة الإنجليزية.',
+            problemEn: 'Create a short message expressing love for your family in English.',
+            stepsAr: [
+              'الخطوة 1: ابدأ بعبارة: "To my dear family".',
+              'الخطوة 2: اكتب الرسالة الرئيسية: "I love my mum and dad".',
+              'الخطوة 3: وقع باسمك: "From Adam".'
+            ],
+            solutionAr: 'بطاقة بسيطة ومؤثرة تعزز مهارة الكتابة والتعبير الوجداني.',
+            takeawayAr: 'ربط اللغة بالمشاعر الصادقة يحبب التلميذ في تعلم الإنجليزية.',
+            takeawayEn: 'Connecting language to genuine feelings makes learning English enjoyable.'
+          }
+        ]
       },
       {
-        titleAr: 'الوحدة 5: مع عائلتي (With my Family)',
-        titleEn: 'Unit 5: With my Family - Family Members & Politeness',
-        subtitleAr: 'أفراد الأسرة: Father, Mother, Brother, Sister وكلمات الشكر',
-        subtitleEn: 'Family members and polite expressions',
-        focusAr: 'تقديم أفراد الأسرة: This is my mother. This is my father. واستخدام عبارة الشكر: Thank you.',
-        focusEn: 'Introducing family: This is my mother. This is my father. Practicing: Please and Thank you.',
-        activityAr: 'ارسم شجرة عائلتك وأشر لكل فرد بالإنجليزية: This is my father/mother.',
-        activityEn: 'Draw your family tree and introduce each member in English.',
-        questionAr: 'من هي "Mother" باللغة العربية؟',
-        questionEn: 'What is "Mother" in Arabic?',
-        optionsAr: ['الأم', 'الأب', 'الأخ'],
-        optionsEn: ['Mother', 'Father', 'Brother'],
+        titleAr: 'التعاون الأسري وصوتيات حرفي H و N',
+        titleEn: 'Helping at Home & Phonics: Letters Hh and Nn',
+        subtitleAr: 'المساعدة في المنزل وصوت /h/ (hat, hand) وصوت /n/ (nut, net, nose)',
+        subtitleEn: 'Helping family members and phonics /h/ (hat, hand) and /n/ (nut, net, nose)',
+        focusAr: 'التعاون والمساعدة الأسرية (Thank you, Please) وإتقان نطق صوت /h/ لحرف Hh في hat, hand, hen وصوت /n/ لحرف Nn في nut, net, nose.',
+        focusEn: 'Family values (kindness, cooperation) and mastering phonics /h/ (hat, hand, hen) and /n/ (nut, net, nose).',
+        activityAr: 'تدريب صوتي مع حركة اليد: ارفع يدك (Hand) عند سماع صوت /h/ والمس أنفك (Nose) عند سماع صوت /n/.',
+        activityEn: 'Kinesthetic phonics game: Raise your hand for /h/ and touch your nose for /n/.',
+        questionAr: 'أي من الكلمات الآتية تبدأ بصوت حرف Hh (/h/)؟',
+        questionEn: 'Which word begins with the /h/ sound?',
+        optionsAr: ['Hand (يد)', 'Nose (أنف)', 'Cat (قطة)'],
+        optionsEn: ['Hand', 'Nose', 'Cat'],
         correctIndex: 0,
-        vocabulary: [['أم', 'Mother'], ['أب', 'Father'], ['أخ', 'Brother'], ['أخت', 'Sister']]
+        vocabulary: [
+          ['قبعة', 'Hat'],
+          ['يد', 'Hand'],
+          ['دجاجة', 'Hen'],
+          ['مكسرات/بندقة', 'Nut'],
+          ['شبكة', 'Net'],
+          ['أنف', 'Nose'],
+          ['شكراً لك', 'Thank you'],
+          ['من فضلك', 'Please']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'صوتيات وقيم الوحدة الثالثة (Connect 1)',
+        diagramTitleEn: 'Unit 3 Phonics and Values (Connect 1)',
+        diagramCaptionAr: 'صوتيات حرفي Hh و Nn وعبارات الشكر والتعاون من كتاب الوزارة',
+        diagramCaptionEn: 'Phonics for letters Hh and Nn with courtesy phrases from the MOE book',
+        workedExamples: [
+          {
+            id: 'we-g1-u3-2-1',
+            titleAr: 'النموذج 1 من 4: صوت حرف Hh ومخارجه الصوتية',
+            titleEn: 'Worked Example 1 of 4: Phonics Sound /h/',
+            problemAr: 'كيف ننطق صوت /h/ الهوائي النقي في: Hat, Hand, Hen؟',
+            problemEn: 'How do we produce the airy /h/ sound in Hat, Hand, Hen?',
+            stepsAr: [
+              'الخطوة 1: افتح الفم برفق وأخرج تيار هواء دافئ من الحلق كالتنفس.',
+              'الخطوة 2: انطق صوتاً خفيفاً مهموساً: /h/.',
+              'الخطوة 3: طبق على الكلمات: /h/.. Hand، /h/.. Hat.'
+            ],
+            solutionAr: 'صوت Hh هو صوت هواء نقي يشبه الهاء الخفيفة في العربية.',
+            takeawayAr: 'صوت /h/ لا يتطلب اهتزازاً في الحبال الصوتية بل انسياباً للهواء.',
+            takeawayEn: 'The /h/ sound is an unvoiced gentle breath sound.'
+          },
+          {
+            id: 'we-g1-u3-2-2',
+            titleAr: 'النموذج 2 من 4: صوت حرف Nn الأنفي (Nasal Sound /n/)',
+            titleEn: 'Worked Example 2 of 4: Phonics Sound /n/',
+            problemAr: 'كيف يخرج صوت الغنة /n/ في: Nose, Nut, Net؟',
+            problemEn: 'How do we articulate the nasal /n/ sound in Nose, Nut, Net?',
+            stepsAr: [
+              'الخطوة 1: الصق طرف اللسان باللثة العلوية خلف الأسنان.',
+              'الخطوة 2: اسمح للهواء بالخروج من الأنف برنين خفيف: /n/.',
+              'الخطوة 3: انطق: /n/.. Nose، /n/.. Nut.'
+            ],
+            solutionAr: 'صوت Nn يخرج بمساعدة الأنف (Nasal consonant).',
+            takeawayAr: 'وعي الطفل بمخارج الحروف يجعل القراءة سهلة وتلقائية.',
+            takeawayEn: 'Phonological awareness makes early reading smooth and automatic.'
+          },
+          {
+            id: 'we-g1-u3-2-3',
+            titleAr: 'النموذج 3 من 4: استخدام عبارات الأدب (Please & Thank you)',
+            titleEn: 'Worked Example 3 of 4: Using Polite Phrases',
+            problemAr: 'كيف تطلب مساعدة من والدتك وكيف تشكرها عند تلبيتها؟',
+            problemEn: 'How do you ask your mother for help and thank her politely?',
+            stepsAr: [
+              'الخطوة 1: عند الطلب استخدم "Please": "Help me, please Mum".',
+              'الخطوة 2: عند استلام المساعدة قل بابتسامة: "Thank you, Mum".'
+            ],
+            solutionAr: 'استخدام Please للطلب المهذب، و Thank you للتعبير عن الشكر والامتنان.',
+            takeawayAr: 'التهذيب اللغوي يعزز العلاقات الإيجابية داخل الأسرة والمجتمع.',
+            takeawayEn: 'Polite words foster warmth and respect within family and society.'
+          },
+          {
+            id: 'we-g1-u3-2-4',
+            titleAr: 'النموذج 4 من 4: لعبة تصنيف الكلمات بحسب الصوت الأول',
+            titleEn: 'Worked Example 4 of 4: Sound Sorting Challenge',
+            problemAr: 'صنف الكلمات التالية إلى مجموعتين: Hat, Nose, Hand, Nut.',
+            problemEn: 'Sort the words into two sound groups: Hat, Nose, Hand, Nut.',
+            stepsAr: [
+              'الخطوة 1: مجموعة صوت /h/: Hat, Hand.',
+              'الخطوة 2: مجموعة صوت /n/: Nose, Nut.'
+            ],
+            solutionAr: 'تصنيف سمعي وبصري سليم يطابق أهداف تقييم وزارة التربية والتعليم.',
+            takeawayAr: 'الفرز الصوتي ينمي مهارات التفكير التحليلي والتمييز السمعي.',
+            takeawayEn: 'Sound sorting builds analytical thinking and phonemic discrimination.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الوحدة 4: جسمي وحواسي الخمس (Unit 4: My Body and My Senses)',
+    unitTitleEn: 'Unit 4: My Body and My Senses',
+    lessons: [
+      {
+        titleAr: 'أجزاء الوجه والجسم والأفعال الحركية',
+        titleEn: 'Parts of the Body: Touch your nose!',
+        subtitleAr: 'أجزاء الوجه: Eye, Nose, Ear, Mouth, Hand والأفعال الحركية',
+        subtitleEn: 'Facial and body parts with action imperatives: Touch your ear!',
+        focusAr: 'التعرف على أجزاء الوجه والجسم واستخدام صيغ الأوامر والتوجيهات: Touch your nose. Touch your mouth. Open your eyes. Close your hands.',
+        focusEn: 'Identifying body parts and responding to commands: Touch your nose! Touch your ear! Open your mouth.',
+        activityAr: 'لعبة سيمون يقول (Simon Says): نفذ الأمر فقط عندما تسمع Touch your... وتحرك بمرونة.',
+        activityEn: 'Play "Simon says": Touch your ear, touch your nose, and practice body vocabulary.',
+        questionAr: 'ما الكلمة الإنجليزية التي تعني "عين"؟',
+        questionEn: 'Which English word means "عين"?',
+        optionsAr: ['Eye (عين)', 'Nose (أنف)', 'Ear (أذن)'],
+        optionsEn: ['Eye', 'Nose', 'Ear'],
+        correctIndex: 0,
+        vocabulary: [
+          ['رأس', 'Head'],
+          ['عين', 'Eye'],
+          ['أنف', 'Nose'],
+          ['فم', 'Mouth'],
+          ['أذن', 'Ear'],
+          ['يد', 'Hand'],
+          ['قدم', 'Foot'],
+          ['ساق', 'Leg']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'جسمي وحواسي (Connect 1)',
+        diagramTitleEn: 'My Body and My Senses (Connect 1)',
+        diagramCaptionAr: 'مخطط أجزاء الوجه والجسم من كتاب وزارة التربية والتعليم الرسمي',
+        diagramCaptionEn: 'Body parts and sensory organs diagram from the official MOE textbook',
+        workedExamples: [
+          {
+            id: 'we-g1-u4-1',
+            titleAr: 'النموذج 1 من 4: تنفيذ أوامر لمس أجزاء الوجه',
+            titleEn: 'Worked Example 1 of 4: Body Part Action Commands',
+            problemAr: 'عندما يُطلب منك: "Touch your nose"، ما الخطوات العملية للاستجابة؟',
+            problemEn: 'When instructed "Touch your nose", what is the correct physical response?',
+            stepsAr: [
+              'الخطوة 1: استمع للأمر وحدد العضو المطلوب: "nose" (الأنف).',
+              'الخطوة 2: ارفع يدك والمس أنفك مباشرة.',
+              'الخطوة 3: كرر الكلمة بصوت واضح: "This is my nose".'
+            ],
+            solutionAr: 'الاستجابة الحركية الصحيحة مع ترديد العبارة: "This is my nose".',
+            takeawayAr: 'التعلم الحركي يربط المفهوم بالذاكرة العضلية ويسرع استدعاء الكلمات.',
+            takeawayEn: 'Total Physical Response (TPR) links vocabulary to muscle memory.'
+          },
+          {
+            id: 'we-g1-u4-2',
+            titleAr: 'النموذج 2 من 4: المفرد والجمع لأعضاء الجسم',
+            titleEn: 'Worked Example 2 of 4: Singular and Plural Body Parts',
+            problemAr: 'كيف ننتقل من المفرد إلى الجمع: عين واحدة مقابل عينين، ويد واحدة مقابل يدين؟',
+            problemEn: 'How do we form plurals: one eye vs two eyes, one hand vs two hands?',
+            stepsAr: [
+              'الخطوة 1: للمفرد نقول: "one eye" (عين واحدة) و "one hand" (يد واحدة).',
+              'الخطوة 2: للجمع نضيف صوت /s/ في النهاية: "two eyes" و "two hands".'
+            ],
+            solutionAr: 'one eye -> two eyes، و one hand -> two hands.',
+            takeawayAr: 'إضافة حرف s في نهاية الأسماء المعدودة تدل على الجمع في الإنجليزية.',
+            takeawayEn: 'Adding "s" to countable nouns creates standard plural forms.'
+          },
+          {
+            id: 'we-g1-u4-3',
+            titleAr: 'النموذج 3 من 4: تصحيح الخطأ الشائع في أسماء الإشارة',
+            titleEn: 'Worked Example 3 of 4: Correcting Demonstrative Agreement',
+            problemAr: 'لماذا نقول "This is my nose" ولكن نقول "These are my eyes"؟',
+            problemEn: 'Why do we say "This is my nose" but "These are my eyes"?',
+            stepsAr: [
+              'الخطوة 1: الأنف مفرد (واحد) فنستخدم معه اسم الإشارة المفرد: "This is my nose".',
+              'الخطوة 2: العينان جمع (اثنتان) فنستخدم معهما اسم الإشارة للجمع: "These are my eyes".'
+            ],
+            solutionAr: 'This is للمفرد القريب، و These are للجمع القريب.',
+            takeawayAr: 'التوافق بين الفاعل واسم الإشارة ركيزة أساسية في بناء الجملة الإنجليزية.',
+            takeawayEn: 'Subject and demonstrative agreement is fundamental in English syntax.'
+          },
+          {
+            id: 'we-g1-u4-4',
+            titleAr: 'النموذج 4 من 4: مشروع النظافة الشخصية والعناية بالجسم',
+            titleEn: 'Worked Example 4 of 4: Personal Hygiene & Body Care',
+            problemAr: 'ما العبارات الإنجليزية التي نستخدمها للعناية بنظافة اليدين والأسنان؟',
+            problemEn: 'What English expressions do we use for hand washing and dental hygiene?',
+            stepsAr: [
+              'الخطوة 1: غسل اليدين -> "Wash your hands with soap".',
+              'الخطوة 2: تنظيف الأسنان -> "Brush your teeth".',
+              'الخطوة 3: غسل الوجه -> "Wash your face with clean water".'
+            ],
+            solutionAr: 'ربط اللغة بالعادات الصحية اليومية المقررة في المنهج الوزاري.',
+            takeawayAr: 'الصحة والنظافة اليومية تحمي أبطالنا الصغار وتبني أسلوب حياة سليم.',
+            takeawayEn: 'Daily hygiene practices build healthy lifestyle habits for young learners.'
+          }
+        ]
       },
       {
-        titleAr: 'الوحدة 6: هيا نعزف الموسيقى! (Let\'s play music!)',
-        titleEn: 'Unit 6: Let\'s play music! - Musical Instruments & Verbs',
-        subtitleAr: 'الآلات الموسيقية: Guitar, Drum, Piano, Flute والفعل: I can play...',
-        subtitleEn: 'Musical instruments (guitar, drum, piano, flute) and action verb play',
-        focusAr: 'التعرف على أسماء الآلات الموسيقية والتعبير عن القدرة على العزف: I can play the guitar. I can play the drum. ونطق حرفي D و F مثل drum, flute.',
-        focusEn: 'Identifying musical instruments and expressing ability: I can play the drum. Phonics sounds /d/ (drum) and /f/ (flute).',
-        activityAr: 'قلد حركة العزف على آلتك الموسيقية المفضلة وعبر عنها بالإنجليزية: I can play the piano.',
-        activityEn: 'Mime playing your favorite instrument and express it in English: I can play the piano.',
-        questionAr: 'ما الآلة الموسيقية التي تعني "طبلة" في اللغة الإنجليزية؟',
-        questionEn: 'Which English word means "طبلة"?',
-        optionsAr: ['Drum', 'Guitar', 'Piano'],
-        optionsEn: ['Drum', 'Guitar', 'Piano'],
+        titleAr: 'الحواس الخمس وصوتيات حرفي C و K',
+        titleEn: 'The Five Senses & Phonics: Letters Cc and Kk',
+        subtitleAr: 'الحواس الخمس وصوت /k/ المشترك لحرفي C (cat, car) و K (kite, king)',
+        subtitleEn: 'The five senses (see, hear, touch, smell, taste) and phonics /k/ (cat, kite)',
+        focusAr: 'استخدام الحواس الخمس في جمل وظيفية: I can see with my eyes. I can hear with my ears. I can touch with my hands. ونطق صوت /k/ لحرفي C و K.',
+        focusEn: 'Functional sentences with senses: I see with my eyes, I hear with my ears. Phonics sound /k/ for Cc (cat, car, cake) and Kk (kite, king, kangaroo).',
+        activityAr: 'اربط كل حاسة بعضوها: أغمض عينيك وتعرف على أصوات الفصل بأذنيك قائلاً: I can hear with my ears.',
+        activityEn: 'Sensory matching: Close eyes and identify sounds saying: "I can hear with my ears".',
+        questionAr: 'بماذا نرى الأشياء من حولنا؟ (I can see with my...)؟',
+        questionEn: 'Complete the sentence: "I can see with my _______."',
+        optionsAr: ['Eyes (عيني)', 'Ears (أذني)', 'Nose (أنفي)'],
+        optionsEn: ['Eyes', 'Ears', 'Nose'],
         correctIndex: 0,
-        vocabulary: [['موسيقى', 'Music'], ['طبلة', 'Drum'], ['جيتار', 'Guitar'], ['يعزف', 'Play']]
+        vocabulary: [
+          ['يلمس', 'Touch'],
+          ['يرى', 'See'],
+          ['يسمع', 'Hear'],
+          ['يشم', 'Smell'],
+          ['يتذوق', 'Taste'],
+          ['قطة', 'Cat'],
+          ['سيارة', 'Car'],
+          ['طائرة ورقية', 'Kite']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'الحواس الخمس وصوت حرف الكاف (Connect 1)',
+        diagramTitleEn: 'Five Senses and /k/ Sound (Connect 1)',
+        diagramCaptionAr: 'وظائف الحواس الخمس وصوتيات حرفي C و K من كتاب الوزارة الرسمي',
+        diagramCaptionEn: 'Sensory functions and phonics drills for letters Cc and Kk from the MOE book',
+        workedExamples: [
+          {
+            id: 'we-g1-u4-2-1',
+            titleAr: 'النموذج 1 من 4: ربط كل حاسة بعضوها الخاص',
+            titleEn: 'Worked Example 1 of 4: Linking Senses to Organs',
+            problemAr: 'كيف نعبر عن وظيفة كل حاسة من الحواس الخمس بجملة إنجليزية متكاملة؟',
+            problemEn: 'How do we express each sensory function in complete English sentences?',
+            stepsAr: [
+              'الخطوة 1: حاسة البصر -> "I see with my eyes".',
+              'الخطوة 2: حاسة السمع -> "I hear with my ears".',
+              'الخطوة 3: حاسة الشم -> "I smell with my nose".',
+              'الخطوة 4: حاسة التذوق -> "I taste with my mouth".'
+            ],
+            solutionAr: 'تركيب الجملة: الفاعل (I) + فعل الحاسة + with my + العضو.',
+            takeawayAr: 'حرف الجر "with" هنا يعني "بواسطة" أو "باستخدام".',
+            takeawayEn: 'The preposition "with" indicates the instrument or sensory organ used.'
+          },
+          {
+            id: 'we-g1-u4-2-2',
+            titleAr: 'النموذج 2 من 4: صوت /k/ لحرف Cc في الكلمات المقررة',
+            titleEn: 'Worked Example 2 of 4: Phonics Sound /k/ with Letter C',
+            problemAr: 'كيف ننطق حرف C بصوت /k/ في: Cat, Car, Cake, Computer؟',
+            problemEn: 'How do we articulate letter C with /k/ sound in Cat, Car, Cake, Computer?',
+            stepsAr: [
+              'الخطوة 1: ارفع مؤخرة اللسان نحو الحلق واحبس الهواء لحظة.',
+              'الخطوة 2: اطلق الهواء فجأة لإصدار صوت /k/ الانفجاري النقي.',
+              'الخطوة 3: انطق: Cat ... Car ... Cake.'
+            ],
+            solutionAr: 'حرف C يُنطق /k/ في أغلب الكلمات ما لم يتبعه e أو i أو y.',
+            takeawayAr: 'معرفة القاعدة الصوتية تسهل على التلميذ قراءة الكلمات الجديدة بثقة.',
+            takeawayEn: 'Mastering the hard C rule enables confident reading of new words.'
+          },
+          {
+            id: 'we-g1-u4-2-3',
+            titleAr: 'النموذج 3 من 4: صوت /k/ لحرف Kk وتطبيقاته',
+            titleEn: 'Worked Example 3 of 4: Phonics Sound /k/ with Letter K',
+            problemAr: 'ما الكلمات التي تبدأ بحرف K ولها نفس صوت /k/ في منهج أولى ابتدائي؟',
+            problemEn: 'What words begin with letter K sharing the /k/ sound in Primary 1?',
+            stepsAr: [
+              'الخطوة 1: كلمة طائرة ورقية = Kite، تبدأ بحرف K وصوتها /k/.',
+              'الخطوة 2: كلمة ملك = King، تبدأ بحرف K وصوتها /k/.'
+            ],
+            solutionAr: 'حرف C وحرف K يشتركان في نفس الصوت /k/ في بداية الكلمات.',
+            takeawayAr: 'اشتراك الحروف في نفس الصوت يعلم الطفل التمييز الصوتي والكتابي.',
+            takeawayEn: 'Shared phonemes teach children both auditory and orthographic distinction.'
+          },
+          {
+            id: 'we-g1-u4-2-4',
+            titleAr: 'النموذج 4 من 4: مسابقة التخمين بالحواس',
+            titleEn: 'Worked Example 4 of 4: Sensory Mystery Game',
+            problemAr: 'المس شيئاً ناعماً أو استمع لصوت جرس، وعبر عن الحاسة المستخدمة.',
+            problemEn: 'Touch a soft object or listen to a bell and name the sense used.',
+            stepsAr: [
+              'الخطوة 1: عند لمس دمية ناعمة -> "I can touch it with my hand".',
+              'الخطوة 2: عند سماع جرس الحصة -> "I can hear it with my ear".'
+            ],
+            solutionAr: 'تطبيق عملي واقعي يربط الحواس بالتجربة الحسية المباشرة.',
+            takeawayAr: 'الأنشطة الاستكشافية تحفز ذكاء الأطفال وتشعل شغف التعلم.',
+            takeawayEn: 'Discovery activities stimulate children curiosity and passion for learning.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الوحدة 5: في المزرعة (Unit 5: On the Farm)',
+    unitTitleEn: 'Unit 5: On the Farm',
+    lessons: [
+      {
+        titleAr: 'حيوانات المزرعة والحياة الريفية',
+        titleEn: 'Farm Animals: Cows, Horses & Ducks',
+        subtitleAr: 'حيوانات المزرعة: Duck, Horse, Cow, Sheep, Goat, Chicken وفوائدها',
+        subtitleEn: 'Farm animals and their benefits: milk, eggs, wool, and country life',
+        focusAr: 'التعرف على حيوانات المزرعة: cow, horse, sheep, duck, goat, chicken، وما تقدمه لنا: Cows give us milk. Chickens give us eggs.',
+        focusEn: 'Identifying farm animals and their roles: Cows give us milk, chickens give us eggs, sheep have wool.',
+        activityAr: 'طابق بين كل حيوان ومزرعته والفائدة التي يقدمها للإنسان مستخدماً جمل إنجليزية بسيطة.',
+        activityEn: 'Match farm animals with their products (milk, eggs) using simple English sentences.',
+        questionAr: 'أي من الحيوانات الآتية يعطينا الحليب (Milk) في المزرعة؟',
+        questionEn: 'Which farm animal gives us milk?',
+        optionsAr: ['Cow (البقرة)', 'Duck (البطة)', 'Cat (القطة)'],
+        optionsEn: ['Cow', 'Duck', 'Cat'],
+        correctIndex: 0,
+        vocabulary: [
+          ['بطة', 'Duck'],
+          ['حصان', 'Horse'],
+          ['بقرة', 'Cow'],
+          ['خروف', 'Sheep'],
+          ['ماعز', 'Goat'],
+          ['دجاجة', 'Chicken'],
+          ['مزرعة', 'Farm'],
+          ['حليب', 'Milk']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'حيوانات المزرعة والخيرات الريفية (Connect 1)',
+        diagramTitleEn: 'Farm Animals and Countryside (Connect 1)',
+        diagramCaptionAr: 'مخطط حيوانات المزرعة من كتاب وزارة التربية والتعليم الرسمي',
+        diagramCaptionEn: 'Farm animals and agricultural life from the official MOE textbook',
+        workedExamples: [
+          {
+            id: 'we-g1-u5-1',
+            titleAr: 'النموذج 1 من 4: تسمية حيوانات المزرعة والتعرف عليها',
+            titleEn: 'Worked Example 1 of 4: Identifying Farm Animals',
+            problemAr: 'أنت في زيارة لمزرعة ريفية ورأيت بقرة وحصاناً وبطة، كيف تصفها؟',
+            problemEn: 'You visit a farm and see a cow, horse, and duck. How do you describe them?',
+            stepsAr: [
+              'الخطوة 1: أشر للبقرة وقل: "This is a cow".',
+              'الخطوة 2: أشر للحصان وقل: "This is a horse. The horse is fast".',
+              'الخطوة 3: أشر للبطة وقل: "This is a duck. The duck can swim".'
+            ],
+            solutionAr: '"This is a cow. This is a horse. This is a duck." — نمط معتمد.',
+            takeawayAr: 'استخدام الصفات والأفعال البسيطة يثري وصف الحيوانات ويجعل الحديث حيوياً.',
+            takeawayEn: 'Using simple verbs and adjectives enriches animal descriptions vividly.'
+          },
+          {
+            id: 'we-g1-u5-2',
+            titleAr: 'النموذج 2 من 4: جمع أسماء الحيوانات (Singular & Plural)',
+            titleEn: 'Worked Example 2 of 4: Plural Farm Animals',
+            problemAr: 'كيف نجمع: duck واحدة مقابل 4 بطات، و horse واحد مقابل 3 خيول؟',
+            problemEn: 'How do we pluralize: one duck vs four ducks, one horse vs three horses?',
+            stepsAr: [
+              'الخطوة 1: One duck -> Four ducks (إضافة حرف s).',
+              'الخطوة 2: One horse -> Three horses (إضافة حرف s).',
+              'الخطوة 3: خروف: One sheep -> Five sheep (جمع شاذ لا يتغير). '
+            ],
+            solutionAr: 'إضافة s لمعظم الأسماء، مع ملاحظة أن كلمة sheep تبقى كما هي في المفرد والجمع.',
+            takeawayAr: 'الانتباه للجموع الخاصة مثل sheep يمنح التلميذ تميزاً مبكراً.',
+            takeawayEn: 'Noticing irregular plurals like sheep fosters early linguistic mastery.'
+          },
+          {
+            id: 'we-g1-u5-3',
+            titleAr: 'النموذج 3 من 4: من أين نحصل على غذائنا؟ (Food Origins)',
+            titleEn: 'Worked Example 3 of 4: Where Food Comes From',
+            problemAr: 'اربط بين منتجات الطعام اليومية وحيوان المزرعة المنتج لها.',
+            problemEn: 'Connect daily breakfast food items to their source farm animals.',
+            stepsAr: [
+              'الخطوة 1: الحليب والجبن -> "Cows give us milk".',
+              'الخطوة 2: البيض الطازج -> "Chickens give us eggs".',
+              'الخطوة 3: الصوف للملابس -> "Sheep give us wool".'
+            ],
+            solutionAr: 'فهم دور المزرعة في تغذية الإنسان وبناء صحته.',
+            takeawayAr: 'تقدير الطبيعة والحيوانات يعلم التلميذ الامتنان والرفق بالكائنات الحية.',
+            takeawayEn: 'Appreciating nature and animals teaches gratitude and kindness.'
+          },
+          {
+            id: 'we-g1-u5-4',
+            titleAr: 'النموذج 4 من 4: محاكاة أصوات وحركات الحيوانات',
+            titleEn: 'Worked Example 4 of 4: Animal Action Simulation',
+            problemAr: 'لعبة مسرحية: كيف تقلد حركة وصوت حيوانك المفضل في المزرعة؟',
+            problemEn: 'Role-play game: Mimic the sound and movement of your favorite farm animal.',
+            stepsAr: [
+              'الخطوة 1: الحصان يجري -> "The horse runs fast".',
+              'الخطوة 2: البطة تسبح في الماء -> "The duck swims in the pond".'
+            ],
+            solutionAr: 'محاكاة حركية تفاعلية تعزز الفهم الشامل للمفردات الإنجليزية.',
+            takeawayAr: 'الدراما والتمثيل الصفي ينقلان تعلم اللغة من الحفظ إلى الممارسة الحية.',
+            takeawayEn: 'Classroom drama transforms language learning into active living experience.'
+          }
+        ]
+      },
+      {
+        titleAr: 'عد الحيوانات من 1 إلى 10 وصوتيات M, G, O, F',
+        titleEn: 'Counting 1-10 & Phonics: Letters Mm, Gg, Oo, Ff',
+        subtitleAr: 'الأرقام من 1 إلى 10 وصوتيات: M (moon), G (goat), O (octopus), F (fish)',
+        subtitleEn: 'Numbers 1 to 10 and phonics sounds /m/, /g/, /ɒ/, /f/',
+        focusAr: 'عد الحيوانات والأشياء من 1 إلى 10: One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten، وإتقان نطق حروف Mm, Gg, Oo, Ff.',
+        focusEn: 'Counting items 1-10: I can see 3 horses, Count the ducks. Phonics /m/ (moon, milk), /g/ (goat, girl), /ɒ/ (octopus), /f/ (fish, fan).',
+        activityAr: 'عد أصابع يديك من 1 إلى 10 بالإنجليزية بصوت مرتفع، ثم عد الحيوانات في الصورة.',
+        activityEn: 'Count your fingers from 1 to 10 aloud in English, then count farm animals.',
+        questionAr: 'كم عدد البطات إذا رأيت: (One, Two, Three ducks)؟',
+        questionEn: 'How many ducks are there: (One, Two, Three)?',
+        optionsAr: ['3 (Three)', '5 (Five)', '2 (Two)'],
+        optionsEn: ['3 (Three)', '5 (Five)', '2 (Two)'],
+        correctIndex: 0,
+        vocabulary: [
+          ['واحد', 'One'],
+          ['اثنان', 'Two'],
+          ['ثلاثة', 'Three'],
+          ['أربعة', 'Four'],
+          ['خمسة', 'Five'],
+          ['ستة', 'Six'],
+          ['سبعة', 'Seven'],
+          ['ثمانية', 'Eight'],
+          ['تسعة', 'Nine'],
+          ['عشرة', 'Ten']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'الأرقام والصوتيات في المزرعة (Connect 1)',
+        diagramTitleEn: 'Numbers and Farm Phonics (Connect 1)',
+        diagramCaptionAr: 'عد الأرقام وصوتيات حروف Mm, Gg, Oo, Ff من كتاب الوزارة الرسمي',
+        diagramCaptionEn: 'Counting and phonics drills for Mm, Gg, Oo, Ff from the MOE book',
+        workedExamples: [
+          {
+            id: 'we-g1-u5-2-1',
+            titleAr: 'النموذج 1 من 4: عد الأشياء وطرح سؤال "How many...?"',
+            titleEn: 'Worked Example 1 of 4: Counting with "How many...?"',
+            problemAr: 'أمامك صورة بها 4 خيول، كيف تسأل وتجيب عن عددها بالإنجليزية؟',
+            problemEn: 'You see a picture with 4 horses. How do you ask and answer their number?',
+            stepsAr: [
+              'الخطوة 1: صيغة السؤال: "How many horses can you see?".',
+              'الخطوة 2: عد الخيول: "One, two, three, four".',
+              'الخطوة 3: الإجابة التامة: "There are four horses" أو "I can see four horses".'
+            ],
+            solutionAr: '"How many horses? — There are four horses." — نمط كتاب الوزارة.',
+            takeawayAr: 'استخدام "How many" للسؤال عن العدد متبوعاً بالاسم الجمع دائماً.',
+            takeawayEn: '"How many" is always followed by a plural countable noun.'
+          },
+          {
+            id: 'we-g1-u5-2-2',
+            titleAr: 'النموذج 2 من 4: صوت حرف Mm وصوت حرف Gg',
+            titleEn: 'Worked Example 2 of 4: Phonics Sounds /m/ and /g/',
+            problemAr: 'كيف نميز بين نطق صوت الشفتين /m/ في Milk وصوت الحلق /g/ في Goat؟',
+            problemEn: 'How do we differentiate the bilabial /m/ in Milk and velar /g/ in Goat?',
+            stepsAr: [
+              'الخطوة 1: صوت /m/ يُنطق بإطباق الشفتين مع رنين صوتي: /m/.. Milk، /m/.. Moon.',
+              'الخطوة 2: صوت /g/ يُنطق من أقصى اللسان مع الحلق: /g/.. Goat، /g/.. Girl.'
+            ],
+            solutionAr: 'صوتان متمايزان وواضحان يسهل تمييزهما بالتدريب العملي.',
+            takeawayAr: 'إطباق الشفتين يميز صوت M، وانفجار الهواء من الحلق يميز صوت G الصلب.',
+            takeawayEn: 'Lip closure marks /m/, while velar airflow marks hard /g/.'
+          },
+          {
+            id: 'we-g1-u5-2-3',
+            titleAr: 'النموذج 3 من 4: صوت حرف Oo القصير وصوت حرف Ff',
+            titleEn: 'Worked Example 3 of 4: Phonics Sounds /ɒ/ and /f/',
+            problemAr: 'نطق صوت العلة المستدير في Octopus وصوت الاحتكاك في Fish.',
+            problemEn: 'Pronouncing the rounded vowel in Octopus and the fricative in Fish.',
+            stepsAr: [
+              'الخطوة 1: صوت Oo القصير /ɒ/ بتدوير الشفتين: /ɒ/.. Octopus.',
+              'الخطوة 2: صوت Ff /f/ بلمس الأسنان العلوية للشفة السفلية: /f/.. Fish، /f/.. Fan.'
+            ],
+            solutionAr: 'مخارج صوتية دقيقة ومطابقة للمعايير الصوتية لكتاب كونكت 1.',
+            takeawayAr: 'تطابق الأسنان مع الشفة يضمن إخراج صوت F ناصعاً وخالياً من الخلط.',
+            takeawayEn: 'Upper teeth touching the lower lip ensures crisp /f/ pronunciation.'
+          },
+          {
+            id: 'we-g1-u5-2-4',
+            titleAr: 'النموذج 4 من 4: خط الأعداد الإنجليزي من 1 إلى 10',
+            titleEn: 'Worked Example 4 of 4: English Number Line (1 to 10)',
+            problemAr: 'ترتيب الأرقام التسلسلي من الأصغر للأكبر مع كتابتها بالكلمات.',
+            problemEn: 'Sequencing numbers from 1 to 10 with their English word spellings.',
+            stepsAr: [
+              'الخطوة 1: المجموعة الأولى: 1 (One), 2 (Two), 3 (Three), 4 (Four), 5 (Five).',
+              'الخطوة 2: المجموعة الثانية: 6 (Six), 7 (Seven), 8 (Eight), 9 (Nine), 10 (Ten).'
+            ],
+            solutionAr: 'إتقان العد والترتيب الشفهي والكتابي حتى الرقم 10.',
+            takeawayAr: 'الدمج بين العد اللغوي والعد الرياضي يقوي الذاكرة الرياضية المبكرة.',
+            takeawayEn: 'Integrating number words with math strengthens early numeracy skills.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الوحدة 6: الحيوانات من حولي (Unit 6: Animals Around Me)',
+    unitTitleEn: 'Unit 6: Animals Around Me',
+    lessons: [
+      {
+        titleAr: 'الحيوانات البرية والأليفة وصفاتها',
+        titleEn: 'Wild Animals & Pets: Big & Small',
+        subtitleAr: 'الحيوانات: Lion, Elephant, Giraffe, Monkey, Cat, Dog وحجمها وسرعتها',
+        subtitleEn: 'Jungle and domestic animals: size, strength, and habitats',
+        focusAr: 'التمييز بين الحيوانات الأليفة في البيت (Cat, Dog) والحيوانات البرية (Lion, Elephant, Giraffe)، واستخدام الصفات: big, small, fast, tall.',
+        focusEn: 'Distinguishing pets (cat, dog) and wild animals (lion, elephant, giraffe) with adjectives: The elephant is big. The giraffe is tall.',
+        activityAr: 'قلد حركة الفيل الضخم أو الزرافة الطويلة وعبر عنها بجملة إنجليزية قصيرة.',
+        activityEn: 'Mime being a big elephant or tall giraffe and say a descriptive sentence.',
+        questionAr: 'ما الحيوان الذي يتميز برقبته الطويلة جداً في الغابة؟',
+        questionEn: 'Which animal is very tall with a long neck?',
+        optionsAr: ['Giraffe (زرافة)', 'Dog (كلب)', 'Cat (قطة)'],
+        optionsEn: ['Giraffe', 'Dog', 'Cat'],
+        correctIndex: 0,
+        vocabulary: [
+          ['قطة', 'Cat'],
+          ['كلب', 'Dog'],
+          ['سلحفاة', 'Turtle'],
+          ['طائر', 'Bird'],
+          ['أسد', 'Lion'],
+          ['فيل', 'Elephant'],
+          ['قرد', 'Monkey'],
+          ['زرافة', 'Giraffe'],
+          ['كبير', 'Big'],
+          ['طويل', 'Tall']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'الحيوانات من حولي (Connect 1)',
+        diagramTitleEn: 'Animals Around Me (Connect 1)',
+        diagramCaptionAr: 'مخطط الحيوانات البرية والأليفة من كتاب وزارة التربية والتعليم الرسمي',
+        diagramCaptionEn: 'Wild animals and domestic pets diagram from the official MOE textbook',
+        workedExamples: [
+          {
+            id: 'we-g1-u6-1',
+            titleAr: 'النموذج 1 من 4: وصف الحيوانات باستخدام الصفات (Adjectives)',
+            titleEn: 'Worked Example 1 of 4: Describing Animals with Adjectives',
+            problemAr: 'كيف تصف الفيل والزرافة والأسد باللغة الإنجليزية؟',
+            problemEn: 'How do you describe an elephant, giraffe, and lion in English?',
+            stepsAr: [
+              'الخطوة 1: الفيل ضخم وكبير -> "The elephant is big".',
+              'الخطوة 2: الزرافة طويلة الرقبة -> "The giraffe is tall".',
+              'الخطوة 3: الأسد قوي وسريع -> "The lion is strong".'
+            ],
+            solutionAr: 'صياغة جمل اسمية وصفية بسيطة: Subject + is + Adjective.',
+            takeawayAr: 'الصفات تساعدنا على توضيح الفروق بين الحيوانات بطريقة دقيقة.',
+            takeawayEn: 'Adjectives help us describe clear differences between animals accurately.'
+          },
+          {
+            id: 'we-g1-u6-2',
+            titleAr: 'النموذج 2 من 4: التصنيف بين الحيوان الأليف والحيوان البري',
+            titleEn: 'Worked Example 2 of 4: Pets vs Wild Animals',
+            problemAr: 'صنف الحيوانات الآتية: Cat, Lion, Dog, Elephant إلى أليفة وبرية.',
+            problemEn: 'Classify the animals: Cat, Lion, Dog, Elephant into pets and wild animals.',
+            stepsAr: [
+              'الخطوة 1: حيوانات أليفة تعيش معنا في المنزل (Pets): Cat, Dog.',
+              'الخطوة 2: حيوانات برية تعيش في الغابة (Wild animals): Lion, Elephant.'
+            ],
+            solutionAr: 'Cat & Dog = Pets، و Lion & Elephant = Wild animals.',
+            takeawayAr: 'التصنيف البيولوجي المبكر يعزز المعرفة البيئية لدى الأطفال.',
+            takeawayEn: 'Early biological classification fosters environmental awareness.'
+          },
+          {
+            id: 'we-g1-u6-3',
+            titleAr: 'النموذج 3 من 4: أفعال حركة الحيوانات (Animal Actions)',
+            titleEn: 'Worked Example 3 of 4: Animal Action Verbs',
+            problemAr: 'ماذا تفعل الحيوانات؟ الطائر يطير، والقرد يتسلق، والسمكة تسبح.',
+            problemEn: 'How do animals move? Birds fly, monkeys climb, fish swim.',
+            stepsAr: [
+              'الخطوة 1: الطائر -> "The bird flies in the sky".',
+              'الخطوة 2: القرد -> "The monkey climbs trees".',
+              'الخطوة 3: السمكة -> "The fish swims in water".'
+            ],
+            solutionAr: 'ربط الحيوان بالفعل الحركي المناسب لقدراته الطبيعية.',
+            takeawayAr: 'ربط الأسماء بالأفعال ينقل المتعلم من مستوى الكلمات المفردة إلى الجمل الكاملة.',
+            takeawayEn: 'Connecting nouns with action verbs moves learners from words to full sentences.'
+          },
+          {
+            id: 'we-g1-u6-4',
+            titleAr: 'النموذج 4 من 4: حماية الحيوانات والرفق بها',
+            titleEn: 'Worked Example 4 of 4: Caring for Animals and Wildlife',
+            problemAr: 'كيف نعبر عن الرفق بالحيوانات الأليفة وإطعامها بانتظام؟',
+            problemEn: 'How do we express kindness to pets and taking care of them?',
+            stepsAr: [
+              'الخطوة 1: تقديم الطعام والماء -> "Feed the cat. Give water to the dog".',
+              'الخطوة 2: التعامل بلطف -> "Be kind to animals".'
+            ],
+            solutionAr: 'غرس قيمة الرفق بالحيوان ضمن نصوص وتمارين المنهج الوزاري.',
+            takeawayAr: 'الرحمة بالحيوانات فضيلة سامية يحرص المنهج القومي على ترسيخها.',
+            takeawayEn: 'Kindness to animals is a core moral value in the national curriculum.'
+          }
+        ]
+      },
+      {
+        titleAr: 'حروف الجر المكانية وصوتيات B, L, U, J',
+        titleEn: 'Prepositions: In, On, Under & Phonics: Bb, Ll, Uu, Jj',
+        subtitleAr: 'حروف الجر: In (في)، On (على)، Under (تحت) وصوتيات B, L, U, J',
+        subtitleEn: 'Prepositions of place (in, on, under) and phonics /b/, /l/, /ʌ/, /dʒ/',
+        focusAr: 'تحديد مواضع الأشياء والحيوانات: The cat is under the chair. The bird is in the tree. The dog is on the grass. وإتقان نطق حروف Bb, Ll, Uu, Jj.',
+        focusEn: 'Prepositions of place: Where is the cat? The cat is under the chair. Phonics /b/ (boy, ball), /l/ (leaf, lion), /ʌ/ (under, up), /dʒ/ (jar, jam).',
+        activityAr: 'لعبة الاختباء بالدمية: ضع لعبتك فوق الطاولة أو تحت الكرسي أو داخل الصندوق واسأل زميلك: Where is it?',
+        activityEn: 'Hide and seek game: Place a toy in, on, or under furniture and ask: Where is it?',
+        questionAr: 'أين القطة إذا كانت جالسة أسفل الكرسي؟',
+        questionEn: 'Where is the cat if it sits beneath the chair?',
+        optionsAr: ['The cat is under the chair.', 'The cat is in the chair.', 'The cat is on the sky.'],
+        optionsEn: ['The cat is under the chair.', 'The cat is in the chair.', 'The cat is on the sky.'],
+        correctIndex: 0,
+        vocabulary: [
+          ['في/داخل', 'In'],
+          ['على/فوق', 'On'],
+          ['تحت/أسفل', 'Under'],
+          ['ولد', 'Boy'],
+          ['كرة', 'Ball'],
+          ['ورقة شجر', 'Leaf'],
+          ['فوق/أعلى', 'Up'],
+          ['برطمان', 'Jar']
+        ],
+        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
+        diagramTitleAr: 'حروف الجر المكانية والصوتيات (Connect 1)',
+        diagramTitleEn: 'Prepositions of Place and Phonics (Connect 1)',
+        diagramCaptionAr: 'نماذج حروف الجر (In, On, Under) وصوتيات Bb, Ll, Uu, Jj من كتاب الوزارة',
+        diagramCaptionEn: 'Prepositions (in, on, under) and phonics drills for Bb, Ll, Uu, Jj from the MOE book',
+        workedExamples: [
+          {
+            id: 'we-g1-u6-2-1',
+            titleAr: 'النموذج 1 من 4: استخدام حروف الجر (In, On, Under)',
+            titleEn: 'Worked Example 1 of 4: Using Prepositions (In, On, Under)',
+            problemAr: 'حدد موضع الكرة في ثلاث حالات مختلفة: داخل الصندوق، فوق الطاولة، وتحت الكرسي.',
+            problemEn: 'Locate a ball in three positions: inside box, on table, and under chair.',
+            stepsAr: [
+              'الخطوة 1: داخل الصندوق = In: "The ball is in the box".',
+              'الخطوة 2: فوق الطاولة = On: "The ball is on the table".',
+              'الخطوة 3: أسفل الكرسي = Under: "The ball is under the chair".'
+            ],
+            solutionAr: 'تطبيق دقيق لحروف الجر المكانية الثلاثة المقررة في كتاب الوزارة.',
+            takeawayAr: 'حروف الجر المكانية تحدد موقع الأشياء بالنسبة لبعضها بدقة بالغة.',
+            takeawayEn: 'Spatial prepositions describe exact relative locations effortlessly.'
+          },
+          {
+            id: 'we-g1-u6-2-2',
+            titleAr: 'النموذج 2 من 4: السؤال عن المكان بـ "Where is...?"',
+            titleEn: 'Worked Example 2 of 4: Asking Location with "Where is...?"',
+            problemAr: 'أنت تبحث عن قطتك، كيف تسأل وتجيب عن مكانها بالإنجليزية؟',
+            problemEn: 'You are looking for your cat. How do you ask and answer in English?',
+            stepsAr: [
+              'الخطوة 1: السؤال عن المكان يبدأ بأداة الاستفهام "Where": "Where is the cat?".',
+              'الخطوة 2: الإجابة بحرف الجر المناسب: "The cat is under the bed".'
+            ],
+            solutionAr: '"Where is the cat? — It is under the bed." — حوار نموذجي معتمد.',
+            takeawayAr: 'أداة الاستفهام "Where" تسأل دائماً عن الموقع أو المكان.',
+            takeawayEn: 'The question word "Where" always inquires about location.'
+          },
+          {
+            id: 'we-g1-u6-2-3',
+            titleAr: 'النموذج 3 من 4: صوتيات حروف Bb, Ll, Uu, Jj',
+            titleEn: 'Worked Example 3 of 4: Phonics Quad (Bb, Ll, Uu, Jj)',
+            problemAr: 'التدريب على نطق أربعة أصوات أساسية من ختام منهج الترم الأول.',
+            problemEn: 'Practicing four essential phonics sounds concluding Term 1 syllabus.',
+            stepsAr: [
+              'الخطوة 1: حرف Bb بصوت الشفتين /b/: Boy, Ball.',
+              'الخطوة 2: حرف Ll بصوت اللسان /l/: Leaf, Lion.',
+              'الخطوة 3: حرف Uu بصوت العلة المنفتح /ʌ/: Under, Up.',
+              'الخطوة 4: حرف Jj بصوت /dʒ/: Jar, Jam.'
+            ],
+            solutionAr: 'إتقان نطق الحروف الأربعة وتطبيقها على الكلمات المصورة.',
+            takeawayAr: 'اكتمال أصوات الحروف يمنح التلميذ القدرة الكاملة على تهجئة كلمات جديدة.',
+            takeawayEn: 'Completing foundational phonics equips young readers to decode new words.'
+          },
+          {
+            id: 'we-g1-u6-2-4',
+            titleAr: 'النموذج 4 من 4: الاختبار التكاملي الشامل للمنهج',
+            titleEn: 'Worked Example 4 of 4: Comprehensive Term 1 Integrative Review',
+            problemAr: 'دمج الحيوانات والألوان والأرقام وحروف الجر في جملة واحدة متقدمة.',
+            problemEn: 'Synthesize animals, colors, numbers, and prepositions into one integrative sentence.',
+            stepsAr: [
+              'الخطوة 1: تحديد العدد واللون والحيوان: "Two brown dogs".',
+              'الخطوة 2: تحديد موقعها بحرف الجر: "under the green tree".',
+              'الخطوة 3: تركيب الجملة: "I can see two brown dogs under the green tree".'
+            ],
+            solutionAr: 'جملة متكاملة تثبت الإتقان الفائق لجميع أهداف منهج Connect 1 للفصل الدراسي الأول.',
+            takeawayAr: 'التكامل بين المهارات هو قمة النجاح في تعلم اللغة الإنجليزية للمرحلة الابتدائية.',
+            takeawayEn: 'Skill integration represents the pinnacle of primary English learning mastery.'
+          }
+        ]
       }
     ]
   }
