@@ -10237,6 +10237,7 @@ input:checked + .slider.round:before {
   max-width: 680px;
   height: auto;
   display: block;
+  direction: ltr;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
 }
 

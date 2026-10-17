@@ -2161,68 +2161,80 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 
       case 'arabic_parts_of_speech':
         return (
-          <svg viewBox="0 0 600 340" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 660 355" className="scientific-svg" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="arabicHeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#6366f1" />
                 <stop offset="100%" stopColor="#8b5cf6" />
               </linearGradient>
             </defs>
-            <rect width="600" height="340" fill="rgba(15, 23, 42, 0.95)" rx="16" />
+            <rect width="660" height="355" fill="rgba(15, 23, 42, 0.95)" rx="16" />
 
             {/* Top Root Node: الكلمة في اللغة العربية */}
-            <rect x="200" y="15" width="200" height="42" rx="10" fill="url(#arabicHeaderGrad)" stroke="#a78bfa" strokeWidth="2" />
-            <text x="300" y="42" textAnchor="middle" fill="#ffffff" fontSize="16" fontWeight="bold">أقسام الكلمة في اللغة العربية</text>
+            <rect x="220" y="15" width="220" height="42" rx="10" fill="url(#arabicHeaderGrad)" stroke="#a78bfa" strokeWidth="2" />
+            <text x="330" y="42" textAnchor="middle" fill="#ffffff" fontSize="16" fontWeight="bold">أقسام الكلمة في اللغة العربية</text>
 
             {/* Connecting Lines */}
-            <line x1="300" y1="57" x2="300" y2="75" stroke="#a78bfa" strokeWidth="2" />
-            <line x1="110" y1="75" x2="490" y2="75" stroke="#a78bfa" strokeWidth="2" />
-            <line x1="110" y1="75" x2="110" y2="95" stroke="#38bdf8" strokeWidth="2" />
-            <line x1="300" y1="75" x2="300" y2="95" stroke="#10b981" strokeWidth="2" />
-            <line x1="490" y1="75" x2="490" y2="95" stroke="#f59e0b" strokeWidth="2" />
+            <line x1="330" y1="57" x2="330" y2="75" stroke="#a78bfa" strokeWidth="2" />
+            <line x1="115" y1="75" x2="545" y2="75" stroke="#a78bfa" strokeWidth="2" />
+            <line x1="115" y1="75" x2="115" y2="95" stroke="#f59e0b" strokeWidth="2" />
+            <line x1="330" y1="75" x2="330" y2="95" stroke="#10b981" strokeWidth="2" />
+            <line x1="545" y1="75" x2="545" y2="95" stroke="#38bdf8" strokeWidth="2" />
 
-            {/* Column 1: الاسم (Noun) */}
-            <rect x="25" y="95" width="170" height="210" rx="10" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" strokeWidth="2" />
-            <rect x="35" y="105" width="150" height="30" rx="6" fill="#0284c7" />
-            <text x="110" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">1. الاسْمُ (Noun)</text>
-            <text x="110" y="150" textAnchor="middle" fill="#7dd3fc" fontSize="11" fontWeight="bold">يدل على معنى دون زمن</text>
-            <line x1="40" y1="160" x2="180" y2="160" stroke="rgba(56, 189, 248, 0.3)" />
-            <text x="175" y="180" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ التنوين (كتابٌ)</text>
-            <text x="175" y="202" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ أل التعريف (المدرسة)</text>
-            <text x="175" y="224" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ حرف الجر (في الفصلِ)</text>
-            <text x="175" y="246" textAnchor="end" fill="#e0f2fe" fontSize="11">✓ النداء (يا طالبُ)</text>
-            <rect x="40" y="262" width="140" height="24" rx="4" fill="rgba(2, 132, 199, 0.3)" />
-            <text x="110" y="278" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">مثال: زَيْدٌ ، العِلْمُ</text>
+            {/* Column 1 (Right in Arabic): الاسم (Noun) */}
+            <rect x="450" y="95" width="190" height="215" rx="10" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" strokeWidth="2" />
+            <rect x="465" y="105" width="160" height="30" rx="6" fill="#0284c7" />
+            <text x="545" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">1. الاسْمُ (Noun)</text>
+            <text x="545" y="150" textAnchor="middle" fill="#7dd3fc" fontSize="11" fontWeight="bold">يدل على معنى دون زمن</text>
+            <line x1="465" y1="160" x2="625" y2="160" stroke="rgba(56, 189, 248, 0.3)" />
+            <rect x="460" y="167" width="170" height="20" rx="4" fill="rgba(56, 189, 248, 0.08)" />
+            <text x="545" y="181" textAnchor="middle" fill="#e0f2fe" fontSize="11">✓ التنوين (كتابٌ)</text>
+            <rect x="460" y="191" width="170" height="20" rx="4" fill="rgba(56, 189, 248, 0.08)" />
+            <text x="545" y="205" textAnchor="middle" fill="#e0f2fe" fontSize="11">✓ أل التعريف (المدرسة)</text>
+            <rect x="460" y="215" width="170" height="20" rx="4" fill="rgba(56, 189, 248, 0.08)" />
+            <text x="545" y="229" textAnchor="middle" fill="#e0f2fe" fontSize="11">✓ حرف الجر (في الفصلِ)</text>
+            <rect x="460" y="239" width="170" height="20" rx="4" fill="rgba(56, 189, 248, 0.08)" />
+            <text x="545" y="253" textAnchor="middle" fill="#e0f2fe" fontSize="11">✓ النداء (يا طالبُ)</text>
+            <rect x="465" y="269" width="160" height="26" rx="6" fill="rgba(2, 132, 199, 0.3)" stroke="#0284c7" strokeWidth="1" />
+            <text x="545" y="286" textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">مثال: زَيْدٌ ، العِلْمُ</text>
 
-            {/* Column 2: الفعل (Verb) */}
-            <rect x="215" y="95" width="170" height="210" rx="10" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" strokeWidth="2" />
-            <rect x="225" y="105" width="150" height="30" rx="6" fill="#059669" />
-            <text x="300" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">2. الفِعْلُ (Verb)</text>
-            <text x="300" y="150" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="bold">يدل على حدث مقترن بزمن</text>
-            <line x1="230" y1="160" x2="370" y2="160" stroke="rgba(16, 185, 129, 0.3)" />
-            <text x="365" y="180" textAnchor="end" fill="#d1fae5" fontSize="11">✓ ماضٍ: قبول تاء الفاعل (كتبتُ)</text>
-            <text x="365" y="202" textAnchor="end" fill="#d1fae5" fontSize="11">✓ مضارع: قبول (لم / سين) (سيكتب)</text>
-            <text x="365" y="224" textAnchor="end" fill="#d1fae5" fontSize="11">✓ أمر: دلالة الطلب + ياء المخاطبة</text>
-            <text x="365" y="246" textAnchor="end" fill="#d1fae5" fontSize="11">✓ تاء التأنيث الساكنة (قامتْ)</text>
-            <rect x="230" y="262" width="140" height="24" rx="4" fill="rgba(5, 150, 105, 0.3)" />
-            <text x="300" y="278" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">مثال: قَرَأَ ، يَقْرَأُ ، اقْرَأْ</text>
+            {/* Column 2 (Middle): الفعل (Verb) */}
+            <rect x="235" y="95" width="190" height="215" rx="10" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" strokeWidth="2" />
+            <rect x="250" y="105" width="160" height="30" rx="6" fill="#059669" />
+            <text x="330" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">2. الفِعْلُ (Verb)</text>
+            <text x="330" y="150" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="bold">يدل على حدث مقترن بزمن</text>
+            <line x1="250" y1="160" x2="410" y2="160" stroke="rgba(16, 185, 129, 0.3)" />
+            <rect x="245" y="167" width="170" height="20" rx="4" fill="rgba(16, 185, 129, 0.08)" />
+            <text x="330" y="181" textAnchor="middle" fill="#d1fae5" fontSize="11">✓ ماضٍ: قبول تاء الفاعل (كتبتُ)</text>
+            <rect x="245" y="191" width="170" height="20" rx="4" fill="rgba(16, 185, 129, 0.08)" />
+            <text x="330" y="205" textAnchor="middle" fill="#d1fae5" fontSize="11">✓ مضارع: قبول (لم / سين)</text>
+            <rect x="245" y="215" width="170" height="20" rx="4" fill="rgba(16, 185, 129, 0.08)" />
+            <text x="330" y="229" textAnchor="middle" fill="#d1fae5" fontSize="11">✓ أمر: دلالة الطلب + ياء المخاطبة</text>
+            <rect x="245" y="239" width="170" height="20" rx="4" fill="rgba(16, 185, 129, 0.08)" />
+            <text x="330" y="253" textAnchor="middle" fill="#d1fae5" fontSize="11">✓ تاء التأنيث الساكنة (قامتْ)</text>
+            <rect x="250" y="269" width="160" height="26" rx="6" fill="rgba(5, 150, 105, 0.3)" stroke="#10b981" strokeWidth="1" />
+            <text x="330" y="286" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold">مثال: قَرَأَ ، يَقْرَأُ ، اقْرَأْ</text>
 
-            {/* Column 3: الحرف (Particle) */}
-            <rect x="405" y="95" width="170" height="210" rx="10" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" strokeWidth="2" />
-            <rect x="415" y="105" width="150" height="30" rx="6" fill="#d97706" />
-            <text x="490" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">3. الحَرْفُ (Particle)</text>
-            <text x="490" y="150" textAnchor="middle" fill="#fde68a" fontSize="11" fontWeight="bold">لا يظهر معناه إلا مع غيره</text>
-            <line x1="420" y1="160" x2="560" y2="160" stroke="rgba(245, 158, 11, 0.3)" />
-            <text x="555" y="180" textAnchor="end" fill="#fef3c7" fontSize="11">✓ لا يقبل علامات الاسم</text>
-            <text x="555" y="202" textAnchor="end" fill="#fef3c7" fontSize="11">✓ لا يقبل علامات الفعل</text>
-            <text x="555" y="224" textAnchor="end" fill="#fef3c7" fontSize="11">✓ حروف الجر: (من، إلى، عن، في)</text>
-            <text x="555" y="246" textAnchor="end" fill="#fef3c7" fontSize="11">✓ حروف العطف: (الواو، الفاء، ثم)</text>
-            <rect x="420" y="262" width="140" height="24" rx="4" fill="rgba(217, 119, 6, 0.3)" />
-            <text x="490" y="278" textAnchor="middle" fill="#fbbf24" fontSize="11" fontWeight="bold">مثال: فِي ، إِلَى ، ثُمَّ</text>
+            {/* Column 3 (Left in Arabic): الحرف (Particle) */}
+            <rect x="20" y="95" width="190" height="215" rx="10" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" strokeWidth="2" />
+            <rect x="35" y="105" width="160" height="30" rx="6" fill="#d97706" />
+            <text x="115" y="125" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">3. الحَرْفُ (Particle)</text>
+            <text x="115" y="150" textAnchor="middle" fill="#fde68a" fontSize="11" fontWeight="bold">لا يظهر معناه إلا مع غيره</text>
+            <line x1="35" y1="160" x2="195" y2="160" stroke="rgba(245, 158, 11, 0.3)" />
+            <rect x="30" y="167" width="170" height="20" rx="4" fill="rgba(245, 158, 11, 0.08)" />
+            <text x="115" y="181" textAnchor="middle" fill="#fef3c7" fontSize="11">✓ لا يقبل علامات الاسم</text>
+            <rect x="30" y="191" width="170" height="20" rx="4" fill="rgba(245, 158, 11, 0.08)" />
+            <text x="115" y="205" textAnchor="middle" fill="#fef3c7" fontSize="11">✓ لا يقبل علامات الفعل</text>
+            <rect x="30" y="215" width="170" height="20" rx="4" fill="rgba(245, 158, 11, 0.08)" />
+            <text x="115" y="229" textAnchor="middle" fill="#fef3c7" fontSize="11">✓ حروف الجر: (من، إلى، عن، في)</text>
+            <rect x="30" y="239" width="170" height="20" rx="4" fill="rgba(245, 158, 11, 0.08)" />
+            <text x="115" y="253" textAnchor="middle" fill="#fef3c7" fontSize="11">✓ حروف العطف: (الواو، الفاء، ثم)</text>
+            <rect x="35" y="269" width="160" height="26" rx="6" fill="rgba(217, 119, 6, 0.3)" stroke="#f59e0b" strokeWidth="1" />
+            <text x="115" y="286" textAnchor="middle" fill="#fbbf24" fontSize="11" fontWeight="bold">مثال: فِي ، إِلَى ، ثُمَّ</text>
 
             {/* Bottom Insight Footer */}
-            <rect x="60" y="312" width="480" height="22" rx="6" fill="rgba(99, 102, 241, 0.2)" stroke="#6366f1" />
-            <text x="300" y="327" textAnchor="middle" fill="#c7d2fe" fontSize="11" fontWeight="bold">قاعدة ابن مالك: بالجر والتنوين والندا وأل ومسندٍ للاسم تمييزٌ حصل</text>
+            <rect x="40" y="318" width="580" height="24" rx="6" fill="rgba(99, 102, 241, 0.2)" stroke="#6366f1" />
+            <text x="330" y="334" textAnchor="middle" fill="#c7d2fe" fontSize="11" fontWeight="bold">قاعدة ابن مالك: بالجر والتنوين والندا وأل ومسندٍ للاسم تمييزٌ حصل</text>
           </svg>
         );
 
