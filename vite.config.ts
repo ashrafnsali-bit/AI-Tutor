@@ -36,6 +36,16 @@ function devHtmlPlugin(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [devHtmlPlugin(), react()],
-  base: '/AI-Tutor/'
+  base: '/AI-Tutor/',
+  server: {
+    port: 4000,
+    strictPort: true,
+    host: true
+  },
+  preview: {
+    port: 4000,
+    strictPort: true,
+    host: true
+  }
 })
 

@@ -40,6 +40,7 @@ import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSe
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
 import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
+import { getSubjectVisual } from '../data/subjectVisuals';
 import { getActiveUserAccount } from '../services/database';
 import { X, User, ShieldAlert, CheckCircle2, Users, ShieldCheck, Lock, Globe } from 'lucide-react';
 
@@ -1143,8 +1144,49 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
             )}
 
             {/* Subject */}
-            <div className="form-group">
+            <div className="form-group full-width">
               <label className="form-label">{t.labelSubject}</label>
+
+              {/* Active Subject Curriculum Visual Card */}
+              {(() => {
+                const activeVisual = getSubjectVisual(formData.subject, formData.country, formData.gradeLevel, formData.educationTrack);
+                const activeSubjTitle = getNationalSubjectLabel(
+                  formData.subject,
+                  formData.country,
+                  formData.gradeLevel,
+                  formData.language,
+                  formData.educationType,
+                  formData.educationTrack
+                );
+                return (
+                  <div className="profile-active-subject-card">
+                    <div className="profile-subject-cover-wrap">
+                      <img 
+                        src={activeVisual.coverImage} 
+                        alt={activeSubjTitle} 
+                        className="profile-subject-cover-img" 
+                        loading="lazy"
+                      />
+                      <div className="profile-subject-cover-overlay" />
+                      <div className="profile-subject-badge">
+                        <span>{formData.language === 'en' ? activeVisual.badgeEn : activeVisual.badgeAr}</span>
+                      </div>
+                    </div>
+                    <div className="profile-subject-details">
+                      <div className="profile-subject-title">
+                        <h4>{activeSubjTitle}</h4>
+                        <span className="profile-subject-stage">{formData.language === 'en' ? activeVisual.stageEn : activeVisual.stageAr}</span>
+                      </div>
+                      <div className="profile-subject-topics">
+                        {(formData.language === 'en' ? activeVisual.topicsEn : activeVisual.topicsAr).map((t, idx) => (
+                          <span key={idx} className="profile-topic-pill">• {t}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
               <select
                 className="form-select"
                 value={formData.subject}

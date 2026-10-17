@@ -2,6 +2,7 @@ import React from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { getNationalSubjectLabel } from '../data/curriculumCountries';
+import { getSubjectVisual } from '../data/subjectVisuals';
 import { removeExternalLinksFromText } from '../services/studentContentSanitizer';
 import { Lock, CheckCircle2, PlayCircle, BookOpen, Award, ArrowDown, Wand2, Clock, Globe } from 'lucide-react';
 
@@ -47,6 +48,8 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
   const courseGrade = t.gradeLabels[gradeKey] || gradeKey;
   const courseTrack = t.specLabels[specKey] || specKey;
 
+  const subjectVisual = getSubjectVisual(subjectKey, countryKey, gradeKey, profile?.educationTrack);
+
   const isPrimarySchool = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeKey);
   const isMiddleSchool = ['G7', 'G8', 'G9'].includes(gradeKey);
   const dynamicCourseName = (isPrimarySchool || isMiddleSchool)
@@ -57,6 +60,20 @@ export const LectureRoadmap: React.FC<LectureRoadmapProps> = ({
     <aside className="roadmap-sidebar">
       {/* Course Header */}
       <div className="roadmap-header">
+        {/* Subject Curriculum Visual Banner */}
+        <div className="roadmap-subject-banner">
+          <img 
+            src={subjectVisual.coverImage} 
+            alt={courseSubject} 
+            className="roadmap-subject-banner-img" 
+            loading="lazy"
+          />
+          <div className="roadmap-subject-banner-overlay" />
+          <div className="roadmap-subject-banner-badge">
+            <span>{isEn ? subjectVisual.badgeEn : subjectVisual.badgeAr}</span>
+          </div>
+        </div>
+
         <div className="roadmap-header-top">
           <div className="roadmap-header-icon-wrap">
             <BookOpen className="roadmap-icon" size={20} />

@@ -30,6 +30,7 @@ import {
   isSudanPublicGrade12SubjectAvailable
 } from '../data/curriculumData';
 import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
+import { getSubjectVisual, getStageVisual } from '../data/subjectVisuals';
 import { detectStudentCountry, setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
   Sparkles, 
@@ -1166,6 +1167,16 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               className={`prep-stage-card ${isPrimary ? 'active-stage-card' : ''}`}
               onClick={() => handleSelectStage('primary')}
             >
+              <div className="prep-stage-cover">
+                <img 
+                  src={getStageVisual('primary').coverImage} 
+                  alt={isEn ? 'Primary Foundation Stage' : 'المرحلة الابتدائية - التأسيس المعرفي'} 
+                  className="prep-stage-cover-img"
+                  loading="lazy"
+                />
+                <div className="prep-stage-cover-overlay" />
+                <span className="prep-stage-cover-badge">{isEn ? 'Grades 1 – 6' : 'الصفوف 1 - 6'}</span>
+              </div>
               <div className="stage-card-header">
                 <span className="stage-badge stage-badge-emerald">{isEn ? 'Elementary' : 'المرحلة الابتدائية'}</span>
                 <span className="stage-age">{isEn ? 'Ages 6 - 12' : '6 - 12 سنة'}</span>
@@ -1192,6 +1203,16 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               className={`prep-stage-card ${isMiddle ? 'active-stage-card' : ''}`}
               onClick={() => handleSelectStage('middle')}
             >
+              <div className="prep-stage-cover">
+                <img 
+                  src={getStageVisual('middle').coverImage} 
+                  alt={isEn ? 'Middle Stage' : 'المرحلة المتوسطة - التفكير المنطقي'} 
+                  className="prep-stage-cover-img"
+                  loading="lazy"
+                />
+                <div className="prep-stage-cover-overlay" />
+                <span className="prep-stage-cover-badge">{isEn ? 'Grades 7 – 9' : 'الصفوف 7 - 9'}</span>
+              </div>
               <div className="stage-card-header">
                 <span className="stage-badge stage-badge-sky">{isEn ? 'Middle / Intermediate' : 'المرحلة المتوسطة'}</span>
                 <span className="stage-age">{isEn ? 'Ages 13 - 15' : '13 - 15 سنة'}</span>
@@ -1218,6 +1239,16 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
               className={`prep-stage-card ${isHigh ? 'active-stage-card' : ''}`}
               onClick={() => handleSelectStage('high')}
             >
+              <div className="prep-stage-cover">
+                <img 
+                  src={getStageVisual('high').coverImage} 
+                  alt={isEn ? 'High School & STEM' : 'المرحلة الثانوية و STEM'} 
+                  className="prep-stage-cover-img"
+                  loading="lazy"
+                />
+                <div className="prep-stage-cover-overlay" />
+                <span className="prep-stage-cover-badge">{isEn ? 'Grades 10 – 12' : 'الصفوف 10 - 12'}</span>
+              </div>
               <div className="stage-card-header">
                 <span className="stage-badge stage-badge-purple">{isEn ? 'High School & STEM' : 'المرحلة الثانوية و STEM'}</span>
                 <span className="stage-age">{isEn ? 'Ages 16 - 18+' : '16 - 18 سنة'}</span>
@@ -1441,6 +1472,8 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
                   selectedTrack
                 ) || (isEn ? subj.nameEn : subj.nameAr);
 
+                const subjVisual = getSubjectVisual(subj.id, selectedCountry, selectedGrade, selectedTrack);
+
                 return (
                   <div
                     key={subj.id}
@@ -1449,20 +1482,49 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
                       setSelectedSubject(subj.id);
                     }}
                   >
-                    <div className="psubj-icon" style={{ color: subj.color, borderColor: `${subj.color}40` }}>
-                      {subj.icon}
-                    </div>
-                    <div className="psubj-info">
-                      <h4>{localizedTitle}</h4>
-                      <p>{isEn ? subj.descEn : subj.descAr}</p>
-                    </div>
-                    {isSelected ? (
-                      <div className="psubj-check">
-                        <CheckCircle2 size={20} />
+                    {/* Official Curriculum Subject Cover Visual */}
+                    <div className="prep-subject-cover-wrap">
+                      <img 
+                        src={subjVisual.coverImage} 
+                        alt={localizedTitle} 
+                        className="prep-subject-cover-img"
+                        loading="lazy"
+                      />
+                      <div className="prep-subject-cover-overlay" />
+                      <div className="prep-subject-curriculum-badge">
+                        <ShieldCheck size={12} className="text-emerald-400" />
+                        <span>{isEn ? subjVisual.badgeEn : subjVisual.badgeAr}</span>
                       </div>
-                    ) : (
-                      <span className="psubj-select-hint">{isEn ? 'Select' : 'اختيار'}</span>
-                    )}
+                    </div>
+
+                    <div className="prep-subject-content">
+                      <div className="prep-subject-head">
+                        <div className="psubj-icon" style={{ color: subj.color, borderColor: `${subj.color}40`, background: `${subj.color}15` }}>
+                          {subj.icon}
+                        </div>
+                        <div className="psubj-title-wrap">
+                          <h4>{localizedTitle}</h4>
+                          <span className="psubj-stage-pill">{isEn ? subjVisual.stageEn : subjVisual.stageAr}</span>
+                        </div>
+                        {isSelected ? (
+                          <div className="psubj-check">
+                            <CheckCircle2 size={22} className="text-emerald-400" />
+                          </div>
+                        ) : (
+                          <span className="psubj-select-hint">{isEn ? 'Select' : 'اختيار'}</span>
+                        )}
+                      </div>
+
+                      <p className="psubj-desc">{isEn ? subj.descEn : subj.descAr}</p>
+
+                      <div className="prep-subject-topics-strip">
+                        {(isEn ? subjVisual.topicsEn : subjVisual.topicsAr).slice(0, 3).map((topic, i) => (
+                          <span key={i} className="prep-subject-topic-pill">
+                            • {topic}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 );
               })}
