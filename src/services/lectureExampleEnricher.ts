@@ -425,13 +425,45 @@ export function ensureFourExamplesForLecture(lecture: Lecture): Lecture {
       '3. Real-World Applications & Context',
       '4. Advanced Synthesis & Mastery Skills'
     ];
+    // Clean lecture title to avoid ugly nested parentheses and prefixes like "المحاضرة X:"
+    const cleanTopicAr = (enriched.titleAr || '')
+      .replace(/^المحاضرة\s*\d*[:\s-]*/i, '')
+      .replace(/^\((.*)\)$/, '$1')
+      .trim() || 'موضوع الدرس';
+    const cleanTopicEn = (enriched.titleEn || '')
+      .replace(/^Lecture\s*\d*[:\s-]*/i, '')
+      .replace(/^\((.*)\)$/, '$1')
+      .trim() || 'the topic';
+
+    const fallbackContentsAr = [
+      `### الشرح المفاهيمي والأساس العلمي لـ ${cleanTopicAr}
+يتناول هذا القسم البناء النظري والمفاهيم الجوهرية المعتمدة في المنهج الدراسي، مع التركيز على المفردات الدقيقة والتعريفات المعيارية لتحقيق الاستيعاب التام لموضوع ${cleanTopicAr}.`,
+      `### النماذج التطبيقية والقوانين المنظمة لـ ${cleanTopicAr}
+يقدم هذا القسم دراسة منهجية للخطوات التحليلية والنماذج التوضيحية المقررة وزارياً لـ ${cleanTopicAr}، وكيفية توظيف القواعد لحل المسائل واستيعاب الأفكار الرئيسية بدقة.`,
+      `### التطبيقات الواقعية والتحليل الحي لـ ${cleanTopicAr}
+يسلط هذا القسم الضوء على السياقات الواقعية والربط التحليلي المباشر لـ ${cleanTopicAr}، مبيناً الأثر التطبيقي والارتباط المباشر بنماذج الأسئلة والتدريبات التطبيقية في الاختبارات.`,
+      `### التحليل المتقدم ومهارات الإتقان والتقييم لـ ${cleanTopicAr}
+يركز هذا القسم على المهارات التحليلية العليا والمسائل المركبة ومحاكاة أسئلة الامتحانات الرسمية لتثبيت الفهم واختبار الجاهزية المعرفية لـ ${cleanTopicAr}.`
+    ];
+
+    const fallbackContentsEn = [
+      `### Conceptual Foundations & Principles of ${cleanTopicEn}
+Covers the core theoretical frameworks and standard curriculum concepts required to master ${cleanTopicEn}.`,
+      `### Applied Models & Analytical Frameworks for ${cleanTopicEn}
+Examines structured problem-solving methodologies and governing principles for ${cleanTopicEn}.`,
+      `### Real-World Applications & Context of ${cleanTopicEn}
+Connects core principles of ${cleanTopicEn} to authentic practical scenarios and examination contexts.`,
+      `### Advanced Synthesis & Mastery for ${cleanTopicEn}
+Focuses on higher-order analytical reasoning and compound questions to achieve comprehensive subject mastery.`
+    ];
+
     while (enriched.sections.length < 4) {
       const idx = enriched.sections.length;
       enriched.sections.push({
         titleAr: sectionTitlesAr[idx],
         titleEn: sectionTitlesEn[idx],
-        contentAr: `يتناول هذا القسم الجانب التطبيقي والتحليلي المتقدم لـ (${enriched.titleAr}) لترسيخ الفهم وحل التدريبات.`,
-        contentEn: `This section addresses applied and advanced synthesis for (${enriched.titleEn}) to consolidate student mastery.`,
+        contentAr: fallbackContentsAr[idx] || fallbackContentsAr[1],
+        contentEn: fallbackContentsEn[idx] || fallbackContentsEn[1],
         interactiveExample: finalizedExamples[idx]
       });
     }
