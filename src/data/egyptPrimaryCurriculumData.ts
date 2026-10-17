@@ -764,6 +764,38 @@ const geographyG4Units: PrimaryUnitDefinition[] = [
         optionsEn: ['Nile Valley, Delta & Fayoum', 'Western desert only', 'Red Sea mountains'],
         correctIndex: 0,
         vocabulary: [['بيئة زراعية', 'Agricultural biome'], ['بيئة ساحلية', 'Coastal biome'], ['بيئة صحراوية', 'Desert biome'], ['دلتا النيل', 'Nile Delta']]
+      },
+      {
+        titleAr: 'الطقس والمناخ والموارد الطبيعية في مصر',
+        titleEn: 'Weather, Climate & Natural Resources in Egypt',
+        subtitleAr: 'الفرق بين الطقس والمناخ، ومصادر الطاقة المتجددة (الشمس والرياح والمياه)',
+        subtitleEn: 'Weather vs climate, meteorological instruments, and clean renewable energy resources',
+        focusAr: 'التمييز بين الطقس (حالة الجو لفترة قصيرة) والمناخ (لفترة زمنية طويلة)، والتعرف على أدوات القياس كدوارة الرياح والترمومتر، والمحافظة على الموارد المائية والشمسية.',
+        focusEn: 'Distinguish weather vs climate; use weather measurement tools and explore renewable wind and solar energy.',
+        activityAr: 'سجل حالة الطقس في مدينتك لمدة أسبوع مستخدماً رموز الطقس ودرجات الحرارة.',
+        activityEn: 'Keep a 7-day weather log using weather symbols and temperature recordings.',
+        questionAr: 'ما الجهاز المستخدم لقياس درجات الحرارة بدقة؟',
+        questionEn: 'Which device measures atmospheric temperature accurately?',
+        optionsAr: ['الترمومتر (ميزان الحرارة)', 'دوارة الرياح', 'مقياس المطر'],
+        optionsEn: ['Thermometer', 'Wind vane', 'Rain gauge'],
+        correctIndex: 0,
+        vocabulary: [['طقس', 'Weather'], ['مناخ', 'Climate'], ['ترمومتر', 'Thermometer'], ['طاقة شمسية', 'Solar energy']]
+      },
+      {
+        titleAr: 'نحو بيئة مستدامة ومبادرة اتحضر للأخضر',
+        titleEn: 'Toward a Sustainable Environment: Go Green Initiative',
+        subtitleAr: 'المشكلات البيئية (التلوث، الإسراف في المياه)، وإعادة التدوير والمحافظة على الموارد',
+        subtitleEn: 'Environmental challenges, recycling, water conservation, and eco-friendly citizen habits',
+        focusAr: 'مواجهة التلوث البيئي في الهواء والتربة والماء، وأهمية مبادرة "اتحضر للأخضر" لزيادة المساحات الخضراء والحد من استخدام البلاستيك.',
+        focusEn: 'Promote environmental sustainability, waste recycling, and active participation in civic conservation programs.',
+        activityAr: 'صمم لوحة إرشادية تحث زملاءك على ترشيد استهلاك المياه وفرز القمامة لإعادة التدوير.',
+        activityEn: 'Design an eco-poster promoting water conservation and waste sorting for recycling.',
+        questionAr: 'ما المبادرة الوطنية التي أطلقتها مصر لنشر الوعي البيئي وحماية الطبيعة؟',
+        questionEn: 'Which national Egyptian initiative promotes green environmental awareness?',
+        optionsAr: ['مبادرة اتحضر للأخضر (Go Green)', 'مبادرة بناء المصانع فقط', 'مبادرة زيادة البلاستيك'],
+        optionsEn: ['Go Green Initiative', 'Factories-only initiative', 'Plastic increase'],
+        correctIndex: 0,
+        vocabulary: [['استدامة بيئية', 'Environmental sustainability'], ['إعادة التدوير', 'Recycling'], ['ترشيد المياه', 'Water conservation'], ['اتحضر للأخضر', 'Go Green']]
       }
     ]
   }
@@ -805,6 +837,38 @@ const historyG4Units: PrimaryUnitDefinition[] = [
         optionsEn: ['Bank Misr', 'Postal Authority', 'Antiquities Museum'],
         correctIndex: 0,
         vocabulary: [['طلعت حرب', 'Talaat Harb'], ['جمال حمدان', 'Gamal Hemdan'], ['بنك مصر', 'Bank Misr'], ['اقتصاد وطني', 'National economy']]
+      },
+      {
+        titleAr: 'الحياة الاقتصادية والتجارة والصناعة في مصر القديمة',
+        titleEn: 'Economy, Craftsmanship & Trade in Ancient Egypt',
+        subtitleAr: 'الزراعة على ضفاف النيل، الصناعات الفخارية والزجاجية، والتبادل التجاري مع بلاد بونت',
+        subtitleEn: 'Nile agriculture, glass and textile craftsmanship, and naval trade with the Land of Punt',
+        focusAr: 'كيف بني الاقتصاد المصري القديم على التعاون والابتكار: مواسم الزراعة المرتبطة بفيضان النيل، استخراج المعادن من سيناء، والرحلات التجارية لبلاد بونت.',
+        focusEn: 'Analyze ancient Egyptian economic pillars: seasonal Nile inundation farming, metallurgy, and maritime commerce with Punt.',
+        activityAr: 'ارسم لوحة توضح المراكب التجارية المصرية القديمة وهي محملة بالبخور وخشب الأبنوس من بلاد بونت.',
+        activityEn: 'Illustrate an ancient Egyptian merchant vessel laden with frankincense, gold, and timber from Punt.',
+        questionAr: 'ما الملكة المصرية التي أرسلت بعثة تجارية كبرى إلى بلاد بونت (الصومال حالياً)؟',
+        questionEn: 'Which Egyptian queen sent a renowned trading expedition to the Land of Punt?',
+        optionsAr: ['الملكة حتشبسوت', 'الملكة كليوباترا', 'الملكة نفرتيتي'],
+        optionsEn: ['Queen Hatshepsut', 'Queen Cleopatra', 'Queen Nefertiti'],
+        correctIndex: 0,
+        vocabulary: [['بلاد بونت', 'Land of Punt'], ['فيضان النيل', 'Nile Flood'], ['صناعة الفخار', 'Pottery'], ['تجارة بحرية', 'Maritime trade']]
+      },
+      {
+        titleAr: 'ملوك خالدون ومعالم أثرية: الأهرامات والمعابد والكرنك',
+        titleEn: 'Enduring Monarchs & Heritage Monuments: Pyramids & Karnak',
+        subtitleAr: 'الملوك بناة الأهرامات ومعابد الأقصر وأبو سمبل والكرنك وواجبنا في صيانة الآثار',
+        subtitleEn: 'The Pyramid builders, Luxor and Abu Simbel temples, Karnak, and preservation ethics',
+        focusAr: 'عظمة العمارة والهندسة في مصر القديمة: دقة بناء الأهرامات وتعامد الشمس على وجه رمسيس الثاني في أبو سمبل، والمسؤولية الوطنية في حماية الآثار والترحيب بالسياح.',
+        focusEn: 'Examine ancient architectural engineering marvels and instill civic duties of heritage preservation and ecotourism.',
+        activityAr: 'اكتب رسالة إلى سائح أجنبي تدعوه فيها لزيارة معالم مصر الأثرية وتشرح له أهميتها التاريخية.',
+        activityEn: 'Write an invitation letter to a foreign visitor highlighting key monuments of Egypt.',
+        questionAr: 'في أي معبد مصري تتعامد الشمس مرتين سنوياً على وجه تمثال الملك رمسيس الثاني؟',
+        questionEn: 'At which monumental temple does the sun align twice a year on the statue of Ramesses II?',
+        optionsAr: ['معبد أبو سمبل بأسوان', 'معبد الكرنك بالأقصر', 'معبد حتشبسوت بالدير البحري'],
+        optionsEn: ['Abu Simbel Temple in Aswan', 'Karnak Temple in Luxor', 'Hatshepsut Temple'],
+        correctIndex: 0,
+        vocabulary: [['معبد أبو سمبل', 'Abu Simbel'], ['تعامد الشمس', 'Solar alignment'], ['آثار خالدة', 'Timeless monuments'], ['سياحة ثقافية', 'Cultural tourism']]
       }
     ]
   }
@@ -846,6 +910,38 @@ const geographyG6Units: PrimaryUnitDefinition[] = [
         optionsEn: ['Aswan Governorate', 'Alexandria', 'Matrouh'],
         correctIndex: 0,
         vocabulary: [['طاقة متجددة', 'Renewable energy'], ['محطة بنبان', 'Benban solar park'], ['تعدين', 'Mining'], ['واحات', 'Oases']]
+      },
+      {
+        titleAr: 'البيئة الساحلية في مصر: الموارد البحرية والموانئ والسياحة الشاطئية',
+        titleEn: 'Coastal Biome in Egypt: Marine Wealth, Ports & Ecotourism',
+        subtitleAr: 'ساحل البحر المتوسط والبحر الأحمر، الشعاب المرجانية، الصيد البحري، وموانئ الإسكندرية ودمياط وبورسعيد',
+        subtitleEn: 'Mediterranean vs Red Sea coastal zones, coral reefs, fisheries, and major international trade ports',
+        focusAr: 'الفروق التضاريسية والمناخية بين ساحل البحر المتوسط الواسع الرملي وساحل البحر الأحمر الجبلي الغني بالشعاب المرجانية، وحماية الثروة السمكية من التلوث.',
+        focusEn: 'Contrast broad sandy Mediterranean shores with steep Red Sea coral habitats; analyze commercial port dynamics.',
+        activityAr: 'صمم خريطة ذهنية توضح أهم الأنشطة الاقتصادية لسكان البيئة الساحلية في مصر.',
+        activityEn: 'Create a concept map outlining economic activities in Egyptian coastal zones.',
+        questionAr: 'ما الظاهرة الطبيعية النادرة التي تجذب ملايين السياح للغوص في مياه البحر الأحمر؟',
+        questionEn: 'Which natural wonder attracts millions of ecotourists to dive in the Red Sea?',
+        optionsAr: ['الشعاب المرجانية الملونة', 'الجليد المتراكم', 'الكثبان الرملية العميقة'],
+        optionsEn: ['Vibrant coral reefs', 'Glacial ice', 'Deep sand dunes'],
+        correctIndex: 0,
+        vocabulary: [['شعاب مرجانية', 'Coral reefs'], ['بيئة ساحلية', 'Coastal biome'], ['ميناء بحري', 'Seaport'], ['ثروة سمكية', 'Fisheries']]
+      },
+      {
+        titleAr: 'البيئة الصناعية في مصر: الصناعات النظيفة والمناطق الصناعية الحديثة',
+        titleEn: 'Industrial Biome in Egypt: Clean Technologies & Eco-Industrial Parks',
+        subtitleAr: 'الصناعات الغذائية والغزل والنسيج والهندسية، شروط إقامة المصانع الخضراء، وتوطين التكنولوجيا',
+        subtitleEn: 'Textiles, food processing, manufacturing clusters, green industrial standards, and technology localization',
+        focusAr: 'عوامل قيام الصناعة (الطبيعية والبشرية)، وأهمية التحول نحو الصناعة الخضراء صديقة البيئة التي تعتمد على الطاقة النظيفة وتدوير المخلفات.',
+        focusEn: 'Examine prerequisites for modern industrial clusters and understand policy shifts toward decarbonized green manufacturing.',
+        activityAr: 'اقترح فكرة مشروع صناعي صديق للبيئة يعتمد على تدوير المخلفات الزراعية أو الصناعية.',
+        activityEn: 'Propose an eco-friendly manufacturing initiative utilizing recycled industrial or agricultural waste.',
+        questionAr: 'ما هو الهدف الأساسي من إنشاء المدن والمناطق الصناعية الخضراء في مصر؟',
+        questionEn: 'What is the primary objective of establishing eco-industrial parks in Egypt?',
+        optionsAr: ['تقليل التلوث البيئي وترشيد استهلاك الطاقة', 'زيادة الانبعاثات الكربونية', 'وقف الإنتاج الصناعي'],
+        optionsEn: ['Reduce pollution and save energy', 'Increase carbon emissions', 'Halt manufacturing'],
+        correctIndex: 0,
+        vocabulary: [['صناعة خضراء', 'Green industry'], ['توطين التكنولوجيا', 'Technology localization'], ['غزل ونسيج', 'Textiles'], ['طاقة نظيفة', 'Clean energy']]
       }
     ]
   }
@@ -873,6 +969,22 @@ const historyG6Units: PrimaryUnitDefinition[] = [
         vocabulary: [['ثورة 1919', '1919 Revolution'], ['سعد زغلول', 'Saad Zaghloul'], ['وحدة وطنية', 'National unity'], ['استقلال', 'Independence']]
       },
       {
+        titleAr: 'ثورة 23 يوليو 1952 المجيدة والتحولات الاقتصادية والاجتماعية',
+        titleEn: 'The Glorious July 23, 1952 Revolution & Social Reforms',
+        subtitleAr: 'تنظيم الضباط الأحرار، إنهاء الملكية وإعلان الجمهورية، قانون الإصلاح الزراعي، وتأميم قناة السويس',
+        subtitleEn: 'Free Officers movement, proclamation of the Republic, Agrarian Reform law, and nationalization of the Suez Canal',
+        focusAr: 'مبادئ وأهداف ثورة 23 يوليو 1952 الستة (القضاء على الاستعمار، الإقطاع، الاحتكار، وإقامة جيش وطني، عدالة اجتماعية، حياة ديمقراطية سليمة)، وإنجازاتها الكبرى كبناء السد العالي ومجانية التعليم.',
+        focusEn: 'Analyze the six foundational pillars of the 1952 revolution, agrarian justice, and the landmark construction of the Aswan High Dam.',
+        activityAr: 'لخص أثر قانون الإصلاح الزراعي في إعادة الأرض للفلاحين وتحقيق العدالة الاجتماعية.',
+        activityEn: 'Evaluate the transformative social impact of the Agrarian Reform law empowering Egyptian farmers.',
+        questionAr: 'ما الإنجاز الهندسي المائي العظيم الذي تم افتتاحه عام 1971 لحماية مصر من الفيضان والجفاف؟',
+        questionEn: 'Which monumental hydro-engineering structure was inaugurated in 1971 to protect Egypt from flood and drought?',
+        optionsAr: ['السد العالي بأسوان', 'قناطر الدلتا', 'سد النهضة'],
+        optionsEn: ['Aswan High Dam', 'Delta Barrages', 'Grand Renaissance Dam'],
+        correctIndex: 0,
+        vocabulary: [['ثورة 23 يوليو', 'July 23 Revolution'], ['السد العالي', 'Aswan High Dam'], ['عدالة اجتماعية', 'Social justice'], ['تأميم قناة السويس', 'Suez nationalization']]
+      },
+      {
         titleAr: 'حرب أكتوبر 1973 المجيدة واسترداد أرض سيناء الغالية',
         titleEn: 'The Glorious October 1973 War & Liberation of Sinai',
         subtitleAr: 'التخطيط الاستراتيجي، عبور خط بارليف، وبطولات القوات المسلحة المصرية الباسلة',
@@ -887,6 +999,22 @@ const historyG6Units: PrimaryUnitDefinition[] = [
         optionsEn: ['6th of October 1973', '23rd of July 1952', '25th of January 2011'],
         correctIndex: 0,
         vocabulary: [['نصر أكتوبر', 'October victory'], ['خط بارليف', 'Bar Lev Line'], ['القوات المسلحة', 'Armed forces'], ['سيناء', 'Sinai']]
+      },
+      {
+        titleAr: 'مصر الحديثة في مطلع الألفية والمشروعات القومية الكبرى',
+        titleEn: 'Modern Egypt in the 21st Century & National Megaprojects',
+        subtitleAr: 'تطوير العاصمة الإدارية الجديدة، شبكة الطرق القومية، مبادرة حياة كريمة، والتحول الرقمي',
+        subtitleEn: 'New Administrative Capital, national highways, Decent Life initiative, and digital transformation',
+        focusAr: 'استراتيجية التنمية المستدامة (رؤية مصر 2030): مشروعات الإسكان الاجتماعي، القضاء على العشوائيات، تطوير الريف المصري عبر حياة كريمة، وبناء المدن الذكية.',
+        focusEn: 'Egypt Vision 2030: sustainable infrastructure, Decent Life rural development, and smart digital governance.',
+        activityAr: 'اكتب تقريراً مصوراً عن أحد المشروعات القومية الحديثة التي تم إنجازها في محافظتك أو بالقرب منك.',
+        activityEn: 'Write a brief report describing a major modern national development project near your hometown.',
+        questionAr: 'ما اسم المبادرة الرئاسية الكبرى لتطوير قرى الريف المصري وتحسين معيشة أكثر من 60 مليون مواطن؟',
+        questionEn: 'What is the comprehensive presidential initiative modernizing Egyptian rural villages?',
+        optionsAr: ['مبادرة حياة كريمة', 'مبادرة محو الأمية فقط', 'مبادرة النقل البري'],
+        optionsEn: ['Decent Life Initiative (Haya Karima)', 'Literacy only', 'Road transit'],
+        correctIndex: 0,
+        vocabulary: [['حياة كريمة', 'Decent Life'], ['رؤية مصر 2030', 'Egypt Vision 2030'], ['مدن ذكية', 'Smart cities'], ['تحول رقمي', 'Digital transformation']]
       }
     ]
   }

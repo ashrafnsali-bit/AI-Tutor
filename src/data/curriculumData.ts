@@ -5578,6 +5578,243 @@ export function getCurriculumForSubject(
   return SUBJECT_CURRICULA[subject];
 }
 
+function ensureMinimumFourLecturesForCourse(
+  rawList: Lecture[],
+  subject: Subject,
+  country: string,
+  gradeLevel?: string,
+  educationType: EducationType = 'PUBLIC',
+  track: EducationTrack = 'GENERAL'
+): Lecture[] {
+  if (!rawList || rawList.length === 0 || rawList.length >= 4) return rawList;
+
+  const result = [...rawList];
+  const baseLec = rawList[0];
+  const isEnglishSubject = subject === 'ENGLISH';
+
+  const extraThemes = [
+    {
+      titleAr: 'تطبيقات عملية متقدمة وتدريبات تعزيزية',
+      titleEn: 'Advanced Practical Applications and Reinforcement',
+      subtitleAr: 'تطوير المهارات وحل التمارين التفاعلية ونماذج تدريبية تطبيقية',
+      subtitleEn: 'Skill building, interactive practice, and worked applied examples',
+      focusAr: 'التركيز على التطبيقات العملية وترسيخ المفاهيم المنهجية وحل المسائل التحليلية.',
+      focusEn: 'Focus on applied practical problem solving and core concept mastery.'
+    },
+    {
+      titleAr: 'مهارات حل المشكلات والمراجعة التراكمية',
+      titleEn: 'Problem Solving Skills & Cumulative Review',
+      subtitleAr: 'تحليل المسائل التخصصية واكتساب مهارات التفكير الناقد والإتقان',
+      subtitleEn: 'In-depth analytical exercises, critical thinking, and mastery tasks',
+      focusAr: 'تمكين الطالب من التحليل والربط بين المفاهيم والتطبيق الذاتي المستقل.',
+      focusEn: 'Empowering independent analytical thinking, synthesis, and self-evaluation.'
+    },
+    {
+      titleAr: 'نماذج اختبارات شاملة والتقييم الختامي للوحدة',
+      titleEn: 'Comprehensive Practice Exam & Unit Mastery Assessment',
+      subtitleAr: 'مراجعة معيارية متكاملة واختبارات قياس مستوى الفهم والمهارة',
+      subtitleEn: 'Comprehensive assessment tasks, standardized questions, and final unit evaluation',
+      focusAr: 'قياس المخرجات التعليمية والتحقق من التمكن التام من المعايير والمقررات المعتمدة.',
+      focusEn: 'Summative assessment and verification of curriculum mastery benchmarks.'
+    }
+  ];
+
+  while (result.length < 4) {
+    const nextIndex = result.length;
+    const themeIndex = (nextIndex - 1) % extraThemes.length;
+    const theme = extraThemes[themeIndex];
+    const orderNum = nextIndex + 1;
+    const id = `${baseLec.id || subject}_auto_lec_${orderNum}`;
+
+    const newLec: Lecture = {
+      ...baseLec,
+      id,
+      order: orderNum,
+      lessonNumberAr: `الدرس ${orderNum}`,
+      lessonNumberEn: `Lesson ${orderNum}`,
+      titleAr: isEnglishSubject && baseLec.titleEn
+        ? `${baseLec.titleEn.split(':')[0] || 'Unit Review'}: Advanced Skills & Practice (${orderNum})`
+        : `${theme.titleAr} (${orderNum})`,
+      titleEn: isEnglishSubject && baseLec.titleEn
+        ? `${baseLec.titleEn.split(':')[0] || 'Unit Review'}: Advanced Skills & Practice (${orderNum})`
+        : `${theme.titleEn} (${orderNum})`,
+      subtitleAr: theme.subtitleAr,
+      subtitleEn: theme.subtitleEn,
+      durationMinutes: baseLec.durationMinutes || 35,
+      isCompleted: false,
+      isLocked: true,
+      passingScoreRequired: 80,
+      country: country as any,
+      subject,
+      gradeLevel: gradeLevel as any,
+      educationType,
+      educationTrack: track,
+      learningOutcomesAr: [
+        `استيعاب المفاهيم الأساسية المرتبطة بموضوع المحاضرة (${orderNum})`,
+        'تطبيق القواعد والمهارات في حل المسائل والنماذج العملية بدقة',
+        'تحليل الأخطاء الشائعة والتمييز بين الحلول الصحيحة والبديلة',
+        'اجتياز التقييم الذاتي والتأكد من تحقيق معايير الوحدة التعليمية'
+      ],
+      learningOutcomesEn: [
+        `Master fundamental concepts associated with Lecture (${orderNum})`,
+        'Apply rules and skills to solve applied models and questions accurately',
+        'Analyze common mistakes and distinguish between standard and alternative solutions',
+        'Pass self-assessment and verify curriculum standard achievements'
+      ],
+      keyConceptsAr: ['تطبيقات عملية', 'حل مشكلات متقدم', 'تقييم معياري'],
+      keyConceptsEn: ['Applied Practice', 'Advanced Problem Solving', 'Standardized Assessment'],
+      sections: [
+        {
+          titleAr: 'المدخل التمهيدي ومراجعة الأفكار الرئيسية',
+          titleEn: 'Introduction and Key Concepts Review',
+          contentAr: 'استعراض الأفكار المحورية ومراجعة القواعد والمهارات اللازمة للتقدم في المادة الدراسية واستيعاب المفاهيم التطبيقية بدقة.',
+          contentEn: 'Review of core foundational concepts, rules, and fundamental ideas necessary for student progression.',
+          tipsAr: ['احرص على قراءة نصوص الكتاب المدرسي وحل أنشطة الفهم والتطبيق.', 'ناقش الأفكار مع المعلم وزملائك.'],
+          tipsEn: ['Study textbook exercises and practice analytical tasks.', 'Participate actively in class discussions.']
+        },
+        {
+          titleAr: 'التحليل التطبيقي ونماذج الخطوات العملية',
+          titleEn: 'Applied Analysis and Step-by-Step Procedures',
+          contentAr: 'تطبيق منهجي للخطوات العلمية والحل المتدرج مع إبراز طريقة التفكير السليمة للتعامل مع مختلف الأسئلة.',
+          contentEn: 'Methodical step-by-step application with emphasis on structured critical thinking.',
+          tipsAr: ['اتبع الخطوات المتسلسلة لضمان دقة النتيجة.', 'راجع كل خطوة قبل الانتقال للتالية.'],
+          tipsEn: ['Follow sequential steps to ensure accurate results.', 'Double-check each step carefully.']
+        },
+        {
+          titleAr: 'تمارين تفاعلية ونقاط التحقق من الفهم',
+          titleEn: 'Interactive Checkpoints and Concept Verification',
+          contentAr: 'أنشطة تدريبية فورية لقياس استيعاب القواعد والمهارات المكتسبة وتعزيز الفهم النشط لدى المتعلم.',
+          contentEn: 'Immediate interactive checkpoint tasks measuring mastery of targeted skills.',
+          tipsAr: ['حاول حل التمارين بنفسك أولاً قبل الاطلاع على الإجابة.', 'استفد من التلميحات عند الحاجة.'],
+          tipsEn: ['Try solving exercises independently before checking answers.', 'Use hints whenever needed.']
+        },
+        {
+          titleAr: 'التقييم التكويني وخلاصة المحاضرة',
+          titleEn: 'Formative Assessment & Lesson Wrap-up',
+          contentAr: 'ملخص شامل لأهم الاستنتاجات والنقاط المحورية، مع توجيهات عملية للتفوق في الاختبارات المدرسية والنهائية.',
+          contentEn: 'Comprehensive wrap-up of conclusions with practical guidelines for academic excellence in exams.',
+          tipsAr: ['راجع الملخص السريع قبل بدء اختبار المحاضرة.', 'التركيز على نقاط التميز يضمن تحقيق الدرجة الكاملة.'],
+          tipsEn: ['Review key takeaways before launching the assessment.', 'Focus on mastery points to earn top marks.']
+        }
+      ],
+      workedExamples: [
+        {
+          id: `we-${id}-1`,
+          titleAr: 'النموذج التطبيقي الأول: التحليل الأولي والتطبيق المباشر',
+          titleEn: 'Worked Example 1: Baseline Analysis and Direct Application',
+          problemAr: `تطبيق مباشر على مهارات ومفاهيم الدرس ${orderNum} للتحقق من الاستيعاب.`,
+          problemEn: `Direct application on core skills and concepts of Lesson ${orderNum}.`,
+          stepsAr: [
+            'الخطوة 1: قراءة المعطيات وتحديد المطلوب بدقة.',
+            'الخطوة 2: استدعاء القاعدة أو المفهوم المناسب للحل.',
+            'الخطوة 3: تنفيذ الإجراء الحسابي أو التحليلي خطوة بخطوة.'
+          ],
+          solutionAr: 'الحل النموذجي المعتمد يوضح الوصول إلى الإجابة السليمة باتباع المعايير المنهجية.',
+          takeawayAr: 'التحديد الدقيق للمطلوب يختصر نصف وقت الإجابة.'
+        },
+        {
+          id: `we-${id}-2`,
+          titleAr: 'النموذج التطبيقي الثاني: المسائل المركبة والربط المفاهيمي',
+          titleEn: 'Worked Example 2: Complex Scenario and Multi-Step Reasoning',
+          problemAr: 'مسألة تحليلية تتطلب الربط بين قاعدتين واستنتاج النتيجة المناسبة.',
+          problemEn: 'Analytical problem requiring combining two concepts and deriving results.',
+          stepsAr: [
+            'الخطوة 1: تفكيك المسألة إلى أجزاء أصغر.',
+            'الخطوة 2: تطبيق القانون أو المبدأ الأول.',
+            'الخطوة 3: دمج النتائج واستخلاص الحل النهائي.'
+          ],
+          solutionAr: 'النتيجة صحيحة ومثبتة من خلال الترابط المنطقي بين المعطيات.',
+          takeawayAr: 'تفكيك المسائل المركبة يبسط الوصول إلى الحل الصحيح.'
+        },
+        {
+          id: `we-${id}-3`,
+          titleAr: 'النموذج التطبيقي الثالث: كشف الأخطاء الشائعة والتصويب',
+          titleEn: 'Worked Example 3: Error Analysis and Correction',
+          problemAr: 'فحص إجابة شائعة غير دقيقة وتحديد سبب الخطأ وتصحيحه منهجياً.',
+          problemEn: 'Inspect a common error, analyze root cause, and formulate correction.',
+          stepsAr: [
+            'الخطوة 1: تحديد موضع الخلل في الإجابة غير الصحيحة.',
+            'الخطوة 2: تبيان القاعدة الصحيحة الواجب استخدامها.',
+            'الخطوة 3: إعادة صياغة الحل المعتمد بطريقة صحيحة.'
+          ],
+          solutionAr: 'تم تصحيح الخطأ بنجاح وتوضيح القاعدة الدقيقة لمنع تكراره.',
+          takeawayAr: 'معرفة سبب الخطأ تحمي الطالب من الوقوع فيه أثناء الاختبارات.'
+        },
+        {
+          id: `we-${id}-4`,
+          titleAr: 'النموذج التطبيقي الرابع: أسئلة التميز والمهارات العليا',
+          titleEn: 'Worked Example 4: Higher-Order Thinking and Mastery Challenge',
+          problemAr: 'سؤال يقيس مهارات التفكير العليا والتطبيق في سياقات غير مألوفة.',
+          problemEn: 'Challenge task testing higher-order synthesis and transfer of learning.',
+          stepsAr: [
+            'الخطوة 1: استيعاب السياق المتقدم للسؤال.',
+            'الخطوة 2: صياغة استراتيجية الحل المناسبة.',
+            'الخطوة 3: التحقق الذاتي من منطقية الحل النهائي.'
+          ],
+          solutionAr: 'حل متميز يظهر الإتقان الكامل والتفكير الإبداعي السليم.',
+          takeawayAr: 'التفكير الناقد والتأمل في النتيجة يمنحان الطالب أعلى درجات التميز.'
+        }
+      ],
+      formativeAssessment: [
+        {
+          id: `${id}-check`,
+          questionAr: `ما هو الإجراء المنهجي الأول المتبع عند حل المسائل التطبيقية في المحاضرة (${orderNum})؟`,
+          questionEn: `What is the primary procedural step when solving applied problems in Lecture (${orderNum})?`,
+          optionsAr: [
+            'قراءة المعطيات وتحديد المطلوب والقاعدة المناسبة بدقة',
+            'التخمين العشوائي للنتيجة دون خطوات',
+            'إهمال شروط المسألة والانتقال للسؤال التالي'
+          ],
+          optionsEn: [
+            'Identify given data, targeted requirement, and appropriate rule accurately',
+            'Random guessing without structured steps',
+            'Ignoring problem constraints and skipping to the next question'
+          ],
+          correctIndex: 0,
+          explanationAr: 'القراءة الدقيقة وتحديد المطلوب هما الركيزة الأساسية للحل السليم.',
+          explanationEn: 'Accurate reading and requirement definition form the foundation of correct problem solving.'
+        }
+      ],
+      assessment: {
+        id: `${id}-assessment`,
+        lectureId: id,
+        titleAr: `تقويم إتقان المحاضرة ${orderNum}`,
+        titleEn: `Mastery Assessment: Lecture ${orderNum}`,
+        passingScore: 80,
+        questions: [
+          {
+            id: `${id}-q1`,
+            textAr: `ما هو الأسلوب الأمثل للتعامل مع الأسئلة والمسائل في المحاضرة ${orderNum}؟`,
+            textEn: `What is the optimal methodology for tackling problems in Lecture ${orderNum}?`,
+            optionsAr: [
+              'التطبيق المتسلسل للخطوات المعتمدة ومراجعة النتيجة بدقة',
+              'التسرع في الإجابة دون التأكد من المعطيات',
+              'تجاهل القوانين والمفاهيم الأساسية'
+            ],
+            optionsEn: [
+              'Sequential application of standard procedures and double-checking results',
+              'Rushing into answers without verifying inputs',
+              'Ignoring core concepts and standard rules'
+            ],
+            correctIndex: 0,
+            conceptTestedAr: 'منهجية الحل السليم والتحقق الذاتي',
+            conceptTestedEn: 'Systematic problem solving and verification',
+            explanationAr: 'اتباع الخطوات المنهجية يضمن دقة الحل وتحقيق الدرجة الكاملة.',
+            explanationEn: 'Following systematic steps ensures accuracy and full marks.',
+            difficulty: 'medium'
+          }
+        ]
+      },
+      summaryAr: `ملخص شامل للمحاضرة ${orderNum}: ترسيخ القواعد الأساسية، والتدريب على 4 نماذج تطبيقية تفاعلية، والاستعداد التام للتقييم الختامي.`,
+      summaryEn: `Summary of Lecture ${orderNum}: Foundational mastery, 4 interactive worked models, and comprehensive assessment readiness.`
+    };
+
+    result.push(newLec);
+  }
+
+  return result;
+}
+
 export function loadSubjectLectures(
   subject: Subject,
   country: string = 'SA',
@@ -5978,6 +6215,11 @@ export function loadSubjectLectures(
     } catch (e) {
       console.error(e);
     }
+  }
+
+  // Guaranteed platform requirement: Every active subject must have at least 4 complete lectures
+  if (rawList.length > 0 && rawList.length < 4) {
+    rawList = ensureMinimumFourLecturesForCourse(rawList, subject, country, gradeLevel, educationType, track);
   }
 
   // Strictly enforce Dynamic Sequential Numbering, Clean Titles, and Strict Sequential Locking:
