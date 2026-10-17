@@ -326,19 +326,21 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-1',
             titleAr: 'النموذج 1 من 4: محادثة التعارف وتقديم النفس',
             titleEn: 'Worked Example 1 of 4: Introduction and Greetings',
-            problemAr: 'كيف تقدم نفسك لزميلك الجديد وتسأله عن اسمه بأسلوب مهذب؟',
-            problemEn: 'How do you introduce yourself and politely ask a new friend their name?',
+            problemAr: 'Miss Mona: Hello! Welcome to our school. Let us make new friends!',
+            problemEn: 'Miss Mona: Hello! Welcome to our school. Let us make new friends!',
             stepsAr: [
-              'الخطوة 1: ابدأ بالتحية الودودة: "Hello!" مع الابتسامة.',
-              'الخطوة 2: اذكر اسمك بوضوح: "I am Adam" أو "My name is Adam".',
-              'الخطوة 3: وجه السؤال لزميلك: "What is your name?" وصافحه باليد.'
+              'Miss Mona: Hello! I am Miss Mona. What is your name?',
+              'Adam: Hello Miss Mona! I am Adam.',
+              'Dina: Hello! I am Dina.',
+              'Busy Bee: Shake hands and say hello to your new friends!'
             ],
             stepsEn: [
-              'Step 1: Start with a friendly greeting: "Hello!".',
-              'Step 2: State your name clearly: "I am Adam" or "My name is Adam".',
-              'Step 3: Ask politely: "What is your name?" and shake hands.'
+              'Miss Mona: Hello! I am Miss Mona. What is your name?',
+              'Adam: Hello Miss Mona! I am Adam.',
+              'Dina: Hello! I am Dina.',
+              'Busy Bee: Shake hands and say hello to your new friends!'
             ],
-            solutionAr: '"Hello! My name is Adam. What is your name?" — نموذج معتمد من كتاب الوزارة.',
+            solutionAr: '"Hello! My name is Adam. What is your name?" — نموذج محادثة معتمد من كتاب الوزارة (Connect 1).',
             takeawayAr: 'التحية والمصافحة تصنع صداقات رائعة وتساعد على التعلم التعاوني في الفصل.',
             takeawayEn: 'Greeting and shaking hands build wonderful friendships in class.'
           },
@@ -346,12 +348,19 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-2',
             titleAr: 'النموذج 2 من 4: تسمية الأدوات المدرسية المحيطة',
             titleEn: 'Worked Example 2 of 4: Naming Classroom Objects',
-            problemAr: 'أمامك قلم وحقيبة وكتاب، كيف تصف كل أداة باللغة الإنجليزية؟',
-            problemEn: 'You have a pencil, bag, and book. How do you identify each in English?',
+            problemAr: 'Busy Bee: Look around your classroom! What can you see?',
+            problemEn: 'Busy Bee: Look around your classroom! What can you see?',
             stepsAr: [
-              'الخطوة 1: أشر للقلم وقل: "It is a pencil".',
-              'الخطوة 2: أشر للكتاب وقل: "It is a book".',
-              'الخطوة 3: أشر للحقيبة وقل: "It is a bag".'
+              'Adam: Look! It is a pencil. I write with it.',
+              'Dina: Look! It is a book. I read with Miss Mona.',
+              'Adam: It is my bag. It has my books and pencils!',
+              'Miss Mona: Excellent work Adam and Dina! Well done.'
+            ],
+            stepsEn: [
+              'Adam: Look! It is a pencil. I write with it.',
+              'Dina: Look! It is a book. I read with Miss Mona.',
+              'Adam: It is my bag. It has my books and pencils!',
+              'Miss Mona: Excellent work Adam and Dina! Well done.'
             ],
             solutionAr: 'استخدام أداة النكرة "a" مع المفرد المعدود: a book, a pencil, a bag.',
             takeawayAr: 'أداة النكرة "a" تسبق الأسماء المفردة التي تبدأ بصوت ساكن.',
@@ -361,11 +370,17 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-3',
             titleAr: 'النموذج 3 من 4: التمييز بين التحية وتوديع الفصل',
             titleEn: 'Worked Example 3 of 4: Distinguishing Hello vs Goodbye',
-            problemAr: 'متى نستخدم "Hello" ومتى نستخدم "Goodbye" خلال اليوم الدراسي؟',
-            problemEn: 'When do we use "Hello" and when do we use "Goodbye" during the school day?',
+            problemAr: 'Miss Mona: When do we say Hello and when do we say Goodbye?',
+            problemEn: 'Miss Mona: When do we say Hello and when do we say Goodbye?',
             stepsAr: [
-              'الخطوة 1: عند دخول الفصل في الصباح نلتقي بالمعلم والزملاء فنقول: "Hello".',
-              'الخطوة 2: عند انتهاء اليوم الدراسي والاستعداد للمغادرة نقول: "Goodbye".'
+              'Adam: In the morning when we enter class, we say: Hello Miss Mona!',
+              'Dina: At the end of the school day, we say: Goodbye friends!',
+              'Busy Bee: Always say goodbye with a cheerful wave and smile!'
+            ],
+            stepsEn: [
+              'Adam: In the morning when we enter class, we say: Hello Miss Mona!',
+              'Dina: At the end of the school day, we say: Goodbye friends!',
+              'Busy Bee: Always say goodbye with a cheerful wave and smile!'
             ],
             solutionAr: 'Hello للترحيب واللقاء، و Goodbye للوداع عند المغادرة.',
             takeawayAr: 'اختيار العبارة الصحيحة بحسب التوقيت يعكس اللباقة والاحترام.',
@@ -375,12 +390,19 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-4',
             titleAr: 'النموذج 4 من 4: الأوامر المدرسية وتنفيذ التوجيهات',
             titleEn: 'Worked Example 4 of 4: Following Classroom Commands',
-            problemAr: 'عندما يقول المعلم: "Open your book"، كيف يستجيب التلميذ بدقة؟',
-            problemEn: 'When the teacher says "Open your book", how does the student respond correctly?',
+            problemAr: 'Miss Mona: Listen and follow classroom instructions!',
+            problemEn: 'Miss Mona: Listen and follow classroom instructions!',
             stepsAr: [
-              'الخطوة 1: الاستماع باهتمام للأمر الصوتي: "Open your book".',
-              'الخطوة 2: فتح الكتاب المدرسي أمامك على الصفحة المطلوبة.',
-              'الخطوة 3: المقارنة مع عكس الأمر: "Close your book" (أغلق كتابك).'
+              'Miss Mona: Stand up, please! Open your Connect book.',
+              'Adam: I open my book on page 10.',
+              'Miss Mona: Close your book and sit down, please.',
+              'Busy Bee: Good listeners become great learners in class!'
+            ],
+            stepsEn: [
+              'Miss Mona: Stand up, please! Open your Connect book.',
+              'Adam: I open my book on page 10.',
+              'Miss Mona: Close your book and sit down, please.',
+              'Busy Bee: Good listeners become great learners in class!'
             ],
             solutionAr: 'فعل الأمر في اللغة الإنجليزية يبدأ بالفعل في المصدر: Open your book / Stand up.',
             takeawayAr: 'اتباع تعليمات المعلم بدقة يضمن تنظيماً ممتازاً داخل غرفة الصف.',
@@ -422,14 +444,21 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-2-1',
             titleAr: 'النموذج 1 من 4: صوت حرف Tt ومخارجه الصوتية',
             titleEn: 'Worked Example 1 of 4: Phonics Sound /t/',
-            problemAr: 'كيف ننطق صوت حرف Tt في كلمات: Table, Tree, Tomato؟',
-            problemEn: 'How do we pronounce the /t/ sound in Table, Tree, Tomato?',
+            problemAr: 'Busy Bee: Learn sounds with Busy Bee! Listen to letter Tt.',
+            problemEn: 'Busy Bee: Learn sounds with Busy Bee! Listen to letter Tt.',
             stepsAr: [
-              'الخطوة 1: ضع طرف اللسان خلف الأسنان العلوية مباشرة.',
-              'الخطوة 2: اخرج الهواء برفق لإصدار صوت /t/ النقي.',
-              'الخطوة 3: انطق: Table ... Tree ... Tomato.'
+              'Miss Mona: Put your tongue behind your top teeth and make the gentle /t/ sound.',
+              'Adam: /t/ ... Table!',
+              'Dina: /t/ ... Tree!',
+              'Busy Bee: Great pronunciation! Table and Tree start with T.'
             ],
-            solutionAr: 'صوت /t/ هو صوت ساكن مهموس يظهر في أول كلمة Table.',
+            stepsEn: [
+              'Miss Mona: Put your tongue behind your top teeth and make the gentle /t/ sound.',
+              'Adam: /t/ ... Table!',
+              'Dina: /t/ ... Tree!',
+              'Busy Bee: Great pronunciation! Table and Tree start with T.'
+            ],
+            solutionAr: 'صوت /t/ هو صوت ساكن مهموس يظهر في أول كلمة Table و Tree.',
             takeawayAr: 'النطق السليم لمخارج الحروف يبني القراءة الصحيحة والتهجئة الدقيقة.',
             takeawayEn: 'Clear articulation builds correct reading and spelling habits.'
           },
@@ -437,12 +466,19 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-2-2',
             titleAr: 'النموذج 2 من 4: صوت حرف Ii القصير (Short /ɪ/)',
             titleEn: 'Worked Example 2 of 4: Phonics Sound /ɪ/',
-            problemAr: 'ما الفرق بين نطق صوت /ɪ/ القصير في Ink و Insect وبين نطق الحروف الأخرى؟',
-            problemEn: 'How do we articulate the short /ɪ/ sound in Ink and Insect?',
+            problemAr: 'Busy Bee: Learn the short vowel /ɪ/ sound with Busy Bee!',
+            problemEn: 'Busy Bee: Learn the short vowel /ɪ/ sound with Busy Bee!',
             stepsAr: [
-              'الخطوة 1: افتح الفم قليلاً واجعل الشفتين منبسطتين ومسترخيتين.',
-              'الخطوة 2: انطق صوتاً قصيراً وخفيفاً: /ɪ/.',
-              'الخطوة 3: طبق على الكلمات: /ɪ/.. Ink، /ɪ/.. Insect.'
+              'Miss Mona: Open your mouth a little and relax your lips: /ɪ/.',
+              'Adam: /ɪ/ ... Ink!',
+              'Dina: /ɪ/ ... Insect!',
+              'Busy Bee: Super! Ink and Insect have the crisp short /ɪ/ sound.'
+            ],
+            stepsEn: [
+              'Miss Mona: Open your mouth a little and relax your lips: /ɪ/.',
+              'Adam: /ɪ/ ... Ink!',
+              'Dina: /ɪ/ ... Insect!',
+              'Busy Bee: Super! Ink and Insect have the crisp short /ɪ/ sound.'
             ],
             solutionAr: 'صوت حرف I في منهج أولى ابتدائي هو صوت العلة القصير Short /ɪ/.',
             takeawayAr: 'أصوات العلة القصيرة تُنطق سريعة وموجزة داخل الكلمة.',
@@ -452,11 +488,17 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-2-3',
             titleAr: 'النموذج 3 من 4: مطابقة الصوت مع الصورة والكلمة',
             titleEn: 'Worked Example 3 of 4: Matching Sounds with Visuals',
-            problemAr: 'أمامك صورة شجرة وصورة حبر، أي كلمة ترتبط بصوت /t/ وأيها بصوت /ɪ/؟',
-            problemEn: 'Given pictures of a tree and ink, which matches /t/ and which matches /ɪ/?',
+            problemAr: 'Miss Mona: Look at the pictures! Which starts with /t/ and which with /ɪ/?',
+            problemEn: 'Miss Mona: Look at the pictures! Which starts with /t/ and which with /ɪ/?',
             stepsAr: [
-              'الخطوة 1: صورة الشجرة = Tree، تبدأ بصوت /t/.',
-              'الخطوة 2: صورة زجاجة الحبر = Ink، تبدأ بصوت /ɪ/.'
+              'Adam: The picture of the tree starts with /t/ ... Tree!',
+              'Dina: The picture of the ink bottle starts with /ɪ/ ... Ink!',
+              'Busy Bee: High five! You matched the sounds and pictures perfectly!'
+            ],
+            stepsEn: [
+              'Adam: The picture of the tree starts with /t/ ... Tree!',
+              'Dina: The picture of the ink bottle starts with /ɪ/ ... Ink!',
+              'Busy Bee: High five! You matched the sounds and pictures perfectly!'
             ],
             solutionAr: 'Tree -> /t/، و Ink -> /ɪ/. المطابقة مطابقة لمعايير كتاب الوزارة.',
             takeawayAr: 'ربط الحرف بالصورة يرسخ الكلمة في الذاكرة البصرية والسمعية معاً.',
@@ -466,11 +508,21 @@ const connectG1Units: PrimaryUnitDefinition[] = [
             id: 'we-g1-u1-2-4',
             titleAr: 'النموذج 4 من 4: التفاعل مع الأوامر المتعاكسة',
             titleEn: 'Worked Example 4 of 4: Interacting with Opposite Commands',
-            problemAr: 'فهم الثنائيات المتضادة: Stand up مقابل Sit down، و Open مقابل Close.',
-            problemEn: 'Understanding action antonyms: Stand up vs Sit down, and Open vs Close.',
+            problemAr: 'Miss Mona: Let us play the opposites game!',
+            problemEn: 'Miss Mona: Let us play the opposites game!',
             stepsAr: [
-              'الخطوة 1: Stand up (قف) عكسها Sit down (اجلس).',
-              'الخطوة 2: Open your bag (افتح حقيبتك) عكسها Close your bag (أغلق حقيبتك).'
+              'Miss Mona: Stand up! What is the opposite?',
+              'Adam: Sit down!',
+              'Miss Mona: Open your bag! What is the opposite?',
+              'Dina: Close your bag!',
+              'Busy Bee: Amazing! You know all your classroom opposites!'
+            ],
+            stepsEn: [
+              'Miss Mona: Stand up! What is the opposite?',
+              'Adam: Sit down!',
+              'Miss Mona: Open your bag! What is the opposite?',
+              'Dina: Close your bag!',
+              'Busy Bee: Amazing! You know all your classroom opposites!'
             ],
             solutionAr: 'تعلم الأضداد يضاعف الحصيلة اللغوية للتلميذ في وقت قصير.',
             takeawayAr: 'الأضداد الحركية تساعد الصغار على تذكر معاني الأفعال بسلاسة ومرح.',

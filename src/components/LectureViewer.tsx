@@ -8,7 +8,8 @@ import {
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
   Target, Sprout, BookMarked, FileCheck2, Eye, EyeOff, ChevronDown,
   ChevronUp, Play, SkipForward, Calculator,
-  PenTool, Star, Zap, ArrowRight, RefreshCw, X, Layers
+  PenTool, Star, Zap, ArrowRight, RefreshCw, X, Layers,
+  Volume2, Users
 } from 'lucide-react';
 import { CurriculumDiagramRenderer } from './CurriculumDiagramRenderer';
 import { RichContentRenderer } from './RichContentRenderer';
@@ -22,6 +23,336 @@ interface LectureViewerProps {
   onOpenTutor: () => void;
   onNextLecture?: () => void;
   hasNextUnlocked: boolean;
+}
+
+interface CharacterSpeaker {
+  name: string;
+  nameAr: string;
+  role: string;
+  roleAr: string;
+  avatarIcon: string;
+  color: string;
+  bg: string;
+  borderColor: string;
+}
+
+const KNOWN_SPEAKERS: Record<string, CharacterSpeaker> = {
+  'miss mona': {
+    name: 'Miss Mona',
+    nameAr: 'المعلمة منى',
+    role: 'Teacher',
+    roleAr: 'معلمة الفصل',
+    avatarIcon: '👩‍🏫',
+    color: '#0284c7',
+    bg: 'rgba(2, 132, 199, 0.12)',
+    borderColor: 'rgba(2, 132, 199, 0.35)'
+  },
+  'adam': {
+    name: 'Adam',
+    nameAr: 'آدم',
+    role: 'Pupil',
+    roleAr: 'تلميذ',
+    avatarIcon: '👦',
+    color: '#10b981',
+    bg: 'rgba(16, 185, 129, 0.12)',
+    borderColor: 'rgba(16, 185, 129, 0.35)'
+  },
+  'dina': {
+    name: 'Dina',
+    nameAr: 'دينا',
+    role: 'Pupil',
+    roleAr: 'تلميذة',
+    avatarIcon: '👧',
+    color: '#ec4899',
+    bg: 'rgba(236, 72, 153, 0.12)',
+    borderColor: 'rgba(236, 72, 153, 0.35)'
+  },
+  'hany': {
+    name: 'Hany',
+    nameAr: 'هاني',
+    role: 'Pupil',
+    roleAr: 'تلميذ',
+    avatarIcon: '🧑',
+    color: '#8b5cf6',
+    bg: 'rgba(139, 92, 246, 0.12)',
+    borderColor: 'rgba(139, 92, 246, 0.35)'
+  },
+  'hana': {
+    name: 'Hana',
+    nameAr: 'هنا',
+    role: 'Pupil',
+    roleAr: 'تلميذة',
+    avatarIcon: '👧',
+    color: '#f59e0b',
+    bg: 'rgba(245, 158, 11, 0.12)',
+    borderColor: 'rgba(245, 158, 11, 0.35)'
+  },
+  'busy bee': {
+    name: 'Busy Bee',
+    nameAr: 'النحلة النشيطة',
+    role: 'Phonics Guide',
+    roleAr: 'مرشدة الأصوات والقيم',
+    avatarIcon: '🐝',
+    color: '#eab308',
+    bg: 'rgba(234, 179, 8, 0.14)',
+    borderColor: 'rgba(234, 179, 8, 0.45)'
+  },
+  'teacher': {
+    name: 'Teacher',
+    nameAr: 'المعلم',
+    role: 'Instructor',
+    roleAr: 'معلم المادة',
+    avatarIcon: '👨‍🏫',
+    color: '#0ea5e9',
+    bg: 'rgba(14, 165, 233, 0.12)',
+    borderColor: 'rgba(14, 165, 233, 0.35)'
+  },
+  'student': {
+    name: 'Student',
+    nameAr: 'الطالب',
+    role: 'Student',
+    roleAr: 'تلميذ باحث',
+    avatarIcon: '🎓',
+    color: '#6366f1',
+    bg: 'rgba(99, 102, 241, 0.12)',
+    borderColor: 'rgba(99, 102, 241, 0.35)'
+  }
+};
+
+function parseDialogueLine(text: string): { speaker: CharacterSpeaker; spokenText: string } | null {
+  if (!text) return null;
+  const match = text.match(/^\s*(Miss Mona|Adam|Dina|Hany|Hana|Busy Bee|Teacher|Student|المعلمة منى|المعلم|الأستاذ|آدم|دينا|هاني|هنا|النحلة النشيطة|بيزي بي|التلميذ|الطالب)\s*[:：]\s*(.*)$/i);
+  if (!match) return null;
+
+  const rawSpeaker = match[1].trim().toLowerCase();
+  let speakerKey = rawSpeaker;
+  if (rawSpeaker.includes('منى') || rawSpeaker.includes('mona')) speakerKey = 'miss mona';
+  else if (rawSpeaker.includes('آدم') || rawSpeaker.includes('adam')) speakerKey = 'adam';
+  else if (rawSpeaker.includes('دينا') || rawSpeaker.includes('dina')) speakerKey = 'dina';
+  else if (rawSpeaker.includes('هاني') || rawSpeaker.includes('hany')) speakerKey = 'hany';
+  else if (rawSpeaker.includes('هنا') || rawSpeaker.includes('hana')) speakerKey = 'hana';
+  else if (rawSpeaker.includes('نحلة') || rawSpeaker.includes('bee')) speakerKey = 'busy bee';
+  else if (rawSpeaker.includes('معلم') || rawSpeaker.includes('أستاذ') || rawSpeaker.includes('teacher')) speakerKey = 'teacher';
+  else if (rawSpeaker.includes('طالب') || rawSpeaker.includes('تلميذ') || rawSpeaker.includes('student')) speakerKey = 'student';
+
+  const speaker = KNOWN_SPEAKERS[speakerKey] || {
+    name: match[1],
+    nameAr: match[1],
+    role: 'Character',
+    roleAr: 'شخصية المنهج',
+    avatarIcon: '💬',
+    color: '#38bdf8',
+    bg: 'rgba(56, 189, 248, 0.1)',
+    borderColor: 'rgba(56, 189, 248, 0.3)'
+  };
+
+  return { speaker, spokenText: match[2].trim() };
+}
+
+function playAudioSpeech(textToSpeak: string, isEnglish: boolean) {
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel();
+      const clean = textToSpeak.replace(/[\$*#_\[\]\(\)\{\}\\]/g, ' ').replace(/\s+/g, ' ').trim();
+      if (!clean) return;
+      const utterance = new SpeechSynthesisUtterance(clean);
+      utterance.lang = isEnglish ? 'en-US' : 'ar-SA';
+      utterance.rate = 0.88;
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // Ignore if speech synthesis unavailable
+    }
+  }
+}
+
+interface TextbookRubricData {
+  titleAr: string;
+  titleEn: string;
+  strategyAr: string;
+  strategyEn: string;
+  audioTrack?: number;
+  icon: React.ReactNode;
+}
+
+function getTextbookRubric(
+  subject: string = '',
+  exampleIndex: number
+): TextbookRubricData {
+  const norm = subject.toLowerCase();
+  const trackNum = exampleIndex + 1;
+
+  if (norm.includes('english') || norm.includes('french') || norm.includes('german') || norm.includes('lang')) {
+    const rubrics: TextbookRubricData[] = [
+      {
+        titleAr: 'النشاط ١: انظر، استمع وردد (Look, Listen & Repeat)',
+        titleEn: 'Activity 1: Look, Listen & Repeat',
+        strategyAr: 'استراتيجية النمذجة السمعية والترديد الصوتي',
+        strategyEn: 'Auditory Modeling & Choral Repetition',
+        audioTrack: trackNum,
+        icon: <Volume2 size={13} style={{ color: '#38bdf8' }} />
+      },
+      {
+        titleAr: 'النشاط ٢: اسأل وأجب مع زميلك (محادثة تفاعلية)',
+        titleEn: 'Activity 2: Ask & Answer with a Partner',
+        strategyAr: 'استراتيجية المحادثة التفاعلية وتبادل الأدوار',
+        strategyEn: 'Interactive Dialogue & Peer Role-Play',
+        audioTrack: trackNum,
+        icon: <Users size={13} style={{ color: '#10b981' }} />
+      },
+      {
+        titleAr: 'النشاط ٣: معمل الأصوات والتهجئة مع Busy Bee',
+        titleEn: 'Activity 3: Phonics & Sounds Lab with Busy Bee',
+        strategyAr: 'استراتيجية الوعي الصوتي والتهجئة السليمة',
+        strategyEn: 'Phonemic Awareness & Sound Discrimination',
+        audioTrack: trackNum,
+        icon: <Sparkles size={13} style={{ color: '#eab308' }} />
+      },
+      {
+        titleAr: 'النشاط ٤: المهارات الحياتية والقيم والتطبيق اليومي',
+        titleEn: 'Activity 4: Life Skills & Values in Daily Life',
+        strategyAr: 'استراتيجية ربط المنهج بالحياة والمسؤولية الأخلاقية',
+        strategyEn: 'Life Skills Integration & Values in Action',
+        audioTrack: trackNum,
+        icon: <Award size={13} style={{ color: '#a855f7' }} />
+      }
+    ];
+    return rubrics[exampleIndex % 4];
+  }
+
+  if (norm.includes('arabic')) {
+    const rubrics: TextbookRubricData[] = [
+      {
+        titleAr: 'النشاط ١: أستمع وأقرأ بطلاقة (نص الاستماع والقراءة الجهرية)',
+        titleEn: 'Activity 1: Fluent Reading & Listening Comprehension',
+        strategyAr: 'استراتيجية القراءة النمذجية والتذوق اللغوي',
+        strategyEn: 'Model Reading & Textual Appreciation',
+        audioTrack: trackNum,
+        icon: <BookOpen size={13} style={{ color: '#38bdf8' }} />
+      },
+      {
+        titleAr: 'النشاط ٢: ألاحظ وأناقش (الفهم القرائي والتحليل الحواري)',
+        titleEn: 'Activity 2: Reading Comprehension & Interactive Discussion',
+        strategyAr: 'استراتيجية الأسئلة السابرة والمناقشة البناءة',
+        strategyEn: 'Probing Questions & Guided Discussion',
+        icon: <Lightbulb size={13} style={{ color: '#10b981' }} />
+      },
+      {
+        titleAr: 'النشاط ٣: أستنتج القاعدة والظواهر اللغوية (النحو والإملاء)',
+        titleEn: 'Activity 3: Grammar Rule Induction & Spelling Clinic',
+        strategyAr: 'استراتيجية الاستقراء النحوي والقياس اللغوي',
+        strategyEn: 'Inductive Grammar & Linguistic Analogy',
+        icon: <PenTool size={13} style={{ color: '#f59e0b' }} />
+      },
+      {
+        titleAr: 'النشاط ٤: شارك وعبّر (القيم الأخلاقية والتعبير الحياتي)',
+        titleEn: 'Activity 4: Values, Moral Reflection & Written Expression',
+        strategyAr: 'استراتيجية الإنتاج اللغوي والتعبير القيمي التطبيقي',
+        strategyEn: 'Applied Linguistic Expression & Ethical Values',
+        icon: <Star size={13} style={{ color: '#ec4899' }} />
+      }
+    ];
+    return rubrics[exampleIndex % 4];
+  }
+
+  if (norm.includes('math') || norm.includes('calculus') || norm.includes('algebra') || norm.includes('geometry')) {
+    const rubrics: TextbookRubricData[] = [
+      {
+        titleAr: 'النشاط ١: ألاحظ وأستكشف (نمذجة المفهوم بالرسم والمحسوسات)',
+        titleEn: 'Activity 1: Observe & Explore (Concept Modeling)',
+        strategyAr: 'استراتيجية النمذجة البصرية والمحسوسات الرياضية',
+        strategyEn: 'Visual & Concrete Mathematical Modeling',
+        icon: <Compass size={13} style={{ color: '#38bdf8' }} />
+      },
+      {
+        titleAr: 'النشاط ٢: أفكر وأحل مع المعلم (مسألة متدرجة خطوة بخطوة)',
+        titleEn: 'Activity 2: Think & Solve (Step-by-Step Guided Practice)',
+        strategyAr: 'استراتيجية الحل الإجرائي المتدرج والتدريس التبادلي',
+        strategyEn: 'Stepwise Algorithmic Practice & Reciprocal Teaching',
+        icon: <Calculator size={13} style={{ color: '#10b981' }} />
+      },
+      {
+        titleAr: 'النشاط ٣: القاعدة الرياضية وتصويب الخطأ الشائع',
+        titleEn: 'Activity 3: Governing Formula & Pitfall Analysis',
+        strategyAr: 'استراتيجية تحليل الأخطاء المفاهيمية وإعادة الضبط',
+        strategyEn: 'Misconception Analysis & Cognitive Correction',
+        icon: <AlertOctagon size={13} style={{ color: '#f59e0b' }} />
+      },
+      {
+        titleAr: 'النشاط ٤: تطبيق حياتي وتحدي التميز الرياضي',
+        titleEn: 'Activity 4: Real-World Application & Mastery Challenge',
+        strategyAr: 'استراتيجية حل المشكلات الواقعية والتفكير الرياضي المتقدم',
+        strategyEn: 'Real-World Problem Solving & Advanced Reasoning',
+        icon: <Award size={13} style={{ color: '#8b5cf6' }} />
+      }
+    ];
+    return rubrics[exampleIndex % 4];
+  }
+
+  if (norm.includes('sci') || norm.includes('phys') || norm.includes('chem') || norm.includes('bio')) {
+    const rubrics: TextbookRubricData[] = [
+      {
+        titleAr: 'النشاط ١: ألاحظ وأتساءل (ملاحظة الظاهرة وطرح الفرضيات)',
+        titleEn: 'Activity 1: Observe & Wonder (Phenomenon & Hypotheses)',
+        strategyAr: 'استراتيجية التساؤل الموجه والملاحظة الاستقصائية',
+        strategyEn: 'Inquiry-Based Questioning & Observation',
+        icon: <Eye size={13} style={{ color: '#38bdf8' }} />
+      },
+      {
+        titleAr: 'النشاط ٢: أجرّب وأستنتج (التجربة والتحليل المعملي)',
+        titleEn: 'Activity 2: Experiment & Conclude (Lab Investigation)',
+        strategyAr: 'استراتيجية التجريب العملي وضبط المتغيرات',
+        strategyEn: 'Hands-on Experimentation & Variable Control',
+        icon: <Sparkles size={13} style={{ color: '#10b981' }} />
+      },
+      {
+        titleAr: 'النشاط ٣: القانون العلمي والتفسير النظري في الطبيعة',
+        titleEn: 'Activity 3: Scientific Law & Theoretical Explanation',
+        strategyAr: 'استراتيجية استخلاص المفاهيم العلمية والقوانين الكونية',
+        strategyEn: 'Scientific Conceptualization & Physical Laws',
+        icon: <Lightbulb size={13} style={{ color: '#f59e0b' }} />
+      },
+      {
+        titleAr: 'النشاط ٤: العلوم والبيئة في حياتنا وتحدي المستقبل',
+        titleEn: 'Activity 4: Science, Technology & Environmental Impact',
+        strategyAr: 'استراتيجية التطبيق التكنولوجي والمسؤولية البيئية',
+        strategyEn: 'Technological Applications & Eco-Citizenship',
+        icon: <Sprout size={13} style={{ color: '#10b981' }} />
+      }
+    ];
+    return rubrics[exampleIndex % 4];
+  }
+
+  const defaultRubrics: TextbookRubricData[] = [
+    {
+      titleAr: 'النشاط ١: الاستكشاف وملاحظة المفهوم الأصيل',
+      titleEn: 'Activity 1: Explore & Observe the Core Concept',
+      strategyAr: 'استراتيجية الاستكشاف الموجه وقراءة النص المصدر',
+      strategyEn: 'Guided Exploration & Source Text Analysis',
+      icon: <BookOpen size={13} style={{ color: '#38bdf8' }} />
+    },
+    {
+      titleAr: 'النشاط ٢: التطبيق العملي والمناقشة الموجهة',
+      titleEn: 'Activity 2: Hands-on Practice & Guided Dialogue',
+      strategyAr: 'استراتيجية التدريس التفاعلي والممارسة المنظمة',
+      strategyEn: 'Interactive Instruction & Structured Practice',
+      icon: <PenTool size={13} style={{ color: '#10b981' }} />
+    },
+    {
+      titleAr: 'النشاط ٣: القاعدة المعتمدة وضبط المفاهيم',
+      titleEn: 'Activity 3: Standard Rule & Conceptual Verification',
+      strategyAr: 'استراتيجية الضبط المعرفي وتجنب اللبس',
+      strategyEn: 'Cognitive Verification & Precision',
+      icon: <CheckCircle2 size={13} style={{ color: '#f59e0b' }} />
+    },
+    {
+      titleAr: 'النشاط ٤: الربط بالحياة اليومية وبناء الشخصية والقيم',
+      titleEn: 'Activity 4: Real-Life Integration & Character Values',
+      strategyAr: 'استراتيجية التعلم القائم على الحياة والمواطنة الإيجابية',
+      strategyEn: 'Real-Life Context & Ethical Character Building',
+      icon: <Award size={13} style={{ color: '#ec4899' }} />
+    }
+  ];
+  return defaultRubrics[exampleIndex % 4];
 }
 
 function cleanExampleTitle(title: string): string {
@@ -150,6 +481,138 @@ function renderMathFormattedText(text: string): React.ReactNode {
   });
 }
 
+const DialogueBubble: React.FC<{
+  speaker: CharacterSpeaker;
+  text: string;
+  isEn: boolean;
+  onPlayAudio?: () => void;
+}> = ({ speaker, text, isEn, onPlayAudio }) => {
+  return (
+    <div className="textbook-dialogue-card" style={{
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '0.85rem',
+      padding: '0.85rem 1.1rem',
+      margin: '0.5rem 0',
+      borderRadius: '16px',
+      background: speaker.bg,
+      border: `1.5px solid ${speaker.borderColor}`,
+      boxShadow: '0 4px 14px rgba(0,0,0,0.1)'
+    }}>
+      <div className="textbook-dialogue-avatar" style={{
+        width: '42px',
+        height: '42px',
+        borderRadius: '50%',
+        background: speaker.color,
+        color: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '1.4rem',
+        boxShadow: `0 4px 10px ${speaker.color}44`,
+        flexShrink: 0
+      }}>
+        {speaker.avatarIcon}
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontWeight: 800, color: speaker.color, fontSize: '0.95rem' }}>
+              {isEn ? speaker.name : speaker.nameAr}
+            </span>
+            <span style={{
+              fontSize: '0.72rem',
+              padding: '2px 8px',
+              borderRadius: '999px',
+              background: 'rgba(255, 255, 255, 0.08)',
+              color: '#94a3b8',
+              fontWeight: 600
+            }}>
+              {isEn ? speaker.role : speaker.roleAr}
+            </span>
+          </div>
+          {onPlayAudio && (
+            <button
+              type="button"
+              onClick={onPlayAudio}
+              title={isEn ? 'Listen to pronunciation' : 'استمع للنطق الصوتي 🎧'}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                color: '#38bdf8',
+                borderRadius: '8px',
+                padding: '3px 8px',
+                fontSize: '0.78rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              <Volume2 size={13} />
+              <span>{isEn ? 'Listen' : 'استمع 🎧'}</span>
+            </button>
+          )}
+        </div>
+        <div className="textbook-dialogue-text" style={{ fontSize: '0.96rem', color: '#f8fafc', lineHeight: 1.6, fontWeight: 500 }} dir="auto">
+          {renderMathFormattedText(text)}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+function renderContentWithDialogues(
+  text: string,
+  isEn: boolean,
+  onPlayAudio?: (textToPlay: string) => void
+): React.ReactNode {
+  if (!text) return null;
+
+  const lines = text.split('\n').filter(l => l.trim().length > 0);
+  const hasDialogue = lines.some(l => parseDialogueLine(l) !== null);
+
+  if (!hasDialogue) {
+    const singleDiag = parseDialogueLine(text);
+    if (singleDiag) {
+      return (
+        <DialogueBubble
+          speaker={singleDiag.speaker}
+          text={singleDiag.spokenText}
+          isEn={isEn}
+          onPlayAudio={onPlayAudio ? () => onPlayAudio(singleDiag.spokenText) : undefined}
+        />
+      );
+    }
+    return renderMathFormattedText(text);
+  }
+
+  return (
+    <div className="textbook-dialogue-thread" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%' }}>
+      {lines.map((line, lIdx) => {
+        const diag = parseDialogueLine(line);
+        if (diag) {
+          return (
+            <DialogueBubble
+              key={lIdx}
+              speaker={diag.speaker}
+              text={diag.spokenText}
+              isEn={isEn}
+              onPlayAudio={onPlayAudio ? () => onPlayAudio(diag.spokenText) : undefined}
+            />
+          );
+        }
+        return (
+          <div key={lIdx} className="textbook-standard-line" style={{ margin: '0.25rem 0' }} dir="auto">
+            {renderMathFormattedText(line)}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
@@ -204,6 +667,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const vocab      = lecture.vocabulary || [];
   const warmup     = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || '';
   const unitTitle  = (isEn ? lecture.unitTitleEn : lecture.unitTitleAr) || '';
+  const curriculumCoverUrl =
+    (lecture.sections || []).find(s => s.diagram?.imageUrl)?.diagram?.imageUrl ||
+    lecture.diagramData?.imageUrl ||
+    (isForeignLanguageLesson && (lecture.gradeLevel === 'G1' || (lecture.id || '').includes('connect-1') || (lecture.id || '').includes('g1-u'))
+      ? '/curriculum_covers/egypt_primary_1_english.png'
+      : undefined);
   const hasFourInteractiveExamples =
     (lecture.sections || []).filter((section) => (section.interactiveExample?.steps?.length || 0) > 0).length >= 4;
 
@@ -230,6 +699,16 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
       {/* ═══ LESSON TITLE HERO ═══ */}
       <header className="lesson-hero-header">
         <div className="lesson-hero-left">
+          {/* Official Ministry Curriculum Alignment Stamp */}
+          <div className="curriculum-official-stamp">
+            <Award size={14} style={{ color: '#38bdf8' }} />
+            <span>
+              {isEn
+                ? '📘 Aligned with Official MOE Curricula & Teacher Guide Pedagogical Standards'
+                : '📘 أسلوب الكتاب المدرسي المعتمد ومطابقة المعايير الوزارية الرسمية'}
+            </span>
+          </div>
+
           <div className="lesson-chips-row">
             <div className="lesson-number-chip">
               <BookMarked size={14} />
@@ -244,6 +723,19 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           </div>
           <h1 className="lesson-hero-title" dir="auto">{title}</h1>
           <p className="lesson-hero-subtitle" dir="auto">{subtitle}</p>
+
+          {/* Official Textbook Cover Card */}
+          {curriculumCoverUrl && (
+            <div className="textbook-cover-hero-badge" title={isEn ? 'Official MOE Textbook' : 'غلاف الكتاب المدرسي المعتمد'}>
+              <img src={curriculumCoverUrl} alt="Official Textbook Cover" className="textbook-cover-img" />
+              <div className="textbook-cover-meta">
+                <span className="textbook-cover-label">
+                  {isEn ? 'Official Ministry Textbook' : 'الكتاب المدرسي المعتمد رسمياً'}
+                </span>
+                <span className="textbook-cover-subject">{unitTitle || title}</span>
+              </div>
+            </div>
+          )}
 
           <div className="lesson-hero-meta">
             <span className="lesson-meta-badge">
@@ -405,6 +897,14 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   {!isArabicLanguageLesson && !isEn && v.termEn !== v.termAr && (
                     <span className="vocab-term-en">{v.termEn}</span>
                   )}
+                  <button
+                    type="button"
+                    className="vocab-audio-listen-btn"
+                    onClick={() => playAudioSpeech(isEn ? v.termEn : (isForeignLanguageLesson ? (v.termEn || v.termAr) : v.termAr), isForeignLanguageLesson || isEn)}
+                    title={isEn ? 'Listen to pronunciation' : 'استمع للنطق الصوتي 🎧'}
+                  >
+                    <Volume2 size={13} />
+                  </button>
                 </div>
                 <p className="vocab-definition" dir="auto">
                   {(isEn ? v.definitionEn : v.definitionAr) || v.definitionEn || v.definitionAr || (isForeignLanguageLesson ? `المعنى والترجمة: ${v.termAr}` : '')}
@@ -495,8 +995,41 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   )}
 
                   {/* ── INTERACTIVE WORKED EXAMPLE (Step-by-Step) ── */}
-                  {ex && (
+                  {ex && (() => {
+                    const rubric = getTextbookRubric(rawLecture?.subject, secIdx);
+                    return (
                     <div className="worked-example-card">
+                      {/* ── Official Textbook Rubric Banner ── */}
+                      <div className="textbook-rubric-bar">
+                        <div className="textbook-rubric-left">
+                          <span className="textbook-activity-chip">
+                            {rubric.icon}
+                            <span>{isEn ? rubric.titleEn : rubric.titleAr}</span>
+                          </span>
+                          {rubric.audioTrack && (
+                            <button
+                              type="button"
+                              className="textbook-track-chip"
+                              onClick={() => playAudioSpeech(ex.equation || ex.steps[0]?.textEn || ex.steps[0]?.textAr || '', isForeignLanguageLesson || isEn)}
+                              title={isEn ? 'Play Lesson Audio Track' : 'استمع للمسار الصوتي للنشاط 🎧'}
+                            >
+                              <Volume2 size={13} />
+                              <span>Track {String(rubric.audioTrack).padStart(2, '0')} 🎧</span>
+                            </button>
+                          )}
+                        </div>
+                        <div className="textbook-rubric-right">
+                          <span className="textbook-strategy-chip" title={isEn ? rubric.strategyEn : rubric.strategyAr}>
+                            <Compass size={12} />
+                            <span>{isEn ? rubric.strategyEn : rubric.strategyAr}</span>
+                          </span>
+                          <span className="textbook-moe-badge">
+                            <CheckCircle2 size={11} />
+                            <span>{isEn ? 'MOE Standard' : 'معتمد وزارياً'}</span>
+                          </span>
+                        </div>
+                      </div>
+
                       {/* Card Header */}
                       <div className="we-header">
                         <div className="we-header-left">
@@ -530,7 +1063,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             <span>{isEn ? 'Problem / Governing Rule' : 'نص المسألة / القاعدة الرياضية'}</span>
                           </div>
                           <div className="we-problem-content" dir="auto">
-                            {renderMathFormattedText(ex.equation)}
+                            {renderContentWithDialogues(ex.equation, isEn, (txt) => playAudioSpeech(txt, isForeignLanguageLesson || isEn))}
                           </div>
                         </div>
                       )}
@@ -560,9 +1093,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             >
                               <div className="we-step-num">{step.stepNumber}</div>
                               <div className="we-step-content">
-                                <p className="we-step-text" dir="auto">
-                                  {renderMathFormattedText(stepText)}
-                                </p>
+                                <div className="we-step-text" dir="auto">
+                                  {renderContentWithDialogues(stepText, isEn, (txt) => playAudioSpeech(txt, isForeignLanguageLesson || isEn))}
+                                </div>
                                 {stepNote && (
                                   <span className="we-step-note" dir="auto">
                                     <Lightbulb size={12} /> {stepNote}
@@ -623,7 +1156,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                         </div>
                       )}
                     </div>
-                  )}
+                    );
+                  })()}
 
                   {/* ── TIPS BOX ── */}
                   {tips && tips.length > 0 && (
