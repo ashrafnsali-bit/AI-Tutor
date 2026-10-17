@@ -289,6 +289,22 @@ const connectG1Units: PrimaryUnitDefinition[] = [
         vocabulary: [['قلم رصاص', 'Pencil'], ['مسطرة', 'Ruler'], ['واحد', 'One'], ['اثنان', 'Two']]
       },
       {
+        titleAr: 'الوحدة 4: عيد ميلادي! (It\'s my birthday!)',
+        titleEn: 'Unit 4: It\'s my birthday! - Age, Numbers 6-10 & Colors',
+        subtitleAr: 'السؤال عن العمر والأرقام من 6 إلى 10: How old are you? I am six ونطق حرف C',
+        subtitleEn: 'Age inquiries, numbers 6 to 10, birthday vocabulary, and phonics sound /k/',
+        focusAr: 'يتعلم التلميذ السؤال والإجابة عن العمر بالإنجليزية: How old are you? I am six. وعد الشموع على كعكة عيد الميلاد من 6 إلى 10، وتسمية الألوان (Red, Blue, Green, Yellow, Orange). نطق الكلمات التي تبدأ بصوت /k/ مثل cake, candle, card.',
+        focusEn: 'Students learn asking and answering age: How old are you? I am six. Counting birthday candles (6 to 10), colors, and phonics /k/ (cake, candle, card).',
+        activityAr: 'ارسم كعكة عيد ميلادك وضع عليها عدداً من الشموع يطابق عمرك، ثم قل لزميلك: I am six years old!',
+        activityEn: 'Draw a birthday cake with candles matching your age and practice saying: I am six years old!',
+        questionAr: 'ما هو السؤال الصحيح لتسأل صديقك عن عمره باللغة الإنجليزية؟',
+        questionEn: 'What is the correct question to ask a peer their age?',
+        optionsAr: ['How old are you?', 'What is your name?', 'Where is your bag?'],
+        optionsEn: ['How old are you?', 'What is your name?', 'Where is your bag?'],
+        correctIndex: 0,
+        vocabulary: [['عيد ميلاد', 'Birthday'], ['كعكة', 'Cake'], ['شمعة', 'Candle'], ['كم عمرك؟', 'How old are you?']]
+      },
+      {
         titleAr: 'الوحدة 5: مع عائلتي (With my Family)',
         titleEn: 'Unit 5: With my Family - Family Members & Politeness',
         subtitleAr: 'أفراد الأسرة: Father, Mother, Brother, Sister وكلمات الشكر',
@@ -303,6 +319,22 @@ const connectG1Units: PrimaryUnitDefinition[] = [
         optionsEn: ['Mother', 'Father', 'Brother'],
         correctIndex: 0,
         vocabulary: [['أم', 'Mother'], ['أب', 'Father'], ['أخ', 'Brother'], ['أخت', 'Sister']]
+      },
+      {
+        titleAr: 'الوحدة 6: هيا نعزف الموسيقى! (Let\'s play music!)',
+        titleEn: 'Unit 6: Let\'s play music! - Musical Instruments & Verbs',
+        subtitleAr: 'الآلات الموسيقية: Guitar, Drum, Piano, Flute والفعل: I can play...',
+        subtitleEn: 'Musical instruments (guitar, drum, piano, flute) and action verb play',
+        focusAr: 'التعرف على أسماء الآلات الموسيقية والتعبير عن القدرة على العزف: I can play the guitar. I can play the drum. ونطق حرفي D و F مثل drum, flute.',
+        focusEn: 'Identifying musical instruments and expressing ability: I can play the drum. Phonics sounds /d/ (drum) and /f/ (flute).',
+        activityAr: 'قلد حركة العزف على آلتك الموسيقية المفضلة وعبر عنها بالإنجليزية: I can play the piano.',
+        activityEn: 'Mime playing your favorite instrument and express it in English: I can play the piano.',
+        questionAr: 'ما الآلة الموسيقية التي تعني "طبلة" في اللغة الإنجليزية؟',
+        questionEn: 'Which English word means "طبلة"?',
+        optionsAr: ['Drum', 'Guitar', 'Piano'],
+        optionsEn: ['Drum', 'Guitar', 'Piano'],
+        correctIndex: 0,
+        vocabulary: [['موسيقى', 'Music'], ['طبلة', 'Drum'], ['جيتار', 'Guitar'], ['يعزف', 'Play']]
       }
     ]
   }
@@ -398,6 +430,22 @@ const connectG4Units: PrimaryUnitDefinition[] = [
         optionsEn: ['An electrician', 'A plumber', 'A mail carrier'],
         correctIndex: 0,
         vocabulary: [['كهربائي', 'Electrician'], ['سباك', 'Plumber'], ['أمان كهربائي', 'Electrical safety'], ['مقبس', 'Socket']]
+      },
+      {
+        titleAr: 'الوحدة 6: ماذا تعمل؟ (What do you do?) - المهن والقطاعات',
+        titleEn: 'Unit 6: What do you do? - Occupations & Economic Sectors',
+        subtitleAr: 'المهن المصرية (Farmer, Fisherman, Guide) والقطاعات الاقتصادية',
+        subtitleEn: 'Occupations, industries (farming, fishing, tourism), and workplace roles',
+        focusAr: 'التعرف على القطاعات الاقتصادية في مصر (Tourism, Fishing, Farming, Mining) ودور كل مهنة في خدمة الوطن والمجتمع.',
+        focusEn: 'Exploring key economic sectors in Egypt: farming, fishing, tourism, and mining, and their community value.',
+        activityAr: 'اختر مهنة تحلم بها في المستقبل واشرح ما ستقدمه لوطنك ومجتمعك بالإنجليزية.',
+        activityEn: 'Choose an occupation and describe how you will help your society.',
+        questionAr: 'من هو الشخص الذي يزرع المحاصيل ويرعى الحيوانات في المزرعة؟',
+        questionEn: 'Who grows crops and takes care of animals on a farm?',
+        optionsAr: ['A farmer (المزارع)', 'A guide (المرشد)', 'A doctor (الطبيب)'],
+        optionsEn: ['A farmer', 'A guide', 'A doctor'],
+        correctIndex: 0,
+        vocabulary: [['مزارع', 'Farmer'], ['صياد', 'Fisherman'], ['سياحة', 'Tourism'], ['مهنة', 'Occupation']]
       }
     ]
   }
@@ -463,6 +511,22 @@ const connectG6Units: PrimaryUnitDefinition[] = [
         vocabulary: [['رحلة تاريخية', 'Historical trip'], ['معبد قديم', 'Ancient temple'], ['ذهب', 'Went'], ['شاهد', 'Saw']]
       },
       {
+        titleAr: 'الوحدة 4: أوقات الاحتفال (Celebrate Good Times!) - المناسبات والأعياد',
+        titleEn: 'Unit 4: Celebrate Good Times! - Festivals, Celebrations & Quantifiers',
+        subtitleAr: 'المهرجانات والمناسبات، ومحددات الكمية: a lot of, some, a few',
+        subtitleEn: 'Festivals, celebrations, cultural traditions, and quantifiers',
+        focusAr: 'الحديث عن الاحتفالات الشعبية والأعياد وإرسال الدعوات: Sending invitations, blowing balloons, decorating. استخدام محددات الكمية: a few invitations, some cake.',
+        focusEn: 'Describing celebrations, party preparations, invitations, and quantifiers (some, any, a few, a little).',
+        activityAr: 'صمم بطاقة دعوة لحفل عيد ميلاد أو مناسبة خاصة مستخدماً عبارات الدعوة بالإنجليزية.',
+        activityEn: 'Design an invitation card for a celebration using English polite invitation expressions.',
+        questionAr: 'ما العبارة المناسبة لدعوة صديق إلى حفل؟',
+        questionEn: 'Which phrase is polite for inviting a friend to a celebration?',
+        optionsAr: ['Would you like to come to my party?', 'Leave the party now.', 'I don\'t want guests.'],
+        optionsEn: ['Would you like to come to my party?', 'Leave the party now.', 'I don\'t want guests.'],
+        correctIndex: 0,
+        vocabulary: [['احتفال', 'Celebration'], ['دعوة', 'Invitation'], ['بالونات', 'Balloons'], ['مهرجان', 'Festival']]
+      },
+      {
         titleAr: 'الوحدة 5: تكنولوجيا مذهلة (Amazing Technology) - المستقبل والذكاء الاصطناعي',
         titleEn: 'Unit 5: Amazing Technology - Future with will, AI & Inventions',
         subtitleAr: 'تطبيقات الذكاء الاصطناعي، الأجهزة الذكية، وصياغة المستقبل: will + infinitive',
@@ -477,6 +541,22 @@ const connectG6Units: PrimaryUnitDefinition[] = [
         optionsEn: ['Robots will help us.', 'Robots helping us.', 'Robots helps us.'],
         correctIndex: 0,
         vocabulary: [['ذكاء اصطناعي', 'Artificial intelligence'], ['مستقبل', 'Future'], ['روبوت', 'Robot'], ['سوف يساعد', 'Will help']]
+      },
+      {
+        titleAr: 'الوحدة 6: الرعاية الصحية والعافية (Taking Care) - الصحة والرفاهية',
+        titleEn: 'Unit 6: Taking Care - Health, Well-being & Modal Verbs',
+        subtitleAr: 'العادات الصحية، النوم الجيد، واستخدام should / shouldn\'t للنصيحة',
+        subtitleEn: 'Healthy habits, sleep hygiene, mental well-being, and modal verbs for advice',
+        focusAr: 'أهمية شرب الماء الكافي، ممارسة الرياضة، والنوم المنتظم. إعطاء النصائح الصحية: You should get 8 hours of sleep. You shouldn\'t stay up late.',
+        focusEn: 'Health guidelines: hydration, balanced meals, sleep hygiene, and giving advice with should / shouldn\'t.',
+        activityAr: 'قدم 3 نصائح صحية لزميلك للمحافظة على نشاطه وتركيزه أثناء المذاكرة.',
+        activityEn: 'Give 3 health tips using should and shouldn\'t for maintaining high energy and focus.',
+        questionAr: 'ما الفعل الناقص المستخدم لتقديم النصيحة الإيجابية بالإنجليزية؟',
+        questionEn: 'Which modal verb is used to give positive advice?',
+        optionsAr: ['Should', 'Must not', 'Will not'],
+        optionsEn: ['Should', 'Must not', 'Will not'],
+        correctIndex: 0,
+        vocabulary: [['صحة', 'Health'], ['نصيحة', 'Advice'], ['ينبغي أن', 'Should'], ['نوم كافٍ', 'Enough sleep']]
       }
     ]
   }
