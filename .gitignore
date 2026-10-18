@@ -9,6 +9,7 @@ pnpm-debug.log*
 node_modules/
 dist-ssr/
 *.local
+*.zip
 
 # Environment variables and secrets
 .env

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node scripts/prepare-build.cjs && vite --port 4000",
     "build": "node scripts/prepare-build.cjs && tsc -b && vite build && node scripts/sync-dist.cjs",
+    "build:zip": "npm run build && powershell -Command \"Compress-Archive -Path dist\\* -DestinationPath public_html.zip -Force\"",
     "lint": "oxlint",
     "preview": "vite preview --port 4000"
   },

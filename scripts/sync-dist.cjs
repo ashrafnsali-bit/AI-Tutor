@@ -49,5 +49,13 @@ if (fs.existsSync(distDir)) {
     try { fs.cpSync(currCoversSrc, path.join(rootDir, 'curriculum_covers'), { recursive: true }); } catch {}
   }
 
-  console.log('Successfully synced dist to root, docs, and 404.html for GitHub Pages production');
+  // Copy .htaccess to root and docs for Apache / Hostinger hosting
+  const htaccessSrc = path.join(publicDir, '.htaccess');
+  if (fs.existsSync(htaccessSrc)) {
+    try { fs.copyFileSync(htaccessSrc, path.join(distDir, '.htaccess')); } catch {}
+    try { fs.copyFileSync(htaccessSrc, path.join(docsDir, '.htaccess')); } catch {}
+    try { fs.copyFileSync(htaccessSrc, path.join(rootDir, '.htaccess')); } catch {}
+  }
+
+  console.log('Successfully synced dist to root, docs, and 404.html for GitHub Pages & Hostinger production');
 }
