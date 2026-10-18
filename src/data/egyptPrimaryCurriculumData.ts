@@ -2168,8 +2168,12 @@ export function getEgyptPrimaryCurriculum(
   track: EducationTrack = 'GENERAL'
 ): Lecture[] {
   const gradeNumber = parseInt(gradeLevel.replace('G', ''), 10) || 4;
-  const nameAr = `الصف ${gradeNumber} الابتدائي (التعليم الأساسي المصري)`;
-  const nameEn = `Primary Grade ${gradeNumber} (Egyptian Basic Education)`;
+  const nameAr = educationType === 'INTERNATIONAL'
+    ? `الصف ${gradeNumber} الابتدائي (مسار مدارس اللغات - التجريبية والرسمية)`
+    : `الصف ${gradeNumber} الابتدائي (التعليم الأساسي المصري - المسار العام العربي)`;
+  const nameEn = educationType === 'INTERNATIONAL'
+    ? `Primary Grade ${gradeNumber} (Language Schools Track - English Medium)`
+    : `Primary Grade ${gradeNumber} (Egyptian National Basic Education)`;
 
   switch (subject) {
     case 'PRIMARY_ARABIC':

@@ -424,24 +424,24 @@ export function getSpecializationForEducationTrack(track: EducationTrack): Speci
 
 export const EDUCATION_TYPE_LABELS: Record<EducationType, { ar: string; en: string; descAr: string }> = {
   PUBLIC: {
-    ar: 'تعليم حكومي معتمد',
-    en: 'Public National Education',
-    descAr: 'وفق خطط ومناهج وزارة التعليم الرسمية للبلد'
+    ar: 'التعليم العام الحكومي (المسار العام العربي)',
+    en: 'Public National Curriculum (Arabic Medium)',
+    descAr: 'وفق خطط ومناهج وزارة التربية والتعليم الرسمية باللغة العربية'
   },
   PRIVATE: {
-    ar: 'تعليم أهلي / خاص',
+    ar: 'تعليم خاص / أهلي معتمد',
     en: 'Private Accredited School',
     descAr: 'مناهج الوزارة المعتمدة مع إثراءات لغوية وتطبيقية إضافية'
   },
   ISLAMIC: {
     ar: 'تعليم شرعي / أزهري',
-    en: 'Islamic & Sharia Education',
-    descAr: 'تركيز مكثف على العلوم الإسلامية والعربية إلى جانب المواد العلمية'
+    en: 'Islamic & Al-Azhar Curriculum',
+    descAr: 'تركيز مكثف على العلوم الشرعية والقرآن الكريم واللغة العربية'
   },
   INTERNATIONAL: {
-    ar: 'تعليم دولي / لغات',
-    en: 'International / Advanced STEM',
-    descAr: 'معايير علمية دولية ثنائية اللغة معتمدة'
+    ar: 'مسار مدارس اللغات والرسمية للغات (English Medium Track)',
+    en: 'Language Schools Track (100% English STEM)',
+    descAr: 'تدريس المواد العلمية والرياضيات واللغة الإنجليزية باللغة الإنجليزية بنسبة 100% وفق كتب الوزارة للغات'
   }
 };
 
@@ -2331,7 +2331,7 @@ export function getNationalSubjectLabel(
     country === 'EG' &&
     _gradeLevel === 'G10' &&
     subject === 'FRENCH' &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return isEn
       ? 'French First Language — Champion 1 (school support)'
@@ -2341,7 +2341,7 @@ export function getNationalSubjectLabel(
     country === 'EG' &&
     _gradeLevel === 'G10' &&
     (subject === 'GERMAN' || subject === 'ITALIAN') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return subject === 'GERMAN'
       ? isEn ? 'German — second foreign language (school support)' : 'الألمانية — لغة أجنبية ثانية (دعم مدرسي)'

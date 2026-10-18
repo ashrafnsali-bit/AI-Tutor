@@ -57,7 +57,7 @@ const isEgyptG10SubjectAvailable = (
       return isEgyptG10BookCourseAvailable(subject, educationType, educationTrack);
     }
     return (['ARABIC_LIT', 'ARABIC_LANG', 'ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(subject) &&
-        (educationType === 'PUBLIC' || educationType === 'PRIVATE')) ||
+        (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')) ||
       isEgyptG10BookCourseAvailable(subject, educationType, educationTrack);
   }
   if (gradeLevel === 'G11') {

@@ -619,9 +619,10 @@ function renderContentWithDialogues(
 }
 
 export const LectureViewer: React.FC<LectureViewerProps> = ({
-  lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
+  lecture: rawLecture, lang, profile, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
-  const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject, rawLecture?.educationType);
+  const effectiveEducationType = rawLecture?.educationType || profile?.educationType;
+  const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject, effectiveEducationType);
   const isEn = lang === 'en';
   const isLessonTargetLang = isEn || isForeignLanguageLesson;
   const lecture = useMemo(

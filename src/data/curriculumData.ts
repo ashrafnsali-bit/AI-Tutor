@@ -4931,7 +4931,7 @@ export function getCurriculumForSubject(
     country === 'EG' &&
     gradeLevel === 'G10' &&
     (subject === 'ARABIC_LIT' || subject === 'ARABIC_LANG') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return getEgyptArabicG10Curriculum(subject, educationType, _track);
   }
@@ -4949,7 +4949,7 @@ export function getCurriculumForSubject(
     country === 'EG' &&
     gradeLevel === 'G10' &&
     subject === 'FRENCH' &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return getEgyptFrenchChampion1G10Curriculum(subject, educationType, _track);
   }
@@ -4957,7 +4957,7 @@ export function getCurriculumForSubject(
     country === 'EG' &&
     gradeLevel === 'G10' &&
     (subject === 'GERMAN' || subject === 'ITALIAN') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return getEgyptSecondLanguageG10Curriculum(subject, educationType, _track);
   }
@@ -5835,14 +5835,16 @@ export function loadSubjectLectures(
     gradeLevel === 'G10' &&
     subject === 'ENGLISH' &&
     educationType !== 'PUBLIC' &&
-    educationType !== 'PRIVATE'
+    educationType !== 'PRIVATE' &&
+    educationType !== 'INTERNATIONAL'
   ) return [];
   if (
     country === 'EG' &&
     gradeLevel === 'G10' &&
     (subject === 'FRENCH' || subject === 'GERMAN' || subject === 'ITALIAN') &&
     educationType !== 'PUBLIC' &&
-    educationType !== 'PRIVATE'
+    educationType !== 'PRIVATE' &&
+    educationType !== 'INTERNATIONAL'
   ) return [];
   const isProtectedSudanGrade7Course = isSudanPublicGrade7SubjectAvailable(
     subject,
@@ -5877,22 +5879,22 @@ export function loadSubjectLectures(
     country === 'EG' &&
     gradeLevel === 'G10' &&
     subject === 'ENGLISH' &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   const isEgyptSecondaryEnglishG11Route =
     country === 'EG' &&
     gradeLevel === 'G11' &&
     subject === 'ENGLISH' &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   const isEgyptFrenchChampion1G10Route =
     country === 'EG' &&
     gradeLevel === 'G10' &&
     (subject === 'FRENCH' || subject === 'GERMAN' || subject === 'ITALIAN') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   const isEgyptSecondaryLanguagesG11Route =
     country === 'EG' &&
     gradeLevel === 'G11' &&
     (subject === 'FRENCH' || subject === 'GERMAN' || subject === 'ITALIAN') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   if (isSudanGrade10Route && !isProtectedSudanGrade10Course) return [];
   const isProtectedSudanGrade11Course = isSudanPublicGrade11SubjectAvailable(
     subject,
@@ -5915,7 +5917,7 @@ export function loadSubjectLectures(
   const isSudanGrade8Route = country === 'SD' && gradeLevel === 'G8';
   const isSudanGrade9Route = country === 'SD' && gradeLevel === 'G9';
   const isProtectedSaudiEnglish = isSaudiPublicEnglishAvailable(country, gradeLevel, educationType);
-  const isProtectedEgyptEnglish = country === 'EG' && (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+  const isProtectedEgyptEnglish = country === 'EG' && (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   const isProtectedEnglish = isProtectedSaudiEnglish ||
     isProtectedEgyptEnglish ||
     isEgyptSecondaryEnglishG10Route ||
@@ -6051,7 +6053,7 @@ export function loadSubjectLectures(
     country === 'EG' &&
     gradeLevel === 'G10' &&
     (subject === 'ARABIC_LIT' || subject === 'ARABIC_LANG') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE');
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   const isEgyptVerifiedSecondaryLanguageRoute =
     isEgyptSecondaryEnglishG10Route ||
     isEgyptSecondaryEnglishG11Route ||
@@ -6060,22 +6062,22 @@ export function loadSubjectLectures(
   const isEgyptVerifiedG11Course =
     country === 'EG' &&
     gradeLevel === 'G11' &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL') &&
     isEgyptG11SubjectAvailable(subject, track, educationType);
   const isEgyptVerifiedG12Course =
     country === 'EG' &&
     gradeLevel === 'G12' &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL') &&
     isEgyptG12SubjectAvailable(subject, track, educationType);
   const isEgyptVerifiedPrepCourse =
     country === 'EG' &&
     ['G7', 'G8', 'G9'].includes(gradeLevel || '') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL') &&
     isEgyptPrepSubjectAvailable(subject, gradeLevel as GradeLevel, educationType);
   const isEgyptVerifiedPrimaryCourse =
     country === 'EG' &&
     ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel || '') &&
-    (educationType === 'PUBLIC' || educationType === 'PRIVATE') &&
+    (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL') &&
     isEgyptPrimarySubjectAvailable(subject, gradeLevel as GradeLevel, educationType);
   const isEgyptVerifiedBookCourse = (
     isEgyptG10BookCourseAvailable(

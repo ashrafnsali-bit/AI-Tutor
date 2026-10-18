@@ -294,7 +294,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         return isEgyptG10BookCourseAvailable(subject, educationType, track) ? subject : 'MATH';
       }
       return ['ARABIC_LIT', 'ARABIC_LANG', 'ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(subject) &&
-        (educationType === 'PUBLIC' || educationType === 'PRIVATE')
+        (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
         ? subject
         : 'ARABIC_LIT';
     }

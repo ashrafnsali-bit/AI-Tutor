@@ -380,8 +380,12 @@ function createLectures(
       gradeLevel: 'G10',
       educationType,
       educationTrack: track,
-      gradeLevelNameAr: 'الصف الأول الثانوي',
-      gradeLevelNameEn: 'Secondary 1',
+      gradeLevelNameAr: educationType === 'INTERNATIONAL'
+        ? 'الصف الأول الثانوي (مسار مدارس اللغات - التجريبية والرسمية)'
+        : 'الصف الأول الثانوي (المسار العام العربي)',
+      gradeLevelNameEn: educationType === 'INTERNATIONAL'
+        ? 'Secondary 1 / Grade 10 (Language Schools Track - English Medium)'
+        : 'Secondary 1 / Grade 10 (Egyptian National Curriculum)',
       termAr,
       termEn,
       unitTitleAr: `الوحدة ${['الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة'][index]}: ${unit.titleAr}`,
@@ -447,7 +451,7 @@ export function getEgyptSecondaryEnglishG10Curriculum(
   educationType: EducationType,
   track: EducationTrack
 ): Lecture[] {
-  if (subject !== 'ENGLISH' || !(['PUBLIC', 'PRIVATE'] as EducationType[]).includes(educationType)) {
+  if (subject !== 'ENGLISH' || !(['PUBLIC', 'PRIVATE', 'INTERNATIONAL'] as EducationType[]).includes(educationType)) {
     return [];
   }
 
@@ -469,7 +473,7 @@ export function getEgyptFrenchChampion1G10Curriculum(
 ): Lecture[] {
   if (
     subject !== 'FRENCH' ||
-    (educationType !== 'PUBLIC' && educationType !== 'PRIVATE')
+    (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL')
   ) return [];
 
   return createLectures(
@@ -490,7 +494,7 @@ export function getEgyptSecondLanguageG10Curriculum(
 ): Lecture[] {
   if (
     (subject !== 'GERMAN' && subject !== 'ITALIAN') ||
-    (educationType !== 'PUBLIC' && educationType !== 'PRIVATE')
+    (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL')
   ) return [];
 
   const german = subject === 'GERMAN';

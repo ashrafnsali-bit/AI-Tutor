@@ -777,8 +777,8 @@ export function isEgyptG10BookCourseAvailable(
   track: EducationTrack
 ): boolean {
   if (!curricula[subject]) return false;
-  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE') return false;
-  return subject !== 'HISTORY' || (educationType === 'PUBLIC' && track === 'GENERAL');
+  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
+  return subject !== 'HISTORY' || ((educationType === 'PUBLIC' || educationType === 'INTERNATIONAL') && track === 'GENERAL');
 }
 
 export function getEgyptG10BookCurriculum(
@@ -828,8 +828,12 @@ export function getEgyptG10BookCurriculum(
         gradeLevel: 'G10',
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: 'الصف الأول الثانوي',
-        gradeLevelNameEn: 'Secondary 1',
+        gradeLevelNameAr: educationType === 'INTERNATIONAL'
+          ? 'الصف الأول الثانوي (مسار مدارس اللغات - التجريبية والرسمية)'
+          : 'الصف الأول الثانوي (المسار العام العربي)',
+        gradeLevelNameEn: educationType === 'INTERNATIONAL'
+          ? 'Secondary 1 / Grade 10 (Language Schools Track - English Medium)'
+          : 'Secondary 1 / Grade 10 (Egyptian National Curriculum)',
         termAr: unit.termAr,
         termEn: unit.termEn,
         unitTitleAr: `الوحدة ${['الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة'][unitIndex]}: ${unit.titleAr}`,

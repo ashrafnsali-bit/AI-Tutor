@@ -146,8 +146,12 @@ function buildLecturesFromUnits(
         gradeLevel: 'G12',
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: 'الصف الثالث الثانوي (الثانوية العامة المصرية)',
-        gradeLevelNameEn: 'Secondary 3 / Grade 12 (Egyptian Curriculum)',
+        gradeLevelNameAr: educationType === 'INTERNATIONAL'
+          ? 'الصف الثالث الثانوي (مسار مدارس اللغات - التجريبية والرسمية)'
+          : 'الصف الثالث الثانوي (الثانوية العامة - المسار العام العربي)',
+        gradeLevelNameEn: educationType === 'INTERNATIONAL'
+          ? 'Secondary 3 / Grade 12 (Language Schools Track - English Medium)'
+          : 'Secondary 3 / Grade 12 (Egyptian National Curriculum)',
         termAr: 'العام الدراسي الكامل',
         termEn: 'Full Academic Year',
         unitTitleAr: unit.unitTitleAr,
@@ -1613,6 +1617,14 @@ export function getEgyptG12Curriculum(
 ): Lecture[] {
   if (!isEgyptG12SubjectAvailable(subject, track, educationType)) return [];
 
+  const isLangTrack = educationType === 'INTERNATIONAL';
+  const gradeLevelNameAr = isLangTrack
+    ? 'الصف الثالث الثانوي (مسار مدارس اللغات - التجريبية والرسمية)'
+    : 'الصف الثالث الثانوي (الثانوية العامة - المسار العام العربي)';
+  const gradeLevelNameEn = isLangTrack
+    ? 'Secondary 3 / Grade 12 (Language Schools Track - English Medium)'
+    : 'Secondary 3 / Grade 12 (Egyptian National Curriculum)';
+
   switch (subject) {
     case 'PHYSICS':
       return HIGH_PHYSICS_G12_LECTURES.map((lec) => ({
@@ -1622,8 +1634,8 @@ export function getEgyptG12Curriculum(
         gradeLevel: 'G12',
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: 'الصف الثالث الثانوي (الثانوية العامة المصرية)',
-        gradeLevelNameEn: 'Secondary 3 / Grade 12 (Egyptian Curriculum)'
+        gradeLevelNameAr,
+        gradeLevelNameEn
       }));
 
     case 'CHEMISTRY':
@@ -1634,8 +1646,8 @@ export function getEgyptG12Curriculum(
         gradeLevel: 'G12',
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: 'الصف الثالث الثانوي (الثانوية العامة المصرية)',
-        gradeLevelNameEn: 'Secondary 3 / Grade 12 (Egyptian Curriculum)'
+        gradeLevelNameAr,
+        gradeLevelNameEn
       }));
 
     case 'BIOLOGY':
@@ -1654,8 +1666,8 @@ export function getEgyptG12Curriculum(
         gradeLevel: 'G12',
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: 'الصف الثالث الثانوي (الثانوية العامة المصرية)',
-        gradeLevelNameEn: 'Secondary 3 / Grade 12 (Egyptian Curriculum)'
+        gradeLevelNameAr,
+        gradeLevelNameEn
       }));
 
     case 'COMPUTER_SCIENCE':

@@ -98,8 +98,12 @@ function buildPrepLectures(
         gradeLevel,
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: `${gradeNameAr} - المنهج المصري المعتمد`,
-        gradeLevelNameEn: `${gradeNameEn} - Egyptian National Curriculum`,
+        gradeLevelNameAr: educationType === 'INTERNATIONAL'
+          ? `${gradeNameAr} (مسار مدارس اللغات - التجريبية والرسمية)`
+          : `${gradeNameAr} (المسار العام العربي) - المنهج المصري المعتمد`,
+        gradeLevelNameEn: educationType === 'INTERNATIONAL'
+          ? `${gradeNameEn} (Language Schools Track - English Medium)`
+          : `${gradeNameEn} (Egyptian National Curriculum)`,
         termAr: 'العام الدراسي الكامل',
         termEn: 'Full Academic Year',
         unitTitleAr: unit.unitTitleAr,

@@ -212,7 +212,7 @@ export async function askGeminiTutor(
   const trackInfo = profile.educationTrack ? TRACK_LABELS[profile.educationTrack] : undefined;
   const typeInfo = profile.educationType ? EDUCATION_TYPE_LABELS[profile.educationType] : undefined;
 
-  const isForeignLang = isForeignLanguageSubject(profile.subject || lecture.subject);
+  const isForeignLang = isForeignLanguageSubject(profile.subject || lecture.subject, profile.educationType || lecture.educationType);
   const targetLanguage = profile.subject === 'FRENCH' ? 'French' : profile.subject === 'GERMAN' ? 'German' : profile.subject === 'ITALIAN' ? 'Italian' : profile.subject === 'ENGLISH' ? 'English' : (isForeignLang ? 'English' : '');
 
   const lectureTitle = (isEn || Boolean(targetLanguage)) ? (lecture.titleEn || lecture.titleAr) : lecture.titleAr;

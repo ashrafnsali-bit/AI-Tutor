@@ -1012,8 +1012,12 @@ function buildLecturesFromUnits(
         gradeLevel: 'G11',
         educationType,
         educationTrack: track,
-        gradeLevelNameAr: 'الصف الثاني الثانوي',
-        gradeLevelNameEn: 'Secondary 2',
+        gradeLevelNameAr: educationType === 'INTERNATIONAL'
+          ? 'الصف الثاني الثانوي (مسار مدارس اللغات - التجريبية والرسمية)'
+          : 'الصف الثاني الثانوي (المسار العام العربي)',
+        gradeLevelNameEn: educationType === 'INTERNATIONAL'
+          ? 'Secondary 2 / Grade 11 (Language Schools Track - English Medium)'
+          : 'Secondary 2 / Grade 11 (Egyptian National Curriculum)',
         termAr: 'الفصل الدراسي الأول',
         termEn: 'First Semester',
         unitTitleAr: unit.unitTitleAr,
