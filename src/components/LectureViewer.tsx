@@ -621,14 +621,14 @@ function renderContentWithDialogues(
 export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
-  const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject);
+  const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject, rawLecture?.educationType);
   const isEn = lang === 'en';
   const isLessonTargetLang = isEn || isForeignLanguageLesson;
   const lecture = useMemo(
     () => sanitizeLectureForStudents(
-      ensureFourExamplesForLecture(
-        isForeignLanguageLesson && rawLecture ? localizeSingleLecture(rawLecture) : rawLecture
-      )
+      isForeignLanguageLesson && rawLecture
+        ? localizeSingleLecture(ensureFourExamplesForLecture(rawLecture))
+        : ensureFourExamplesForLecture(rawLecture)
     ),
     [rawLecture, isForeignLanguageLesson]
   );

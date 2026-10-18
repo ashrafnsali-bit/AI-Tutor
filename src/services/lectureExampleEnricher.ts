@@ -1,4 +1,5 @@
 import type { InteractiveExample, Lecture, StepItem } from '../types';
+import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
 
 /**
  * Pedagogical Examples Engine
@@ -249,54 +250,135 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
 
   // 5. English & Foreign Languages (اللغة الإنجليزية واللغات الأجنبية)
   if (subject.includes('english') || subject.includes('french') || subject.includes('german') || subject.includes('italian')) {
+    const isEnLang = subject.includes('english') || (!subject.includes('french') && !subject.includes('german') && !subject.includes('italian'));
     return [
       {
-        titleAr: `مثال تطبيقي 1 من 4: المحادثة والتواصل اللغوي لـ (${concepts[0] || title})`,
+        titleAr: isEnLang
+          ? `Worked Example 1 of 4: Conversational Fluency & Dialogue for (${conceptsEn[0] || titleEn})`
+          : `مثال تطبيقي 1 من 4: المحادثة والتواصل اللغوي لـ (${concepts[0] || title})`,
         titleEn: `Worked Example 1 of 4: Conversational Fluency & Dialogue for (${conceptsEn[0] || titleEn})`,
-        equation: 'Linguistic Model: Greeting / Introduction  -->  Response & Active Exchange',
+        equation: 'Linguistic Model: Contextual Cue / Inquiry  -->  Target Response & Discourse',
         steps: [
-          { stepNumber: 1, textAr: 'الاستماع إلى المحادثة وتحديد عبارة البدء والتحية المناسبة للموقف.', textEn: 'Listen to the dialogue and identify the appropriate opening greeting for the context.', noteAr: 'بدء المحادثة', noteEn: 'Conversation opening' },
-          { stepNumber: 2, textAr: 'استخدام العبارة النموذجية لتقديم النفس أو السؤال بنطق سليم وواضح.', textEn: 'Use the target sentence structure to introduce oneself or ask a question with clear pronunciation.', noteAr: 'التحدث بوضوح', noteEn: 'Clear articulation' },
-          { stepNumber: 3, textAr: 'الرد على الطرف الآخر والتفاعل الإيجابي مع مراعاة قواعد اللباقة.', textEn: 'Respond appropriately and engage in active, polite exchange.', noteAr: 'الرد والتفاعل', noteEn: 'Active response' }
+          {
+            stepNumber: 1,
+            textAr: isEnLang ? 'Listen to the dialogue and identify the appropriate opening greeting and context.' : 'الاستماع إلى المحادثة وتحديد عبارة البدء والتحية المناسبة للموقف.',
+            textEn: 'Listen to the dialogue and identify the appropriate opening greeting and context.',
+            noteAr: isEnLang ? 'Conversation Opening' : 'بدء المحادثة',
+            noteEn: 'Conversation Opening'
+          },
+          {
+            stepNumber: 2,
+            textAr: isEnLang ? 'Use target sentence structures and key vocabulary with clear, authentic pronunciation.' : 'استخدام العبارة النموذجية لتقديم النفس أو السؤال بنطق سليم وواضح.',
+            textEn: 'Use target sentence structures and key vocabulary with clear, authentic pronunciation.',
+            noteAr: isEnLang ? 'Target Structure' : 'التحدث بوضوح',
+            noteEn: 'Target Structure'
+          },
+          {
+            stepNumber: 3,
+            textAr: isEnLang ? 'Formulate a natural response maintaining active, polite, and meaningful interaction.' : 'الرد على الطرف الآخر والتفاعل الإيجابي مع مراعاة قواعد اللباقة.',
+            textEn: 'Formulate a natural response maintaining active, polite, and meaningful interaction.',
+            noteAr: isEnLang ? 'Discourse Exchange' : 'الرد والتفاعل',
+            noteEn: 'Discourse Exchange'
+          }
         ],
-        takeawayAr: 'المحادثة المستمرة وتكرار العبارات اليومية بصوت مسموع يكسبك الثقة والطلاقة اللغوية السريعة.',
-        takeawayEn: 'Consistent conversational practice and speaking aloud builds confidence and fluency quickly.'
+        takeawayAr: isEnLang ? 'Consistent daily conversational practice and speaking aloud builds immediate spoken fluency and cognitive retention.' : 'المحادثة المستمرة وتكرار العبارات اليومية بصوت مسموع يكسبك الثقة والطلاقة اللغوية السريعة.',
+        takeawayEn: 'Consistent daily conversational practice and speaking aloud builds immediate spoken fluency and cognitive retention.'
       },
       {
-        titleAr: `مثال تطبيقي 2 من 4: القواعد والتراكيب اللغوية (Grammar & Structure) لـ (${concepts[1] || concepts[0] || title})`,
+        titleAr: isEnLang
+          ? `Worked Example 2 of 4: Grammar & Sentence Structure for (${conceptsEn[1] || conceptsEn[0] || titleEn})`
+          : `مثال تطبيقي 2 من 4: القواعد والتراكيب اللغوية لـ (${concepts[1] || concepts[0] || title})`,
         titleEn: `Worked Example 2 of 4: Grammar & Sentence Structure for (${conceptsEn[1] || conceptsEn[0] || titleEn})`,
-        equation: 'Grammar Rule: Subject + Verb + Complement / Question Formation',
+        equation: 'Grammar Syntax: Form [Subject + Target Verb Form + Complement]  -->  Usage Context',
         steps: [
-          { stepNumber: 1, textAr: 'تحديد الفاعل (Subject) واختيار الفعل المساعد أو الصيغة المناسبة للزمن.', textEn: 'Identify the subject pronoun and select the matching auxiliary or verb form.', noteAr: 'تحديد الفاعل', noteEn: 'Subject identification' },
-          { stepNumber: 2, textAr: 'ترتيب أركان الجملة وفق القاعدة النحوية الصحيحة دون ترجمة حرفية.', textEn: 'Arrange sentence elements in standard English order without literal translation.', noteAr: 'ترتيب الجملة', noteEn: 'Word order' },
-          { stepNumber: 3, textAr: 'التحقق من التوافق بين الفاعل والفعل والتأكد من علامات الترقيم (Punctuation).', textEn: 'Ensure subject-verb agreement and verify correct capitalization and punctuation.', noteAr: 'التحقق والضبط', noteEn: 'Agreement & punctuation' }
+          {
+            stepNumber: 1,
+            textAr: isEnLang ? 'Identify the subject, tense marker, and governing syntactic rule in the sentence.' : 'تحديد الفاعل (Subject) واختيار الفعل المساعد أو الصيغة المناسبة للزمن.',
+            textEn: 'Identify the subject, tense marker, and governing syntactic rule in the sentence.',
+            noteAr: isEnLang ? 'Syntactic Identification' : 'تحديد الفاعل',
+            noteEn: 'Syntactic Identification'
+          },
+          {
+            stepNumber: 2,
+            textAr: isEnLang ? 'Apply the standardized grammatical transformation accurately without literal translation.' : 'ترتيب أركان الجملة وفق القاعدة النحوية الصحيحة دون ترجمة حرفية.',
+            textEn: 'Apply the standardized grammatical transformation accurately without literal translation.',
+            noteAr: isEnLang ? 'Rule Execution' : 'ترتيب الجملة',
+            noteEn: 'Rule Execution'
+          },
+          {
+            stepNumber: 3,
+            textAr: isEnLang ? 'Verify subject-verb agreement, auxiliary placement, and standard punctuation.' : 'التحقق من التوافق بين الفاعل والفعل والتأكد من علامات الترقيم (Punctuation).',
+            textEn: 'Verify subject-verb agreement, auxiliary placement, and standard punctuation.',
+            noteAr: isEnLang ? 'Accuracy Verification' : 'التحقق والضبط',
+            noteEn: 'Accuracy Verification'
+          }
         ],
-        takeawayAr: 'فهم منطق قواعد اللغة الإنجليزية وترتيب الكلمات يمنع الأخطاء الشائعة ويمنحك كتابة سليمة ومتقنة.',
-        takeawayEn: 'Understanding sentence structure and word order ensures accurate written and spoken English.'
+        takeawayAr: isEnLang ? 'Grasping the underlying logic of grammar rules ensures error-free written composition and speech.' : 'فهم منطق قواعد اللغة الإنجليزية وترتيب الكلمات يمنع الأخطاء الشائعة ويمنحك كتابة سليمة ومتقنة.',
+        takeawayEn: 'Grasping the underlying logic of grammar rules ensures error-free written composition and speech.'
       },
       {
-        titleAr: `مثال تطبيقي 3 من 4: الصوتيات والنطق السليم (Phonics & Pronunciation) لـ (${concepts[2] || concepts[0] || title})`,
-        titleEn: `Worked Example 3 of 4: Phonics & Pronunciation Practice for (${conceptsEn[2] || conceptsEn[0] || titleEn})`,
-        equation: 'Phonetic Drill: Letter Sound /b/ /s/ /t/  -->  Word Blending  -->  Fluent Reading',
+        titleAr: isEnLang
+          ? `Worked Example 3 of 4: Phonics, Articulation & Analytical Reading for (${conceptsEn[2] || conceptsEn[0] || titleEn})`
+          : `مثال تطبيقي 3 من 4: الصوتيات والنطق السليم لـ (${concepts[2] || concepts[0] || title})`,
+        titleEn: `Worked Example 3 of 4: Phonics, Articulation & Analytical Reading for (${conceptsEn[2] || conceptsEn[0] || titleEn})`,
+        equation: 'Phonology & Lexicon: Target Phoneme / Stress Pattern  -->  Word Blending  -->  Fluent Reading',
         steps: [
-          { stepNumber: 1, textAr: 'التركيز على مخرج صوت الحرف المستهدف وتمييزه عن الحروف المتقاربة.', textEn: 'Focus on the target phoneme sound and distinguish it from similar sounds.', noteAr: 'تمييز الصوت', noteEn: 'Sound recognition' },
-          { stepNumber: 2, textAr: 'دمج الصوت في بداية الكلمات ووسطها ونهايتها مع التكرار الإيقاعي.', textEn: 'Blend the target sound in word initial, medial, and final positions.', noteAr: 'دمج الأصوات', noteEn: 'Sound blending' },
-          { stepNumber: 3, textAr: 'قراءة كلمات كاملة تبدأ بالصوت المستهدف (مثل: book, bag, busy bee) بطلاقة.', textEn: 'Read complete words featuring the sound with rhythm and accuracy.', noteAr: 'القراءة الطليقة', noteEn: 'Fluent reading' }
+          {
+            stepNumber: 1,
+            textAr: isEnLang ? 'Isolate the target phoneme, syllable stress, or intonation contour precisely.' : 'التركيز على مخرج صوت الحرف المستهدف وتمييزه عن الحروف المتقاربة.',
+            textEn: 'Isolate the target phoneme, syllable stress, or intonation contour precisely.',
+            noteAr: isEnLang ? 'Phonemic Awareness' : 'تمييز الصوت',
+            noteEn: 'Phonemic Awareness'
+          },
+          {
+            stepNumber: 2,
+            textAr: isEnLang ? 'Blend phonemes across words, noting silent letters and connected speech assimilations.' : 'دمج الصوت في بداية الكلمات ووسطها ونهايتها مع التكرار الإيقاعي.',
+            textEn: 'Blend phonemes across words, noting silent letters and connected speech assimilations.',
+            noteAr: isEnLang ? 'Sound Blending' : 'دمج الأصوات',
+            noteEn: 'Sound Blending'
+          },
+          {
+            stepNumber: 3,
+            textAr: isEnLang ? 'Read complete contextual sentences with natural rhythm, expressive cadence, and fluency.' : 'قراءة كلمات كاملة تبدأ بالصوت المستهدف بطلاقة.',
+            textEn: 'Read complete contextual sentences with natural rhythm, expressive cadence, and fluency.',
+            noteAr: isEnLang ? 'Fluent Cadence' : 'القراءة الطليقة',
+            noteEn: 'Fluent Cadence'
+          }
         ],
-        takeawayAr: 'إتقان الصوتيات (Phonics) هو المفتاح السحري لتعلم القراءة الصحيحة والتهجئة الدقيقة للكلمات.',
-        takeawayEn: 'Mastering phonics is the foundation for accurate reading, clear pronunciation, and confident spelling.'
+        takeawayAr: isEnLang ? 'Mastery of phonics and connected speech transforms reading accuracy and listening comprehension.' : 'إتقان الصوتيات (Phonics) هو المفتاح السحري لتعلم القراءة الصحيحة والتهجئة الدقيقة للكلمات.',
+        takeawayEn: 'Mastery of phonics and connected speech transforms reading accuracy and listening comprehension.'
       },
       {
-        titleAr: `مثال تطبيقي 4 من 4: المفردات وسياقات الاستخدام (Vocabulary & Context) لـ (${concepts[3] || concepts[1] || title})`,
-        titleEn: `Worked Example 4 of 4: Vocabulary in Context & Daily Life for (${conceptsEn[3] || conceptsEn[1] || titleEn})`,
-        equation: 'Vocabulary Application: Word Meaning  -->  Sentence Context  -->  Everyday Situations',
+        titleAr: isEnLang
+          ? `Worked Example 4 of 4: Vocabulary in Authentic Context & Real-World Application for (${conceptsEn[3] || conceptsEn[1] || titleEn})`
+          : `مثال تطبيقي 4 من 4: المفردات وسياقات الاستخدام لـ (${concepts[3] || concepts[1] || title})`,
+        titleEn: `Worked Example 4 of 4: Vocabulary in Authentic Context & Real-World Application for (${conceptsEn[3] || conceptsEn[1] || titleEn})`,
+        equation: 'Lexical Acquisition: Target Lexeme  -->  Collocation & Nuance  -->  Productive Usage',
         steps: [
-          { stepNumber: 1, textAr: 'معرفة معنى الكلمة الجديدة وربطها بالصورة أو الموقف المعبر عنها.', textEn: 'Learn the new word meaning and associate it with its visual or situational representation.', noteAr: 'فهم المعنى', noteEn: 'Contextual meaning' },
-          { stepNumber: 2, textAr: 'توظيف الكلمة في جملة مفيدة بسيطة تصف شيئاً في غرفتك أو مدرستك.', textEn: 'Place the word into a simple, meaningful sentence describing everyday surroundings.', noteAr: 'التوظيف في جملة', noteEn: 'Sentence formation' },
-          { stepNumber: 3, textAr: 'استخدام الكلمة في إجابة سؤال أو حوار مع زميل أو ولي الأمر.', textEn: 'Use the word actively when answering questions or conversing with peers.', noteAr: 'الممارسة الحية', noteEn: 'Active usage' }
+          {
+            stepNumber: 1,
+            textAr: isEnLang ? 'Analyze lexical definition, part of speech, connotations, and related collocations.' : 'معرفة معنى الكلمة الجديدة وربطها بالصورة أو الموقف المعبر عنها.',
+            textEn: 'Analyze lexical definition, part of speech, connotations, and related collocations.',
+            noteAr: isEnLang ? 'Semantic Analysis' : 'فهم المعنى',
+            noteEn: 'Semantic Analysis'
+          },
+          {
+            stepNumber: 2,
+            textAr: isEnLang ? 'Contextualize the word within an authentic argumentative or descriptive sentence.' : 'توظيف الكلمة في جملة مفيدة بسيطة تصف شيئاً في غرفتك أو مدرستك.',
+            textEn: 'Contextualize the word within an authentic argumentative or descriptive sentence.',
+            noteAr: isEnLang ? 'Contextualization' : 'التوظيف في جملة',
+            noteEn: 'Contextualization'
+          },
+          {
+            stepNumber: 3,
+            textAr: isEnLang ? 'Deploy the vocabulary actively in writing tasks, debate discourse, and real scenarios.' : 'استخدام الكلمة في إجابة سؤال أو حوار مع زميل أو ولي الأمر.',
+            textEn: 'Deploy the vocabulary actively in writing tasks, debate discourse, and real scenarios.',
+            noteAr: isEnLang ? 'Active Deployment' : 'الممارسة الحية',
+            noteEn: 'Active Deployment'
+          }
         ],
-        takeawayAr: 'حفظ الكلمات داخل جمل ومواقف حقيقية يرسخها في الذاكرة طويلة الأمد ويمنع نسيانها نهائياً.',
-        takeawayEn: 'Learning vocabulary in authentic context cements retention and makes recall effortless.'
+        takeawayAr: isEnLang ? 'Internalizing vocabulary within rich authentic contexts cements long-term memory recall and expressive versatility.' : 'حفظ الكلمات داخل جمل ومواقف حقيقية يرسخها في الذاكرة طويلة الأمد ويمنع نسيانها نهائياً.',
+        takeawayEn: 'Internalizing vocabulary within rich authentic contexts cements long-term memory recall and expressive versatility.'
       }
     ];
   }
@@ -511,12 +593,14 @@ Connects core principles of ${cleanTopicEn} to authentic practical scenarios and
 Focuses on higher-order analytical reasoning and compound questions to achieve comprehensive subject mastery.`
     ];
 
+    const isForeignLesson = isForeignLanguageSubject(enriched.subject, enriched.educationType);
+
     while (enriched.sections.length < 4) {
       const idx = enriched.sections.length;
       enriched.sections.push({
-        titleAr: sectionTitlesAr[idx],
+        titleAr: isForeignLesson ? sectionTitlesEn[idx] : sectionTitlesAr[idx],
         titleEn: sectionTitlesEn[idx],
-        contentAr: fallbackContentsAr[idx] || fallbackContentsAr[1],
+        contentAr: isForeignLesson ? (fallbackContentsEn[idx] || fallbackContentsEn[1]) : (fallbackContentsAr[idx] || fallbackContentsAr[1]),
         contentEn: fallbackContentsEn[idx] || fallbackContentsEn[1],
         interactiveExample: finalizedExamples[idx]
       });

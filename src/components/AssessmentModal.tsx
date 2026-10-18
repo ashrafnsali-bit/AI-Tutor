@@ -43,7 +43,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const isForeignLanguage = isForeignLanguageSubject(lecture.subject || profile.subject);
+  const isForeignLanguage = isForeignLanguageSubject(lecture.subject || profile.subject, lecture.educationType || profile.educationType);
   const isEn = profile.language === 'en';
   const isTargetLang = isEn || isForeignLanguage;
   const studentLecture = sanitizeLectureForStudents(isForeignLanguage ? localizeSingleLecture(lecture) : lecture);

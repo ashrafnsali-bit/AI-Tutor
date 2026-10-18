@@ -3,8 +3,12 @@ import type { Lecture, Subject } from '../types';
 // Foreign-language courses must be taught in the target language, so the
 // "Ar" text slots are overwritten with the target-language ("En") text.
 const FOREIGN_LANGUAGE_SUBJECTS: ReadonlySet<string> = new Set<Subject>(['ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN']);
+const STEM_LANGUAGES_TRACK_SUBJECTS: ReadonlySet<string> = new Set<string>([
+  'PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'PRIMARY_SCIENCE', 'GENERAL_SCIENCE',
+  'MATH', 'PRIMARY_MATH', 'COMPUTER_SCIENCE'
+]);
 
-// Course metadata that stays in Arabic at the top level of a lecture.
+// Course metadata that stays in Arabic at the top level of a lecture for national portal context.
 const KEEP_ARABIC_TOP_LEVEL = new Set([
   'ministryAr',
   'gradeLevelNameAr',
@@ -39,16 +43,23 @@ function mirror(node: unknown, depth: number): unknown {
   return result;
 }
 
-export function isForeignLanguageSubject(subject?: string): boolean {
-  return !!subject && FOREIGN_LANGUAGE_SUBJECTS.has(subject);
+export function isForeignLanguageSubject(subject?: string, educationType?: string): boolean {
+  if (!subject) return false;
+  if (FOREIGN_LANGUAGE_SUBJECTS.has(subject as Subject)) return true;
+  // In International / Languages track (مدارس اللغات), science and math subjects are taught 100% in English
+  if (educationType === 'INTERNATIONAL' && STEM_LANGUAGES_TRACK_SUBJECTS.has(subject as Subject)) {
+    return true;
+  }
+  return false;
 }
 
 export function localizeSingleLecture(lecture: Lecture): Lecture {
-  if (!lecture || !isForeignLanguageSubject(lecture.subject)) return lecture;
+  if (!lecture || !isForeignLanguageSubject(lecture.subject, lecture.educationType)) return lecture;
   return mirror(lecture, 0) as Lecture;
 }
 
-export function localizeForeignLanguageLectures(subject: string, lectures: Lecture[]): Lecture[] {
-  if (!isForeignLanguageSubject(subject)) return lectures;
+export function localizeForeignLanguageLectures(subject: string, lectures: Lecture[], educationType?: string): Lecture[] {
+  if (!isForeignLanguageSubject(subject, educationType)) return lectures;
   return lectures.map(lecture => mirror(lecture, 0) as Lecture);
 }
+

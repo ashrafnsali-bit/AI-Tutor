@@ -54,7 +54,7 @@ export function isEgyptPrimarySubjectAvailable(
   gradeLevel?: GradeLevel,
   educationType: EducationType = 'PUBLIC'
 ): boolean {
-  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE') return false;
+  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
   if (!gradeLevel || !['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel)) return false;
 
   // For math and science aliases

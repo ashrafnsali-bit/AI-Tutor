@@ -32,7 +32,7 @@ export function isEgyptPrepSubjectAvailable(
   gradeLevel?: GradeLevel,
   educationType: EducationType = 'PUBLIC'
 ): boolean {
-  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE') return false;
+  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
   if (!gradeLevel || !['G7', 'G8', 'G9'].includes(gradeLevel)) return false;
   return EGYPT_PREP_SUBJECTS.includes(subject);
 }

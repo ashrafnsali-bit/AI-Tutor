@@ -54,7 +54,7 @@ export function isEgyptG11SubjectAvailable(
   track: EducationTrack = 'GENERAL',
   educationType: EducationType = 'PUBLIC'
 ): boolean {
-  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE') return false;
+  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
   if (track === 'SHARIA_HUMANITIES') {
     return LITERARY_G11_SUBJECTS.includes(subject);
   }

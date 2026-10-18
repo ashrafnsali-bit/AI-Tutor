@@ -84,7 +84,7 @@ export function isEgyptG12SubjectAvailable(
   track: EducationTrack = 'GENERAL',
   educationType: EducationType = 'PUBLIC'
 ): boolean {
-  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE') return false;
+  if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
   if (track === 'SCIENCE_BIO' || track === 'HEALTH_LIFE') {
     return SCIENCE_BIO_G12_SUBJECTS.includes(subject);
   }
@@ -1012,88 +1012,466 @@ const philosophyUnitsG12: UnitDefinition[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// 7. English G12 (First Foreign Language - اللغة الإنجليزية)
+// 7. English G12 (First Foreign Language - Official MOE 2026/2027 Framework)
 // ---------------------------------------------------------------------------
 const englishUnitsG12: UnitDefinition[] = [
   {
-    unitTitleAr: 'الوحدة الأولى والثانية: القراءة المتقدمة والقواعد (الأزمنة والمبني للمجهول)',
-    unitTitleEn: 'Units 1 & 2: Advanced Reading, Tenses in Context & Passive Voice Structures',
+    unitTitleAr: 'Unit 1: Inside the World of Care',
+    unitTitleEn: 'Unit 1: Inside the World of Care',
     lessons: [
       {
-        titleAr: 'Reading & Vocabulary: Cultural Heritage and National Achievements',
-        titleEn: 'Reading & Vocabulary: Cultural Heritage and National Achievements',
-        subtitleAr: 'نصوص القراءة الوزارية حول الإنجازات الوطنية، والمترادفات والمتضادات وحروف الجر والتعبيرات الاصطلاحية',
-        subtitleEn: 'Ministry reading passages on national mega-projects, lexical collocations, phrasal verbs, and context clues',
-        focusAr: 'إتقان استراتيجيات القراءة الاستيعابية، استنتاج المعاني من السياق، وحل أسئلة الفهم والترجمة المتقدمة وفق نماذج الثانوية العامة.',
-        focusEn: 'Develop critical reading comprehension, context vocabulary acquisition, and translation strategies for national exams.',
-        activityAr: 'ترجم الفقرة الآتية من الإنجليزية إلى العربية مراعياً الصياغة البلاغية واللغوية الدقيقة.',
-        activityEn: 'Translate an authentic journalistic paragraph analyzing sentence structures and collocations.',
-        questionAr: 'Which word correctly completes the collocation: "Mega developmental projects play a vital role in _______ economic growth"?',
-        questionEn: 'Which word correctly completes the collocation: "Mega developmental projects play a vital role in _______ economic growth"?',
-        optionsAr: ['boosting', 'declining', 'delaying'],
-        optionsEn: ['boosting', 'declining', 'delaying'],
+        titleAr: 'A Day in the Life of a Hospital Nurse',
+        titleEn: 'A Day in the Life of a Hospital Nurse',
+        subtitleAr: 'Hospital workflow, 12-hour shifts, patient care, and administering medication',
+        subtitleEn: 'Hospital workflow, 12-hour shifts, patient care, and administering medication',
+        focusAr: 'Analyze reading comprehension regarding healthcare careers, emergency department routines, and vocabulary in context (shift, buzz, administer, attention, victim, chaos, heartbreaking, rewarding).',
+        focusEn: 'Analyze reading comprehension regarding healthcare careers, emergency department routines, and vocabulary in context (shift, buzz, administer, attention, victim, chaos, heartbreaking, rewarding).',
+        activityAr: 'Analyze Nurse Sarah\'s daily challenges and explain how interprofessional teamwork mitigates emergency crises.',
+        activityEn: 'Analyze Nurse Sarah\'s daily challenges and explain how interprofessional teamwork mitigates emergency crises.',
+        questionAr: 'Which phrase best defines the idiom \'Teamwork makes the dream work\' as used in healthcare settings?',
+        questionEn: 'Which phrase best defines the idiom \'Teamwork makes the dream work\' as used in healthcare settings?',
+        optionsAr: [
+          'Collaborative effort between professionals produces optimal outcomes.',
+          'Individual competition yields higher efficiency.',
+          'Strict hierarchy prevents clinical errors.'
+        ],
+        optionsEn: [
+          'Collaborative effort between professionals produces optimal outcomes.',
+          'Individual competition yields higher efficiency.',
+          'Strict hierarchy prevents clinical errors.'
+        ],
         correctIndex: 0,
-        vocabulary: [['mega projects', 'المشروعات العملاقة'], ['sustainable development', 'التنمية المستدامة'], ['boost economic growth', 'تعزيز النمو الاقتصادي']]
+        vocabulary: [
+          ['administer medication', 'administer medication'],
+          ['shift work', 'shift work'],
+          ['interprofessional teamwork', 'interprofessional teamwork'],
+          ['rewarding career', 'rewarding career']
+        ]
       },
       {
-        titleAr: 'Grammar: Advanced Passive Voice and Causative Forms',
-        titleEn: 'Grammar: Advanced Passive Voice and Causative Forms',
-        subtitleAr: 'المبني للمجهول في مختلف الأزمنة، الأفعال المتعدية لمفعولين، وصيغة السببية [have/get + object + p.p.]',
-        subtitleEn: 'Passive voice across complex tenses, reporting passives (It is said that...), and causative structures (have/get something done)',
-        focusAr: 'التمييز بين صيغ المبني للمعلوم والمجهول وتطبيق صيغة المبني للمجهول للأفعال التقريرية وصيغ السببية مع have و get.',
-        focusEn: 'Master complex passive constructions, impersonal passives, and causative structures in formal writing.',
-        activityAr: 'Rewrite using the causative: "The mechanic repaired my car yesterday" -> "I had my car repaired yesterday".',
-        activityEn: 'Transform active causative statements into correct formal passive structures.',
-        questionAr: 'Choose the correct form: "She didn\'t paint her room herself; she _______ painted by a professional."',
-        questionEn: 'Choose the correct form: "She didn\'t paint her room herself; she _______ painted by a professional."',
-        optionsAr: ['had it', 'made it', 'got to'],
-        optionsEn: ['had it', 'made it', 'got to'],
+        titleAr: 'Grammar: Present Perfect Simple vs. Present Perfect Continuous',
+        titleEn: 'Grammar: Present Perfect Simple vs. Present Perfect Continuous',
+        subtitleAr: 'Contrasting completed action results (have/has + p.p.) with continuous ongoing duration (have/has been + -ing)',
+        subtitleEn: 'Contrasting completed action results (have/has + p.p.) with continuous ongoing duration (have/has been + -ing)',
+        focusAr: 'Master syntactic distinctions between the Present Perfect Simple for completed experiences/results and Present Perfect Continuous for actions lasting over a period of time with for, since, lately, and recently.',
+        focusEn: 'Master syntactic distinctions between the Present Perfect Simple for completed experiences/results and Present Perfect Continuous for actions lasting over a period of time with for, since, lately, and recently.',
+        activityAr: 'Complete sentence transformations comparing \'Nurse Sarah has treated 15 patients today\' with \'Nurse Sarah has been treating patients for eight hours.\'',
+        activityEn: 'Complete sentence transformations comparing \'Nurse Sarah has treated 15 patients today\' with \'Nurse Sarah has been treating patients for eight hours.\'',
+        questionAr: 'Choose the correct form: \'Dr. Hany looks exhausted because he _______ in surgery for six consecutive hours.\'',
+        questionEn: 'Choose the correct form: \'Dr. Hany looks exhausted because he _______ in surgery for six consecutive hours.\'',
+        optionsAr: [
+          'has been operating',
+          'has operated',
+          'was operated'
+        ],
+        optionsEn: [
+          'has been operating',
+          'has operated',
+          'was operated'
+        ],
         correctIndex: 0,
-        vocabulary: [['passive voice', 'المبني للمجهول'], ['causative verbs', 'صيغة السببية'], ['impersonal passive', 'المبني للمجهول غير الشخصي']]
+        vocabulary: [
+          ['present perfect continuous', 'present perfect continuous'],
+          ['duration marker', 'duration marker'],
+          ['ongoing action', 'ongoing action'],
+          ['present result', 'present result']
+        ]
       }
     ]
   },
   {
-    unitTitleAr: 'الوحدة الثالثة والرابعة: الجمل الشرطية والكلام المنقول ومهارات الكتابة',
-    unitTitleEn: 'Units 3 & 4: Conditionals, Reported Speech & Advanced Essay Writing',
+    unitTitleAr: 'Unit 2: The Power of Machines',
+    unitTitleEn: 'Unit 2: The Power of Machines',
     lessons: [
       {
-        titleAr: 'Grammar: Conditionals (Zero, 1st, 2nd, 3rd) and Inversions',
-        titleEn: 'Grammar: Conditionals (Zero, 1st, 2nd, 3rd) and Inversions',
-        subtitleAr: 'حالات if الشرطية الأربع، بدائل if (Unless, Provided that, In case of, But for)، وصيغ الحذف والتقديم (Had I known...)',
-        subtitleEn: 'Zero to 3rd conditionals, mixed conditionals, alternatives to if, and formal inversions (Had he studied, Were he to...)',
-        focusAr: 'إتقان الحالات الشرطية المعقدة والشرط المختلط وصيغ التقديم في اللغة الرسمية (Inversion with Should, Were, Had).',
-        focusEn: 'Analyze hypothetical reasoning with mixed conditionals and formal inversions in official examination contexts.',
-        activityAr: 'Rewrite using inversion: "If he had trained harder, he would have won" -> "Had he trained harder, he would have won".',
-        activityEn: 'Rewrite conditional sentences applying formal inversion without the conjunction "if".',
-        questionAr: 'Select the correct inverted conditional: "_______ he listened to the advice, he wouldn\'t have made that mistake."',
-        questionEn: 'Select the correct inverted conditional: "_______ he listened to the advice, he wouldn\'t have made that mistake."',
-        optionsAr: ['Had', 'Were', 'Should'],
-        optionsEn: ['Had', 'Were', 'Should'],
+        titleAr: 'Artificial Intelligence & Robotics in Modern Society',
+        titleEn: 'Artificial Intelligence & Robotics in Modern Society',
+        subtitleAr: 'Technological disruption, surgical robotics, workplace automation, and human-machine collaboration',
+        subtitleEn: 'Technological disruption, surgical robotics, workplace automation, and human-machine collaboration',
+        focusAr: 'Evaluate reading texts concerning artificial intelligence, robotic assistance in healthcare and industry, ethical dilemmas, and the preservation of human empathy in technology-driven fields.',
+        focusEn: 'Evaluate reading texts concerning artificial intelligence, robotic assistance in healthcare and industry, ethical dilemmas, and the preservation of human empathy in technology-driven fields.',
+        activityAr: 'Participate in a structured discussion weighing the advantages of AI diagnostic accuracy against the irreplaceable value of human empathy.',
+        activityEn: 'Participate in a structured discussion weighing the advantages of AI diagnostic accuracy against the irreplaceable value of human empathy.',
+        questionAr: 'What is highlighted as the primary challenge when integrating autonomous AI into medical decision-making?',
+        questionEn: 'What is highlighted as the primary challenge when integrating autonomous AI into medical decision-making?',
+        optionsAr: [
+          'Balancing computational algorithms with empathetic human clinical judgment.',
+          'Eliminating all human medical practitioners from operating theaters.',
+          'Replacing diagnostic software with manual handwritten charts.'
+        ],
+        optionsEn: [
+          'Balancing computational algorithms with empathetic human clinical judgment.',
+          'Eliminating all human medical practitioners from operating theaters.',
+          'Replacing diagnostic software with manual handwritten charts.'
+        ],
         correctIndex: 0,
-        vocabulary: [['conditional inversion', 'التقديم في الجمل الشرطية'], ['mixed conditionals', 'الجمل الشرطية المختلطة'], ['hypothetical situation', 'موقف افتراضي']]
+        vocabulary: [
+          ['artificial intelligence', 'artificial intelligence'],
+          ['workplace automation', 'workplace automation'],
+          ['surgical robotics', 'surgical robotics'],
+          ['human-centered tech', 'human-centered tech']
+        ]
       },
       {
-        titleAr: 'Advanced Writing Skills: Argumentative Essays and Official Translation',
-        titleEn: 'Advanced Writing Skills: Argumentative Essays and Official Translation',
-        subtitleAr: 'بنية المقال الأكاديمي (أطروحة، فقرات داعمة، خاتمة)، علامات الترقيم، وقواعد الترجمة الدقيقة من وإلى الإنجليزية',
-        subtitleEn: 'Essay anatomy (thesis statement, topic sentences, transitional devices, conclusion), mechanics, and professional translation',
-        focusAr: 'تطبيق مهارات كتابة المقال الجدلي والتأملي، واستخدام أدوات الربط المنطقي وعلامات الترقيم، وإتقان الترجمة الاحترافية.',
-        focusEn: 'Write coherent persuasive essays adhering to standard mechanics and practice exam-level bilateral translation.',
-        activityAr: 'اكتب أطروحة مقال (Thesis Statement) حول دور الذكاء الاصطناعي في تطوير التعليم الحديث.',
-        activityEn: 'Draft an introductory hook and concise thesis statement on AI-driven educational transformation.',
-        questionAr: 'Which transitional phrase is best suited to introduce an opposing viewpoint in an argumentative essay?',
-        questionEn: 'Which transitional phrase is best suited to introduce an opposing viewpoint in an argumentative essay?',
-        optionsAr: ['On the other hand,', 'Furthermore,', 'In addition to this,'],
-        optionsEn: ['On the other hand,', 'Furthermore,', 'In addition to this,'],
+        titleAr: 'Grammar: Reported Speech (Statements, Commands & Requests)',
+        titleEn: 'Grammar: Reported Speech (Statements, Commands & Requests)',
+        subtitleAr: 'Tense backshifting, pronoun alterations, time/place adverbial shifts, and reporting verbs (explain, claim, instruct, urge)',
+        subtitleEn: 'Tense backshifting, pronoun alterations, time/place adverbial shifts, and reporting verbs (explain, claim, instruct, urge)',
+        focusAr: 'Apply rules of indirect speech to convert direct statements and commands into reported structures, mastering changes in modal auxiliaries, demonstratives, and reporting verb patterns.',
+        focusEn: 'Apply rules of indirect speech to convert direct statements and commands into reported structures, mastering changes in modal auxiliaries, demonstratives, and reporting verb patterns.',
+        activityAr: 'Transform direct commands from hospital safety guidelines into formal indirect reporting using told, advised, and instructed.',
+        activityEn: 'Transform direct commands from hospital safety guidelines into formal indirect reporting using told, advised, and instructed.',
+        questionAr: 'Which sentence correctly converts: \'The chief surgeon said, \"Sterilize the instruments before entering\"\'',
+        questionEn: 'Which sentence correctly converts: \'The chief surgeon said, \"Sterilize the instruments before entering\"\'',
+        optionsAr: [
+          'The chief surgeon instructed the nurses to sterilize the instruments before entering.',
+          'The chief surgeon said that sterilizing the instruments before entering.',
+          'The chief surgeon told to sterilize the instruments before entering.'
+        ],
+        optionsEn: [
+          'The chief surgeon instructed the nurses to sterilize the instruments before entering.',
+          'The chief surgeon said that sterilizing the instruments before entering.',
+          'The chief surgeon told to sterilize the instruments before entering.'
+        ],
         correctIndex: 0,
-        vocabulary: [['thesis statement', 'جملة الأطروحة'], ['transitional devices', 'روابط الانتقال المنطقي'], ['punctuation rules', 'قواعد علامات الترقيم']]
+        vocabulary: [
+          ['reported speech', 'reported speech'],
+          ['reporting verb', 'reporting verb'],
+          ['tense backshift', 'tense backshift'],
+          ['indirect command', 'indirect command']
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'Unit 3: Protect Nature, Protect Future',
+    unitTitleEn: 'Unit 3: Protect Nature, Protect Future',
+    lessons: [
+      {
+        titleAr: 'Ecological Sustainability, Green Energy & Egypt\'s Initiatives',
+        titleEn: 'Ecological Sustainability, Green Energy & Egypt\'s Initiatives',
+        subtitleAr: 'Renewable energy projects, Benban Solar Park, green hydrogen, and carbon footprint reduction',
+        subtitleEn: 'Renewable energy projects, Benban Solar Park, green hydrogen, and carbon footprint reduction',
+        focusAr: 'Examine Egypt’s national sustainability initiatives, transition to solar and wind energy at Benban and the Gulf of Suez, and methods for mitigating global climate change through civic responsibility.',
+        focusEn: 'Examine Egypt’s national sustainability initiatives, transition to solar and wind energy at Benban and the Gulf of Suez, and methods for mitigating global climate change through civic responsibility.',
+        activityAr: 'Draft an analytical cause-and-effect summary of the economic and environmental dividends yielded by large-scale solar installations.',
+        activityEn: 'Draft an analytical cause-and-effect summary of the economic and environmental dividends yielded by large-scale solar installations.',
+        questionAr: 'What distinction makes the Benban Solar Park a global benchmark for clean energy transitions?',
+        questionEn: 'What distinction makes the Benban Solar Park a global benchmark for clean energy transitions?',
+        optionsAr: [
+          'It is one of the world’s largest photovoltaic solar complexes, significantly reducing greenhouse gas emissions.',
+          'It relies primarily on fossil fuel generators during daytime operation.',
+          'It is exclusively designed for nuclear power desalination plants.'
+        ],
+        optionsEn: [
+          'It is one of the world’s largest photovoltaic solar complexes, significantly reducing greenhouse gas emissions.',
+          'It relies primarily on fossil fuel generators during daytime operation.',
+          'It is exclusively designed for nuclear power desalination plants.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['ecological sustainability', 'ecological sustainability'],
+          ['photovoltaic park', 'photovoltaic park'],
+          ['green hydrogen', 'green hydrogen'],
+          ['carbon footprint', 'carbon footprint']
+        ]
+      },
+      {
+        titleAr: 'Grammar: Modals of Deduction and Probability',
+        titleEn: 'Grammar: Modals of Deduction and Probability',
+        subtitleAr: 'Expressing certainty, impossibility, and past deduction using must, can’t, might, and modal perfects (must have + p.p.)',
+        subtitleEn: 'Expressing certainty, impossibility, and past deduction using must, can’t, might, and modal perfects (must have + p.p.)',
+        focusAr: 'Differentiate degrees of epistemic modality in present and past contexts, contrasting \'must have been\' (certainty) with \'can\'t have been\' (impossibility) and \'might have been\' (possibility).',
+        focusEn: 'Differentiate degrees of epistemic modality in present and past contexts, contrasting \'must have been\' (certainty) with \'can\'t have been\' (impossibility) and \'might have been\' (possibility).',
+        activityAr: 'Evaluate circumstantial scientific evidence to formulate logical deductions using appropriate modal perfect structures.',
+        activityEn: 'Evaluate circumstantial scientific evidence to formulate logical deductions using appropriate modal perfect structures.',
+        questionAr: 'Choose the correct deduction: \'The laboratory equipment was completely cool and packed away; the researchers _______ their experiment hours ago.\'',
+        questionEn: 'Choose the correct deduction: \'The laboratory equipment was completely cool and packed away; the researchers _______ their experiment hours ago.\'',
+        optionsAr: [
+          'must have finished',
+          'can\'t have finished',
+          'might finish'
+        ],
+        optionsEn: [
+          'must have finished',
+          'can\'t have finished',
+          'might finish'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['logical deduction', 'logical deduction'],
+          ['epistemic modality', 'epistemic modality'],
+          ['past deduction', 'past deduction'],
+          ['degrees of certainty', 'degrees of certainty']
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'Review 1: Cumulative Synthesis (Units 1 - 3)',
+    unitTitleEn: 'Review 1: Cumulative Synthesis (Units 1 - 3)',
+    lessons: [
+      {
+        titleAr: 'Lexical Collocations, Phrasal Verbs & Advanced Translation',
+        titleEn: 'Lexical Collocations, Phrasal Verbs & Advanced Translation',
+        subtitleAr: 'Synthesis of healthcare, artificial intelligence, and environmental lexemes with bidirectional translation',
+        subtitleEn: 'Synthesis of healthcare, artificial intelligence, and environmental lexemes with bidirectional translation',
+        focusAr: 'Synthesize vocabulary and grammar across Units 1 to 3, applying lexical collocations, phrasal verbs, and standardized bilateral translation techniques aligned with national secondary examinations.',
+        focusEn: 'Synthesize vocabulary and grammar across Units 1 to 3, applying lexical collocations, phrasal verbs, and standardized bilateral translation techniques aligned with national secondary examinations.',
+        activityAr: 'Translate an authentic analytical paragraph on sustainable healthcare and robotics into precise academic English.',
+        activityEn: 'Translate an authentic analytical paragraph on sustainable healthcare and robotics into precise academic English.',
+        questionAr: 'Which option represents the most accurate academic translation for: \'تلعب الطاقة المتجددة دوراً محورياً في الحد من الانبعاثات الكربونية وتحقيق التنمية المستدامة\'? ',
+        questionEn: 'Which option represents the most accurate academic translation for: \'تلعب الطاقة المتجددة دوراً محورياً في الحد من الانبعاثات الكربونية وتحقيق التنمية المستدامة\'? ',
+        optionsAr: [
+          'Renewable energy plays a pivotal role in reducing carbon emissions and achieving sustainable development.',
+          'Renewable energy makes a small work for carbon emissions and continuous growing.',
+          'Renewable energy has taken over carbon emissions for industrial building.'
+        ],
+        optionsEn: [
+          'Renewable energy plays a pivotal role in reducing carbon emissions and achieving sustainable development.',
+          'Renewable energy makes a small work for carbon emissions and continuous growing.',
+          'Renewable energy has taken over carbon emissions for industrial building.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['pivotal role', 'pivotal role'],
+          ['bilateral translation', 'bilateral translation'],
+          ['lexical collocation', 'lexical collocation'],
+          ['academic synthesis', 'academic synthesis']
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'Unit 4: Marine Life',
+    unitTitleEn: 'Unit 4: Marine Life',
+    lessons: [
+      {
+        titleAr: 'The Red Sea Marine Ecosystem & Coral Reef Conservation',
+        titleEn: 'The Red Sea Marine Ecosystem & Coral Reef Conservation',
+        subtitleAr: 'Endemic biodiversity, coral bleaching, protected marine reserves (Ras Mohamed), and ocean ecology',
+        subtitleEn: 'Endemic biodiversity, coral bleaching, protected marine reserves (Ras Mohamed), and ocean ecology',
+        focusAr: 'Analyze scientific and expository texts on the unique thermal resilience of Red Sea coral reefs, marine biodiversity hotspots, threats posed by plastic pollution, and ecological preservation measures.',
+        focusEn: 'Analyze scientific and expository texts on the unique thermal resilience of Red Sea coral reefs, marine biodiversity hotspots, threats posed by plastic pollution, and ecological preservation measures.',
+        activityAr: 'Create an infographic outline detailing three conservation strategies preserving Egyptian marine nature reserves.',
+        activityEn: 'Create an infographic outline detailing three conservation strategies preserving Egyptian marine nature reserves.',
+        questionAr: 'Why do global marine biologists regard the northern Red Sea coral reefs as exceptionally significant for climate study?',
+        questionEn: 'Why do global marine biologists regard the northern Red Sea coral reefs as exceptionally significant for climate study?',
+        optionsAr: [
+          'They demonstrate high biological resilience to rising ocean water temperatures.',
+          'They are artificial structures constructed by deep-sea oil drilling platforms.',
+          'They contain zero fish species due to excessive water salinity.'
+        ],
+        optionsEn: [
+          'They demonstrate high biological resilience to rising ocean water temperatures.',
+          'They are artificial structures constructed by deep-sea oil drilling platforms.',
+          'They contain zero fish species due to excessive water salinity.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['marine biodiversity', 'marine biodiversity'],
+          ['coral bleaching', 'coral bleaching'],
+          ['thermal resilience', 'thermal resilience'],
+          ['marine sanctuary', 'marine sanctuary']
+        ]
+      },
+      {
+        titleAr: 'Grammar: Defining and Non-Defining Relative Clauses',
+        titleEn: 'Grammar: Defining and Non-Defining Relative Clauses',
+        subtitleAr: 'Relative pronouns (who, which, that, whose, where, when), comma conventions, and pronoun omission rules',
+        subtitleEn: 'Relative pronouns (who, which, that, whose, where, when), comma conventions, and pronoun omission rules',
+        focusAr: 'Master syntactic distinctions between defining relative clauses (essential identifying information, no commas, \'that\' permitted) and non-defining relative clauses (extra descriptive detail, commas required, \'that\' forbidden).',
+        focusEn: 'Master syntactic distinctions between defining relative clauses (essential identifying information, no commas, \'that\' permitted) and non-defining relative clauses (extra descriptive detail, commas required, \'that\' forbidden).',
+        activityAr: 'Combine complex sentences regarding marine biology using correct relative pronouns and standard comma punctuation.',
+        activityEn: 'Combine complex sentences regarding marine biology using correct relative pronouns and standard comma punctuation.',
+        questionAr: 'Which sentence correctly demonstrates a non-defining relative clause with proper punctuation?',
+        questionEn: 'Which sentence correctly demonstrates a non-defining relative clause with proper punctuation?',
+        optionsAr: [
+          'Ras Mohamed National Park, which was declared a marine sanctuary in 1983, attracts researchers globally.',
+          'Ras Mohamed National Park that was declared a marine sanctuary in 1983 attracts researchers globally.',
+          'Ras Mohamed National Park which was declared a marine sanctuary in 1983 attracts, researchers globally.'
+        ],
+        optionsEn: [
+          'Ras Mohamed National Park, which was declared a marine sanctuary in 1983, attracts researchers globally.',
+          'Ras Mohamed National Park that was declared a marine sanctuary in 1983 attracts researchers globally.',
+          'Ras Mohamed National Park which was declared a marine sanctuary in 1983 attracts, researchers globally.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['defining clause', 'defining clause'],
+          ['non-defining clause', 'non-defining clause'],
+          ['relative pronoun', 'relative pronoun'],
+          ['comma convention', 'comma convention']
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'Unit 5: From Muscles to Mindset',
+    unitTitleEn: 'Unit 5: From Muscles to Mindset',
+    lessons: [
+      {
+        titleAr: 'Athletic Endurance, Sports Science & the Growth Mindset',
+        titleEn: 'Athletic Endurance, Sports Science & the Growth Mindset',
+        subtitleAr: 'Physical physiology, deliberate training, cognitive resilience, and psychological determination',
+        subtitleEn: 'Physical physiology, deliberate training, cognitive resilience, and psychological determination',
+        focusAr: 'Explore psychological and physical dimensions of athletic excellence, contrasting fixed and growth mindsets, understanding neural adaptation through deliberate practice, and overcoming performance plateaus.',
+        focusEn: 'Explore psychological and physical dimensions of athletic excellence, contrasting fixed and growth mindsets, understanding neural adaptation through deliberate practice, and overcoming performance plateaus.',
+        activityAr: 'Formulate a 4-step cognitive reframing plan to transform academic or athletic setbacks into productive learning milestones.',
+        activityEn: 'Formulate a 4-step cognitive reframing plan to transform academic or athletic setbacks into productive learning milestones.',
+        questionAr: 'According to educational psychology, what characterizes an individual possessing a \'growth mindset\'? ',
+        questionEn: 'According to educational psychology, what characterizes an individual possessing a \'growth mindset\'? ',
+        optionsAr: [
+          'Viewing challenges and effort as pathways to expand intellectual and physical capacity.',
+          'Believing that talent and intellect are unchangeable biological traits.',
+          'Avoiding difficult tasks to protect self-esteem from failure.'
+        ],
+        optionsEn: [
+          'Viewing challenges and effort as pathways to expand intellectual and physical capacity.',
+          'Believing that talent and intellect are unchangeable biological traits.',
+          'Avoiding difficult tasks to protect self-esteem from failure.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['growth mindset', 'growth mindset'],
+          ['deliberate practice', 'deliberate practice'],
+          ['cognitive resilience', 'cognitive resilience'],
+          ['neuroplasticity', 'neuroplasticity']
+        ]
+      },
+      {
+        titleAr: 'Grammar: Gerunds and Infinitives in Complex Syntax',
+        titleEn: 'Grammar: Gerunds and Infinitives in Complex Syntax',
+        subtitleAr: 'Verbs followed exclusively by gerunds (-ing) or to-infinitives, and verbs exhibiting semantic shifts (remember, stop, forget, regret)',
+        subtitleEn: 'Verbs followed exclusively by gerunds (-ing) or to-infinitives, and verbs exhibiting semantic shifts (remember, stop, forget, regret)',
+        focusAr: 'Master structural rules governing verb complements, differentiating subtle semantic changes in dual-behavior verbs such as \'stop to do\' (halt in order to perform an action) versus \'stop doing\' (discontinue an ongoing action).',
+        focusEn: 'Master structural rules governing verb complements, differentiating subtle semantic changes in dual-behavior verbs such as \'stop to do\' (halt in order to perform an action) versus \'stop doing\' (discontinue an ongoing action).',
+        activityAr: 'Analyze and correct student sentences with ambiguous gerund and infinitive usage.',
+        activityEn: 'Analyze and correct student sentences with ambiguous gerund and infinitive usage.',
+        questionAr: 'Choose the sentence that correctly conveys: \'The runner discontinued eating refined sugar completely to enhance endurance\':',
+        questionEn: 'Choose the sentence that correctly conveys: \'The runner discontinued eating refined sugar completely to enhance endurance\':',
+        optionsAr: [
+          'The runner stopped eating refined sugar to enhance endurance.',
+          'The runner stopped to eat refined sugar to enhance endurance.',
+          'The runner stopped eat refined sugar to enhance endurance.'
+        ],
+        optionsEn: [
+          'The runner stopped eating refined sugar to enhance endurance.',
+          'The runner stopped to eat refined sugar to enhance endurance.',
+          'The runner stopped eat refined sugar to enhance endurance.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['gerund complement', 'gerund complement'],
+          ['to-infinitive', 'to-infinitive'],
+          ['semantic contrast', 'semantic contrast'],
+          ['verb complementation', 'verb complementation']
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'Unit 6: Let\'s Hang Out!',
+    unitTitleEn: 'Unit 6: Let\'s Hang Out!',
+    lessons: [
+      {
+        titleAr: 'Youth Social Life, Leisure & Digital Wellness',
+        titleEn: 'Youth Social Life, Leisure & Digital Wellness',
+        subtitleAr: 'Peer interactions, managing digital screen time, overcoming FOMO, and healthy recreation',
+        subtitleEn: 'Peer interactions, managing digital screen time, overcoming FOMO, and healthy recreation',
+        focusAr: 'Analyze modern sociological patterns among teenagers, examining the balance between social media engagement and authentic face-to-face interpersonal relationships for mental well-being.',
+        focusEn: 'Analyze modern sociological patterns among teenagers, examining the balance between social media engagement and authentic face-to-face interpersonal relationships for mental well-being.',
+        activityAr: 'Write a persuasive editorial offering practical guidelines for teenagers seeking digital detox while staying connected with peers.',
+        activityEn: 'Write a persuasive editorial offering practical guidelines for teenagers seeking digital detox while staying connected with peers.',
+        questionAr: 'What is recognized as a key symptom of digital fatigue among students spending excessive screen time on social media?',
+        questionEn: 'What is recognized as a key symptom of digital fatigue among students spending excessive screen time on social media?',
+        optionsAr: [
+          'Decreased sleep quality and feelings of social isolation due to constant online comparison.',
+          'Substantial increase in offline sports participation and literary reading.',
+          'Complete eradication of interpersonal communication friction.'
+        ],
+        optionsEn: [
+          'Decreased sleep quality and feelings of social isolation due to constant online comparison.',
+          'Substantial increase in offline sports participation and literary reading.',
+          'Complete eradication of interpersonal communication friction.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['digital wellness', 'digital wellness'],
+          ['screen time balance', 'screen time balance'],
+          ['interpersonal connection', 'interpersonal connection'],
+          ['healthy recreation', 'healthy recreation']
+        ]
+      },
+      {
+        titleAr: 'Grammar: Phrasal Verbs & Advanced Idiomatic Expressions',
+        titleEn: 'Grammar: Phrasal Verbs & Advanced Idiomatic Expressions',
+        subtitleAr: 'Separable vs. inseparable phrasal verbs, three-word phrasal verbs (look forward to, run out of), and particle semantics',
+        subtitleEn: 'Separable vs. inseparable phrasal verbs, three-word phrasal verbs (look forward to, run out of), and particle semantics',
+        focusAr: 'Master syntactic rules of transitive and intransitive phrasal verbs, pronoun object placement in separable verbs (e.g. \'turn it off\' vs *\'turn off it\'), and idiomatic prepositional verbs.',
+        focusEn: 'Master syntactic rules of transitive and intransitive phrasal verbs, pronoun object placement in separable verbs (e.g. \'turn it off\' vs *\'turn off it\'), and idiomatic prepositional verbs.',
+        activityAr: 'Categorize a list of 15 phrasal verbs into separable and inseparable structures and create contextual dialogues.',
+        activityEn: 'Categorize a list of 15 phrasal verbs into separable and inseparable structures and create contextual dialogues.',
+        questionAr: 'Which sentence demonstrates correct object placement with a separable phrasal verb?',
+        questionEn: 'Which sentence demonstrates correct object placement with a separable phrasal verb?',
+        optionsAr: [
+          'The proposal was unreasonable, so the board turned it down immediately.',
+          'The proposal was unreasonable, so the board turned down it immediately.',
+          'The proposal was unreasonable, so the board turned down them immediately.'
+        ],
+        optionsEn: [
+          'The proposal was unreasonable, so the board turned it down immediately.',
+          'The proposal was unreasonable, so the board turned down it immediately.',
+          'The proposal was unreasonable, so the board turned down them immediately.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['separable phrasal verb', 'separable phrasal verb'],
+          ['inseparable phrasal verb', 'inseparable phrasal verb'],
+          ['particle semantics', 'particle semantics'],
+          ['idiomatic fluency', 'idiomatic fluency']
+        ]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'Review 2: Comprehensive National Exam Synthesis (Units 1 - 6)',
+    unitTitleEn: 'Review 2: Comprehensive National Exam Synthesis (Units 1 - 6)',
+    lessons: [
+      {
+        titleAr: 'National High-School Standardized Exam Simulation',
+        titleEn: 'National High-School Standardized Exam Simulation',
+        subtitleAr: 'Full-term comprehensive reading, advanced vocabulary mastery, grammar analysis, and academic essay composition',
+        subtitleEn: 'Full-term comprehensive reading, advanced vocabulary mastery, grammar analysis, and academic essay composition',
+        focusAr: 'Synthesize all lexical, grammatical, and communicative competencies across the full first-term curriculum, practicing official Ministry standardized examination questions with a strict 80% mastery threshold.',
+        focusEn: 'Synthesize all lexical, grammatical, and communicative competencies across the full first-term curriculum, practicing official Ministry standardized examination questions with a strict 80% mastery threshold.',
+        activityAr: 'Complete a full mock examination evaluating reading inference, structural mechanics, bilateral translation, and argumentative writing.',
+        activityEn: 'Complete a full mock examination evaluating reading inference, structural mechanics, bilateral translation, and argumentative writing.',
+        questionAr: 'Which writing component constitutes the core argumentative claim governing an entire formal academic essay?',
+        questionEn: 'Which writing component constitutes the core argumentative claim governing an entire formal academic essay?',
+        optionsAr: [
+          'The concise, arguable thesis statement positioned in the introductory paragraph.',
+          'A random concluding sentence offering unrelated historical facts.',
+          'An informal rhetorical question lacking analytical support.'
+        ],
+        optionsEn: [
+          'The concise, arguable thesis statement positioned in the introductory paragraph.',
+          'A random concluding sentence offering unrelated historical facts.',
+          'An informal rhetorical question lacking analytical support.'
+        ],
+        correctIndex: 0,
+        vocabulary: [
+          ['thesis statement', 'thesis statement'],
+          ['reading inference', 'reading inference'],
+          ['examination simulation', 'examination simulation'],
+          ['standardized assessment', 'standardized assessment']
+        ]
       }
     ]
   }
 ];
 
-// ---------------------------------------------------------------------------
+
 // 8. German G12 (اللغة الألمانية كلغة ثانية)
 // ---------------------------------------------------------------------------
 const germanUnitsG12: UnitDefinition[] = [

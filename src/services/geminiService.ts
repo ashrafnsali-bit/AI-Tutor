@@ -927,8 +927,9 @@ CRITICAL RULES & CURRICULUM BOUNDARIES (ضوابط الالتزام الصارم
       }
     };
 
-    const finalizedLecture = isForeignLanguageSubject(profile.subject) ? localizeSingleLecture(lecture) : lecture;
-    return { lecture: sanitizeLectureForStudents(ensureFourExamplesForLecture(finalizedLecture)) };
+    const withExamples = ensureFourExamplesForLecture(lecture);
+    const finalizedLecture = isForeignLanguageSubject(profile.subject, profile.educationType) ? localizeSingleLecture(withExamples) : withExamples;
+    return { lecture: sanitizeLectureForStudents(finalizedLecture) };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown generation error';
     return { lecture: null, error: message };

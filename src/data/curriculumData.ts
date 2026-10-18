@@ -6267,7 +6267,7 @@ export function loadSubjectLectures(
   }
 
   const finalList = formattedList.map(ensureFourExamplesForLecture);
-  return localizeForeignLanguageLectures(subject, finalList);
+  return localizeForeignLanguageLectures(subject, finalList, educationType);
 }
 
 export function saveSubjectLectures(
