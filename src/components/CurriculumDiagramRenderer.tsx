@@ -9,6 +9,16 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+export function resolveDiagramImageUrl(url: string | undefined): string {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  const base = import.meta.env.BASE_URL || '/';
+  const clean = url.replace(/^\/+/, '');
+  return `${base.endsWith('/') ? base : base + '/'}${clean}`;
+}
+
 interface CurriculumDiagramRendererProps {
   diagram: LectureDiagram;
   lang?: 'ar' | 'en';
@@ -3315,7 +3325,22 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
       {/* SVG Canvas Area */}
       <div className="diagram-canvas-box">
         {diagram.imageUrl ? (
-          <img src={diagram.imageUrl} alt={title} className="diagram-image-loaded" />
+          <img
+            src={resolveDiagramImageUrl(diagram.imageUrl)}
+            alt={title}
+            className="diagram-image-loaded"
+            onError={(e) => {
+              const img = e.currentTarget;
+              const clean = (diagram.imageUrl || '').replace(/^\/+/, '');
+              if (!img.dataset.retryCount) {
+                img.dataset.retryCount = '1';
+                img.src = `./${clean}`;
+              } else if (img.dataset.retryCount === '1') {
+                img.dataset.retryCount = '2';
+                img.src = `/${clean}`;
+              }
+            }}
+          />
         ) : (
           renderSvgModel()
         )}
@@ -3369,7 +3394,22 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 
             <div className="df-canvas-body">
               {diagram.imageUrl ? (
-                <img src={diagram.imageUrl} alt={title} className="df-image" />
+                <img
+                  src={resolveDiagramImageUrl(diagram.imageUrl)}
+                  alt={title}
+                  className="df-image"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    const clean = (diagram.imageUrl || '').replace(/^\/+/, '');
+                    if (!img.dataset.retryCount) {
+                      img.dataset.retryCount = '1';
+                      img.src = `./${clean}`;
+                    } else if (img.dataset.retryCount === '1') {
+                      img.dataset.retryCount = '2';
+                      img.src = `/${clean}`;
+                    }
+                  }}
+                />
               ) : (
                 renderSvgModel()
               )}

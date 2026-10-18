@@ -41,5 +41,13 @@ if (fs.existsSync(distDir)) {
     }
   });
 
+  // Copy curriculum_covers to dist, docs, and root
+  const currCoversSrc = path.join(publicDir, 'curriculum_covers');
+  if (fs.existsSync(currCoversSrc)) {
+    try { fs.cpSync(currCoversSrc, path.join(distDir, 'curriculum_covers'), { recursive: true }); } catch {}
+    try { fs.cpSync(currCoversSrc, path.join(docsDir, 'curriculum_covers'), { recursive: true }); } catch {}
+    try { fs.cpSync(currCoversSrc, path.join(rootDir, 'curriculum_covers'), { recursive: true }); } catch {}
+  }
+
   console.log('Successfully synced dist to root, docs, and 404.html for GitHub Pages production');
 }

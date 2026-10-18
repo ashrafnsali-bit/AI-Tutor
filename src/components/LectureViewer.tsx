@@ -11,7 +11,7 @@ import {
   PenTool, Star, Zap, ArrowRight, RefreshCw, X, Layers,
   Volume2, Users
 } from 'lucide-react';
-import { CurriculumDiagramRenderer } from './CurriculumDiagramRenderer';
+import { CurriculumDiagramRenderer, resolveDiagramImageUrl } from './CurriculumDiagramRenderer';
 import { RichContentRenderer } from './RichContentRenderer';
 import { sanitizeLectureForStudents } from '../services/studentContentSanitizer';
 
@@ -727,7 +727,22 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           {/* Official Textbook Cover Card */}
           {curriculumCoverUrl && (
             <div className="textbook-cover-hero-badge" title={isEn ? 'Official MOE Textbook' : 'غلاف الكتاب المدرسي المعتمد'}>
-              <img src={curriculumCoverUrl} alt="Official Textbook Cover" className="textbook-cover-img" />
+              <img
+                src={resolveDiagramImageUrl(curriculumCoverUrl)}
+                alt="Official Textbook Cover"
+                className="textbook-cover-img"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  const clean = (curriculumCoverUrl || '').replace(/^\/+/, '');
+                  if (!img.dataset.retryCount) {
+                    img.dataset.retryCount = '1';
+                    img.src = `./${clean}`;
+                  } else if (img.dataset.retryCount === '1') {
+                    img.dataset.retryCount = '2';
+                    img.src = `/${clean}`;
+                  }
+                }}
+              />
               <div className="textbook-cover-meta">
                 <span className="textbook-cover-label">
                   {isEn ? 'Official Ministry Textbook' : 'الكتاب المدرسي المعتمد رسمياً'}

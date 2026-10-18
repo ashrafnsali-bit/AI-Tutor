@@ -316,11 +316,11 @@ const connectG1Units: PrimaryUnitDefinition[] = [
           ['قلم رصاص', 'Pencil'],
           ['معلم', 'Teacher']
         ],
-        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
-        diagramTitleAr: 'الوحدة الأولى: أهلاً بكم في مدرستي (Connect 1)',
-        diagramTitleEn: 'Unit 1: Welcome to My School (Connect 1)',
-        diagramCaptionAr: 'الغلاف الرسمي المعتمد من وزارة التربية والتعليم لكتاب Connect 1 وتطبيقات الوحدة الأولى',
-        diagramCaptionEn: 'Official Ministry of Education Connect 1 curriculum textbook and Unit 1 activities',
+        imageUrl: '/curriculum_covers/connect1_unit1_classroom.jpg',
+        diagramTitleAr: 'الوحدة الأولى: أهلاً بكم في مدرستي (Connect 1 - الفصل المدرسي المعلمة منى والتلاميذ)',
+        diagramTitleEn: 'Unit 1: Welcome to My School (Connect 1 - Miss Mona and Students)',
+        diagramCaptionAr: 'رسم توضيحي ملون أصيل من كتاب Connect 1 المعتمد يوضح المعلمة منى والتلاميذ آدم ودينا والنحلة النشيطة Busy Bee وأدوات الفصل',
+        diagramCaptionEn: 'Authentic MOE Connect 1 textbook illustration featuring Miss Mona, Adam, Dina, and Busy Bee in the classroom',
         workedExamples: [
           {
             id: 'we-g1-u1-1',
@@ -434,11 +434,11 @@ const connectG1Units: PrimaryUnitDefinition[] = [
           ['حبر', 'Ink'],
           ['حشرة', 'Insect']
         ],
-        imageUrl: '/curriculum_covers/egypt_primary_1_english.png',
-        diagramTitleAr: 'صوتيات وأوامر الوحدة الأولى (Connect 1)',
-        diagramTitleEn: 'Unit 1 Phonics and Commands (Connect 1)',
-        diagramCaptionAr: 'التدريبات الصوتية المقررة لحرفي Tt و Ii مع الأوامر الصفية من كتاب الوزارة',
-        diagramCaptionEn: 'Targeted phonics drills for letters Tt and Ii with classroom imperatives from the MOE book',
+        imageUrl: '/curriculum_covers/connect1_unit1_phonics.jpg',
+        diagramTitleAr: 'معمل صوتيات الوحدة الأولى: حرفي Tt و Ii مع Busy Bee',
+        diagramTitleEn: 'Unit 1 Phonics Lab: Letters Tt and Ii with Busy Bee',
+        diagramCaptionAr: 'صفحة تدريب الصوتيات المصورة من كتاب الوزارة Connect 1: أصوات الحروف مع الكلمات المصورة (table, tree, tomato, ink, insect)',
+        diagramCaptionEn: 'Official Connect 1 phonics page: Illustrated pronunciation guide for letters Tt and Ii with Busy Bee',
         workedExamples: [
           {
             id: 'we-g1-u1-2-1',
