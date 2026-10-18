@@ -4,6 +4,7 @@ import { sanitizeLectureForStudents } from '../services/studentContentSanitizer'
 import { evaluateAssessmentWithGemini } from '../services/geminiService';
 import { saveGrade, recordSession } from '../services/database';
 import { getTranslations } from '../i18n/translations';
+import { isForeignLanguageSubject, localizeSingleLecture } from '../data/foreignLanguageLessonLocalization';
 import confetti from 'canvas-confetti';
 import { 
   X, 
@@ -42,10 +43,12 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const studentLecture = sanitizeLectureForStudents(lecture);
-  const assessment = studentLecture.assessment;
-  const t = getTranslations(profile.language);
+  const isForeignLanguage = isForeignLanguageSubject(lecture.subject || profile.subject);
   const isEn = profile.language === 'en';
+  const isTargetLang = isEn || isForeignLanguage;
+  const studentLecture = sanitizeLectureForStudents(isForeignLanguage ? localizeSingleLecture(lecture) : lecture);
+  const assessment = studentLecture.assessment;
+  const t = getTranslations(isTargetLang ? 'en' : profile.language);
 
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,7 +99,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
 
       // ── Persist grade to IndexedDB + localStorage ──
       try {
-        const lectureTitle = (profile.language === 'en' ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleAr || studentLecture.id;
+        const lectureTitle = (isTargetLang ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleEn || studentLecture.titleAr || studentLecture.id;
         await saveGrade(
           profile.id,
           lecture.id,
@@ -287,9 +290,9 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
               <div className="questions-list">
                 {assessment.questions.map((q, qIndex) => {
                   const isAnswered = selectedAnswers[q.id] !== undefined;
-                  const questionText = (isEn ? q.textEn : q.textAr) || q.textAr || '';
-                  const options = (isEn ? q.optionsEn : q.optionsAr) || q.optionsAr || [];
-                  const conceptName = (isEn ? q.conceptTestedEn : q.conceptTestedAr) || q.conceptTestedAr || '';
+                  const questionText = (isTargetLang ? q.textEn : q.textAr) || q.textEn || q.textAr || '';
+                  const options = (isTargetLang ? q.optionsEn : q.optionsAr) || q.optionsEn || q.optionsAr || [];
+                  const conceptName = (isTargetLang ? q.conceptTestedEn : q.conceptTestedAr) || q.conceptTestedEn || q.conceptTestedAr || '';
                   const diffLabel = q.difficulty === 'easy' ? t.diffEasy : q.difficulty === 'medium' ? t.diffMedium : t.diffHard;
 
                   return (

@@ -3,6 +3,7 @@ import { getCountryInfo, TRACK_LABELS, EDUCATION_TYPE_LABELS } from '../data/cur
 import { getNationalLessonOverrides } from '../data/nationalCurricula';
 import { ensureFourExamplesForLecture } from './lectureExampleEnricher';
 import { removeExternalLinksFromText, sanitizeLectureForStudents } from './studentContentSanitizer';
+import { isForeignLanguageSubject, localizeSingleLecture } from '../data/foreignLanguageLessonLocalization';
 
 export interface GeminiEvaluationResponse {
   score: number;
@@ -211,17 +212,19 @@ export async function askGeminiTutor(
   const trackInfo = profile.educationTrack ? TRACK_LABELS[profile.educationTrack] : undefined;
   const typeInfo = profile.educationType ? EDUCATION_TYPE_LABELS[profile.educationType] : undefined;
 
-  const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
-  const keyConcepts = isEn ? lecture.keyConceptsEn.join(', ') : lecture.keyConceptsAr.join('، ');
-  const targetLanguage = profile.subject === 'FRENCH' ? 'French' : profile.subject === 'GERMAN' ? 'German' : profile.subject === 'ITALIAN' ? 'Italian' : profile.subject === 'ENGLISH' ? 'English' : '';
+  const isForeignLang = isForeignLanguageSubject(profile.subject || lecture.subject);
+  const targetLanguage = profile.subject === 'FRENCH' ? 'French' : profile.subject === 'GERMAN' ? 'German' : profile.subject === 'ITALIAN' ? 'Italian' : profile.subject === 'ENGLISH' ? 'English' : (isForeignLang ? 'English' : '');
+
+  const lectureTitle = (isEn || Boolean(targetLanguage)) ? (lecture.titleEn || lecture.titleAr) : lecture.titleAr;
+  const keyConcepts = (isEn || Boolean(targetLanguage)) ? lecture.keyConceptsEn.join(', ') : lecture.keyConceptsAr.join('، ');
   const languageDirectiveEn = targetLanguage
-    ? `\n8. This is a ${targetLanguage} language lesson: conduct the whole lesson and all explanations only in ${targetLanguage}. Do not explain in Arabic.`
+    ? `\n8. CRITICAL: This is a ${targetLanguage} language lesson. Conduct 100% of the conversation, hints, questions, and explanations strictly in ${targetLanguage}. NEVER use Arabic to explain a foreign language.`
     : '';
   const languageDirectiveAr = targetLanguage
-    ? `\n8. هذا درس لغة (${targetLanguage}): قدّم الشرح والتفاعل كاملًا باللغة ${targetLanguage} فقط ولا تشرح بالعربية، واستخدم عبارات بسيطة تناسب مستوى الطالب.`
+    ? `\n8. ضابط صارم جداً: هذه المادة هي لغة أجنبية (${targetLanguage}). يجب أن يكون كامل الحوار والشرح والأسئلة والتلميحات بنسبة 100% باللغة ${targetLanguage} فقط. يمنع منعاً باتاً استخدام اللغة العربية لشرح هذه اللغة الأجنبية!`
     : '';
 
-  const systemInstruction = isEn
+  const systemInstruction = (isEn || Boolean(targetLanguage))
     ? `
 You are the certified AI Socratic Tutor assigned to student: ${profile.name}.
 Country & Ministry: ${cInfo.nameEn} (${cInfo.ministryEn}).
@@ -239,7 +242,7 @@ Strict Pedagogical Directives:
 4. Strictly confine discussions to this active lecture. If student asks off-topic questions, gently guide them back: "Let's first master the concepts in ${lectureTitle} so you can pass the mandatory assessment!".
 5. Keep explanations concise, encouraging, and clear (max 3 short paragraphs).
 6. Never direct the student to an external website or include external URLs or hyperlinks. Keep instruction and resources inside the platform.
-7. Always converse in English.${languageDirectiveEn}
+7. Always converse in ${targetLanguage || 'English'}.${languageDirectiveEn}
     `.trim()
     : `
 أنت "المعلم الذكي" (AI Socratic Tutor) المعتمد والمخصص لمساعدة الطالب: ${profile.name}.
@@ -256,7 +259,7 @@ Strict Pedagogical Directives:
 2. ممنوع منعاً باتاً إعطاء الحلول المباشرة أو الأرقام النهائية للمسائل والواجبات!
 3. اتبع المنهج السقراطي: اسأل الطالب سؤالاً استرشادياً صغيراً واحداً في كل رد يقوده للتفكير الذاتي.
 4. التزم حصرياً بنطاق المحاضرة الحالية؛ إذا سأل الطالب عن مواضيع خارجية، وجهه بلطف للتركيز على إتقان ${lectureTitle}.
-5. استخدم لغة عربية فصحى مشجعة، ووضح الرموز الرياضية خطوة بخطوة.
+5. ${targetLanguage ? `تحدث واشرح باللغة ${targetLanguage} فقط وبشكل كامل بدون استخدام اللغة العربية نهائياً.` : `استخدم لغة عربية فصحى مشجعة، ووضح الرموز الرياضية خطوة بخطوة.`}
 6. لا توجه الطالب إلى أي موقع خارج المنصة، ولا تدرج روابط أو عناوين URL خارجية؛ قدّم الشرح والموارد داخل المنصة فقط.
 7. لا تتجاوز 3 فقرات قصيرة لكل إجابة.${languageDirectiveAr}
     `.trim();
@@ -309,7 +312,9 @@ export async function evaluateAssessmentWithGemini(
   profile: StudentProfile,
   apiKey?: string
 ): Promise<GeminiEvaluationResponse> {
+  const isForeignLanguage = isForeignLanguageSubject(lecture.subject || profile.subject);
   const isEn = profile.language === 'en';
+  const isTargetLang = isEn || isForeignLanguage;
   let correctCount = 0;
   const conceptAdvice: { concept: string; isCorrect: boolean; advice: string }[] = [];
 
@@ -317,26 +322,26 @@ export async function evaluateAssessmentWithGemini(
     const isCorrect = selectedAnswers[q.id] === q.correctIndex;
     if (isCorrect) correctCount++;
 
-    const conceptName = isEn ? q.conceptTestedEn : q.conceptTestedAr;
-    const explanation = isEn ? q.explanationEn : q.explanationAr;
+    const conceptName = (isTargetLang ? q.conceptTestedEn : q.conceptTestedAr) || q.conceptTestedEn || q.conceptTestedAr;
+    const explanation = (isTargetLang ? q.explanationEn : q.explanationAr) || q.explanationEn || q.explanationAr;
 
     conceptAdvice.push({
       concept: conceptName,
       isCorrect,
       advice: isCorrect
-        ? (isEn ? `Excellent! Demonstrated firm grasp of ${conceptName}.` : `ممتاز! أظهرت استيعاباً قوياً لمفهوم (${conceptName}).`)
-        : (isEn ? `Needs review: ${explanation}` : `يحتاج لمراجعة: ${explanation}`)
+        ? (isTargetLang ? `Excellent! Demonstrated firm grasp of ${conceptName}.` : `ممتاز! أظهرت استيعاباً قوياً لمفهوم (${conceptName}).`)
+        : (isTargetLang ? `Needs review: ${explanation}` : `يحتاج لمراجعة: ${explanation}`)
     });
   });
 
   const score = Math.round((correctCount / questions.length) * 100);
   const passed = score >= lecture.passingScoreRequired;
-  const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
+  const lectureTitle = (isTargetLang ? lecture.titleEn : lecture.titleAr) || lecture.titleEn || lecture.titleAr;
 
   const activeKey = apiKey || (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_API_KEY;
 
   if (activeKey && activeKey.trim() !== '') {
-    const prompt = isEn
+    const prompt = isTargetLang
       ? `
 You are the academic Socratic advisor to student ${profile.name} (${profile.gradeLevel}).
 The student just completed the mandatory assessment for lecture "${lectureTitle}".
@@ -348,7 +353,7 @@ Concept Mastery:
 ${conceptAdvice.map((c) => `- Concept "${c.concept}": ${c.isCorrect ? 'Correct' : 'Incorrect - ' + c.advice}`).join('\n')}
 
 Task:
-Write a concise, motivating 3-4 sentence Socratic evaluation directly addressing the student in English. Summarize their performance and give actionable guidance on what they should do next.
+Write a concise, motivating 3-4 sentence Socratic evaluation directly addressing the student in English. Summarize their performance and give actionable guidance on what they should do next. DO NOT use Arabic.
       `.trim()
       : `
 أنت الموجه التربوي الأكاديمي للطالب ${profile.name} في ${profile.gradeLevel}.
@@ -384,7 +389,7 @@ ${conceptAdvice.map((c) => `- مفهوم "${c.concept}": ${c.isCorrect ? 'إجا
   }
 
   // Default Bilingual Fallback Text
-  const defaultFeedback = isEn
+  const defaultFeedback = isTargetLang
     ? passed
       ? `🎉 Outstanding work, ${profile.name}! You scored ${score}% and successfully mastered "${lectureTitle}". The gate has officially unlocked the next lecture—proceed with confidence!`
       : `💪 Good effort, ${profile.name}, but you attained ${score}% while the unlock threshold is ${lecture.passingScoreRequired}%. Review the concept tips below, and retake the quiz to conquer this gate!`
@@ -409,7 +414,33 @@ ${conceptAdvice.map((c) => `- مفهوم "${c.concept}": ${c.isCorrect ? 'إجا
  */
 function generateSimulatedSocraticResponse(query: string, lecture: Lecture, isEn: boolean) {
   const lower = query.toLowerCase();
-  const lectureTitle = isEn ? lecture.titleEn : lecture.titleAr;
+  const isForeign = isForeignLanguageSubject(lecture.subject);
+  const lectureTitle = (isEn || isForeign) ? (lecture.titleEn || lecture.titleAr) : lecture.titleAr;
+
+  if (isForeign) {
+    if (lecture.subject === 'FRENCH') {
+      return {
+        text: `Très bonne question sur "${lectureTitle}" ! 🌟\n\nPour progresser, observez attentivement la structure de la phrase : quels sont les mots clés ou les règles de grammaire que vous pouvez identifier ici ?`,
+        scaffoldingType: 'socratic_question' as const
+      };
+    }
+    if (lecture.subject === 'GERMAN') {
+      return {
+        text: `Sehr gute Frage zu "${lectureTitle}"! 🌟\n\nSchau dir den Satz genau an: Welches Verb oder welche grammatikalische Regel kannst du hier anwenden?`,
+        scaffoldingType: 'socratic_question' as const
+      };
+    }
+    if (lecture.subject === 'ITALIAN') {
+      return {
+        text: `Ottima domanda su "${lectureTitle}"! 🌟\n\nGuarda la struttura della frase: quali sono i vocaboli o le regole grammaticali chiave che riconosci qui?`,
+        scaffoldingType: 'socratic_question' as const
+      };
+    }
+    return {
+      text: `Great inquiry related to "${lectureTitle}"! 🌟\n\nNotice the sentence structure and vocabulary in this lesson. How would you apply this language rule or phrase in your own sentence?`,
+      scaffoldingType: 'socratic_question' as const
+    };
+  }
 
   if (isEn) {
     if (lower.includes('solve') || lower.includes('answer') || lower.includes('result') || lower.includes('what is x')) {
@@ -896,7 +927,8 @@ CRITICAL RULES & CURRICULUM BOUNDARIES (ضوابط الالتزام الصارم
       }
     };
 
-    return { lecture: sanitizeLectureForStudents(ensureFourExamplesForLecture(lecture)) };
+    const finalizedLecture = isForeignLanguageSubject(profile.subject) ? localizeSingleLecture(lecture) : lecture;
+    return { lecture: sanitizeLectureForStudents(ensureFourExamplesForLecture(finalizedLecture)) };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown generation error';
     return { lecture: null, error: message };

@@ -8,8 +8,7 @@ const FOREIGN_LANGUAGE_SUBJECTS: ReadonlySet<string> = new Set<Subject>(['ENGLIS
 const KEEP_ARABIC_TOP_LEVEL = new Set([
   'ministryAr',
   'gradeLevelNameAr',
-  'termAr',
-  'lessonNumberAr'
+  'termAr'
 ]);
 
 const hasContent = (value: unknown): boolean =>
@@ -29,9 +28,9 @@ function mirror(node: unknown, depth: number): unknown {
       const enKey = `${key.slice(0, -2)}En`;
       const enValue = source[enKey];
       const keep = depth === 0 && KEEP_ARABIC_TOP_LEVEL.has(key);
-      // Only fallback to English if Arabic is missing/empty
-      if (!keep && !hasContent(value) && hasContent(enValue) && typeof enValue === typeof value) {
-        result[key] = enValue;
+      // For foreign language subjects, overwrite pedagogical Arabic slots with target language (En) text
+      if (!keep && hasContent(enValue) && typeof enValue === typeof value) {
+        result[key] = mirror(enValue, depth + 1);
         continue;
       }
     }
@@ -42,6 +41,11 @@ function mirror(node: unknown, depth: number): unknown {
 
 export function isForeignLanguageSubject(subject?: string): boolean {
   return !!subject && FOREIGN_LANGUAGE_SUBJECTS.has(subject);
+}
+
+export function localizeSingleLecture(lecture: Lecture): Lecture {
+  if (!lecture || !isForeignLanguageSubject(lecture.subject)) return lecture;
+  return mirror(lecture, 0) as Lecture;
 }
 
 export function localizeForeignLanguageLectures(subject: string, lectures: Lecture[]): Lecture[] {

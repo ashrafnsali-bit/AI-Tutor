@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import type { Language, Lecture, StudentProfile } from '../types';
 import { getTranslations } from '../i18n/translations';
 import { ensureFourExamplesForLecture } from '../services/lectureExampleEnricher';
-import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
+import { isForeignLanguageSubject, localizeSingleLecture } from '../data/foreignLanguageLessonLocalization';
 import {
   BookOpen, Lightbulb, HelpCircle, CheckCircle, Award,
   AlertOctagon, Sparkles, Flame, CheckCircle2, Compass,
@@ -149,14 +149,19 @@ function parseDialogueLine(text: string): { speaker: CharacterSpeaker; spokenTex
   return { speaker, spokenText: match[2].trim() };
 }
 
-function playAudioSpeech(textToSpeak: string, isEnglish: boolean) {
+function playAudioSpeech(textToSpeak: string, isEnglish: boolean, subject?: string) {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     try {
       window.speechSynthesis.cancel();
       const clean = textToSpeak.replace(/[\$*#_\[\]\(\)\{\}\\]/g, ' ').replace(/\s+/g, ' ').trim();
       if (!clean) return;
       const utterance = new SpeechSynthesisUtterance(clean);
-      utterance.lang = isEnglish ? 'en-US' : 'ar-SA';
+      let langCode = isEnglish ? 'en-US' : 'ar-SA';
+      if (subject === 'FRENCH') langCode = 'fr-FR';
+      else if (subject === 'GERMAN') langCode = 'de-DE';
+      else if (subject === 'ITALIAN') langCode = 'it-IT';
+      else if (subject === 'ENGLISH') langCode = 'en-US';
+      utterance.lang = langCode;
       utterance.rate = 0.88;
       window.speechSynthesis.speak(utterance);
     } catch {
@@ -617,11 +622,15 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
   const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject);
+  const isEn = lang === 'en';
+  const isLessonTargetLang = isEn || isForeignLanguageLesson;
   const lecture = useMemo(
     () => sanitizeLectureForStudents(
-      ensureFourExamplesForLecture(rawLecture)
+      ensureFourExamplesForLecture(
+        isForeignLanguageLesson && rawLecture ? localizeSingleLecture(rawLecture) : rawLecture
+      )
     ),
-    [rawLecture]
+    [rawLecture, isForeignLanguageLesson]
   );
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
@@ -632,7 +641,6 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const [showAllSteps, setShowAllSteps]           = useState<Record<string, boolean>>({});
 
   const isArabicLanguageLesson = ['ARABIC_LIT', 'ARABIC_LANG', 'PRIMARY_ARABIC'].includes(rawLecture?.subject || '');
-  const isEn = lang === 'en';
   const t = getTranslations(isEn ? 'en' : 'ar');
 
   useEffect(() => {
@@ -658,15 +666,15 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
     );
   }
 
-  const title      = (isEn ? lecture.titleEn      : lecture.titleAr)      || lecture.titleAr  || '';
-  const subtitle   = (isEn ? lecture.subtitleEn   : lecture.subtitleAr)   || lecture.subtitleAr|| '';
-  const summary    = (isEn ? lecture.summaryEn     : lecture.summaryAr)    || lecture.summaryAr || '';
-  const keyConcepts= (isEn ? lecture.keyConceptsEn: lecture.keyConceptsAr)|| [];
-  const conceptMap = (isEn ? lecture.conceptMapEn : lecture.conceptMapAr) || [];
-  const outcomes   = ((isEn ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || []).filter(o => o && o.trim().length > 0);
+  const title      = (isLessonTargetLang ? lecture.titleEn      : lecture.titleAr)      || lecture.titleEn || lecture.titleAr  || '';
+  const subtitle   = (isLessonTargetLang ? lecture.subtitleEn   : lecture.subtitleAr)   || lecture.subtitleEn || lecture.subtitleAr|| '';
+  const summary    = (isLessonTargetLang ? lecture.summaryEn     : lecture.summaryAr)    || lecture.summaryEn || lecture.summaryAr || '';
+  const keyConcepts= (isLessonTargetLang ? lecture.keyConceptsEn: lecture.keyConceptsAr)|| lecture.keyConceptsEn || lecture.keyConceptsAr || [];
+  const conceptMap = (isLessonTargetLang ? lecture.conceptMapEn : lecture.conceptMapAr) || lecture.conceptMapEn || lecture.conceptMapAr || [];
+  const outcomes   = ((isLessonTargetLang ? lecture.learningOutcomesEn : lecture.learningOutcomesAr) || lecture.learningOutcomesEn || []).filter(o => o && o.trim().length > 0);
   const vocab      = lecture.vocabulary || [];
-  const warmup     = (isEn ? lecture.warmupHookEn : lecture.warmupHookAr) || '';
-  const unitTitle  = (isEn ? lecture.unitTitleEn : lecture.unitTitleAr) || '';
+  const warmup     = (isLessonTargetLang ? lecture.warmupHookEn : lecture.warmupHookAr) || lecture.warmupHookEn || lecture.warmupHookAr || '';
+  const unitTitle  = (isLessonTargetLang ? lecture.unitTitleEn : lecture.unitTitleAr) || lecture.unitTitleEn || lecture.unitTitleAr || '';
   const curriculumCoverUrl =
     (lecture.sections || []).find(s => s.diagram?.imageUrl)?.diagram?.imageUrl ||
     lecture.diagramData?.imageUrl ||
@@ -703,7 +711,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           <div className="curriculum-official-stamp">
             <Award size={14} style={{ color: '#38bdf8' }} />
             <span>
-              {isEn
+              {isLessonTargetLang
                 ? '📘 Aligned with Official MOE Curricula & Teacher Guide Pedagogical Standards'
                 : '📘 أسلوب الكتاب المدرسي المعتمد ومطابقة المعايير الوزارية الرسمية'}
             </span>
@@ -712,7 +720,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           <div className="lesson-chips-row">
             <div className="lesson-number-chip">
               <BookMarked size={14} />
-              <span>{isEn ? lecture.lessonNumberEn : lecture.lessonNumberAr}</span>
+              <span>{isLessonTargetLang ? (lecture.lessonNumberEn || lecture.lessonNumberAr) : lecture.lessonNumberAr}</span>
             </div>
             {unitTitle && (
               <div className="lesson-unit-chip">
@@ -726,7 +734,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
           {/* Official Textbook Cover Card */}
           {curriculumCoverUrl && (
-            <div className="textbook-cover-hero-badge" title={isEn ? 'Official MOE Textbook' : 'غلاف الكتاب المدرسي المعتمد'}>
+            <div className="textbook-cover-hero-badge" title={isLessonTargetLang ? 'Official MOE Textbook' : 'غلاف الكتاب المدرسي المعتمد'}>
               <img
                 src={resolveDiagramImageUrl(curriculumCoverUrl)}
                 alt="Official Textbook Cover"
@@ -745,7 +753,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               />
               <div className="textbook-cover-meta">
                 <span className="textbook-cover-label">
-                  {isEn ? 'Official Ministry Textbook' : 'الكتاب المدرسي المعتمد رسمياً'}
+                  {isLessonTargetLang ? 'Official Ministry Textbook' : 'الكتاب المدرسي المعتمد رسمياً'}
                 </span>
                 <span className="textbook-cover-subject">{unitTitle || title}</span>
               </div>
@@ -855,7 +863,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Zap size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '🌍 Real-World Connection' : '🌍 ربط بالحياة اليومية'}
+              {isLessonTargetLang ? '🌍 Real-World Connection' : '🌍 ربط بالحياة اليومية'}
             </h2>
           </div>
           <div className="warmup-bubble">
@@ -872,7 +880,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Target size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '🎯 Learning Objectives' : '🎯 أهداف الدرس'}
+              {isLessonTargetLang ? '🎯 Learning Objectives' : '🎯 أهداف الدرس'}
             </h2>
           </div>
           <div className="outcomes-checklist">
@@ -896,33 +904,28 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <BookOpen size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '📚 Key Terms & Vocabulary' : '📚 مصطلحات الدرس'}
+              {isLessonTargetLang ? '📚 Key Terms & Vocabulary' : '📚 مصطلحات الدرس'}
             </h2>
           </div>
           <div className="vocab-grid">
             {vocab.map((v, i) => (
               <div key={i} className="vocab-card">
                 <div className="vocab-term-row">
-                  <span className="vocab-term-ar">{isEn ? v.termEn : v.termAr}</span>
-                  {isForeignLanguageLesson && v.termAr && v.termAr !== v.termEn && (
-                    <span className="vocab-term-translation" style={{ fontSize: '0.9rem', color: '#38bdf8', marginInlineStart: '0.5rem', fontWeight: 600 }}>
-                      ({v.termAr})
-                    </span>
-                  )}
-                  {!isArabicLanguageLesson && !isEn && v.termEn !== v.termAr && (
+                  <span className="vocab-term-ar">{isLessonTargetLang ? (v.termEn || v.termAr) : v.termAr}</span>
+                  {!isArabicLanguageLesson && !isLessonTargetLang && v.termEn !== v.termAr && (
                     <span className="vocab-term-en">{v.termEn}</span>
                   )}
                   <button
                     type="button"
                     className="vocab-audio-listen-btn"
-                    onClick={() => playAudioSpeech(isEn ? v.termEn : (isForeignLanguageLesson ? (v.termEn || v.termAr) : v.termAr), isForeignLanguageLesson || isEn)}
-                    title={isEn ? 'Listen to pronunciation' : 'استمع للنطق الصوتي 🎧'}
+                    onClick={() => playAudioSpeech(isLessonTargetLang ? (v.termEn || v.termAr) : v.termAr, isLessonTargetLang, rawLecture?.subject)}
+                    title={isLessonTargetLang ? 'Listen to pronunciation' : 'استمع للنطق الصوتي 🎧'}
                   >
                     <Volume2 size={13} />
                   </button>
                 </div>
                 <p className="vocab-definition" dir="auto">
-                  {(isEn ? v.definitionEn : v.definitionAr) || v.definitionEn || v.definitionAr || (isForeignLanguageLesson ? `المعنى والترجمة: ${v.termAr}` : '')}
+                  {(isLessonTargetLang ? (v.definitionEn || v.definitionAr) : (v.definitionAr || v.definitionEn)) || ''}
                 </p>
               </div>
             ))}
@@ -937,16 +940,16 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
             <PenTool size={18} />
           </div>
           <h2 className="lesson-section-title">
-            {isEn ? '📖 Lesson Content' : '📖 شرح الدرس'}
+            {isLessonTargetLang ? '📖 Lesson Content' : '📖 شرح الدرس'}
           </h2>
         </div>
 
         {/* Lesson Sections or Markdown Content */}
         {lecture.sections && lecture.sections.length > 0 ? (
           lecture.sections.map((sec, secIdx) => {
-            const secTitle   = isEn ? sec.titleEn   : sec.titleAr;
-            const secContent = isEn ? sec.contentEn : sec.contentAr;
-            const tips       = ((isEn ? sec.tipsEn    : sec.tipsAr) || []).filter(t => t && t.trim().length > 0);
+            const secTitle   = (isLessonTargetLang ? sec.titleEn   : sec.titleAr) || sec.titleEn || sec.titleAr;
+            const secContent = (isLessonTargetLang ? sec.contentEn : sec.contentAr) || sec.contentEn || sec.contentAr;
+            const tips       = ((isLessonTargetLang ? sec.tipsEn    : sec.tipsAr) || sec.tipsEn || sec.tipsAr || []).filter(t => t && t.trim().length > 0);
             const check      = sec.formativeCheck;
             const ex         = sec.interactiveExample;
             const isOpen     = openSections[secIdx] !== false;
@@ -977,19 +980,19 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                     {sec.diagram && (
                       <span className="section-has-diagram-badge">
                         <Layers size={12} />
-                        <span>{isEn ? 'Diagram' : 'رسم توضيحي'}</span>
+                        <span>{isLessonTargetLang ? 'Diagram' : 'رسم توضيحي'}</span>
                       </span>
                     )}
                     {check && (
                       <span className="section-has-check-badge">
                         <CheckCircle size={12} />
-                        <span>{isEn ? 'Quiz' : 'تحقق'}</span>
+                        <span>{isLessonTargetLang ? 'Quiz' : 'تحقق'}</span>
                       </span>
                     )}
                     {ex && (
                       <span className="section-has-example-badge">
                         <Calculator size={12} />
-                        <span>{isEn ? `Example ${secIdx + 1} of 4` : `مثال ${secIdx + 1} من 4`}</span>
+                        <span>{isLessonTargetLang ? `Example ${secIdx + 1} of 4` : `مثال ${secIdx + 1} من 4`}</span>
                       </span>
                     )}
                   </div>
@@ -1001,12 +1004,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
                   {/* Main Explanation Text */}
                   <div className="section-explanation">
-                    <RichContentRenderer content={secContent} isEn={isEn} />
+                    <RichContentRenderer content={secContent} isEn={isLessonTargetLang} />
                   </div>
 
                   {/* ── CURRICULUM ILLUSTRATION & SCIENTIFIC DIAGRAM ── */}
                   {sec.diagram && (
-                    <CurriculumDiagramRenderer diagram={sec.diagram} lang={isEn ? 'en' : lang} />
+                    <CurriculumDiagramRenderer diagram={sec.diagram} lang={isLessonTargetLang ? 'en' : lang} />
                   )}
 
                   {/* ── INTERACTIVE WORKED EXAMPLE (Step-by-Step) ── */}
@@ -1019,14 +1022,14 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                         <div className="textbook-rubric-left">
                           <span className="textbook-activity-chip">
                             {rubric.icon}
-                            <span>{isEn ? rubric.titleEn : rubric.titleAr}</span>
+                            <span>{isLessonTargetLang ? rubric.titleEn : rubric.titleAr}</span>
                           </span>
                           {rubric.audioTrack && (
                             <button
                               type="button"
                               className="textbook-track-chip"
-                              onClick={() => playAudioSpeech(ex.equation || ex.steps[0]?.textEn || ex.steps[0]?.textAr || '', isForeignLanguageLesson || isEn)}
-                              title={isEn ? 'Play Lesson Audio Track' : 'استمع للمسار الصوتي للنشاط 🎧'}
+                              onClick={() => playAudioSpeech(ex.equation || ex.steps[0]?.textEn || ex.steps[0]?.textAr || '', isLessonTargetLang, rawLecture?.subject)}
+                              title={isLessonTargetLang ? 'Play Lesson Audio Track' : 'استمع للمسار الصوتي للنشاط 🎧'}
                             >
                               <Volume2 size={13} />
                               <span>Track {String(rubric.audioTrack).padStart(2, '0')} 🎧</span>
@@ -1034,13 +1037,13 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           )}
                         </div>
                         <div className="textbook-rubric-right">
-                          <span className="textbook-strategy-chip" title={isEn ? rubric.strategyEn : rubric.strategyAr}>
+                          <span className="textbook-strategy-chip" title={isLessonTargetLang ? rubric.strategyEn : rubric.strategyAr}>
                             <Compass size={12} />
-                            <span>{isEn ? rubric.strategyEn : rubric.strategyAr}</span>
+                            <span>{isLessonTargetLang ? rubric.strategyEn : rubric.strategyAr}</span>
                           </span>
                           <span className="textbook-moe-badge">
                             <CheckCircle2 size={11} />
-                            <span>{isEn ? 'MOE Standard' : 'معتمد وزارياً'}</span>
+                            <span>{isLessonTargetLang ? 'MOE Standard' : 'معتمد وزارياً'}</span>
                           </span>
                         </div>
                       </div>
@@ -1054,17 +1057,17 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           <div className="we-title-group">
                             <span className="we-label">
                               <Sparkles size={13} />
-                              {isEn ? `Interactive Example ${secIdx + 1} of 4` : `مثال توضيحي تفاعلي (${secIdx + 1} من 4)`}
+                              {isLessonTargetLang ? `Interactive Example ${secIdx + 1} of 4` : `مثال توضيحي تفاعلي (${secIdx + 1} من 4)`}
                             </span>
                             <h4 className="we-title" dir="auto">
-                              {cleanExampleTitle(isEn ? ex.titleEn : ex.titleAr)}
+                              {cleanExampleTitle((isLessonTargetLang ? ex.titleEn : ex.titleAr) || ex.titleEn || ex.titleAr)}
                             </h4>
                           </div>
                         </div>
 
                         {/* Step Count Chip */}
                         <div className="we-step-counter-chip">
-                          {isEn
+                          {isLessonTargetLang
                             ? `Step ${(activeExampleStep[exKey] ?? 0) + 1} of ${ex.steps.length}`
                             : `الخطوة ${(activeExampleStep[exKey] ?? 0) + 1} من ${ex.steps.length}`}
                         </div>
@@ -1075,10 +1078,10 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                         <div className="we-problem-statement">
                           <div className="we-problem-tag-row">
                             <BookOpen size={14} />
-                            <span>{isEn ? 'Problem / Governing Rule' : 'نص المسألة / القاعدة الرياضية'}</span>
+                            <span>{isLessonTargetLang ? 'Problem / Governing Rule' : 'نص المسألة / القاعدة الرياضية'}</span>
                           </div>
                           <div className="we-problem-content" dir="auto">
-                            {renderContentWithDialogues(ex.equation, isEn, (txt) => playAudioSpeech(txt, isForeignLanguageLesson || isEn))}
+                            {renderContentWithDialogues(ex.equation, isLessonTargetLang, (txt) => playAudioSpeech(txt, isLessonTargetLang, rawLecture?.subject))}
                           </div>
                         </div>
                       )}
@@ -1089,7 +1092,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           <div
                             key={sIdx}
                             className={`we-step-dot ${sIdx <= currentStep || allShown ? 'step-dot-active' : ''} ${sIdx === currentStep && !allShown ? 'step-dot-current' : ''}`}
-                            title={`الخطوة ${sIdx + 1}`}
+                            title={isLessonTargetLang ? `Step ${sIdx + 1}` : `الخطوة ${sIdx + 1}`}
                           />
                         ))}
                       </div>
@@ -1099,8 +1102,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                         {ex.steps.map((step, sIdx) => {
                           const visible = allShown || sIdx <= currentStep;
                           if (!visible) return null;
-                          const stepText = isEn ? step.textEn : step.textAr;
-                          const stepNote = isEn ? step.noteEn : step.noteAr;
+                          const stepText = (isLessonTargetLang ? step.textEn : step.textAr) || step.textEn || step.textAr;
+                          const stepNote = (isLessonTargetLang ? step.noteEn : step.noteAr) || step.noteEn || step.noteAr;
                           return (
                             <div
                               key={sIdx}
@@ -1109,7 +1112,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                               <div className="we-step-num">{step.stepNumber}</div>
                               <div className="we-step-content">
                                 <div className="we-step-text" dir="auto">
-                                  {renderContentWithDialogues(stepText, isEn, (txt) => playAudioSpeech(txt, isForeignLanguageLesson || isEn))}
+                                  {renderContentWithDialogues(stepText, isLessonTargetLang, (txt) => playAudioSpeech(txt, isLessonTargetLang, rawLecture?.subject))}
                                 </div>
                                 {stepNote && (
                                   <span className="we-step-note" dir="auto">
@@ -1131,7 +1134,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             onClick={() => advanceStep(exKey, ex.steps.length)}
                           >
                             <Play size={15} />
-                            {isEn ? 'Next Step' : 'الخطوة التالية'}
+                            {isLessonTargetLang ? 'Next Step' : 'الخطوة التالية'}
                           </button>
                         ) : !allShown ? (
                           <button
@@ -1140,7 +1143,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                             onClick={() => setShowAllSteps(p => ({ ...p, [exKey]: true }))}
                           >
                             <SkipForward size={15} />
-                            {isEn ? 'Show All Steps' : 'عرض جميع الخطوات'}
+                            {isLessonTargetLang ? 'Show All Steps' : 'عرض جميع الخطوات'}
                           </button>
                         ) : null}
                         <button
@@ -1152,20 +1155,20 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           }}
                         >
                           <RefreshCw size={14} />
-                          {isEn ? 'Restart' : 'إعادة'}
+                          {isLessonTargetLang ? 'Restart' : 'إعادة'}
                         </button>
                       </div>
 
                       {/* Golden Takeaway */}
-                      {ex.takeawayAr && (
+                      {(ex.takeawayAr || ex.takeawayEn) && (
                         <div className="we-takeaway">
                           <Star size={16} className="takeaway-star" />
                           <div className="takeaway-content" style={{ flex: 1 }}>
                             <div className="takeaway-title" style={{ fontSize: '0.78rem', color: '#fbbf24', fontWeight: 800, marginBottom: '0.2rem' }}>
-                              {isEn ? 'Golden Pedagogical Takeaway' : 'الفائدة التربوية الذهبية'}
+                              {isLessonTargetLang ? 'Golden Pedagogical Takeaway' : 'الفائدة التربوية الذهبية'}
                             </div>
                             <p className="takeaway-text" dir="auto">
-                              {renderMathFormattedText(isEn ? ex.takeawayEn : ex.takeawayAr)}
+                              {renderMathFormattedText((isLessonTargetLang ? ex.takeawayEn : ex.takeawayAr) || ex.takeawayEn || ex.takeawayAr)}
                             </p>
                           </div>
                         </div>
@@ -1179,7 +1182,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                     <div className="tips-box-v2">
                       <div className="tips-v2-header">
                         <Lightbulb size={16} className="tips-v2-icon" />
-                        <span>{isEn ? 'Key Tips' : 'نصائح مهمة'}</span>
+                        <span>{isLessonTargetLang ? 'Key Tips' : 'نصائح مهمة'}</span>
                       </div>
                       <ul className="tips-v2-list">
                         {tips.map((tip, ti) => (
@@ -1194,10 +1197,10 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
                   {/* ── FORMATIVE CHECK ── */}
                   {check && (() => {
-                    const opts        = (isEn ? check.optionsEn : check.optionsAr) || check.optionsAr || check.optionsEn || [];
-                    const qText       = (isEn ? check.questionEn : check.questionAr) || check.questionAr || '';
-                    const explanation = (isEn ? check.explanationEn : check.explanationAr) || check.explanationAr || '';
-                    const hint        = (isEn ? check.hintEn : check.hintAr) || check.hintAr || '';
+                    const opts        = (isLessonTargetLang ? check.optionsEn : check.optionsAr) || check.optionsEn || check.optionsAr || [];
+                    const qText       = (isLessonTargetLang ? check.questionEn : check.questionAr) || check.questionEn || check.questionAr || '';
+                    const explanation = (isLessonTargetLang ? check.explanationEn : check.explanationAr) || check.explanationEn || check.explanationAr || '';
+                    const hint        = (isLessonTargetLang ? check.hintEn : check.hintAr) || check.hintEn || check.hintAr || '';
                     const selectedIdx = formativeSelected[check.id];
                     const isChecked   = formativeChecked[check.id];
                     const isCorrect   = isChecked && selectedIdx === check.correctIndex;
@@ -1209,7 +1212,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           <div className="fc-icon-v2">❓</div>
                           <div>
                             <span className="fc-label-v2">
-                              {isEn ? 'Check Your Understanding' : 'تحقق من فهمك'}
+                              {isLessonTargetLang ? 'Check Your Understanding' : 'تحقق من فهمك'}
                             </span>
                             <p className="fc-question-v2" dir="auto">{qText}</p>
                           </div>
@@ -1233,7 +1236,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                                 onClick={() => handleSelectFormativeOption(check.id, oIdx)}
                               >
                                 <span className="fc-opt-letter">
-                                  {['أ', 'ب', 'ج', 'د'][oIdx] || String.fromCharCode(65 + oIdx)}
+                                  {isLessonTargetLang ? String.fromCharCode(65 + oIdx) : (['أ', 'ب', 'ج', 'د'][oIdx] || String.fromCharCode(65 + oIdx))}
                                 </span>
                                 <span className="fc-opt-text" dir="auto">{opt}</span>
                                 {isChecked && oIdx === check.correctIndex && (
@@ -1256,7 +1259,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                               onClick={() => handleCheckFormativeAnswer(check.id)}
                             >
                               <CheckCircle2 size={15} />
-                              {isEn ? 'Check Answer' : 'تحقق من الإجابة'}
+                              {isLessonTargetLang ? 'Check Answer' : 'تحقق من الإجابة'}
                             </button>
                           )}
                           {hint && (
@@ -1266,7 +1269,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                               onClick={() => handleToggleHint(check.id)}
                             >
                               <Lightbulb size={14} />
-                              {isHintOpen ? (isEn ? 'Hide Hint' : 'إخفاء التلميح') : (isEn ? 'Show Hint' : 'تلميح')}
+                              {isHintOpen ? (isLessonTargetLang ? 'Hide Hint' : 'إخفاء التلميح') : (isLessonTargetLang ? 'Show Hint' : 'تلميح')}
                             </button>
                           )}
                         </div>
@@ -1282,8 +1285,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                           <div className={`fc-feedback-v2 ${isCorrect ? 'fc-correct' : 'fc-wrong'}`}>
                             <div className="fc-feedback-head">
                               {isCorrect
-                                ? <><CheckCircle size={16} /> <span>{isEn ? '✅ Correct! Well done!' : '✅ ممتاز! إجابة صحيحة!'}</span></>
-                                : <><AlertOctagon size={16} /> <span>{isEn ? '❌ Not quite right.' : '❌ ليست الإجابة الصحيحة.'}</span></>
+                                ? <><CheckCircle size={16} /> <span>{isLessonTargetLang ? '✅ Correct! Well done!' : '✅ ممتاز! إجابة صحيحة!'}</span></>
+                                : <><AlertOctagon size={16} /> <span>{isLessonTargetLang ? '❌ Not quite right.' : '❌ ليست الإجابة الصحيحة.'}</span></>
                               }
                             </div>
                             <p className="fc-feedback-exp">{explanation}</p>
@@ -1300,8 +1303,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
         ) : (
           <div className="content-section-card" style={{ padding: '1.75rem', lineHeight: '1.8' }}>
             <RichContentRenderer
-              content={(isEn ? (lecture.mainContentEn || lecture.mainContentAr) : (lecture.mainContentAr || lecture.mainContentEn)) || ''}
-              isEn={isEn}
+              content={(isLessonTargetLang ? (lecture.mainContentEn || lecture.mainContentAr) : (lecture.mainContentAr || lecture.mainContentEn)) || ''}
+              isEn={isLessonTargetLang}
             />
           </div>
         )}
@@ -1315,23 +1318,23 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Calculator size={18} />
             </div>
             <h2 className="lesson-section-title" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#38bdf8' }}>
-              {isEn ? '💡 Interactive Worked Examples' : '💡 أمثلة محلولة خطوة بخطوة'}
+              {isLessonTargetLang ? '💡 Interactive Worked Examples' : '💡 أمثلة محلولة خطوة بخطوة'}
             </h2>
           </div>
 
           <div className="worked-examples-grid" style={{ display: 'grid', gap: '1.25rem' }}>
             {lecture.workedExamples.map((ex, exIdx) => {
-              const exTitle = isEn ? ex.titleEn : ex.titleAr;
-              const probText = (isEn ? (ex.problemEn || ex.problemAr) : (ex.problemAr || ex.problemEn)) || '';
-              const steps = (isEn ? (ex.stepByStepSolutionEn || ex.stepsEn || ex.stepByStepSolutionAr || ex.stepsAr) : (ex.stepByStepSolutionAr || ex.stepsAr)) || [];
-              const finalAns = (isEn ? (ex.finalAnswerEn || ex.finalAnswerAr) : (ex.finalAnswerAr || ex.finalAnswerEn)) || '';
-              const takeaway = (isEn ? (ex.takeawayEn || ex.takeawayAr) : (ex.takeawayAr || ex.takeawayEn)) || '';
+              const exTitle = (isLessonTargetLang ? ex.titleEn : ex.titleAr) || ex.titleEn || ex.titleAr;
+              const probText = (isLessonTargetLang ? (ex.problemEn || ex.problemAr) : (ex.problemAr || ex.problemEn)) || ex.problemEn || '';
+              const steps = (isLessonTargetLang ? (ex.stepByStepSolutionEn || ex.stepsEn || ex.stepByStepSolutionAr || ex.stepsAr) : (ex.stepByStepSolutionAr || ex.stepsAr)) || [];
+              const finalAns = (isLessonTargetLang ? (ex.finalAnswerEn || ex.finalAnswerAr) : (ex.finalAnswerAr || ex.finalAnswerEn)) || '';
+              const takeaway = (isLessonTargetLang ? (ex.takeawayEn || ex.takeawayAr) : (ex.takeawayAr || ex.takeawayEn)) || '';
               return (
                 <div key={ex.id || exIdx} className="worked-example-card" style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '14px', padding: '1.25rem' }}>
                   <div className="we-header" style={{ display: 'flex', borderBottom: '1px solid #1e293b', paddingBottom: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                       <span style={{ background: '#38bdf8', color: '#0f172a', fontWeight: 'bold', padding: '4px 10px', borderRadius: '6px', fontSize: '0.85rem' }}>
-                        {isEn ? `Example ${exIdx + 1}` : `مثال ${exIdx + 1}`}
+                        {isLessonTargetLang ? `Example ${exIdx + 1}` : `مثال ${exIdx + 1}`}
                       </span>
                       <h4 style={{ margin: 0, color: '#f8fafc', fontSize: '1.1rem' }}>{exTitle}</h4>
                     </div>
@@ -1346,7 +1349,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   {steps.length > 0 && (
                     <div className="we-steps-list" style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                       {steps.map((st: string, sIdx: number) => (
-                        <div key={sIdx} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: '#141e33', padding: '0.75rem 1rem', borderRadius: '8px', borderLeft: isEn ? '3px solid #38bdf8' : 'none', borderRight: !isEn ? '3px solid #38bdf8' : 'none' }}>
+                        <div key={sIdx} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: '#141e33', padding: '0.75rem 1rem', borderRadius: '8px', borderLeft: isLessonTargetLang ? '3px solid #38bdf8' : 'none', borderRight: !isLessonTargetLang ? '3px solid #38bdf8' : 'none' }}>
                           <span style={{ color: '#38bdf8', fontWeight: 'bold', minWidth: '24px' }}>{sIdx + 1}.</span>
                           <span style={{ color: '#cbd5e1', lineHeight: '1.6' }}>{st}</span>
                         </div>
@@ -1357,7 +1360,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   {finalAns && (
                     <div style={{ marginTop: '1rem', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid #10b981', padding: '0.75rem 1rem', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#34d399' }}>
                       <CheckCircle2 size={16} />
-                      <span>{isEn ? 'Final Answer:' : 'النتيجة النهائية:'} <strong>{finalAns}</strong></span>
+                      <span>{isLessonTargetLang ? 'Final Answer:' : 'النتيجة النهائية:'} <strong>{finalAns}</strong></span>
                     </div>
                   )}
 
@@ -1382,15 +1385,15 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <CheckCircle size={18} />
             </div>
             <h2 className="lesson-section-title" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#34d399' }}>
-              {isEn ? '❓ Quick Understanding Checks' : '❓ أسئلة تحقق سريعة'}
+              {isLessonTargetLang ? '❓ Quick Understanding Checks' : '❓ أسئلة تحقق سريعة'}
             </h2>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {lecture.formativeAssessment.map((q: any, qIdx: number) => {
-              const qText = (isEn ? q.questionEn : q.questionAr) || q.questionAr || '';
-              const opts = (isEn ? q.optionsEn : q.optionsAr) || q.optionsAr || q.optionsEn || [];
-              const rationale = (isEn ? q.rationaleEn : q.rationaleAr) || q.rationaleAr || '';
+              const qText = (isLessonTargetLang ? q.questionEn : q.questionAr) || q.questionEn || q.questionAr || '';
+              const opts = (isLessonTargetLang ? q.optionsEn : q.optionsAr) || q.optionsEn || q.optionsAr || [];
+              const rationale = (isLessonTargetLang ? q.rationaleEn : q.rationaleAr) || q.rationaleEn || q.rationaleAr || '';
               const selectedIdx = formativeSelected[q.id];
               const isChecked = formativeChecked[q.id];
               const isCorrect = isChecked && selectedIdx === q.correctIndex;
@@ -1470,12 +1473,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                         }}
                       >
                         <CheckCircle2 size={15} />
-                        {isEn ? 'Check Answer' : 'تحقق من الإجابة'}
+                        {isLessonTargetLang ? 'Check Answer' : 'تحقق من الإجابة'}
                       </button>
                     ) : (
                       <div style={{ color: isCorrect ? '#34d399' : '#f87171', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold' }}>
                         {isCorrect ? <CheckCircle size={16} /> : <AlertOctagon size={16} />}
-                        <span>{isCorrect ? (isEn ? 'Correct!' : 'إجابة صحيحة!') : (isEn ? 'Incorrect' : 'إجابة غير صحيحة')}</span>
+                        <span>{isCorrect ? (isLessonTargetLang ? 'Correct!' : 'إجابة صحيحة!') : (isLessonTargetLang ? 'Incorrect' : 'إجابة غير صحيحة')}</span>
                       </div>
                     )}
                   </div>
@@ -1500,7 +1503,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Sprout size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '📝 Lesson Summary' : '📝 ملخص الدرس'}
+              {isLessonTargetLang ? '📝 Lesson Summary' : '📝 ملخص الدرس'}
             </h2>
           </div>
           <div className="summary-card">
@@ -1517,7 +1520,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Layers size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '🔑 Key Concepts' : '🔑 المفاهيم الأساسية'}
+              {isLessonTargetLang ? '🔑 Key Concepts' : '🔑 المفاهيم الأساسية'}
             </h2>
           </div>
           <div className="concepts-tags">
@@ -1536,7 +1539,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <Compass size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '🗺️ Concept Map' : '🗺️ خريطة المفاهيم'}
+              {isLessonTargetLang ? '🗺️ Concept Map' : '🗺️ خريطة المفاهيم'}
             </h2>
           </div>
           <div className="concept-map-v2">
@@ -1558,22 +1561,22 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               <FileCheck2 size={18} />
             </div>
             <h2 className="lesson-section-title">
-              {isEn ? '✏️ Guided Practice' : '✏️ تدريبات تطبيقية'}
+              {isLessonTargetLang ? '✏️ Guided Practice' : '✏️ تدريبات تطبيقية'}
             </h2>
           </div>
 
           <div className="exercises-v2-list">
             {lecture.textbookExercises.map((ex, exIdx) => {
-              const qText  = (isEn ? (ex.questionEn || ex.problemEn) : (ex.questionAr || ex.problemAr)) || '';
-              const steps  = (isEn ? (ex.solutionStepsEn || ex.solutionStepsAr) : ex.solutionStepsAr) || [];
-              const answer = (isEn ? (ex.answerEn || ex.finalAnswerEn) : (ex.answerAr || ex.finalAnswerAr)) || '';
+              const qText  = (isLessonTargetLang ? (ex.questionEn || ex.problemEn) : (ex.questionAr || ex.problemAr)) || ex.questionEn || ex.problemEn || '';
+              const steps  = (isLessonTargetLang ? (ex.solutionStepsEn || ex.solutionStepsAr) : ex.solutionStepsAr) || ex.solutionStepsEn || [];
+              const answer = (isLessonTargetLang ? (ex.answerEn || ex.finalAnswerEn) : (ex.answerAr || ex.finalAnswerAr)) || ex.answerEn || ex.finalAnswerEn || '';
               const revealed = revealedSolutions[ex.id];
 
               return (
                 <div key={exIdx} className="exercise-v2-card">
                   <div className="ex-v2-top">
                     <div className="ex-v2-num-badge">
-                      {isEn ? `Ex ${exIdx + 1}` : `تمرين ${exIdx + 1}`}
+                      {isLessonTargetLang ? `Ex ${exIdx + 1}` : `تمرين ${exIdx + 1}`}
                     </div>
                     <p className="ex-v2-question">{qText}</p>
                   </div>
@@ -1586,8 +1589,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                     {revealed ? <EyeOff size={14} /> : <Eye size={14} />}
                     <span>
                       {revealed
-                        ? (isEn ? 'Hide Solution' : 'إخفاء الحل')
-                        : (isEn ? 'Show Step-by-Step Solution' : 'عرض الحل خطوة بخطوة')}
+                        ? (isLessonTargetLang ? 'Hide Solution' : 'إخفاء الحل')
+                        : (isLessonTargetLang ? 'Show Step-by-Step Solution' : 'عرض الحل خطوة بخطوة')}
                     </span>
                   </button>
 
@@ -1603,7 +1606,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                       </div>
                       <div className="ex-final-answer">
                         <Award size={15} />
-                        <span>{isEn ? 'Answer:' : 'الإجابة:'}</span>
+                        <span>{isLessonTargetLang ? 'Answer:' : 'الإجابة:'}</span>
                         <strong>{answer}</strong>
                       </div>
                     </div>
@@ -1641,16 +1644,16 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
             </div>
             <div>
               <h3 className="al-title">
-                {isEn ? '🏆 Ready for the Assessment?' : '🏆 هل أنت مستعد للتقييم؟'}
+                {isLessonTargetLang ? '🏆 Ready for the Assessment?' : '🏆 هل أنت مستعد للتقييم؟'}
               </h3>
               <p className="al-desc">
-                {isEn
+                {isLessonTargetLang
                   ? `Score ${lecture.passingScoreRequired}% or above to unlock the next lesson.`
                   : `احصل على ${lecture.passingScoreRequired}% أو أعلى لفتح الدرس التالي.`}
               </p>
               {lecture.lastAttempt && (
                 <span className={`al-last-attempt ${lecture.lastAttempt.passed ? 'al-passed' : 'al-failed'}`}>
-                  {isEn ? `Last attempt: ${lecture.lastAttempt.score}%` : `آخر محاولة: ${lecture.lastAttempt.score}%`}
+                  {isLessonTargetLang ? `Last attempt: ${lecture.lastAttempt.score}%` : `آخر محاولة: ${lecture.lastAttempt.score}%`}
                 </span>
               )}
             </div>
@@ -1663,9 +1666,9 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
               onClick={onStartAssessment}
             >
               {lecture.isCompleted ? (
-                <><RefreshCw size={17} /> {isEn ? 'Retake' : 'إعادة التقييم'}</>
+                <><RefreshCw size={17} /> {isLessonTargetLang ? 'Retake' : 'إعادة التقييم'}</>
               ) : (
-                <><Play size={17} /> {isEn ? 'Start Assessment' : 'ابدأ التقييم'}</>
+                <><Play size={17} /> {isLessonTargetLang ? 'Start Assessment' : 'ابدأ التقييم'}</>
               )}
             </button>
 
@@ -1675,7 +1678,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                 className="al-btn-next"
                 onClick={onNextLecture}
               >
-                {isEn ? 'Next Lesson' : 'الدرس التالي'}
+                {isLessonTargetLang ? 'Next Lesson' : 'الدرس التالي'}
                 <ArrowRight size={16} />
               </button>
             )}

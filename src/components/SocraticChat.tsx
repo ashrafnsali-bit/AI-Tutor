@@ -33,26 +33,49 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const t = getTranslations(profile.language);
+  const isForeignLanguage = ['ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(lecture.subject || profile.subject || '');
   const isEn = profile.language === 'en';
+  const isTargetLang = isEn || isForeignLanguage;
+  const t = getTranslations(isTargetLang ? 'en' : profile.language);
   const studentLecture = sanitizeLectureForStudents(lecture);
-  const lectureTitle = removeExternalLinksFromText(isEn ? studentLecture.titleEn : studentLecture.titleAr);
+  const lectureTitle = removeExternalLinksFromText((isTargetLang ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleEn || studentLecture.titleAr || '');
 
-  const initialWelcomeText = isEn
-    ? `Hello, ${profile.name}! 👋 I am your Socratic AI Tutor for "${lectureTitle}".\n\nRemember, my goal is to guide you with targeted questions and hints so you discover the solution yourself rather than receiving ready-made answers. What mathematical concept would you like to explore today?`
-    : `مرحباً يا ${profile.name}! 👋 أنا معلمك السقراطي لمساعدتك في فهم "${lectureTitle}".\n\nتذكر أنني هنا لأوجهك بالأسئلة والتلميحات لتكتشف الحلول بنفسك لا لأعطيك حلولاً جاهزة. ما الذي تود استكشافه أو توضيحه في هذا الدرس؟`;
+  let initialWelcomeText = `مرحباً يا ${profile.name}! 👋 أنا معلمك السقراطي لمساعدتك في فهم "${lectureTitle}".\n\nتذكر أنني هنا لأوجهك بالأسئلة والتلميحات لتكتشف الحلول بنفسك لا لأعطيك حلولاً جاهزة. ما الذي تود استكشافه أو توضيحه في هذا الدرس؟`;
+  let initialSuggestions = [
+    'كيف أعزل المتغير بخطوة واحدة؟',
+    'ما هي العمليات العكسية وكيف أستخدمها؟',
+    'أريد مثالاً إضافياً على خاصية التوازن'
+  ];
 
-  const initialSuggestions = isEn
-    ? [
-        'How do I isolate the variable in one step?',
-        'What are inverse operations and how do I apply them?',
-        'Can you give me an extra example of the balance scale property?'
-      ]
-    : [
-        'كيف أعزل المتغير بخطوة واحدة؟',
-        'ما هي العمليات العكسية وكيف أستخدمها؟',
-        'أريد مثالاً إضافياً على خاصية التوازن'
-      ];
+  if (profile.subject === 'FRENCH') {
+    initialWelcomeText = `Bonjour, ${profile.name} ! 👋 Je suis votre tuteur IA socratique pour "${lectureTitle}".\n\nMon rôle est de vous guider avec des questions et des indices afin que vous découvriez les réponses par vous-même. Que souhaitez-vous explorer aujourd'hui ?`;
+    initialSuggestions = [
+      'Pouvez-vous me donner un exemple avec ces mots ?',
+      'Comment utiliser cette règle dans une phrase ?',
+      'Pouvez-vous expliquer le point principal de cette leçon ?'
+    ];
+  } else if (profile.subject === 'GERMAN') {
+    initialWelcomeText = `Hallo, ${profile.name}! 👋 Ich bin dein sokratischer KI-Tutor für "${lectureTitle}".\n\nMein Ziel ist es, dich mit gezielten Hinweisen anzuleiten, damit du die Lösung selbst findest. Was möchtest du heute üben?`;
+    initialSuggestions = [
+      'Kannst du mir ein Beispiel für diesen Satz geben?',
+      'Wie wende ich diese Grammatikregel an?',
+      'Kannst du die Hauptidee dieser Lektion erklären?'
+    ];
+  } else if (profile.subject === 'ITALIAN') {
+    initialWelcomeText = `Ciao, ${profile.name}! 👋 Sono il tuo tutor IA socratico per "${lectureTitle}".\n\nIl mio obiettivo è guidarti passo dopo passo a scoprire le risposte. Di cosa vorresti parlare oggi?`;
+    initialSuggestions = [
+      'Puoi farmi un esempio con questi vocaboli?',
+      'Come si usa questa regola in una frase?',
+      'Puoi spiegare il concetto principale di questa lezione?'
+    ];
+  } else if (isTargetLang) {
+    initialWelcomeText = `Hello, ${profile.name}! 👋 I am your Socratic AI Tutor for "${lectureTitle}".\n\nRemember, my goal is to guide you with targeted questions and hints so you discover the solution yourself rather than receiving ready-made answers. What concept would you like to explore today?`;
+    initialSuggestions = [
+      'Can you give me an example with these words?',
+      'How can I form a sentence using this rule?',
+      'Can you explain the main idea of this lesson?'
+    ];
+  }
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -115,7 +138,7 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
         text: response.text,
         timestamp: new Date().toLocaleTimeString(isEn ? 'en-US' : 'ar-SA', { hour: '2-digit', minute: '2-digit' }),
         scaffoldingType: response.scaffoldingType,
-        suggestedFollowUps: isEn
+        suggestedFollowUps: isTargetLang
           ? [
               'What is the next step in this solution?',
               'Can you test my understanding with a question?',
