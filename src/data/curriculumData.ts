@@ -4905,8 +4905,7 @@ export function isEnglishCourseAvailable(
   track: EducationTrack = 'GENERAL'
 ): boolean {
   return isSaudiPublicEnglishAvailable(country, gradeLevel, educationType) ||
-    (country === 'EG' &&
-      (educationType === 'PUBLIC' || educationType === 'PRIVATE')) ||
+    country === 'EG' ||
     isSudanPublicGrade12SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicMiddleSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicPrimaryCurriculumSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track);

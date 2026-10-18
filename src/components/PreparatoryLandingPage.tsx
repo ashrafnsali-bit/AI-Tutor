@@ -186,42 +186,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           selectedTrack
         )) ||
       (selectedSubject === 'ENGLISH' &&
-        !(selectedCountry === 'EG' && selectedGrade === 'G10') &&
-        !isSudanPublicGrade12SubjectAvailable(
-          selectedSubject,
-          selectedCountry,
-          selectedGrade,
-          educationType,
-          selectedTrack
-        ) &&
-        !isSaudiPublicEnglishAvailable(
-          selectedCountry,
-          selectedGrade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
-        ) &&
-        !isSudanPublicGrade4SubjectAvailable(
-          selectedSubject,
-          selectedCountry,
-          selectedGrade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-          selectedTrack
-        ) &&
-        !isSudanPublicGrade5SubjectAvailable(
-          selectedSubject,
-          selectedCountry,
-          selectedGrade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-          selectedTrack
-        ) &&
-        !isSudanPublicGrade6SubjectAvailable(
-          selectedSubject,
-          selectedCountry,
-          selectedGrade,
-          educationType,
-          selectedTrack
-        ) &&
-        !isSudanPublicMiddleSubjectAvailable(
-          selectedSubject,
+        !isEnglishCourseAvailable(
           selectedCountry,
           selectedGrade,
           educationType,
@@ -930,28 +895,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
             selectedTrack
           ))
         || (selectedSubject === 'ENGLISH' &&
-          !(selectedCountry === 'EG' && selectedGrade === 'G10') &&
-          !isSudanPublicGrade12SubjectAvailable(
-            selectedSubject,
-            selectedCountry,
-            selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-            selectedTrack
-          ) &&
-          !isSaudiPublicEnglishAvailable(
-            selectedCountry,
-            selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
-          ) &&
-          !isSudanPublicGrade4SubjectAvailable(
-            selectedSubject,
-            selectedCountry,
-            selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-            selectedTrack
-          ) &&
-          !isSudanPublicGrade5SubjectAvailable(
-            selectedSubject,
+          !isEnglishCourseAvailable(
             selectedCountry,
             selectedGrade,
             normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
