@@ -203,25 +203,26 @@ export async function saveGrade(
  * Load all grades for a specific student
  */
 export async function loadAllGrades(userId: string): Promise<GradeRecord[]> {
-  let localGrades: GradeRecord[] = [];
+  let idbGrades: GradeRecord[] = [];
   try {
     const db = await getDB();
-    localGrades = await new Promise((resolve) => {
+    idbGrades = await new Promise((resolve) => {
       const tx = db.transaction(GRADES_STORE, 'readonly');
       const store = tx.objectStore(GRADES_STORE);
       const idx = store.index('userId');
       const req = idx.getAll(IDBKeyRange.only(userId));
       req.onsuccess = () => resolve((req.result as GradeRecord[]) || []);
-      req.onerror = () => resolve(loadGradesFromLocalStorage(userId));
+      req.onerror = () => resolve([]);
     });
   } catch {
-    localGrades = loadGradesFromLocalStorage(userId);
+    idbGrades = [];
   }
 
+  const lsGrades = loadGradesFromLocalStorage(userId);
   // Merge with Cloud Grades (e.g. if student took assessment on another device)
   const cloudGrades = getCachedCloudGrades(userId);
   const gradesMap = new Map<string, GradeRecord>();
-  [...localGrades, ...cloudGrades].forEach(g => {
+  [...lsGrades, ...idbGrades, ...cloudGrades].forEach(g => {
     if (g && g.id) gradesMap.set(g.id, g);
   });
 
@@ -368,18 +369,26 @@ export function getLastSessionState(): LastSessionState | null {
  * Load all study sessions for a student
  */
 export async function loadAllSessions(userId: string): Promise<StudySession[]> {
+  let idbSessions: StudySession[] = [];
   try {
     const db = await getDB();
-    return new Promise((resolve) => {
+    idbSessions = await new Promise((resolve) => {
       const tx = db.transaction(SESSIONS_STORE, 'readonly');
       const idx = tx.objectStore(SESSIONS_STORE).index('userId');
       const req = idx.getAll(IDBKeyRange.only(userId));
-      req.onsuccess = () => resolve(req.result as StudySession[]);
-      req.onerror = () => resolve(loadSessionsFromLocalStorage(userId));
+      req.onsuccess = () => resolve((req.result as StudySession[]) || []);
+      req.onerror = () => resolve([]);
     });
   } catch {
-    return loadSessionsFromLocalStorage(userId);
+    idbSessions = [];
   }
+
+  const lsSessions = loadSessionsFromLocalStorage(userId);
+  const sessionMap = new Map<string, StudySession>();
+  [...lsSessions, ...idbSessions].forEach(s => {
+    if (s && s.id) sessionMap.set(s.id, s);
+  });
+  return Array.from(sessionMap.values()).sort((a, b) => b.sessionStart - a.sessionStart);
 }
 
 // ─────────────────────────────────────────────
@@ -442,6 +451,11 @@ export async function registerUserAccount(
         tx.objectStore(SESSION_STORE).put({ key: 'activeUserId', userId: newUser.id, user: newUser });
         try {
           localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(newUser));
+          const existing = getLocalUsers();
+          if (!existing.some(u => u.id === newUser.id || u.username === cleanUsername)) {
+            existing.push(newUser);
+            localStorage.setItem('TEACHER_AI_USERS_DB', JSON.stringify(existing));
+          }
         } catch {}
         resolve();
       };
@@ -535,6 +549,11 @@ export async function loginUserAccount(identifier: string, password?: string): P
       tx.oncomplete = () => {
         try {
           localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(user));
+          const existing = getLocalUsers();
+          const idx = existing.findIndex(u => u.id === user!.id || u.username === user!.username);
+          if (idx >= 0) existing[idx] = user!;
+          else existing.push(user!);
+          localStorage.setItem('TEACHER_AI_USERS_DB', JSON.stringify(existing));
         } catch {}
         resolve();
       };
@@ -646,6 +665,13 @@ export async function updateUserAccount(id: string, updates: Partial<UserAccount
     });
     localStorage.setItem('TEACHER_AI_STUDENT_PROFILE', JSON.stringify(updated));
     localStorage.setItem('TEACHER_AI_ACTIVE_USER', JSON.stringify(updated));
+    try {
+      const users = getLocalUsers();
+      const idx = users.findIndex(u => u.id === id);
+      if (idx !== -1) users[idx] = updated;
+      else users.push(updated);
+      localStorage.setItem('TEACHER_AI_USERS_DB', JSON.stringify(users));
+    } catch {}
     syncUserAccountToCloud(updated).catch(() => {});
     return updated;
   } catch {

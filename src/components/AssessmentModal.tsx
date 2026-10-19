@@ -141,7 +141,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container modal-wide assessment-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-container modal-wide assessment-modal" onClick={(e) => e.stopPropagation()} dir={isTargetLang ? 'ltr' : 'rtl'}>
         {/* Modal Header */}
         <div className="modal-header">
           <div className="modal-title-group">

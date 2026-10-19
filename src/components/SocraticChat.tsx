@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage, Lecture, StudentProfile } from '../types';
 import { removeExternalLinksFromText, sanitizeLectureForStudents } from '../services/studentContentSanitizer';
+import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
 import { askGeminiTutor } from '../services/geminiService';
 import { getTranslations } from '../i18n/translations';
 import { 
@@ -33,9 +34,11 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const isForeignLanguage = ['ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(lecture.subject || profile.subject || '');
+  const effectiveEduType = lecture.educationType || profile.educationType;
+  const isForeignLanguage = isForeignLanguageSubject(lecture.subject || profile.subject, effectiveEduType);
   const isEn = profile.language === 'en';
-  const isTargetLang = isEn || isForeignLanguage;
+  const isLanguagesTrack = effectiveEduType === 'INTERNATIONAL';
+  const isTargetLang = isEn || isForeignLanguage || isLanguagesTrack;
   const t = getTranslations(isTargetLang ? 'en' : profile.language);
   const studentLecture = sanitizeLectureForStudents(lecture);
   const lectureTitle = removeExternalLinksFromText((isTargetLang ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleEn || studentLecture.titleAr || '');
@@ -160,7 +163,7 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
   };
 
   return (
-    <div className="socratic-chat-drawer">
+    <div className="socratic-chat-drawer" dir={isTargetLang ? 'ltr' : 'rtl'}>
       {/* Chat Header */}
       <div className="chat-header">
         <div className="chat-header-title-group">

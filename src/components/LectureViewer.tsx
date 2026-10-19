@@ -704,7 +704,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const score  = lecture.lastAttempt?.score;
 
   return (
-    <main className="lecture-viewer-root" dir={isEn ? 'ltr' : 'rtl'}>
+    <main className="lecture-viewer-root" dir={isLessonTargetLang ? 'ltr' : 'rtl'}>
       {/* ═══ LESSON TITLE HERO ═══ */}
       <header className="lesson-hero-header">
         <div className="lesson-hero-left">

@@ -33,6 +33,7 @@ import {
   isEnglishCourseAvailable
 } from '../data/curriculumData';
 import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
+import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
 import { getSubjectVisual, getStageVisual } from '../data/subjectVisuals';
 import { detectStudentCountry, setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
@@ -951,8 +952,13 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
     selectedTrack
   ) || selectedSubject;
 
+  const effectiveEduType = normalizeEducationTypeForCountry(selectedCountry, profile.educationType);
+  const isLanguagesTrack = effectiveEduType === 'INTERNATIONAL';
+  const isForeignSubj = isForeignLanguageSubject(selectedSubject, effectiveEduType);
+  const isLtrMode = isEn || isLanguagesTrack || isForeignSubj;
+
   return (
-    <div className="preparatory-landing-root" dir={isEn ? 'ltr' : 'rtl'}>
+    <div className="preparatory-landing-root" dir={isLtrMode ? 'ltr' : 'rtl'}>
       {/* Top Header Bar */}
       <header className="prep-site-header">
         <div className="prep-header-inner">

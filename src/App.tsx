@@ -19,6 +19,7 @@ import {
   isEgyptPrimarySubjectAvailable,
   isEgyptPrepSubjectAvailable
 } from './data/curriculumData';
+import { isForeignLanguageSubject } from './data/foreignLanguageLessonLocalization';
 import {
   getActiveCurriculumCountry,
   getCountryInfo,
@@ -578,19 +579,25 @@ export function App() {
     ).catch(() => {});
   }, [profile.id, profile.subject, profile.gradeLevel, profile.country, profile.educationType, profile.educationTrack, lectures]);
 
-  // Adjust HTML dir and title when language changes
+  // Adjust HTML dir and title dynamically: switch to LTR when Languages Track, English, or foreign language subject is chosen
   useEffect(() => {
     const htmlEl = document.documentElement;
-    if (profile.language === 'ar') {
+    const isForeign = isForeignLanguageSubject(profile.subject, profile.educationType);
+    const isLanguagesTrack = profile.educationType === 'INTERNATIONAL';
+    const isLtr = profile.language === 'en' || isLanguagesTrack || isForeign;
+
+    if (!isLtr) {
       htmlEl.setAttribute('dir', 'rtl');
       htmlEl.setAttribute('lang', 'ar');
       document.title = 'منصة المعلم الذكي | منصة التعلم التكيفي المعززة بـ Gemini';
     } else {
       htmlEl.setAttribute('dir', 'ltr');
       htmlEl.setAttribute('lang', 'en');
-      document.title = 'AI Tutor | Adaptive Learning Platform powered by Gemini';
+      document.title = profile.language === 'en'
+        ? 'AI Tutor | Adaptive Learning Platform powered by Gemini'
+        : 'AI Tutor | Language Schools Track (English Medium)';
     }
-  }, [profile.language]);
+  }, [profile.language, profile.subject, profile.educationType]);
 
   // Live Real-Time Presence Heartbeat for Active Student
   useEffect(() => {
@@ -1156,7 +1163,7 @@ export function App() {
   };
 
   return (
-    <div className="app-root">
+    <div className="app-root" dir={profile.language === 'en' || profile.educationType === 'INTERNATIONAL' || isForeignLanguageSubject(profile.subject, profile.educationType) ? 'ltr' : 'rtl'}>
       {/* ═══ VIEW 1: PREPARATORY WELCOME & CURRICULUM SELECTION HUB ═══ */}
       {currentView === 'landing' ? (
         <PreparatoryLandingPage
