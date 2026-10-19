@@ -11,6 +11,7 @@ interface ExampleTemplate {
   titleAr: string;
   titleEn: string;
   equation: string;
+  equationEn?: string;
   steps: StepItem[];
   takeawayAr: string;
   takeawayEn: string;
@@ -38,6 +39,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 1 من 4: حساب وتطبيق المفهوم التأسيسي لـ (${concepts[0] || title})`,
         titleEn: `Worked Example 1 of 4: Foundational Computation for (${conceptsEn[0] || titleEn})`,
         equation: 'المعطيات: قيمة أ = 12، قيمة ب = 4 | المطلوب: إيجاد الناتج وفق القاعدة الرياضية',
+        equationEn: 'Given: Parameter A = 12, Parameter B = 4 | Goal: Compute result following the mathematical rule',
         steps: [
           { stepNumber: 1, textAr: 'تحديد المعطيات بدقة وقراءة المسألة الرياضية بعناية لاستخراج القيم المعلومة.', textEn: 'Identify given parameters carefully and extract known mathematical values.', noteAr: 'تحديد المعطيات', noteEn: 'Given parameters' },
           { stepNumber: 2, textAr: 'كتابة القانون أو المعادلة الرياضية الأساسية والتعويض بالقيم المستخرجة مباشرة.', textEn: 'State the governing formula and substitute extracted values directly.', noteAr: 'التعويض بالقانون', noteEn: 'Formula substitution' },
@@ -51,6 +53,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 2 من 4: معالجة مسألة لفظية وربطها بالواقع لـ (${concepts[1] || concepts[0] || title})`,
         titleEn: `Worked Example 2 of 4: Real-World Word Problem for (${conceptsEn[1] || conceptsEn[0] || titleEn})`,
         equation: 'المسألة اللفظية: تحويل النص الواقعي إلى نموذج ومعادلة رياضية قابلة للحل',
+        equationEn: 'Word Problem: Translate real-world scenario into a solvable algebraic model',
         steps: [
           { stepNumber: 1, textAr: 'قراءة النص اللفظي واستخراج المتغير المجهول والكميات الثابتة وتسميتها بوضوح.', textEn: 'Parse word problem text and assign explicit variables to unknown quantities.', noteAr: 'صياغة المتغيرات', noteEn: 'Variable assignment' },
           { stepNumber: 2, textAr: 'بناء المعادلة الجبرية أو النموذج الحسابي الذي يمثل العلاقة بين المتغيرات.', textEn: 'Formulate the algebraic equation representing the described real-world scenario.', noteAr: 'بناء المعادلة', noteEn: 'Equation modeling' },
@@ -63,6 +66,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 3 من 4: مسألة بيانية وهندسية واستنتاج الخواص لـ (${concepts[2] || concepts[0] || title})`,
         titleEn: `Worked Example 3 of 4: Graphical & Geometric Analysis for (${conceptsEn[2] || conceptsEn[0] || titleEn})`,
         equation: 'النموذج البياني: تحليل الميل ونقاط التقاطع واستنتاج السلوك الرياضي',
+        equationEn: 'Graphical Model: Analyze slope, coordinate intercepts, and functional behavior',
         steps: [
           { stepNumber: 1, textAr: 'قراءة المنحنى أو الشكل الهندسي وتحديد النقاط المحورية ومحاور الإحداثيات.', textEn: 'Examine geometric diagram/graph and identify pivot points and coordinate axes.', noteAr: 'قراءة الشكل', noteEn: 'Graph inspection' },
           { stepNumber: 2, textAr: 'حساب الميل أو المساحة أو النسبة الهندسية بالاعتماد على الخواص المبرهنة.', textEn: 'Calculate slope, area, or geometric ratio based on proven theorems.', noteAr: 'التطبيق الهندسي', noteEn: 'Geometric calculation' },
@@ -75,6 +79,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 4 من 4: مهارة التفكير العليا وتجنب الأفخاخ الامتحانية لـ (${concepts[3] || concepts[1] || title})`,
         titleEn: `Worked Example 4 of 4: Higher-Order Thinking & Exam Trap Avoidance for (${conceptsEn[3] || conceptsEn[1] || titleEn})`,
         equation: 'تحدي الإتقان: فحص الحالات الخاصة والمغالطات الشائعة في الحل',
+        equationEn: 'Mastery Challenge: Analyze edge cases, domain restrictions, and solution accuracy',
         steps: [
           { stepNumber: 1, textAr: 'فحص الشروط المسبقة للمسألة (مثل القسمة على الصفر أو القيم السالبة تحت الجذر).', textEn: 'Inspect domain conditions and edge cases (e.g. division by zero or negative radicands).', noteAr: 'فحص الشروط', noteEn: 'Domain conditions' },
           { stepNumber: 2, textAr: 'التمييز بين الحل المقبول والحل المرفوض رياضياً في سياق المسألة.', textEn: 'Differentiate between valid solutions and extraneous/rejected solutions.', noteAr: 'استبعاد الدخيل', noteEn: 'Extraneous check' },
@@ -93,6 +98,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 1 من 4: النموذج العلمي والتفسير الظواهري لـ (${concepts[0] || title})`,
         titleEn: `Worked Example 1 of 4: Scientific Model & Phenomenological Explanation for (${conceptsEn[0] || titleEn})`,
         equation: 'النموذج التجريبي: مراقبة المتغير المستقل والتابع وضبط العوامل الثابتة',
+        equationEn: 'Experimental Model: Observe independent & dependent variables while controlling constants',
         steps: [
           { stepNumber: 1, textAr: 'تحديد الظاهرة العلمية محل الدراسة وصياغة الفرضية القابلة للاختبار.', textEn: 'Define target scientific phenomenon and formulate a testable hypothesis.', noteAr: 'صياغة الفرضية', noteEn: 'Hypothesis' },
           { stepNumber: 2, textAr: 'تطبيق القانون الفيزيائي/الكيميائي المفسر لحركة الجسيمات أو تحولات الطاقة.', textEn: 'Apply governing scientific law explaining particle motion or energy transformation.', noteAr: 'التفسير العلمي', noteEn: 'Scientific law' },
@@ -105,6 +111,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 2 من 4: مسألة حسابية بقوانين ووحدات القياس الدولية لـ (${concepts[1] || concepts[0] || title})`,
         titleEn: `Worked Example 2 of 4: Quantitative Calculation with SI Units for (${conceptsEn[1] || conceptsEn[0] || titleEn})`,
         equation: 'المعادلة الرياضية العلمية: تطبيق القانون وحساب المقدار العددي ووحدة القياس',
+        equationEn: 'Quantitative Scientific Equation: Apply governing formula, calculate numerical value & SI unit',
         steps: [
           { stepNumber: 1, textAr: 'تفريغ المعطيات وتحويل كافة الوحدات إلى النظام الدولي للوحدات (SI Units).', textEn: 'List given quantities and convert all units to the International System of Units (SI).', noteAr: 'تحويل الوحدات', noteEn: 'Unit conversion' },
           { stepNumber: 2, textAr: 'كتابة القانون الفيزيائي/الكيميائي الصريح وعزل الكمية المجهولة جبرياً.', textEn: 'State explicit scientific equation and isolate target variable algebraically.', noteAr: 'تطبيق القانون', noteEn: 'Equation formulation' },
@@ -117,6 +124,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 3 من 4: تجربة معملية وتطبيق حياتي وصناعي لـ (${concepts[2] || concepts[0] || title})`,
         titleEn: `Worked Example 3 of 4: Laboratory Experiment & Industrial Application for (${conceptsEn[2] || conceptsEn[0] || titleEn})`,
         equation: 'التطبيق الواقعي: دراسة سلوك المادة وتطبيقاتها في التكنولوجيا المعاصرة',
+        equationEn: 'Real-world Application: Analyze material behavior & industrial technological uses',
         steps: [
           { stepNumber: 1, textAr: 'وصف التجربة المعملية وتحديد أدوات القياس والمواد المستخدمة باحتياطات السلامة.', textEn: 'Describe lab protocol, measurement apparatus, and safety precautions.', noteAr: 'إعداد التجربة', noteEn: 'Apparatus setup' },
           { stepNumber: 2, textAr: 'ملاحظة التغيرات (انبعاث طاقة، تغير لون، تولد جهد، انقسام خلوي) وتسجيل البيانات.', textEn: 'Record quantitative and qualitative observations systematically.', noteAr: 'تسجيل الملاحظات', noteEn: 'Data logging' },
@@ -129,6 +137,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
         titleAr: `مثال تطبيقي 4 من 4: تحليل مقارن واستنتاج وتجنب المفاهيم الخاطئة لـ (${concepts[3] || concepts[1] || title})`,
         titleEn: `Worked Example 4 of 4: Comparative Analysis & Misconception Clarification for (${conceptsEn[3] || conceptsEn[1] || titleEn})`,
         equation: 'المقارنة العلمية: التمييز بين المفاهيم المتقاربة وتصحيح الفهم الخاطئ الشائع',
+        equationEn: 'Comparative Science: Distinguish related concepts & clarify common misconceptions',
         steps: [
           { stepNumber: 1, textAr: 'طرح المفهوم الخاطئ الشائع الذي يقع فيه الطلاب غالباً وتحليله علمياً.', textEn: 'Identify widespread student misconception and contrast with rigorous scientific theory.', noteAr: 'كشف المفهوم الخاطئ', noteEn: 'Misconception' },
           { stepNumber: 2, textAr: 'تقديم الدليل العلمي التجريبي والبرهان المنطقي الذي يدحض المفهوم الخاطئ.', textEn: 'Provide empirical evidence and rational proof disproving the misconception.', noteAr: 'البرهان العلمي', noteEn: 'Scientific proof' },
@@ -389,6 +398,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
       titleAr: `مثال تطبيقي 1 من 4: تأسيس المفهوم والتحليل الأولي لـ (${concepts[0] || title})`,
       titleEn: `Worked Example 1 of 4: Core Concept Foundation & Initial Analysis for (${conceptsEn[0] || titleEn})`,
       equation: 'النموذج التأسيسي: تفكيك الفكرة المعقدة إلى عناصرها البسيطة المفهومة',
+      equationEn: 'Foundational Model: Deconstruct complex idea into clear fundamental elements',
       steps: [
         { stepNumber: 1, textAr: 'قراءة المفهوم الأساسي وتحديد عناصره الجوهرية بدون تعقيد.', textEn: 'Deconstruct central concept into straightforward, intuitive components.', noteAr: 'التفكيك الأولي', noteEn: 'Deconstruction' },
         { stepNumber: 2, textAr: 'استعراض حالة نموذجية وتطبيق القاعدة عليها خطوة بخطوة بالمنطق السليم.', textEn: 'Walk through a benchmark scenario applying the foundational rule logically.', noteAr: 'التطبيق المباشر', noteEn: 'Direct application' },
@@ -401,6 +411,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
       titleAr: `مثال تطبيقي 2 من 4: تطبيق عملي ومسألة تدريبية لـ (${concepts[1] || concepts[0] || title})`,
       titleEn: `Worked Example 2 of 4: Practical Execution & Guided Practice for (${conceptsEn[1] || conceptsEn[0] || titleEn})`,
       equation: 'التطبيق الإجرائي: الخطوات المنظمة للوصول إلى الحل النموذجي',
+      equationEn: 'Procedural Application: Systematic steps to reach standard solution',
       steps: [
         { stepNumber: 1, textAr: 'تحديد المدخلات والمعطيات والشروط الأساسية للعملية أو المسألة.', textEn: 'Identify inputs, parameters, and boundary conditions systematically.', noteAr: 'تحديد المدخلات', noteEn: 'Input identification' },
         { stepNumber: 2, textAr: 'تنفيذ الإجراءات المتسلسلة والمتابعة الدقيقة لكل مرحلة بدون تخطي.', textEn: 'Execute step-by-step sequential operations without skipping crucial stages.', noteAr: 'المعالجة المنهجية', noteEn: 'Systematic execution' },
@@ -413,6 +424,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
       titleAr: `مثال تطبيقي 3 من 4: سيناريو من واقع الحياة المعاصرة لـ (${concepts[2] || concepts[0] || title})`,
       titleEn: `Worked Example 3 of 4: Real-World Modern Scenario for (${conceptsEn[2] || conceptsEn[0] || titleEn})`,
       equation: 'الربط الواقعي: كيف نرى هذا المفهوم يعمل في حياتنا اليومية وسوق العمل',
+      equationEn: 'Real-world Connection: How this concept functions in everyday life and industry',
       steps: [
         { stepNumber: 1, textAr: 'طرح موقف واقعي ملموس يواجهه الطلاب في حياتهم أو في التقنيات الحديثة.', textEn: 'Present an authentic modern scenario encountered in daily life or modern technology.', noteAr: 'الموقف الواقعي', noteEn: 'Authentic scenario' },
         { stepNumber: 2, textAr: 'تحليل الموقف واستخدام المفهوم المدروس لإيجاد الحل الأمثل أو اتخاذ القرار الصحيح.', textEn: 'Analyze the context using the curriculum concept to arrive at an optimal decision.', noteAr: 'اتخاذ القرار', noteEn: 'Decision making' },
@@ -425,6 +437,7 @@ function generateContextualExamples(lecture: Lecture): ExampleTemplate[] {
       titleAr: `مثال تطبيقي 4 من 4: التفكير الناقد واستكشاف الأخطاء وتصحيحها لـ (${concepts[3] || concepts[1] || title})`,
       titleEn: `Worked Example 4 of 4: Critical Thinking & Debugging Pitfalls for (${conceptsEn[3] || conceptsEn[1] || titleEn})`,
       equation: 'تحدي الإتقان: اكتشاف الخطأ، تتبعه، وإصلاحه بالطريقة المعتمدة الصحيحة',
+      equationEn: 'Mastery Challenge: Identify, diagnose, and correct common errors systematically',
       steps: [
         { stepNumber: 1, textAr: 'عرض حل غير صحيح يحتوي على خطأ شائع يقع فيه الكثير من الطلاب.', textEn: 'Examine a flawed student solution containing a common diagnostic error.', noteAr: 'اكتشاف الخطأ', noteEn: 'Error detection' },
         { stepNumber: 2, textAr: 'تحديد سبب الخطأ وتوضيح لماذا أدى هذا المسار إلى نتيجة غير سليمة.', textEn: 'Analyze the root cause and explain why this misconception derails the solution.', noteAr: 'تحليل السبب', noteEn: 'Root cause analysis' },
@@ -449,12 +462,23 @@ export function ensureFourExamplesForLecture(lecture: Lecture): Lecture {
     sections: lecture.sections ? lecture.sections.map(s => ({ ...s })) : []
   };
 
+  const isForeignLesson = isForeignLanguageSubject(enriched.subject, enriched.educationType);
+
   // Collect existing interactive examples from sections
   const existingExamples: InteractiveExample[] = [];
   if (enriched.sections) {
     enriched.sections.forEach(sec => {
       if (sec.interactiveExample && sec.interactiveExample.steps && sec.interactiveExample.steps.length > 0) {
-        existingExamples.push(sec.interactiveExample);
+        const ex = sec.interactiveExample;
+        const eqAr = (ex as any).problemAr || ex.equation || '';
+        const eqEn = (ex as any).problemEn || ex.equationEn || '';
+        existingExamples.push({
+          ...ex,
+          equation: isForeignLesson ? (eqEn || eqAr) : (ex.equation || eqAr),
+          equationEn: eqEn || eqAr,
+          problemAr: eqAr,
+          problemEn: eqEn || eqAr
+        });
       }
     });
   }
@@ -469,10 +493,15 @@ export function ensureFourExamplesForLecture(lecture: Lecture): Lecture {
           }
           return st;
         });
+        const eqAr = we.problemAr || we.equation || '';
+        const eqEn = we.problemEn || we.equationEn || '';
         existingExamples.push({
           titleAr: we.titleAr || `مثال تطبيقي ${existingExamples.length + 1}`,
           titleEn: we.titleEn || `Worked Example ${existingExamples.length + 1}`,
-          equation: we.problemAr || we.equation || '',
+          equation: isForeignLesson ? (eqEn || eqAr) : eqAr,
+          equationEn: eqEn || eqAr,
+          problemAr: eqAr,
+          problemEn: eqEn || eqAr,
           steps: stepsArr,
           takeawayAr: we.takeawayAr || 'الفائدة الأساسية من حل هذا المثال',
           takeawayEn: we.takeawayEn || 'Key takeaway from this example'
@@ -493,7 +522,11 @@ export function ensureFourExamplesForLecture(lecture: Lecture): Lecture {
     finalizedExamples.push({
       ...ex,
       titleAr: ex.titleAr?.includes('من 4') ? ex.titleAr : `مثال تطبيقي ${i + 1} من 4: ${ex.titleAr.replace(/^مثال\s*\d*[:\s-]*/i, '')}`,
-      titleEn: ex.titleEn?.includes('of 4') ? ex.titleEn : `Worked Example ${i + 1} of 4: ${ex.titleEn.replace(/^Example\s*\d*[:\s-]*/i, '')}`
+      titleEn: ex.titleEn?.includes('of 4') ? ex.titleEn : `Worked Example ${i + 1} of 4: ${ex.titleEn.replace(/^Example\s*\d*[:\s-]*/i, '')}`,
+      equation: isForeignLesson ? ((ex as any).problemEn || ex.equationEn || ex.equation) : ex.equation,
+      equationEn: ex.equationEn || (ex as any).problemEn,
+      problemAr: (ex as any).problemAr,
+      problemEn: (ex as any).problemEn || ex.equationEn
     });
   }
 
@@ -504,7 +537,8 @@ export function ensureFourExamplesForLecture(lecture: Lecture): Lecture {
     finalizedExamples.push({
       titleAr: template.titleAr,
       titleEn: template.titleEn,
-      equation: template.equation,
+      equation: isForeignLesson && template.equationEn ? template.equationEn : template.equation,
+      equationEn: template.equationEn || template.equation,
       steps: template.steps,
       takeawayAr: template.takeawayAr,
       takeawayEn: template.takeawayEn
@@ -617,8 +651,8 @@ Focuses on higher-order analytical reasoning and compound questions to achieve c
     id: `we-${enriched.id}-${idx + 1}`,
     titleAr: ex.titleAr,
     titleEn: ex.titleEn,
-    problemAr: ex.equation,
-    problemEn: ex.equation,
+    problemAr: (ex as any).problemAr || ex.equation,
+    problemEn: (ex as any).problemEn || (ex as any).equationEn || ex.equation,
     stepByStepSolutionAr: ex.steps.map(s => `${s.textAr} ${s.noteAr ? `(${s.noteAr})` : ''}`),
     stepByStepSolutionEn: ex.steps.map(s => `${s.textEn} ${s.noteEn ? `(${s.noteEn})` : ''}`),
     takeawayAr: ex.takeawayAr,

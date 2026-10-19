@@ -14,6 +14,7 @@ export const PRIMARY_MATH_G1_LECTURES: Lecture[] = [
   {
     id: 'p1-m-1',
     order: 1,
+    subject: 'PRIMARY_MATH',
     titleAr: 'المحاضرة 1: الأعداد من 0 إلى 20، إطار العشرة خانات، والعد والمقارنة (> ، < ، =)',
     titleEn: 'Lecture 1: Numbers 0 to 20, Ten-Frames, Counting & Comparing (> , < , =)',
     subtitleAr: 'العد التصاعدي والتنازلي من 0 إلى 20، تمثيل الأعداد بنماذج إطار خانات العشرة (Ten Frames)، ومقارنة الأعداد باستخدام رموز أكبر من وأصغر من ويساوي',
@@ -286,6 +287,7 @@ export const PRIMARY_MATH_G1_LECTURES: Lecture[] = [
   {
     id: 'p1-m-2',
     order: 2,
+    subject: 'PRIMARY_MATH',
     titleAr: 'المحاضرة 2: الجمع والطرح البسيط ضمن العدد 20 ومخطط تكوين الأعداد (Number Bonds)',
     titleEn: 'Lecture 2: Basic Addition & Subtraction within 20, Number Bonds & Word Problems',
     subtitleAr: 'مفهوم الجمع كضم مجموعتين (+ و =)، مفهوم الطرح كأخذ وحذف (-)، مكونات العدد 10 (Pairs to 10)، ومسائل لفظية مصورة بسيطة',
@@ -528,6 +530,7 @@ export const PRIMARY_MATH_G1_LECTURES: Lecture[] = [
   {
     id: 'p1-m-3',
     order: 3,
+    subject: 'PRIMARY_MATH',
     titleAr: 'المحاضرة 3: الأشكال الهندسية ثنائية وثلاثية الأبعاد (2D & 3D Shapes) والرسوم البيانية المصورة (Graphing)',
     titleEn: 'Lecture 3: 2D & 3D Geometric Shapes, Sides/Vertices & Picture/Bar Graphs',
     subtitleAr: 'التعرف على الأشكال المستوية (Circle, Square, Triangle, Rectangle)، الأشكال المجسمة (Cube, Sphere, Cone, Cylinder)، وجمع البيانات بالرسم البياني',
@@ -776,6 +779,7 @@ export const PRIMARY_MATH_G1_LECTURES: Lecture[] = [
   {
     id: 'p1-m-4',
     order: 4,
+    subject: 'PRIMARY_MATH',
     titleAr: 'المحاضرة 4: الأعداد حتى 99، القيمة المكانية (الآحاد والعشرات Tens & Ones)، الوقت والنقود والقياس',
     titleEn: 'Lecture 4: Numbers up to 99, Place Value (Tens & Ones), 2-Digit Operations, Time & Money',
     subtitleAr: 'العد حتى 99، تحليل الأعداد إلى آحاد وعشرات، جمع وطرح عددين بدون إعادة تجميع (32 + 15)، قراءة الساعة بالكامل ونصف، والنقود المصرية (1, 5, 10, 20 جنيه)',

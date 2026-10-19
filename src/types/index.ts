@@ -178,6 +178,9 @@ export interface InteractiveExample {
   titleAr: string;
   titleEn: string;
   equation?: string;
+  equationEn?: string;
+  problemAr?: string;
+  problemEn?: string;
   steps: StepItem[];
   takeawayAr: string;
   takeawayEn: string;

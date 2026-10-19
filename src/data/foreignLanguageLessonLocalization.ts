@@ -38,6 +38,13 @@ function mirror(node: unknown, depth: number): unknown {
         continue;
       }
     }
+    if (key === 'equation') {
+      const enValue = source['equationEn'] || source['problemEn'];
+      if (hasContent(enValue)) {
+        result[key] = mirror(enValue, depth + 1);
+        continue;
+      }
+    }
     result[key] = mirror(value, depth + 1);
   }
   return result;

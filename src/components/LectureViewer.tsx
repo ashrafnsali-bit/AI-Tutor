@@ -621,17 +621,26 @@ function renderContentWithDialogues(
 export const LectureViewer: React.FC<LectureViewerProps> = ({
   lecture: rawLecture, lang, profile, onStartAssessment, onOpenTutor, onNextLecture, hasNextUnlocked
 }) => {
+  const effectiveSubject = rawLecture?.subject || profile?.subject;
   const effectiveEducationType = rawLecture?.educationType || profile?.educationType;
-  const isForeignLanguageLesson = isForeignLanguageSubject(rawLecture?.subject, effectiveEducationType);
+  const isForeignLanguageLesson = isForeignLanguageSubject(effectiveSubject, effectiveEducationType);
   const isEn = lang === 'en';
   const isLessonTargetLang = isEn || isForeignLanguageLesson;
   const lecture = useMemo(
-    () => sanitizeLectureForStudents(
-      isForeignLanguageLesson && rawLecture
-        ? localizeSingleLecture(ensureFourExamplesForLecture(rawLecture))
-        : ensureFourExamplesForLecture(rawLecture)
-    ),
-    [rawLecture, isForeignLanguageLesson]
+    () => {
+      if (!rawLecture) return rawLecture;
+      const lectureWithContext = {
+        ...rawLecture,
+        subject: effectiveSubject,
+        educationType: effectiveEducationType
+      };
+      return sanitizeLectureForStudents(
+        isForeignLanguageLesson
+          ? localizeSingleLecture(ensureFourExamplesForLecture(lectureWithContext))
+          : ensureFourExamplesForLecture(lectureWithContext)
+      );
+    },
+    [rawLecture, isForeignLanguageLesson, effectiveSubject, effectiveEducationType]
   );
   const [formativeSelected, setFormativeSelected] = useState<Record<string, number>>({});
   const [formativeChecked, setFormativeChecked]   = useState<Record<string, boolean>>({});
@@ -1075,14 +1084,24 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                       </div>
 
                       {/* Problem Statement / Formula Banner */}
-                      {ex.equation && (
+                      {Boolean(
+                        isLessonTargetLang
+                          ? ((ex as any).problemEn || (ex as any).equationEn || ex.equation)
+                          : (ex.equation || (ex as any).problemAr || (ex as any).problemEn)
+                      ) && (
                         <div className="we-problem-statement">
                           <div className="we-problem-tag-row">
                             <BookOpen size={14} />
                             <span>{isLessonTargetLang ? 'Problem / Governing Rule' : 'نص المسألة / القاعدة الرياضية'}</span>
                           </div>
                           <div className="we-problem-content" dir="auto">
-                            {renderContentWithDialogues(ex.equation, isLessonTargetLang, (txt) => playAudioSpeech(txt, isLessonTargetLang, rawLecture?.subject))}
+                            {renderContentWithDialogues(
+                              (isLessonTargetLang
+                                ? ((ex as any).problemEn || (ex as any).equationEn || ex.equation)
+                                : (ex.equation || (ex as any).problemAr || (ex as any).problemEn)) || '',
+                              isLessonTargetLang,
+                              (txt) => playAudioSpeech(txt, isLessonTargetLang, rawLecture?.subject || profile?.subject)
+                            )}
                           </div>
                         </div>
                       )}
