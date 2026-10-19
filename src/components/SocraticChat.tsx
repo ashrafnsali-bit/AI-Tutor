@@ -35,13 +35,19 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
   if (!isOpen) return null;
 
   const effectiveEduType = lecture.educationType || profile.educationType;
-  const isForeignLanguage = isForeignLanguageSubject(lecture.subject || profile.subject, effectiveEduType);
+  const currentSubject = lecture.subject || profile.subject;
+  const isForeignLanguage = isForeignLanguageSubject(currentSubject, effectiveEduType);
   const isEn = profile.language === 'en';
   const isLanguagesTrack = effectiveEduType === 'INTERNATIONAL';
   const isTargetLang = isEn || isForeignLanguage || isLanguagesTrack;
   const t = getTranslations(isTargetLang ? 'en' : profile.language);
   const studentLecture = sanitizeLectureForStudents(lecture);
   const lectureTitle = removeExternalLinksFromText((isTargetLang ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleEn || studentLecture.titleAr || '');
+
+  let tutorTitle = t.tutorTitle;
+  let tutorSubtitlePrefix = t.tutorSubtitlePrefix;
+  let socraticMissionRule = t.socraticMissionRule;
+  let chatPlaceholder = t.chatPlaceholder;
 
   let initialWelcomeText = `مرحباً يا ${profile.name}! 👋 أنا معلمك السقراطي لمساعدتك في فهم "${lectureTitle}".\n\nتذكر أنني هنا لأوجهك بالأسئلة والتلميحات لتكتشف الحلول بنفسك لا لأعطيك حلولاً جاهزة. ما الذي تود استكشافه أو توضيحه في هذا الدرس؟`;
   let initialSuggestions = [
@@ -50,21 +56,33 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
     'أريد مثالاً إضافياً على خاصية التوازن'
   ];
 
-  if (profile.subject === 'FRENCH') {
+  if (currentSubject === 'FRENCH') {
+    tutorTitle = 'Tuteur Socratique IA';
+    tutorSubtitlePrefix = 'Dialogue guidé pour : ';
+    socraticMissionRule = 'Principe socratique : Je vous guide avec des questions et des indices sans réponses toutes faites !';
+    chatPlaceholder = 'Posez votre question ou demandez un indice...';
     initialWelcomeText = `Bonjour, ${profile.name} ! 👋 Je suis votre tuteur IA socratique pour "${lectureTitle}".\n\nMon rôle est de vous guider avec des questions et des indices afin que vous découvriez les réponses par vous-même. Que souhaitez-vous explorer aujourd'hui ?`;
     initialSuggestions = [
       'Pouvez-vous me donner un exemple avec ces mots ?',
       'Comment utiliser cette règle dans une phrase ?',
       'Pouvez-vous expliquer le point principal de cette leçon ?'
     ];
-  } else if (profile.subject === 'GERMAN') {
+  } else if (currentSubject === 'GERMAN') {
+    tutorTitle = 'Sokratischer KI-Tutor';
+    tutorSubtitlePrefix = 'Geführter Dialog zu: ';
+    socraticMissionRule = 'Sokratisches Prinzip: Ich leite dich mit Fragen und Hinweisen an, ohne fertige Antworten!';
+    chatPlaceholder = 'Stelle deine Frage oder bitte um einen Hinweis...';
     initialWelcomeText = `Hallo, ${profile.name}! 👋 Ich bin dein sokratischer KI-Tutor für "${lectureTitle}".\n\nMein Ziel ist es, dich mit gezielten Hinweisen anzuleiten, damit du die Lösung selbst findest. Was möchtest du heute üben?`;
     initialSuggestions = [
       'Kannst du mir ein Beispiel für diesen Satz geben?',
       'Wie wende ich diese Grammatikregel an?',
       'Kannst du die Hauptidee dieser Lektion erklären?'
     ];
-  } else if (profile.subject === 'ITALIAN') {
+  } else if (currentSubject === 'ITALIAN') {
+    tutorTitle = 'Tutor Socratico IA';
+    tutorSubtitlePrefix = 'Dialogo guidato su: ';
+    socraticMissionRule = 'Principio socratico: Ti guido con domande e indizi senza risposte già pronte!';
+    chatPlaceholder = 'Fai una domanda o chiedi un indizio...';
     initialWelcomeText = `Ciao, ${profile.name}! 👋 Sono il tuo tutor IA socratico per "${lectureTitle}".\n\nIl mio obiettivo è guidarti passo dopo passo a scoprire le risposte. Di cosa vorresti parlare oggi?`;
     initialSuggestions = [
       'Puoi farmi un esempio con questi vocaboli?',
@@ -171,8 +189,8 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
             <Sparkles size={20} />
           </div>
           <div>
-            <h3 className="chat-title">{t.tutorTitle}</h3>
-            <span className="chat-subtitle">{t.tutorSubtitlePrefix}{lectureTitle}</span>
+            <h3 className="chat-title">{tutorTitle}</h3>
+            <span className="chat-subtitle">{tutorSubtitlePrefix}{lectureTitle}</span>
           </div>
         </div>
 
@@ -197,7 +215,7 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
       {/* Socratic Mission Banner */}
       <div className="socratic-rule-banner">
         <Lightbulb size={16} className="rule-icon" />
-        <span>{t.socraticMissionRule}</span>
+        <span>{socraticMissionRule}</span>
       </div>
 
       {/* Messages List */}
@@ -255,7 +273,7 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
         <input
           type="text"
           className="chat-input"
-          placeholder={t.chatPlaceholder}
+          placeholder={chatPlaceholder}
           value={inputQuery}
           onChange={(e) => setInputQuery(e.target.value)}
           onKeyDown={(e) => {

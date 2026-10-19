@@ -653,6 +653,29 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const isArabicLanguageLesson = ['ARABIC_LIT', 'ARABIC_LANG', 'PRIMARY_ARABIC'].includes(rawLecture?.subject || '');
   const t = getTranslations(isEn ? 'en' : 'ar');
 
+  let socraticTitle = t.socraticCalloutTitle;
+  let socraticDesc = t.socraticCalloutDesc;
+  let socraticBtn = t.btnAskSocratic;
+
+  if (effectiveSubject === 'FRENCH') {
+    socraticTitle = 'Avez-vous une question ou un point flou dans cette leçon ?';
+    socraticDesc = 'Échangez directement avec le Tuteur Socratique propulsé par Gemini pour comprendre le concept sans réponses toutes faites !';
+    socraticBtn = 'Demander au Tuteur Socratique ✨';
+  } else if (effectiveSubject === 'GERMAN') {
+    socraticTitle = 'Hast du eine Frage oder ist ein Punkt in dieser Lektion unklar?';
+    socraticDesc = 'Sprich direkt mit dem sokratischen KI-Tutor von Gemini, um das Konzept ohne fertige Antworten selbst zu begreifen!';
+    socraticBtn = 'Sokratischen Tutor jetzt fragen ✨';
+  } else if (effectiveSubject === 'ITALIAN') {
+    socraticTitle = 'Hai una domanda o un punto poco chiaro in questa lezione?';
+    socraticDesc = 'Parla direttamente con il Tutor Socratico potenziato da Gemini per capire il concetto senza risposte già pronte!';
+    socraticBtn = 'Chiedi al Tutor Socratico ora ✨';
+  } else if (isLessonTargetLang) {
+    const enT = getTranslations('en');
+    socraticTitle = enT.socraticCalloutTitle;
+    socraticDesc = enT.socraticCalloutDesc;
+    socraticBtn = `${enT.btnAskSocratic} ✨`;
+  }
+
   useEffect(() => {
     setFormativeSelected({});
     setFormativeChecked({});
@@ -773,12 +796,12 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           <div className="lesson-hero-meta">
             <span className="lesson-meta-badge">
               <Flame size={13} />
-              {lecture.durationMinutes} {t.minutesUnit}
+              {lecture.durationMinutes} {isLessonTargetLang ? 'min' : t.minutesUnit}
             </span>
             {hasFourInteractiveExamples && (
               <span className="lesson-meta-badge badge-examples-guarantee" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.3)', fontWeight: 600 }}>
                 <Calculator size={13} />
-                {isEn ? '4 Step-by-Step Worked Examples' : '🎯 4 أمثلة توضيحية تفاعلية محلولة'}
+                {isLessonTargetLang ? '4 Step-by-Step Worked Examples' : '🎯 4 أمثلة توضيحية تفاعلية محلولة'}
               </span>
             )}
             {passed !== undefined && (
@@ -858,7 +881,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                 transition: 'all 0.2s'
               }}
             >
-              <span>{isEn ? 'Go to Next Lesson' : 'الانتقال للمحاضرة القادمة'}</span>
+              <span>{isLessonTargetLang ? 'Go to Next Lesson' : 'الانتقال للمحاضرة القادمة'}</span>
               <ArrowRight size={17} />
             </button>
           )}
@@ -1640,17 +1663,17 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
 
       {/* ═══ SECTION 9 — SOCRATIC AI TUTOR ═══ */}
       <section className="lesson-section socratic-cta-section">
-        <div className="socratic-cta-card">
+        <div className="socratic-cta-card" dir={isLessonTargetLang ? 'ltr' : 'rtl'}>
           <div className="socratic-cta-icon-wrap">
             <HelpCircle size={26} />
           </div>
           <div className="socratic-cta-text">
-            <h4 className="socratic-cta-title">{t.socraticCalloutTitle}</h4>
-            <p className="socratic-cta-desc">{t.socraticCalloutDesc}</p>
+            <h4 className="socratic-cta-title">{socraticTitle}</h4>
+            <p className="socratic-cta-desc">{socraticDesc}</p>
           </div>
           <button type="button" className="socratic-cta-btn" onClick={onOpenTutor}>
             <Sparkles size={16} />
-            {t.btnAskSocratic}
+            {socraticBtn}
           </button>
         </div>
       </section>
