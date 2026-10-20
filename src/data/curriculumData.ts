@@ -4834,10 +4834,11 @@ export function isSudanPublicGrade11SubjectAvailable(
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
   _educationType: EducationType = 'PUBLIC',
-  _track: EducationTrack = 'GENERAL'
+  track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G11' &&
+    track !== 'SHARIA_HUMANITIES' &&
     subject === 'BIOLOGY';
 }
 
@@ -4850,8 +4851,7 @@ export function isSudanPublicGrade12SubjectAvailable(
 ): boolean {
   if (country !== 'SD' || gradeLevel !== 'G12') return false;
   const subjects = getSudanGrade12Subjects(track);
-  if (subjects.includes(subject)) return true;
-  return getSudanGrade12Subjects('GENERAL').includes(subject);
+  return subjects.includes(subject);
 }
 
 export function getSudanPublicGrade12Subjects(track: EducationTrack = 'GENERAL'): Subject[] {

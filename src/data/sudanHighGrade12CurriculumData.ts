@@ -145,7 +145,7 @@ const courses: Grade12Course[] = [
     subject: 'PHYSICS',
     titleAr: 'الفيزياء',
     titleEn: 'Physics',
-    tracks: ['SCIENCE_MATH', 'SCIENCE_BIO'],
+    tracks: ['SCIENCE_MATH', 'SCIENCE_BIO', 'CS_ENGINEERING', 'HEALTH_LIFE', 'GENERAL'],
     lessonLabelAr: 'الفصل',
     lessonLabelEn: 'Chapter',
     units: [
@@ -283,6 +283,7 @@ const courses: Grade12Course[] = [
     subject: 'CHEMISTRY',
     titleAr: 'الكيمياء',
     titleEn: 'Chemistry',
+    tracks: ['SCIENCE_MATH', 'SCIENCE_BIO', 'CS_ENGINEERING', 'HEALTH_LIFE', 'GENERAL'],
     units: [
       {
         titleAr: 'مشتقات الهيدروكربونات العضوية',
@@ -362,6 +363,7 @@ const courses: Grade12Course[] = [
     subject: 'BIOLOGY',
     titleAr: 'علم الأحياء',
     titleEn: 'Biology',
+    tracks: ['SCIENCE_BIO', 'HEALTH_LIFE', 'GENERAL'],
     units: [
       {
         titleAr: 'التكاثر',
@@ -448,6 +450,7 @@ const courses: Grade12Course[] = [
     subject: 'HISTORY',
     titleAr: 'التاريخ',
     titleEn: 'History',
+    tracks: ['SHARIA_HUMANITIES', 'GENERAL'],
     units: [
       {
         titleAr: 'الثورة المهدية والدولة في السودان (1881–1899م)',
@@ -487,6 +490,7 @@ const courses: Grade12Course[] = [
     subject: 'GEOGRAPHY',
     titleAr: 'الجغرافيا والدراسات البيئية',
     titleEn: 'Geography and Environmental Studies',
+    tracks: ['SHARIA_HUMANITIES', 'GENERAL'],
     units: [
       {
         titleAr: 'قراءة الصور الجوية والفضائية والاستشعار عن بعد',
@@ -518,6 +522,7 @@ const courses: Grade12Course[] = [
     subject: 'COMPUTER_SCIENCE',
     titleAr: 'علوم الحاسوب',
     titleEn: 'Computer Science',
+    tracks: ['SCIENCE_MATH', 'CS_ENGINEERING', 'GENERAL'],
     units: [
       {
         titleAr: 'المنطق والعد الثنائي',
@@ -659,6 +664,7 @@ const courses: Grade12Course[] = [
     subject: 'FRENCH',
     titleAr: 'اللغة الفرنسية',
     titleEn: 'French',
+    tracks: ['SHARIA_HUMANITIES', 'GENERAL'],
     units: [
       {
         titleAr: 'الوحدة 13: C’est trop cher !',
@@ -714,7 +720,7 @@ const courses: Grade12Course[] = [
     subject: 'TECHNICAL_EDUCATION',
     titleAr: 'العلوم الهندسية',
     titleEn: 'Engineering Sciences',
-    track: 'SCIENCE_MATH',
+    tracks: ['SCIENCE_MATH', 'CS_ENGINEERING', 'GENERAL'],
     units: [
       {
         titleAr: 'مفاهيم العلوم الهندسية وتطبيقاتها',
@@ -752,7 +758,8 @@ function getCourse(subject: Subject, track: EducationTrack): Grade12Course | und
     if (candidate.subject !== subject) return false;
     if (candidate.tracks) return candidate.tracks.includes(track);
     if (subject === 'MATH') {
-      return candidate.track === (track === 'SCIENCE_MATH' ? 'SCIENCE_MATH' : 'SHARIA_HUMANITIES');
+      const isMathScience = track === 'SCIENCE_MATH' || track === 'CS_ENGINEERING';
+      return candidate.track === (isMathScience ? 'SCIENCE_MATH' : 'SHARIA_HUMANITIES');
     }
     return !candidate.track || candidate.track === track;
   });
