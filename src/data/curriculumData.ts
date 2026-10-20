@@ -4714,13 +4714,11 @@ export function isSudanPublicGrade4SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G4' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'ENGLISH' ||
       subject === 'COMPUTER_SCIENCE' ||
       subject === 'VISUAL_ARTS' ||
@@ -4732,13 +4730,11 @@ export function isSudanPublicGrade5SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G5' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'ENGLISH' ||
       subject === 'COMPUTER_SCIENCE' ||
       subject === 'VISUAL_ARTS' ||
@@ -4752,13 +4748,11 @@ export function isSudanPublicGrade6SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G6' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'PRIMARY_ARABIC' ||
       subject === 'ENGLISH' ||
       subject === 'ISLAMIC_STUDIES' ||
@@ -4775,13 +4769,11 @@ export function isSudanPublicGrade7SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G7' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'ARABIC_LANG' ||
       subject === 'ENGLISH' ||
       subject === 'MATH' ||
@@ -4796,13 +4788,11 @@ export function isSudanPublicGrade8SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G8' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'ARABIC_LANG' ||
       subject === 'ENGLISH' ||
       subject === 'MATH' ||
@@ -4819,13 +4809,11 @@ export function isSudanPublicGrade9SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G9' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'ENGLISH' || subject === 'HISTORY');
 }
 
@@ -4833,13 +4821,11 @@ export function isSudanPublicGrade10SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G10' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     (subject === 'CHEMISTRY' || subject === 'GEOGRAPHY' || subject === 'HISTORY');
 }
 
@@ -4847,13 +4833,11 @@ export function isSudanPublicGrade11SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
-  track: EducationTrack = 'GENERAL'
+  _educationType: EducationType = 'PUBLIC',
+  _track: EducationTrack = 'GENERAL'
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G11' &&
-    educationType === 'PUBLIC' &&
-    track === 'GENERAL' &&
     subject === 'BIOLOGY';
 }
 
@@ -4861,13 +4845,13 @@ export function isSudanPublicGrade12SubjectAvailable(
   subject: Subject,
   country: CountryCode,
   gradeLevel: GradeLevel | undefined,
-  educationType: EducationType = 'PUBLIC',
+  _educationType: EducationType = 'PUBLIC',
   track: EducationTrack = 'GENERAL'
 ): boolean {
-  return country === 'SD' &&
-    gradeLevel === 'G12' &&
-    educationType === 'PUBLIC' &&
-    getSudanGrade12Subjects(track).includes(subject);
+  if (country !== 'SD' || gradeLevel !== 'G12') return false;
+  const subjects = getSudanGrade12Subjects(track);
+  if (subjects.includes(subject)) return true;
+  return getSudanGrade12Subjects('GENERAL').includes(subject);
 }
 
 export function getSudanPublicGrade12Subjects(track: EducationTrack = 'GENERAL'): Subject[] {
@@ -5224,14 +5208,6 @@ export function getCurriculumForSubject(
       : [];
   }
 
-  if (
-    country === 'SD' &&
-    ['G3', 'G4', 'G5'].includes(gradeLevel ?? '') &&
-    ['PRIMARY_ARABIC', 'ENGLISH', 'ISLAMIC_STUDIES', 'PRIMARY_MATH', 'MATH', 'PRIMARY_SCIENCE', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE', 'VISUAL_ARTS', 'GEOGRAPHY', 'HISTORY'].includes(subject) &&
-    (educationType !== 'PUBLIC' || _track !== 'GENERAL')
-  ) {
-    return [];
-  }
 
   if (subject === 'ENGLISH') {
     if (country === 'SD') {
@@ -5540,12 +5516,7 @@ export function getCurriculumForSubject(
     return gradeLevel ? [] : ARABIC_LIT_LECTURES;
   }
   if (subject === 'GEOGRAPHY') {
-    if (
-      country === 'SD' &&
-      gradeLevel === 'G3' &&
-      educationType === 'PUBLIC' &&
-      _track === 'GENERAL'
-    ) {
+    if (country === 'SD' && gradeLevel === 'G3') {
       return SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES;
     }
     if (gradeLevel && gradeLevel !== 'G10') return [];
@@ -5555,12 +5526,7 @@ export function getCurriculumForSubject(
     return [];
   }
   if (subject === 'HISTORY') {
-    if (
-      country === 'SD' &&
-      gradeLevel === 'G3' &&
-      educationType === 'PUBLIC' &&
-      _track === 'GENERAL'
-    ) {
+    if (country === 'SD' && gradeLevel === 'G3') {
       return SUDAN_PRIMARY_HISTORY_G3_LECTURES;
     }
     if (country === 'SA' && gradeLevel === 'G11') {
