@@ -297,10 +297,14 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
           )) {
         copy.subject = 'ARABIC_LIT';
       }
-      if (!isVerifiedSudanGrade12 && (copy.subject === 'ARABIC_LANG' || copy.subject === 'PRIMARY_ARABIC')) copy.subject = 'ARABIC_LIT';
-      if (copy.subject === 'SAUDI_SOCIAL_STUDIES' &&
-          !isSaudiSocialStudies(copy.gradeLevel, copy.country, copy.educationType, copy.educationTrack)) copy.subject = 'ARABIC_LIT';
-      if (!isVerifiedSudanGrade12 && (copy.subject === 'GEOGRAPHY' || copy.subject === 'HISTORY') &&
+      const isVerifiedSudanGrade10 = isSudanPublicGrade10SubjectAvailable(
+        copy.subject,
+        copy.country,
+        copy.gradeLevel,
+        copy.educationType,
+        copy.educationTrack
+      );
+      if (!isVerifiedSudanGrade12 && !isVerifiedSudanGrade10 && (copy.subject === 'GEOGRAPHY' || copy.subject === 'HISTORY') &&
           !isLegacyGeographyHistoryAvailable(copy.country, copy.educationType, copy.educationTrack)) copy.subject = 'ARABIC_LIT';
       if (!isEgyptG10BookSubject && (copy.subject === 'GENERAL_SCIENCE' || copy.subject === 'PRIMARY_SCIENCE')) copy.subject = 'PHYSICS';
       if (copy.subject === 'PRIMARY_MATH') copy.subject = 'MATH';
@@ -1050,13 +1054,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
             {isPrimarySchool || isMiddleSchool ? (
               <div className="form-group">
                 <label className="form-label">{t.labelSpecialization}</label>
-                {formData.country === 'SD' && formData.gradeLevel === 'G10' ? (
-                  <optgroup label={formData.language === 'en' ? 'Grade 10 subjects' : 'مواد الصف الأول الثانوي'}>
-                    <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
-                    <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
-                    <option value="HISTORY">{getNationalSubjectLabel('HISTORY', formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}</option>
-                  </optgroup>
-                ) : isPrimarySchool ? (
+                {isPrimarySchool ? (
                 <div>
                   <select
                     className="form-select select-locked"
@@ -1299,6 +1297,40 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                       )}
                     </optgroup>
                   )
+                ) : formData.country === 'SD' &&
+                  formData.gradeLevel === 'G10' ? (
+                  <optgroup label={formData.language === 'en' ? 'Sudan Secondary 1 (Grade 10) courses' : 'مقررات الصف الأول الثانوي السوداني'}>
+                    <option value="CHEMISTRY">
+                      {getNationalSubjectLabel(
+                        'CHEMISTRY',
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.language,
+                        formData.educationType,
+                        formData.educationTrack
+                      )}
+                    </option>
+                    <option value="GEOGRAPHY">
+                      {getNationalSubjectLabel(
+                        'GEOGRAPHY',
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.language,
+                        formData.educationType,
+                        formData.educationTrack
+                      )}
+                    </option>
+                    <option value="HISTORY">
+                      {getNationalSubjectLabel(
+                        'HISTORY',
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.language,
+                        formData.educationType,
+                        formData.educationTrack
+                      )}
+                    </option>
+                  </optgroup>
                 ) : formData.country === 'SD' &&
                   formData.gradeLevel === 'G11' ? (
                   <optgroup label={formData.language === 'en' ? 'Verified Grade 11 subject' : 'المادة الموثقة للصف الثاني الثانوي'}>

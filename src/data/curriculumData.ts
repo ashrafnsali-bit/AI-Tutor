@@ -4695,6 +4695,7 @@ export function isBlockedGeographyHistoryRoute(
 ): boolean {
   if (subject !== 'GEOGRAPHY' && subject !== 'HISTORY') return false;
   if (!['SA', 'EG', 'SD'].includes(country)) return true;
+  if (country === 'SD') return false;
   return educationType !== 'PUBLIC' || track !== 'GENERAL';
 }
 

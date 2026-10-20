@@ -97,7 +97,7 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     culturalEventEn: 'Khartoum International Book Fair',
     hasHighSchoolTracks: true,
     availableTracks: ['GENERAL', 'SCIENCE_MATH', 'SCIENCE_BIO', 'SHARIA_HUMANITIES'],
-    availableTypes: ['PUBLIC', 'PRIVATE', 'ISLAMIC']
+    availableTypes: ['PUBLIC', 'PRIVATE']
   },
   AE: {
     code: 'AE',
