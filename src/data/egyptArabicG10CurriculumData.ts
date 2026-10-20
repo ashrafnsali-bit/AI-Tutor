@@ -235,7 +235,7 @@ export function getEgyptArabicG10Curriculum(
 ): Lecture[] {
   if (
     !(['ARABIC_LIT', 'ARABIC_LANG'] as Subject[]).includes(subject) ||
-    !(['PUBLIC', 'PRIVATE'] as EducationType[]).includes(educationType)
+    !(['PUBLIC', 'PRIVATE', 'INTERNATIONAL'] as EducationType[]).includes(educationType)
   ) {
     return [];
   }
