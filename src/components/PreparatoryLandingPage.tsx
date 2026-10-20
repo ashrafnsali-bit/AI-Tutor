@@ -3,7 +3,6 @@ import type { CountryCode, EducationTrack, GradeLevel, StudentProfile, Subject }
 import {
   ACTIVE_CURRICULUM_COUNTRIES,
   SUPPORTED_COUNTRIES,
-  TRACK_LABELS,
   getActiveCurriculumCountry,
   getCountryInfo,
   getSpecializationForEducationTrack,
@@ -17,8 +16,12 @@ import {
   isSaudiPublicQuranRecitationAvailable,
   isSaudiPublicG6VisualArtsAvailable,
   normalizeEducationTrackForCountry,
-  normalizeEducationTypeForCountry
+  normalizeEducationTypeForCountry,
+  getAvailableTracksForCountryAndGrade,
+  getTrackLabel
 } from '../data/curriculumCountries';
+import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
+import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import {
   isSudanPublicGrade4SubjectAvailable,
   isSudanPublicGrade5SubjectAvailable,
@@ -347,6 +350,20 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         setSelectedSubject('GENERAL_SCIENCE');
       }
     } else {
+      if (selectedCountry === 'EG' && grade === 'G12') {
+        const nextTrack = normalizeEducationTrackForCountry('EG', selectedTrack, 'G12');
+        setSelectedTrack(nextTrack);
+        const available = getEgyptG12Subjects(nextTrack);
+        if (!available.includes(selectedSubject)) setSelectedSubject(available[0] ?? 'ARABIC_LIT');
+        return;
+      }
+      if (selectedCountry === 'EG' && grade === 'G11') {
+        const nextTrack = normalizeEducationTrackForCountry('EG', selectedTrack, 'G11');
+        setSelectedTrack(nextTrack);
+        const available = getEgyptG11Subjects(nextTrack);
+        if (!available.includes(selectedSubject)) setSelectedSubject(available[0] ?? 'ARABIC_LIT');
+        return;
+      }
       if (selectedCountry === 'SD' && grade === 'G12') {
         const available = getSudanPublicGrade12Subjects(selectedTrack);
         if (!available.includes(selectedSubject)) setSelectedSubject(available[0] ?? 'ARABIC_LIT');
@@ -490,6 +507,30 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           nameEn: getNationalSubjectLabel(id, selectedCountry, selectedGrade, 'en', 'PUBLIC', selectedTrack),
           ...(meta[id] ?? { descAr: 'محاور الكتاب المقرر', descEn: 'Textbook course topics', icon: <BookOpen size={28} />, color: '#60a5fa' })
         }));
+    }
+    if (selectedCountry === 'EG' && selectedGrade === 'G12') {
+      const g12Meta: Partial<Record<Subject, { descAr: string; descEn: string; icon: React.ReactNode; color: string }>> = {
+        ARABIC_LIT: { descAr: 'الأدب والنصوص والبلاغة والنحو وقصة الأيام', descEn: 'Literature, texts, rhetoric, grammar and story', icon: <BookMarked size={28} />, color: '#34d399' },
+        ENGLISH: { descAr: 'القراءة والكتابة والمحادثة والقصة المقررة', descEn: 'Reading, writing, communication and novel', icon: <BookOpen size={28} />, color: '#a78bfa' },
+        FRENCH: { descAr: 'اللغة الفرنسية كلغة أجنبية ثانية', descEn: 'French as second foreign language', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        GERMAN: { descAr: 'اللغة الألمانية كلغة أجنبية ثانية', descEn: 'German as second foreign language', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        ITALIAN: { descAr: 'اللغة الإيطالية كلغة أجنبية ثانية', descEn: 'Italian as second foreign language', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        ISLAMIC_STUDIES: { descAr: 'القرآن الكريم والحديث والعقيدة والآداب', descEn: 'Quran, Hadith, creed and morals', icon: <Award size={28} />, color: '#fbbf24' },
+        PHYSICS: { descAr: 'الكهربية والتيار المتردد والفيزياء الحديثة', descEn: 'Electricity, AC circuits and modern physics', icon: <Atom size={28} />, color: '#38bdf8' },
+        CHEMISTRY: { descAr: 'العناصر الانتقالية والاتزان والكهربية والعضوية', descEn: 'Transition elements, equilibrium and organic chemistry', icon: <FlaskConical size={28} />, color: '#f472b6' },
+        BIOLOGY: { descAr: 'الدعامة والحركة والتنسيق الهرموني والتكاثر والمناعة والبيولوجيا الجزيئية', descEn: 'Physiology, reproduction, immunity and molecular biology', icon: <Dna size={28} />, color: '#a3e635' },
+        MATH: { descAr: selectedTrack === 'SCIENCE_MATH' ? 'التفاضل والتكامل والجبر العام والهندسة الفراغية' : 'الإحصاء والاحتمال وتطبيقات البيانات', descEn: selectedTrack === 'SCIENCE_MATH' ? 'Calculus, algebra and solid geometry' : 'Statistics and probability', icon: <Calculator size={28} />, color: '#60a5fa' },
+        COMPUTER_SCIENCE: { descAr: 'الاستاتيكا والديناميكا وعلم الحركة والقوى', descEn: 'Statics and dynamics', icon: <Code2 size={28} />, color: '#c084fc' },
+        HISTORY: { descAr: 'تاريخ مصر الحديث والمعاصر والقضايا القومية', descEn: 'Modern and contemporary history of Egypt', icon: <BookOpen size={28} />, color: '#f59e0b' },
+        GEOGRAPHY: { descAr: 'الدولة والمقومات والحدود السياسية والتكتلات الاقتصادية', descEn: 'Political geography, states and borders', icon: <Globe2 size={28} />, color: '#38bdf8' },
+        PHILOSOPHY: { descAr: 'الفلسفة التطبيقية والبيئية والمنطق وتطور الفكر', descEn: 'Applied philosophy, ethics and logic', icon: <Brain size={28} />, color: '#fbbf24' }
+      };
+      return getEgyptG12Subjects(selectedTrack).map((id) => ({
+        id,
+        nameAr: getNationalSubjectLabel(id, 'EG', 'G12', 'ar', normalizeEducationTypeForCountry('EG', profile.educationType), selectedTrack),
+        nameEn: getNationalSubjectLabel(id, 'EG', 'G12', 'en', normalizeEducationTypeForCountry('EG', profile.educationType), selectedTrack),
+        ...(g12Meta[id] ?? { descAr: 'محاور الكتاب المقرر', descEn: 'Textbook course topics', icon: <BookOpen size={28} />, color: '#60a5fa' })
+      }));
     }
     if (isPrimary) {
       return [
@@ -1388,7 +1429,15 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
                 onChange={(event) => {
                   const track = event.target.value as EducationTrack;
                   setSelectedTrack(track);
-                  if (selectedCountry === 'SD' && selectedGrade === 'G12' &&
+                  if (selectedCountry === 'EG' && selectedGrade === 'G12') {
+                    if (!isEgyptG12SubjectAvailable(selectedSubject, track, normalizeEducationTypeForCountry(selectedCountry, profile.educationType))) {
+                      setSelectedSubject(getEgyptG12Subjects(track)[0] ?? 'ARABIC_LIT');
+                    }
+                  } else if (selectedCountry === 'EG' && selectedGrade === 'G11') {
+                    if (!isEgyptG11SubjectAvailable(selectedSubject, track, normalizeEducationTypeForCountry(selectedCountry, profile.educationType))) {
+                      setSelectedSubject(getEgyptG11Subjects(track)[0] ?? 'ARABIC_LIT');
+                    }
+                  } else if (selectedCountry === 'SD' && selectedGrade === 'G12' &&
                       !isSudanPublicGrade12SubjectAvailable(
                         selectedSubject,
                         selectedCountry,
@@ -1400,9 +1449,9 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
                   }
                 }}
               >
-                {countryInfo.availableTracks.map((track) => (
+                {getAvailableTracksForCountryAndGrade(selectedCountry, selectedGrade).map((track) => (
                   <option key={track} value={track}>
-                    {isEn ? TRACK_LABELS[track].en : TRACK_LABELS[track].ar}
+                    {getTrackLabel(track, selectedCountry, isEn ? 'en' : 'ar')}
                   </option>
                 ))}
               </select>

@@ -471,11 +471,56 @@ export function normalizeEducationTypeForCountry(
     : availableTypes[0] || 'PUBLIC';
 }
 
+export function getAvailableTracksForCountryAndGrade(
+  country: CountryCode,
+  gradeLevel?: GradeLevel
+): EducationTrack[] {
+  if (['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9'].includes(gradeLevel || '')) {
+    return ['GENERAL'];
+  }
+  if (country === 'EG') {
+    if (gradeLevel === 'G10') {
+      return ['GENERAL'];
+    }
+    if (gradeLevel === 'G11') {
+      return ['SCIENCE_BIO', 'SHARIA_HUMANITIES'];
+    }
+    if (gradeLevel === 'G12') {
+      return ['SCIENCE_BIO', 'SCIENCE_MATH', 'SHARIA_HUMANITIES'];
+    }
+  }
+  return getCountryInfo(country).availableTracks;
+}
+
+export function getTrackLabel(
+  track: EducationTrack,
+  country: CountryCode = 'SA',
+  lang: Language = 'ar'
+): string {
+  const isEn = lang === 'en';
+  if (country === 'EG') {
+    if (track === 'SHARIA_HUMANITIES') {
+      return isEn ? 'Literary Section (Humanities)' : 'الشعبة الأدبية';
+    }
+    if (track === 'SCIENCE_BIO') {
+      return isEn ? 'Scientific Section (Sciences / Biology)' : 'شعبة علمي علوم';
+    }
+    if (track === 'SCIENCE_MATH') {
+      return isEn ? 'Scientific Section (Mathematics)' : 'شعبة علمي رياضة';
+    }
+    if (track === 'GENERAL') {
+      return isEn ? 'General Curriculum (Foundational)' : 'التعليم العام المشترك (أول ثانوي)';
+    }
+  }
+  return isEn ? TRACK_LABELS[track]?.en || track : TRACK_LABELS[track]?.ar || track;
+}
+
 export function normalizeEducationTrackForCountry(
   country: CountryCode,
-  preferredTrack?: EducationTrack
+  preferredTrack?: EducationTrack,
+  gradeLevel?: GradeLevel
 ): EducationTrack {
-  const availableTracks = getCountryInfo(country).availableTracks;
+  const availableTracks = getAvailableTracksForCountryAndGrade(country, gradeLevel);
   return preferredTrack && availableTracks.includes(preferredTrack)
     ? preferredTrack
     : availableTracks[0] || 'GENERAL';

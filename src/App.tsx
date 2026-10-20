@@ -99,6 +99,9 @@ export function App() {
       try {
         const parsedActive = JSON.parse(activeStored);
         if (parsedActive && parsedActive.id && parsedActive.name && parsedActive.name !== 'عمر التميمي') {
+          parsedActive.country = getActiveCurriculumCountry(parsedActive.country);
+          parsedActive.educationType = normalizeEducationTypeForCountry(parsedActive.country, parsedActive.educationType);
+          parsedActive.educationTrack = normalizeEducationTrackForCountry(parsedActive.country, parsedActive.educationTrack, parsedActive.gradeLevel);
           return parsedActive;
         }
       } catch {}
@@ -117,13 +120,13 @@ export function App() {
         const merged: StudentProfile = { ...INITIAL_STUDENT_PROFILE, ...parsed };
         merged.country = getActiveCurriculumCountry(merged.country);
         merged.educationType = normalizeEducationTypeForCountry(merged.country, merged.educationType);
-        merged.educationTrack = normalizeEducationTrackForCountry(merged.country, merged.educationTrack);
+        merged.educationTrack = normalizeEducationTrackForCountry(merged.country, merged.educationTrack, merged.gradeLevel);
         
         // If user has NOT manually chosen a country, dynamically apply the detected country
         if (!isManual && defaultDynamicCountry && merged.country !== defaultDynamicCountry) {
           merged.country = defaultDynamicCountry;
           merged.educationType = normalizeEducationTypeForCountry(merged.country, merged.educationType);
-          merged.educationTrack = normalizeEducationTrackForCountry(merged.country, merged.educationTrack);
+          merged.educationTrack = normalizeEducationTrackForCountry(merged.country, merged.educationTrack, merged.gradeLevel);
           merged.isAutoDetectedCountry = true;
         }
 

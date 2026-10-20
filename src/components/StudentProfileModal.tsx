@@ -20,7 +20,9 @@ import {
   isSaudiPublicG6VisualArtsAvailable,
   isSaudiPublicLifeSkillsAvailable,
   normalizeEducationTrackForCountry,
-  normalizeEducationTypeForCountry
+  normalizeEducationTypeForCountry,
+  getAvailableTracksForCountryAndGrade,
+  getTrackLabel
 } from '../data/curriculumCountries';
 import {
   isBlockedGeographyHistoryRoute,
@@ -103,6 +105,22 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
           setActiveDbUser(user);
         }
       });
+      const copy = { ...profile };
+      copy.country = getActiveCurriculumCountry(copy.country);
+      copy.educationType = normalizeEducationTypeForCountry(copy.country, copy.educationType);
+      copy.educationTrack = normalizeEducationTrackForCountry(copy.country, copy.educationTrack, copy.gradeLevel);
+      if (copy.country === 'EG' && copy.gradeLevel === 'G12') {
+        const validG12 = isEgyptG12SubjectAvailable(copy.subject, copy.educationTrack, copy.educationType);
+        if (!validG12) {
+          copy.subject = getEgyptG12Subjects(copy.educationTrack)[0] || 'ARABIC_LIT';
+        }
+      } else if (copy.country === 'EG' && copy.gradeLevel === 'G11') {
+        const validG11 = isEgyptG11SubjectAvailable(copy.subject, copy.educationTrack, copy.educationType);
+        if (!validG11) {
+          copy.subject = getEgyptG11Subjects(copy.educationTrack)[0] || 'ARABIC_LIT';
+        }
+      }
+      setFormData(copy);
     }
   }, [isOpen, profile]);
 
@@ -510,7 +528,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     let nextAge = formData.age;
     let nextSpec = formData.specialization;
     let nextSubj = formData.subject;
-    let nextTrack = formData.educationTrack || 'GENERAL';
+    let nextTrack = normalizeEducationTrackForCountry(formData.country, formData.educationTrack, grade);
 
     if (isPrimary) {
       nextTrack = 'GENERAL';
@@ -564,7 +582,15 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     nextSpec = isPrimary || isMiddle
       ? 'GENERAL'
       : getSpecializationForEducationTrack(nextTrack);
-    if (!isEgyptG10SubjectAvailable(
+    if (formData.country === 'EG' && grade === 'G12') {
+      if (!isEgyptG12SubjectAvailable(nextSubj, nextTrack, formData.educationType)) {
+        nextSubj = getEgyptG12Subjects(nextTrack)[0] || 'ARABIC_LIT';
+      }
+    } else if (formData.country === 'EG' && grade === 'G11') {
+      if (!isEgyptG11SubjectAvailable(nextSubj, nextTrack, formData.educationType)) {
+        nextSubj = getEgyptG11Subjects(nextTrack)[0] || 'ARABIC_LIT';
+      }
+    } else if (!isEgyptG10SubjectAvailable(
       nextSubj,
       formData.country,
       grade,
@@ -1100,43 +1126,55 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                   value={formData.educationTrack || 'GENERAL'}
                   onChange={(e) => {
                     const educationTrack = e.target.value as StudentProfile['educationTrack'];
-                    const keepSocialStudies = formData.subject !== 'SAUDI_SOCIAL_STUDIES' ||
-                      isSaudiSocialStudies(
-                        formData.gradeLevel,
-                        formData.country,
-                        formData.educationType,
-                        educationTrack
-                      );
-                    const keepLegacyGeographyHistory =
-                      (formData.subject !== 'GEOGRAPHY' && formData.subject !== 'HISTORY') ||
-                      !isBlockedGeographyHistoryRoute(
+                    let nextSubj = formData.subject;
+                    if (formData.country === 'EG' && formData.gradeLevel === 'G12') {
+                      if (!isEgyptG12SubjectAvailable(formData.subject, educationTrack, formData.educationType)) {
+                        nextSubj = getEgyptG12Subjects(educationTrack)[0] || 'ARABIC_LIT';
+                      }
+                    } else if (formData.country === 'EG' && formData.gradeLevel === 'G11') {
+                      if (!isEgyptG11SubjectAvailable(formData.subject, educationTrack, formData.educationType)) {
+                        nextSubj = getEgyptG11Subjects(educationTrack)[0] || 'ARABIC_LIT';
+                      }
+                    } else {
+                      const keepSocialStudies = formData.subject !== 'SAUDI_SOCIAL_STUDIES' ||
+                        isSaudiSocialStudies(
+                          formData.gradeLevel,
+                          formData.country,
+                          formData.educationType,
+                          educationTrack
+                        );
+                      const keepLegacyGeographyHistory =
+                        (formData.subject !== 'GEOGRAPHY' && formData.subject !== 'HISTORY') ||
+                        !isBlockedGeographyHistoryRoute(
+                          formData.subject,
+                          formData.country,
+                          formData.educationType || 'PUBLIC',
+                          educationTrack || 'GENERAL'
+                        );
+                      const keepEgyptBookCourse = isEgyptG10SubjectAvailable(
                         formData.subject,
                         formData.country,
-                        formData.educationType || 'PUBLIC',
+                        formData.gradeLevel,
+                        formData.educationType,
                         educationTrack || 'GENERAL'
                       );
-                    const keepEgyptBookCourse = isEgyptG10SubjectAvailable(
-                      formData.subject,
-                      formData.country,
-                      formData.gradeLevel,
-                      formData.educationType,
-                      educationTrack || 'GENERAL'
-                    );
+                      if (!keepSocialStudies || !keepLegacyGeographyHistory || !keepEgyptBookCourse) {
+                        nextSubj = 'ARABIC_LIT';
+                      }
+                    }
                     setFormData({
                       ...formData,
                       educationTrack,
                       specialization: getSpecializationForEducationTrack(
                         educationTrack || 'GENERAL'
                       ),
-                      subject: keepSocialStudies && keepLegacyGeographyHistory && keepEgyptBookCourse
-                        ? formData.subject
-                        : 'ARABIC_LIT'
+                      subject: nextSubj
                     });
                   }}
                 >
-                  {countryInfo.availableTracks.map(track => (
+                  {getAvailableTracksForCountryAndGrade(formData.country, formData.gradeLevel).map(track => (
                     <option key={track} value={track}>
-                      {formData.language === 'en' ? TRACK_LABELS[track].en : TRACK_LABELS[track].ar}
+                      {getTrackLabel(track, formData.country, formData.language)}
                     </option>
                   ))}
                 </select>

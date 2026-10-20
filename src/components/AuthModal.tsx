@@ -6,7 +6,6 @@ import { detectStudentCountry } from '../services/geoService';
 import {
   ACTIVE_CURRICULUM_COUNTRIES,
   EDUCATION_TYPE_LABELS,
-  TRACK_LABELS,
   getActiveCurriculumCountry,
   getCountryInfo,
   isSaudiPublicBusinessG11DigitalTechnologyAvailable,
@@ -21,7 +20,9 @@ import {
   isSaudiPublicG6VisualArtsAvailable,
   isSaudiPublicLifeSkillsAvailable,
   normalizeEducationTrackForCountry,
-  normalizeEducationTypeForCountry
+  normalizeEducationTypeForCountry,
+  getAvailableTracksForCountryAndGrade,
+  getTrackLabel
 } from '../data/curriculumCountries';
 import {
   isBlockedGeographyHistoryRoute,
@@ -472,14 +473,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         : !MIDDLE_SUBJECTS.includes(regSubject)) &&
           !(regSubject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(grade))) setRegSubject('ARABIC_LANG');
     } else {
-      const educationTrack = normalizeEducationTrackForCountry(regCountry, regEducationTrack);
+      const educationTrack = normalizeEducationTrackForCountry(regCountry, regEducationTrack, grade);
       setRegEducationTrack(educationTrack);
       setRegSpec(getSpecializationForEducationTrack(educationTrack));
       setRegSubject(regCountry === 'SD' && grade === 'G12'
         ? getSudanPublicGrade12Subjects(educationTrack)[0] ?? 'ARABIC_LIT'
         : regCountry === 'SD' && grade === 'G10'
         ? 'CHEMISTRY'
-        : regCountry === 'SD' && grade === 'G11' ? 'BIOLOGY' : 'PHYSICS');
+        : regCountry === 'SD' && grade === 'G11'
+        ? 'BIOLOGY'
+        : regCountry === 'EG' && grade === 'G12'
+        ? getEgyptG12Subjects(educationTrack)[0] ?? 'ARABIC_LIT'
+        : regCountry === 'EG' && grade === 'G11'
+        ? getEgyptG11Subjects(educationTrack)[0] ?? 'ARABIC_LIT'
+        : 'PHYSICS');
     }
   };
 
@@ -913,14 +920,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         const track = e.target.value as EducationTrack;
                         setRegEducationTrack(track);
                         setRegSpec(getSpecializationForEducationTrack(track));
-                        setRegSubject(normalizeNationalSubject(
-                          regSubject, regCountry, regEducationType, track, regGrade
-                        ));
+                        let nextSubj = regSubject;
+                        if (regCountry === 'EG' && regGrade === 'G12') {
+                          if (!isEgyptG12SubjectAvailable(regSubject, track, regEducationType)) {
+                            nextSubj = getEgyptG12Subjects(track)[0] || 'ARABIC_LIT';
+                          }
+                        } else if (regCountry === 'EG' && regGrade === 'G11') {
+                          if (!isEgyptG11SubjectAvailable(regSubject, track, regEducationType)) {
+                            nextSubj = getEgyptG11Subjects(track)[0] || 'ARABIC_LIT';
+                          }
+                        } else {
+                          nextSubj = normalizeNationalSubject(
+                            regSubject, regCountry, regEducationType, track, regGrade
+                          );
+                        }
+                        setRegSubject(nextSubj);
                       }}
                     >
-                      {countryInfo.availableTracks.map(track => (
+                      {getAvailableTracksForCountryAndGrade(regCountry, regGrade).map(track => (
                         <option key={track} value={track}>
-                          {regLanguage === 'en' ? TRACK_LABELS[track].en : TRACK_LABELS[track].ar}
+                          {getTrackLabel(track, regCountry, regLanguage)}
                         </option>
                       ))}
                     </select>

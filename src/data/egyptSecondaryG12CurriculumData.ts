@@ -97,7 +97,7 @@ export function isEgyptG12SubjectAvailable(
   return ALL_G12_SUBJECTS.includes(subject);
 }
 
-export function getEgyptG12Subjects(track: EducationTrack = 'GENERAL'): Subject[] {
+export function getEgyptG12Subjects(track: EducationTrack = 'SCIENCE_BIO'): Subject[] {
   if (track === 'SCIENCE_BIO' || track === 'HEALTH_LIFE') {
     return [...SCIENCE_BIO_G12_SUBJECTS];
   }
@@ -107,7 +107,7 @@ export function getEgyptG12Subjects(track: EducationTrack = 'GENERAL'): Subject[
   if (track === 'SHARIA_HUMANITIES') {
     return [...LITERARY_G12_SUBJECTS];
   }
-  return [...ALL_G12_SUBJECTS];
+  return [...SCIENCE_BIO_G12_SUBJECTS];
 }
 
 // ---------------------------------------------------------------------------
