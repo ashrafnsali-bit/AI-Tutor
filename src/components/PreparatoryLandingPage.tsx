@@ -33,7 +33,7 @@ import {
   isEnglishCourseAvailable
 } from '../data/curriculumData';
 import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
-import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
+import { isForeignLanguageSubject, isArabicSubject } from '../data/foreignLanguageLessonLocalization';
 import { getSubjectVisual, getStageVisual } from '../data/subjectVisuals';
 import { detectStudentCountry, setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
@@ -954,8 +954,9 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
 
   const effectiveEduType = normalizeEducationTypeForCountry(selectedCountry, profile.educationType);
   const isLanguagesTrack = effectiveEduType === 'INTERNATIONAL';
+  const isArabicSubj = isArabicSubject(selectedSubject);
   const isForeignSubj = isForeignLanguageSubject(selectedSubject, effectiveEduType);
-  const isLtrMode = isEn || isLanguagesTrack || isForeignSubj;
+  const isLtrMode = isEn || (!isArabicSubj && (isForeignSubj || (isLanguagesTrack && !selectedSubject)));
 
   return (
     <div className="preparatory-landing-root" dir={isLtrMode ? 'ltr' : 'rtl'}>

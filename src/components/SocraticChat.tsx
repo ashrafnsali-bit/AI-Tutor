@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage, Lecture, StudentProfile } from '../types';
 import { removeExternalLinksFromText, sanitizeLectureForStudents } from '../services/studentContentSanitizer';
-import { isForeignLanguageSubject } from '../data/foreignLanguageLessonLocalization';
+import { isForeignLanguageSubject, isArabicSubject } from '../data/foreignLanguageLessonLocalization';
 import { askGeminiTutor } from '../services/geminiService';
 import { getTranslations } from '../i18n/translations';
 import { 
@@ -37,9 +37,10 @@ export const SocraticChat: React.FC<SocraticChatProps> = ({
   const effectiveEduType = lecture.educationType || profile.educationType;
   const currentSubject = lecture.subject || profile.subject;
   const isForeignLanguage = isForeignLanguageSubject(currentSubject, effectiveEduType);
+  const isArabicSubj = isArabicSubject(currentSubject);
   const isEn = profile.language === 'en';
   const isLanguagesTrack = effectiveEduType === 'INTERNATIONAL';
-  const isTargetLang = isEn || isForeignLanguage || isLanguagesTrack;
+  const isTargetLang = isEn || (!isArabicSubj && (isForeignLanguage || (isLanguagesTrack && !currentSubject)));
   const t = getTranslations(isTargetLang ? 'en' : profile.language);
   const studentLecture = sanitizeLectureForStudents(lecture);
   const lectureTitle = removeExternalLinksFromText((isTargetLang ? studentLecture.titleEn : studentLecture.titleAr) || studentLecture.titleEn || studentLecture.titleAr || '');

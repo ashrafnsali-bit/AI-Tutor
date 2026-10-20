@@ -19,7 +19,7 @@ import {
   isEgyptPrimarySubjectAvailable,
   isEgyptPrepSubjectAvailable
 } from './data/curriculumData';
-import { isForeignLanguageSubject } from './data/foreignLanguageLessonLocalization';
+import { isForeignLanguageSubject, isArabicSubject } from './data/foreignLanguageLessonLocalization';
 import {
   getActiveCurriculumCountry,
   getCountryInfo,
@@ -579,12 +579,13 @@ export function App() {
     ).catch(() => {});
   }, [profile.id, profile.subject, profile.gradeLevel, profile.country, profile.educationType, profile.educationTrack, lectures]);
 
-  // Adjust HTML dir and title dynamically: switch to LTR when Languages Track, English, or foreign language subject is chosen
+  // Adjust HTML dir and title dynamically: switch to LTR when Languages Track STEM/English is chosen, but keep RTL for Arabic subjects
   useEffect(() => {
     const htmlEl = document.documentElement;
+    const isArabic = isArabicSubject(profile.subject);
     const isForeign = isForeignLanguageSubject(profile.subject, profile.educationType);
     const isLanguagesTrack = profile.educationType === 'INTERNATIONAL';
-    const isLtr = profile.language === 'en' || isLanguagesTrack || isForeign;
+    const isLtr = profile.language === 'en' || (!isArabic && (isForeign || (isLanguagesTrack && !profile.subject)));
 
     if (!isLtr) {
       htmlEl.setAttribute('dir', 'rtl');
@@ -1163,7 +1164,7 @@ export function App() {
   };
 
   return (
-    <div className="app-root" dir={profile.language === 'en' || profile.educationType === 'INTERNATIONAL' || isForeignLanguageSubject(profile.subject, profile.educationType) ? 'ltr' : 'rtl'}>
+    <div className="app-root" dir={profile.language === 'en' || (!isArabicSubject(profile.subject) && (isForeignLanguageSubject(profile.subject, profile.educationType) || (profile.educationType === 'INTERNATIONAL' && !profile.subject))) ? 'ltr' : 'rtl'}>
       {/* ═══ VIEW 1: PREPARATORY WELCOME & CURRICULUM SELECTION HUB ═══ */}
       {currentView === 'landing' ? (
         <PreparatoryLandingPage

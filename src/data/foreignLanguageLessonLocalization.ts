@@ -50,6 +50,22 @@ function mirror(node: unknown, depth: number): unknown {
   return result;
 }
 
+export function isArabicSubject(subject?: string): boolean {
+  if (!subject) return false;
+  return (
+    subject.startsWith('ARABIC_') ||
+    subject.endsWith('_ARABIC') ||
+    subject === 'ISLAMIC_STUDIES' ||
+    subject === 'TAJWEED' ||
+    subject === 'QURAN_RECITATION' ||
+    subject === 'HISTORY' ||
+    subject === 'GEOGRAPHY' ||
+    subject === 'PHILOSOPHY' ||
+    subject === 'NATIONAL_EDUCATION' ||
+    subject === 'SAUDI_SOCIAL_STUDIES'
+  );
+}
+
 export function isForeignLanguageSubject(subject?: string, educationType?: string): boolean {
   if (!subject) return false;
   if (FOREIGN_LANGUAGE_SUBJECTS.has(subject as Subject)) return true;
