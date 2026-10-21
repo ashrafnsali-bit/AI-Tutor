@@ -132,8 +132,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     : isMiddleSchool
     ? t.middleSchoolStage
     : (isEn
-      ? TRACK_LABELS[profile.educationTrack || 'GENERAL'].en
-      : TRACK_LABELS[profile.educationTrack || 'GENERAL'].ar);
+      ? TRACK_LABELS[profile.educationTrack || 'GENERAL']?.en || profile.educationTrack || 'General'
+      : TRACK_LABELS[profile.educationTrack || 'GENERAL']?.ar || profile.educationTrack || 'المسار العام');
 
   const gradeLabel = t.gradeLabels[profile.gradeLevel] || profile.gradeLevel;
 

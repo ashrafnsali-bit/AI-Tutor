@@ -738,7 +738,7 @@ export function App() {
       freshProfile.language
     );
     setLectures(freshLectures);
-    setSelectedLectureId(freshLectures[0].id);
+    setSelectedLectureId(freshLectures[0]?.id || '');
   };
 
   const handleToggleLanguage = () => {
@@ -798,7 +798,7 @@ export function App() {
     };
     sanitized.country = getActiveCurriculumCountry(sanitized.country);
     sanitized.educationType = normalizeEducationTypeForCountry(sanitized.country, sanitized.educationType);
-    sanitized.educationTrack = normalizeEducationTrackForCountry(sanitized.country, sanitized.educationTrack);
+    sanitized.educationTrack = normalizeEducationTrackForCountry(sanitized.country, sanitized.educationTrack, sanitized.gradeLevel);
 
     // Record or clear manual override based on whether it was auto-detected or explicitly picked
     if (sanitized.isAutoDetectedCountry) {

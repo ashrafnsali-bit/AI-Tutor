@@ -42,13 +42,15 @@ export class ErrorBoundary extends Component<Props, State> {
 
   private handleReset = () => {
     try {
+      localStorage.removeItem('TEACHER_AI_ACTIVE_USER');
       localStorage.removeItem('TEACHER_AI_STUDENT_PROFILE');
       localStorage.removeItem('TEACHER_AI_HAS_STUDIED');
       localStorage.removeItem('TEACHER_AI_LAST_LECTURE_ID');
+      localStorage.removeItem('TEACHER_AI_LAST_SESSION_STATE');
       localStorage.removeItem('TEACHER_AI_CLOUD_SHARED_LECTURES');
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const k = localStorage.key(i);
-        if (k && (k.startsWith('TEACHER_AI_LECTURES') || k.startsWith('TEACHER_AI_SHARED_LECS'))) {
+        if (k && k.startsWith('TEACHER_AI_') && k !== 'GEMINI_API_KEY') {
           localStorage.removeItem(k);
         }
       }
@@ -146,6 +148,20 @@ export class ErrorBoundary extends Component<Props, State> {
               <RefreshCw size={18} />
               <span>إعادة تحميل المنصة والبدء</span>
             </button>
+
+            {this.state.error && (
+              <div style={{ textAlign: 'left', marginTop: '18px', direction: 'ltr' }}>
+                <details style={{ background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(239, 68, 68, 0.25)', padding: '8px 12px', borderRadius: '8px', fontSize: '0.75rem', color: '#f87171' }}>
+                  <summary style={{ cursor: 'pointer', fontWeight: 600, color: '#fca5a5' }}>Technical details / تفاصيل الخطأ</summary>
+                  <p style={{ marginTop: '8px', fontWeight: 'bold', wordBreak: 'break-all' }}>{this.state.error.message}</p>
+                  {this.state.error.stack && (
+                    <pre style={{ overflowX: 'auto', maxHeight: '140px', fontSize: '0.68rem', opacity: 0.85, whiteSpace: 'pre-wrap' }}>
+                      {this.state.error.stack}
+                    </pre>
+                  )}
+                </details>
+              </div>
+            )}
           </div>
         </div>
       );
