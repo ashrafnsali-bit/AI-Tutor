@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="100%" height="100%">
+  <defs>
+    <linearGradient id="somBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#081026"/>
+      <stop offset="50%" stopColor="#0f172a"/>
+      <stop offset="100%" stopColor="#1e1b4b"/>
+    </linearGradient>
+
+    <linearGradient id="solidBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="rgba(56, 189, 248, 0.2)"/>
+      <stop offset="100%" stopColor="rgba(14, 165, 233, 0.05)"/>
+    </linearGradient>
+
+    <linearGradient id="liquidBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="rgba(16, 185, 129, 0.2)"/>
+      <stop offset="100%" stopColor="rgba(5, 150, 105, 0.05)"/>
+    </linearGradient>
+
+    <linearGradient id="gasBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="rgba(244, 63, 94, 0.2)"/>
+      <stop offset="100%" stopColor="rgba(225, 29, 72, 0.05)"/>
+    </linearGradient>
+
+    <radialGradient id="particleSolid" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stopColor="#93c5fd"/>
+      <stop offset="60%" stopColor="#3b82f6"/>
+      <stop offset="100%" stopColor="#1d4ed8"/>
+    </radialGradient>
+
+    <radialGradient id="particleLiquid" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stopColor="#6ee7b7"/>
+      <stop offset="60%" stopColor="#10b981"/>
+      <stop offset="100%" stopColor="#047857"/>
+    </radialGradient>
+
+    <radialGradient id="particleGas" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stopColor="#fda4af"/>
+      <stop offset="60%" stopColor="#f43f5e"/>
+      <stop offset="100%" stopColor="#be123c"/>
+    </radialGradient>
+
+    <marker id="arrowRight" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#facc15"/>
+    </marker>
+    <marker id="arrowLeft" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto">
+      <path d="M7,1 L1,4 L7,7 Z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="460" rx="20" fill="url(#somBg)" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Title Banner -->
+  <rect x="30" y="20" width="820" height="50" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5"/>
+  <text x="440" y="44" text-anchor="middle" fill="#38bdf8" font-size="19" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
+    مقارنة حالات المادة الثلاث والنموذج الجسيمي (Solid, Liquid &amp; Gas States)
+  </text>
+  <text x="440" y="62" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    تعتمد حالة المادة على قوة الترابط بين الجسيمات ومسافاتها وسرعة حركتها الاهتزازية
+  </text>
+
+  <!-- COLUMN 1: SOLID (المادة الصلبة) -->
+  <g transform="translate(45, 95)">
+    <rect width="245" height="235" rx="16" fill="url(#solidBox)" stroke="#38bdf8" stroke-width="2"/>
+    <text x="122" y="30" text-anchor="middle" fill="#38bdf8" font-size="16" font-weight="bold">الحالة الصلبة (Solid)</text>
+    <text x="122" y="48" text-anchor="middle" fill="#94a3b8" font-size="11">مثل: قطعة ثلج 🧊 - صخور 🪨</text>
+
+    <!-- Vessel Box -->
+    <rect x="32" y="60" width="180" height="110" rx="10" fill="#090d16" stroke="#0284c7" stroke-width="1.5"/>
+    
+    <!-- Tightly packed ordered lattice of particles -->
+    <!-- Row 1 -->
+    <circle cx="55" cy="80" r="11" fill="url(#particleSolid)"/>
+    <circle cx="80" cy="80" r="11" fill="url(#particleSolid)"/>
+    <circle cx="105" cy="80" r="11" fill="url(#particleSolid)"/>
+    <circle cx="130" cy="80" r="11" fill="url(#particleSolid)"/>
+    <circle cx="155" cy="80" r="11" fill="url(#particleSolid)"/>
+    <circle cx="180" cy="80" r="11" fill="url(#particleSolid)"/>
+    <!-- Row 2 -->
+    <circle cx="55" cy="104" r="11" fill="url(#particleSolid)"/>
+    <circle cx="80" cy="104" r="11" fill="url(#particleSolid)"/>
+    <circle cx="105" cy="104" r="11" fill="url(#particleSolid)"/>
+    <circle cx="130" cy="104" r="11" fill="url(#particleSolid)"/>
+    <circle cx="155" cy="104" r="11" fill="url(#particleSolid)"/>
+    <circle cx="180" cy="104" r="11" fill="url(#particleSolid)"/>
+    <!-- Row 3 -->
+    <circle cx="55" cy="128" r="11" fill="url(#particleSolid)"/>
+    <circle cx="80" cy="128" r="11" fill="url(#particleSolid)"/>
+    <circle cx="105" cy="128" r="11" fill="url(#particleSolid)"/>
+    <circle cx="130" cy="128" r="11" fill="url(#particleSolid)"/>
+    <circle cx="155" cy="128" r="11" fill="url(#particleSolid)"/>
+    <circle cx="180" cy="128" r="11" fill="url(#particleSolid)"/>
+    <!-- Row 4 -->
+    <circle cx="55" cy="152" r="11" fill="url(#particleSolid)"/>
+    <circle cx="80" cy="152" r="11" fill="url(#particleSolid)"/>
+    <circle cx="105" cy="152" r="11" fill="url(#particleSolid)"/>
+    <circle cx="130" cy="152" r="11" fill="url(#particleSolid)"/>
+    <circle cx="155" cy="152" r="11" fill="url(#particleSolid)"/>
+    <circle cx="180" cy="152" r="11" fill="url(#particleSolid)"/>
+
+    <!-- Key Properties -->
+    <text x="122" y="190" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="bold">الشكل: <tspan fill="#38bdf8">ثابت ومحدد</tspan></text>
+    <text x="122" y="208" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="bold">الحجم: <tspan fill="#38bdf8">ثابت ومحدد</tspan></text>
+    <text x="122" y="224" text-anchor="middle" fill="#cbd5e1" font-size="10">تهتز الجسيمات في مواضعها</text>
+  </g>
+
+  <!-- COLUMN 2: LIQUID (المادة السائلة) -->
+  <g transform="translate(315, 95)">
+    <rect width="250" height="235" rx="16" fill="url(#liquidBox)" stroke="#10b981" stroke-width="2"/>
+    <text x="125" y="30" text-anchor="middle" fill="#34d399" font-size="16" font-weight="bold">الحالة السائلة (Liquid)</text>
+    <text x="125" y="48" text-anchor="middle" fill="#94a3b8" font-size="11">مثل: الماء 💧 - العصير 🧃</text>
+
+    <!-- Vessel Box -->
+    <rect x="35" y="60" width="180" height="110" rx="10" fill="#090d16" stroke="#059669" stroke-width="1.5"/>
+    
+    <!-- Loosely packed sliding particles occupying bottom of vessel -->
+    <circle cx="55" cy="110" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="78" cy="115" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="106" cy="108" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="132" cy="114" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="158" cy="109" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="182" cy="116" r="11" fill="url(#particleLiquid)"/>
+
+    <circle cx="62" cy="133" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="89" cy="136" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="118" cy="132" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="145" cy="135" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="172" cy="134" r="11" fill="url(#particleLiquid)"/>
+
+    <circle cx="52" cy="154" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="76" cy="155" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="102" cy="154" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="129" cy="155" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="156" cy="154" r="11" fill="url(#particleLiquid)"/>
+    <circle cx="182" cy="155" r="11" fill="url(#particleLiquid)"/>
+
+    <!-- Key Properties -->
+    <text x="125" y="190" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="bold">الشكل: <tspan fill="#34d399">يتغير حسب الإناء</tspan></text>
+    <text x="125" y="208" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="bold">الحجم: <tspan fill="#34d399">ثابت ومحدد</tspan></text>
+    <text x="125" y="224" text-anchor="middle" fill="#cbd5e1" font-size="10">تنزلق الجسيمات بحرية فوق بعضها</text>
+  </g>
+
+  <!-- COLUMN 3: GAS (المادة الغازية) -->
+  <g transform="translate(590, 95)">
+    <rect width="245" height="235" rx="16" fill="url(#gasBox)" stroke="#f43f5e" stroke-width="2"/>
+    <text x="122" y="30" text-anchor="middle" fill="#fb7185" font-size="16" font-weight="bold">الحالة الغازية (Gas)</text>
+    <text x="122" y="48" text-anchor="middle" fill="#94a3b8" font-size="11">مثل: بخار الماء 💨 - الأكسجين 🎈</text>
+
+    <!-- Vessel Box -->
+    <rect x="32" y="60" width="180" height="110" rx="10" fill="#090d16" stroke="#e11d48" stroke-width="1.5"/>
+    
+    <!-- Widely scattered particles with motion trails -->
+    <circle cx="55" cy="80" r="9" fill="url(#particleGas)"/>
+    <path d="M42,86 L51,82" stroke="#fda4af" stroke-width="1.5"/>
+    
+    <circle cx="150" cy="78" r="9" fill="url(#particleGas)"/>
+    <path d="M162,72 L154,76" stroke="#fda4af" stroke-width="1.5"/>
+
+    <circle cx="105" cy="110" r="9" fill="url(#particleGas)"/>
+    <path d="M96,120 L102,113" stroke="#fda4af" stroke-width="1.5"/>
+
+    <circle cx="175" cy="125" r="9" fill="url(#particleGas)"/>
+    <path d="M165,132 L172,127" stroke="#fda4af" stroke-width="1.5"/>
+
+    <circle cx="65" cy="148" r="9" fill="url(#particleGas)"/>
+    <path d="M78,142 L68,146" stroke="#fda4af" stroke-width="1.5"/>
+
+    <circle cx="135" cy="152" r="9" fill="url(#particleGas)"/>
+    <path d="M125,160 L132,154" stroke="#fda4af" stroke-width="1.5"/>
+
+    <!-- Key Properties -->
+    <text x="122" y="190" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="bold">الشكل: <tspan fill="#fb7185">غير ثابت (متغير)</tspan></text>
+    <text x="122" y="208" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="bold">الحجم: <tspan fill="#fb7185">غير ثابت (يشغل أي حيز)</tspan></text>
+    <text x="122" y="224" text-anchor="middle" fill="#cbd5e1" font-size="10">تتحرك الجسيمات بسرعة في كل اتجاه</text>
+  </g>
+
+  <!-- BOTTOM: THERMAL PHASE TRANSITIONS BAR -->
+  <g transform="translate(45, 345)">
+    <rect width="790" height="95" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(250, 204, 21, 0.4)" stroke-width="1.5"/>
+
+    <!-- Heating Arrow: Solid -> Liquid -> Gas -->
+    <path d="M140,30 L730,30" fill="none" stroke="#facc15" stroke-width="3" marker-end="url(#arrowRight)"/>
+    <rect x="360" y="18" width="160" height="24" rx="6" fill="#ca8a04"/>
+    <text x="440" y="34" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">🔥 بالتسخين (زيادة الطاقة الحركية)</text>
+    <text x="210" y="22" fill="#fde047" font-size="11" font-weight="bold">انصهار (Melting)</text>
+    <text x="610" y="22" fill="#fde047" font-size="11" font-weight="bold">تبخر (Evaporation)</text>
+
+    <!-- Cooling Arrow: Gas -> Liquid -> Solid -->
+    <path d="M730,70 L140,70" fill="none" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrowLeft)"/>
+    <rect x="360" y="58" width="160" height="24" rx="6" fill="#0284c7"/>
+    <text x="440" y="74" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">❄️ بالتبريد (نقصان الطاقة الحركية)</text>
+    <text x="610" y="86" fill="#7dd3fc" font-size="11" font-weight="bold">تكثف (Condensation)</text>
+    <text x="210" y="86" fill="#7dd3fc" font-size="11" font-weight="bold">تجمد (Freezing)</text>
+  </g>
+</svg>
