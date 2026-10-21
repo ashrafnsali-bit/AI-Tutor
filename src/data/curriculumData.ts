@@ -6249,7 +6249,44 @@ export function saveSubjectLectures(
 ): void {
   if (typeof localStorage === 'undefined') return;
   const storageKey = `TEACHER_AI_LECTURES_V5_${country}_${educationType}_${subject}_${gradeLevel || 'ALL'}_${track}`;
-  localStorage.setItem(storageKey, JSON.stringify(lectures));
+  
+  // Compact payload: Only save progress flags and custom/AI-generated lectures
+  // Never duplicate full static curriculum libraries in browser localStorage (avoids QuotaExceededError)
+  const minimalPayload = lectures.map(l => {
+    const isCustomOrAi = l.id.startsWith('ai-gen-') || l.id.startsWith('gen-') || (l as any).isSharedCommunity;
+    if (isCustomOrAi) {
+      return l; // Keep full object for custom/generated lectures
+    }
+    return {
+      id: l.id,
+      isCompleted: !!l.isCompleted,
+      isLocked: !!l.isLocked,
+      lastAttempt: l.lastAttempt,
+      country: l.country,
+      subject: l.subject,
+      gradeLevel: l.gradeLevel,
+      educationType: l.educationType,
+      educationTrack: l.educationTrack
+    };
+  });
+
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(minimalPayload));
+  } catch (err) {
+    console.warn(`[Storage] Quota exceeded saving ${storageKey}. Purging old lecture caches...`, err);
+    try {
+      // Purge old heavy caches to free up quota
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith('TEACHER_AI_LECTURES_') || k.startsWith('TEACHER_AI_SHARED_LECS_'))) {
+          localStorage.removeItem(k);
+        }
+      }
+      localStorage.setItem(storageKey, JSON.stringify(minimalPayload));
+    } catch {
+      // Gracefully prevent UI crash if storage remains full
+    }
+  }
 }
 
 export const INITIAL_LECTURES = HIGH_CHEMISTRY_G12_LECTURES;

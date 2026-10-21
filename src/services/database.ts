@@ -718,7 +718,27 @@ export async function saveUserSubjectLectures(
       compositeKey, userId, country, subject, gradeLevel, educationType, educationTrack, lectures, updatedAt: Date.now()
     });
   } catch { /* ignore */ }
-  localStorage.setItem(`TEACHER_AI_LECTURES_${compositeKey}`, JSON.stringify(lectures));
+
+  try {
+    const minimal = lectures.map(l => {
+      const isCustomOrAi = l.id.startsWith('ai-gen-') || l.id.startsWith('gen-') || (l as any).isSharedCommunity;
+      if (isCustomOrAi) return l;
+      return {
+        id: l.id,
+        isCompleted: !!l.isCompleted,
+        isLocked: !!l.isLocked,
+        lastAttempt: l.lastAttempt,
+        country: l.country,
+        subject: l.subject,
+        gradeLevel: l.gradeLevel,
+        educationType: l.educationType,
+        educationTrack: l.educationTrack
+      };
+    });
+    localStorage.setItem(`TEACHER_AI_LECTURES_${compositeKey}`, JSON.stringify(minimal));
+  } catch (err) {
+    console.warn(`[Database] localStorage backup quota exceeded for ${compositeKey}:`, err);
+  }
 }
 
 export async function loadUserSubjectLectures(
