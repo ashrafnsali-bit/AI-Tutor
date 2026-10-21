@@ -2362,6 +2362,8 @@ export function getNationalSubjectLabel(
   }
   if (country === 'EG' && _gradeLevel === 'G10') {
     const grade10Labels: Partial<Record<Subject, [string, string]>> = {
+      ARABIC_LIT: ['Arabic Language', 'اللغة العربية'],
+      ARABIC_LANG: ['Arabic Language', 'اللغة العربية'],
       MATH: ['Mathematics', 'الرياضيات'],
       HISTORY: ['History (Civilization of Egypt & Ancient World)', 'التاريخ (حضارة مصر والعالم القديم)'],
       GENERAL_SCIENCE: ['Integrated Science', 'العلوم المتكاملة'],
@@ -2807,7 +2809,7 @@ export function getNationalSubjectLabel(
         return isEn ? 'Arabic Language (Edu 2.0)' : 'اللغة العربية (التعليم 2.0 - تواصل)';
       case 'ARABIC_LANG':
         if (_gradeLevel === 'G10') {
-          return isEn ? 'Arabic Language (Grade 10, First Semester)' : 'اللغة العربية (الصف الأول الثانوي، الفصل الدراسي الأول)';
+          return isEn ? 'Arabic Language' : 'اللغة العربية';
         }
         return isEn ? 'Arabic Language (Middle School)' : 'اللغة العربية (المرحلة الإعدادية)';
       case 'PRIMARY_MATH':
@@ -2833,7 +2835,7 @@ export function getNationalSubjectLabel(
         return isEn ? 'ICT & Computer Science' : 'تكنولوجيا المعلومات والحاسب الآلي';
       case 'ARABIC_LIT':
         if (_gradeLevel === 'G10') {
-          return isEn ? 'Arabic Language (Grade 10, First Semester)' : 'اللغة العربية (الصف الأول الثانوي، الفصل الدراسي الأول)';
+          return isEn ? 'Arabic Language' : 'اللغة العربية';
         }
         return isEn ? 'Arabic Rhetoric & Grammar' : 'اللغة العربية والنحو والأدب (الثانوية العامة)';
       default:
