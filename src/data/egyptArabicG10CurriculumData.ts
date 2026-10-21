@@ -240,6 +240,108 @@ export function getEgyptArabicG10Curriculum(
     return [];
   }
 
+  const egyptArabicG10Diagrams: Record<number, {
+    titleAr: string;
+    titleEn: string;
+    captionAr: string;
+    captionEn: string;
+    imageUrl: string;
+    diagramType: 'arabic_sentence_structure' | 'rhetoric_simile_map' | 'rhetoric_metaphor_map' | 'literary_criticism_map' | 'arabic_parsing_tree' | 'arabic_learning_map' | 'arabic_inna_kana_map';
+    takeawayFormulaAr: string;
+    takeawayFormulaEn: string;
+  }> = {
+    1: {
+      titleAr: 'مخطط الأفعال الناسخة والتامة: كَانَ وأخواتها وكَادَ وأخواتها (المقاربة والرجاء والشروع)',
+      titleEn: 'Complete & Incomplete Verbs: Kana & Kada (Verbs of Imminence, Hope, and Beginning)',
+      captionAr: 'مخطط توضيحي شامل يوضح الفرق بين كان التامة والناقصة، وأفعال المقاربة والرجاء والشروع، وحكم اقتران خبرها بـ (أن).',
+      captionEn: 'Comprehensive diagram clarifying complete vs incomplete Kana, Kada group classification, and rules of pairing with "An".',
+      imageUrl: '/curriculum_images/arabic_g10_kana_kada_verbs.svg',
+      diagramType: 'arabic_sentence_structure',
+      takeawayFormulaAr: 'كَانَ الناقصة ترفع المبتدأ وتنصب الخبر | كَادَ وأخواتها تشترط خبراً جملة فعلية مضارعة | يمتنع اقتران الشروع بأن',
+      takeawayFormulaEn: 'Incomplete Kana takes nominative subject & accusative predicate | Kada requires present-verb clause | Shuru verbs forbid "An"'
+    },
+    2: {
+      titleAr: 'مخطط علم البيان: أركان التشبيه وأنواعه الخمسة وأسرار جماله البلاغي',
+      titleEn: 'Rhetorical Simile: The Four Pillars, Five Types, and Secrets of Aesthetic Beauty',
+      captionAr: 'شجرة تصنيف التشبيه البلاغي المعتمد: المفصل، المجمل، البليغ وصوره، التمثيلي، والضمني، مع أسرار الجمال (التشخيص والتجسيم والتوضيح).',
+      captionEn: 'Classification tree of rhetorical simile: Detailed, Summary, Eloquent, Representational, and Implicit, plus beauty secrets.',
+      imageUrl: '/curriculum_images/arabic_g10_balagha_tashbeeh.svg',
+      diagramType: 'rhetoric_simile_map',
+      takeawayFormulaAr: 'التشبيه البليغ = المشبه + المشبه به فقط | سر الجمال: التشخيص (لعاقل)، التجسيم (معنوي بمادي)، التوضيح (المتماثلين)',
+      takeawayFormulaEn: 'Eloquent simile = subject + object only | Beauty: Personification, Materialization, Clarification'
+    },
+    3: {
+      titleAr: 'مخطط تاريخ الأدب العربي: منهج بناء القصيدة الجاهلية والمعلقات السبع',
+      titleEn: 'Pre-Islamic Poetry Ode Architecture & The Seven Mu\'allaqat Masters',
+      captionAr: 'رسم تعليمي معتمد يوضح المراحل الأربع لبناء القصيدة الجاهلية (الأطلال، الرحلة، الغرض، الحكمة) وشعراء المعلقات السبع وسمات العصر الفنية.',
+      captionEn: 'Pedagogical diagram illustrating the 4 traditional stages of Pre-Islamic odes and the 7 Mu\'allaqat poet masters.',
+      imageUrl: '/curriculum_images/arabic_g10_jahili_literature_structure.svg',
+      diagramType: 'literary_criticism_map',
+      takeawayFormulaAr: 'بناء القصيدة الجاهلية: الأطلال والغزل ➔ الرحلة والوصف ➔ الغرض الرئيس ➔ الختام بالحكمة | وحدة البيت الشعري',
+      takeawayFormulaEn: 'Pre-Islamic ode structure: Ruins/Love ➔ Journey/Description ➔ Main Purpose ➔ Wisdom Closure'
+    },
+    4: {
+      titleAr: 'مخطط إعمال المشتقات العاملة: اسم الفاعل وصيغ المبالغة واسم المفعول',
+      titleEn: 'Working Derivatives: Active Participle, Intensive Forms, and Passive Participle',
+      captionAr: 'مخطط تفصيلي يوضح صياغة المشتقات وشروط إعمالها بالمحلى بـ (أل) والمجرد منها ومعمولاتها الإعرابية.',
+      captionEn: 'Detailed diagram outlining derivation rules, conditions of syntactic action (with/without AL), and noun complements.',
+      imageUrl: '/curriculum_images/arabic_g10_active_passive_derivatives.svg',
+      diagramType: 'arabic_parsing_tree',
+      takeawayFormulaAr: 'المحلى بـ (أل) يعمل دون قيد أو شرط | المجرد من (أل) يدل على الحال أو الاستقبال ويعتمد على الستة المشهورة',
+      takeawayFormulaEn: 'With "AL" works unconditionally | Without "AL" requires present/future tense and syntactic dependency'
+    },
+    5: {
+      titleAr: 'مخطط علم البيان: الاستعارة المكنية والتصريحية وقواعد التمييز في الامتحان',
+      titleEn: 'Metaphorical Rhetoric: Implicit (Makniyyah) and Explicit (Tasreehiyyah) Metaphors',
+      captionAr: 'مخطط مقارنة معتمد يوضح معادلة الاستعارة المكنية والتصريحية، والأمثلة الشعرية من كعب بن زهير، وطريقة حل أسئلة الامتحان.',
+      captionEn: 'Approved comparative diagram for implicit and explicit metaphors, curriculum examples, and step-by-step exam strategy.',
+      imageUrl: '/curriculum_images/arabic_g10_istiara_metaphor_types.svg',
+      diagramType: 'rhetoric_metaphor_map',
+      takeawayFormulaAr: 'الاستعارة المكنية: ذكر المشبه وحذف المشبه به ودل عليه بلازمة | الاستعارة التصريحية: حذف المشبه وصُرّح بلفظ المشبه به',
+      takeawayFormulaEn: 'Implicit: Subject kept, object deleted with clue | Explicit: Subject deleted, object stated clearly'
+    },
+    6: {
+      titleAr: 'مخطط النواسخ المعتمد: كَانَ وأخواتها (أفعال ناسخة) مقابل إِنَّ وأخواتها (حروف ناسخة)',
+      titleEn: 'Arabic Modifiers: Kana (Verbs) vs Inna (Particles) Comprehensive Comparison',
+      captionAr: 'مقارنة شاملة بين عمل كان وأخواتها برفع المبتدأ ونصب الخبر، وعمل إن وأخواتها بنصب المبتدأ ورفع الخبر.',
+      captionEn: 'Comprehensive contrast between Kana (raising subject, accusative predicate) and Inna (accusative subject, raising predicate).',
+      imageUrl: '/curriculum_images/arabic_kana_inna_modifiers.svg',
+      diagramType: 'arabic_inna_kana_map',
+      takeawayFormulaAr: 'كَانَ (فعل) ترفع المبتدأ وتنصب الخبر | إِنَّ (حرف) تنصب المبتدأ وترفع الخبر',
+      takeawayFormulaEn: 'Kana (verb) raises subject, lowers predicate | Inna (particle) lowers subject, raises predicate'
+    },
+    7: {
+      titleAr: 'مخطط قواعد النحو: إعمال اسم المفعول وشروط رفعه لنائب الفاعل',
+      titleEn: 'Grammar Focus: Passive Participle and the Nominative Agent Substitute',
+      captionAr: 'مخطط تطبيقي يوضح عمل اسم المفعول المشتق من الفعل المبني للمجهول ورفعه لنائب الفاعل في التراكيب المعاصرة.',
+      captionEn: 'Applied diagram demonstrating the passive participle derived from passive voice verbs and raising the substitute agent.',
+      imageUrl: '/curriculum_images/arabic_g10_active_passive_derivatives.svg',
+      diagramType: 'arabic_learning_map',
+      takeawayFormulaAr: 'اسم المفعول يشتق من الفعل المبني للمجهول: من الثلاثي (مَفْعُول) ومن غير الثلاثي بميم مضمومة وفتح ما قبل الآخر ويرفع نائب فاعل',
+      takeawayFormulaEn: 'Passive participle derives from passive verbs: Maf\'ool for trilateral, Mu-...-a- for non-trilateral, takes na\'ib fa\'il'
+    },
+    8: {
+      titleAr: 'مخطط البلاغة والأدب: التشبيه الضمني والتمثيلي وسر الجمال البلاغي',
+      titleEn: 'Rhetoric in Poetry: Implicit and Representational Simile in Verse',
+      captionAr: 'توضيح الفروق الدقيقة بين التشبيه المفرد والتشبيه المركب (التمثيلي والضمني) وسر الجمال في النص الشعري.',
+      captionEn: 'Nuanced distinctions between simple and compound similes (tamthili & dimni) and their aesthetic impact in poetry.',
+      imageUrl: '/curriculum_images/arabic_g10_balagha_tashbeeh.svg',
+      diagramType: 'rhetoric_simile_map',
+      takeawayFormulaAr: 'التشبيه التمثيلي: صورة مركبة بصورة مركبة مع أداة | التشبيه الضمني: يلمح ضمناً والشطر الثاني حكمة برهانية',
+      takeawayFormulaEn: 'Representational: composite image with tool | Implicit: hinted at through context with second hemistich as proof'
+    },
+    9: {
+      titleAr: 'مخطط البلاغة والنثر: الصور البيانية والاستعارة والقرينة المانعة في النثر الفني',
+      titleEn: 'Prose Rhetoric: Imagery, Metaphor, and Context Clues in Classical Writing',
+      captionAr: 'رسم توضيحي لتحليل الصور والاستعارات في النصوص النثرية القديمة والحديثة وأسرار جمالها.',
+      captionEn: 'Illustrative diagram for analyzing metaphors and imagery in classical and modern prose, plus aesthetic values.',
+      imageUrl: '/curriculum_images/arabic_g10_istiara_metaphor_types.svg',
+      diagramType: 'rhetoric_metaphor_map',
+      takeawayFormulaAr: 'القرينة المانعة هي اللفظ أو السياق الذي يمنع إرادة المعنى الحقيقي وينقل اللفظ إلى المعنى البلاغي الاستعاري',
+      takeawayFormulaEn: 'Context clue prevents literal meaning and unlocks metaphorical rhetorical depth'
+    }
+  };
+
   return units.flatMap((unit, unitIndex) =>
     unit.texts.map((text, textIndex): Lecture => {
       const order = unitIndex * 3 + textIndex + 1;
@@ -247,6 +349,21 @@ export function getEgyptArabicG10Curriculum(
       const lessonNumber = ['الأول', 'الثاني', 'الثالث'][textIndex];
       const id = `eg-arabic-g10-t1-${order}`;
       const lessonFocus = `يركز الدرس على ${text.focusAr}`;
+      const diagramMeta = egyptArabicG10Diagrams[order];
+
+      const lectureDiagram = {
+        id: `diagram-${id}`,
+        figureNumberAr: `شكل توضيحي (${order}-١)`,
+        figureNumberEn: `Figure (${order}-1)`,
+        titleAr: diagramMeta.titleAr,
+        titleEn: diagramMeta.titleEn,
+        captionAr: diagramMeta.captionAr,
+        captionEn: diagramMeta.captionEn,
+        diagramType: diagramMeta.diagramType,
+        imageUrl: diagramMeta.imageUrl,
+        takeawayFormulaAr: diagramMeta.takeawayFormulaAr,
+        takeawayFormulaEn: diagramMeta.takeawayFormulaEn
+      };
 
       return {
         id,
@@ -290,22 +407,23 @@ export function getEgyptArabicG10Curriculum(
         keyConceptsEn: [unit.titleEn, text.genreEn, ...text.outcomeEn],
         summaryAr: `${text.focusAr} ويرتبط الدرس بموضوع الوحدة: ${unit.titleAr}.`,
         summaryEn: `${text.focusEn} This lesson is part of the unit “${unit.titleEn}.”`,
-        mainContentAr: `${text.focusAr}\n\nنشاط تطبيقي: ${text.activityAr}\n\nمن مهارات الوحدة: ${unit.languageAr}\n\nالسياق الأدبي والبلاغي: ${unit.literatureAr} ${unit.rhetoricAr}`,
-        mainContentEn: `${text.focusEn}\n\nPractice: ${text.activityEn}\n\nUnit language focus: ${unit.languageEn}\n\nLiterary context: ${unit.literatureEn} ${unit.rhetoricEn}`,
+        mainContentAr: `![${diagramMeta.titleAr}](${diagramMeta.imageUrl})\n\n### 📌 نظرة عامة ومحاور الدرس:\n${text.focusAr}\n\n### 💡 نشاط تطبيقي تفاعلي:\n${text.activityAr}\n\n### 📐 القواعد النحوية واللغوية المقررة:\n${unit.languageAr}\n\n### 🎨 السياق البلاغي والأدبي:\n${unit.rhetoricAr}\n\n${unit.literatureAr}`,
+        mainContentEn: `![${diagramMeta.titleEn}](${diagramMeta.imageUrl})\n\n### 📌 Lesson Overview:\n${text.focusEn}\n\n### 💡 Applied Activity:\n${text.activityEn}\n\n### 📐 Grammar & Language:\n${unit.languageEn}\n\n### 🎨 Rhetorical & Literary Context:\n${unit.rhetoricEn}\n\n${unit.literatureEn}`,
         sections: [
           {
-            titleAr: 'الفهم والتحليل',
-            titleEn: 'Comprehension and Analysis',
-            contentAr: `${text.focusAr}\n\n${text.outcomesAr.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')}`,
-            contentEn: `${text.focusEn}\n\n${text.outcomeEn.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')}`,
-            tipsAr: ['استند إلى قرائن النص عند تفسير معنى أو قيمة.', 'اربط الفكرة بسياقها ولا تقتطع عبارة من معناها.'],
-            tipsEn: ['Use clues from the text to support an interpretation.', 'Keep ideas in context rather than isolating a phrase.']
+            titleAr: 'الفهم القرائي والتحليل البصري للمخطط المعتمد',
+            titleEn: 'Comprehension & Visual Diagram Analysis',
+            contentAr: `![${diagramMeta.titleAr}](${diagramMeta.imageUrl})\n\n### 📖 الفكرة الرئيسة ومحاور النص:\n${text.focusAr}\n\n### 🎯 مخرجات التعلم المستهدفة:\n${text.outcomesAr.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')}\n\n### 🖼️ الشرح البصري للمخطط التوضيحي المعتمد:\nيوضح المخطط المرفق أعلاه: **${diagramMeta.titleAr}**، حيث يركز على تيسير المفاهيم وقواعد المنهج المقررة في هذا الدرس.\n\n- **الضابط التعليمي والقاعدة الذهبية:** ${diagramMeta.takeawayFormulaAr}`,
+            contentEn: `![${diagramMeta.titleEn}](${diagramMeta.imageUrl})\n\n### 📖 Core Focus:\n${text.focusEn}\n\n### 🎯 Learning Outcomes:\n${text.outcomeEn.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')}\n\n### 🖼️ Approved Diagram Analysis:\n${diagramMeta.captionEn}\n\n- **Key Formula:** ${diagramMeta.takeawayFormulaEn}`,
+            diagram: lectureDiagram,
+            tipsAr: ['استند إلى قرائن النص والمخطط التعليمي عند تفسير المعنى أو القيمة.', 'اربط الفكرة بسياقها البصري والنحوي ولا تقتطع عبارة من معناها.'],
+            tipsEn: ['Use clues from the text and educational diagram to support interpretations.', 'Keep ideas in their visual and grammatical context.']
           },
           {
-            titleAr: 'نشاط تطبيقي ومهارات الوحدة',
-            titleEn: 'Practice and Unit Skills',
-            contentAr: `${text.activityAr}\n\n${unit.languageAr}\n\n${unit.rhetoricAr}`,
-            contentEn: `${text.activityEn}\n\n${unit.languageEn}\n\n${unit.rhetoricEn}`
+            titleAr: 'نشاط تطبيقي وتدريبات الوحدة',
+            titleEn: 'Practice and Unit Exercises',
+            contentAr: `### ✍️ النشاط التطبيقي:\n${text.activityAr}\n\n### 🔍 التطبيق النحوي والبلاغي:\n- ${unit.languageAr}\n- ${unit.rhetoricAr}`,
+            contentEn: `### ✍️ Practice Activity:\n${text.activityEn}\n\n### 🔍 Grammar & Rhetoric Application:\n- ${unit.languageEn}\n- ${unit.rhetoricEn}`
           }
         ],
         formativeAssessment: [

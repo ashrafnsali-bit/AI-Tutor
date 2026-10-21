@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="50%" stop-color="#191932"/>
+      <stop offset="100%" stop-color="#0e1526"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 22px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 15px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .badge-card { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .rule-name { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; font-weight: 700; fill: #fbbf24; }
+    .text-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11.5px; fill: #cbd5e1; }
+    .ex-q { font-family: 'Cairo', 'Amiri', 'Traditional Arabic', serif; font-size: 13px; font-weight: bold; fill: #34d399; }
+    .formula-tag { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: bold; fill: #facc15; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Banner -->
+  <rect x="25" y="20" width="910" height="65" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="480" y="47" class="title-main">مخطط علم البيان: الاستعارة المكنية والاستعارة التصريحية وقواعد التمييز</text>
+  <text x="480" y="69" class="subtitle">الصف الأول الثانوي (مقرر البلاغة المصرية لسانٌ عربيٌّ مبين EG) • التشبيه البليغ المحذوف أحد طرفيه، القرينة المانعة، وسر الجمال</text>
+
+  <!-- Golden Definition Banner -->
+  <g transform="translate(25, 96)">
+    <rect width="910" height="50" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="455" y="32" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#e0e7ff" text-anchor="middle">
+      الاسْتِعَارَةُ هِيَ: <tspan fill="#fbbf24">تَشْبِيهٌ بَلِيغٌ حُذِفَ أَحَدُ طَرَفَيْهِ</tspan> (المُشَبَّهُ أو المُشَبَّهُ بِهِ) مَعَ وُجُودِ قَرِينَةٍ تَمْنَعُ إِرَادَةَ المَعْنَى الأَصْلِيِّ
+    </text>
+  </g>
+
+  <!-- Section 1: Side by Side Comparison (Makniyyah vs Tasreehiyyah) -->
+  <g transform="translate(25, 158)">
+    <rect width="910" height="310" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">١. الْمُقَارَنَةُ الْحَاسِمَةُ بَيْنَ نَوْعَيِ الاسْتِعَارَةِ</text>
+
+    <!-- Card Right: Istiara Makniyyah -->
+    <g transform="translate(470, 36)">
+      <rect width="425" height="260" rx="10" fill="#112238" stroke="#0ea5e9" stroke-width="1.2"/>
+      <rect x="15" y="10" width="395" height="30" rx="6" fill="#0284c7"/>
+      <text x="212" y="30" class="badge-card">الاسْتِعَارَةُ المَكْنِيَّةُ (المشبه موجود ✓ / المشبه به محذوف ✗)</text>
+
+      <!-- Formula Equation -->
+      <rect x="15" y="48" width="395" height="38" rx="6" fill="#081426" stroke="#0369a1" stroke-width="0.8"/>
+      <text x="395" y="72" class="formula-tag" text-anchor="end">المُعَادَلَةُ: ذُكِرَ المُشَبَّهُ [✓] + حُذِفَ المُشَبَّهُ بِهِ [✗] مَعَ لازِمَةٍ تَدُلُّ عَلَيْهِ</text>
+
+      <text x="400" y="105" class="rule-name" text-anchor="end">أمثلة مقررة في المنهج:</text>
+      
+      <!-- Example 1 -->
+      <rect x="15" y="112" width="395" height="64" rx="6" fill="#0b172a" stroke="#1e293b" stroke-width="0.8"/>
+      <text x="395" y="132" class="ex-q" text-anchor="end">«وَإِذَا المَنِيَّةُ أَنْشَبَتْ أَظْفَارَهَا...»</text>
+      <text x="395" y="152" class="text-body" text-anchor="end">شُبّهت (المنية/الموت) بوحش مفترس له أظفار؛ حُذف المشبه به (الوحش)،</text>
+      <text x="395" y="168" class="text-body" text-anchor="end">ودل عليه بلازمة من صفاته (الأظفار) على سبيل الاستعارة المكنية.</text>
+
+      <!-- Example 2 -->
+      <rect x="15" y="184" width="395" height="64" rx="6" fill="#0b172a" stroke="#1e293b" stroke-width="0.8"/>
+      <text x="395" y="204" class="ex-q" text-anchor="end">«ابْتَسَمَ الحَظُّ لِلْمُجْتَهِدِ فِي سَعْيِهِ»</text>
+      <text x="395" y="224" class="text-body" text-anchor="end">شُبّه الحظ بإنسان يبتسم؛ ذكر المشبه (الحظ) وحُذف المشبه به (الإنسان)</text>
+      <text x="395" y="240" class="text-body" text-anchor="end">وبقيت صفة الابتسامة دليلاً عليه (سر الجمال: التشخيص).</text>
+    </g>
+
+    <!-- Card Left: Istiara Tasreehiyyah -->
+    <g transform="translate(15, 36)">
+      <rect width="440" height="260" rx="10" fill="#2d1522" stroke="#f43f5e" stroke-width="1.2"/>
+      <rect x="15" y="10" width="410" height="30" rx="6" fill="#be123c"/>
+      <text x="220" y="30" class="badge-card">الاسْتِعَارَةُ التَّصْرِيحِيَّةُ (المشبه محذوف ✗ / المشبه به مصرّح به ✓)</text>
+
+      <!-- Formula Equation -->
+      <rect x="15" y="48" width="410" height="38" rx="6" fill="#1b0811" stroke="#9f1239" stroke-width="0.8"/>
+      <text x="410" y="72" class="formula-tag" text-anchor="end" fill="#fb7185">المُعَادَلَةُ: حُذِفَ المُشَبَّهُ [✗] + صُرِّحَ بِلَفْظِ المُشَبَّهِ بِهِ [✓] فِي الكَلاَمِ</text>
+
+      <text x="415" y="105" class="rule-name" text-anchor="end" fill="#f43f5e">أمثلة مقررة في المنهج:</text>
+
+      <!-- Example 1 -->
+      <rect x="15" y="112" width="410" height="64" rx="6" fill="#1c0a12" stroke="#4c0519" stroke-width="0.8"/>
+      <text x="405" y="132" class="ex-q" text-anchor="end">«وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعاً...»</text>
+      <text x="405" y="152" class="text-body" text-anchor="end">شُبّه دين الله وهداه بالحبل المتين المنجي؛ حُذف المشبه (الدين)،</text>
+      <text x="405" y="168" class="text-body" text-anchor="end">وصُرّح بلفظ المشبه به (الحبل) على سبيل الاستعارة التصريحية.</text>
+
+      <!-- Example 2 -->
+      <rect x="15" y="184" width="410" height="64" rx="6" fill="#1c0a12" stroke="#4c0519" stroke-width="0.8"/>
+      <text x="405" y="204" class="ex-q" text-anchor="end">«كِتَابٌ أَنْزَلْنَاهُ إِلَيْكَ لِتُخْرِجَ النَّاسَ مِنَ الظُّلُمَاتِ إِلَى النُّورِ»</text>
+      <text x="405" y="224" class="text-body" text-anchor="end">الظلمات: استعارة تصريحية عن (الكفر والضلال)، والنور: استعارة</text>
+      <text x="405" y="240" class="text-body" text-anchor="end">تصريحية عن (الإيمان والهدى)؛ صُرّح بالمشبه به وحُذف المشبه.</text>
+    </g>
+  </g>
+
+  <!-- Section 2: Step-by-Step Solving Guide for Exams -->
+  <g transform="translate(25, 480)">
+    <rect width="910" height="145" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">٢. خُطُوَاتُ اسْتِخْرَاجِ نَوْعِ الاسْتِعَارَةِ فِي امْتِحَانَاتِ الصَّفِّ الأَوَّلِ الثَّانَوِيِّ</text>
+
+    <!-- Step 1 -->
+    <g transform="translate(685, 36)">
+      <rect width="210" height="96" rx="8" fill="#132338" stroke="#38bdf8" stroke-width="1"/>
+      <text x="105" y="25" class="rule-name" text-anchor="middle">الخطوة الأولى</text>
+      <text x="195" y="50" class="text-body" text-anchor="end">حدد المعنى المجازي الذي</text>
+      <text x="195" y="68" class="text-body" text-anchor="end">لا يمكن حدوثه حقيقة في العبارة.</text>
+    </g>
+
+    <!-- Step 2 -->
+    <g transform="translate(465, 36)">
+      <rect width="210" height="96" rx="8" fill="#132338" stroke="#38bdf8" stroke-width="1"/>
+      <text x="105" y="25" class="rule-name" text-anchor="middle">الخطوة الثانية</text>
+      <text x="195" y="50" class="text-body" text-anchor="end">ضع جدول المقارنة:</text>
+      <text x="195" y="68" class="text-body" text-anchor="end">المشبه = ... | المشبه به = ...</text>
+    </g>
+
+    <!-- Step 3 -->
+    <g transform="translate(245, 36)">
+      <rect width="210" height="96" rx="8" fill="#1b2e1e" stroke="#10b981" stroke-width="1"/>
+      <text x="105" y="25" class="rule-name" fill="#34d399" text-anchor="middle">الخطوة الثالثة</text>
+      <text x="195" y="50" class="text-body" text-anchor="end">إذا المذكور هو المشبه ➔</text>
+      <text x="195" y="70" class="rule-name" fill="#38bdf8" text-anchor="end">اسْتِعَارَةٌ مَكْنِيَّةٌ</text>
+    </g>
+
+    <!-- Step 4 -->
+    <g transform="translate(25, 36)">
+      <rect width="210" height="96" rx="8" fill="#2d1522" stroke="#f43f5e" stroke-width="1"/>
+      <text x="105" y="25" class="rule-name" fill="#fb7185" text-anchor="middle">الخطوة الرابعة</text>
+      <text x="195" y="50" class="text-body" text-anchor="end">إذا المذكور هو المشبه به ➔</text>
+      <text x="195" y="70" class="rule-name" fill="#f43f5e" text-anchor="end">اسْتِعَارَةٌ تَصْرِيحِيَّةٌ</text>
+    </g>
+  </g>
+</svg>

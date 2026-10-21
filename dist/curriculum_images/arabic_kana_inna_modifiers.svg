@@ -1,172 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 600" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b1120"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+      <stop offset="0%" stop-color="#0b1329"/>
+      <stop offset="50%" stop-color="#15203b"/>
+      <stop offset="100%" stop-color="#070c1a"/>
     </linearGradient>
-
     <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
       <stop offset="100%" stop-color="#0f172a"/>
     </linearGradient>
-
-    <linearGradient id="kanaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.5"/>
-    </linearGradient>
-
-    <linearGradient id="innaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#15803d" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#047857" stop-opacity="0.5"/>
-    </linearGradient>
-
-    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
       <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
   </defs>
 
   <style>
-    .main-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 21px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
-    .subtitle { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
-    .card-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 15px; font-weight: bold; }
-    .arabic-text { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; fill: #e2e8f0; }
-    .arabic-bold { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 14px; font-weight: bold; }
-    .badge-kana { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #38bdf8; }
-    .badge-inna { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #34d399; }
-    .example-box { font-family: 'Consolas', 'Segoe UI', Tahoma, Cairo; font-size: 13.5px; font-weight: bold; }
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 22px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 15px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .header-badge { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 14px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .member-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: bold; fill: #fbbf24; text-anchor: end; }
+    .text-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11.5px; fill: #cbd5e1; }
+    .ex-q { font-family: 'Cairo', 'Amiri', 'Traditional Arabic', serif; font-size: 14px; font-weight: bold; fill: #34d399; }
+    .parse-lbl { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #93c5fd; }
   </style>
 
-  <!-- Frame Background -->
-  <rect width="920" height="600" rx="16" fill="url(#bgGrad)"/>
-  <rect x="10" y="10" width="900" height="580" rx="12" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#334155" stroke-width="1.5"/>
 
-  <!-- Top Header Banner -->
-  <rect x="30" y="22" width="860" height="62" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" filter="url(#cardShadow)"/>
-  <text x="460" y="48" class="main-title">النواسخ في اللغة العربية: المقارنة الذهبية بين (كان وأخواتها) و(إن وأخواتها)</text>
-  <text x="460" y="70" class="subtitle">Primary Arabic 6 &amp; Middle Grammar: Copular Verbs vs Assertive Particles in Arabic Nominal Sentences</text>
+  <!-- Top Title Banner -->
+  <rect x="25" y="18" width="910" height="62" rx="10" fill="#132338" stroke="#334155" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="480" y="44" class="title-main">مخطط النواسخ المعتمد: كَانَ وأخواتها (أفعال ناسخة) مقابل إِنَّ وأخواتها (حروف ناسخة)</text>
+  <text x="480" y="66" class="subtitle">قواعد اللغة العربية • أثر النواسخ على المبتدأ والخبر، المعاني البلاغية والدلالية، والشواهد التطبيقية المضبوطة</text>
 
-  <!-- Top Hero Card: Original Nominal Sentence Transformation -->
-  <g transform="translate(30, 96)">
-    <rect width="860" height="90" rx="10" fill="#0f172a" stroke="#475569" stroke-width="1.2" filter="url(#cardShadow)"/>
-    
-    <!-- Base Sentence Box (Middle) -->
-    <rect x="310" y="12" width="240" height="66" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
-    <text x="430" y="34" font-family="'Segoe UI', Cairo" font-size="11" fill="#facc15" text-anchor="middle">الجملة الاسمية الأصلية (دون ناسخ)</text>
-    <text x="430" y="60" class="example-box" fill="#ffffff" text-anchor="middle">الطَّالِبُ مُجْتَهِدٌ</text>
-    <text x="430" y="73" font-family="'Segoe UI', Cairo" font-size="9" fill="#94a3b8" text-anchor="middle">مبتدأ مرفوع بالضمة + خبر مرفوع بالضمة</text>
+  <!-- Section: Side-by-Side In-depth Comparison -->
+  <g transform="translate(25, 92)">
+    <!-- Right Card: Kana & Sisters (Af'al Nasikha) -->
+    <g transform="translate(470, 0)">
+      <rect width="440" height="420" rx="12" fill="url(#cardGrad)" stroke="#0ea5e9" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="15" y="12" width="410" height="34" rx="6" fill="#0284c7"/>
+      <text x="220" y="34" class="header-badge">كَانَ وَأَخَوَاتُهَا (أَفْعَالٌ نَاسِخَةٌ نَاقِصَةٌ)</text>
 
-    <!-- Arrow to Kana (Left side) -->
-    <path d="M 310 45 L 250 45" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowKana)"/>
-    <rect x="25" y="12" width="225" height="66" rx="8" fill="url(#kanaGrad)" stroke="#38bdf8" stroke-width="1.5"/>
-    <text x="137" y="32" class="badge-kana" text-anchor="middle">دخول كَانَ (فعل ناسخ ناقص)</text>
-    <text x="137" y="55" class="example-box" fill="#ffffff" text-anchor="middle">كَانَ الطَّالِبُ مُجْتَهِداً</text>
-    <text x="137" y="70" font-family="'Segoe UI', Cairo" font-size="9.5" fill="#bae6fd" text-anchor="middle">ترفع المبتدأ اسماً لها ⬆ وتنصب الخبر ⬇</text>
+      <!-- Operation Rule Box -->
+      <rect x="15" y="56" width="410" height="45" rx="6" fill="#0c1a2e" stroke="#0284c7" stroke-width="0.8"/>
+      <text x="410" y="76" class="text-body" text-anchor="end" font-weight="bold" fill="#38bdf8">عَمَلُهَا فِي الْجُمْلَةِ الاسْمِيَّةِ:</text>
+      <text x="410" y="94" class="text-body" text-anchor="end">تَدْخُلُ عَلَى الْمُبْتَدَأِ <tspan fill="#4ade80" font-weight="bold">فَتَرْفَعُهُ اسْماً لَهَا</tspan>، وَتَنْصِبُ الْخَبَرَ <tspan fill="#f87171" font-weight="bold">خَبَراً لَهَا</tspan>.</text>
 
-    <!-- Arrow to Inna (Right side) -->
-    <path d="M 550 45 L 610 45" stroke="#34d399" stroke-width="2.5"/>
-    <rect x="610" y="12" width="225" height="66" rx="8" fill="url(#innaGrad)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="722" y="32" class="badge-inna" text-anchor="middle">دخول إِنَّ (حرف ناسخ ناصب)</text>
-    <text x="722" y="55" class="example-box" fill="#ffffff" text-anchor="middle">إِنَّ الطَّالِبَ مُجْتَهِدٌ</text>
-    <text x="722" y="70" font-family="'Segoe UI', Cairo" font-size="9.5" fill="#a7f3d0" text-anchor="middle">تنصب المبتدأ اسماً لها ⬇ وترفع الخبر ⬆</text>
-  </g>
+      <!-- Members & Meanings -->
+      <rect x="15" y="110" width="410" height="150" rx="6" fill="#081426" stroke="#1e3a5f" stroke-width="0.8"/>
+      <text x="410" y="130" class="member-title">أَخَوَاتُ كَانَ وَدَلاَلاَتُهَا:</text>
+      <text x="410" y="152" class="text-body" text-anchor="end">• <tspan fill="#fbbf24">كَانَ:</tspan> التوقيت في الماضي • <tspan fill="#fbbf24">أَصْبَحَ:</tspan> التوقيت في الصباح</text>
+      <text x="410" y="174" class="text-body" text-anchor="end">• <tspan fill="#fbbf24">أَضْحَى:</tspan> وقت الضحى • <tspan fill="#fbbf24">أَمْسَى:</tspan> وقت المساء</text>
+      <text x="410" y="196" class="text-body" text-anchor="end">• <tspan fill="#fbbf24">بَاتَ:</tspan> وقت الليل • <tspan fill="#fbbf24">ظَلَّ:</tspan> الاستمرار في النهار</text>
+      <text x="410" y="218" class="text-body" text-anchor="end">• <tspan fill="#fbbf24">صَارَ:</tspan> التحول والانتقال • <tspan fill="#fbbf24">لَيْسَ:</tspan> النفي الصريح</text>
+      <text x="410" y="240" class="text-body" text-anchor="end">• <tspan fill="#fbbf24">مَا زَالَ، مَا بَرِحَ، مَا فَتِئَ، مَا انْفَكَّ:</tspan> ملازمة واستمرار</text>
 
-  <!-- Left Column: Kāna and Its Sisters (كان وأخواتها) -->
-  <g transform="translate(30, 198)">
-    <rect width="420" height="380" rx="12" fill="url(#cardGrad)" stroke="#0284c7" stroke-width="1.2" filter="url(#cardShadow)"/>
-    <rect x="0" y="0" width="420" height="32" rx="12" fill="#0284c7" fill-opacity="0.3"/>
-    <text x="210" y="22" class="card-title" fill="#38bdf8" text-anchor="middle">١. كَانَ وَأَخَوَاتُهَا (أَفْعَالٌ نَاسِخَةٌ نَاقِصَةٌ)</text>
-
-    <!-- Rule Badge -->
-    <rect x="20" y="42" width="380" height="42" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
-    <text x="210" y="60" class="arabic-bold" fill="#facc15" text-anchor="middle">القاعدة: ترفع المبتدأ ويسمى اسمها، وتنصب الخبر ويسمى خبرها</text>
-    <text x="210" y="76" font-family="'Segoe UI', Cairo" font-size="10.5" fill="#bae6fd" text-anchor="middle">سُميت أفعالاً لأنها تدل على زمان، وناسخة لأنها غيرت حكم الخبر، وناقصة لا تكتفي بفاعلها</text>
-
-    <!-- The Sisters & Meanings Table -->
-    <g transform="translate(20, 92)">
-      <rect width="380" height="150" rx="8" fill="#090d16" stroke="#334155" stroke-width="1"/>
-      <text x="190" y="20" font-family="'Segoe UI', Cairo" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">الأخوات ومعانيها الدقيقة في البلاغة العربية</text>
-      
-      <line x1="10" y1="28" x2="370" y2="28" stroke="#334155" stroke-width="1"/>
-      
-      <text x="15" y="46" class="arabic-bold" fill="#60a5fa">كَانَ:</text>
-      <text x="65" y="46" class="arabic-text">التوقيت في الماضي أو الاستمرار (كَانَ اللَّهُ غَفُوراً رَحِيماً)</text>
-
-      <text x="15" y="68" class="arabic-bold" fill="#60a5fa">أَصْبَحَ / أَضْحَى:</text>
-      <text x="110" y="68" class="arabic-text">التوقيت بالصباح وبالضحى (أَصْبَحَ الجَوُّ مُعْتَدِلاً)</text>
-
-      <text x="15" y="90" class="arabic-bold" fill="#60a5fa">أَمْسَى / بَاتَ:</text>
-      <text x="100" y="90" class="arabic-text">التوقيت بالمساء وبالليل (بَاتَ الحَارِسُ يَقِظاً)</text>
-
-      <text x="15" y="112" class="arabic-bold" fill="#60a5fa">ظَلَّ / صَارَ:</text>
-      <text x="95" y="112" class="arabic-text">الاستمرار / التحول من حال لآخر (صَارَ المَاءُ ثَلْجاً)</text>
-
-      <text x="15" y="134" class="arabic-bold" fill="#60a5fa">لَيْسَ / مَا زَالَ:</text>
-      <text x="105" y="134" class="arabic-text">النفي المطلق / ملازمة الخبر للاسم (لَيْسَ الكَسُولُ نَاجِحاً)</text>
+      <!-- Example & Parsing -->
+      <rect x="15" y="270" width="410" height="135" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="1"/>
+      <text x="410" y="292" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="end">شَاهِدٌ إِعْرَابِيٌّ مُفَصَّلٌ:</text>
+      <text x="410" y="322" class="ex-q" text-anchor="end">«كَانَ الْجَوُّ صَحْواً وَالْمَطَرُ هَاطِلاً»</text>
+      <text x="410" y="350" class="parse-lbl" text-anchor="end">• كَانَ: فعل ماضٍ ناسخ مبني على الفتح.</text>
+      <text x="410" y="370" class="parse-lbl" text-anchor="end">• الجَوُّ: <tspan fill="#4ade80" font-weight="bold">اسم كان مرفوع</tspan> وعلامة رفعه الضمة الظاهرة.</text>
+      <text x="410" y="390" class="parse-lbl" text-anchor="end">• صَحْواً: <tspan fill="#f87171" font-weight="bold">خبر كان منصوب</tspan> وعلامة نصبه الفتحة الظاهرة.</text>
     </g>
 
-    <!-- Examples with Dual, Plural & 5 Nouns -->
-    <g transform="translate(20, 252)">
-      <rect width="380" height="115" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-dasharray="2,2" stroke-width="1"/>
-      <text x="190" y="20" font-family="'Segoe UI', Cairo" font-size="11.5" font-weight="bold" fill="#facc15" text-anchor="middle">تطبيقات إعرابية هامة مع علامات الإعراب الفرعية</text>
-      
-      <text x="15" y="42" class="arabic-bold" fill="#38bdf8">• مع المثنى:</text>
-      <text x="95" y="42" class="arabic-text">أَصْبَحَ الطَّالِبَانِ مُجْتَهِدَيْنِ (اسم مرفوع بالألف، خبر منصوب بالياء)</text>
+    <!-- Left Card: Inna & Sisters (Huroof Nasikha) -->
+    <g transform="translate(0, 0)">
+      <rect width="445" height="420" rx="12" fill="url(#cardGrad)" stroke="#f43f5e" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="15" y="12" width="415" height="34" rx="6" fill="#be123c"/>
+      <text x="222" y="34" class="header-badge">إِنَّ وَأَخَوَاتُهَا (حُرُوفٌ نَاسِخَةٌ مُشَبَّهَةٌ بِالْفِعْلِ)</text>
 
-      <text x="15" y="66" class="arabic-bold" fill="#38bdf8">• مع جمع المذكر:</text>
-      <text x="115" y="66" class="arabic-text">ظَلَّ المُهَنْدِسُونَ مَاهِرِينَ (مرفوع بالواو، خبر منصوب بالياء)</text>
+      <!-- Operation Rule Box -->
+      <rect x="15" y="56" width="415" height="45" rx="6" fill="#2d131a" stroke="#be123c" stroke-width="0.8"/>
+      <text x="415" y="76" class="text-body" text-anchor="end" font-weight="bold" fill="#fb7185">عَمَلُهَا فِي الْجُمْلَةِ الاسْمِيَّةِ:</text>
+      <text x="415" y="94" class="text-body" text-anchor="end">تَدْخُلُ عَلَى الْمُبْتَدَأِ <tspan fill="#f87171" font-weight="bold">فَتَنْصِبُهُ اسْماً لَهَا</tspan>، وَتَرْفَعُ الْخَبَرَ <tspan fill="#4ade80" font-weight="bold">خَبَراً لَهَا</tspan>.</text>
 
-      <text x="15" y="90" class="arabic-bold" fill="#38bdf8">• مع الأسماء الـ 5:</text>
-      <text x="115" y="90" class="arabic-text">كَانَ أَبُوكَ ذَا خُلُقٍ (اسم كان مرفوع بالواو، خبر منصوب بالألف)</text>
+      <!-- Members & Meanings -->
+      <rect x="15" y="110" width="415" height="150" rx="6" fill="#1c0a10" stroke="#881337" stroke-width="0.8"/>
+      <text x="415" y="130" class="member-title" fill="#fb7185">أَخَوَاتُ إِنَّ وَدَلاَلاَتُهَا:</text>
+      <text x="415" y="152" class="text-body" text-anchor="end">• <tspan fill="#facc15">إِنَّ / أَنَّ:</tspan> التوكيد وتحقيق النسبة وإزالة الشك</text>
+      <text x="415" y="174" class="text-body" text-anchor="end">• <tspan fill="#facc15">كَأَنَّ:</tspan> التشبيه والمقاربة</text>
+      <text x="415" y="196" class="text-body" text-anchor="end">• <tspan fill="#facc15">لَكِنَّ:</tspan> الاستدراك ومنع توهم الخطأ</text>
+      <text x="415" y="218" class="text-body" text-anchor="end">• <tspan fill="#facc15">لَيْتَ:</tspan> التمني لِما يستحيل أو يعسر حصوله</text>
+      <text x="415" y="240" class="text-body" text-anchor="end">• <tspan fill="#facc15">لَعَلَّ:</tspan> الترجي لِما يرجى وقربه أو الإشفاق</text>
+
+      <!-- Example & Parsing -->
+      <rect x="15" y="270" width="415" height="135" rx="6" fill="#0f172a" stroke="#f43f5e" stroke-width="1"/>
+      <text x="415" y="292" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fb7185" text-anchor="end">شَاهِدٌ إِعْرَابِيٌّ مُفَصَّلٌ:</text>
+      <text x="415" y="322" class="ex-q" text-anchor="end">«إِنَّ العِلْمَ نُورٌ يَهْدِي الْعُقُولَ»</text>
+      <text x="415" y="350" class="parse-lbl" text-anchor="end">• إِنَّ: حرف توكيد ونصب مبني على الفتح لا محل له.</text>
+      <text x="415" y="370" class="parse-lbl" text-anchor="end">• العِلْمَ: <tspan fill="#f87171" font-weight="bold">اسم إن منصوب</tspan> وعلامة نصبه الفتحة الظاهرة.</text>
+      <text x="415" y="390" class="parse-lbl" text-anchor="end">• نُورٌ: <tspan fill="#4ade80" font-weight="bold">خبر إن مرفوع</tspan> وعلامة رفعه الضمة الظاهرة.</text>
     </g>
   </g>
 
-  <!-- Right Column: Inna and Its Sisters (إن وأخواتها) -->
-  <g transform="translate(470, 198)">
-    <rect width="420" height="380" rx="12" fill="url(#cardGrad)" stroke="#059669" stroke-width="1.2" filter="url(#cardShadow)"/>
-    <rect x="0" y="0" width="420" height="32" rx="12" fill="#059669" fill-opacity="0.3"/>
-    <text x="210" y="22" class="card-title" fill="#34d399" text-anchor="middle">٢. إِنَّ وَأَخَوَاتُهَا (حُرُوفٌ نَاسِخَةٌ نَاصِبَةٌ)</text>
-
-    <!-- Rule Badge -->
-    <rect x="20" y="42" width="380" height="42" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
-    <text x="210" y="60" class="arabic-bold" fill="#facc15" text-anchor="middle">القاعدة: تنصب المبتدأ ويسمى اسمها، وترفع الخبر ويسمى خبرها</text>
-    <text x="210" y="76" font-family="'Segoe UI', Cairo" font-size="10.5" fill="#a7f3d0" text-anchor="middle">سُميت حروفاً لأنها لا تقبل علامات الأفعال ولا الأسماء، وتعمل عكس كان تماماً</text>
-
-    <!-- The Sisters & Meanings Table -->
-    <g transform="translate(20, 92)">
-      <rect width="380" height="150" rx="8" fill="#090d16" stroke="#334155" stroke-width="1"/>
-      <text x="190" y="20" font-family="'Segoe UI', Cairo" font-size="12" font-weight="bold" fill="#34d399" text-anchor="middle">الحروف ومعانيها الدقيقة في البلاغة القرآنية</text>
-      
-      <line x1="10" y1="28" x2="370" y2="28" stroke="#334155" stroke-width="1"/>
-
-      <text x="15" y="46" class="arabic-bold" fill="#34d399">إِنَّ / أَنَّ:</text>
-      <text x="80" y="46" class="arabic-text">التوكيد ونفي الشك ﴿إِنَّ اللَّهَ مَعَ الصَّابِرِينَ﴾</text>
-
-      <text x="15" y="68" class="arabic-bold" fill="#34d399">كَأَنَّ:</text>
-      <text x="65" y="68" class="arabic-text">التشبيه وتأكيد المماثلة (كَأَنَّ المُعَلِّمَ بَدْرٌ يُضِيءُ)</text>
-
-      <text x="15" y="90" class="arabic-bold" fill="#34d399">لَكِنَّ:</text>
-      <text x="65" y="90" class="arabic-text">الاستدراك ومنع الفهم الخاطئ (الامْتِحَانُ طَوِيلٌ لَكِنَّهُ سَهْلٌ)</text>
-
-      <text x="15" y="112" class="arabic-bold" fill="#34d399">لَيْتَ:</text>
-      <text x="65" y="112" class="arabic-text">التمني لما هو مستحيل أو عسير الوقوع (أَلا لَيْتَ الشَّبَابَ يَعُودُ)</text>
-
-      <text x="15" y="134" class="arabic-bold" fill="#34d399">لَعَلَّ:</text>
-      <text x="65" y="134" class="arabic-text">الترجي والتوقع للأمر المحبوب الممكن (لَعَلَّ الفَرَجَ قَرِيبٌ)</text>
-    </g>
-
-    <!-- Examples with Dual, Plural & 5 Nouns -->
-    <g transform="translate(20, 252)">
-      <rect width="380" height="115" rx="8" fill="#0f172a" stroke="#10b981" stroke-dasharray="2,2" stroke-width="1"/>
-      <text x="190" y="20" font-family="'Segoe UI', Cairo" font-size="11.5" font-weight="bold" fill="#facc15" text-anchor="middle">تطبيقات إعرابية هامة مع علامات الإعراب الفرعية</text>
-
-      <text x="15" y="42" class="arabic-bold" fill="#34d399">• مع المثنى:</text>
-      <text x="95" y="42" class="arabic-text">إِنَّ الطَّالِبَيْنِ مُجْتَهِدَانِ (اسم إن منصوب بالياء، خبر مرفوع بالألف)</text>
-
-      <text x="15" y="66" class="arabic-bold" fill="#34d399">• مع جمع المذكر:</text>
-      <text x="115" y="66" class="arabic-text">لَعَلَّ المُهَنْدِسِينَ مَاهِرُونَ (اسم منصوب بالياء، خبر مرفوع بالواو)</text>
-
-      <text x="15" y="90" class="arabic-bold" fill="#34d399">• مع جمع المؤنث:</text>
-      <text x="115" y="90" class="arabic-text">إِنَّ الطَّالِبَاتِ مُتَفَوِّقَاتٌ (اسم إنَّ منصوب بالكسرة نيابة عن الفتحة)</text>
-    </g>
+  <!-- Bottom Golden Rule of Thumb Box -->
+  <g transform="translate(25, 525)">
+    <rect width="910" height="95" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2" filter="url(#shadow)"/>
+    <text x="455" y="28" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#facc15" text-anchor="middle">
+      القَاعِدَةُ الذَّهَبِيَّةُ لِلْحِفْظِ السَّرِيعِ وَعَدَمِ الخَلْطِ بَيْنَ النَّاسِخَيْنِ:
+    </text>
+    <text x="455" y="54" font-family="'Cairo', sans-serif" font-size="13" fill="#e0e7ff" text-anchor="middle">
+      كَانَ (فعل) ➔ <tspan fill="#4ade80" font-weight="bold">تَرْفَعُ</tspan> الْمُبْتَدَأَ وَ <tspan fill="#f87171" font-weight="bold">تَنْصِبُ</tspan> الْخَبَرَ  |  إِنَّ (حرف) ➔ <tspan fill="#f87171" font-weight="bold">تَنْصِبُ</tspan> الْمُبْتَدَأَ وَ <tspan fill="#4ade80" font-weight="bold">تَرْفَعُ</tspan> الْخَبَرَ
+    </text>
+    <text x="455" y="78" font-family="'Cairo', sans-serif" font-size="11.5" fill="#93c5fd" text-anchor="middle">
+      تذكر دائماً: كَانَ ترفع أولاً ثم تنصب، بينما إِنَّ تنصب أولاً ثم ترفع (عكس بعضهما تماماً في العمل).
+    </text>
   </g>
 </svg>

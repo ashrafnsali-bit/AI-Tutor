@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <filter id="dropShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 22px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 15px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .badge-text { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .rule-name { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 14px; font-weight: 700; fill: #fbbf24; }
+    .rule-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; fill: #e2e8f0; }
+    .ex-q { font-family: 'Cairo', 'Amiri', 'Traditional Arabic', serif; font-size: 14px; font-weight: bold; fill: #34d399; }
+    .ex-parse { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    .tbl-header { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: bold; fill: #93c5fd; text-anchor: middle; }
+    .tbl-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; fill: #f8fafc; text-anchor: middle; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <rect x="25" y="20" width="910" height="65" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.2" filter="url(#dropShadow)"/>
+  <text x="480" y="47" class="title-main">مخطط الأفعال الناسخة والتامة: كَانَ وأخواتها وكَادَ وأخواتها (المقاربة والرجاء والشروع)</text>
+  <text x="480" y="69" class="subtitle">الصف الأول الثانوي (كتاب لسانٌ عربيٌّ مبين - وزارة التربية والتعليم المصرية EG) • النحو التطبيقي والضوابط الإعرابية</text>
+
+  <!-- Section 1: Comparison between Kana Naqisa and Kana Tamma -->
+  <g transform="translate(25, 98)">
+    <rect width="910" height="155" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#dropShadow)"/>
+    <text x="455" y="26" class="sec-title">١. الفَرْقُ الدَّقِيقُ بَيْنَ كَانَ النَّاقِصَةِ وَكَانَ التَّامَّةِ</text>
+
+    <!-- Card A: Kana Naqisa -->
+    <g transform="translate(470, 38)">
+      <rect width="420" height="102" rx="8" fill="#132338" stroke="#38bdf8" stroke-width="1.2"/>
+      <rect x="300" y="8" width="105" height="24" rx="12" fill="#0284c7"/>
+      <text x="352" y="24" class="badge-text">كَانَ النَّاقِصَةُ</text>
+      <text x="400" y="50" class="rule-body" text-anchor="end">تحتاج إلى اسم مرفوع وخبر منصوب لإتمام المعنى.</text>
+      <rect x="15" y="60" width="390" height="32" rx="6" fill="#0c1a2e" stroke="#1e3a5f" stroke-width="1"/>
+      <text x="390" y="80" class="ex-q" text-anchor="end">«كَانَ الدَّوَاءُ مُرّاً»</text>
+      <text x="180" y="80" class="ex-parse" text-anchor="end">الدواءُ: اسم كان مرفوع | مُرّاً: خبر كان منصوب</text>
+    </g>
+
+    <!-- Card B: Kana Tamma -->
+    <g transform="translate(20, 38)">
+      <rect width="425" height="102" rx="8" fill="#201f3d" stroke="#a855f7" stroke-width="1.2"/>
+      <rect x="305" y="8" width="105" height="24" rx="12" fill="#7e22ce"/>
+      <text x="357" y="24" class="badge-text">كَانَ التَّامَّةُ</text>
+      <text x="405" y="50" class="rule-body" text-anchor="end">تكتفي بمرفوعها ويُعرب <tspan fill="#f43f5e" font-weight="bold">فَاعِلاً</tspan> وتدل على الوجود أو الحدوث.</text>
+      <rect x="15" y="60" width="395" height="32" rx="6" fill="#16122d" stroke="#3b1f5e" stroke-width="1"/>
+      <text x="395" y="80" class="ex-q" text-anchor="end">«فَسُبْحَانَ اللَّهِ حِينَ تُمْسُونَ وَحِينَ تُصْبِحُونَ»</text>
+      <text x="135" y="80" class="ex-parse" text-anchor="end">واو الجماعة: ضمير متصل في محل رفع فاعل</text>
+    </g>
+  </g>
+
+  <!-- Section 2: Kada and Akhawatiha (Muqaraba, Raja, Shuru) -->
+  <g transform="translate(25, 265)">
+    <rect width="910" height="195" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#dropShadow)"/>
+    <text x="455" y="26" class="sec-title">٢. كَادَ وَأَخَوَاتُهَا (أَفْعَالُ الْمُقَارَبَةِ وَالرَّجَاءِ وَالشُّرُوعِ) — تَعْمَلُ عَمَلَ كَانَ بِشَرْطٍ أَنْ يَكُونَ خَبَرُهَا جُمْلَةً فِعْلِيَّةً مُضَارِعَةً</text>
+
+    <!-- Group 1: Muqaraba -->
+    <g transform="translate(615, 42)">
+      <rect width="275" height="138" rx="8" fill="#1e293b" stroke="#0ea5e9" stroke-width="1.2"/>
+      <rect x="15" y="10" width="245" height="28" rx="6" fill="#0369a1"/>
+      <text x="137" y="29" class="badge-text">أَفْعَالُ الْمُقَارَبَةِ (دُنُوّ الْخَبَر)</text>
+      <text x="260" y="62" class="rule-name" text-anchor="end">كَادَ • كَرَبَ • أَوْشَكَ</text>
+      <text x="260" y="84" class="rule-body" text-anchor="end">تدل على قرب وقوع الفعل والخبر.</text>
+      <rect x="12" y="94" width="251" height="34" rx="5" fill="#0f172a" stroke="#0284c7" stroke-width="0.8"/>
+      <text x="250" y="115" class="ex-q" font-size="12" text-anchor="end">«كَادَ الْمَطَرُ يَهْطِلُ»</text>
+    </g>
+
+    <!-- Group 2: Raja -->
+    <g transform="translate(320, 42)">
+      <rect width="275" height="138" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.2"/>
+      <rect x="15" y="10" width="245" height="28" rx="6" fill="#047857"/>
+      <text x="137" y="29" class="badge-text">أَفْعَالُ الرَّجَاءِ (أَمَلُ الْخَبَر)</text>
+      <text x="260" y="62" class="rule-name" text-anchor="end" fill="#34d399">عَسَى • حَرَى • اخْلَوْلَقَ</text>
+      <text x="260" y="84" class="rule-body" text-anchor="end">تدل على رجاء وتمني حصول الخبر.</text>
+      <rect x="12" y="94" width="251" height="34" rx="5" fill="#0f172a" stroke="#059669" stroke-width="0.8"/>
+      <text x="250" y="115" class="ex-q" font-size="12" text-anchor="end">«عَسَى رَبُّكُمْ أَنْ يَرْحَمَكُمْ»</text>
+    </g>
+
+    <!-- Group 3: Shuru -->
+    <g transform="translate(20, 42)">
+      <rect width="280" height="138" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+      <rect x="15" y="10" width="250" height="28" rx="6" fill="#b45309"/>
+      <text x="140" y="29" class="badge-text">أَفْعَالُ الشُّرُوعِ (الْبَدْءُ فِي الْخَبَر)</text>
+      <text x="265" y="62" class="rule-name" text-anchor="end" fill="#facc15">شَرَعَ • بَدَأَ • طَفِقَ • أَنْشَأَ • أَخَذَ</text>
+      <text x="265" y="84" class="rule-body" text-anchor="end">تكون ناقصة إذا كان خبرها مضارعاً ومجرداً من أن.</text>
+      <rect x="12" y="94" width="256" height="34" rx="5" fill="#0f172a" stroke="#d97706" stroke-width="0.8"/>
+      <text x="254" y="115" class="ex-q" font-size="12" text-anchor="end">«شَرَعَ الطَّالِبُ يُذَاكِرُ»</text>
+    </g>
+  </g>
+
+  <!-- Section 3: Rules of pairing with 'An' (Iqtiran bi-An) -->
+  <g transform="translate(25, 470)">
+    <rect width="910" height="150" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#dropShadow)"/>
+    <text x="455" y="24" class="sec-title">٣. حُكْمُ اقْتِرَانِ خَبَرِ كَادَ وَأَخَوَاتِهَا بِـ (أَنْ) الْمَصْدَرِيَّةِ (قَاعِدَةٌ امْتِحَانِيَّةٌ جَوْهَرِيَّةٌ)</text>
+
+    <!-- Table Container -->
+    <g transform="translate(20, 36)">
+      <!-- Header Row -->
+      <rect width="870" height="30" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="760" y="20" class="tbl-header">الْحُكْمُ الإِعْرَابِيُّ</text>
+      <text x="520" y="20" class="tbl-header">الأَفْعَالُ الْمُخْتَصَّةُ</text>
+      <text x="230" y="20" class="tbl-header">الشَّاهِدُ وَالْمِثَالُ التَّطْبِيقِيُّ</text>
+
+      <!-- Row 1: Yaqill -->
+      <rect y="34" width="870" height="26" fill="#1e293b" opacity="0.6"/>
+      <rect x="800" y="38" width="60" height="18" rx="4" fill="#3b82f6"/>
+      <text x="830" y="51" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">يَقِلُّ</text>
+      <text x="520" y="52" class="tbl-body" fill="#93c5fd">كَادَ — كَرَبَ</text>
+      <text x="230" y="52" class="tbl-body" fill="#e2e8f0">«كَادَ الْوَقْتُ يَنْتَهِي» (ويجوز نادراً: أن ينتهي)</text>
+
+      <!-- Row 2: Yakthur -->
+      <rect y="62" width="870" height="26" fill="#0f172a" opacity="0.6"/>
+      <rect x="800" y="66" width="60" height="18" rx="4" fill="#10b981"/>
+      <text x="830" y="79" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">يَكْثُرُ</text>
+      <text x="520" y="80" class="tbl-body" fill="#6ee7b7">عَسَى — أَوْشَكَ</text>
+      <text x="230" y="80" class="tbl-body" fill="#e2e8f0">«أَوْشَكَ النَّصْرُ أَنْ يَتَحَقَّقَ» (ويجوز قليلاً: يتحقق)</text>
+
+      <!-- Row 3: Yajib -->
+      <rect y="90" width="870" height="26" fill="#1e293b" opacity="0.6"/>
+      <rect x="800" y="94" width="60" height="18" rx="4" fill="#8b5cf6"/>
+      <text x="830" y="107" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">يَجِبُ</text>
+      <text x="520" y="108" class="tbl-body" fill="#c4b5fd">حَرَى — اخْلَوْلَقَ</text>
+      <text x="230" y="108" class="tbl-body" fill="#e2e8f0">«حَرَى الطَّالِبُ أَنْ يَجْتَهِدَ» (يلزم اقترانه بأن وجوباً)</text>
+
+      <!-- Row 4: Yamtani' -->
+      <rect y="118" width="870" height="26" fill="#0f172a" opacity="0.6"/>
+      <rect x="800" y="122" width="60" height="18" rx="4" fill="#ef4444"/>
+      <text x="830" y="135" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">يَمْتَنِعُ</text>
+      <text x="520" y="136" class="tbl-body" fill="#fca5a5">جَمِيعُ أَفْعَالِ الشُّرُوعِ (شَرَعَ، بَدَأَ، طَفِقَ...)</text>
+      <text x="230" y="136" class="tbl-body" fill="#f87171">«شَرَعَ الْخَطِيبُ يَتَكَلَّمُ» (يمتنع اقترانها بأن تماماً)</text>
+    </g>
+  </g>
+</svg>

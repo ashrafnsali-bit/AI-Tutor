@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="50%" stop-color="#151b2e"/>
+      <stop offset="100%" stop-color="#1f1d36"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 22px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 15px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .type-badge { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .term-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; font-weight: bold; fill: #facc15; text-anchor: middle; }
+    .text-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    .ex-verse { font-family: 'Cairo', 'Amiri', 'Traditional Arabic', serif; font-size: 12px; font-weight: bold; fill: #34d399; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Banner -->
+  <rect x="25" y="20" width="910" height="65" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="480" y="47" class="title-main">مخطط علم البيان: أركان التشبيه وأنواعه الخمسة وأسرار جماله البلاغي</text>
+  <text x="480" y="69" class="subtitle">الصف الأول الثانوي (منهج البلاغة المصرية المعتمدة EG) • المفصل، المجمل، البليغ، التمثيلي، الضمني</text>
+
+  <!-- Section 1: The 4 Pillars of Simile (Arkan at-Tashbeeh) -->
+  <g transform="translate(25, 98)">
+    <rect width="910" height="110" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">١. أَرْكَانُ التَّشْبِيهِ الأَرْبَعَةُ (الْمُشَبَّهُ وَالْمُشَبَّهُ بِهِ طَرَفَانِ أَسَاسِيَّانِ لاَ يَجُوزُ حَذْفُهُمَا مَعاً)</text>
+
+    <!-- Pillar 1: Mushabbah -->
+    <g transform="translate(685, 36)">
+      <rect width="205" height="62" rx="8" fill="#1e293b" stroke="#0ea5e9" stroke-width="1.2"/>
+      <text x="102" y="25" class="term-title" fill="#38bdf8">١. المُشَبَّهُ (الطرف الأول)</text>
+      <text x="102" y="48" class="text-body" text-anchor="middle">الموضوع المراد بيانه أو تحسينه</text>
+    </g>
+
+    <!-- Pillar 2: Adat -->
+    <g transform="translate(465, 36)">
+      <rect width="205" height="62" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+      <text x="102" y="25" class="term-title" fill="#fbbf24">٢. أَدَاةُ التَّشْبِيهِ</text>
+      <text x="102" y="48" class="text-body" text-anchor="middle">حرف (الكاف، كأن) • اسم (مثل) • فعل (يشبه)</text>
+    </g>
+
+    <!-- Pillar 3: Mushabbah Bihi -->
+    <g transform="translate(245, 36)">
+      <rect width="205" height="62" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.2"/>
+      <text x="102" y="25" class="term-title" fill="#34d399">٣. المُشَبَّهُ بِهِ (الطرف الثاني)</text>
+      <text x="102" y="48" class="text-body" text-anchor="middle">الأمر الأقوى والأوضح في الصفة</text>
+    </g>
+
+    <!-- Pillar 4: Wajh ash-Shabah -->
+    <g transform="translate(25, 36)">
+      <rect width="205" height="62" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1.2"/>
+      <text x="102" y="25" class="term-title" fill="#c084fc">٤. وَجْهُ الشَّبَهِ</text>
+      <text x="102" y="48" class="text-body" text-anchor="middle">الصفة المشتركة بين الطرفين</text>
+    </g>
+  </g>
+
+  <!-- Section 2: The 5 Types of Simile (Anwa' at-Tashbeeh) -->
+  <g transform="translate(25, 220)">
+    <rect width="910" height="260" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">٢. شَجَرَةُ أَنْوَاعِ التَّشْبِيهِ الْخَمْسَةِ فِي الْمَنْهَجِ الْمِصْرِيِّ</text>
+
+    <!-- Type 1: Mufassal -->
+    <g transform="translate(730, 40)">
+      <rect width="165" height="205" rx="8" fill="#132338" stroke="#0ea5e9" stroke-width="1.2"/>
+      <rect x="15" y="10" width="135" height="26" rx="6" fill="#0284c7"/>
+      <text x="82" y="28" class="type-badge">المُفَصَّل (٤ أركان)</text>
+      <text x="150" y="58" class="text-body" text-anchor="end">ذكرت فيه الأركان الأربعة كاملة دون حذف أي ركن.</text>
+      <rect x="8" y="90" width="149" height="102" rx="6" fill="#0a1526" stroke="#1e3a5f" stroke-width="0.8"/>
+      <text x="82" y="112" class="ex-verse" text-anchor="middle">«العِلْمُ كَالنُّورِ يَهْدِي»</text>
+      <text x="140" y="132" class="text-body" text-anchor="end" font-size="10">المشبه: العلم</text>
+      <text x="140" y="150" class="text-body" text-anchor="end" font-size="10">الأداة: الكاف | به: النور</text>
+      <text x="140" y="168" class="text-body" text-anchor="end" font-size="10">وجه الشبه: الهداية</text>
+    </g>
+
+    <!-- Type 2: Mujmal -->
+    <g transform="translate(555, 40)">
+      <rect width="165" height="205" rx="8" fill="#162e24" stroke="#10b981" stroke-width="1.2"/>
+      <rect x="15" y="10" width="135" height="26" rx="6" fill="#047857"/>
+      <text x="82" y="28" class="type-badge">المُجْمَل (٣ أركان)</text>
+      <text x="150" y="58" class="text-body" text-anchor="end">حذفت منه الأداة فقط أو حذف وجه الشبه فقط.</text>
+      <rect x="8" y="90" width="149" height="102" rx="6" fill="#0d1f18" stroke="#134e4a" stroke-width="0.8"/>
+      <text x="82" y="112" class="ex-verse" text-anchor="middle">«العِلْمُ نُورٌ فِي الهِدَايَةِ»</text>
+      <text x="140" y="134" class="text-body" text-anchor="end" font-size="10">حُذفت الأداة (٣ أركان)</text>
+      <text x="82" y="156" class="ex-verse" text-anchor="middle">«العِلْمُ كَالنُّورِ»</text>
+      <text x="140" y="176" class="text-body" text-anchor="end" font-size="10">حُذف وجه الشبه (٣ أركان)</text>
+    </g>
+
+    <!-- Type 3: Baligh -->
+    <g transform="translate(380, 40)">
+      <rect width="165" height="205" rx="8" fill="#2d1f11" stroke="#f59e0b" stroke-width="1.2"/>
+      <rect x="15" y="10" width="135" height="26" rx="6" fill="#b45309"/>
+      <text x="82" y="28" class="type-badge">البَلِيغ (ركنان فقط)</text>
+      <text x="150" y="58" class="text-body" text-anchor="end">حُذفت الأداة ووجه الشبه معاً، وبقي الطرفان فقط.</text>
+      <rect x="8" y="90" width="149" height="102" rx="6" fill="#1c1208" stroke="#78350f" stroke-width="0.8"/>
+      <text x="82" y="110" class="ex-verse" text-anchor="middle">«الجَهْلُ ظَلاَمٌ»</text>
+      <text x="140" y="130" class="text-body" text-anchor="end" font-size="10">صوره الأربع:</text>
+      <text x="140" y="146" class="text-body" text-anchor="end" font-size="9">• مبتدأ وخبر</text>
+      <text x="140" y="160" class="text-body" text-anchor="end" font-size="9">• الحال وصاحبها</text>
+      <text x="140" y="174" class="text-body" text-anchor="end" font-size="9">• المفعول المطلق</text>
+      <text x="140" y="188" class="text-body" text-anchor="end" font-size="9">• إضافة المشبه به للمشبه</text>
+    </g>
+
+    <!-- Type 4: Tamthili -->
+    <g transform="translate(195, 40)">
+      <rect width="175" height="205" rx="8" fill="#281530" stroke="#a855f7" stroke-width="1.2"/>
+      <rect x="15" y="10" width="145" height="26" rx="6" fill="#7e22ce"/>
+      <text x="87" y="28" class="type-badge">التَّمْثِيلِي (مركب)</text>
+      <text x="160" y="58" class="text-body" text-anchor="end">تشبيه صورة بصورة أخرى متعددة الأجزاء مع وجود أداة تشبيه.</text>
+      <rect x="8" y="90" width="159" height="102" rx="6" fill="#180b1e" stroke="#581c87" stroke-width="0.8"/>
+      <text x="87" y="112" class="ex-verse" text-anchor="middle">«مَثَلُ الَّذِينَ يُنْفِقُونَ...»</text>
+      <text x="87" y="130" class="ex-verse" text-anchor="middle">«كَمَثَلِ حَبَّةٍ أَنْبَتَتْ»</text>
+      <text x="150" y="155" class="text-body" text-anchor="end" font-size="10">تشبيه هيئة بهيئة متكاملة</text>
+      <text x="150" y="175" class="text-body" text-anchor="end" font-size="10">وجه الشبه صورة منتزعة</text>
+    </g>
+
+    <!-- Type 5: Dimni -->
+    <g transform="translate(15, 40)">
+      <rect width="170" height="205" rx="8" fill="#2d131a" stroke="#f43f5e" stroke-width="1.2"/>
+      <rect x="15" y="10" width="140" height="26" rx="6" fill="#be123c"/>
+      <text x="85" y="28" class="type-badge">الضِّمْنِي (يُفهم ضمناً)</text>
+      <text x="155" y="58" class="text-body" text-anchor="end">لا يُصرح به في صورة تشبيه، بل يُلمح من السياق ويكون دليلاً وحكمة.</text>
+      <rect x="8" y="90" width="154" height="102" rx="6" fill="#1c0a10" stroke="#881337" stroke-width="0.8"/>
+      <text x="85" y="112" class="ex-verse" text-anchor="middle">«مَنْ يَهُنْ يَسْهُلِ الهَوَانُ»</text>
+      <text x="85" y="130" class="ex-verse" text-anchor="middle">«مَا لِجُرْحٍ بِمَيِّتٍ إِيلاَمُ»</text>
+      <text x="145" y="155" class="text-body" text-anchor="end" font-size="10">قضية وحكمها الشطرة الأولى</text>
+      <text x="145" y="175" class="text-body" text-anchor="end" font-size="10">الشطرة الثانية برهان وحكمة</text>
+    </g>
+  </g>
+
+  <!-- Section 3: The 3 Secrets of Rhetorical Beauty (Asrar al-Jamal) -->
+  <g transform="translate(25, 490)">
+    <rect width="910" height="130" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">٣. أَسْرَارُ الْجَمَالِ الْبَلاَغِيِّ الثَّلاَثَةِ (قَاعِدَةُ التَّمْيِيزِ الْحَاسِمَةِ)</text>
+
+    <!-- Secret 1: Tashkhees -->
+    <g transform="translate(615, 36)">
+      <rect width="275" height="80" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="137" y="24" class="term-title" fill="#38bdf8">١. التَّشْخِيصُ (شخص عاقل)</text>
+      <text x="260" y="46" class="text-body" text-anchor="end">تشبيه غير العاقل (جماد/معنى) بإنسان عاقل.</text>
+      <text x="260" y="66" class="ex-verse" text-anchor="end">مثال: «العُمْرُ صَدِيقٌ وَفِيٌّ»</text>
+    </g>
+
+    <!-- Secret 2: Tajseem -->
+    <g transform="translate(320, 36)">
+      <rect width="275" height="80" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1.2"/>
+      <text x="137" y="24" class="term-title" fill="#34d399">٢. التَّجْسِيمُ (جسم مادي)</text>
+      <text x="260" y="46" class="text-body" text-anchor="end">تشبيه المعنوي المجرد بمادي محسوس ومجسم.</text>
+      <text x="260" y="66" class="ex-verse" text-anchor="end">مثال: «الصَّبْرُ حَبْلٌ مَتِينٌ»</text>
+    </g>
+
+    <!-- Secret 3: Tawdeeh -->
+    <g transform="translate(20, 36)">
+      <rect width="280" height="80" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.2"/>
+      <text x="140" y="24" class="term-title" fill="#fbbf24">٣. التَّوْضِيحُ (تماثل الطرفين)</text>
+      <text x="265" y="46" class="text-body" text-anchor="end">مادي بمادي، أو معنوي بمعنوي، أو عاقل بغير عاقل.</text>
+      <text x="265" y="66" class="ex-verse" text-anchor="end">مثال: «المُعَلِّمُ كَالشَّمْسِ»</text>
+    </g>
+  </g>
+</svg>

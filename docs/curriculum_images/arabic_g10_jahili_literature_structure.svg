@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#140f07"/>
+      <stop offset="50%" stop-color="#24190e"/>
+      <stop offset="100%" stop-color="#120c06"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#291a10"/>
+      <stop offset="100%" stop-color="#180e07"/>
+    </linearGradient>
+    <linearGradient id="goldHdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="50%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 22px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #d4d4d8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 15px; font-weight: 700; fill: #fbbf24; text-anchor: middle; }
+    .step-badge { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: 800; fill: #1c1917; text-anchor: middle; }
+    .step-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; font-weight: bold; fill: #facc15; text-anchor: middle; }
+    .text-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #e7e5e4; }
+    .poet-name { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: bold; fill: #fde047; }
+    .matla-verse { font-family: 'Cairo', 'Amiri', 'Traditional Arabic', serif; font-size: 11px; fill: #a7f3d0; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#78350f" stroke-width="1.5"/>
+
+  <!-- Top Banner -->
+  <rect x="25" y="20" width="910" height="65" rx="12" fill="#291a10" stroke="#b45309" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="480" y="47" class="title-main">مخطط تاريخ الأدب العربي: منهج بناء القصيدة الجاهلية والمعلقات السبع</text>
+  <text x="480" y="69" class="subtitle">الصف الأول الثانوي (كتاب لسانٌ عربيٌّ مبين - وزارة التربية والتعليم المصرية EG) • التقاليد الفنية للقصيدة وأشهر شعراء العصر الجاهلي</text>
+
+  <!-- Section 1: The 4 Sequential Stages of Jahili Ode -->
+  <g transform="translate(25, 98)">
+    <rect width="910" height="185" rx="12" fill="url(#cardGrad)" stroke="#78350f" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">١. الْمَرَاحِلُ الأَرْبَعُ التَّقْلِيدِيَّةُ لِبِنَاءِ الْقَصِيدَةِ فِي الْعَصْرِ الْجَاهِلِيِّ (وَحْدَةُ الْبَيْتِ)</text>
+
+    <!-- Stage 1: Atlal -->
+    <g transform="translate(685, 38)">
+      <rect width="210" height="132" rx="8" fill="#1c130b" stroke="#f59e0b" stroke-width="1.2"/>
+      <rect x="15" y="10" width="180" height="24" rx="12" fill="#f59e0b"/>
+      <text x="105" y="27" class="step-badge">المَرْحَلَةُ الأُولَى</text>
+      <text x="105" y="54" class="step-title">المُقَدِّمَةُ الطَّلَلِيَّةُ وَالغَزَلُ</text>
+      <text x="195" y="76" class="text-body" text-anchor="end">• الوقوف على ديار المحبوبة الدارسة</text>
+      <text x="195" y="94" class="text-body" text-anchor="end">• البكاء واسترجاع الذكريات والأحبة</text>
+      <text x="195" y="114" class="text-body" font-style="italic" fill="#fde68a" text-anchor="end">«قِفَا نَبْكِ مِنْ ذِكْرَى حَبِيبٍ وَمَنْزِلِ»</text>
+    </g>
+
+    <!-- Stage 2: Rihla & Wasf -->
+    <g transform="translate(465, 38)">
+      <rect width="210" height="132" rx="8" fill="#1c130b" stroke="#f59e0b" stroke-width="1.2"/>
+      <rect x="15" y="10" width="180" height="24" rx="12" fill="#d97706"/>
+      <text x="105" y="27" class="step-badge" fill="#ffffff">المَرْحَلَةُ الثَّانِيَةُ</text>
+      <text x="105" y="54" class="step-title">الرِّحْلَةُ وَالوَصْفُ</text>
+      <text x="195" y="76" class="text-body" text-anchor="end">• وصف الناقة أو الفرس وسرعتها</text>
+      <text x="195" y="94" class="text-body" text-anchor="end">• وصف مخاطر الصحراء ووحوشها والظلام</text>
+      <text x="195" y="114" class="text-body" font-style="italic" fill="#fde68a" text-anchor="end">«وَقِرْبَةِ خَوْفٍ قَدْ حَمَلْتُ وَرَاوِيَةٍ»</text>
+    </g>
+
+    <!-- Stage 3: Main Purpose -->
+    <g transform="translate(245, 38)">
+      <rect width="210" height="132" rx="8" fill="#1c130b" stroke="#f59e0b" stroke-width="1.2"/>
+      <rect x="15" y="10" width="180" height="24" rx="12" fill="#b45309"/>
+      <text x="105" y="27" class="step-badge" fill="#ffffff">المَرْحَلَةُ الثَّالِثَةُ</text>
+      <text x="105" y="54" class="step-title">الغَرَضُ الرَّئِيسُ لِلْقَصِيدَةِ</text>
+      <text x="195" y="76" class="text-body" text-anchor="end">• الفخر القبلي والذاتي بالفروسية</text>
+      <text x="195" y="94" class="text-body" text-anchor="end">• المدح، الحماسة، الهجاء، أو الرثاء</text>
+      <text x="195" y="114" class="text-body" font-style="italic" fill="#fde68a" text-anchor="end">«إِذَا بَلَغَ الفِطَامَ لَنَا صَبِيٌّ تَخِرُّ لَهُ...»</text>
+    </g>
+
+    <!-- Stage 4: Wisdom / Khitam -->
+    <g transform="translate(25, 38)">
+      <rect width="210" height="132" rx="8" fill="#1c130b" stroke="#f59e0b" stroke-width="1.2"/>
+      <rect x="15" y="10" width="180" height="24" rx="12" fill="#78350f"/>
+      <text x="105" y="27" class="step-badge" fill="#ffffff">المَرْحَلَةُ الرَّابِعَةُ</text>
+      <text x="105" y="54" class="step-title">الخَاتِمَةُ بِالحِكْمَةِ</text>
+      <text x="195" y="76" class="text-body" text-anchor="end">• خلاصة تجارب الحياة وصروف الدهر</text>
+      <text x="195" y="94" class="text-body" text-anchor="end">• الموعظة والتأمل في الموت والمصير</text>
+      <text x="195" y="114" class="text-body" font-style="italic" fill="#fde68a" text-anchor="end">«سَئِمْتُ تَكَالِيفَ الحَيَاةِ وَمَنْ يَعِشْ...»</text>
+    </g>
+  </g>
+
+  <!-- Section 2: The 7 Mu'allaqat and their Poets -->
+  <g transform="translate(25, 295)">
+    <rect width="910" height="325" rx="12" fill="url(#cardGrad)" stroke="#78350f" stroke-width="1" filter="url(#shadow)"/>
+    <text x="455" y="24" class="sec-title">٢. الْمُعَلَّقَاتُ السَّبْعُ وَفُرْسَانُهَا وَأَشْهَرُ مَطَالِعِهَا الشِّعْرِيَّةِ</text>
+
+    <!-- Banner on Mu'allaqat definition -->
+    <rect x="25" y="36" width="860" height="32" rx="6" fill="#1b120a" stroke="#92400e" stroke-width="0.8"/>
+    <text x="455" y="57" font-family="'Cairo', sans-serif" font-size="11.5" fill="#fde68a" text-anchor="middle">
+      سُمِّيت المعلقات لجودتها لأنها كالعقود النفيسة عُلقت بالأذهان، وقيل كُتبت بماء الذهب وعُلقت على أستار الكعبة لمكانتها الرفيعة.
+    </text>
+
+    <!-- Grid of Poets -->
+    <!-- Col 1 -->
+    <g transform="translate(465, 80)">
+      <!-- Poet 1: Imru' al-Qais -->
+      <rect width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="22" class="poet-name" text-anchor="end">١. امْرُؤُ القَيْسِ (أمير شعراء الجاهلية)</text>
+      <text x="405" y="42" class="matla-verse" text-anchor="end">«قِفَا نَبْكِ مِنْ ذِكْرَى حَبِيبٍ وَمَنْزِلِ • بِسِقْطِ اللِّوَى بَيْنَ الدَّخُولِ فَحَوْمَلِ»</text>
+
+      <!-- Poet 2: Tarfa -->
+      <rect y="58" width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="80" class="poet-name" text-anchor="end">٢. طَرَفَةُ بْنُ العَبْدِ (أصغرهم سناً وأشعرهم)</text>
+      <text x="405" y="100" class="matla-verse" text-anchor="end">«لِخَوْلَةَ أَطْلاَلٌ بِبُرْقَةِ ثَهْمَدِ • تَلُوحُ كَبَاقِي الوَشْمِ فِي ظَاهِرِ اليَدِ»</text>
+
+      <!-- Poet 3: Zuhair -->
+      <rect y="116" width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="138" class="poet-name" text-anchor="end">٣. زُهَيْرُ بْنُ أَبِي سُلْمَى (شاعر الحوليات والسلام)</text>
+      <text x="405" y="158" class="matla-verse" text-anchor="end">«أَمِنْ أُمِّ أَوْفَى دِمْنَةٌ لَمْ تَكَلَّمِ • بِحَوْمَانَةِ الدَّرَّاجِ فَالمُتَثَلَّمِ»</text>
+
+      <!-- Poet 4: Labid -->
+      <rect y="174" width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="196" class="poet-name" text-anchor="end">٤. لَبِيدُ بْنُ رَبِيعَةَ (المعمر الذي أسلم وحسن إسلامه)</text>
+      <text x="405" y="216" class="matla-verse" text-anchor="end">«عَفَتِ الدِّيَارُ مَحَلُّهَا فَمُقَامُهَا • بِمِنىً تَأَبَّدَ غَوْلُهَا فَرِجَامُهَا»</text>
+    </g>
+
+    <!-- Col 2 -->
+    <g transform="translate(25, 80)">
+      <!-- Poet 5: Antarah -->
+      <rect width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="22" class="poet-name" text-anchor="end">٥. عَنْتَرَةُ بْنُ شَدَّادٍ (فارس بني عبس وشاعر الحماسة)</text>
+      <text x="405" y="42" class="matla-verse" text-anchor="end">«هَلْ غَادَرَ الشُّعَرَاءُ مِنْ مُتَرَدَّمِ • أَمْ هَلْ عَرَفْتَ الدَّارَ بَعْدَ تَوَهُّمِ»</text>
+
+      <!-- Poet 6: Amr ibn Kulthum -->
+      <rect y="58" width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="80" class="poet-name" text-anchor="end">٦. عَمْرُو بْنُ كُلْثُومٍ (سيد تغلب وشاعر الفخر البديهي)</text>
+      <text x="405" y="100" class="matla-verse" text-anchor="end">«أَلاَ هُبِّي بِصَحْنِكِ فَاصْبَحِينَا • وَلاَ تُبْقِي خُمُورَ الأَنْدَرِينَا»</text>
+
+      <!-- Poet 7: Al-Harith -->
+      <rect y="116" width="420" height="52" rx="6" fill="#1c130b" stroke="#d97706" stroke-width="0.8"/>
+      <text x="405" y="138" class="poet-name" text-anchor="end">٧. الحَارِثُ بْنُ حِلِّزَةَ (خطيب بكر بن وائل المرتجل)</text>
+      <text x="405" y="158" class="matla-verse" text-anchor="end">«آذَنَتْنَا بِبَيْنِهَا أَسْمَاءُ • رُبَّ ثَاوٍ يُمَلُّ مِنْهُ الثَّوَاءُ»</text>
+
+      <!-- Literary Characteristics Box -->
+      <rect y="174" width="420" height="52" rx="6" fill="#150e07" stroke="#78350f" stroke-width="1"/>
+      <text x="405" y="194" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15" text-anchor="end">السمات الفنية للأدب الجاهلي:</text>
+      <text x="405" y="214" class="text-body" text-anchor="end">وضوح المعاني، فخامة الألفاظ وجزالتها، الخيال الحسي الصادق، وقلة التعقيد.</text>
+    </g>
+  </g>
+</svg>
