@@ -89,6 +89,8 @@ export const PRIMARY_ARABIC_G4_LECTURES: Lecture[] = [
 - **الفعل:** يدل على حدث في زمن محدد (ماضٍ: كتبَ، مضارع: يكتبُ، أمر: اكتبْ).
 - **الحرف:** لا يفهم معناه إلا مع غيره (حروف الجر: من، إلى، عن، على، في، الباء، الكاف، اللام؛ وحروف العطف: الواو، الفاء، ثم، أو).
 
+![مخطط أقسام الكلمة المعتمد: الاسم وعلاماته، الفعل وأزمنته، والحرف وأنواعه](/curriculum_images/arabic_parts_of_speech.svg)
+
 ---
 
 ### 2. ركنا الجملة الاسمية وعلامات الرفع
@@ -102,6 +104,30 @@ export const PRIMARY_ARABIC_G4_LECTURES: Lecture[] = [
 3. **الرفع بالواو (علامة فرعية):**
    - جمع المذكر السالم: **المعلمونَ مخلصونَ** (مبتدأ وخبر مرفوعان بالواو لأنهما جمع مذكر سالم).
 `,
+    sections: [
+      {
+        titleAr: 'أقسام الكلمة وعلامات تمييز الاسم',
+        titleEn: 'Parts of Speech & Noun Indicators',
+        contentAr: `تنقسم الكلمة في لغتنا العربية إلى ثلاثة أقسام أساسية:
+- **الاسم:** ما دل على مسمى غير مقترن بزمن (إنسان، حيوان، نبات، جماد، صفة)، وعلاماته: الـ التعريف، التنوين، التاء المربوطة، الجر، والنداء.
+- **الفعل:** ما دل على حدث مقترن بزمن (ماضٍ، مضارع، أمر).
+- **الحرف:** لفظ لا يظهر معناه كاملاً إلا داخل سياق الجملة (حروف الجر والعطف).`,
+        contentEn: 'Arabic words classify into Noun, Verb, and Particle. Nouns have distinctive markers (Al-, nunation, Taa Marbuta).',
+        diagram: {
+          id: 'diagram-parb4-parts-of-speech',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط شجرة أقسام الكلمة وعلامات التمييز',
+          titleEn: 'Parts of Speech & Distinctive Indicators Tree',
+          captionAr: 'مخطط تعليمي معتمد يوضح تفريعات أقسام الكلمة (الاسم، الفعل، الحرف) وعلامات الاسم الخمسة وأزمنة الأفعال الثلاثة.',
+          captionEn: 'Standard curriculum tree diagram illustrating Arabic word categories and structural noun indicators.',
+          diagramType: 'arabic_parts_of_speech',
+          imageUrl: '/curriculum_images/arabic_parts_of_speech.svg',
+          takeawayFormulaAr: 'الكلمة = اسم (يقبل الـ والتنوين) + فعل (حدث وزمن) + حرف (يربط الكلام)',
+          takeawayFormulaEn: 'Word = Noun (accepts Al- & tanween) + Verb (action + time) + Particle'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-arb4-1',
       titleAr: 'تقييم المحاضرة 1: أقسام الكلمة والجملة الاسمية',

@@ -92,8 +92,35 @@ export const HIGH_CHEMISTRY_G10_LECTURES: Lecture[] = [
       {
         titleAr: '1. الكيمياء مركز العلوم وأدوات القياس المعملية',
         titleEn: '1. Chemistry Central Science & Laboratory Tools',
-        contentAr: '1) أهمية الكيمياء وفروعها:\n- ترتبط الكيمياء بالفيزياء (الكيمياء الفيزيائية)، وبالأحياء (الكيمياء الحيوية لتفسير تفاعلات التنفس والبناء الضوئي)، وبالطب والصيدلة (تفسير عمل الإنزيمات وتخليق الأدوية).\n\n2) أدوات القياس الأساسية في مختبر الكيمياء:\n- الميزان الحساس الرقمي: قياس الكتل بدقة.\n- السحاحة (Burette): أنبوبة زجاجية مفتوحة الطرفين صمامها بالأسفل، صفر تدريجها قريب من الفتحة العليا، وتستخدم في تجارب المعايرة (Titration).\n- الكأس الزجاجي (Beaker): نقل وخلط السوائل وقياس حجوم تقريبية.\n- المخبار المدرج (Graduated Cylinder): قياس حجوم السوائل بدقة أعلى من الكؤوس، وقياس حجم جسم صلب غير منتظم لا يذوب في الماء.\n- الدورق المخروطي (Conical Flask): يستخدم في عمليات المعايرة.\n- الدورق المستدير (Round-bottom Flask): يستخدم في عمليات التحضير والتقطير.\n- الدورق العياري (Volumetric Flask): يحتوي على علامة تحدد سعة الحجم بدقة لتحضير المحاليل القياسية (Standard Solutions).\n- الماصة (Pipette): نقل حجوم مضبوطة ومزودة بأداة شفط للسوائل شديدة الخطورة.\n- جهاز الـ pH الرقمي: قياس الأس الهيدروجيني للمحاليل (حامضي < 7، متعادل = 7، قاعدي > 7).',
-        contentEn: 'Chemistry is the central science linking biology, physics, and medicine. Laboratory tools include burettes (titration), graduated cylinders (liquid volume), volumetric flasks (standard solutions), and pH meters.'
+        contentAr: `1) أهمية الكيمياء وفروعها:
+- ترتبط الكيمياء بالفيزياء (الكيمياء الفيزيائية)، وبالأحياء (الكيمياء الحيوية لتفسير تفاعلات التنفس والبناء الضوئي)، وبالطب والصيدلة (تفسير عمل الإنزيمات وتخليق الأدوية).
+
+2) أدوات القياس الأساسية في مختبر الكيمياء:
+- الميزان الحساس الرقمي: قياس الكتل بدقة.
+- السحاحة (Burette): أنبوبة زجاجية مفتوحة الطرفين صمامها بالأسفل، صفر تدريجها قريب من الفتحة العليا، وتستخدم في تجارب المعايرة (Titration).
+- الكأس الزجاجي (Beaker): نقل وخلط السوائل وقياس حجوم تقريبية.
+- المخبار المدرج (Graduated Cylinder): قياس حجوم السوائل بدقة أعلى من الكؤوس، وقياس حجم جسم صلب غير منتظم لا يذوب في الماء.
+- الدورق المخروطي (Conical Flask): يستخدم في عمليات المعايرة.
+- الدورق المستدير (Round-bottom Flask): يستخدم في عمليات التحضير والتقطير.
+- الدورق العياري (Volumetric Flask): يحتوي على علامة تحدد سعة الحجم بدقة لتحضير المحاليل القياسية (Standard Solutions).
+- الماصة (Pipette): نقل حجوم مضبوطة ومزودة بأداة شفط للسوائل شديدة الخطورة.
+- جهاز الـ pH الرقمي: قياس الأس الهيدروجيني للمحاليل (حامضي < 7، متعادل = 7، قاعدي > 7).
+
+![مخطط أدوات القياس والأجهزة الزجاجية في مختبر الكيمياء](/curriculum_images/chemistry_lab_apparatus.svg)`,
+        contentEn: 'Chemistry is the central science linking biology, physics, and medicine. Laboratory tools include burettes (titration), graduated cylinders (liquid volume), volumetric flasks (standard solutions), and pH meters.',
+        diagram: {
+          id: 'diagram-chem10-apparatus',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط أدوات القياس والأجهزة في مختبر الكيمياء',
+          titleEn: 'Chemistry Laboratory Apparatus & Instruments',
+          captionAr: 'دليل مرئي معتمد لأهم أدوات القياس المعملية: السحاحة، المخبار المدرج، الكؤوس والدوارق الزجاجية، الماصة، وجهاز الأس الهيدروجيني الرقمي.',
+          captionEn: 'Visual guide to standard chemical laboratory apparatus: burette, graduated cylinder, flasks, pipettes, and digital pH meters.',
+          diagramType: 'apparatus',
+          imageUrl: '/curriculum_images/chemistry_lab_apparatus.svg',
+          takeawayFormulaAr: 'السحاحة للمعايرة | المخبار المدرج لقياس الحجوم | الدورق العياري للمحاليل القياسية',
+          takeawayFormulaEn: 'Burette for titrations | Graduated cylinder for liquid volume | Volumetric flask for standard solutions'
+        }
       },
       {
         titleAr: '2. كيمياء النانو والمواد النانوية الفريدة',

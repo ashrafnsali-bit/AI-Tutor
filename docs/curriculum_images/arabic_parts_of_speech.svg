@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="100%" height="100%">
+  <defs>
+    <linearGradient id="arbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#0c192c"/>
+      <stop offset="50%" stopColor="#0f2537"/>
+      <stop offset="100%" stopColor="#091824"/>
+    </linearGradient>
+
+    <linearGradient id="nounCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="rgba(56, 189, 248, 0.2)"/>
+      <stop offset="100%" stopColor="rgba(14, 165, 233, 0.05)"/>
+    </linearGradient>
+
+    <linearGradient id="verbCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="rgba(16, 185, 129, 0.2)"/>
+      <stop offset="100%" stopColor="rgba(5, 150, 105, 0.05)"/>
+    </linearGradient>
+
+    <linearGradient id="particleCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="rgba(245, 158, 11, 0.2)"/>
+      <stop offset="100%" stopColor="rgba(217, 119, 6, 0.05)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="880" height="460" rx="20" fill="url(#arbBg)" stroke="#1e3a5f" stroke-width="2"/>
+
+  <!-- Top Header Title -->
+  <rect x="30" y="20" width="820" height="52" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5"/>
+  <text x="440" y="44" text-anchor="middle" fill="#38bdf8" font-size="20" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
+    مخطط أقسام الكلمة في اللغة العربية وعلامات التمييز
+  </text>
+  <text x="440" y="63" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    تنقسم جميع كلمات لغتنا العربية إلى ثلاثة أقسام رئيسية: الاسم، والفعل، والحرف
+  </text>
+
+  <!-- 1. NOUN COLUMN (الاسم) -->
+  <g transform="translate(45, 95)">
+    <rect width="245" height="335" rx="16" fill="url(#nounCard)" stroke="#38bdf8" stroke-width="2"/>
+    
+    <!-- Title Badge -->
+    <rect x="25" y="15" width="195" height="36" rx="8" fill="#0284c7"/>
+    <text x="122" y="39" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">١. الاِسْم (Noun)</text>
+
+    <!-- Definition -->
+    <rect x="15" y="62" width="215" height="50" rx="8" fill="rgba(15, 23, 42, 0.6)"/>
+    <text x="122" y="82" text-anchor="middle" fill="#bae6fd" font-size="12" font-weight="bold">ما دل على معنى مستقل</text>
+    <text x="122" y="100" text-anchor="middle" fill="#e2e8f0" font-size="11">غير مقترن بزمن معين</text>
+
+    <!-- Examples Categories -->
+    <text x="25" y="132" fill="#7dd3fc" font-size="12" font-weight="bold">أنواعه ومدلولاته:</text>
+    <text x="25" y="152" fill="#e2e8f0" font-size="11.5">• إنسان: <tspan fill="#fde047">محمد، فاطمة، معلم</tspan></text>
+    <text x="25" y="172" fill="#e2e8f0" font-size="11.5">• حيوان: <tspan fill="#fde047">أسد، غزال، طائر</tspan></text>
+    <text x="25" y="192" fill="#e2e8f0" font-size="11.5">• نبات أو جماد: <tspan fill="#fde047">شجرة، قلم، كتاب</tspan></text>
+    <text x="25" y="212" fill="#e2e8f0" font-size="11.5">• صفة: <tspan fill="#fde047">صادق، كريم، جميل</tspan></text>
+
+    <!-- Identification Marks (علامات الاسم) -->
+    <rect x="15" y="228" width="215" height="92" rx="8" fill="rgba(2, 132, 199, 0.15)" stroke="#38bdf8" stroke-dasharray="3,2"/>
+    <text x="122" y="247" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="bold">📌 علامات الاسم الخمس:</text>
+    <text x="25" y="267" fill="#e2e8f0" font-size="11">١) قبول (الـ) التعريف: <tspan fill="#67e8f9">القلم</tspan></text>
+    <text x="25" y="285" fill="#e2e8f0" font-size="11">٢) التنوين: <tspan fill="#67e8f9">كتابٌ / علماً</tspan></text>
+    <text x="25" y="303" fill="#e2e8f0" font-size="11">٣) التاء المربوطة (ـة): <tspan fill="#67e8f9">مدرسة</tspan></text>
+    <text x="25" y="315" fill="#e2e8f0" font-size="9.5">٤) الجر بحرف الجر  ٥) النداء بـ (يا)</text>
+  </g>
+
+  <!-- 2. VERB COLUMN (الفعل) -->
+  <g transform="translate(315, 95)">
+    <rect width="250" height="335" rx="16" fill="url(#verbCard)" stroke="#10b981" stroke-width="2"/>
+    
+    <!-- Title Badge -->
+    <rect x="25" y="15" width="200" height="36" rx="8" fill="#059669"/>
+    <text x="125" y="39" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">٢. الفِعْل (Verb)</text>
+
+    <!-- Definition -->
+    <rect x="15" y="62" width="220" height="50" rx="8" fill="rgba(15, 23, 42, 0.6)"/>
+    <text x="125" y="82" text-anchor="middle" fill="#a7f3d0" font-size="12" font-weight="bold">ما دل على حدث معين</text>
+    <text x="125" y="100" text-anchor="middle" fill="#e2e8f0" font-size="11">مقترن بزمن محدد (ماضٍ، مضارع، أمر)</text>
+
+    <!-- Verb Tenses -->
+    <text x="25" y="132" fill="#34d399" font-size="12" font-weight="bold">أزمنة الفعل الثلاثة:</text>
+    
+    <!-- Past -->
+    <rect x="15" y="142" width="220" height="48" rx="6" fill="rgba(6, 78, 59, 0.4)"/>
+    <text x="25" y="162" fill="#6ee7b7" font-size="12" font-weight="bold">١) ماضٍ (وانتهى):</text>
+    <text x="25" y="180" fill="#f8fafc" font-size="11">مثل: <tspan fill="#fde047">كَتَبَ، قَرَأَ، اجْتَهَدَ</tspan></text>
+
+    <!-- Present -->
+    <rect x="15" y="196" width="220" height="48" rx="6" fill="rgba(6, 78, 59, 0.4)"/>
+    <text x="25" y="216" fill="#6ee7b7" font-size="12" font-weight="bold">٢) مضارع (مستمر الآن):</text>
+    <text x="25" y="234" fill="#f8fafc" font-size="11">يبدأ بـ (أ، ن، ي، ت): <tspan fill="#fde047">يَكْتُبُ، نَقْرَأُ</tspan></text>
+
+    <!-- Command -->
+    <rect x="15" y="250" width="220" height="48" rx="6" fill="rgba(6, 78, 59, 0.4)"/>
+    <text x="25" y="270" fill="#6ee7b7" font-size="12" font-weight="bold">٣) أمر (طلب حصول الفعل):</text>
+    <text x="25" y="288" fill="#f8fafc" font-size="11">مثل: <tspan fill="#fde047">اكْتُبْ، اقْرَأْ، حَافِظْ</tspan></text>
+
+    <!-- Footnote -->
+    <text x="125" y="318" text-anchor="middle" fill="#a7f3d0" font-size="10">📌 علامته: قبول تاء الفاعل أو السين وسوف</text>
+  </g>
+
+  <!-- 3. PARTICLE COLUMN (الحرف) -->
+  <g transform="translate(590, 95)">
+    <rect width="245" height="335" rx="16" fill="url(#particleCard)" stroke="#f59e0b" stroke-width="2"/>
+    
+    <!-- Title Badge -->
+    <rect x="25" y="15" width="195" height="36" rx="8" fill="#d97706"/>
+    <text x="122" y="39" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">٣. الحَرْف (Particle)</text>
+
+    <!-- Definition -->
+    <rect x="15" y="62" width="215" height="50" rx="8" fill="rgba(15, 23, 42, 0.6)"/>
+    <text x="122" y="82" text-anchor="middle" fill="#fde68a" font-size="12" font-weight="bold">لا يظهر معناه كاملاً</text>
+    <text x="122" y="100" text-anchor="middle" fill="#e2e8f0" font-size="11">إلا مع غيره داخل جملة مفيدة</text>
+
+    <!-- Categories -->
+    <text x="25" y="132" fill="#fbbf24" font-size="12" font-weight="bold">أشهر أنواع الحروف:</text>
+
+    <!-- Prepositions -->
+    <rect x="15" y="142" width="215" height="66" rx="6" fill="rgba(120, 53, 15, 0.35)"/>
+    <text x="25" y="162" fill="#fde047" font-size="12" font-weight="bold">• حروف الجر (٨ حروف):</text>
+    <text x="25" y="182" fill="#ffffff" font-size="11.5">مِنْ، إِلَى، عَنْ، عَلَى، فِي</text>
+    <text x="25" y="198" fill="#ffffff" font-size="11.5">الباء (بـ)، الكاف (كـ)، اللام (لـ)</text>
+
+    <!-- Conjunctions -->
+    <rect x="15" y="214" width="215" height="58" rx="6" fill="rgba(120, 53, 15, 0.35)"/>
+    <text x="25" y="234" fill="#fde047" font-size="12" font-weight="bold">• حروف العطف:</text>
+    <text x="25" y="254" fill="#ffffff" font-size="11.5">الواو (و)، الفاء (فـ)</text>
+    <text x="25" y="268" fill="#ffffff" font-size="11.5">ثمّ، أَوْ</text>
+
+    <!-- Negation -->
+    <rect x="15" y="278" width="215" height="42" rx="6" fill="rgba(120, 53, 15, 0.35)"/>
+    <text x="25" y="296" fill="#fde047" font-size="11" font-weight="bold">• حروف النفي والنهي:</text>
+    <text x="25" y="312" fill="#ffffff" font-size="11">لَا، لَمْ، لَنْ</text>
+  </g>
+</svg>

@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="100%" height="100%">
+  <defs>
+    <linearGradient id="htBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#0a0f1d"/>
+      <stop offset="50%" stopColor="#1e1b4b"/>
+      <stop offset="100%" stopColor="#180c2e"/>
+    </linearGradient>
+
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stopColor="#dc2626"/>
+      <stop offset="40%" stopColor="#ea580c"/>
+      <stop offset="80%" stopColor="#facc15"/>
+      <stop offset="100%" stopColor="#ffffff"/>
+    </linearGradient>
+
+    <radialGradient id="waterSoup" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stopColor="#38bdf8"/>
+      <stop offset="60%" stopColor="#0284c7"/>
+      <stop offset="100%" stopColor="#0369a1"/>
+    </radialGradient>
+
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="460" rx="20" fill="url(#htBg)" stroke="#312e81" stroke-width="2"/>
+
+  <!-- Title Banner -->
+  <rect x="30" y="20" width="820" height="52" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(244, 63, 94, 0.3)" stroke-width="1.5"/>
+  <text x="440" y="44" text-anchor="middle" fill="#f43f5e" font-size="20" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
+    طرق انتقال الحرارة الثلاث (التوصيل، الحمل الحراري، والإشعاع)
+  </text>
+  <text x="440" y="63" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    تنتقل الطاقة الحرارية دائماً وبشكل تلقائي من الجسم الساخن إلى الجسم الأقل سخونة
+  </text>
+
+  <!-- CENTRAL ILLUSTRATION: COOKING POT ON STOVE -->
+  <g transform="translate(180, 110)">
+    <!-- Stove Burner Surface -->
+    <rect x="-80" y="240" width="380" height="24" rx="6" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+
+    <!-- Fire / Flames under Pot -->
+    <path d="M30,240 Q40,205 50,240 Q65,195 80,240 Q95,200 110,240 Q130,190 145,240 Q160,205 175,240 Z" fill="url(#flameGrad)"/>
+
+    <!-- Metal Cooking Pot Body -->
+    <rect x="0" y="80" width="220" height="140" rx="14" fill="#1e293b" stroke="#94a3b8" stroke-width="3"/>
+    
+    <!-- Boiling Soup / Liquid inside Pot -->
+    <rect x="10" y="110" width="200" height="100" rx="8" fill="url(#waterSoup)" opacity="0.85"/>
+    <ellipse cx="110" cy="110" rx="100" ry="12" fill="#7dd3fc" opacity="0.9"/>
+
+    <!-- Convection Currents in Liquid (Hot rises, cold sinks) -->
+    <!-- Hot Rising Stream (Red) -->
+    <path d="M80,195 C80,145 90,135 105,120" fill="none" stroke="#ef4444" stroke-width="3.5" marker-end="url(#arrowRed)"/>
+    <path d="M140,195 C140,145 130,135 115,120" fill="none" stroke="#ef4444" stroke-width="3.5" marker-end="url(#arrowRed)"/>
+    <!-- Cold Sinking Stream (Blue) -->
+    <path d="M40,130 C30,165 40,185 60,195" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4,2" marker-end="url(#arrowBlue)"/>
+    <path d="M180,130 C190,165 180,185 160,195" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4,2" marker-end="url(#arrowBlue)"/>
+
+    <!-- Long Metal Handle on Left (Conduction zone) -->
+    <path d="M0,110 L-95,95 L-95,115 L0,130 Z" fill="#64748b" stroke="#cbd5e1" stroke-width="2"/>
+    <!-- Heat wave spreading into handle -->
+    <path d="M-10,120 L-85,105" fill="none" stroke="#f43f5e" stroke-width="4" stroke-linecap="round" stroke-dasharray="8,4"/>
+
+    <!-- Steam rising from pot -->
+    <path d="M80,95 Q70,60 90,30" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <path d="M110,95 Q130,55 105,25" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <path d="M140,95 Q130,60 150,30" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- Radiation Waves from Fire -->
+    <path d="M-20,225 Q-40,240 -20,255" fill="none" stroke="#facc15" stroke-width="2.5"/>
+    <path d="M-35,215 Q-60,240 -35,265" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+    <path d="M240,225 Q260,240 240,255" fill="none" stroke="#facc15" stroke-width="2.5"/>
+    <path d="M255,215 Q280,240 255,265" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+  </g>
+
+  <!-- 3 ANNOTATION CARDS (RIGHT SIDE & LABELS) -->
+
+  <!-- Card 1: Conduction (التوصيل الحراري) -->
+  <g transform="translate(560, 95)">
+    <rect width="280" height="95" rx="12" fill="rgba(30, 41, 59, 0.9)" stroke="#ef4444" stroke-width="2"/>
+    <rect x="15" y="12" width="120" height="24" rx="6" fill="#dc2626"/>
+    <text x="75" y="28" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">١. التوصيل (Conduction)</text>
+    <text x="15" y="55" fill="#fca5a5" font-size="12" font-weight="bold">• يحدث في المواد الصلبة (المعادن).</text>
+    <text x="15" y="72" fill="#e2e8f0" font-size="11">تنتقل الحرارة عبر تصادم الجسيمات دون انتقالها من أماكنها (مثل سخونة المقبض المعدني للقدر).</text>
+  </g>
+
+  <!-- Pointer line to handle -->
+  <path d="M555,140 Q400,150 90,215" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,2"/>
+
+  <!-- Card 2: Convection (الحمل الحراري) -->
+  <g transform="translate(560, 205)">
+    <rect width="280" height="105" rx="12" fill="rgba(30, 41, 59, 0.9)" stroke="#38bdf8" stroke-width="2"/>
+    <rect x="15" y="12" width="125" height="24" rx="6" fill="#0284c7"/>
+    <text x="77" y="28" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">٢. الحمل (Convection)</text>
+    <text x="15" y="55" fill="#7dd3fc" font-size="12" font-weight="bold">• يحدث في الموائع (السوائل والغازات).</text>
+    <text x="15" y="73" fill="#e2e8f0" font-size="11">يسخن السائل وتقل كثافته فيصعد لأعلى، ويهبط السائل البارد ليحل محله مكوّناً <tspan fill="#38bdf8" font-weight="bold">تيارات الحمل</tspan>.</text>
+  </g>
+
+  <!-- Pointer line to water -->
+  <path d="M555,255 Q420,250 310,240" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,2"/>
+
+  <!-- Card 3: Radiation (الإشعاع الحراري) -->
+  <g transform="translate(560, 325)">
+    <rect width="280" height="105" rx="12" fill="rgba(30, 41, 59, 0.9)" stroke="#facc15" stroke-width="2"/>
+    <rect x="15" y="12" width="120" height="24" rx="6" fill="#d97706"/>
+    <text x="75" y="28" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">٣. الإشعاع (Radiation)</text>
+    <text x="15" y="55" fill="#fde047" font-size="12" font-weight="bold">• ينتقل عبر الفراغ وموجات الضوء.</text>
+    <text x="15" y="73" fill="#e2e8f0" font-size="11">لا يحتاج إلى وسط مادي ملموس للانتقال (مثل وصول حرارة الشمس للأرض، أو حرارة الموقد والمدفأة).</text>
+  </g>
+
+  <!-- Pointer line to flame radiation -->
+  <path d="M555,375 Q380,360 210,360" fill="none" stroke="#facc15" stroke-width="2" stroke-dasharray="4,2"/>
+</svg>

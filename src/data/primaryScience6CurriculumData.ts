@@ -514,7 +514,33 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 ### 3. الموصلات والعوازل الحرارية وتطبيقاتها
 - **الموصلات الجيدة:** معادن تسمح بسريان الحرارة بسرعة وكفاءة (النحاس، الألمنيوم، الحديد) $\\implies$ تُصنع منها قدور وأواني الطهي وأجهزة التبريد.
 - **العوازل الجيدة:** مواد تمنع أو تبطئ تدفق الحرارة (الخشب، السيليكون، البلاستيك، الهواء، الفلين) $\\implies$ تُصنع منها مقابض أواني الطهي، والملابس الثقيلة، والعوازل في جدران المنازل.
+
+![مخطط طرق انتقال الحرارة الثلاث: التوصيل في المواد الصلبة، الحمل الحراري في الموائع، والإشعاع في الفراغ](/curriculum_images/heat_transfer_mechanisms.svg)
 `,
+    sections: [
+      {
+        titleAr: 'طرق انتقال الحرارة: التوصيل والحمل والإشعاع',
+        titleEn: 'Heat Transfer Mechanisms: Conduction, Convection & Radiation',
+        contentAr: `تنتقل الحرارة من الجسم الساخن إلى البارد بثلاث آليات فيزيائية:
+1. **التوصيل (Conduction):** تلامس جزيئات المواد الصلبة (مثل مقبض الإناء المعدني).
+2. **الحمل (Convection):** تيارات صاعدة وهابطة في الموائع والسوائل والغازات (مثل غليان الماء).
+3. **الإشعاع (Radiation):** موجات تسافر في الأوساط والفراغ التام (مثل حرارة الشمس والدفايات).`,
+        contentEn: 'Thermal energy transfers via conduction in solids, convection in fluids, and radiation across space/vacuum.',
+        diagram: {
+          id: 'diagram-psci6-heat-transfer',
+          figureNumberAr: 'شكل توضيحي (٣-١)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط آليات انتقال الحرارة الثلاث وتطبيقاتها',
+          titleEn: 'Three Modes of Heat Transfer & Practical Applications',
+          captionAr: 'رسم علمي توضيحي معتمد يوضح التوصيل عبر المقبض الصلب، والحمل عبر تيارات السائل الساخن، والإشعاع الحراري المنبعث من مصدر اللهب.',
+          captionEn: 'Standard textbook illustration showing conduction along solid handle, convection currents in liquid, and radiant heat waves.',
+          diagramType: 'forces_motion_vector',
+          imageUrl: '/curriculum_images/heat_transfer_mechanisms.svg',
+          takeawayFormulaAr: 'الحرارة تنتقل بالتوصيل (في المواد الصلبة) والحمل (في الموائع) والإشعاع (في الفراغ والأوساط)',
+          takeawayFormulaEn: 'Heat transfers by conduction (solids), convection (fluids), and radiation (vacuum)'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-sci6-3',
       titleAr: 'تقييم المحاضرة 3: الطاقة الحرارية وانتقال الحرارة',

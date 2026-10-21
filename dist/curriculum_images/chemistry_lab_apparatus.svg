@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="100%" height="100%">
+  <defs>
+    <linearGradient id="chemBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#081528"/>
+      <stop offset="50%" stopColor="#0f172a"/>
+      <stop offset="100%" stopColor="#0a2233"/>
+    </linearGradient>
+
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="rgba(255, 255, 255, 0.4)"/>
+      <stop offset="25%" stopColor="rgba(56, 189, 248, 0.15)"/>
+      <stop offset="75%" stopColor="rgba(56, 189, 248, 0.05)"/>
+      <stop offset="100%" stopColor="rgba(255, 255, 255, 0.3)"/>
+    </linearGradient>
+
+    <linearGradient id="liquidBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#38bdf8"/>
+      <stop offset="100%" stopColor="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="liquidAmber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#fbbf24"/>
+      <stop offset="100%" stopColor="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="liquidRose" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#fb7185"/>
+      <stop offset="100%" stopColor="#e11d48"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="460" rx="20" fill="url(#chemBg)" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Top Title -->
+  <rect x="30" y="20" width="820" height="52" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5"/>
+  <text x="440" y="44" text-anchor="middle" fill="#38bdf8" font-size="20" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
+    أدوات القياس الأساسية في مختبر الكيمياء (Laboratory Glassware &amp; Apparatus)
+  </text>
+  <text x="440" y="63" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    أدوات القياس الكمي لتحضير المحاليل القياسية بدقة وعمليات المعايرة وقياس الحجوم والكتل
+  </text>
+
+  <!-- 1. BURETTE & RETORT STAND (السحاحة وحامل المعايرة) -->
+  <g transform="translate(60, 95)">
+    <rect width="145" height="335" rx="12" fill="rgba(30, 41, 59, 0.6)" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="72" y="24" text-anchor="middle" fill="#38bdf8" font-size="13" font-weight="bold">١. السحاحة (Burette)</text>
+    
+    <!-- Stand Base and Rod -->
+    <rect x="25" y="240" width="75" height="12" rx="3" fill="#64748b"/>
+    <rect x="40" y="45" width="5" height="200" fill="#94a3b8"/>
+    <!-- Clamp -->
+    <rect x="42" y="90" width="25" height="8" rx="2" fill="#475569"/>
+    
+    <!-- Burette Glass Tube -->
+    <rect x="62" y="45" width="14" height="160" rx="4" fill="url(#glassGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="64" y="90" width="10" height="113" fill="url(#liquidRose)" opacity="0.85"/>
+    <!-- Graduations (Top is 0) -->
+    <line x1="62" y1="55" x2="68" y2="55" stroke="#f8fafc" stroke-width="1"/>
+    <text x="54" y="58" fill="#f8fafc" font-size="7">0</text>
+    <line x1="62" y1="85" x2="68" y2="85" stroke="#f8fafc" stroke-width="1"/>
+    <text x="50" y="88" fill="#f8fafc" font-size="7">20</text>
+    <line x1="62" y1="120" x2="68" y2="120" stroke="#f8fafc" stroke-width="1"/>
+    <line x1="62" y1="155" x2="68" y2="155" stroke="#f8fafc" stroke-width="1"/>
+    <text x="50" y="158" fill="#f8fafc" font-size="7">40</text>
+    <!-- Stopcock valve -->
+    <rect x="58" y="200" width="22" height="6" rx="2" fill="#ef4444"/>
+    <polygon points="69,206 65,225 73,225" fill="#38bdf8"/>
+    <!-- Drop -->
+    <circle cx="69" cy="235" r="2.5" fill="#f43f5e"/>
+
+    <!-- Use annotation -->
+    <text x="72" y="270" text-anchor="middle" fill="#fde047" font-size="11" font-weight="bold">صفرها بالأعلى ⬆️</text>
+    <text x="72" y="290" text-anchor="middle" fill="#e2e8f0" font-size="10.5">تستخدم في عمليات</text>
+    <text x="72" y="306" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">المعايرة (Titration)</text>
+    <text x="72" y="322" text-anchor="middle" fill="#cbd5e1" font-size="9">لقياس الحجوم بدقة بالغة</text>
+  </g>
+
+  <!-- 2. VOLUMETRIC FLASK (الدورق العياري) -->
+  <g transform="translate(220, 95)">
+    <rect width="145" height="335" rx="12" fill="rgba(30, 41, 59, 0.6)" stroke="#10b981" stroke-width="1.5"/>
+    <text x="72" y="24" text-anchor="middle" fill="#34d399" font-size="13" font-weight="bold">٢. الدورق العياري</text>
+    <text x="72" y="38" text-anchor="middle" fill="#94a3b8" font-size="10">Volumetric Flask</text>
+
+    <!-- Glass Flask: Long thin neck with bulbous bottom -->
+    <path d="M64,55 L64,130 L35,215 A40,40 0 0 0 110,215 L81,130 L81,55 Z" fill="url(#glassGrad)" stroke="#10b981" stroke-width="2"/>
+    <ellipse cx="72.5" cy="55" rx="9" ry="3" fill="#6ee7b7"/>
+    <!-- Liquid inside -->
+    <path d="M50,175 L37,212 A38,38 0 0 0 108,212 L95,175 Z" fill="url(#liquidBlue)" opacity="0.85"/>
+    <ellipse cx="72.5" cy="175" rx="22" ry="5" fill="#7dd3fc"/>
+    <!-- Calibration Mark -->
+    <line x1="60" y1="100" x2="85" y2="100" stroke="#facc15" stroke-width="2"/>
+    <text x="92" y="103" fill="#facc15" font-size="9" font-weight="bold">علامة السعة</text>
+
+    <!-- Use annotation -->
+    <text x="72" y="260" text-anchor="middle" fill="#fde047" font-size="11" font-weight="bold">محدد السعة بدقة</text>
+    <text x="72" y="280" text-anchor="middle" fill="#e2e8f0" font-size="10.5">تحضير المحاليل</text>
+    <text x="72" y="296" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">القياسية (Standard)</text>
+    <text x="72" y="316" text-anchor="middle" fill="#cbd5e1" font-size="9.5">معلومة التركيز بدقة</text>
+  </g>
+
+  <!-- 3. GRADUATED CYLINDER (المخبار المدرج) -->
+  <g transform="translate(380, 95)">
+    <rect width="145" height="335" rx="12" fill="rgba(30, 41, 59, 0.6)" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="72" y="24" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="bold">٣. المخبار المدرج</text>
+    <text x="72" y="38" text-anchor="middle" fill="#94a3b8" font-size="10">Graduated Cylinder</text>
+
+    <!-- Tall graduated cylinder -->
+    <rect x="52" y="55" width="40" height="175" rx="4" fill="url(#glassGrad)" stroke="#f59e0b" stroke-width="2"/>
+    <!-- Base -->
+    <polygon points="35,235 110,235 100,228 45,228" fill="#475569"/>
+    <!-- Liquid -->
+    <rect x="54" y="110" width="36" height="118" fill="url(#liquidAmber)" opacity="0.85"/>
+    <!-- Graduations (Bottom is 0) -->
+    <line x1="52" y1="200" x2="62" y2="200" stroke="#fff" stroke-width="1.5"/>
+    <text x="40" y="203" fill="#fff" font-size="7">20</text>
+    <line x1="52" y1="170" x2="62" y2="170" stroke="#fff" stroke-width="1.5"/>
+    <text x="40" y="173" fill="#fff" font-size="7">40</text>
+    <line x1="52" y1="140" x2="62" y2="140" stroke="#fff" stroke-width="1.5"/>
+    <text x="40" y="143" fill="#fff" font-size="7">60</text>
+    <line x1="52" y1="110" x2="62" y2="110" stroke="#fff" stroke-width="1.5"/>
+    <text x="40" y="113" fill="#fff" font-size="7">80</text>
+    <!-- Meniscus meniscus curve -->
+    <path d="M54,110 Q72,114 90,110" fill="none" stroke="#fef08a" stroke-width="2"/>
+
+    <!-- Use annotation -->
+    <text x="72" y="260" text-anchor="middle" fill="#fde047" font-size="11" font-weight="bold">تدريجه من أسفل لأعلى</text>
+    <text x="72" y="280" text-anchor="middle" fill="#e2e8f0" font-size="10.5">قياس حجوم السوائل</text>
+    <text x="72" y="296" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">أكثر دقة من الكؤوس</text>
+    <text x="72" y="316" text-anchor="middle" fill="#cbd5e1" font-size="9.5">وقياس حجم جسم صلب</text>
+  </g>
+
+  <!-- 4. CONICAL FLASK (الدورق المخروطي) -->
+  <g transform="translate(540, 95)">
+    <rect width="145" height="335" rx="12" fill="rgba(30, 41, 59, 0.6)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="72" y="24" text-anchor="middle" fill="#c084fc" font-size="13" font-weight="bold">٤. الدورق المخروطي</text>
+    <text x="72" y="38" text-anchor="middle" fill="#94a3b8" font-size="10">Conical Flask (Erlenmeyer)</text>
+
+    <!-- Conical Flask -->
+    <path d="M60,65 L60,110 L25,215 L120,215 L85,110 L85,65 Z" fill="url(#glassGrad)" stroke="#a855f7" stroke-width="2"/>
+    <ellipse cx="72.5" cy="65" rx="13" ry="4" fill="#c084fc"/>
+    <!-- Liquid -->
+    <path d="M45,160 L27,213 L118,213 L100,160 Z" fill="url(#liquidRose)" opacity="0.85"/>
+    <ellipse cx="72.5" cy="160" rx="27" ry="5" fill="#fda4af"/>
+
+    <!-- Use annotation -->
+    <text x="72" y="260" text-anchor="middle" fill="#fde047" font-size="11" font-weight="bold">قاعدته عريضة</text>
+    <text x="72" y="280" text-anchor="middle" fill="#e2e8f0" font-size="10.5">يوضع أسفل السحاحة في</text>
+    <text x="72" y="296" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="bold">عمليات المعايرة</text>
+    <text x="72" y="316" text-anchor="middle" fill="#cbd5e1" font-size="9.5">لتسهيل الرج دون انسكاب</text>
+  </g>
+
+  <!-- 5. PIPETTE & BALANCE (الماصة والميزان الحساس) -->
+  <g transform="translate(700, 95)">
+    <rect width="145" height="335" rx="12" fill="rgba(30, 41, 59, 0.6)" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="72" y="24" text-anchor="middle" fill="#22d3ee" font-size="13" font-weight="bold">٥. الماصة والميزان</text>
+    <text x="72" y="38" text-anchor="middle" fill="#94a3b8" font-size="10">Pipette &amp; Balance</text>
+
+    <!-- Pipette Graphic -->
+    <rect x="35" y="55" width="8" height="110" rx="3" fill="url(#glassGrad)" stroke="#06b6d4" stroke-width="1.5"/>
+    <circle cx="39" cy="52" r="8" fill="#ef4444"/> <!-- Rubber suction bulb -->
+    
+    <!-- Digital Balance Graphic -->
+    <rect x="65" y="105" width="65" height="55" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <rect x="75" y="112" width="45" height="20" rx="3" fill="#0284c7"/>
+    <text x="97" y="127" text-anchor="middle" fill="#ffffff" font-size="10" font-family="monospace" font-weight="bold">12.54 g</text>
+    <rect x="75" y="140" width="45" height="6" rx="2" fill="#94a3b8"/> <!-- Weighing pan -->
+
+    <!-- Use annotation -->
+    <text x="72" y="200" text-anchor="middle" fill="#22d3ee" font-size="12" font-weight="bold">الماصة (Pipette):</text>
+    <text x="72" y="218" text-anchor="middle" fill="#e2e8f0" font-size="10">نقل حجوم محددة بأمان</text>
+    <text x="72" y="232" text-anchor="middle" fill="#94a3b8" font-size="9.5">مزودة بأداة شفط للسوائل الخطرة</text>
+
+    <line x1="20" y1="245" x2="125" y2="245" stroke="#334155"/>
+
+    <text x="72" y="265" text-anchor="middle" fill="#fde047" font-size="12" font-weight="bold">الميزان الرقمي:</text>
+    <text x="72" y="285" text-anchor="middle" fill="#e2e8f0" font-size="10">قياس كتل المواد الكيميائية</text>
+    <text x="72" y="303" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold">بدقة فائقة (حتى 0.001g)</text>
+  </g>
+</svg>

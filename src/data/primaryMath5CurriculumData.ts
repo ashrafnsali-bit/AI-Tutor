@@ -408,7 +408,33 @@ $$\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}$$
 ### 3. قسمة الكسور الاعتيادية
 نستخدم قاعدة "ثَبّت، غَيّر، اقلِب" (Keep, Change, Flip):
 $$\\frac{1}{2} \\div 3 = \\frac{1}{2} \\times \\frac{1}{3} = \\frac{1}{6}$$
+
+![مخطط نماذج أشرطة الكسور الاعتيادية والكسور المتكافئة والنسب المئوية والعشرية](/curriculum_images/fractions_models_visual.svg)
 `,
+    sections: [
+      {
+        titleAr: 'نماذج الكسور المتكافئة والتحويلات',
+        titleEn: 'Equivalent Fraction Visual Models & Conversions',
+        contentAr: `الكسور تمثل أجزاء من الواحد الصحيح، وتساعدنا النماذج البصرية (حائط الكسور والنماذج الدائرية) في المقارنة والتحويل:
+- **حائط الكسور:** يوضح بصرياً أن النصف $1/2$ يكافئ ربعين $2/4$ وأربعة أثمان $4/8$.
+- **التكافؤ العشري والمئوي:** النصف $= 0.5 = 50\\%$، والربع $= 0.25 = 25\\%$، وثلاثة أرباع $= 0.75 = 75\\%$.
+- **توحيد المقامات:** بمضاعفة البسط والمقام بنفس المعامل نحصل على كسور متكافئة تسهل الجمع والطرح.`,
+        contentEn: 'Fraction bars and circular models visually demonstrate equivalences: 1/2 = 2/4 = 4/8 = 0.5 (50%), and 1/4 = 0.25 (25%).',
+        diagram: {
+          id: 'diagram-pmath5-fractions-models',
+          figureNumberAr: 'شكل توضيحي (٣-١)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط حائط الكسور والنماذج الدائرية المتكافئة',
+          titleEn: 'Fraction Bars & Circular Equivalent Models Diagram',
+          captionAr: 'رسم بياني تعليمي معتمد يوضح مقارنة أشرطة الكسور من الواحد الصحيح حتى الأثمان، والنماذج الدائرية والنسب المئوية والعشرية المتكافئة.',
+          captionEn: 'Approved curriculum diagram illustrating fraction wall from whole to eighths, along with circular percentages and decimals.',
+          diagramType: 'primary_fractions',
+          imageUrl: '/curriculum_images/fractions_models_visual.svg',
+          takeawayFormulaAr: 'الكسور المتكافئة: ضرب أو قسمة البسط والمقام في نفس العدد يحافظ على قيمة الكسر',
+          takeawayFormulaEn: 'Equivalent Fractions: Multiplying or dividing numerator & denominator by the same number preserves value'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-math5-3',
       titleAr: 'تقييم المحاضرة 3: الكسور الاعتيادية وم.م.أ',
