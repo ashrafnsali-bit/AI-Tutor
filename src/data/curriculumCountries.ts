@@ -2357,17 +2357,17 @@ export function getNationalSubjectLabel(
 
   if (country === 'EG' && _gradeLevel === 'G10' && subject === 'ENGLISH') {
     return isEn
-      ? 'English — Secondary 1 (Second Language)'
-      : 'اللغة الإنجليزية — الصف الأول الثانوي (لغة ثانية)';
+      ? 'English (First Language)'
+      : 'اللغة الإنجليزية (لغة أولى)';
   }
   if (country === 'EG' && _gradeLevel === 'G10') {
     const grade10Labels: Partial<Record<Subject, [string, string]>> = {
-      MATH: ['Mathematics — Secondary 1, First Semester', 'الرياضيات — الصف الأول الثانوي، الفصل الدراسي الأول'],
-      HISTORY: ['History — Civilization of Egypt and the Ancient World', 'التاريخ — حضارة مصر والعالم القديم'],
-      GENERAL_SCIENCE: ['Integrated Science — Secondary 1', 'العلوم المتكاملة — الصف الأول الثانوي'],
-      PHILOSOPHY: ['Philosophy and Logic — Secondary 1', 'الفلسفة والمنطق — الصف الأول الثانوي'],
-      ISLAMIC_STUDIES: ['Islamic Religious Education — Ministry textbook', 'التربية الدينية الإسلامية — كتاب الوزارة'],
-      COMPUTER_SCIENCE: ['Information and Communication Technology — English edition', 'تكنولوجيا المعلومات والاتصالات — نسخة الكتاب الإنجليزية']
+      MATH: ['Mathematics', 'الرياضيات'],
+      HISTORY: ['History (Civilization of Egypt & Ancient World)', 'التاريخ (حضارة مصر والعالم القديم)'],
+      GENERAL_SCIENCE: ['Integrated Science', 'العلوم المتكاملة'],
+      PHILOSOPHY: ['Philosophy and Logic', 'الفلسفة والمنطق'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية'],
+      COMPUTER_SCIENCE: ['ICT & Information Technology', 'تكنولوجيا المعلومات والاتصالات']
     };
     const label = grade10Labels[subject];
     if (label) return isEn ? label[0] : label[1];
@@ -2379,8 +2379,8 @@ export function getNationalSubjectLabel(
     (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return isEn
-      ? 'French First Language — Champion 1 (school support)'
-      : 'الفرنسية لغة أولى — Champion 1 (مسار دعم مدرسي)';
+      ? 'French (First Language)'
+      : 'اللغة الفرنسية (لغة أولى)';
   }
   if (
     country === 'EG' &&
@@ -2389,27 +2389,27 @@ export function getNationalSubjectLabel(
     (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
   ) {
     return subject === 'GERMAN'
-      ? isEn ? 'German — second foreign language (school support)' : 'الألمانية — لغة أجنبية ثانية (دعم مدرسي)'
-      : isEn ? 'Italian — second foreign language (school support)' : 'الإيطالية — لغة أجنبية ثانية (دعم مدرسي)';
+      ? isEn ? 'German (Second Foreign Language)' : 'اللغة الألمانية (لغة ثانية)'
+      : isEn ? 'Italian (Second Foreign Language)' : 'اللغة الإيطالية (لغة ثانية)';
   }
 
   if (country === 'EG' && _gradeLevel === 'G11') {
     const egyptG11Labels: Partial<Record<Subject, [string, string]>> = {
-      ARABIC_LIT: ['Arabic Language — Secondary 2', 'اللغة العربية — الصف الثاني الثانوي'],
-      ENGLISH: ['English (First Language) — Secondary 2', 'اللغة الإنجليزية (لغة أولى) — الصف الثاني الثانوي'],
-      FRENCH: ['French (Second Language) — Secondary 2', 'اللغة الفرنسية (لغة ثانية) — الصف الثاني الثانوي'],
-      GERMAN: ['German (Second Language) — Secondary 2', 'اللغة الألمانية (لغة ثانية) — الصف الثاني الثانوي'],
-      ITALIAN: ['Italian (Second Language) — Secondary 2', 'اللغة الإيطالية (لغة ثانية) — الصف الثاني الثانوي'],
-      ISLAMIC_STUDIES: ['Islamic Religious Education — Secondary 2', 'التربية الدينية الإسلامية — الصف الثاني الثانوي'],
-      PHYSICS: ['Physics — Secondary 2 (Scientific Track)', 'الفيزياء — الصف الثاني الثانوي (الشعبة العلمية)'],
-      CHEMISTRY: ['Chemistry — Secondary 2 (Scientific Track)', 'الكيمياء — الصف الثاني الثانوي (الشعبة العلمية)'],
+      ARABIC_LIT: ['Arabic Language', 'اللغة العربية'],
+      ENGLISH: ['English (First Language)', 'اللغة الإنجليزية (لغة أولى)'],
+      FRENCH: ['French (Second Language)', 'اللغة الفرنسية (لغة ثانية)'],
+      GERMAN: ['German (Second Language)', 'اللغة الألمانية (لغة ثانية)'],
+      ITALIAN: ['Italian (Second Language)', 'اللغة الإيطالية (لغة ثانية)'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية'],
+      PHYSICS: ['Physics (Scientific Section)', 'الفيزياء (الشعبة العلمية)'],
+      CHEMISTRY: ['Chemistry (Scientific Section)', 'الكيمياء (الشعبة العلمية)'],
       MATH: track === 'SHARIA_HUMANITIES'
-        ? ['General Mathematics — Secondary 2 (Literary Track)', 'الرياضيات العامة — الصف الثاني الثانوي (الشعبة الأدبية)']
-        : ['Pure Mathematics & Applications — Secondary 2 (Scientific Track)', 'الرياضيات البحتة وتطبيقاتها — الصف الثاني الثانوي (الشعبة العلمية)'],
-      PHILOSOPHY: ['Psychology & Sociology — Secondary 2 (Literary Track)', 'علم النفس والاجتماع — الصف الثاني الثانوي (الشعبة الأدبية)'],
-      HISTORY: ['History — Secondary 2 (Literary Track)', 'التاريخ — الصف الثاني الثانوي (الشعبة الأدبية)'],
-      GEOGRAPHY: ['Geography — Secondary 2 (Literary Track)', 'الجغرافيا — الصف الثاني الثانوي (الشعبة الأدبية)'],
-      BIOLOGY: ['Biology — Secondary 2 (Scientific Track)', 'الأحياء — الصف الثاني الثانوي (الشعبة العلمية)']
+        ? ['General Mathematics (Literary Section)', 'الرياضيات العامة (الشعبة الأدبية)']
+        : ['Pure Mathematics & Applications (Scientific Section)', 'الرياضيات البحتة وتطبيقاتها (الشعبة العلمية)'],
+      PHILOSOPHY: ['Psychology & Sociology (Literary Section)', 'علم النفس والاجتماع (الشعبة الأدبية)'],
+      HISTORY: ['History (Literary Section)', 'التاريخ (الشعبة الأدبية)'],
+      GEOGRAPHY: ['Geography (Literary Section)', 'الجغرافيا (الشعبة الأدبية)'],
+      BIOLOGY: ['Biology (Scientific Section)', 'الأحياء (الشعبة العلمية)']
     };
     const egLabel = egyptG11Labels[subject];
     if (egLabel) return isEn ? egLabel[0] : egLabel[1];
@@ -2417,58 +2417,55 @@ export function getNationalSubjectLabel(
 
   if (country === 'EG' && _gradeLevel === 'G12') {
     const egyptG12Labels: Partial<Record<Subject, [string, string]>> = {
-      ARABIC_LIT: ['Arabic Language & Literature — Secondary 3', 'اللغة العربية وآدابها — الصف الثالث الثانوي'],
-      ENGLISH: ['English (First Language) — Secondary 3', 'اللغة الإنجليزية (لغة أولى) — الصف الثالث الثانوي'],
-      FRENCH: ['French (Second Language) — Secondary 3', 'اللغة الفرنسية (لغة ثانية) — الصف الثالث الثانوي'],
-      GERMAN: ['German (Second Language) — Secondary 3', 'اللغة الألمانية (لغة ثانية) — الصف الثالث الثانوي'],
-      ITALIAN: ['Italian (Second Language) — Secondary 3', 'اللغة الإيطالية (لغة ثانية) — الصف الثالث الثانوي'],
-      ISLAMIC_STUDIES: ['Islamic Religious Education — Secondary 3', 'التربية الدينية الإسلامية — الصف الثالث الثانوي'],
-      PHYSICS: ['Physics — Secondary 3 (Scientific Track)', 'الفيزياء — الصف الثالث الثانوي (الشعبة العلمية)'],
-      CHEMISTRY: ['Chemistry — Secondary 3 (Scientific Track)', 'الكيمياء — الصف الثالث الثانوي (الشعبة العلمية)'],
-      BIOLOGY: ['Biology — Secondary 3 (Scientific Track: Biological)', 'الأحياء — الصف الثالث الثانوي (شعبة علمي علوم)'],
+      ARABIC_LIT: ['Arabic Language & Literature', 'اللغة العربية وآدابها'],
+      ENGLISH: ['English (First Language)', 'اللغة الإنجليزية (لغة أولى)'],
+      FRENCH: ['French (Second Language)', 'اللغة الفرنسية (لغة ثانية)'],
+      GERMAN: ['German (Second Language)', 'اللغة الألمانية (لغة ثانية)'],
+      ITALIAN: ['Italian (Second Language)', 'اللغة الإيطالية (لغة ثانية)'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية'],
+      PHYSICS: ['Physics (Scientific Section)', 'الفيزياء (الشعبة العلمية)'],
+      CHEMISTRY: ['Chemistry (Scientific Section)', 'الكيمياء (الشعبة العلمية)'],
+      BIOLOGY: ['Biology (Scientific Section: Biology)', 'الأحياء (شعبة علمي علوم)'],
       MATH: track === 'SHARIA_HUMANITIES' || track === 'SCIENCE_BIO'
-        ? ['Statistics & Probability — Secondary 3', 'الإحصاء والاحتمال — الصف الثالث الثانوي']
-        : ['Pure Mathematics (Calculus, Algebra & Solid Geometry) — Secondary 3', 'الرياضيات البحتة (تفاضل وتكامل وجبر وهندسة فراغية) — شعبة علمي رياضة'],
-      COMPUTER_SCIENCE: ['Applied Mathematics (Statics & Dynamics) — Secondary 3', 'الرياضيات التطبيقية (الاستاتيكا والديناميكا) — شعبة علمي رياضة'],
-      HISTORY: ['Modern & Contemporary History of Egypt & Arabs — Secondary 3', 'التاريخ الحديث والمعاصر لمصر والعرب — الصف الثالث الثانوي (الشعبة الأدبية)'],
-      GEOGRAPHY: ['Political Geography — Secondary 3', 'الجغرافيا السياسية — الصف الثالث الثانوي (الشعبة الأدبية)'],
-      PHILOSOPHY: ['Philosophy & Logic — Secondary 3', 'الفلسفة والمنطق — الصف الثالث الثانوي (الشعبة الأدبية)']
+        ? ['Statistics & Probability', 'الإحصاء والاحتمال']
+        : ['Pure Mathematics (Calculus, Algebra & Solid Geometry) — Math Section', 'الرياضيات البحتة (تفاضل وتكامل وجبر وهندسة فراغية) — شعبة علمي رياضة'],
+      COMPUTER_SCIENCE: ['Applied Mathematics (Statics & Dynamics) — Math Section', 'الرياضيات التطبيقية (الاستاتيكا والديناميكا) — شعبة علمي رياضة'],
+      HISTORY: ['Modern & Contemporary History of Egypt & Arabs (Literary Section)', 'التاريخ الحديث والمعاصر لمصر والعرب (الشعبة الأدبية)'],
+      GEOGRAPHY: ['Political Geography (Literary Section)', 'الجغرافيا السياسية (الشعبة الأدبية)'],
+      PHILOSOPHY: ['Philosophy & Logic (Literary Section)', 'الفلسفة والمنطق (الشعبة الأدبية)']
     };
     const egLabel = egyptG12Labels[subject];
     if (egLabel) return isEn ? egLabel[0] : egLabel[1];
   }
 
   if (country === 'EG' && ['G7', 'G8', 'G9'].includes(_gradeLevel || '')) {
-    const prepGradeAr = _gradeLevel === 'G7' ? 'الأول الإعدادي' : (_gradeLevel === 'G8' ? 'الثاني الإعدادي' : 'الثالث الإعدادي (الشهادة الإعدادية)');
-    const prepGradeEn = _gradeLevel === 'G7' ? 'Prep 1' : (_gradeLevel === 'G8' ? 'Prep 2' : 'Prep 3');
     const egyptPrepLabels: Partial<Record<Subject, [string, string]>> = {
-      ARABIC_LANG: [`Arabic Language — ${prepGradeEn}`, `اللغة العربية — الصف ${prepGradeAr}`],
-      MATH: [`Mathematics — ${prepGradeEn}`, `الرياضيات — الصف ${prepGradeAr}`],
-      GENERAL_SCIENCE: [`Science — ${prepGradeEn}`, `العلوم — الصف ${prepGradeAr}`],
-      ENGLISH: [`English (New Hello!) — ${prepGradeEn}`, `اللغة الإنجليزية (New Hello!) — الصف ${prepGradeAr}`],
-      GEOGRAPHY: [`Social Studies (Geography) — ${prepGradeEn}`, `الدراسات الاجتماعية (الجغرافيا) — الصف ${prepGradeAr}`],
-      HISTORY: [`Social Studies (History) — ${prepGradeEn}`, `الدراسات الاجتماعية (التاريخ) — الصف ${prepGradeAr}`],
-      COMPUTER_SCIENCE: [`Computer & Information Technology — ${prepGradeEn}`, `الحاسب الآلي وتكنولوجيا المعلومات — الصف ${prepGradeAr}`],
-      ISLAMIC_STUDIES: [`Islamic Religious Education — ${prepGradeEn}`, `التربية الدينية الإسلامية — الصف ${prepGradeAr}`]
+      ARABIC_LANG: ['Arabic Language', 'اللغة العربية'],
+      MATH: ['Mathematics', 'الرياضيات'],
+      GENERAL_SCIENCE: ['Science', 'العلوم'],
+      ENGLISH: ['English (New Hello!)', 'اللغة الإنجليزية (New Hello!)'],
+      GEOGRAPHY: ['Social Studies (Geography)', 'الدراسات الاجتماعية (الجغرافيا)'],
+      HISTORY: ['Social Studies (History)', 'الدراسات الاجتماعية (التاريخ)'],
+      COMPUTER_SCIENCE: ['Computer & Information Technology', 'الحاسب الآلي وتكنولوجيا المعلومات'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية']
     };
     const prepLabel = egyptPrepLabels[subject];
     if (prepLabel) return isEn ? prepLabel[0] : prepLabel[1];
   }
 
   if (country === 'EG' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(_gradeLevel || '')) {
-    const gNum = _gradeLevel?.replace('G', '') || '1';
     const primaryLabels: Partial<Record<Subject, [string, string]>> = {
-      PRIMARY_ARABIC: [`Arabic Language (Tawasol) — Primary ${gNum}`, `اللغة العربية (تواصل) — الصف ${gNum} الابتدائي`],
-      ARABIC_LANG: [`Arabic Language (Tawasol) — Primary ${gNum}`, `اللغة العربية (تواصل) — الصف ${gNum} الابتدائي`],
-      PRIMARY_MATH: [`Mathematics — Primary ${gNum}`, `الرياضيات — الصف ${gNum} الابتدائي`],
-      MATH: [`Mathematics — Primary ${gNum}`, `الرياضيات — الصف ${gNum} الابتدائي`],
-      PRIMARY_SCIENCE: [`Science — Primary ${gNum}`, `العلوم — الصف ${gNum} الابتدائي`],
-      GENERAL_SCIENCE: [`Science — Primary ${gNum}`, `العلوم — الصف ${gNum} الابتدائي`],
-      ENGLISH: [`English (Connect) — Primary ${gNum}`, `اللغة الإنجليزية (Connect) — الصف ${gNum} الابتدائي`],
-      COMPUTER_SCIENCE: [`ICT & Computer Skills — Primary ${gNum}`, `تكنولوجيا المعلومات والاتصالات (ICT) — الصف ${gNum} الابتدائي`],
-      GEOGRAPHY: [`Social Studies (Geography) — Primary ${gNum}`, `الدراسات الاجتماعية (الجغرافيا) — الصف ${gNum} الابتدائي`],
-      HISTORY: [`Social Studies (History) — Primary ${gNum}`, `الدراسات الاجتماعية (التاريخ) — الصف ${gNum} الابتدائي`],
-      ISLAMIC_STUDIES: [`Islamic Religious Education — Primary ${gNum}`, `التربية الدينية الإسلامية — الصف ${gNum} الابتدائي`]
+      PRIMARY_ARABIC: ['Arabic Language (Tawasol)', 'اللغة العربية (تواصل)'],
+      ARABIC_LANG: ['Arabic Language (Tawasol)', 'اللغة العربية (تواصل)'],
+      PRIMARY_MATH: ['Mathematics', 'الرياضيات'],
+      MATH: ['Mathematics', 'الرياضيات'],
+      PRIMARY_SCIENCE: ['Science', 'العلوم'],
+      GENERAL_SCIENCE: ['Science', 'العلوم'],
+      ENGLISH: ['English (Connect)', 'اللغة الإنجليزية (Connect)'],
+      COMPUTER_SCIENCE: ['ICT & Computer Skills', 'تكنولوجيا المعلومات والاتصالات (ICT)'],
+      GEOGRAPHY: ['Social Studies (Geography)', 'الدراسات الاجتماعية (الجغرافيا)'],
+      HISTORY: ['Social Studies (History)', 'الدراسات الاجتماعية (التاريخ)'],
+      ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية']
     };
     const primLabel = primaryLabels[subject];
     if (primLabel) return isEn ? primLabel[0] : primLabel[1];
