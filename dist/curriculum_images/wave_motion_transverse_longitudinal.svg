@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="waveBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1224"/>
+      <stop offset="50%" stop-color="#0f1d38"/>
+      <stop offset="100%" stop-color="#060d1a"/>
+    </linearGradient>
+    <linearGradient id="transGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="longGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="50%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <filter id="waveShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 21px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 14.5px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .wave-label { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .anno-txt { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #e2e8f0; }
+    .body-txt { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    .formula-bold { font-family: 'Consolas', 'Courier New', monospace; font-size: 16px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+  </style>
+
+  <!-- Background Canvas -->
+  <rect width="960" height="640" rx="16" fill="url(#waveBg)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <rect x="25" y="16" width="910" height="62" rx="10" fill="#132338" stroke="#334155" stroke-width="1.2" filter="url(#waveShadow)"/>
+  <text x="480" y="42" class="title-main">مخطط الحركة الموجية: الموجات المستعرضة والطولية وقانون انتشار الأمواج</text>
+  <text x="480" y="64" class="subtitle">الفيزياء المعتمدة • القمم والقيعان والتضاغطات والتخلخلات، الطول الموجي (λ)، والتردد (ν / f)، وسرعة الموجة v = f × λ</text>
+
+  <!-- Left Card: Transverse Wave (الموجة المستعرضة) -->
+  <g transform="translate(25, 88)">
+    <rect width="445" height="348" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#waveShadow)"/>
+    <text x="222" y="24" class="sec-title">١. الموجة المستعرضة (Transverse Wave)</text>
+
+    <!-- Visual Area Container -->
+    <rect x="14" y="38" width="417" height="175" rx="8" fill="#111c38" stroke="#1e3a5f" stroke-width="0.8"/>
+
+    <!-- Equilibrium Line -->
+    <line x1="25" y1="125" x2="420" y2="125" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <text x="50" y="120" font-family="'Cairo', sans-serif" font-size="9.5" fill="#94a3b8">خط الاتزان الأصلي</text>
+
+    <!-- Sine Wave Curve -->
+    <path d="M 40 125 C 75 50, 115 50, 150 125 C 185 200, 225 200, 260 125 C 295 50, 335 50, 370 125 C 388 160, 405 160, 415 125"
+          fill="none" stroke="url(#transGrad)" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Crest (قمة) Marker -->
+    <circle cx="95" cy="73" r="5" fill="#38bdf8"/>
+    <rect x="55" y="44" width="80" height="22" rx="4" fill="#0284c7"/>
+    <text x="95" y="59" class="wave-label">قمة (Crest)</text>
+
+    <!-- Trough (قاع) Marker -->
+    <circle cx="205" cy="177" r="5" fill="#ec4899"/>
+    <rect x="165" y="184" width="80" height="22" rx="4" fill="#be185d"/>
+    <text x="205" y="199" class="wave-label">قاع (Trough)</text>
+
+    <!-- Wavelength Indicator (Between two crests) -->
+    <line x1="95" y1="62" x2="315" y2="62" stroke="#facc15" stroke-width="2"/>
+    <polygon points="95,62 103,58 103,66" fill="#facc15"/>
+    <polygon points="315,62 307,58 307,66" fill="#facc15"/>
+    <circle cx="315" cy="73" r="4" fill="#38bdf8"/>
+    <rect x="170" y="48" width="70" height="20" rx="3" fill="#854d0e"/>
+    <text x="205" y="62" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#fef08a" text-anchor="middle">الطول الموجي (λ)</text>
+
+    <!-- Amplitude Indicator (A) -->
+    <line x1="315" y1="73" x2="315" y2="125" stroke="#34d399" stroke-width="1.8"/>
+    <polygon points="315,73 311,81 319,81" fill="#34d399"/>
+    <polygon points="315,125 311,117 319,117" fill="#34d399"/>
+    <text x="340" y="103" font-family="'Cairo', sans-serif" font-size="9.5" font-weight="bold" fill="#34d399">سعة الموجة (A)</text>
+
+    <!-- Direction Vectors (Perpendicular) -->
+    <g transform="translate(18, 222)">
+      <rect width="409" height="114" rx="6" fill="#132338" stroke="#334155" stroke-width="0.8"/>
+      <text x="14" y="20" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">• اتجاه اهتزاز جزيئات الوسط:</text>
+      <text x="14" y="38" class="body-txt">تهتز جزيئات الوسط عمودياً (للأعلى وللأسفل ↕) على اتجاه انتشار الموجة دون أن تنتقل من أماكنها الأصلية.</text>
+      
+      <text x="14" y="62" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">• تتكون من:</text>
+      <text x="14" y="80" class="body-txt">قمم (أقصى إزاحة لأعلى) وقيعان (أقصى إزاحة لأسفل). λ = المسافة بين قمتين متتاليتين أو قاعين متتاليين.</text>
+
+      <text x="14" y="102" font-family="'Cairo', sans-serif" font-size="10.5" fill="#facc15">أمثلة: موجات سطح الماء، وموجات الضوء والموجات الكهرومغناطيسية، وموجات الأوتار.</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Longitudinal Wave (الموجة الطولية) -->
+  <g transform="translate(490, 88)">
+    <rect width="445" height="348" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#waveShadow)"/>
+    <text x="222" y="24" class="sec-title">٢. الموجة الطولية (Longitudinal Wave)</text>
+
+    <!-- Visual Area Container for Longitudinal Spring/Coils -->
+    <rect x="14" y="38" width="417" height="175" rx="8" fill="#111c38" stroke="#1e3a5f" stroke-width="0.8"/>
+
+    <!-- Spring simulation lines for compressions and rarefactions -->
+    <g transform="translate(25, 80)">
+      <!-- Rarefaction 1 (sparse lines) -->
+      <line x1="10" y1="10" x2="10" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="28" y1="10" x2="28" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="48" y1="10" x2="48" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+
+      <!-- Compression 1 (dense cluster) -->
+      <line x1="75" y1="5" x2="75" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="83" y1="5" x2="83" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="91" y1="5" x2="91" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="99" y1="5" x2="99" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="107" y1="5" x2="107" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="115" y1="5" x2="115" y2="75" stroke="#ef4444" stroke-width="3"/>
+
+      <!-- Rarefaction 2 (sparse lines) -->
+      <line x1="140" y1="10" x2="140" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="168" y1="10" x2="168" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="196" y1="10" x2="196" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="224" y1="10" x2="224" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+
+      <!-- Compression 2 (dense cluster) -->
+      <line x1="250" y1="5" x2="250" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="258" y1="5" x2="258" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="266" y1="5" x2="266" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="274" y1="5" x2="274" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="282" y1="5" x2="282" y2="75" stroke="#ef4444" stroke-width="3"/>
+      <line x1="290" y1="5" x2="290" y2="75" stroke="#ef4444" stroke-width="3"/>
+
+      <!-- Rarefaction 3 -->
+      <line x1="316" y1="10" x2="316" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="344" y1="10" x2="344" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+      <line x1="372" y1="10" x2="372" y2="70" stroke="#f59e0b" stroke-width="2.2"/>
+    </g>
+
+    <!-- Labels for Compression and Rarefaction -->
+    <rect x="100" y="44" width="84" height="22" rx="4" fill="#b91c1c"/>
+    <text x="142" y="59" class="wave-label">تضاغط (كثافة عالية)</text>
+
+    <rect x="230" y="44" width="84" height="22" rx="4" fill="#b45309"/>
+    <text x="272" y="59" class="wave-label">تخلخل (كثافة منخفضة)</text>
+
+    <!-- Wavelength Indicator (Between centers of two compressions) -->
+    <line x1="120" y1="180" x2="295" y2="180" stroke="#facc15" stroke-width="2"/>
+    <polygon points="120,180 128,176 128,184" fill="#facc15"/>
+    <polygon points="295,180 287,176 287,184" fill="#facc15"/>
+    <rect x="168" y="168" width="80" height="22" rx="4" fill="#854d0e"/>
+    <text x="208" y="183" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#fef08a" text-anchor="middle">الطول الموجي (λ)</text>
+
+    <!-- Explanation Box for Longitudinal -->
+    <g transform="translate(18, 222)">
+      <rect width="409" height="114" rx="6" fill="#132338" stroke="#334155" stroke-width="0.8"/>
+      <text x="14" y="20" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#f59e0b">• اتجاه اهتزاز جزيئات الوسط:</text>
+      <text x="14" y="38" class="body-txt">تهتز جزيئات الوسط في نفس خط (موازية ↔) اتجاه انتشار الموجة، مقتربة ومبتعدة دورياً.</text>
+      
+      <text x="14" y="62" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#f59e0b">• تتكون من:</text>
+      <text x="14" y="80" class="body-txt">تضاغطات (مواضع ترتفع فيها كثافة وضغط جزيئات الوسط) وتخلخلات (مواضع تقل فيها الكثافة والضغط).</text>
+
+      <text x="14" y="102" font-family="'Cairo', sans-serif" font-size="10.5" fill="#facc15">أمثلة: موجات الصوت في الهواء والغازات والسوائل، وموجات الزلازل الأولية (P-waves).</text>
+    </g>
+  </g>
+
+  <!-- Bottom Panel: Wave Speed Equation & Physical Laws -->
+  <g transform="translate(25, 450)">
+    <rect width="910" height="175" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#waveShadow)"/>
+    <text x="455" y="24" class="sec-title">٣. القانون العام لانتشار الأمواج (The Wave Speed Equation) وحسابات التردد والزمن الدوري</text>
+
+    <!-- Formula Triangle Box (Left) -->
+    <g transform="translate(22, 34)">
+      <polygon points="80,8 15,116 145,116" fill="#132338" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="42" y1="65" x2="118" y2="65" stroke="#38bdf8" stroke-width="1.8"/>
+      <line x1="80" y1="65" x2="80" y2="116" stroke="#38bdf8" stroke-width="1.8"/>
+      
+      <!-- Symbols inside triangle -->
+      <text x="80" y="50" font-family="'Consolas', monospace" font-size="20" font-weight="bold" fill="#facc15" text-anchor="middle">v</text>
+      <text x="56" y="96" font-family="'Consolas', monospace" font-size="18" font-weight="bold" fill="#38bdf8" text-anchor="middle">f (ν)</text>
+      <text x="108" y="96" font-family="'Consolas', monospace" font-size="18" font-weight="bold" fill="#34d399" text-anchor="middle">λ</text>
+    </g>
+
+    <!-- Equation breakdown card (Center-Left) -->
+    <g transform="translate(185, 36)">
+      <rect width="320" height="126" rx="8" fill="#111c38" stroke="#0284c7" stroke-width="1"/>
+      <text x="160" y="22" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">علاقات سرعة انتشار الموجة الأساسية</text>
+      <line x1="15" y1="30" x2="305" y2="30" stroke="#1e3a5f" stroke-width="1"/>
+
+      <text x="14" y="52" class="formula-bold" fill="#facc15">v = f × λ  أو  v = ν · λ</text>
+      <text x="14" y="74" class="body-txt">• سرعة الموجة v (بوحدة m/s) = التردد (Hz) × الطول الموجي (m).</text>
+      <text x="14" y="96" class="body-txt">• العلاقة مع الزمن الدوري T: بما أن f = 1 / T فإن: v = λ / T.</text>
+      <text x="14" y="116" font-family="'Cairo', sans-serif" font-size="10.5" fill="#67e8f9">التردد f = عدد الموجات الكاملة في الثانية الواحدة (Hz = s⁻¹).</text>
+    </g>
+
+    <!-- Key Physics Exam Rules (Right) -->
+    <g transform="translate(520, 36)">
+      <rect width="372" height="126" rx="8" fill="#111c38" stroke="#10b981" stroke-width="1"/>
+      <text x="186" y="22" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#34d399" text-anchor="middle">القاعدتان الذهبيتان لحل المسائل الفيزيائية</text>
+      <line x1="15" y1="30" x2="357" y2="30" stroke="#1e3a5f" stroke-width="1"/>
+
+      <g transform="translate(12, 40)">
+        <text x="0" y="12" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fef08a">١) عند انتقال الموجة من وسط لوسط آخر:</text>
+        <text x="0" y="28" font-family="'Cairo', sans-serif" font-size="10.5" fill="#cbd5e1">التردد ثابت (لأنه يرتبط بالمصدر) وتتغير السرعة والطول الموجي طردياً:</text>
+        <text x="120" y="44" font-family="'Consolas', monospace" font-size="12" font-weight="bold" fill="#38bdf8">v₁ / v₂ = λ₁ / λ₂</text>
+
+        <text x="0" y="60" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fef08a">٢) لموجات مختلفة في نفس الوسط الواحد:</text>
+        <text x="0" y="74" font-family="'Cairo', sans-serif" font-size="10.5" fill="#cbd5e1">السرعة ثابتة في الوسط الواحد، وتتناسب λ عكسياً مع التردد f:</text>
+        <text x="120" y="88" font-family="'Consolas', monospace" font-size="12" font-weight="bold" fill="#34d399">f₁ · λ₁ = f₂ · λ₂</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="mathBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1226"/>
+      <stop offset="50%" stop-color="#111c3b"/>
+      <stop offset="100%" stop-color="#060b18"/>
+    </linearGradient>
+    <linearGradient id="parabolaGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="parabolaGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="parabolaGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="mathShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 21px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 14px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .case-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .math-formula { font-family: 'Consolas', 'Courier New', monospace; font-size: 14.5px; font-weight: bold; fill: #facc15; text-anchor: middle; }
+    .txt-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    .axis-label { font-family: 'Consolas', monospace; font-size: 10px; fill: #64748b; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#mathBg)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <rect x="25" y="16" width="910" height="62" rx="10" fill="#132338" stroke="#334155" stroke-width="1.2" filter="url(#mathShadow)"/>
+  <text x="480" y="42" class="title-main">مخطط الدالة التربيعية والمميز (Δ = b² - 4ac) وحالات الجذور وبحث الإشارة</text>
+  <text x="480" y="64" class="subtitle">رياضيات المرحلة الثانوية والإعدادية • المنحنى البياني، حالات المميز الثلاث، إحداثيات الرأس، وإشارة الدالة</text>
+
+  <!-- Case 1: Discriminant > 0 (Left Card) -->
+  <g transform="translate(25, 88)">
+    <rect width="292" height="348" rx="12" fill="#0d1829" stroke="#0284c7" stroke-width="1.2" filter="url(#mathShadow)"/>
+    <rect x="0" y="0" width="292" height="32" rx="12" fill="#0369a1"/>
+    <text x="146" y="21" class="case-title">الحالة ١: المميز موجب (Δ > 0)</text>
+    
+    <!-- Mini Coordinate Plane with Parabola intersecting twice -->
+    <g transform="translate(16, 42)">
+      <rect width="260" height="150" rx="8" fill="#111c38" stroke="#1e3a5f" stroke-width="0.8"/>
+      
+      <!-- Grid Lines -->
+      <line x1="20" y1="90" x2="245" y2="90" stroke="#475569" stroke-width="1.5"/> <!-- X axis -->
+      <polygon points="245,90 238,87 238,93" fill="#475569"/>
+      <text x="248" y="93" class="axis-label">x</text>
+
+      <line x1="130" y1="135" x2="130" y2="15" stroke="#475569" stroke-width="1.5"/> <!-- Y axis -->
+      <polygon points="130,15 127,22 133,22" fill="#475569"/>
+      <text x="135" y="18" class="axis-label">y</text>
+
+      <!-- Parabola cutting X-axis at two points: x1 and x2 -->
+      <path d="M 45 35 Q 130 155 215 35" fill="none" stroke="url(#parabolaGrad1)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Roots intersection dots -->
+      <circle cx="78" cy="90" r="5" fill="#facc15"/>
+      <text x="78" y="106" font-family="'Consolas', monospace" font-size="11" font-weight="bold" fill="#facc15" text-anchor="middle">x₁</text>
+
+      <circle cx="182" cy="90" r="5" fill="#facc15"/>
+      <text x="182" y="106" font-family="'Consolas', monospace" font-size="11" font-weight="bold" fill="#facc15" text-anchor="middle">x₂</text>
+
+      <!-- Vertex -->
+      <circle cx="130" cy="125" r="3.5" fill="#38bdf8"/>
+      <text x="130" y="142" font-family="'Cairo', sans-serif" font-size="8.5" fill="#94a3b8" text-anchor="middle">رأس المنحنى</text>
+    </g>
+
+    <!-- Details Box for Case 1 -->
+    <g transform="translate(16, 202)">
+      <rect width="260" height="132" rx="6" fill="#132338" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="20" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#38bdf8">• نوع الجذرين:</text>
+      <text x="12" y="38" font-family="'Cairo', sans-serif" font-size="11" fill="#ffffff">جذران حقيقيان مختلفان (x₁ ≠ x₂).</text>
+      
+      <text x="12" y="60" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#38bdf8">• التقاطع مع محور السينات:</text>
+      <text x="12" y="78" class="txt-body">يقطع المنحنى محور السينات في نقطتين.</text>
+
+      <text x="12" y="100" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#facc15">• بحث إشارة الدالة f(x):</text>
+      <text x="12" y="116" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1">بين الجذرين: عكس إشارة a | خارجهما: مثل إشارة a</text>
+    </g>
+  </g>
+
+  <!-- Case 2: Discriminant = 0 (Center Card) -->
+  <g transform="translate(334, 88)">
+    <rect width="292" height="348" rx="12" fill="#0d1829" stroke="#059669" stroke-width="1.2" filter="url(#mathShadow)"/>
+    <rect x="0" y="0" width="292" height="32" rx="12" fill="#047857"/>
+    <text x="146" y="21" class="case-title">الحالة ٢: المميز يساوي صفراً (Δ = 0)</text>
+
+    <!-- Mini Coordinate Plane with Parabola tangent at 1 point -->
+    <g transform="translate(16, 42)">
+      <rect width="260" height="150" rx="8" fill="#111c38" stroke="#1e3a5f" stroke-width="0.8"/>
+      
+      <!-- Grid Lines -->
+      <line x1="20" y1="100" x2="245" y2="100" stroke="#475569" stroke-width="1.5"/> <!-- X axis -->
+      <polygon points="245,100 238,97 238,103" fill="#475569"/>
+      <text x="248" y="103" class="axis-label">x</text>
+
+      <line x1="130" y1="135" x2="130" y2="15" stroke="#475569" stroke-width="1.5"/> <!-- Y axis -->
+      <polygon points="130,15 127,22 133,22" fill="#475569"/>
+      <text x="135" y="18" class="axis-label">y</text>
+
+      <!-- Parabola tangent to X-axis at vertex -->
+      <path d="M 55 35 Q 130 165 205 35" fill="none" stroke="url(#parabolaGrad2)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Single Tangent Root Dot -->
+      <circle cx="130" cy="100" r="5.5" fill="#34d399"/>
+      <text x="130" y="118" font-family="'Consolas', monospace" font-size="11" font-weight="bold" fill="#34d399" text-anchor="middle">x₁ = x₂</text>
+      <text x="130" y="134" font-family="'Cairo', sans-serif" font-size="8.5" fill="#a7f3d0" text-anchor="middle">نقطة تماس الرأس</text>
+    </g>
+
+    <!-- Details Box for Case 2 -->
+    <g transform="translate(16, 202)">
+      <rect width="260" height="132" rx="6" fill="#132338" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="20" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#34d399">• نوع الجذرين:</text>
+      <text x="12" y="38" font-family="'Cairo', sans-serif" font-size="11" fill="#ffffff">جذران حقيقيان متساويان (جذر وحيد مكرر).</text>
+      
+      <text x="12" y="60" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#34d399">• التقاطع مع محور السينات:</text>
+      <text x="12" y="78" class="txt-body">يمس المنحنى محور السينات عند الرأس x = -b/2a.</text>
+
+      <text x="12" y="100" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#facc15">• بحث إشارة الدالة f(x):</text>
+      <text x="12" y="116" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1">مثل إشارة a لجميع x ∈ ℝ ما عدا عند الجذر f(x) = 0</text>
+    </g>
+  </g>
+
+  <!-- Case 3: Discriminant < 0 (Right Card) -->
+  <g transform="translate(643, 88)">
+    <rect width="292" height="348" rx="12" fill="#0d1829" stroke="#e11d48" stroke-width="1.2" filter="url(#mathShadow)"/>
+    <rect x="0" y="0" width="292" height="32" rx="12" fill="#be123c"/>
+    <text x="146" y="21" class="case-title">الحالة ٣: المميز سالب (Δ &lt; 0)</text>
+
+    <!-- Mini Coordinate Plane with floating parabola -->
+    <g transform="translate(16, 42)">
+      <rect width="260" height="150" rx="8" fill="#111c38" stroke="#1e3a5f" stroke-width="0.8"/>
+      
+      <!-- Grid Lines -->
+      <line x1="20" y1="115" x2="245" y2="115" stroke="#475569" stroke-width="1.5"/> <!-- X axis -->
+      <polygon points="245,115 238,112 238,118" fill="#475569"/>
+      <text x="248" y="118" class="axis-label">x</text>
+
+      <line x1="130" y1="135" x2="130" y2="15" stroke="#475569" stroke-width="1.5"/> <!-- Y axis -->
+      <polygon points="130,15 127,22 133,22" fill="#475569"/>
+      <text x="135" y="18" class="axis-label">y</text>
+
+      <!-- Parabola floating entirely above X-axis -->
+      <path d="M 60 25 Q 130 115 200 25" fill="none" stroke="url(#parabolaGrad3)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Floating vertex indicator -->
+      <circle cx="130" cy="70" r="4" fill="#fb7185"/>
+      <text x="130" y="88" font-family="'Cairo', sans-serif" font-size="8.5" fill="#fda4af" text-anchor="middle">المنحنى لا يقطع محور السينات</text>
+    </g>
+
+    <!-- Details Box for Case 3 -->
+    <g transform="translate(16, 202)">
+      <rect width="260" height="132" rx="6" fill="#132338" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="20" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#fb7185">• نوع الجذرين:</text>
+      <text x="12" y="38" font-family="'Cairo', sans-serif" font-size="11" fill="#ffffff">لا توجد جذور حقيقية (جذران مركبان مترافقان في ℂ).</text>
+      
+      <text x="12" y="60" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#fb7185">• التقاطع مع محور السينات:</text>
+      <text x="12" y="78" class="txt-body">لا يتقاطع المنحنى مع محور السينات نهائياً.</text>
+
+      <text x="12" y="100" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#facc15">• بحث إشارة الدالة f(x):</text>
+      <text x="12" y="116" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1">إشارة الدالة هي نفس إشارة a دائماً لجميع قيم x ∈ ℝ</text>
+    </g>
+  </g>
+
+  <!-- Bottom Panel: Master Formulas and Analytical Toolkit -->
+  <g transform="translate(25, 450)">
+    <rect width="910" height="175" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#mathShadow)"/>
+    <text x="455" y="24" class="sec-title">٤. الدستور العام وقوانين الجبر والتحليل البياني للدوال التربيعية</text>
+
+    <!-- Formula 1: Discriminant & General Formula -->
+    <g transform="translate(18, 36)">
+      <rect width="278" height="126" rx="8" fill="#132338" stroke="#0284c7" stroke-width="1"/>
+      <text x="139" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">المميز والقانون العام لحل المعادلة</text>
+      <line x1="15" y1="28" x2="263" y2="28" stroke="#1e3a5f" stroke-width="1"/>
+
+      <text x="139" y="52" class="math-formula">Δ = b² - 4ac</text>
+      <text x="139" y="82" class="math-formula" fill="#34d399">x = (-b ± √Δ) / 2a</text>
+      <text x="14" y="114" class="txt-body">حيث a معامل x² ، و b معامل x ، و c الحد المطلق.</text>
+    </g>
+
+    <!-- Formula 2: Vertex and Symmetry Axis -->
+    <g transform="translate(316, 36)">
+      <rect width="278" height="126" rx="8" fill="#132338" stroke="#10b981" stroke-width="1"/>
+      <text x="139" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#34d399" text-anchor="middle">إحداثيات رأس المنحنى ومحور التماثل</text>
+      <line x1="15" y1="28" x2="263" y2="28" stroke="#1e3a5f" stroke-width="1"/>
+
+      <text x="14" y="50" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15">• نقطة رأس المنحنى (Vertex):</text>
+      <text x="139" y="70" class="math-formula" fill="#a7f3d0">V = (-b / 2a , f(-b / 2a))</text>
+      
+      <text x="14" y="96" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15">• معادلة خط التماثل:</text>
+      <text x="139" y="116" class="math-formula" fill="#38bdf8">x = -b / 2a</text>
+    </g>
+
+    <!-- Formula 3: Direction & Roots Relations -->
+    <g transform="translate(614, 36)">
+      <rect width="278" height="126" rx="8" fill="#132338" stroke="#8b5cf6" stroke-width="1"/>
+      <text x="139" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#c084fc" text-anchor="middle">اتجاه الفتحة وعلاقة المعاملات بالجذرين</text>
+      <line x1="15" y1="28" x2="263" y2="28" stroke="#1e3a5f" stroke-width="1"/>
+
+      <text x="14" y="48" class="txt-body">• إذا كان <tspan font-weight="bold" fill="#34d399">a &gt; 0</tspan>: المنحنى مفتوح لأعلى (له قيمة صغرى).</text>
+      <text x="14" y="68" class="txt-body">• إذا كان <tspan font-weight="bold" fill="#f87171">a &lt; 0</tspan>: المنحنى مفتوح لأسفل (له قيمة عظمى).</text>
+      
+      <text x="14" y="94" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fef08a">• مجموع الجذرين:</text>
+      <text x="100" y="94" class="math-formula" fill="#ffffff">L + M = -b / a</text>
+
+      <text x="14" y="114" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fef08a">• حاصل ضرب الجذرين:</text>
+      <text x="110" y="114" class="math-formula" fill="#ffffff">L · M = c / a</text>
+    </g>
+  </g>
+</svg>

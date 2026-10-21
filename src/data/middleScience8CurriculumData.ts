@@ -143,8 +143,23 @@ export const MIDDLE_SCIENCE_G8_LECTURES: Lecture[] = [
       {
         titleAr: '2. بنية الجدول الدوري الحديث وفئاته الأربع (s, p, d, f)',
         titleEn: '2. Architecture of the Modern Periodic Table & Four Blocks',
-        contentAr: 'يحتوي الجدول الدوري الحديث على 118 عنصراً مقسمة إلى 7 دورات أفقية و 18 مجموعة رأسية، وينقسم إلى 4 فئات: 1) الفئة s: تقع يسار الجدول وتضم مجموعتين (1A, 2A). 2) الفئة p: تقع يمين الجدول وتضم 6 مجموعات (3A, 4A, 5A, 6A, 7A والمجموعة الصفرية 18). 3) الفئة d: تقع وسط الجدول وتسمى العناصر الانتقالية وتضم 10 مجموعات بالحرف B وتبدأ من الدورة الرابعة. 4) الفئة f: تقع أسفل الجدول وتضم سلسلتي اللانثانيدات والأكتينيدات.',
+        contentAr: `يحتوي الجدول الدوري الحديث على 118 عنصراً مقسمة إلى 7 دورات أفقية و 18 مجموعة رأسية، وينقسم إلى 4 فئات: 1) الفئة s: تقع يسار الجدول وتضم مجموعتين (1A, 2A). 2) الفئة p: تقع يمين الجدول وتضم 6 مجموعات (3A, 4A, 5A, 6A, 7A والمجموعة الصفرية 18). 3) الفئة d: تقع وسط الجدول وتسمى العناصر الانتقالية وتضم 10 مجموعات بالحرف B وتبدأ من الدورة الرابعة. 4) الفئة f: تقع أسفل الجدول وتضم سلسلتي اللانثانيدات والأكتينيدات.
+
+![مخطط بنية الجدول الدوري الحديث وتوزيع الفئات وتدرج الخواص](/curriculum_images/periodic_table_trends_blocks.svg)`,
         contentEn: 'The MPT houses 118 elements arranged into 7 periods and 18 groups across 4 blocks: s-block (left: 1A, 2A), p-block (right: 3A to 7A and 0), d-block (middle transition metals starting period 4 with B suffix), and f-block (bottom lanthanides and actinides).',
+        diagram: {
+          id: 'diagram-sci8-periodic-table-blocks',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط بنية وتدرج خواص الجدول الدوري الحديث',
+          titleEn: 'Modern Periodic Table Blocks & Periodic Trends Diagram',
+          captionAr: 'مخطط علمي معتمد يوضح مواقع الفئات الأربع (s, p, d, f)، وتدرج الحجم الذري والسالبية الكهربية والخواص الفلزية واللافلزية في الدورات والمجموعات.',
+          captionEn: 'Approved scientific schematic detailing four block distribution, atomic radius scaling, electronegativity, and metallic/non-metallic gradients.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/periodic_table_trends_blocks.svg',
+          takeawayFormulaAr: 'في الدورة: يقل الحجم الذري وتزداد السالبية | في المجموعة: يزداد الحجم الذري وتقل السالبية',
+          takeawayFormulaEn: 'Period: Atomic radius decreases, electronegativity rises | Group: Atomic radius increases, electronegativity falls'
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي 2: خريطة فئات الجدول الدوري وتوزيع المجموعات',
           titleEn: 'Worked Example 2: Block Mapping and Group Numbering Schemes',

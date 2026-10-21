@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bioBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07131e"/>
+      <stop offset="50%" stop-color="#0c2231"/>
+      <stop offset="100%" stop-color="#040b12"/>
+    </linearGradient>
+    <linearGradient id="mitoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c2d12"/>
+      <stop offset="50%" stop-color="#9a3412"/>
+      <stop offset="100%" stop-color="#431407"/>
+    </linearGradient>
+    <linearGradient id="atpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+    <filter id="bioShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 21px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 14px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .step-box-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .step-detail { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 9.5px; fill: #e2e8f0; text-anchor: middle; }
+    .txt-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    .badge-atp { font-family: 'Consolas', monospace; font-size: 11.5px; font-weight: bold; fill: #fef08a; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bioBg)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#134e4a" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <rect x="25" y="16" width="910" height="62" rx="10" fill="#0f293d" stroke="#1e3a5f" stroke-width="1.2" filter="url(#bioShadow)"/>
+  <text x="480" y="42" class="title-main">مخطط التنفس الخلوي وإنتاج الطاقة ATP: انشطار الجلوكوز، دورة كربس، وسلسلة نقل الإلكترون</text>
+  <text x="480" y="64" class="subtitle">أحياء الثانوية العامة المعتمدة • مراحل تحلل الجلوكوز بالسيتوسول، مصفوفة وأعراف الميتوكوندريا، وحساب الـ 38 ATP</text>
+
+  <!-- Phase 1: Glycolysis (Cytosol) - Left Card -->
+  <g transform="translate(25, 88)">
+    <rect width="285" height="352" rx="12" fill="#081b29" stroke="#0284c7" stroke-width="1.2" filter="url(#bioShadow)"/>
+    <rect x="0" y="0" width="285" height="32" rx="12" fill="#0369a1"/>
+    <text x="142" y="21" class="sec-title" fill="#ffffff">١. انشطار الجلوكوز (Glycolysis)</text>
+    <text x="142" y="46" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle">المكان: سيتوسول الخلية (لا يتطلب أكسجين O₂)</text>
+
+    <!-- Flowchart nodes -->
+    <g transform="translate(18, 54)">
+      <!-- Glucose 6C -->
+      <rect x="20" y="0" width="210" height="30" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <text x="125" y="20" class="step-box-title">جلوكوز Glucose (6C)</text>
+
+      <line x1="125" y1="30" x2="125" y2="44" stroke="#64748b" stroke-width="2"/>
+      <polygon points="125,44 121,38 129,38" fill="#64748b"/>
+      <!-- Consumes 2 ATP note -->
+      <rect x="180" y="30" width="65" height="18" rx="3" fill="#be123c"/>
+      <text x="212" y="43" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">-2 ATP استهلاك</text>
+
+      <!-- Fructose 1,6-bisphosphate -->
+      <rect x="20" y="46" width="210" height="30" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
+      <text x="125" y="66" class="step-box-title">فركتوز 1، 6 - ثنائي الفوسفات (6C)</text>
+
+      <line x1="125" y1="76" x2="125" y2="90" stroke="#64748b" stroke-width="2"/>
+      <polygon points="125,90 121,84 129,84" fill="#64748b"/>
+
+      <!-- 2 PGAL -->
+      <rect x="20" y="92" width="210" height="30" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+      <text x="125" y="112" class="step-box-title">2 فوسفو جلسرالدهيد (2 PGAL) (3C)</text>
+
+      <line x1="125" y1="122" x2="125" y2="136" stroke="#64748b" stroke-width="2"/>
+      <polygon points="125,136 121,130 129,130" fill="#64748b"/>
+      <!-- Produces 4 ATP + 2 NADH -->
+      <rect x="175" y="122" width="70" height="18" rx="3" fill="#047857"/>
+      <text x="210" y="135" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">+4 ATP + 2NADH</text>
+
+      <!-- 2 Pyruvic acid -->
+      <rect x="20" y="138" width="210" height="32" rx="6" fill="#1e3a5f" stroke="#10b981" stroke-width="1.5"/>
+      <text x="125" y="159" class="step-box-title" fill="#a7f3d0">2 حمض بيروفيك Pyruvate (3C)</text>
+    </g>
+
+    <!-- Phase 1 Net Output box -->
+    <g transform="translate(14, 246)">
+      <rect width="257" height="92" rx="8" fill="#132338" stroke="#38bdf8" stroke-width="1"/>
+      <text x="128" y="18" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15" text-anchor="middle">الحصيلة الصافية لانشطار الجلوكوز:</text>
+      <text x="12" y="38" class="txt-body">• إنتاج مباشر: <tspan fill="#34d399" font-weight="bold">2 ATP</tspan> (4 ناتجة - 2 مستهلكة).</text>
+      <text x="12" y="58" class="txt-body">• مرافقات إنزيمية مختزلة: <tspan fill="#67e8f9" font-weight="bold">2 NADH</tspan>.</text>
+      <text x="12" y="78" font-family="'Cairo', sans-serif" font-size="10" fill="#f87171">• في غياب O₂: يتحول البيروفيك لتخمر (لاكتيك أو كحولي).</text>
+    </g>
+  </g>
+
+  <!-- Phase 2: Krebs Cycle (Mitochondrial Matrix) - Center Card -->
+  <g transform="translate(325, 88)">
+    <rect width="330" height="352" rx="12" fill="#141a29" stroke="#d97706" stroke-width="1.2" filter="url(#bioShadow)"/>
+    <rect x="0" y="0" width="330" height="32" rx="12" fill="#b45309"/>
+    <text x="165" y="21" class="sec-title" fill="#ffffff">٢. دورة كربس (Krebs Citric Acid Cycle)</text>
+    <text x="165" y="46" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fef08a" text-anchor="middle">المكان: مادة الأساس (Matrix) داخل الميتوكوندريا</text>
+
+    <!-- Transition step: Pyruvate to Acetyl-CoA -->
+    <g transform="translate(20, 52)">
+      <rect width="290" height="34" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+      <text x="145" y="16" class="step-box-title">أكسدة البيروفيك ➔ أسيتيل كو-إنزيم أ (2C)</text>
+      <text x="145" y="28" font-family="'Cairo', sans-serif" font-size="9" fill="#fcd34d" text-anchor="middle">خروج 2 CO₂ + إنتاج 2 NADH (لجزيئي البيروفيك)</text>
+    </g>
+
+    <!-- Krebs Cycle Wheel Schematic -->
+    <g transform="translate(165, 172)">
+      <!-- Circle pathway -->
+      <circle cx="0" cy="0" r="62" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,4"/>
+      
+      <!-- Center label -->
+      <circle cx="0" cy="0" r="30" fill="#451a03" stroke="#f59e0b" stroke-width="1.2"/>
+      <text x="0" y="-4" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">دورة كربس</text>
+      <text x="0" y="12" font-family="'Cairo', sans-serif" font-size="8.5" fill="#fcd34d" text-anchor="middle">(دورتان/جلوكوز)</text>
+
+      <!-- Intermediates around circle -->
+      <!-- Citric Acid (6C) top -->
+      <rect x="-48" y="-80" width="96" height="20" rx="4" fill="#047857"/>
+      <text x="0" y="-66" font-family="'Cairo', sans-serif" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle">حمض الستريك (6C)</text>
+
+      <!-- Ketoglutaric (5C) right -->
+      <rect x="25" y="-12" width="96" height="20" rx="4" fill="#1e3a5f"/>
+      <text x="73" y="2" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">كيتوجلوتاريك (5C)</text>
+
+      <!-- Succinic (4C) bottom -->
+      <rect x="-48" y="62" width="96" height="20" rx="4" fill="#1e3a5f"/>
+      <text x="0" y="76" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">حمض السكسينيك (4C)</text>
+
+      <!-- Oxaloacetic (4C) left -->
+      <rect x="-120" y="-12" width="96" height="20" rx="4" fill="#1e3a5f"/>
+      <text x="-72" y="2" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">أوكسالوأسيتيك (4C)</text>
+    </g>
+
+    <!-- Phase 2 Net Output Box -->
+    <g transform="translate(15, 268)">
+      <rect width="300" height="72" rx="8" fill="#1f1812" stroke="#d97706" stroke-width="1"/>
+      <text x="150" y="18" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15" text-anchor="middle">حصيلة دورتي كربس لجزيء جلوكوز كامل:</text>
+      <text x="12" y="38" class="txt-body">• طاقة مباشرة: <tspan fill="#34d399" font-weight="bold">2 ATP</tspan> | فضلات: <tspan fill="#f87171">4 CO₂</tspan></text>
+      <text x="12" y="58" class="txt-body">• مرافقات عالية الطاقة: <tspan fill="#67e8f9" font-weight="bold">6 NADH</tspan> + <tspan fill="#f472b6" font-weight="bold">2 FADH₂</tspan></text>
+    </g>
+  </g>
+
+  <!-- Phase 3: Electron Transport Chain (Cristae) - Right Card -->
+  <g transform="translate(670, 88)">
+    <rect width="265" height="352" rx="12" fill="#0c1e24" stroke="#10b981" stroke-width="1.2" filter="url(#bioShadow)"/>
+    <rect x="0" y="0" width="265" height="32" rx="12" fill="#047857"/>
+    <text x="132" y="21" class="sec-title" fill="#ffffff">٣. سلسلة نقل الإلكترون والفسفرة</text>
+    <text x="132" y="46" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#a7f3d0" text-anchor="middle">المكان: الأعراف (Cristae) بغشاء الميتوكوندريا</text>
+
+    <!-- Cytochrome cascade visual -->
+    <g transform="translate(14, 56)">
+      <rect width="237" height="175" rx="8" fill="#0f291e" stroke="#059669" stroke-width="0.8"/>
+      <text x="118" y="18" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#34d399" text-anchor="middle">حوامل الإلكترونات (السيتوكرومات)</text>
+      
+      <!-- Cytochromes ladder -->
+      <g transform="translate(20, 28)">
+        <circle cx="20" cy="20" r="16" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+        <text x="20" y="24" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">NADH</text>
+        
+        <path d="M 40 20 L 70 45 L 110 45 L 140 70" fill="none" stroke="#facc15" stroke-width="2" stroke-dasharray="3,3"/>
+
+        <circle cx="85" cy="45" r="15" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+        <text x="85" y="49" font-family="'Cairo', sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">Cyt b,c</text>
+
+        <circle cx="150" cy="70" r="16" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+        <text x="150" y="74" font-family="'Cairo', sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">Cyt a,a3</text>
+      </g>
+
+      <!-- Terminal Acceptor O2 -->
+      <rect x="25" y="125" width="187" height="38" rx="6" fill="#1e3a5f" stroke="#38bdf8" stroke-width="1"/>
+      <text x="118" y="141" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#f87171" text-anchor="middle">المستقبل النهائي للإلكترونات: O₂</text>
+      <text x="118" y="155" font-family="'Consolas', monospace" font-size="9" fill="#ffffff" text-anchor="middle">½ O₂ + 2H⁺ + 2e⁻ ➔ H₂O (ماء)</text>
+    </g>
+
+    <!-- Phase 3 Output Box -->
+    <g transform="translate(14, 246)">
+      <rect width="237" height="92" rx="8" fill="#082f1b" stroke="#10b981" stroke-width="1"/>
+      <text x="118" y="18" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fef08a" text-anchor="middle">تحويل المرافقات لطاقة ATP:</text>
+      <text x="10" y="38" class="txt-body">• كل 1 NADH يعطي: <tspan fill="#34d399" font-weight="bold">3 ATP</tspan></text>
+      <text x="10" y="58" class="txt-body">• كل 1 FADH₂ يعطي: <tspan fill="#f472b6" font-weight="bold">2 ATP</tspan></text>
+      <text x="10" y="78" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#67e8f9">إنتاج السلسلة = 34 ATP</text>
+    </g>
+  </g>
+
+  <!-- Bottom Panel: Master ATP Balance Sheet (38 ATP Accounting Table) -->
+  <g transform="translate(25, 450)">
+    <rect width="910" height="175" rx="12" fill="#0c1829" stroke="#334155" stroke-width="1" filter="url(#bioShadow)"/>
+    <text x="455" y="24" class="sec-title">٤. جدول الميزانية الكلية لإنتاج الطاقة (Total 38 ATP Balance Sheet per Glucose)</text>
+
+    <!-- Table Header -->
+    <rect x="20" y="36" width="870" height="24" rx="4" fill="#1e293b"/>
+    <text x="120" y="52" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#94a3b8" text-anchor="middle">المرحلة الحيوية</text>
+    <text x="320" y="52" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#94a3b8" text-anchor="middle">المكان داخل الخلية</text>
+    <text x="500" y="52" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#94a3b8" text-anchor="middle">ATP مباشر</text>
+    <text x="680" y="52" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#94a3b8" text-anchor="middle">المرافقات المختزلة</text>
+    <text x="830" y="52" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#38bdf8" text-anchor="middle">المكافئ الإجمالي</text>
+
+    <!-- Row 1: Glycolysis -->
+    <line x1="20" y1="62" x2="890" y2="62" stroke="#334155" stroke-width="0.8"/>
+    <text x="120" y="78" font-family="'Cairo', sans-serif" font-size="10.5" fill="#ffffff" text-anchor="middle">١. انشطار الجلوكوز</text>
+    <text x="320" y="78" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">السيتوسول (Cytosol)</text>
+    <text x="500" y="78" font-family="'Consolas', monospace" font-size="11" font-weight="bold" fill="#34d399" text-anchor="middle">2 ATP</text>
+    <text x="680" y="78" font-family="'Consolas', monospace" font-size="11" fill="#67e8f9" text-anchor="middle">2 NADH (×3 = 6 ATP)</text>
+    <text x="830" y="78" font-family="'Consolas', monospace" font-size="11.5" font-weight="bold" fill="#facc15" text-anchor="middle">8 ATP</text>
+
+    <!-- Row 2: Pyruvate to Acetyl -->
+    <line x1="20" y1="88" x2="890" y2="88" stroke="#334155" stroke-width="0.8"/>
+    <text x="120" y="104" font-family="'Cairo', sans-serif" font-size="10.5" fill="#ffffff" text-anchor="middle">٢. أكسدة البيروفيك لأسيتيل</text>
+    <text x="320" y="104" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">عبور غشاء الميتوكوندريا</text>
+    <text x="500" y="104" font-family="'Consolas', monospace" font-size="11" fill="#64748b" text-anchor="middle">0 ATP</text>
+    <text x="680" y="104" font-family="'Consolas', monospace" font-size="11" fill="#67e8f9" text-anchor="middle">2 NADH (×3 = 6 ATP)</text>
+    <text x="830" y="104" font-family="'Consolas', monospace" font-size="11.5" font-weight="bold" fill="#facc15" text-anchor="middle">6 ATP</text>
+
+    <!-- Row 3: Krebs Cycle -->
+    <line x1="20" y1="114" x2="890" y2="114" stroke="#334155" stroke-width="0.8"/>
+    <text x="120" y="130" font-family="'Cairo', sans-serif" font-size="10.5" fill="#ffffff" text-anchor="middle">٣. دورتا كربس (Krebs)</text>
+    <text x="320" y="130" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">مادة الأساس بالميتوكوندريا</text>
+    <text x="500" y="130" font-family="'Consolas', monospace" font-size="11" font-weight="bold" fill="#34d399" text-anchor="middle">2 ATP</text>
+    <text x="680" y="130" font-family="'Consolas', monospace" font-size="10" fill="#f472b6" text-anchor="middle">6 NADH (18 ATP) + 2 FADH₂ (4 ATP)</text>
+    <text x="830" y="130" font-family="'Consolas', monospace" font-size="11.5" font-weight="bold" fill="#facc15" text-anchor="middle">24 ATP</text>
+
+    <!-- Total Banner -->
+    <rect x="20" y="140" width="870" height="26" rx="5" fill="#047857"/>
+    <text x="250" y="158" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">المجموع الإجمالي للتنفس الهوائي الكامل لجزيء جلوكوز واحد:</text>
+    <text x="750" y="158" font-family="'Consolas', monospace" font-size="15" font-weight="bold" fill="#fef08a" text-anchor="middle">38 ATP (صافي الطاقة الكلية)</text>
+  </g>
+</svg>

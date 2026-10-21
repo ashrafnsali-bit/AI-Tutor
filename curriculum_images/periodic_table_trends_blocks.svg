@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1128"/>
+      <stop offset="50%" stop-color="#101c3d"/>
+      <stop offset="100%" stop-color="#060b1c"/>
+    </linearGradient>
+    <linearGradient id="sBlockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="dBlockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="pBlockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="fBlockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 21px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .sec-title { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 14.5px; font-weight: 700; fill: #38bdf8; text-anchor: middle; }
+    .block-label { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .block-sub { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 10px; fill: rgba(255,255,255,0.85); text-anchor: middle; }
+    .txt-body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11.5px; fill: #cbd5e1; }
+    .txt-accent { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 11.5px; font-weight: bold; fill: #38bdf8; }
+    .trend-head { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; font-size: 12.5px; font-weight: 800; text-anchor: middle; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="640" rx="16" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="944" height="624" rx="14" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <rect x="25" y="16" width="910" height="62" rx="10" fill="#132338" stroke="#334155" stroke-width="1.2" filter="url(#cardShadow)"/>
+  <text x="480" y="42" class="title-main">مخطط الجدول الدوري الحديث وفئاته الأربع وتدرج الخواص الدورية</text>
+  <text x="480" y="64" class="subtitle">العلوم والكيمياء المعتمدة • الفئات s, p, d, f • تدرج الحجم الذري، السالبية الكهربية، والخواص الفلزية واللافلزية</text>
+
+  <!-- Left/Center Panel: Modern Periodic Table Architecture -->
+  <g transform="translate(25, 88)">
+    <rect width="580" height="352" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#cardShadow)"/>
+    <text x="290" y="24" class="sec-title">١. هيكل الجدول الدوري الحديث (118 عنصراً • 7 دورات • 18 مجموعة)</text>
+
+    <!-- Period numbers label on left -->
+    <text x="18" y="65" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د١</text>
+    <text x="18" y="95" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د٢</text>
+    <text x="18" y="125" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د٣</text>
+    <text x="18" y="155" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د٤</text>
+    <text x="18" y="185" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د٥</text>
+    <text x="18" y="215" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د٦</text>
+    <text x="18" y="245" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#64748b">د٧</text>
+
+    <!-- s-block (Left: Group 1A, 2A) -->
+    <g transform="translate(38, 48)">
+      <rect width="84" height="206" rx="8" fill="url(#sBlockGrad)" opacity="0.9" stroke="#34d399" stroke-width="1.2"/>
+      <text x="42" y="26" class="block-label">الفئة s</text>
+      <text x="42" y="44" class="block-sub">يسار الجدول</text>
+      <line x1="12" y1="52" x2="72" y2="52" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="42" y="70" class="block-sub">مجموعتان:</text>
+      <text x="42" y="90" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">1A (1)</text>
+      <text x="42" y="104" font-family="'Cairo', sans-serif" font-size="9" fill="#d1fae5" text-anchor="middle">الأقلاء</text>
+      <text x="42" y="128" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">2A (2)</text>
+      <text x="42" y="142" font-family="'Cairo', sans-serif" font-size="9" fill="#d1fae5" text-anchor="middle">الأقلاء الأرضية</text>
+      <rect x="8" y="162" width="68" height="34" rx="4" fill="rgba(0,0,0,0.25)"/>
+      <text x="42" y="177" font-family="'Cairo', sans-serif" font-size="9" font-weight="bold" fill="#fef08a" text-anchor="middle">أقوى الفلزات</text>
+      <text x="42" y="190" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">السيزيوم (Cs)</text>
+    </g>
+
+    <!-- d-block (Center: Transition elements) -->
+    <g transform="translate(130, 138)">
+      <rect width="250" height="116" rx="8" fill="url(#dBlockGrad)" opacity="0.9" stroke="#fbbf24" stroke-width="1.2"/>
+      <text x="125" y="24" class="block-label">الفئة d (العناصر الانتقالية الرئيسية)</text>
+      <text x="125" y="42" class="block-sub">وسط الجدول • تفصل بين الفئتين s و p</text>
+      <line x1="20" y1="50" x2="230" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="125" y="68" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">10 مجموعات رأسية (تبدأ من الدورة 4)</text>
+      <text x="125" y="86" font-family="'Cairo', sans-serif" font-size="10" fill="#fef3c7" text-anchor="middle">تتميز بالحرف B (3B إلى 2B والمجموعة 8)</text>
+      <text x="125" y="104" font-family="'Cairo', sans-serif" font-size="9.5" fill="#ffffff" text-anchor="middle">أمثلة: الحديد (Fe)، النحاس (Cu)، الذهب (Au)</text>
+    </g>
+
+    <!-- p-block (Right: 3A to 7A and 0) -->
+    <g transform="translate(388, 48)">
+      <rect width="176" height="206" rx="8" fill="url(#pBlockGrad)" opacity="0.9" stroke="#a78bfa" stroke-width="1.2"/>
+      <text x="88" y="26" class="block-label">الفئة p</text>
+      <text x="88" y="44" class="block-sub">يمين الجدول (6 مجموعات)</text>
+      <line x1="15" y1="52" x2="161" y2="52" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <text x="88" y="70" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#ffffff" text-anchor="middle">3A, 4A, 5A, 6A, 7A, والمجموعة 0 (18)</text>
+      
+      <!-- Mini columns representation -->
+      <g transform="translate(10, 82)">
+        <rect width="74" height="66" rx="5" fill="rgba(0,0,0,0.3)"/>
+        <text x="37" y="18" font-family="'Cairo', sans-serif" font-size="9.5" font-weight="bold" fill="#fcd34d" text-anchor="middle">7A (17)</text>
+        <text x="37" y="32" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">الهالوجينات</text>
+        <text x="37" y="48" font-family="'Cairo', sans-serif" font-size="8" fill="#fef08a" text-anchor="middle">أقوى اللافلزات</text>
+        <text x="37" y="60" font-family="'Cairo', sans-serif" font-size="8" font-weight="bold" fill="#67e8f9" text-anchor="middle">الفلور (F)</text>
+      </g>
+      <g transform="translate(90, 82)">
+        <rect width="74" height="66" rx="5" fill="rgba(0,0,0,0.3)"/>
+        <text x="37" y="18" font-family="'Cairo', sans-serif" font-size="9.5" font-weight="bold" fill="#67e8f9" text-anchor="middle">المجموعة 0 (18)</text>
+        <text x="37" y="32" font-family="'Cairo', sans-serif" font-size="8.5" fill="#ffffff" text-anchor="middle">الغازات الخاملة</text>
+        <text x="37" y="48" font-family="'Cairo', sans-serif" font-size="8" fill="#e2e8f0" text-anchor="middle">مكتملة التكافؤ</text>
+        <text x="37" y="60" font-family="'Cairo', sans-serif" font-size="8" font-weight="bold" fill="#cbd5e1" text-anchor="middle">He, Ne, Ar...</text>
+      </g>
+      <rect x="10" y="156" width="154" height="40" rx="5" fill="rgba(0,0,0,0.25)"/>
+      <text x="87" y="172" font-family="'Cairo', sans-serif" font-size="9" fill="#f5d0fe" text-anchor="middle">تضم: فلزات، أشباه فلزات (B, Si, Ge)،</text>
+      <text x="87" y="188" font-family="'Cairo', sans-serif" font-size="9" fill="#f5d0fe" text-anchor="middle">ولافلزات (C, N, O, F) والغازات النبيلة</text>
+    </g>
+
+    <!-- f-block (Bottom: Lanthanides & Actinides) -->
+    <g transform="translate(130, 268)">
+      <rect width="360" height="70" rx="8" fill="url(#fBlockGrad)" opacity="0.9" stroke="#fda4af" stroke-width="1.2"/>
+      <text x="180" y="20" class="block-label">الفئة f (العناصر الانتقالية الداخلية)</text>
+      <text x="180" y="36" class="block-sub">موقعها أسفل الجدول الدوري لمنع اتساعه الشديد</text>
+      <rect x="15" y="44" width="160" height="20" rx="4" fill="rgba(0,0,0,0.25)"/>
+      <text x="95" y="58" font-family="'Cairo', sans-serif" font-size="9.5" font-weight="bold" fill="#ffffff" text-anchor="middle">سلسلة اللانثانيدات (الدورة 6)</text>
+      <rect x="185" y="44" width="160" height="20" rx="4" fill="rgba(0,0,0,0.25)"/>
+      <text x="265" y="58" font-family="'Cairo', sans-serif" font-size="9.5" font-weight="bold" fill="#ffffff" text-anchor="middle">سلسلة الأكتينيدات (الدورة 7)</text>
+    </g>
+  </g>
+
+  <!-- Right Panel: Rules for Determining Position & Comparison -->
+  <g transform="translate(615, 88)">
+    <rect width="320" height="352" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#cardShadow)"/>
+    <text x="160" y="24" class="sec-title">٢. القواعد الذهبية لتحديد موقع العنصر</text>
+
+    <!-- Rule 1 Box -->
+    <g transform="translate(14, 38)">
+      <rect width="292" height="66" rx="7" fill="#132338" stroke="#38bdf8" stroke-width="1"/>
+      <circle cx="20" cy="18" r="10" fill="#0284c7"/>
+      <text x="20" y="22" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">١</text>
+      <text x="38" y="22" class="txt-accent">رقم الدورة الأفقية =</text>
+      <text x="14" y="42" class="txt-body">عدد مستويات الطاقة الرئيسية المشغولة بالإلكترونات.</text>
+      <text x="14" y="58" font-family="'Cairo', sans-serif" font-size="10.5" fill="#94a3b8">مثال: عنصر الكالسيوم Ca (20) توزيعه: 2, 8, 8, 2 ➔ الدورة 4</text>
+    </g>
+
+    <!-- Rule 2 Box -->
+    <g transform="translate(14, 112)">
+      <rect width="292" height="66" rx="7" fill="#132338" stroke="#10b981" stroke-width="1"/>
+      <circle cx="20" cy="18" r="10" fill="#059669"/>
+      <text x="20" y="22" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">٢</text>
+      <text x="38" y="22" font-family="'Cairo', sans-serif" font-size="11.5" font-weight="bold" fill="#34d399">رقم المجموعة الرأسية =</text>
+      <text x="14" y="42" class="txt-body">عدد إلكترونات مستوى الطاقة الخارجي (غلاف التكافؤ).</text>
+      <text x="14" y="58" font-family="'Cairo', sans-serif" font-size="10.5" fill="#94a3b8">مثال: الكالسيوم لديه 2 إلكترون خارجي ➔ المجموعة 2A (2)</text>
+    </g>
+
+    <!-- Historical comparison milestone -->
+    <g transform="translate(14, 186)">
+      <rect width="292" height="152" rx="7" fill="#111c38" stroke="#475569" stroke-width="0.9"/>
+      <text x="146" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#facc15" text-anchor="middle">التطور التاريخي للتصنيف الدوري</text>
+      
+      <line x1="14" y1="28" x2="278" y2="28" stroke="#334155" stroke-width="1"/>
+      
+      <text x="14" y="46" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">• جدول مندليف (1869):</text>
+      <text x="14" y="62" class="txt-body">رتب 67 عنصراً تصاعدياً حسب الوزن الذري مع ترك فراغات.</text>
+
+      <text x="14" y="84" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#f59e0b">• جدول موزلي (1913):</text>
+      <text x="14" y="100" class="txt-body">رتب العناصر تصاعدياً حسب العدد الذري (أشعة رنتجن السينية).</text>
+
+      <text x="14" y="122" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#a78bfa">• الجدول الدوري الحديث:</text>
+      <text x="14" y="138" class="txt-body">العدد الذري + طريقة ملء مستويات الطاقة الفرعية بالبناء التصاعدي.</text>
+    </g>
+  </g>
+
+  <!-- Bottom Panel: Comprehensive Periodic Trends (3 Core Vectors) -->
+  <g transform="translate(25, 450)">
+    <rect width="910" height="175" rx="12" fill="#0d1829" stroke="#334155" stroke-width="1" filter="url(#cardShadow)"/>
+    <text x="455" y="24" class="sec-title">٣. التدرج الدوري للخواص الكيميائية والفيزيائية عبر الدورات والمجموعات</text>
+
+    <!-- Trend 1: Atomic Size / Radius -->
+    <g transform="translate(18, 36)">
+      <rect width="278" height="126" rx="8" fill="#132338" stroke="#0284c7" stroke-width="1.2"/>
+      <rect x="0" y="0" width="278" height="28" rx="8" fill="#0369a1"/>
+      <text x="139" y="19" class="trend-head" fill="#ffffff">١) الحجم الذري (Atomic Radius)</text>
+      
+      <text x="12" y="48" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">في الدورة (يسار ➔ يمين):</text>
+      <text x="12" y="64" class="txt-body">يقل الحجم الذري 📉 (لزيادة شحنة النواة الموجبة الفعالة وجذبها لإلكترونات التكافؤ).</text>
+      
+      <text x="12" y="88" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">في المجموعة (أعلى ➔ أسفل):</text>
+      <text x="12" y="104" class="txt-body">يزداد الحجم الذري 📈 (لزيادة عدد مستويات الطاقة الرئيسية المشغولة بالإلكترونات).</text>
+      <text x="12" y="119" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#facc15">أكبر العناصر حجماً: Cs | أصغرها: F</text>
+    </g>
+
+    <!-- Trend 2: Electronegativity -->
+    <g transform="translate(316, 36)">
+      <rect width="278" height="126" rx="8" fill="#132338" stroke="#d97706" stroke-width="1.2"/>
+      <rect x="0" y="0" width="278" height="28" rx="8" fill="#b45309"/>
+      <text x="139" y="19" class="trend-head" fill="#ffffff">٢) السالبية الكهربية (Electronegativity)</text>
+      
+      <text x="12" y="48" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15">في الدورة (يسار ➔ يمين):</text>
+      <text x="12" y="64" class="txt-body">تزداد السالبية وطاقة التأين 📈 لصغر الحجم وقوة جذب النواة لإلكترونات الرابطة.</text>
+      
+      <text x="12" y="88" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#facc15">في المجموعة (أعلى ➔ أسفل):</text>
+      <text x="12" y="104" class="txt-body">تقل السالبية الكهربية 📉 لكبر الحجم الذري وحجب مستويات الطاقة الداخلية للشحنة.</text>
+      <text x="12" y="119" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#67e8f9">أعلى العناصر سالبية: الفلور F (4.0)</text>
+    </g>
+
+    <!-- Trend 3: Metallic vs Non-Metallic -->
+    <g transform="translate(614, 36)">
+      <rect width="278" height="126" rx="8" fill="#132338" stroke="#7c3aed" stroke-width="1.2"/>
+      <rect x="0" y="0" width="278" height="28" rx="8" fill="#6d28d9"/>
+      <text x="139" y="19" class="trend-head" fill="#ffffff">٣) الخواص الفلزية واللافلزية</text>
+      
+      <text x="12" y="48" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#c084fc">تبدأ كل دورة بفلز قوي جداً:</text>
+      <text x="12" y="64" class="txt-body">ثم تقل الفلزية حتى نصل إلى شبه فلز، ثم تبدأ لافلزات تزداد قوتها تدريجياً.</text>
+      
+      <text x="12" y="88" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#c084fc">تنتهي الدورة بـ:</text>
+      <text x="12" y="104" class="txt-body">أقوى اللافلزات (مجموعة 7A الهالوجينات) ثم يليه غاز خامل تماماً (المجموعة 0).</text>
+      <text x="12" y="119" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#34d399">القاعدة: الفلزية عكس اللافلزية تماماً</text>
+    </g>
+  </g>
+</svg>

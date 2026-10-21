@@ -91,8 +91,31 @@ export const HIGH_PHYSICS_G11_LECTURES: Lecture[] = [
       {
         titleAr: '1. الحركة الموجية وقانون انتشار الأمواج',
         titleEn: '1. Wave Motion & Wave Speed Equation',
-        contentAr: '1) خصائص الموجة:\n- التردد ($\\nu$): عدد الاهتزازات الكاملة في الثانية الواحدة ($\\nu = \\frac{N}{t} = \\frac{1}{T}$). وحدة القياس: هرتز ($Hz$).\n- الطول الموجي ($\\lambda$): المسافة بين قمتين متتاليتين في الموجة المستعرضة، أو تضاغطين متتاليين في الطولية.\n- قانون سرعة انتشار الموجة: $v = \\nu \\cdot \\lambda$.\n\n2) انتقال الموجة بين وسطين:\n- التردد يظل ثابتاً لأنه يعتمد على المصدر: $\\frac{v_1}{v_2} = \\frac{\\lambda_1}{\\lambda_2}$.\n- مثال: شوكة رنانة ترددها $440\\text{ Hz}$ تصدر صوتاً طوله الموجي $0.75\\text{ m}$ في الهواء، احسب سرعة الصوت:\n  $v = \\nu \\cdot \\lambda = 440 \\times 0.75 = 330\\text{ m/s}$.',
-        contentEn: 'Wave velocity v = νλ. Frequency remains invariant across medium transitions while wavelength scales with phase velocity.'
+        contentAr: `1) خصائص الموجة:
+- التردد ($\\nu$): عدد الاهتزازات الكاملة في الثانية الواحدة ($\\nu = \\frac{N}{t} = \\frac{1}{T}$). وحدة القياس: هرتز ($Hz$).
+- الطول الموجي ($\\lambda$): المسافة بين قمتين متتاليتين في الموجة المستعرضة، أو تضاغطين متتاليين في الطولية.
+- قانون سرعة انتشار الموجة: $v = \\nu \\cdot \\lambda$.
+
+2) انتقال الموجة بين وسطين:
+- التردد يظل ثابتاً لأنه يعتمد على المصدر: $\\frac{v_1}{v_2} = \\frac{\\lambda_1}{\\lambda_2}$.
+- مثال: شوكة رنانة ترددها $440\\text{ Hz}$ تصدر صوتاً طوله الموجي $0.75\\text{ m}$ في الهواء، احسب سرعة الصوت:
+  $v = \\nu \\cdot \\lambda = 440 \\times 0.75 = 330\\text{ m/s}$.
+
+![مخطط خصائص الحركة الموجية: مقارنة الموجات المستعرضة والطولية وقانون انتشار الأمواج](/curriculum_images/wave_motion_transverse_longitudinal.svg)`,
+        contentEn: 'Wave velocity v = νλ. Frequency remains invariant across medium transitions while wavelength scales with phase velocity. Transverse waves oscillate perpendicularly with crests and troughs; longitudinal waves oscillate parallel with compressions and rarefactions.',
+        diagram: {
+          id: 'diagram-phy11-wave-motion',
+          figureNumberAr: 'شكل توضيحي (١-٠)',
+          figureNumberEn: 'Figure (1-0)',
+          titleAr: 'مخطط الحركة الموجية والأمواج المستعرضة والطولية',
+          titleEn: 'Wave Motion, Transverse & Longitudinal Characteristics Diagram',
+          captionAr: 'رسم بياني وتخطيطي معتمد يوضح عناصر الموجة المستعرضة (سعة الموجة A، الطول الموجي λ، قمة وقاع) والموجة الطولية (تضاغطات وتخلخلات) ومثلث قانون سرعة الموجات v = λ × ν.',
+          captionEn: 'Standard physics diagram detailing transverse wave anatomy (amplitude, crest, trough, wavelength) versus longitudinal wave compressions and rarefactions, with the wave speed triangle.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/wave_motion_transverse_longitudinal.svg',
+          takeawayFormulaAr: 'v = λ · ν | T = 1/ν | الموجة المستعرضة: قمم وقيعان | الموجة الطولية: تضاغطات وتخلخلات',
+          takeawayFormulaEn: 'v = λ · ν | T = 1/ν | Transverse: crests & troughs | Longitudinal: compressions & rarefactions'
+        }
       },
       {
         titleAr: '2. انكسار الضوء، الزاوية الحرجة، والانعكاس الكلي',
