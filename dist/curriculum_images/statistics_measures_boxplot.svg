@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#070b14"/>
+    </linearGradient>
+
+    <!-- Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="620" fill="url(#bgGrad)" rx="16"/>
+  <rect width="916" height="616" x="2" y="2" fill="none" stroke="#334155" stroke-width="1.5" rx="15" opacity="0.6"/>
+
+  <!-- Top Title -->
+  <g transform="translate(460, 48)" text-anchor="middle">
+    <rect x="-350" y="-22" width="700" height="46" rx="23" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#shadowFilter)"/>
+    <text y="8" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="19" font-weight="bold" fill="#f8fafc">
+      📈 الإحصاء: مقاييس النزعة المركزية (الوسط، الوسيط، المنوال) ومخطط الصندوق
+    </text>
+  </g>
+
+  <!-- Top Left: Measures of Center (مقاييس النزعة المركزية) -->
+  <g transform="translate(30, 90)">
+    <rect width="415" height="235" rx="12" fill="url(#cardGrad)" stroke="#6366f1" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 403,0 Q 415,0 415,12 L 415,38 L 0,38 Z" fill="#4338ca" opacity="0.85"/>
+    <text x="207" y="24" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#e0e7ff" text-anchor="middle">
+      1. مقاييس النزعة المركزية والمدى (Measures of Center)
+    </text>
+
+    <!-- 3 Core Measures + Range Grid -->
+    <g transform="translate(14, 48)">
+      <!-- 1. Mean (الوسط الحسابي) -->
+      <g transform="translate(0, 0)">
+        <rect width="188" height="82" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+        <text x="176" y="22" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="end">الوسط الحسابي (Mean):</text>
+        <text x="176" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">مجموع القيم ÷ عددها</text>
+        <text x="176" y="58" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">(4+6+8+10+12) ÷ 5 =</text>
+        <text x="176" y="74" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="end">الوسط = 8</text>
+      </g>
+
+      <!-- 2. Median (الوسيط) -->
+      <g transform="translate(198, 0)">
+        <rect width="188" height="82" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+        <text x="176" y="22" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#34d399" text-anchor="end">الوسيط (Median):</text>
+        <text x="176" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">العدد الأوسط بعد الترتيب!</text>
+        <text x="176" y="58" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">3، 5، [7]، 9، 11</text>
+        <text x="176" y="74" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="end">الوسيط = 7</text>
+      </g>
+
+      <!-- 3. Mode (المنوال) -->
+      <g transform="translate(0, 92)">
+        <rect width="188" height="82" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1"/>
+        <text x="176" y="22" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#c084fc" text-anchor="end">المنوال (Mode):</text>
+        <text x="176" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">القيمة الأكثر تكراراً وشيوعاً</text>
+        <text x="176" y="58" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">{3، 7، 7، 8، 9}</text>
+        <text x="176" y="74" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="end">المنوال = 7</text>
+      </g>
+
+      <!-- 4. Range (المدى) -->
+      <g transform="translate(198, 92)">
+        <rect width="188" height="82" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1"/>
+        <text x="176" y="22" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fda4af" text-anchor="end">المدى (Range):</text>
+        <text x="176" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">أكبر قيمة - أصغر قيمة</text>
+        <text x="176" y="58" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">يقيس تشتت وتباعد البيانات</text>
+        <text x="176" y="74" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="end">المدى = 12 - 4 = 8</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Top Right: Outliers & Robustness (القيم المتطرفة وتأثيرها) -->
+  <g transform="translate(475, 90)">
+    <rect width="415" height="235" rx="12" fill="url(#cardGrad)" stroke="#f43f5e" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 403,0 Q 415,0 415,12 L 415,38 L 0,38 Z" fill="#9f1239" opacity="0.85"/>
+    <text x="207" y="24" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#ffe4e6" text-anchor="middle">
+      2. القيم المتطرفة (Outliers) وتأثيرها على المقاييس
+    </text>
+
+    <!-- Visual Dot Plot showing Outlier -->
+    <g transform="translate(20, 52)">
+      <rect width="375" height="70" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      
+      <!-- Axis line -->
+      <line x1="25" y1="45" x2="350" y2="45" stroke="#64748b" stroke-width="2"/>
+      
+      <!-- Cluster dots -->
+      <circle cx="50" cy="35" r="5" fill="#38bdf8"/>
+      <circle cx="65" cy="35" r="5" fill="#38bdf8"/>
+      <circle cx="70" cy="22" r="5" fill="#38bdf8"/>
+      <circle cx="80" cy="35" r="5" fill="#38bdf8"/>
+      <text x="65" y="60" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">تجمع البيانات (15-18)</text>
+
+      <!-- Outlier dot -->
+      <circle cx="320" cy="35" r="7" fill="#f43f5e"/>
+      <text x="320" y="20" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#f43f5e" text-anchor="middle">50 ⭐</text>
+      <text x="320" y="60" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fda4af" text-anchor="middle">قيمة متطرفة</text>
+    </g>
+
+    <!-- Comparison Table of Impact -->
+    <g transform="translate(20, 132)">
+      <rect width="375" height="90" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      
+      <text x="360" y="24" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fde68a" text-anchor="end">⚠️ تأثير القيمة المتطرفة (50) على البيانات {15, 16, 17, 18, 50}:</text>
+
+      <g transform="translate(10, 32)">
+        <text x="350" y="18" font-family="'Cairo', sans-serif" font-size="11" fill="#f8fafc" text-anchor="end">
+          • <tspan font-weight="bold" fill="#f43f5e">الوسط الحسابي يتأثر بشدة:</tspan> يرتفع إلى 23.2 (وهو غير معبر عن الأغلبية).
+        </text>
+        <text x="350" y="38" font-family="'Cairo', sans-serif" font-size="11" fill="#f8fafc" text-anchor="end">
+          • <tspan font-weight="bold" fill="#34d399">الوسيط لا يتأثر (مقاوم):</tspan> يظل 17 (وهو الأفضل لوصف البيانات).
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom: Five-Number Summary & Box Plot (ملخص الأعداد الخمسة ومخطط الصندوق) -->
+  <g transform="translate(30, 340)">
+    <rect width="860" height="205" rx="12" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 848,0 Q 860,0 860,12 L 860,38 L 0,38 Z" fill="#065f46" opacity="0.85"/>
+    <text x="430" y="24" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#d1fae5" text-anchor="middle">
+      3. مخطط الصندوق ذو العارضتين (Box Plot) وملخص الأعداد الخمسة
+    </text>
+
+    <!-- Vector Box Plot Diagram -->
+    <g transform="translate(60, 115)">
+      <!-- Number Line Axis -->
+      <line x1="20" y1="45" x2="720" y2="45" stroke="#64748b" stroke-width="2"/>
+      
+      <!-- Axis Tick Marks & Labels -->
+      <g font-family="'Segoe UI', sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+        <line x1="60" y1="42" x2="60" y2="48" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="60" y="62">10</text>
+
+        <line x1="200" y1="42" x2="200" y2="48" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="200" y="62">20 (Q1)</text>
+
+        <line x1="380" y1="42" x2="380" y2="48" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="380" y="62">30 (Q2)</text>
+
+        <line x1="560" y1="42" x2="560" y2="48" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="560" y="62">40 (Q3)</text>
+
+        <line x1="680" y1="42" x2="680" y2="48" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="680" y="62">50</text>
+      </g>
+
+      <!-- Whiskers (العارضتان) -->
+      <!-- Left Whisker (Min to Q1) -->
+      <line x1="60" y1="0" x2="200" y2="0" stroke="#38bdf8" stroke-width="2.5"/>
+      <line x1="60" y1="-15" x2="60" y2="15" stroke="#38bdf8" stroke-width="3"/>
+
+      <!-- Right Whisker (Q3 to Max) -->
+      <line x1="560" y1="0" x2="680" y2="0" stroke="#38bdf8" stroke-width="2.5"/>
+      <line x1="680" y1="-15" x2="680" y2="15" stroke="#38bdf8" stroke-width="3"/>
+
+      <!-- The Box (Q1 to Q3) -->
+      <rect x="200" y="-25" width="360" height="50" rx="4" fill="#0369a1" fill-opacity="0.5" stroke="#38bdf8" stroke-width="2"/>
+
+      <!-- Median Line Q2 inside Box -->
+      <line x1="380" y1="-25" x2="380" y2="25" stroke="#fbbf24" stroke-width="4"/>
+      <circle cx="380" cy="0" r="5" fill="#fbbf24"/>
+
+      <!-- Annotations above the plot -->
+      <!-- 1. Minimum -->
+      <g transform="translate(60, -35)" text-anchor="middle">
+        <text font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#38bdf8">1. الحد الأدنى</text>
+      </g>
+
+      <!-- 2. Q1 -->
+      <g transform="translate(200, -35)" text-anchor="middle">
+        <text font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#38bdf8">2. الربع الأول Q1</text>
+      </g>
+
+      <!-- 3. Median Q2 -->
+      <g transform="translate(380, -35)" text-anchor="middle">
+        <text font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fbbf24">3. الوسيط Q2 ⭐</text>
+      </g>
+
+      <!-- 4. Q3 -->
+      <g transform="translate(560, -35)" text-anchor="middle">
+        <text font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#38bdf8">4. الربع الثالث Q3</text>
+      </g>
+
+      <!-- 5. Maximum -->
+      <g transform="translate(680, -35)" text-anchor="middle">
+        <text font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#38bdf8">5. الحد الأقصى</text>
+      </g>
+    </g>
+
+    <!-- Box Plot IQR Span Label -->
+    <text x="430" y="190" font-family="'Cairo', sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">
+      المدى الربيعي (IQR = Q3 - Q1) يمثل الصندوق الأزرق ويحتوي على 50% من البيانات الوسطى.
+    </text>
+  </g>
+
+  <!-- Bottom Takeaway -->
+  <g transform="translate(30, 555)">
+    <rect width="860" height="52" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="430" y="32" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+      📊 تذكر: الوسيط هو المقياس الأكثر دقة وأماناً عند وجود قيم متطرفة شاذة في مجموعة البيانات.
+    </text>
+  </g>
+</svg>

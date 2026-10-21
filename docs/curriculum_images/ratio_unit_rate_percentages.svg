@@ -1,0 +1,246 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09101d"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#050a14"/>
+    </linearGradient>
+
+    <!-- Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="920" height="620" fill="url(#bgGrad)" rx="16"/>
+  <rect width="916" height="616" x="2" y="2" fill="none" stroke="#334155" stroke-width="1.5" rx="15" opacity="0.6"/>
+
+  <!-- Top Header Title -->
+  <g transform="translate(460, 48)" text-anchor="middle">
+    <rect x="-350" y="-22" width="700" height="46" rx="23" fill="#1e293b" stroke="#14b8a6" stroke-width="1.5" filter="url(#shadowFilter)"/>
+    <text y="8" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="19" font-weight="bold" fill="#f8fafc">
+      📊 النسبة والمعدل ومعدل الوحدة والنسبة المئوية وتطبيقاتها الحياتية
+    </text>
+  </g>
+
+  <!-- Left Card: Ratio & Equivalent Ratios (النسبة والنسب المتكافئة) -->
+  <g transform="translate(30, 90)">
+    <rect width="275" height="435" rx="12" fill="url(#cardGrad)" stroke="#14b8a6" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 263,0 Q 275,0 275,12 L 275,40 L 0,40 Z" fill="#0f766e" opacity="0.85"/>
+    <text x="137" y="26" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#ccfbf1" text-anchor="middle">
+      1. مفهوم النسبة (Ratio)
+    </text>
+
+    <!-- Definition Box -->
+    <g transform="translate(14, 52)">
+      <rect width="247" height="65" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="235" y="22" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#2dd4bf" text-anchor="end">مقارنة بين كميتين من نفس النوع والوحدة:</text>
+      <text x="235" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">ليس لها تمييز (وحدات) لأن الوحدات تختصر.</text>
+      <text x="235" y="56" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">مثال: 3 تفاحات إلى 5 برتقالات.</text>
+    </g>
+
+    <!-- 3 Formats of Writing Ratio -->
+    <g transform="translate(14, 126)">
+      <text x="240" y="16" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fde68a" text-anchor="end">صيغ كتابة النسبة الثلاث:</text>
+
+      <g transform="translate(0, 26)">
+        <!-- Form 1: Words -->
+        <rect width="247" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="235" y="22" font-family="'Cairo', sans-serif" font-size="11" fill="#f8fafc" text-anchor="end">1) بالكلمات:</text>
+        <text x="70" y="22" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">3 إلى 5</text>
+      </g>
+
+      <g transform="translate(0, 68)">
+        <!-- Form 2: Colon -->
+        <rect width="247" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="235" y="22" font-family="'Cairo', sans-serif" font-size="11" fill="#f8fafc" text-anchor="end">2) بالنقطتين:</text>
+        <text x="70" y="22" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#34d399" text-anchor="middle">3 : 5</text>
+      </g>
+
+      <g transform="translate(0, 110)">
+        <!-- Form 3: Fraction -->
+        <rect width="247" height="42" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="235" y="26" font-family="'Cairo', sans-serif" font-size="11" fill="#f8fafc" text-anchor="end">3) ككسر اعتيادي:</text>
+        <g transform="translate(70, 22)" text-anchor="middle">
+          <text x="0" y="-3" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">3</text>
+          <line x1="-12" y1="2" x2="12" y2="2" stroke="#fff" stroke-width="1.5"/>
+          <text x="0" y="15" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">5</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Equivalent Ratios Visual -->
+    <g transform="translate(14, 295)">
+      <rect width="247" height="125" rx="8" fill="#0f172a" stroke="#14b8a6" stroke-width="1"/>
+      <text x="235" y="22" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#2dd4bf" text-anchor="end">النسب المتكافئة (Equivalent Ratios):</text>
+      <text x="235" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">الضرب أو القسمة في نفس العدد ≠ 0:</text>
+      
+      <g transform="translate(123, 75)" text-anchor="middle">
+        <text x="-60" y="4" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#38bdf8">2 / 3</text>
+        <text x="-15" y="4" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#94a3b8">=</text>
+        <text x="15" y="4" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#34d399">4 / 6</text>
+        <text x="45" y="4" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#94a3b8">=</text>
+        <text x="75" y="4" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#fbbf24">6 / 9</text>
+      </g>
+      <text x="123" y="110" font-family="'Cairo', sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">(ضرب حدي النسبة × 2 ثم × 3)</text>
+    </g>
+  </g>
+
+  <!-- Middle Card: Rate & Unit Rate (المعدل ومعدل الوحدة) -->
+  <g transform="translate(320, 90)">
+    <rect width="280" height="435" rx="12" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 268,0 Q 280,0 280,12 L 280,40 L 0,40 Z" fill="#0284c7" opacity="0.85"/>
+    <text x="140" y="26" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#f0f9ff" text-anchor="middle">
+      2. المعدل ومعدل الوحدة (Unit Rate)
+    </text>
+
+    <!-- Rate vs Ratio Definition -->
+    <g transform="translate(14, 52)">
+      <rect width="252" height="65" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="240" y="22" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="end">المعدل (Rate): مقارنة بين وحدتين مختلفتين</text>
+      <text x="240" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">مسافة/زمن (كم/ساعة) أو نقود/سلع (ج/قطعة).</text>
+      <text x="240" y="56" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fbbf24" text-anchor="end">معدل الوحدة: تبسيط المقام ليصبح 1 وحدة.</text>
+    </g>
+
+    <!-- Formula Box -->
+    <g transform="translate(14, 126)">
+      <rect width="252" height="82" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="126" y="24" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fde68a" text-anchor="middle">قانون معدل السرعة والمسافة:</text>
+      
+      <g transform="translate(126, 56)" text-anchor="middle">
+        <text x="-65" y="4" font-family="'Cairo', sans-serif" font-size="11" fill="#cbd5e1">معدل الوحدة =</text>
+        <g transform="translate(10, 0)">
+          <text x="0" y="-8" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">240 كم</text>
+          <line x1="-30" y1="-2" x2="30" y2="-2" stroke="#fff" stroke-width="1.5"/>
+          <text x="0" y="14" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">3 ساعات</text>
+        </g>
+        <text x="60" y="4" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#34d399">= 80 كم/س</text>
+      </g>
+    </g>
+
+    <!-- Best Buy Comparison Visual -->
+    <g transform="translate(14, 220)">
+      <rect width="252" height="200" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="240" y="24" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="end">🛒 المقارنة الذكية وأفضل صفقة شراء:</text>
+
+      <!-- Offer A -->
+      <g transform="translate(10, 36)">
+        <rect width="232" height="60" rx="6" fill="#1e293b" stroke="#f43f5e" stroke-width="1"/>
+        <text x="220" y="20" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fda4af" text-anchor="end">العرض (أ): 6 علب بـ 18 جنيهاً</text>
+        <text x="220" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">سعر العلبة الواحدة = 18 ÷ 6 =</text>
+        <text x="35" y="42" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#fda4af" text-anchor="middle">3 ج / علبة</text>
+      </g>
+
+      <!-- Offer B -->
+      <g transform="translate(10, 104)">
+        <rect width="232" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="220" y="20" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#6ee7b7" text-anchor="end">العرض (ب): 10 علب بـ 25 جنيهاً ⭐</text>
+        <text x="220" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">سعر العلبة الواحدة = 25 ÷ 10 =</text>
+        <text x="35" y="42" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#34d399" text-anchor="middle">2.5 ج / علبة</text>
+      </g>
+
+      <text x="126" y="185" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fde68a" text-anchor="middle">
+        ✅ العرض (ب) هو الأوفر والأفضل اقتصادياً!
+      </text>
+    </g>
+  </g>
+
+  <!-- Right Card: Percentage & Real-World Discounts (النسبة المئوية والخصومات) -->
+  <g transform="translate(615, 90)">
+    <rect width="275" height="435" rx="12" fill="url(#cardGrad)" stroke="#a855f7" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 263,0 Q 275,0 275,12 L 275,40 L 0,40 Z" fill="#7e22ce" opacity="0.85"/>
+    <text x="137" y="26" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#faf5ff" text-anchor="middle">
+      3. النسبة المئوية (%) والتطبيقات
+    </text>
+
+    <!-- Percentage Definition -->
+    <g transform="translate(14, 52)">
+      <rect width="247" height="65" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="235" y="22" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#c084fc" text-anchor="end">النسبة المئوية: نسبة حدها الثاني 100</text>
+      <text x="235" y="40" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">كسر اعتيادي ⟷ كسر عشري ⟷ نسبة %</text>
+      <text x="235" y="56" font-family="'Cairo', sans-serif" font-size="10" fill="#fde68a" text-anchor="end">3/4 = 75/100 = 0.75 = 75%</text>
+    </g>
+
+    <!-- Formula Circle -->
+    <g transform="translate(14, 126)">
+      <rect width="247" height="90" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1.2"/>
+      <text x="123" y="24" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fde68a" text-anchor="middle">قانون حساب قيمة النسبة من المبلغ:</text>
+      
+      <g transform="translate(123, 58)" text-anchor="middle">
+        <text x="0" y="0" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#38bdf8">
+          القيمة = المبلغ الإجمالي × (النسبة ÷ 100)
+        </text>
+        <text x="0" y="20" font-family="'Cairo', sans-serif" font-size="11" fill="#cbd5e1">
+          20% من 150 = 150 × 0.20 = 30 ج
+        </text>
+      </g>
+    </g>
+
+    <!-- Practical Store Discount Example -->
+    <g transform="translate(14, 226)">
+      <rect width="247" height="194" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+      
+      <text x="235" y="24" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#c084fc" text-anchor="end">🏷️ مسألة الخصم والتخفيضات:</text>
+      <text x="235" y="44" font-family="'Cairo', sans-serif" font-size="10" fill="#e2e8f0" text-anchor="end">قميص سعره 200 جنيه وعليه خصم 15%</text>
+
+      <g transform="translate(10, 56)">
+        <rect width="227" height="42" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="215" y="18" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">الخطوة 1: حساب قيمة الخصم</text>
+        <text x="215" y="34" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fbbf24" text-anchor="end">200 × (15/100) = 30 جنيهاً</text>
+      </g>
+
+      <g transform="translate(10, 106)">
+        <rect width="227" height="42" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+        <text x="215" y="18" font-family="'Cairo', sans-serif" font-size="10" fill="#94a3b8" text-anchor="end">الخطوة 2: السعر النهائي بعد الخصم</text>
+        <text x="215" y="34" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#34d399" text-anchor="end">200 - 30 = 170 جنيهاً</text>
+      </g>
+
+      <text x="123" y="174" font-family="'Cairo', sans-serif" font-size="10" fill="#38bdf8" text-anchor="middle">
+        أو مباشرة: 200 × 0.85 = 170 جنيهاً
+      </text>
+    </g>
+  </g>
+
+  <!-- Bottom Takeaway Banner -->
+  <g transform="translate(30, 538)">
+    <rect width="860" height="68" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadowFilter)"/>
+    <g transform="translate(20, 22)">
+      <circle cx="12" cy="12" r="12" fill="#0f766e"/>
+      <text x="12" y="16" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">💡</text>
+      <text x="35" y="12" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf">القاعدة الذهبية:</text>
+      <text x="35" y="30" font-family="'Cairo', sans-serif" font-size="11" fill="#cbd5e1">
+        النسبة: مقارنة بين نفس الوحدات (بلا تمييز) | المعدل: بين وحدات مختلفة (كم/ساعة) | معدل الوحدة: المقام = 1 لمقارنة الأسعار | النسبة المئوية: مقامها دائماً 100.
+      </text>
+    </g>
+  </g>
+</svg>

@@ -530,8 +530,33 @@ export const HIGH_BIO_G10_LECTURES: Lecture[] = [
       {
         titleAr: '2. عضيات الخلية ووظائفها الحيوية',
         titleEn: '2. Cellular Organelles and Physiology',
-        contentAr: '1) عضيات غير غشائية (Non-membranous):\n- الريبوسومات: مصانع تخليق البروتين في الخلية.\n- السنتروسوم (الجسم المركزي): يتكون من سنتريولين، يكون خيوط المغزل في الخلايا الحيوانية.\n\n2) عضيات غشائية (Membranous):\n- الشبكة الإندوبلازمية (ER): خشنة (تصنيع وتعديل البروتينات) وملساء (تصنيع الدهون وتخزين الجليكوجين في الكبد وتحويل السموم لمواد أقل سمية).\n- جهاز جولجي: فرز وتعديل وتغليف البروتينات وإنتاج اللايسوسومات.\n- اللايسوسومات: حويصلات هضمية تحتوي على إنزيمات محللة.\n- الميتوكوندريا: مراكز إنتاج الطاقة والتنفس الخلوي الهوائي وتوليد $ATP$.\n- الفجوات (Vacuoles): فجوة عصيرية مركزية كبيرة في النباتات، وصغيرة متعددة في الحيوانات.\n- البلاستيدات: خضراء (Chloroplasts)، ملونة (Chromoplasts)، وعديمة اللون (Leucoplasts).',
-        contentEn: 'Non-membranous organelles (ribosomes, centrosomes) vs membranous organelles (ER, Golgi, lysosomes, mitochondria, vacuoles, plastids).'
+        contentAr: `1) عضيات غير غشائية (Non-membranous):
+- الريبوسومات: مصانع تخليق البروتين في الخلية.
+- السنتروسوم (الجسم المركزي): يتكون من سنتريولين، يكون خيوط المغزل في الخلايا الحيوانية.
+
+2) عضيات غشائية (Membranous):
+- الشبكة الإندوبلازمية (ER): خشنة (تصنيع وتعديل البروتينات) وملساء (تصنيع الدهون وتخزين الجليكوجين في الكبد وتحويل السموم لمواد أقل سمية).
+- جهاز جولجي: فرز وتعديل وتغليف البروتينات وإنتاج اللايسوسومات.
+- اللايسوسومات: حويصلات هضمية تحتوي على إنزيمات محللة.
+- الميتوكوندريا: مراكز إنتاج الطاقة والتنفس الخلوي الهوائي وتوليد $ATP$.
+- الفجوات (Vacuoles): فجوة عصيرية مركزية كبيرة في النباتات، وصغيرة متعددة في الحيوانات.
+- البلاستيدات: خضراء (Chloroplasts)، ملونة (Chromoplasts)، وعديمة اللون (Leucoplasts).
+
+![مخطط بيولوجيا الخلية: المقارنة الشاملة بين الخلية النباتية والخلية الحيوانية وعضياتهما](/curriculum_images/plant_animal_cell_ultrastructure.svg)`,
+        contentEn: 'Non-membranous organelles (ribosomes, centrosomes) vs membranous organelles (ER, Golgi, lysosomes, mitochondria, vacuoles, plastids).',
+        diagram: {
+          id: 'diagram-bio10-plant-animal-cell-ultrastructure',
+          figureNumberAr: 'شكل توضيحي (٣-١)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط بيولوجيا الخلية: مقارنة الخلية النباتية والحيوانية والعضيات الخلوية',
+          titleEn: 'Comparative Plant & Animal Cell Ultrastructure & Organelles',
+          captionAr: 'لوحة تشريحية معتمدة توضح الفروق الجوهرية بين الخلية النباتية (جدار خلوي، بلاستيدات خضراء، فجوة عصيرية ضخمة) والخلية الحيوانية (جسم مركزي سنتروسوم، فجوات صغيرة)، مع العضيات المشتركة (النواة، الميتوكوندريا، الغشاء البلازمي، الشبكة الإندوبلازمية، وجهاز جولجي).',
+          captionEn: 'Standard biological diagram comparing unique and shared organelles between plant cells (cell wall, chloroplasts, central vacuole) and animal cells (centrosome, lysosomes).',
+          diagramType: 'dna_cell_biology',
+          imageUrl: '/curriculum_images/plant_animal_cell_ultrastructure.svg',
+          takeawayFormulaAr: 'نباتية تنفرد بـ: [جدار خلوي + بلاستيدات + فجوة ضخمة]  |  حيوانية تنفرد بـ: [سنتروسوم خيوط المغزل]',
+          takeawayFormulaEn: 'Plant exclusive: [Cell Wall + Chloroplasts + Large Vacuole] | Animal exclusive: [Centrosome/Centrioles]'
+        }
       }
     ],
 

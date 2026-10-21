@@ -308,7 +308,33 @@ export const PRIMARY_MATH_G6_LECTURES: Lecture[] = [
 - **معادلات الضرب والقسمة:**
   - $3m = 21 \\implies m = \\frac{21}{3} \\implies m = 7$.
   - $\\frac{k}{4} = 5 \\implies k = 5 \\times 4 \\implies k = 20$.
+
+![مخطط المقادير الجبرية وميزان حل المعادلات وترتيب العمليات](/curriculum_images/algebraic_expressions_equations_scale.svg)
 `,
+    sections: [
+      {
+        titleAr: 'المقادير الجبرية وميزان حل المعادلات',
+        titleEn: 'Algebraic Expressions & Equation Balance Scale',
+        contentAr: `يتناول هذا المخطط التوضيحي أركان المقدار الجبري، وهرم ترتيب العمليات والأسس (PEMDAS)، وميزان التكافؤ لحل معادلات الدرجة الأولى:
+- **تشريح المقدار الجبري:** المتغير (رمز مجهول س)، المعامل (العدد المضروب بالمتغير)، الأس والقوة (²)، والحد الثابت المستقل.
+- **ترتيب العمليات الحسابية:** الأقواس أولاً، ثم الأسس، ثم الضرب والقسمة، وأخيراً الجمع والطرح.
+- **ميزان المعادلات:** الحفاظ على التكافؤ باستخدام العمليات العكسية (الجمع يقابله الطرح، والضرب تقابله القسمة).`,
+        contentEn: 'Illustrated diagram detailing algebraic expression parts, PEMDAS operations hierarchy with exponents, and two-pan balance scale for one-step linear equations.',
+        diagram: {
+          id: 'diagram-pmath6-algebra-scale',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط المقادير الجبرية وميزان حل المعادلات وترتيب العمليات',
+          titleEn: 'Algebraic Expressions, PEMDAS Hierarchy & Equation Balance Scale Diagram',
+          captionAr: 'رسم بياني تعليمي معتمد يوضح تشريح المقدار الجبري 5س² + 3س + 9، وهرم ترتيب العمليات الحسابية PEMDAS، وميزان المعادلة المتكافئ والعمليات العكسية الأربع.',
+          captionEn: 'Standard mathematics diagram illustrating algebraic expression components, order of operations hierarchy, and balanced scale for inverse operations.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/algebraic_expressions_equations_scale.svg',
+          takeawayFormulaAr: 'ميزان المعادلة: الجمع ⟷ الطرح | الضرب ⟷ القسمة | الأقواس ➔ الأسس ➔ الضرب والقسمة ➔ الجمع والطرح',
+          takeawayFormulaEn: 'Equation Balance: Add ⟷ Subtract | Multiply ⟷ Divide | PEMDAS: Parentheses ➔ Exponents ➔ MD ➔ AS'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-math6-2',
       titleAr: 'تقييم المحاضرة 2: المقادير الجبرية والمعادلات',
@@ -469,7 +495,33 @@ export const PRIMARY_MATH_G6_LECTURES: Lecture[] = [
   - قميص سعره 200 جنيه وعليه خصم $15\\%$:
     - قيمة الخصم $= 200 \\times \\frac{15}{100} = 30$ جنيهاً.
     - السعر بعد الخصم $= 200 - 30 = 170$ جنيهاً.
+
+![مخطط النسبة والمعدل ومعدل الوحدة والنسبة المئوية وتطبيقاتها الحياتية](/curriculum_images/ratio_unit_rate_percentages.svg)
 `,
+    sections: [
+      {
+        titleAr: 'النسبة والمعدل ومعدل الوحدة والنسبة المئوية',
+        titleEn: 'Ratio, Rate, Unit Rate & Percentages',
+        contentAr: `يتناول هذا المخطط التعليمي الشامل مقارنة المفاهيم الرياضية الأساسية:
+- **النسبة (Ratio):** مقارنة بين كميتين من نفس النوع والوحدة، وتكتب بالصيغ الثلاث: بالكلمات (3 إلى 5)، بالنقطتين (3 : 5)، وككسر (3/5).
+- **المعدل ومعدل الوحدة:** مقارنة بين وحدتين مختلفتين، وتبسيط المقام ليصبح 1 وحدة للمقارنة الذكية بين أسعار السلع في المتاجر واختيار الصفقة الأوفر.
+- **النسبة المئوية (%):** نسبة حدها الثاني 100، وتطبيقات حساب الخصومات والتخفيضات المالية.`,
+        contentEn: 'Illustrated diagram contrasting ratios and rates, calculating unit rates for best-buy consumer decisions, and computing percentage discounts in real-life contexts.',
+        diagram: {
+          id: 'diagram-pmath6-ratio-unit-rate',
+          figureNumberAr: 'شكل توضيحي (٣-١)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط النسبة والمعدل ومعدل الوحدة والنسبة المئوية والخصومات',
+          titleEn: 'Ratio, Rate, Unit Rate & Percentage Discounts Diagram',
+          captionAr: 'رسم بياني تعليمي معتمد يوضح صيغ كتابة النسبة الثلاث والنسب المتكافئة، وحساب معدل الوحدة للمقارنة الذكية بين الأسعار، وقانون حساب نسبة الخصم والسعر النهائي.',
+          captionEn: 'Standard mathematics diagram illustrating ratio representations, equivalent ratios, unit rate comparison, and discount percentages.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/ratio_unit_rate_percentages.svg',
+          takeawayFormulaAr: 'معدل الوحدة = (الكمية الأولى) ÷ (الكمية الثانية) ليصبح المقام 1  |  قيمة الخصم = السعر × (النسبة ÷ 100)',
+          takeawayFormulaEn: 'Unit Rate = Quantity 1 ÷ Quantity 2 (denom = 1) | Discount = Price × (% / 100)'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-math6-3',
       titleAr: 'تقييم المحاضرة 3: النسبة والمعدل والنسبة المئوية',
@@ -635,7 +687,33 @@ export const PRIMARY_MATH_G6_LECTURES: Lecture[] = [
   3. **الوسيط ($Q_2$):** وسيط جميع البيانات.
   4. **الربيع الثالث ($Q_3$):** وسيط النصف الأعلى للبيانات.
   5. **الحد الأقصى (Max):** أكبر قيمة.
+
+![مخطط مقاييس النزعة المركزية ومخطط الصندوق والمدى](/curriculum_images/statistics_measures_boxplot.svg)
 `,
+    sections: [
+      {
+        titleAr: 'مقاييس النزعة المركزية ومخطط الصندوق ذو العارضتين',
+        titleEn: 'Measures of Central Tendency & Box Plot',
+        contentAr: `يقدم هذا المخطط الإحصائي تلخيصاً شاملاً لأساليب تحليل وتمثيل البيانات:
+- **مقاييس النزعة المركزية والمدى:** الوسط الحسابي (نقطة التوازن = المجموع ÷ العدد)، الوسيط (القيمة الوسطى بعد الترتيب)، المنوال (الأكثر تكراراً)، والمدى (الفرق بين أكبر وأصغر قيمة).
+- **القيم المتطرفة (Outliers):** قيم شاذة تؤثر بشدة على الوسط الحسابي وتغير دلالته، بينما يظل الوسيط مقياساً مقاوماً وأكثر دقة في تمثيل البيانات.
+- **مخطط الصندوق (Box Plot):** تمثيل بياني بياني لملخص الأعداد الخمسة: الحد الأدنى، الربع الأول Q1، الوسيط Q2، الربع الثالث Q3، والحد الأقصى، مع المدى الربيعي IQR.`,
+        contentEn: 'Illustrated statistics guide detailing measures of central tendency, impact of extreme outliers on the mean vs median, and the five-number summary on box-and-whisker plots.',
+        diagram: {
+          id: 'diagram-pmath6-stats-boxplot',
+          figureNumberAr: 'شكل توضيحي (٤-١)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'مخطط مقاييس النزعة المركزية ومخطط الصندوق والمدى',
+          titleEn: 'Central Tendency Measures, Outliers & Box Plot Diagram',
+          captionAr: 'رسم بياني تعليمي معتمد يوضح قوانين الوسط والوسيط والمنوال والمدى، وتأثير القيم المتطرفة الشاذة، وتشريح مخطط الصندوق ذي العارضتين مع ملخص الأعداد الخمسة.',
+          captionEn: 'Standard mathematics diagram illustrating Mean, Median, Mode, Range, Outlier effects, and Five-Number Summary Box Plot.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/statistics_measures_boxplot.svg',
+          takeawayFormulaAr: 'الوسط = المجموع ÷ العدد | الوسيط = رتّب أولاً ثم اختر المنتصف | المدى = الأكبر - الأصغر | الصندوق = ملخص الأعداد الخمسة',
+          takeawayFormulaEn: 'Mean = Sum / Count | Median = Sort first then pick center | Range = Max - Min | Box = 5-Number Summary'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-math6-4',
       titleAr: 'تقييم المحاضرة 4: الإحصاء واستكشاف البيانات',

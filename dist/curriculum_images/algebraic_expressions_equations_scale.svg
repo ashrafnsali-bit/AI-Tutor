@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+
+    <!-- Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="cyanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <linearGradient id="purplePinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="620" fill="url(#bgGrad)" rx="16"/>
+  <rect width="916" height="616" x="2" y="2" fill="none" stroke="#334155" stroke-width="1.5" rx="15" opacity="0.6"/>
+
+  <!-- Top Title -->
+  <g transform="translate(460, 48)" text-anchor="middle">
+    <rect x="-350" y="-22" width="700" height="46" rx="23" fill="#1e293b" stroke="#06b6d4" stroke-width="1.5" filter="url(#shadowFilter)"/>
+    <text y="8" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="19" font-weight="bold" fill="#f8fafc">
+      ⚖️ المقادير الجبرية وميزان حل المعادلات وترتيب العمليات (الأسس)
+    </text>
+  </g>
+
+  <!-- Top Left Card: Anatomy of an Algebraic Expression (تشريح المقدار الجبري) -->
+  <g transform="translate(30, 90)">
+    <rect width="415" height="235" rx="12" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadowFilter)"/>
+    
+    <path d="M 0,12 Q 0,0 12,0 L 403,0 Q 415,0 415,12 L 415,38 L 0,38 Z" fill="#0369a1" opacity="0.85"/>
+    <text x="207" y="24" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#f0f9ff" text-anchor="middle">
+      1. تشريح المقدار الجبري: 5س² + 3س + 9
+    </text>
+
+    <!-- Large Visual Formula Display -->
+    <g transform="translate(207, 95)" text-anchor="middle">
+      <rect x="-185" y="-30" width="370" height="60" rx="10" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+      
+      <!-- 5x^2 -->
+      <text x="-120" y="8" font-family="'Cairo', 'Cambria Math', sans-serif" font-size="28" font-weight="bold" fill="#38bdf8">5</text>
+      <text x="-95" y="8" font-family="'Cairo', 'Cambria Math', sans-serif" font-size="28" font-weight="bold" fill="#fbbf24">س</text>
+      <text x="-78" y="-6" font-family="'Cairo', 'Cambria Math', sans-serif" font-size="18" font-weight="bold" fill="#f43f5e">²</text>
+
+      <!-- + -->
+      <text x="-50" y="8" font-family="'Cairo', sans-serif" font-size="24" font-weight="bold" fill="#94a3b8">+</text>
+
+      <!-- 3x -->
+      <text x="-15" y="8" font-family="'Cairo', 'Cambria Math', sans-serif" font-size="28" font-weight="bold" fill="#38bdf8">3</text>
+      <text x="10" y="8" font-family="'Cairo', 'Cambria Math', sans-serif" font-size="28" font-weight="bold" fill="#fbbf24">س</text>
+
+      <!-- + -->
+      <text x="45" y="8" font-family="'Cairo', sans-serif" font-size="24" font-weight="bold" fill="#94a3b8">+</text>
+
+      <!-- 9 -->
+      <text x="95" y="8" font-family="'Cairo', 'Cambria Math', sans-serif" font-size="28" font-weight="bold" fill="#34d399">9</text>
+    </g>
+
+    <!-- Component Annotations -->
+    <g transform="translate(20, 145)">
+      <!-- Variable (المتغير) -->
+      <g transform="translate(0, 0)">
+        <rect width="180" height="34" rx="6" fill="#1e293b" stroke="#fbbf24" stroke-width="1"/>
+        <circle cx="165" cy="17" r="5" fill="#fbbf24"/>
+        <text x="150" y="21" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fbbf24" text-anchor="end">المتغير (س):</text>
+        <text x="75" y="21" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">رمز مجهول</text>
+      </g>
+
+      <!-- Coefficient (المعامل) -->
+      <g transform="translate(195, 0)">
+        <rect width="180" height="34" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+        <circle cx="165" cy="17" r="5" fill="#38bdf8"/>
+        <text x="150" y="21" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="end">المعامل (5 و 3):</text>
+        <text x="75" y="21" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">مضروب بالرمز</text>
+      </g>
+
+      <!-- Exponent (الأس) -->
+      <g transform="translate(0, 42)">
+        <rect width="180" height="34" rx="6" fill="#1e293b" stroke="#f43f5e" stroke-width="1"/>
+        <circle cx="165" cy="17" r="5" fill="#f43f5e"/>
+        <text x="150" y="21" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#f43f5e" text-anchor="end">الأس والقوة (²):</text>
+        <text x="75" y="21" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">تكرار الضرب</text>
+      </g>
+
+      <!-- Constant (الحد الثابت) -->
+      <g transform="translate(195, 42)">
+        <rect width="180" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1"/>
+        <circle cx="165" cy="17" r="5" fill="#34d399"/>
+        <text x="150" y="21" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#34d399" text-anchor="end">الحد الثابت (9):</text>
+        <text x="75" y="21" font-family="'Cairo', sans-serif" font-size="10" fill="#cbd5e1" text-anchor="end">عدد مستقل بلا رمز</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Top Right Card: Order of Operations PEMDAS (ترتيب العمليات الحسابية) -->
+  <g transform="translate(475, 90)">
+    <rect width="415" height="235" rx="12" fill="url(#cardGrad)" stroke="#a855f7" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 403,0 Q 415,0 415,12 L 415,38 L 0,38 Z" fill="#6b21a8" opacity="0.85"/>
+    <text x="207" y="24" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#faf5ff" text-anchor="middle">
+      2. هرم ترتيب العمليات الحسابية والأسس (PEMDAS)
+    </text>
+
+    <!-- 4 Pyramid Hierarchy Levels -->
+    <g transform="translate(20, 52)">
+      <!-- Level 1: Parentheses (الأقواس) -->
+      <g transform="translate(0, 0)">
+        <rect width="375" height="36" rx="6" fill="#581c87" stroke="#c084fc" stroke-width="1"/>
+        <text x="25" y="23" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#f3e8ff">1️⃣ الأقواس الداخلية أولاً (Parentheses): (س + 3)</text>
+      </g>
+
+      <!-- Level 2: Exponents (الأسس) -->
+      <g transform="translate(0, 42)">
+        <rect width="375" height="36" rx="6" fill="#701a75" stroke="#f472b6" stroke-width="1"/>
+        <text x="25" y="23" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fdf2f8">2️⃣ الأسس والقوى والجذور (Exponents): 2³ = 8</text>
+      </g>
+
+      <!-- Level 3: Multiply & Divide (الضرب والقسمة) -->
+      <g transform="translate(0, 84)">
+        <rect width="375" height="36" rx="6" fill="#0369a1" stroke="#38bdf8" stroke-width="1"/>
+        <text x="25" y="23" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#e0f2fe">3️⃣ الضرب والقسمة (من اليسار لليمين أو يمين ليسار): × و ÷</text>
+      </g>
+
+      <!-- Level 4: Add & Subtract (الجمع والطرح) -->
+      <g transform="translate(0, 126)">
+        <rect width="375" height="36" rx="6" fill="#065f46" stroke="#34d399" stroke-width="1"/>
+        <text x="25" y="23" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#d1fae5">4️⃣ الجمع والطرح بالترتيب النهائي: + و -</text>
+      </g>
+    </g>
+
+    <!-- Quick Example -->
+    <text x="207" y="222" font-family="'Cairo', sans-serif" font-size="11" fill="#fde68a" text-anchor="middle">
+      💡 تطبيق: 3 × 2² + 5 = 3 × 4 + 5 = 12 + 5 = 17
+    </text>
+  </g>
+
+  <!-- Bottom Large Card: The Equation Balance Scale & Inverse Operations (ميزان المعادلات والعمليات العكسية) -->
+  <g transform="translate(30, 340)">
+    <rect width="860" height="205" rx="12" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" filter="url(#shadowFilter)"/>
+
+    <path d="M 0,12 Q 0,0 12,0 L 848,0 Q 860,0 860,12 L 860,38 L 0,38 Z" fill="#065f46" opacity="0.85"/>
+    <text x="430" y="24" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#d1fae5" text-anchor="middle">
+      3. ميزان حل معادلات الدرجة الأولى وقاعدة العمليات العكسية (Inverse Operations)
+    </text>
+
+    <!-- Left: Balance Scale Vector Graphic -->
+    <g transform="translate(180, 125)">
+      <!-- Base & Stand -->
+      <polygon points="0,55 -25,75 25,75" fill="#475569"/>
+      <rect x="-4" y="-10" width="8" height="70" fill="#64748b"/>
+      <!-- Fulcrum pivot -->
+      <circle cx="0" cy="-10" r="7" fill="#fbbf24"/>
+      
+      <!-- Balance Beam (Horizontal = Equal) -->
+      <line x1="-120" y1="-10" x2="120" y2="-10" stroke="#f8fafc" stroke-width="4"/>
+
+      <!-- Left Pan (x + 5) -->
+      <line x1="-100" y1="-10" x2="-120" y2="25" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="-100" y1="-10" x2="-80" y2="25" stroke="#94a3b8" stroke-width="1.5"/>
+      <ellipse cx="-100" cy="27" rx="35" ry="6" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
+      
+      <!-- Weight Box Left -->
+      <rect x="-122" y="5" width="44" height="20" rx="4" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+      <text x="-100" y="19" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">س + 5</text>
+
+      <!-- Center Equals -->
+      <text x="0" y="15" font-family="'Cairo', sans-serif" font-size="28" font-weight="bold" fill="#fbbf24" text-anchor="middle">=</text>
+
+      <!-- Right Pan (12) -->
+      <line x1="100" y1="-10" x2="80" y2="25" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="100" y1="-10" x2="120" y2="25" stroke="#94a3b8" stroke-width="1.5"/>
+      <ellipse cx="100" cy="27" rx="35" ry="6" fill="#334155" stroke="#10b981" stroke-width="2"/>
+
+      <!-- Weight Box Right -->
+      <rect x="80" y="5" width="40" height="20" rx="4" fill="#059669" stroke="#34d399" stroke-width="1"/>
+      <text x="100" y="19" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">12</text>
+    </g>
+
+    <!-- Right: 4 Inverse Operations Grid -->
+    <g transform="translate(420, 50)">
+      
+      <!-- Inverse Addition / Subtraction -->
+      <g transform="translate(0, 0)">
+        <rect width="200" height="66" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+        <text x="190" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="end">➕ الجمع ⟷ ➖ الطرح</text>
+        <text x="190" y="38" font-family="'Cairo', sans-serif" font-size="10" fill="#e2e8f0" text-anchor="end">س + 5 = 12</text>
+        <text x="190" y="54" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fbbf24" text-anchor="end">س = 12 - 5 = 7</text>
+      </g>
+
+      <!-- Inverse Subtraction / Addition -->
+      <g transform="translate(215, 0)">
+        <rect width="200" height="66" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1"/>
+        <text x="190" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#f43f5e" text-anchor="end">➖ الطرح ⟷ ➕ الجمع</text>
+        <text x="190" y="38" font-family="'Cairo', sans-serif" font-size="10" fill="#e2e8f0" text-anchor="end">ص - 4 = 10</text>
+        <text x="190" y="54" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fbbf24" text-anchor="end">ص = 10 + 4 = 14</text>
+      </g>
+
+      <!-- Inverse Multiplication / Division -->
+      <g transform="translate(0, 76)">
+        <rect width="200" height="66" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+        <text x="190" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#10b981" text-anchor="end">✖️ الضرب ⟷ ➗ القسمة</text>
+        <text x="190" y="38" font-family="'Cairo', sans-serif" font-size="10" fill="#e2e8f0" text-anchor="end">4س = 28</text>
+        <text x="190" y="54" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fbbf24" text-anchor="end">س = 28 ÷ 4 = 7</text>
+      </g>
+
+      <!-- Inverse Division / Multiplication -->
+      <g transform="translate(215, 76)">
+        <rect width="200" height="66" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1"/>
+        <text x="190" y="20" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#c084fc" text-anchor="end">➗ القسمة ⟷ ✖️ الضرب</text>
+        <text x="190" y="38" font-family="'Cairo', sans-serif" font-size="10" fill="#e2e8f0" text-anchor="end">ك ÷ 3 = 6</text>
+        <text x="190" y="54" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fbbf24" text-anchor="end">ك = 6 × 3 = 18</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Footer Takeaway -->
+  <g transform="translate(30, 555)">
+    <rect width="860" height="52" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="430" y="32" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+      ⚖️ قاعدة توازن المعادلة: ما تجريه على الطرف الأيمن، يجب بالضرورة إجراؤه على الطرف الأيسر للحفاظ على التكافؤ.
+    </text>
+  </g>
+</svg>
