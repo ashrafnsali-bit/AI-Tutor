@@ -712,7 +712,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const warmup     = (isLessonTargetLang ? lecture.warmupHookEn : lecture.warmupHookAr) || lecture.warmupHookEn || lecture.warmupHookAr || '';
   const unitTitle  = (isLessonTargetLang ? lecture.unitTitleEn : lecture.unitTitleAr) || lecture.unitTitleEn || lecture.unitTitleAr || '';
   const curriculumCoverUrl =
-    (lecture.sections || []).find(s => s.diagram?.imageUrl)?.diagram?.imageUrl ||
+    ((lecture.sections || []).find(s => (s.diagram as any)?.diagramType === 'curriculum_cover')?.diagram?.imageUrl) ||
+    (lecture as any).coverUrl ||
     lecture.diagramData?.imageUrl ||
     (isForeignLanguageLesson && (lecture.gradeLevel === 'G1' || (lecture.id || '').includes('connect-1') || (lecture.id || '').includes('g1-u'))
       ? '/curriculum_covers/egypt_primary_1_english.png'

@@ -116,6 +116,8 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 | **البلاستيدات الخضراء** | **موجودة** (لصنع الغذاء بالبناء الضوئي) | **غير موجودة** |
 | **الفجوة العصارية** | فجوة واحدة **كبيرة ومركزية** | فجوات **صغيرة ومتعددة** |
 | **غشاء الخلية والنواة** | موجودان | موجودان |
+
+![المقارنة التشريحية المعتمدة: الخلية النباتية والخلية الحيوانية وعضياتها الحيوية](/curriculum_images/plant_animal_cell_diagram.jpg)
 `,
     sections: [
       {
@@ -126,7 +128,9 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 وتنفرد الخلية النباتية بوجود:
 1. **الجدار الخلوي السليلوزي:** يعطي الخلية شكلاً ثابتاً ودعماً قوياً.
 2. **البلاستيدات الخضراء:** تمتص طاقة الضوء لتصنع الغذاء بعملية البناء الضوئي.
-3. **الفجوة العصارية الكبيرة:** لتخزين الماء والغذاء.`,
+3. **الفجوة العصارية الكبيرة:** لتخزين الماء والغذاء.
+
+![المقارنة التشريحية بين الخلية النباتية والخلية الحيوانية وعضياتهما](/curriculum_images/plant_animal_cell_diagram.jpg)`,
         contentEn: 'Cells are the fundamental units of life. Plant and animal cells share the nucleus, membrane, and mitochondria. Plant cells uniquely feature a cell wall, chloroplasts, and a large central vacuole.',
         diagram: {
           id: 'diagram-psci6-plant-animal-cell',
@@ -317,6 +321,8 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 - **الكليتان:** العضو الرئيسي؛ تحتوي كل كلية على حوالي مليون **نيفرون** يقوم بترشيح الدم واستخلاص اليوريا والأملاح الزائدة وتصريفها في البول.
 - **الجلد:** يفرز العرق المحمل بالماء والأملاح للمساعدة في تبريد الجسم والتخلص من الفضلات.
 - **الرئتان:** تطرد غاز ثاني أكسيد الكربون وبخار الماء الناتج عن التنفس الخلوي.
+
+![مخطط تشريح القلب المعتمد ومسار الدورة الدموية الكبرى والصغرى](/curriculum_images/heart_circulatory_system.jpg)
 `,
     sections: [
       {
@@ -324,7 +330,9 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
         titleEn: 'Body Systems Integration: Circulatory System & Heart',
         contentAr: `يتكامل الجهاز الدوري مع الأجهزة الحيوية لتزويد الجسم بالأكسجين والغذاء:
 - **القلب:** مضخة عضلية مجوفة لاإرادية تتكون من ٤ حجرات (أذينان وبطينان).
-- **الدورة الدموية:** تدفع الشرايين الدم المؤكسج إلى الخلايا، وتجمع الأوردة الدم غير المؤكسج ليعود إلى القلب ثم الرئتين لتنقيته.`,
+- **الدورة الدموية:** تدفع الشرايين الدم المؤكسج إلى الخلايا، وتجمع الأوردة الدم غير المؤكسج ليعود إلى القلب ثم الرئتين لتنقيته.
+
+![مخطط تشريح القلب ومسار الدورة الدموية](/curriculum_images/heart_circulatory_system.jpg)`,
         contentEn: 'The circulatory system coordinates with vital organs to supply oxygen and nutrients. The heart is an involuntary pump made of four chambers driving blood through arteries and veins.',
         diagram: {
           id: 'diagram-psci6-heart-circulatory',

@@ -45,6 +45,16 @@ export function cleanLatexMath(mathStr: string): string {
     .trim();
 }
 
+function resolveImageUrl(url: string): string {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  const base = import.meta.env.BASE_URL || '/';
+  const clean = url.replace(/^\/+/, '');
+  return `${base.endsWith('/') ? base : base + '/'}${clean}`;
+}
+
 export const RichContentRenderer: React.FC<RichContentRendererProps> = ({ content, isEn = false }) => {
   if (!content) return null;
   // Cleanly unwrap any SVGs that are wrapped in escaped or raw code fences (\```xml <svg... </svg> \```)
@@ -246,6 +256,76 @@ function renderMarkdownParagraphs(text: string, _isEn?: boolean): React.ReactNod
       trimmed.startsWith('<!--') ||
       trimmed.endsWith('-->')
     ) {
+      continue;
+    }
+
+    // Markdown Image: ![Alt text](image_url)
+    const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (imgMatch) {
+      flushList();
+      flushTable();
+      const altText = imgMatch[1] || 'رسم توضيحي للدرس';
+      const rawSrc = imgMatch[2].trim();
+      const resolvedSrc = resolveImageUrl(rawSrc);
+      nodes.push(
+        <figure
+          key={`img-block-${nodeKey++}`}
+          className="lecture-inline-image-figure"
+          style={{
+            margin: '1.75rem auto',
+            maxWidth: '820px',
+            textAlign: 'center',
+            background: 'linear-gradient(145deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%)',
+            borderRadius: '16px',
+            border: '1.5px solid rgba(56, 189, 248, 0.35)',
+            padding: '1.25rem',
+            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.5)'
+          }}
+        >
+          <img
+            src={resolvedSrc}
+            alt={altText}
+            style={{
+              maxWidth: '100%',
+              maxHeight: '480px',
+              borderRadius: '12px',
+              objectFit: 'contain',
+              boxShadow: '0 6px 20px rgba(0,0,0,0.5)',
+              display: 'block',
+              margin: '0 auto',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}
+            onError={(e) => {
+              const img = e.currentTarget;
+              const clean = rawSrc.replace(/^\/+/, '');
+              if (!img.dataset.retryCount) {
+                img.dataset.retryCount = '1';
+                img.src = `./${clean}`;
+              } else if (img.dataset.retryCount === '1') {
+                img.dataset.retryCount = '2';
+                img.src = `/${clean}`;
+              }
+            }}
+          />
+          {altText && (
+            <figcaption
+              style={{
+                marginTop: '0.95rem',
+                fontSize: '0.92rem',
+                color: '#38bdf8',
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <span>🖼️</span>
+              <span>{altText}</span>
+            </figcaption>
+          )}
+        </figure>
+      );
       continue;
     }
 
