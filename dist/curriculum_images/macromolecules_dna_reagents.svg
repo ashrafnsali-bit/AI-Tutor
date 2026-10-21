@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    
+    <!-- Test Tube Gradients -->
+    <linearGradient id="tubeGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="benedictLiquid" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="iodineLiquid" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="sudanLiquid" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#be123c"/>
+      <stop offset="100%" stop-color="#e11d48"/>
+    </linearGradient>
+    <linearGradient id="biuretLiquid" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7e22ce"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 21px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .section-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #38bdf8; text-anchor: middle; }
+    .tube-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .tube-sub { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 11px; fill: #cbd5e1; text-anchor: middle; }
+    .shift-tag { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 10px; font-weight: bold; fill: #facc15; text-anchor: middle; }
+    .dna-label { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #f8fafc; }
+    .dna-desc { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 11px; fill: #94a3b8; }
+  </style>
+
+  <!-- Background -->
+  <rect width="920" height="600" rx="16" fill="url(#bgGrad)"/>
+  <rect x="10" y="10" width="900" height="580" rx="12" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Header Banner -->
+  <rect x="30" y="22" width="860" height="64" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" filter="url(#shadow)"/>
+  <text x="460" y="50" class="title-main">مخطط الجزيئات البيولوجية الكبيرة وكواشف الفحص المخبري وبنية الـ DNA</text>
+  <text x="460" y="72" class="subtitle">High School Biology: Macromolecules, Diagnostic Color Reagents &amp; Nucleotide DNA Double Helix</text>
+
+  <!-- Top Panel: 4 Diagnostic Color Reagents -->
+  <g transform="translate(30, 105)">
+    <rect width="860" height="235" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="430" y="28" class="section-title">الكواشف المعملية الأربعة لتشخيص الجزيئات العضوية الكبيرة</text>
+
+    <!-- Test Tube 1: Benedict's (Glucose) -->
+    <g transform="translate(60, 48)">
+      <rect x="0" y="0" width="165" height="170" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1"/>
+      <text x="82" y="22" class="tube-title">١. كاشف بندكت</text>
+      <text x="82" y="38" class="tube-sub">Benedict's Reagent</text>
+      <!-- Tube Graphic -->
+      <g transform="translate(70, 48)">
+        <path d="M 0,0 L 0,60 A 12,12 0 0,0 24,60 L 24,0 Z" fill="url(#tubeGlass)" stroke="#64748b" stroke-width="1.5"/>
+        <path d="M 1,25 L 1,60 A 11,11 0 0,0 23,60 L 23,25 Z" fill="url(#benedictLiquid)"/>
+        <rect x="-3" y="-3" width="30" height="4" rx="2" fill="#94a3b8"/>
+      </g>
+      <text x="82" y="132" class="shift-tag">أزرق ➔ برتقالي</text>
+      <text x="82" y="152" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#fed7aa" text-anchor="middle">السكريات البسيطة (الجلوكوز)</text>
+    </g>
+
+    <!-- Test Tube 2: Iodine (Starch) -->
+    <g transform="translate(255, 48)">
+      <rect x="0" y="0" width="165" height="170" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+      <text x="82" y="22" class="tube-title">٢. محلول اليود</text>
+      <text x="82" y="38" class="tube-sub">Iodine Solution</text>
+      <!-- Tube Graphic -->
+      <g transform="translate(70, 48)">
+        <path d="M 0,0 L 0,60 A 12,12 0 0,0 24,60 L 24,0 Z" fill="url(#tubeGlass)" stroke="#64748b" stroke-width="1.5"/>
+        <path d="M 1,25 L 1,60 A 11,11 0 0,0 23,60 L 23,25 Z" fill="url(#iodineLiquid)"/>
+        <rect x="-3" y="-3" width="30" height="4" rx="2" fill="#94a3b8"/>
+      </g>
+      <text x="82" y="132" class="shift-tag">برتقالي ➔ أزرق داكن</text>
+      <text x="82" y="152" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#bfdbfe" text-anchor="middle">السكريات المعقدة (النشا)</text>
+    </g>
+
+    <!-- Test Tube 3: Sudan IV (Lipids) -->
+    <g transform="translate(450, 48)">
+      <rect x="0" y="0" width="165" height="170" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1"/>
+      <text x="82" y="22" class="tube-title">٣. كاشف سودان IV</text>
+      <text x="82" y="38" class="tube-sub">Sudan IV Dye</text>
+      <!-- Tube Graphic -->
+      <g transform="translate(70, 48)">
+        <path d="M 0,0 L 0,60 A 12,12 0 0,0 24,60 L 24,0 Z" fill="url(#tubeGlass)" stroke="#64748b" stroke-width="1.5"/>
+        <path d="M 1,20 L 1,35 L 23,35 L 23,20 Z" fill="url(#sudanLiquid)"/>
+        <rect x="-3" y="-3" width="30" height="4" rx="2" fill="#94a3b8"/>
+      </g>
+      <text x="82" y="132" class="shift-tag">حلقة بقع حمراء</text>
+      <text x="82" y="152" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#fecdd3" text-anchor="middle">الليبيدات والدهون والزيوت</text>
+    </g>
+
+    <!-- Test Tube 4: Biuret (Proteins) -->
+    <g transform="translate(645, 48)">
+      <rect x="0" y="0" width="165" height="170" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
+      <text x="82" y="22" class="tube-title">٤. كاشف البيوريت</text>
+      <text x="82" y="38" class="tube-sub">Biuret Reagent</text>
+      <!-- Tube Graphic -->
+      <g transform="translate(70, 48)">
+        <path d="M 0,0 L 0,60 A 12,12 0 0,0 24,60 L 24,0 Z" fill="url(#tubeGlass)" stroke="#64748b" stroke-width="1.5"/>
+        <path d="M 1,25 L 1,60 A 11,11 0 0,0 23,60 L 23,25 Z" fill="url(#biuretLiquid)"/>
+        <rect x="-3" y="-3" width="30" height="4" rx="2" fill="#94a3b8"/>
+      </g>
+      <text x="82" y="132" class="shift-tag">أزرق ➔ بنفسجي</text>
+      <text x="82" y="152" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#e9d5ff" text-anchor="middle">البروتينات (الروابط الببتيدية)</text>
+    </g>
+  </g>
+
+  <!-- Bottom Panel: DNA Double Helix & Nucleotide Structure -->
+  <g transform="translate(30, 355)">
+    <rect width="860" height="225" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="430" y="28" class="section-title">الأحماض النووية: تركيب النيوكليوتيدة واللولب المزدوج (DNA)</text>
+
+    <!-- Left Box: Nucleotide Anatomy -->
+    <g transform="translate(30, 45)">
+      <rect width="400" height="160" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+      <text x="200" y="24" font-family="'Segoe UI', Cairo, sans-serif" font-size="14" font-weight="bold" fill="#38bdf8" text-anchor="middle">تركيب النيوكليوتيدة (وحدة بناء الحمض النووي)</text>
+
+      <!-- Phosphate Circle -->
+      <circle cx="55" cy="65" r="18" fill="#ef4444" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="55" y="70" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">P</text>
+      <text x="55" y="98" font-family="'Segoe UI', Cairo, sans-serif" font-size="10" fill="#fca5a5" text-anchor="middle">مجموعة فوسفات</text>
+
+      <!-- Bond Line -->
+      <line x1="73" y1="65" x2="115" y2="90" stroke="#94a3b8" stroke-width="2"/>
+
+      <!-- Pentose Sugar (Deoxyribose Pentagon) -->
+      <polygon points="145,70 175,90 165,120 125,120 115,90" fill="#3b82f6" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="145" y="102" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">S</text>
+      <text x="145" y="138" font-family="'Segoe UI', Cairo, sans-serif" font-size="10" fill="#93c5fd" text-anchor="middle">سكر خماسي (ديوكسي ريبوز)</text>
+
+      <!-- Bond Line -->
+      <line x1="175" y1="90" x2="215" y2="90" stroke="#94a3b8" stroke-width="2"/>
+
+      <!-- Nitrogenous Base Box -->
+      <rect x="215" y="70" width="80" height="40" rx="4" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <text x="255" y="94" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">A / T / C / G</text>
+      <text x="255" y="125" font-family="'Segoe UI', Cairo, sans-serif" font-size="10" fill="#86efac" text-anchor="middle">قاعدة نيتروجينية</text>
+
+      <!-- Side Rule -->
+      <text x="315" y="75" font-family="'Segoe UI', Cairo, sans-serif" font-size="10" fill="#cbd5e1">✦ A ترتبط مع T برابطتين</text>
+      <text x="315" y="95" font-family="'Segoe UI', Cairo, sans-serif" font-size="10" fill="#cbd5e1">✦ C ترتبط مع G بـ ٣ روابط</text>
+    </g>
+
+    <!-- Right Box: DNA Double Helix Illustration -->
+    <g transform="translate(450, 45)">
+      <rect width="380" height="160" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+      <text x="190" y="24" font-family="'Segoe UI', Cairo, sans-serif" font-size="14" font-weight="bold" fill="#10b981" text-anchor="middle">اللولب المزدوج المتعاكس (Double Helix)</text>
+
+      <!-- Sine Wave Double Strands -->
+      <path d="M 30,55 Q 65,30 100,55 T 170,55 T 240,55 T 310,55 T 350,55" fill="none" stroke="#38bdf8" stroke-width="3"/>
+      <path d="M 30,105 Q 65,130 100,105 T 170,105 T 240,105 T 310,105 T 350,105" fill="none" stroke="#f43f5e" stroke-width="3"/>
+
+      <!-- Hydrogen bonds connecting strands -->
+      <line x1="65" y1="42" x2="65" y2="118" stroke="#facc15" stroke-width="2" stroke-dasharray="3,3"/>
+      <text x="70" y="85" font-family="'Consolas', monospace" font-size="9" fill="#facc15">A = T</text>
+
+      <line x1="135" y1="42" x2="135" y2="118" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3"/>
+      <text x="140" y="85" font-family="'Consolas', monospace" font-size="9" fill="#10b981">G ≡ C</text>
+
+      <line x1="205" y1="42" x2="205" y2="118" stroke="#facc15" stroke-width="2" stroke-dasharray="3,3"/>
+      <text x="210" y="85" font-family="'Consolas', monospace" font-size="9" fill="#facc15">T = A</text>
+
+      <line x1="275" y1="42" x2="275" y2="118" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3"/>
+      <text x="280" y="85" font-family="'Consolas', monospace" font-size="9" fill="#10b981">C ≡ G</text>
+
+      <text x="190" y="145" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">يحمل الشيفرة الوراثية الكاملة لتخليق البروتينات الحيوية</text>
+    </g>
+  </g>
+</svg>

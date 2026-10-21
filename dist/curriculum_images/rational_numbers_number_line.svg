@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Markers -->
+    <marker id="arrowL" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto">
+      <path d="M6,1 L1,4 L6,7 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowR" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto">
+      <path d="M1,1 L6,4 L1,7 z" fill="#38bdf8"/>
+    </marker>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .card-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #38bdf8; text-anchor: middle; }
+    .num-label { font-family: 'Consolas', 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #f8fafc; text-anchor: middle; }
+    .num-label-pos { font-family: 'Consolas', 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #34d399; text-anchor: middle; }
+    .num-label-neg { font-family: 'Consolas', 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #f87171; text-anchor: middle; }
+    .body-desc { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 12px; fill: #cbd5e1; }
+    .set-text { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+  </style>
+
+  <!-- Background -->
+  <rect width="920" height="600" rx="16" fill="url(#bgGrad)"/>
+  <rect x="10" y="10" width="900" height="580" rx="12" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Header Banner -->
+  <rect x="30" y="22" width="860" height="64" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" filter="url(#shadow)"/>
+  <text x="460" y="50" class="title-main">مخطط مجموعة الأعداد النسبية (Q) وخط الأعداد والقيمة المطلقة</text>
+  <text x="460" y="72" class="subtitle">Grade 6 Mathematics: Rational Numbers, Number Line Symmetry &amp; Absolute Value Distance</text>
+
+  <!-- Top Large Card: Interactive Number Line & Absolute Value Distance -->
+  <g transform="translate(30, 105)">
+    <rect width="860" height="235" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="430" y="30" class="card-title">تمثيل الأعداد النسبية والمعكوس الجمعي على خط الأعداد</text>
+
+    <!-- Number Line Horizontal Arrow -->
+    <g transform="translate(50, 110)">
+      <line x1="20" y1="0" x2="740" y2="0" stroke="#38bdf8" stroke-width="3" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+
+      <!-- Center Zero Point -->
+      <line x1="380" y1="-12" x2="380" y2="12" stroke="#facc15" stroke-width="3"/>
+      <circle cx="380" cy="0" r="6" fill="#facc15"/>
+      <text x="380" y="32" class="num-label" fill="#facc15">0</text>
+      <text x="380" y="50" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#facc15" text-anchor="middle">الصفر (المحايد)</text>
+
+      <!-- Positive Integers (Right) -->
+      <!-- +1 -->
+      <line x1="460" y1="-8" x2="460" y2="8" stroke="#34d399" stroke-width="2"/>
+      <circle cx="460" cy="0" r="4" fill="#34d399"/>
+      <text x="460" y="28" class="num-label-pos">+1</text>
+      <!-- +2 -->
+      <line x1="540" y1="-8" x2="540" y2="8" stroke="#34d399" stroke-width="2"/>
+      <circle cx="540" cy="0" r="4" fill="#34d399"/>
+      <text x="540" y="28" class="num-label-pos">+2</text>
+      <!-- +2.5 Fraction Marker -->
+      <line x1="580" y1="-5" x2="580" y2="5" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="2,2"/>
+      <circle cx="580" cy="0" r="3" fill="#fbbf24"/>
+      <text x="580" y="-12" font-family="'Consolas', monospace" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">+2.5</text>
+      <!-- +3 -->
+      <line x1="620" y1="-8" x2="620" y2="8" stroke="#34d399" stroke-width="2"/>
+      <circle cx="620" cy="0" r="4" fill="#34d399"/>
+      <text x="620" y="28" class="num-label-pos">+3</text>
+      <!-- +4 -->
+      <line x1="700" y1="-8" x2="700" y2="8" stroke="#34d399" stroke-width="2"/>
+      <circle cx="700" cy="0" r="4" fill="#34d399"/>
+      <text x="700" y="28" class="num-label-pos">+4</text>
+
+      <!-- Negative Integers (Left) -->
+      <!-- -1 -->
+      <line x1="300" y1="-8" x2="300" y2="8" stroke="#f87171" stroke-width="2"/>
+      <circle cx="300" cy="0" r="4" fill="#f87171"/>
+      <text x="300" y="28" class="num-label-neg">-1</text>
+      <!-- -2 -->
+      <line x1="220" y1="-8" x2="220" y2="8" stroke="#f87171" stroke-width="2"/>
+      <circle cx="220" cy="0" r="4" fill="#f87171"/>
+      <text x="220" y="28" class="num-label-neg">-2</text>
+      <!-- -2.5 Fraction Marker -->
+      <line x1="180" y1="-5" x2="180" y2="5" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="2,2"/>
+      <circle cx="180" cy="0" r="3" fill="#fbbf24"/>
+      <text x="180" y="-12" font-family="'Consolas', monospace" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">-2.5</text>
+      <!-- -3 -->
+      <line x1="140" y1="-8" x2="140" y2="8" stroke="#f87171" stroke-width="2"/>
+      <circle cx="140" cy="0" r="4" fill="#f87171"/>
+      <text x="140" y="28" class="num-label-neg">-3</text>
+      <!-- -4 -->
+      <line x1="60" y1="-8" x2="60" y2="8" stroke="#f87171" stroke-width="2"/>
+      <circle cx="60" cy="0" r="4" fill="#f87171"/>
+      <text x="60" y="28" class="num-label-neg">-4</text>
+
+      <!-- Curved Distance Arc for Absolute Value: |-4| = 4 and |+4| = 4 -->
+      <path d="M 60,-22 Q 220,-75 380,-22" fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="4,4"/>
+      <text x="220" y="-60" font-family="'Consolas', monospace" font-size="14" font-weight="bold" fill="#f87171" text-anchor="middle">مسافة |-4| = 4 وحدات</text>
+
+      <path d="M 380,-22 Q 540,-75 700,-22" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="4,4"/>
+      <text x="540" y="-60" font-family="'Consolas', monospace" font-size="14" font-weight="bold" fill="#34d399" text-anchor="middle">مسافة |+4| = 4 وحدات</text>
+    </g>
+
+    <!-- Bottom Legend inside Top Card -->
+    <g transform="translate(40, 185)">
+      <rect width="780" height="38" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="760" y="24" class="body-desc" text-anchor="end">✦ **المعكوس الجمعي:** العددان المتناظران حول الصفر (مثل +4 و -4) مجموعهما صفر دائماً: a + (-a) = 0</text>
+      <text x="20" y="24" font-family="'Consolas', monospace" font-size="12" font-weight="bold" fill="#facc15">|-x| = |+x| = x (دائماً موجب)</text>
+    </g>
+  </g>
+
+  <!-- Bottom Panel: Venn Diagram of Number Sets & Properties -->
+  <g transform="translate(30, 355)">
+    <!-- Left Card: Nested Sets (Venn Diagram) -->
+    <g transform="translate(0, 0)">
+      <rect width="440" height="225" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+      <text x="220" y="28" class="card-title">مجموعات الأعداد: الطبيعية والصحيحة والنسبية</text>
+
+      <!-- Outer Ellipse: Q (Rational Numbers) -->
+      <ellipse cx="220" cy="125" rx="190" ry="80" fill="#0284c7" fill-opacity="0.15" stroke="#38bdf8" stroke-width="2"/>
+      <text x="55" y="80" class="set-text" fill="#38bdf8">ن (Q)</text>
+      <text x="80" y="100" font-family="'Consolas', monospace" font-size="11" fill="#93c5fd">½, ¾, 0.75, -1.2</text>
+
+      <!-- Middle Ellipse: Z (Integers) -->
+      <ellipse cx="240" cy="135" rx="130" ry="60" fill="#7c3aed" fill-opacity="0.2" stroke="#a78bfa" stroke-width="2"/>
+      <text x="135" y="105" class="set-text" fill="#a78bfa">ص (Z)</text>
+      <text x="155" y="125" font-family="'Consolas', monospace" font-size="11" fill="#c4b5fd">-1, -5, -100</text>
+
+      <!-- Inner Ellipse: N (Natural & Counting) -->
+      <ellipse cx="270" cy="145" rx="75" ry="40" fill="#059669" fill-opacity="0.3" stroke="#34d399" stroke-width="2"/>
+      <text x="240" y="145" class="set-text" fill="#34d399">ط (N)</text>
+      <text x="270" y="160" font-family="'Consolas', monospace" font-size="11" fill="#a7f3d0">0, 1, 2, 3...</text>
+    </g>
+
+    <!-- Right Card: Rules of Comparison & Absolute Value -->
+    <g transform="translate(460, 0)">
+      <rect width="400" height="225" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+      <text x="200" y="28" class="card-title">قواعد المقارنة والقيمة المطلقة</text>
+
+      <g transform="translate(20, 45)">
+        <!-- Rule 1 -->
+        <rect width="360" height="45" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+        <text x="345" y="20" class="body-desc" text-anchor="end">✦ أي عدد موجب أكبر من الصفر ومن أي عدد سالب.</text>
+        <text x="345" y="38" font-family="'Consolas', monospace" font-size="12" fill="#34d399" text-anchor="end">+5 > 0   |   +1 > -1000</text>
+      </g>
+
+      <g transform="translate(20, 98)">
+        <!-- Rule 2 -->
+        <rect width="360" height="45" rx="6" fill="#1e293b" stroke="#f87171" stroke-width="1"/>
+        <text x="345" y="20" class="body-desc" text-anchor="end">✦ بين عددين سالبين: الأقرب للصفر هو الأكبر قيمة.</text>
+        <text x="345" y="38" font-family="'Consolas', monospace" font-size="12" fill="#fca5a5" text-anchor="end">-2 > -9   (لأن -2 أقرب لليمين)</text>
+      </g>
+
+      <g transform="translate(20, 151)">
+        <!-- Rule 3 -->
+        <rect width="360" height="58" rx="6" fill="#1e293b" stroke="#facc15" stroke-width="1"/>
+        <text x="345" y="22" class="body-desc" text-anchor="end">✦ القيمة المطلقة تخرج العدد مجرداً وموجباً دائماً.</text>
+        <text x="345" y="44" font-family="'Consolas', monospace" font-size="13" font-weight="bold" fill="#facc15" text-anchor="end">|-15| = 15   |   |0| = 0   |   -| -7| = -7</text>
+      </g>
+    </g>
+  </g>
+</svg>

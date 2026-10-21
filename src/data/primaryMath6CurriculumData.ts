@@ -119,7 +119,33 @@ export const PRIMARY_MATH_G6_LECTURES: Lecture[] = [
 - بين عددين سالبين: العدد الأقرب إلى الصفر (الأصغر في القيمة المطلقة) هو الأكبر:
   - $-3 > -7$ لأن $-3$ يقع على يمين $-7$ على خط الأعداد.
   - $-\\frac{1}{2} > -\\frac{3}{4}$.
+
+![مخطط مجموعة الأعداد النسبية وخط الأعداد والقيمة المطلقة](/curriculum_images/rational_numbers_number_line.svg)
 `,
+    sections: [
+      {
+        titleAr: 'خط الأعداد والمعكوس والقيمة المطلقة',
+        titleEn: 'Number Line, Inverses & Absolute Value',
+        contentAr: `الأعداد النسبية تشمل الأعداد الطبيعية والصحيحة والكسور:
+- **خط الأعداد:** الصفر يقسم الخط إلى أعداد موجبة يميناً وأعداد سالبة يساراً.
+- **المعكوس الجمعي:** نظير العدد حول الصفر وجمعهما يعطي صفراً: $+a + (-a) = 0$.
+- **القيمة المطلقة $|x|$:** تعبر عن المسافة الهندسية عن الصفر وهي دائماً موجبة.`,
+        contentEn: 'Rational numbers include natural, integers, fractions, and decimals. Absolute value denotes distance from zero on the number line.',
+        diagram: {
+          id: 'diagram-pmath6-rational-line',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط خط الأعداد ومجموعات الأعداد والقيمة المطلقة',
+          titleEn: 'Rational Number Line, Inverses & Absolute Value Diagram',
+          captionAr: 'رسم بياني تعليمي معتمد يوضح تناظر المعكوس الجمعي حول الصفر، وحساب القيمة المطلقة كمسافة، واحتواء مجموعات الأعداد ط ⊂ ص ⊂ ن.',
+          captionEn: 'Standard mathematics diagram illustrating symmetric additive inverses, absolute value distance, and nested sets N ⊂ Z ⊂ Q.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/rational_numbers_number_line.svg',
+          takeawayFormulaAr: '|-a| = |+a| = a (المسافة موجبة دائماً) | الن الأعداد: ط ⊂ ص ⊂ ن',
+          takeawayFormulaEn: '|-a| = |+a| = a (always non-negative distance) | N ⊂ Z ⊂ Q'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-math6-1',
       titleAr: 'تقييم المحاضرة 1: الأعداد النسبية والقيمة المطلقة',

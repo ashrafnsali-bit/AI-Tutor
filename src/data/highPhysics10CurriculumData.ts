@@ -197,13 +197,28 @@ Principle of Dimensional Homogeneity dictates that left and right sides of any v
   (الناتج كمية قياسية، ويكون أقصى ما يمكن عندما يكون المتجهان متوازيين θ = 0°، وينعدم عندما يتعامدان θ = 90°).
 - **الضرب الاتجاهي (Cross Product)**:
   \`A × B = |A| |B| sin(θ) · n̂\`
-  (الناتج كمية متجهة عمودية على المستوى المشترك، ويكون أقصى ما يمكن عند التعامد θ = 90°، وينعدم عند التوازي θ = 0°).`,
+  (الناتج كمية متجهة عمودية على المستوى المشترك، ويكون أقصى ما يمكن عند التعامد θ = 90°، وينعدم عند التوازي θ = 0°).
+
+![مخطط تحليل المتجهات إلى مركبتين متعامدتين والضرب القياسي والاتجاهي](/curriculum_images/vector_resolution_components.svg)`,
         contentEn: `Vector resolution breaks an arbitrary vector into orthogonal Cartesian coordinates:
 - Ax = A cos(θ)
 - Ay = A sin(θ)
 Multiplication paradigms:
 - Dot Product: A · B = |A| |B| cos(θ) (Scalar output; max at parallel 0°).
-- Cross Product: A × B = |A| |B| sin(θ) n̂ (Vector output perpendicular via Right-Hand Rule; max at perpendicular 90°).`
+- Cross Product: A × B = |A| |B| sin(θ) n̂ (Vector output perpendicular via Right-Hand Rule; max at perpendicular 90°).`,
+        diagram: {
+          id: 'diagram-phys10-vectors',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط تحليل المتجهات والضرب القياسي والاتجاهي',
+          titleEn: 'Vector Resolution & Dot/Cross Products Diagram',
+          captionAr: 'رسم بياني علمي يوضح تحليل المتجه إلى مركبتين متعامدتين في المستوى الديكارتي، والمقارنة الهندسية بين الضرب القياسي والاتجاهي وقاعدة اليد اليمنى.',
+          captionEn: 'Standard physics diagram illustrating vector resolution into Ax and Ay, with geometric comparison between dot and cross products.',
+          diagramType: 'forces_motion_vector',
+          imageUrl: '/curriculum_images/vector_resolution_components.svg',
+          takeawayFormulaAr: 'Ax = A cos(θ) | Ay = A sin(θ) | A · B = AB cos(θ) | A × B = AB sin(θ) n̂',
+          takeawayFormulaEn: 'Ax = A cos(θ) | Ay = A sin(θ) | Dot: AB cos(θ) | Cross: AB sin(θ) n̂'
+        }
       }
     ],
 

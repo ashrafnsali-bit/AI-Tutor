@@ -174,34 +174,8 @@ export const PRIMARY_SCIENCE_G3_LECTURES: Lecture[] = [
 
 ---
 
-### 4. Interactive Diagram: The Digestive System & Life Skills
-\`\`\`xml
-<svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family:system-ui, sans-serif;">
-  <rect width="720" height="250" fill="#0f172a" rx="16"/>
-  
-  <!-- Digestive System Pathway -->
-  <g transform="translate(20, 20)">
-    <rect width="330" height="210" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="12"/>
-    <text x="165" y="30" fill="#38bdf8" font-size="15" font-weight="bold" text-anchor="middle">مسار الجهاز الهضمي (Digestive Journey)</text>
-    <text x="20" y="65" fill="#f8fafc" font-size="13">👄 <tspan fill="#38bdf8" font-weight="bold">1. الفم والأسنان:</tspan> مضغ + لعاب (Saliva)</text>
-    <text x="20" y="100" fill="#f8fafc" font-size="13">🥖 <tspan fill="#38bdf8" font-weight="bold">2. المريء (Esophagus):</tspan> توصيل الطعام للمعدة</text>
-    <text x="20" y="135" fill="#f8fafc" font-size="13">🫘 <tspan fill="#38bdf8" font-weight="bold">3. المعدة (Stomach):</tspan> عصارات حامضية وخفق</text>
-    <text x="20" y="170" fill="#f8fafc" font-size="13">🌀 <tspan fill="#34d399" font-weight="bold">4. الأمعاء الدقيقة:</tspan> امتصاص الغذاء للدم</text>
-    <text x="20" y="200" fill="#f8fafc" font-size="13">🧻 <tspan fill="#f59e0b" font-weight="bold">5. الأمعاء الغليظة:</tspan> امتصاص الماء والفضلات</text>
-  </g>
-
-  <!-- 7 Life Skills & Nutrition -->
-  <g transform="translate(370, 20)">
-    <rect width="330" height="210" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="12"/>
-    <text x="165" y="30" fill="#34d399" font-size="15" font-weight="bold" text-anchor="middle">مهارات الحياة الـ 7 والتغذية المتوازنة</text>
-    <text x="20" y="65" fill="#f8fafc" font-size="12">🗣️ <tspan fill="#34d399" font-weight="bold">Communication:</tspan> التعبير والاستماع الإيجابي</text>
-    <text x="20" y="95" fill="#f8fafc" font-size="12">🧠 <tspan fill="#34d399" font-weight="bold">Critical Thinking:</tspan> التفكير والتحليل الذكي</text>
-    <text x="20" y="125" fill="#f8fafc" font-size="12">⏰ <tspan fill="#34d399" font-weight="bold">Self-Management:</tspan> تنظيم الوقت والخيارات</text>
-    <text x="20" y="155" fill="#f8fafc" font-size="12">🤝 <tspan fill="#34d399" font-weight="bold">Collaboration & Empathy:</tspan> التعاون والتعاطف</text>
-    <text x="20" y="185" fill="#fbbf24" font-size="12" font-weight="bold">🥗 الطبق الصحي: كربوهيدرات + بروتين + خضار + ماء</text>
-  </g>
-</svg>
-\`\`\`
+### 4. مخطط رحلة الطعام في الجهاز الهضمي للإنسان
+![مخطط تشريح الجهاز الهضمي ورحلة الطعام في جسم الإنسان](/curriculum_images/human_digestive_system_anatomy.svg)
 `,
     mainContentEn: `
 ### 1. Essential Life Skills (Edu 2.0 Framework)

@@ -99,8 +99,35 @@ export const HIGH_BIO_G10_LECTURES: Lecture[] = [
       {
         titleAr: '2. البروتينات والأحماض النووية والكواشف المعملية',
         titleEn: '2. Proteins, Nucleic Acids & Diagnostic Tests',
-        contentAr: '1) البروتينات (Proteins):\n- تتكون من سلاسل عديد الببتيد المرتبطة بروابط ببتيدية.\n- تدخل في تركيب الإنزيمات، الهرمونات، الأجسام المضادة، والعضلات والأظافر والشعر.\n\n2) الأحماض النووية ($DNA$ و $RNA$):\n- $DNA$: لولب مزدوج يحتوي على سكر ديوكسي ريبوز والقواعد $A, T, C, G$ ويحمل المعلومات الوراثية.\n- $RNA$: شريط مفرد يحتوي على سكر ريبوز والقواعد $A, U, C, G$ ويصنع البروتين.\n\n3) الكواشف المخبرية:\n- كاشف بندكت: أزرق ⟹ برتقالي (مع الجلوكوز).\n- كاشف اليود: برتقالي ⟹ أزرق داكن (مع النشا).\n- كاشف سودان IV: يذوب مكوناً حلقة حمراء (مع الدهون).\n- كاشف البيوريت: أزرق ⟹ بنفسجي (مع البروتين).',
-        contentEn: 'Proteins provide structural and enzymatic functions. DNA/RNA store and translate genetic code. Diagnostic reagents identify macromolecule classes by distinct color shifts.'
+        contentAr: `1) البروتينات (Proteins):
+- تتكون من سلاسل عديد الببتيد المرتبطة بروابط ببتيدية.
+- تدخل في تركيب الإنزيمات، الهرمونات، الأجسام المضادة، والعضلات والأظافر والشعر.
+
+2) الأحماض النووية ($DNA$ و $RNA$):
+- $DNA$: لولب مزدوج يحتوي على سكر ديوكسي ريبوز والقواعد $A, T, C, G$ ويحمل المعلومات الوراثية.
+- $RNA$: شريط مفرد يحتوي على سكر ريبوز والقواعد $A, U, C, G$ ويصنع البروتين.
+
+3) الكواشف المخبرية:
+- كاشف بندكت: أزرق ⟹ برتقالي (مع الجلوكوز).
+- كاشف اليود: برتقالي ⟹ أزرق داكن (مع النشا).
+- كاشف سودان IV: يذوب مكوناً حلقة حمراء (مع الدهون).
+- كاشف البيوريت: أزرق ⟹ بنفسجي (مع البروتين).
+
+![مخطط الجزيئات البيولوجية الكبيرة وكواشف الفحص المخبري وبنية الـ DNA](/curriculum_images/macromolecules_dna_reagents.svg)`,
+        contentEn: 'Proteins provide structural and enzymatic functions. DNA/RNA store and translate genetic code. Diagnostic reagents identify macromolecule classes by distinct color shifts.',
+        diagram: {
+          id: 'diagram-bio10-macromolecules-dna',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط كواشف الفحص المخبري للجزيئات الكبيرة وبنية الـ DNA',
+          titleEn: 'Biochemical Reagent Color Shifts & DNA Architecture Diagram',
+          captionAr: 'دليل مرئي معتمد يوضح التحولات اللونية لكواشف بندكت واليود وسودان IV والبيوريت، وتفاصيل النيوكليوتيدة واللولب المزدوج للـ DNA.',
+          captionEn: 'Standard biological diagram displaying test-tube color shifts for diagnostic reagents and DNA double helix nucleotide components.',
+          diagramType: 'dna_cell_biology',
+          imageUrl: '/curriculum_images/macromolecules_dna_reagents.svg',
+          takeawayFormulaAr: 'بندكت (أزرق ➔ برتقالي سكر) | يود (برتقالي ➔ أزرق نشا) | بيوريت (أزرق ➔ بنفسجي بروتين) | A=T و G≡C',
+          takeawayFormulaEn: 'Benedict (blue ➔ orange) | Iodine (orange ➔ dark blue) | Biuret (blue ➔ purple) | A=T & G≡C'
+        }
       }
     ],
 
