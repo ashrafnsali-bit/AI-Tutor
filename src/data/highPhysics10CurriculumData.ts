@@ -561,13 +561,28 @@ Circular dynamics:
 **2. قانون الجذب العام لنيوتن (Universal Gravitation)**:
 كل كتلتين في الكون تجذب كل منهما الأخرى بقوة تتناسب طردياً مع حاصل ضرب الكتلتين وعكسياً مع مربع المسافة بين مركزيهما:
 \`F = G · (m1 · m2) / r²\`
-حيث G هو ثابت الجذب العام: \`6.67 × 10⁻¹¹ N·m²/kg²\`.`,
+حيث G هو ثابت الجذب العام: \`6.67 × 10⁻¹¹ N·m²/kg²\`.
+
+![مخطط قوانين نيوتن الثلاثة للحركة وقانون الجذب العام للكون وميكانيكا القوى](/curriculum_images/newton_laws_motion_mechanics.svg)`,
         contentEn: `Newton's laws of dynamic mechanics:
 1. First Law (Inertia): ΣF = 0 preserves state of rest or uniform linear motion.
 2. Second Law: F = m · a = dp/dt.
 3. Third Law: Action-reaction pair F_action = -F_reaction acting on distinct physical bodies.
 Universal Gravitation:
-F = G (m1 m2) / r², where G = 6.67 × 10⁻¹¹ N·m²/kg².`
+F = G (m1 m2) / r², where G = 6.67 × 10⁻¹¹ N·m²/kg².`,
+        diagram: {
+          id: 'diagram-high-phys10-newton',
+          figureNumberAr: 'شكل فيزيائي (٥-١)',
+          figureNumberEn: 'Physics Figure (5-1)',
+          titleAr: 'مخطط قوانين نيوتن الثلاثة للحركة وقانون الجذب العام للكون',
+          titleEn: 'Newton\'s Laws of Motion & Universal Gravitation',
+          captionAr: 'رسم توضيحي شامل لقوانين نيوتن: القصور الذاتي (ΣF=0)، قانون القوة والتسارع (F=m·a)، الفعل ورد الفعل (F1 = -F2)، وقانون الجذب العام مع الأمثلة المعيارية.',
+          captionEn: 'Comprehensive vector diagram showing Newton\'s laws of motion, inertia, force equation F=ma, action-reaction, and universal gravity.',
+          diagramType: 'forces_motion_vector',
+          imageUrl: '/curriculum_images/newton_laws_motion_mechanics.svg',
+          takeawayFormulaAr: 'F = m · a  |  ΣF = 0  |  F₁ = -F₂  |  F = G · (m₁ · m₂) / r²',
+          takeawayFormulaEn: 'F = m · a  |  ΣF = 0  |  F₁ = -F₂  |  F = G · (m₁ · m₂) / r²'
+        }
       }
     ],
 

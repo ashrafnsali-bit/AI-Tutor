@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#070a12"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.98"/>
+    </linearGradient>
+
+    <!-- Radial Circle Glow -->
+    <radialGradient id="circleDisc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0369a1" stop-opacity="0.25"/>
+      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#0c4a6e" stop-opacity="0.0"/>
+    </radialGradient>
+
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+
+    <marker id="arrowMath" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0.5 L 6 3.5 L 0 6.5 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="960" height="620" fill="url(#bgGrad)"/>
+  <rect x="12" y="12" width="936" height="596" rx="18" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- HEADER -->
+  <g id="headerGroup">
+    <rect x="25" y="24" width="910" height="64" rx="14" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" filter="url(#softShadow)"/>
+    <circle cx="58" cy="56" r="20" fill="#0284c7" opacity="0.2"/>
+    <circle cx="58" cy="56" r="14" fill="none" stroke="#38bdf8" stroke-width="2"/>
+    <circle cx="58" cy="56" r="3" fill="#fbbf24"/>
+    
+    <text x="95" y="48" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="20" font-weight="bold" fill="#f8fafc">
+      مخطط هندسة ونظريات الدائرة (Circle Geometry &amp; Theorems)
+    </text>
+    <text x="95" y="70" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="12.5" fill="#94a3b8">
+      المفاهيم الهندسية المعتمدة: الزوايا المركزية والمحيطية، زاوية نصف الدائرة، الأوتار والمماسات، وقوانين المحيط والمساحة
+    </text>
+    <rect x="800" y="38" width="120" height="36" rx="8" fill="#1e293b" stroke="#0ea5e9" stroke-width="1"/>
+    <text x="860" y="61" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+      الرياضيات - الهندسة
+    </text>
+  </g>
+
+  <!-- LEFT PANEL: GEOMETRIC CIRCLE VISUALIZATION -->
+  <g id="circleVisualGroup" transform="translate(30, 105)">
+    <rect width="520" height="490" rx="16" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5" filter="url(#softShadow)"/>
+    
+    <text x="260" y="32" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="16" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+      الرسم الهندسي التفاعلي للدائرة (Center M, Radius r)
+    </text>
+
+    <!-- Main Circle (Center: (260, 260), Radius: 160) -->
+    <circle cx="260" cy="260" r="160" fill="url(#circleDisc)" stroke="#38bdf8" stroke-width="2.5"/>
+
+    <!-- Intercepted Arc AB (Highlighted in Amber) -->
+    <!-- Arc from Angle 50° to 130° around center (260, 260) -->
+    <!-- Point A at (260 + 160*cos(50°) = 363, 260 + 160*sin(50°) = 383) -->
+    <!-- Point B at (260 - 160*cos(50°) = 157, 260 + 160*sin(50°) = 383) -->
+    <path d="M 363 383 A 160 160 0 0 1 157 383" fill="none" stroke="#fbbf24" stroke-width="6" stroke-linecap="round"/>
+    <text x="260" y="405" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fef08a" text-anchor="middle">القوس الأصغر المشترك (Arc AB)</text>
+
+    <!-- Center Point M -->
+    <circle cx="260" cy="260" r="5" fill="#f59e0b"/>
+    <text x="275" y="255" font-family="'Cairo', sans-serif" font-size="15" font-weight="bold" fill="#fbbf24">M (المركز)</text>
+
+    <!-- 1. Central Angle (الزاوية المركزية AMB) -->
+    <line x1="260" y1="260" x2="363" y2="383" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="260" y1="260" x2="157" y2="383" stroke="#f59e0b" stroke-width="2"/>
+    <!-- Central Angle Arc indicator -->
+    <path d="M 285 290 A 35 35 0 0 1 235 290" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <text x="260" y="315" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2θ = 80°</text>
+    <text x="260" y="332" font-family="'Cairo', sans-serif" font-size="10" fill="#fef08a" text-anchor="middle">زاوية مركزية</text>
+
+    <!-- 2. Inscribed Angle (الزاوية المحيطية ACB on top) -->
+    <!-- Point C at (260, 100) (top of circle) -->
+    <circle cx="260" cy="100" r="5" fill="#10b981"/>
+    <text x="260" y="88" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#34d399" text-anchor="middle">C (رأس المحيطية)</text>
+    
+    <line x1="260" y1="100" x2="363" y2="383" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+    <line x1="260" y1="100" x2="157" y2="383" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+    <!-- Inscribed Angle Arc indicator -->
+    <path d="M 270 128 A 30 30 0 0 1 250 128" fill="none" stroke="#10b981" stroke-width="2"/>
+    <text x="260" y="148" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#34d399" text-anchor="middle">θ = 40°</text>
+    <text x="260" y="165" font-family="'Cairo', sans-serif" font-size="10" fill="#6ee7b7" text-anchor="middle">زاوية محيطية = نصف المركزية</text>
+
+    <!-- Points A and B -->
+    <circle cx="363" cy="383" r="5" fill="#fbbf24"/>
+    <text x="382" y="392" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="bold" fill="#fef08a">A</text>
+    <circle cx="157" cy="383" r="5" fill="#fbbf24"/>
+    <text x="138" y="392" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="bold" fill="#fef08a">B</text>
+
+    <!-- 3. Diameter (القطر) & Inscribed Right Angle in Semicircle -->
+    <!-- Horizontal Diameter through M: from (100, 260) to (420, 260) -->
+    <!-- Let's show Tangent on the right: at (420, 260) -->
+    <line x1="260" y1="260" x2="420" y2="260" stroke="#38bdf8" stroke-width="2"/>
+    <text x="340" y="250" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#7dd3fc">نصف القطر r</text>
+
+    <!-- Tangent Line at P (420, 260) -->
+    <line x1="420" y1="130" x2="420" y2="390" stroke="#f43f5e" stroke-width="2.5"/>
+    <circle cx="420" cy="260" r="5" fill="#f43f5e"/>
+    <text x="430" y="252" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fda4af">نقطة التماس P</text>
+    <text x="430" y="150" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#f43f5e">المماس (Tangent)</text>
+
+    <!-- 90 degree right angle symbol at contact point -->
+    <rect x="408" y="248" width="12" height="12" fill="none" stroke="#f43f5e" stroke-width="1.5"/>
+
+    <!-- Chord CD on Left -->
+    <line x1="110" y1="210" x2="135" y2="330" stroke="#a855f7" stroke-width="2.5"/>
+    <text x="75" y="275" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#c084fc">وتر (Chord)</text>
+
+    <!-- Radius/Perpendicular to Chord -->
+    <line x1="260" y1="260" x2="122" y2="270" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3"/>
+  </g>
+
+  <!-- RIGHT PANEL: THEOREMS & GOLDEN FORMULAS -->
+  <g id="theoremsGroup" transform="translate(570, 105)">
+    <rect width="360" height="490" rx="16" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5" filter="url(#softShadow)"/>
+    
+    <text x="180" y="32" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="16" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+      نظريات وقوانين الدائرة المعتمدة
+    </text>
+
+    <!-- Theorem 1: Inscribed vs Central -->
+    <rect x="15" y="50" width="330" height="74" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+    <text x="25" y="70" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#34d399">1. نظرية الزاوية المحيطية والمركزية:</text>
+    <text x="25" y="90" font-family="'Cairo', sans-serif" font-size="10.5" fill="#cbd5e1">«قياس الزاوية المحيطية يساوي نصف قياس الزاوية المركزية المشتركة معها في نفس القوس».</text>
+    <text x="25" y="110" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="bold" fill="#fef08a">m(∠ACB) = 1/2 · m(∠AMB) = 1/2 · قياس القوس</text>
+
+    <!-- Theorem 2: Semicircle Angle -->
+    <rect x="15" y="132" width="330" height="70" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <text x="25" y="152" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8">2. الزاوية المحيطية في نصف دائرة:</text>
+    <text x="25" y="172" font-family="'Cairo', sans-serif" font-size="10.5" fill="#cbd5e1">«الزاوية المحيطية المرسومة في نصف دائرة (تقابل قطراً) تكون دائماً زاوية قائمة قياسها 90°».</text>
+    <text x="25" y="191" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="bold" fill="#7dd3fc">m(∠نصف الدائرة) = 90° (قائمة دائماً)</text>
+
+    <!-- Theorem 3: Tangent & Radius -->
+    <rect x="15" y="210" width="330" height="74" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1"/>
+    <text x="25" y="230" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#fda4af">3. نظرية المماس ونصف القطر:</text>
+    <text x="25" y="250" font-family="'Cairo', sans-serif" font-size="10.5" fill="#cbd5e1">«المماس للدائرة يكون عمودياً على نصف القطر المرسوم من نقطة التماس» (MP ⟂ Tangent).</text>
+    <text x="25" y="271" font-family="'Cairo', sans-serif" font-size="10.5" font-weight="bold" fill="#fecdd3">• المماسان المرسومان من نقطة خارج دائرة متساويان في الطول.</text>
+
+    <!-- Golden Formulas Box -->
+    <rect x="15" y="292" width="330" height="182" rx="10" fill="#0b1329" stroke="#fbbf24" stroke-width="1.2"/>
+    <text x="180" y="316" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#fbbf24" text-anchor="middle">📐 القوانين الرياضية الذهبية للدائرة</text>
+
+    <!-- Formula 1: Circumference -->
+    <rect x="25" y="328" width="310" height="42" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="347" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#e2e8f0">محيط الدائرة (Circumference):</text>
+    <text x="35" y="362" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8">C = 2 · π · r  أو  C = π · d  (π ≈ 3.14 أو 22/7)</text>
+
+    <!-- Formula 2: Area -->
+    <rect x="25" y="376" width="310" height="42" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="395" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#e2e8f0">مساحة الدائرة (Circle Area):</text>
+    <text x="35" y="410" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#34d399">A = π · r²  (المساحة = ط × نق²)</text>
+
+    <!-- Formula 3: Arc Length -->
+    <rect x="25" y="424" width="310" height="42" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="443" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#e2e8f0">طول القوس (Arc Length):</text>
+    <text x="35" y="458" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24">L = (θ° / 360°) · 2 · π · r</text>
+  </g>
+</svg>

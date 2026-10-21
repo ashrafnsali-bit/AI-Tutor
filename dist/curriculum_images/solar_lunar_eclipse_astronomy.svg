@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient Space Theme -->
+    <linearGradient id="spaceBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050814"/>
+      <stop offset="50%" stop-color="#0c1222"/>
+      <stop offset="100%" stop-color="#04060d"/>
+    </linearGradient>
+
+    <!-- Sun Radiant Gradient -->
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="25%" stop-color="#fef08a"/>
+      <stop offset="60%" stop-color="#f59e0b"/>
+      <stop offset="90%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </radialGradient>
+
+    <!-- Earth Gradient -->
+    <radialGradient id="earthGrad" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="35%" stop-color="#0284c7"/>
+      <stop offset="70%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+
+    <!-- Moon Gradients -->
+    <radialGradient id="moonGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#f1f5f9"/>
+      <stop offset="60%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </radialGradient>
+
+    <radialGradient id="bloodMoonGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fca5a5"/>
+      <stop offset="60%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#450a0a"/>
+    </radialGradient>
+
+    <!-- Umbra Cone Gradients -->
+    <linearGradient id="umbraGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Penumbra Cone Gradients -->
+    <linearGradient id="penumbraGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.04"/>
+    </linearGradient>
+
+    <filter id="coronaBlur">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Deep Space Canvas -->
+  <rect width="960" height="620" fill="url(#spaceBg)"/>
+  <rect x="12" y="12" width="936" height="596" rx="18" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Tiny Stars in Background -->
+  <g fill="#94a3b8" opacity="0.4">
+    <circle cx="50" cy="80" r="1.2"/>
+    <circle cx="120" cy="180" r="1"/>
+    <circle cx="280" cy="60" r="1.5"/>
+    <circle cx="450" cy="110" r="1"/>
+    <circle cx="700" cy="70" r="1.2"/>
+    <circle cx="880" cy="140" r="1.5"/>
+    <circle cx="920" cy="340" r="1"/>
+    <circle cx="640" cy="540" r="1.2"/>
+    <circle cx="340" cy="570" r="1"/>
+    <circle cx="100" cy="480" r="1.5"/>
+  </g>
+
+  <!-- HEADER -->
+  <g id="headerGroup">
+    <rect x="25" y="24" width="910" height="64" rx="14" fill="#0b1120" stroke="#f59e0b" stroke-width="1.5"/>
+    <circle cx="58" cy="56" r="20" fill="#f59e0b" opacity="0.2"/>
+    <circle cx="58" cy="56" r="13" fill="url(#sunGlow)"/>
+    <circle cx="62" cy="56" r="11" fill="#0b1120"/>
+    
+    <text x="95" y="48" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="20" font-weight="bold" fill="#f8fafc">
+      مخطط ظاهرتي كسوف الشمس وخسوف القمر (Solar &amp; Lunar Eclipses)
+    </text>
+    <text x="95" y="70" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="12.5" fill="#94a3b8">
+      المقارنة الفلكية الشاملة: مسارات الضوء، منطقة الظل التام (Umbra)، شبه الظل (Penumbra)، وشروط الرؤية والسلامة
+    </text>
+    <rect x="800" y="38" width="120" height="36" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+    <text x="860" y="61" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">
+      علوم الفضاء والكون
+    </text>
+  </g>
+
+  <!-- UPPER SECTION: SOLAR ECLIPSE (كسوف الشمس) -->
+  <g id="solarEclipseGroup" transform="translate(30, 105)">
+    <!-- Section Border Card -->
+    <rect x="0" y="0" width="900" height="235" rx="14" fill="#0a0f1d" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2"/>
+
+    <!-- Section Badge -->
+    <rect x="15" y="12" width="220" height="30" rx="6" fill="#451a03" stroke="#f59e0b" stroke-width="1"/>
+    <text x="125" y="32" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#fef08a" text-anchor="middle">
+      1. كسوف الشمس (Solar Eclipse)
+    </text>
+    <text x="245" y="32" font-family="'Cairo', sans-serif" font-size="11" fill="#cbd5e1">
+      الترتيب: [الشمس ☀️] ⟵ [القمر 🌑] ⟵ [الأرض 🌍] (يحدث نهاراً عند ولادة الهلال)
+    </text>
+
+    <!-- SUN (Left) -->
+    <g id="solarSun">
+      <circle cx="80" cy="130" r="50" fill="url(#sunGlow)" filter="url(#coronaBlur)"/>
+      <circle cx="80" cy="130" r="42" fill="url(#sunGlow)"/>
+      <text x="80" y="136" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#451a03" text-anchor="middle">الشمس</text>
+    </g>
+
+    <!-- LIGHT RAYS & CONES -->
+    <!-- Penumbra Rays (Light Cyan) -->
+    <polygon points="80,88 470,123 680,80 680,180 470,137 80,172" fill="url(#penumbraGrad)"/>
+    <line x1="80" y1="88" x2="680" y2="180" stroke="#38bdf8" stroke-width="0.8" stroke-dasharray="3"/>
+    <line x1="80" y1="172" x2="680" y2="80" stroke="#38bdf8" stroke-width="0.8" stroke-dasharray="3"/>
+
+    <!-- Umbra Cone (Dark Shadow) -->
+    <polygon points="80,95 470,122 580,130 470,138 80,165" fill="url(#umbraGrad)"/>
+    <line x1="80" y1="95" x2="580" y2="130" stroke="#e2e8f0" stroke-width="1" stroke-opacity="0.6"/>
+    <line x1="80" y1="165" x2="580" y2="130" stroke="#e2e8f0" stroke-width="1" stroke-opacity="0.6"/>
+
+    <!-- MOON (Center) -->
+    <g id="solarMoon">
+      <circle cx="470" cy="130" r="16" fill="url(#moonGrad)" stroke="#475569" stroke-width="1"/>
+      <text x="470" y="105" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#f1f5f9" text-anchor="middle">القمر (يحجب الشمس)</text>
+    </g>
+
+    <!-- EARTH (Right) -->
+    <g id="solarEarth">
+      <circle cx="680" cy="130" r="38" fill="url(#earthGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+      <!-- Shadow patch on Earth -->
+      <!-- Umbra dot (Total Eclipse point) -->
+      <circle cx="642" cy="130" r="4.5" fill="#000000" stroke="#f43f5e" stroke-width="1"/>
+      <!-- Penumbra area (Partial Eclipse) -->
+      <ellipse cx="645" cy="130" rx="8" ry="18" fill="#0284c7" opacity="0.4"/>
+      <text x="680" y="185" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">الأرض (الجانب النهاري)</text>
+    </g>
+
+    <!-- ANNOTATIONS -->
+    <!-- Umbra Label -->
+    <line x1="560" y1="130" x2="560" y2="65" stroke="#f43f5e" stroke-width="1"/>
+    <rect x="500" y="50" width="130" height="24" rx="4" fill="#450a0a" stroke="#f43f5e" stroke-width="1"/>
+    <text x="565" y="66" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#fca5a5" text-anchor="middle">الظل التام (Umbra) ➔ كلي</text>
+
+    <!-- Penumbra Label -->
+    <line x1="620" y1="102" x2="620" y2="40" stroke="#38bdf8" stroke-width="1"/>
+    <rect x="565" y="25" width="140" height="24" rx="4" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1"/>
+    <text x="635" y="41" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#7dd3fc" text-anchor="middle">شبه الظل (Penumbra) ➔ جزئي</text>
+
+    <!-- Safety Warning Card -->
+    <rect x="740" y="55" width="145" height="130" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1"/>
+    <text x="812" y="78" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#a5b4fc" text-anchor="middle">⚠️ تنبيه السلامة</text>
+    <text x="750" y="98" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e0e7ff">لا تنظر إطلاقاً للشمس</text>
+    <text x="750" y="114" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e0e7ff">بالعين المجردة وقت</text>
+    <text x="750" y="130" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e0e7ff">الكسوف لمنع تلف الشبكية؛</text>
+    <text x="750" y="148" font-family="'Cairo', sans-serif" font-size="9.5" font-weight="bold" fill="#38bdf8">استخدم نظارات معتمدة!</text>
+  </g>
+
+  <!-- LOWER SECTION: LUNAR ECLIPSE (خسوف القمر) -->
+  <g id="lunarEclipseGroup" transform="translate(30, 355)">
+    <!-- Section Border Card -->
+    <rect x="0" y="0" width="900" height="235" rx="14" fill="#0a0f1d" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.2"/>
+
+    <!-- Section Badge -->
+    <rect x="15" y="12" width="220" height="30" rx="6" fill="#082f49" stroke="#38bdf8" stroke-width="1"/>
+    <text x="125" y="32" font-family="'Cairo', sans-serif" font-size="13" font-weight="bold" fill="#7dd3fc" text-anchor="middle">
+      2. خسوف القمر (Lunar Eclipse)
+    </text>
+    <text x="245" y="32" font-family="'Cairo', sans-serif" font-size="11" fill="#cbd5e1">
+      الترتيب: [الشمس ☀️] ⟵ [الأرض 🌍] ⟵ [القمر 🌕] (يحدث ليلاً عندما يكون القمر بدراً)
+    </text>
+
+    <!-- SUN (Left) -->
+    <g id="lunarSun">
+      <circle cx="80" cy="130" r="50" fill="url(#sunGlow)" filter="url(#coronaBlur)"/>
+      <circle cx="80" cy="130" r="42" fill="url(#sunGlow)"/>
+      <text x="80" y="136" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#451a03" text-anchor="middle">الشمس</text>
+    </g>
+
+    <!-- LIGHT RAYS & EARTH'S SHADOW CONES -->
+    <!-- Earth's Penumbra Cone -->
+    <polygon points="80,88 470,105 790,50 790,210 470,155 80,172" fill="url(#penumbraGrad)"/>
+    <line x1="80" y1="88" x2="790" y2="210" stroke="#38bdf8" stroke-width="0.8" stroke-dasharray="3"/>
+    <line x1="80" y1="172" x2="790" y2="50" stroke="#38bdf8" stroke-width="0.8" stroke-dasharray="3"/>
+
+    <!-- Earth's Umbra Cone (Tapering behind Earth) -->
+    <polygon points="80,95 470,110 740,130 470,150 80,165" fill="url(#umbraGrad)"/>
+    <line x1="80" y1="95" x2="740" y2="130" stroke="#94a3b8" stroke-width="1" stroke-opacity="0.6"/>
+    <line x1="80" y1="165" x2="740" y2="130" stroke="#94a3b8" stroke-width="1" stroke-opacity="0.6"/>
+
+    <!-- EARTH (Center) -->
+    <g id="lunarEarth">
+      <circle cx="470" cy="130" r="38" fill="url(#earthGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="470" y="185" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">الأرض (تحجب ضوء الشمس)</text>
+    </g>
+
+    <!-- MOON IN EARTH'S SHADOW (Right) -->
+    <!-- Moon 1: In Umbra (Total Lunar Eclipse - Blood Moon) -->
+    <g id="lunarMoonUmbra">
+      <circle cx="660" cy="130" r="16" fill="url(#bloodMoonGrad)" stroke="#f43f5e" stroke-width="1.5" filter="url(#softGlow)"/>
+      <text x="660" y="105" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#fca5a5" text-anchor="middle">خسوف كلي (القمر الدامي)</text>
+      <text x="660" y="165" font-family="'Cairo', sans-serif" font-size="9.5" fill="#fecdd3" text-anchor="middle">داخل ظل الأرض التام</text>
+    </g>
+
+    <!-- Moon 2: In Penumbra (Penumbra Lunar Eclipse) -->
+    <g id="lunarMoonPenumbra">
+      <circle cx="730" cy="75" r="13" fill="url(#moonGrad)" opacity="0.6" stroke="#94a3b8" stroke-width="1"/>
+      <text x="730" y="55" font-family="'Cairo', sans-serif" font-size="9.5" fill="#cbd5e1" text-anchor="middle">خسوف شبه الظل (خافت)</text>
+    </g>
+
+    <!-- Summary Box on the right -->
+    <rect x="760" y="55" width="125" height="135" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="822" y="78" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">💡 حقائق علمية</text>
+    <text x="768" y="100" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e2e8f0">• آمن تماماً للعين.</text>
+    <text x="768" y="118" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e2e8f0">• يستمر لساعات.</text>
+    <text x="768" y="136" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e2e8f0">• احمرار القمر بسبب</text>
+    <text x="768" y="152" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e2e8f0">تشتت رايلي لأشعة</text>
+    <text x="768" y="168" font-family="'Cairo', sans-serif" font-size="9.5" fill="#e2e8f0">الشمس بغلاف الأرض.</text>
+  </g>
+</svg>

@@ -190,8 +190,23 @@ export const SUDAN_PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 - تناول الغذاء المتوازن وشرب كميات كافية من الماء يومياً لحماية الكليتين.
 - النظافة الشخصية والاستحمام بالماء والصابون لتفتيح مسام الجلد ومنع تراكم الجراثيم.
 - تطهير الجروح فوراً بالماء والصابون والمطهرات لمنع دخول الميكروبات إلى مجرى الدم.
-- تجنب التعرض المباشر لأشعة الشمس الحارقة لفترات طويلة.`,
+- تجنب التعرض المباشر لأشعة الشمس الحارقة لفترات طويلة.
+
+![مخطط الجهاز البولي والإخراج في جسم الإنسان ووحدة التنقية النيفرون](/curriculum_images/human_urinary_system_kidney.svg)`,
         contentEn: 'The excretory system removes toxins via the kidneys (urine), skin (sweat and temperature regulation), and lungs (exhaled CO2 and water vapor).',
+        diagram: {
+          id: 'diagram-sudan-sci6-urinary',
+          figureNumberAr: 'شكل علمي (١-٢)',
+          figureNumberEn: 'Scientific Figure (1-2)',
+          titleAr: 'مخطط تشريح الجهاز البولي وآلية الترشيح بالنيفرون',
+          titleEn: 'Urinary System Anatomy & Nephron Filtration',
+          captionAr: 'رسم تعليمي يوضح تركيب الجهاز البولي (الكليتان، الحالبان، المثانة، مجرى البول) ووحدة الترشيح المجهرية (النيفرون) لتنقية الدم من الفضلات السامة.',
+          captionEn: 'Detailed diagram illustrating the urinary tract and microscopic nephron filtration of blood waste.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/human_urinary_system_kidney.svg',
+          takeawayFormulaAr: 'الكليتان ترشحان الدم عبر ملايين النيفرونات وتطردان الفضلات السامة عبر الحالبين والمثانة في صورة بول',
+          takeawayFormulaEn: 'Kidneys filter blood waste via nephrons into urine eliminated through ureters and bladder'
+        },
         interactiveExample: {
           titleAr: 'تطبيق عملي 2: مقارنة وظيفة الكلية بوظيفة الجلد في إخراج الفضلات',
           titleEn: 'Interactive Example 2: Comparing Kidney and Skin Excretory Functions',
@@ -2011,8 +2026,23 @@ export const SUDAN_PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
   5. **المشتري:** الكوكب الخامس، وهو **أكبر كواكب النظام الشمسي حجماً** وكتلة (عملاق غازي).
   6. **زحل:** الكوكب السادس، يشتهر بـ **حلقاته الملونة البديعة** المكونة من قطع الثلج والصخور.
   7. **أورانوس:** الكوكب السابع، كوكب جليدي عملاق ذو لون أزرق مخضر.
-  8. **نبتون:** الكوكب الثامن والأخير، أبعد الكواكب وأشدها برودة وعواصف، ويُعرف بـ (الكوكب الأزرق).`,
+  8. **نبتون:** الكوكب الثامن والأخير، أبعد الكواكب وأشدها برودة وعواصف، ويُعرف بـ (الكوكب الأزرق).
+
+![مخطط ظاهرتي كسوف الشمس وخسوف القمر ومسارات الظل وشبه الظل](/curriculum_images/solar_lunar_eclipse_astronomy.svg)`,
         contentEn: 'Eclipses occur during planetary syzygies: solar eclipses place Moon between Earth/Sun; lunar eclipses place Earth between Sun/Moon. The 8 planets ordered from Mercury to Neptune.',
+        diagram: {
+          id: 'diagram-sudan-sci6-eclipse',
+          figureNumberAr: 'شكل علمي (٨-٢)',
+          figureNumberEn: 'Scientific Figure (8-2)',
+          titleAr: 'مخطط ظاهرتي كسوف الشمس وخسوف القمر ومسارات الضوء والظلال',
+          titleEn: 'Solar & Lunar Eclipses, Umbra, and Penumbra Geometry',
+          captionAr: 'رسم تعليمي فلكي يقارن بين كسوف الشمس (القمر بين الشمس والأرض نهاراً) وخسوف القمر (الأرض بين الشمس والقمر ليلاً) مع توضيح مخروط الظل التام (Umbra) وشبه الظل (Penumbra).',
+          captionEn: 'Educational astronomical diagram comparing solar and lunar eclipses, umbra, and penumbra shadow cones.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/solar_lunar_eclipse_astronomy.svg',
+          takeawayFormulaAr: 'الكسوف: قمر في المنتصف يحجب الشمس نهاراً | الخسوف: أرض في المنتصف تحجب ضوء الشمس عن القمر ليلاً',
+          takeawayFormulaEn: 'Solar Eclipse: Moon in middle | Lunar Eclipse: Earth in middle'
+        },
         interactiveExample: {
           titleAr: 'تطبيق عملي 2: التمييز بين ترتيب الأجرام في الكسوف والخسوف',
           titleEn: 'Interactive Example 2: Distinguishing Celestial Alignment in Eclipses',

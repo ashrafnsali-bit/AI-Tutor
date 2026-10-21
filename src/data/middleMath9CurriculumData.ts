@@ -843,8 +843,21 @@ export const MIDDLE_MATH_G9_LECTURES: Lecture[] = [
       {
         titleAr: '1. الزاوية المركزية والمحيطية وقياس الأقواس',
         titleEn: '1. Central & Inscribed Angles & Arc Measures',
-        contentAr: '1) قياس القوس: قياس الدائرة كلها = 360°، وقياس نصف الدائرة = 180°.\n- طول القوس = (قياس القوس / 360°) × محيط الدائرة (2πr).\n2) العلاقة بين الزاوية المحيطية والمركزية:\n- نظرية: قياس الزاوية المحيطية يساوي نصف قياس الزاوية المركزية المشتركة معها في نفس القوس: m(∠المحيطية) = 1/2 m(∠المركزية).\n- الزوايا المحيطية التي تحصر نفس القوس في الدائرة الواحدة تكون متساوية في القياس.\n- نتيجة هامة: الزاوية المحيطية المرسومة في نصف دائرة (تقابل قطراً) تكون قائمة (قياسها 90°).',
-        contentEn: 'Full circle = 360°. Arc length = (Arc°/360°) · 2πr. Inscribed angle = 1/2 Central angle subtending same arc. Inscribed angle in a semicircle is a right angle (90°).'
+        contentAr: '1) قياس القوس: قياس الدائرة كلها = 360°، وقياس نصف الدائرة = 180°.\n- طول القوس = (قياس القوس / 360°) × محيط الدائرة (2πr).\n2) العلاقة بين الزاوية المحيطية والمركزية:\n- نظرية: قياس الزاوية المحيطية يساوي نصف قياس الزاوية المركزية المشتركة معها في نفس القوس: m(∠المحيطية) = 1/2 m(∠المركزية).\n- الزوايا المحيطية التي تحصر نفس القوس في الدائرة الواحدة تكون متساوية في القياس.\n- نتيجة هامة: الزاوية المحيطية المرسومة في نصف دائرة (تقابل قطراً) تكون قائمة (قياسها 90°).\n\n![مخطط هندسة ونظريات الدائرة والزوايا المركزية والمحيطية والمماسات والقوانين الذهبية](/curriculum_images/circle_geometry_theorems_angles.svg)',
+        contentEn: 'Full circle = 360°. Arc length = (Arc°/360°) · 2πr. Inscribed angle = 1/2 Central angle subtending same arc. Inscribed angle in a semicircle is a right angle (90°).',
+        diagram: {
+          id: 'diagram-m9-math-circle',
+          figureNumberAr: 'شكل هندسي (٦-١)',
+          figureNumberEn: 'Geometry Figure (6-1)',
+          titleAr: 'مخطط هندسة ونظريات الدائرة والزوايا المركزية والمحيطية والمماسات',
+          titleEn: 'Circle Geometry Theorems: Inscribed & Central Angles & Tangents',
+          captionAr: 'رسم هندسي توضيحي شامل يتضمن: نصف القطر والقطر والوتر، قياس الزاوية المحيطية وعلاقتها بالمركزية، زاوية نصف الدائرة القائمة، تعامد المماس مع نصف القطر، والقوانين الذهبية للمحيط والمساحة.',
+          captionEn: 'Comprehensive geometric vector illustration showing central and inscribed angles, semicircle right angle, tangent perpendicularity, and circumference & area formulas.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/circle_geometry_theorems_angles.svg',
+          takeawayFormulaAr: 'm(∠المحيطية) = 1/2 m(∠المركزية) | C = 2πr | A = πr² | المماس ⟂ نصف القطر',
+          takeawayFormulaEn: 'm(Inscribed) = 1/2 m(Central) | C = 2πr | A = πr² | Tangent ⟂ Radius'
+        }
       },
       {
         titleAr: '2. الشكل الرباعي الدائري ونظريات المماسات',
