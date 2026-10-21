@@ -97,8 +97,32 @@ export const HIGH_PHYSICS_G11_LECTURES: Lecture[] = [
       {
         titleAr: '2. انكسار الضوء، الزاوية الحرجة، والانعكاس الكلي',
         titleEn: '2. Refraction, Critical Angle & Total Internal Reflection',
-        contentAr: '1) معامل الانكسار وقانون سنل:\n- معامل الانكسار المطلق: $n = \\frac{c}{v}$ (حيث $c = 3 \\times 10^8\\text{ m/s}$ سرعة الضوء في الفراغ).\n- قانون سنل: $n_1 \\sin\\phi = n_2 \\sin\\theta$.\n\n2) الزاوية الحرجة والانعكاس الكلي:\n- عند سقوط الضوء من وسط ذي معامل انكسار $n_1$ إلى وسط أقل $n_2$ بزاوية حرجة $\\phi_c$:\n  $\\sin\\phi_c = \\frac{n_2}{n_1}$. (وبالنسبة للهواء $n_2 = 1 \\implies \\sin\\phi_c = \\frac{1}{n}$).\n- مثال: للزجاج ذي معامل الانكسار $n = 1.5$:\n  $\\sin\\phi_c = \\frac{1}{1.5} = 0.6667 \\implies \\phi_c \\approx 41.8^\\circ$.\n- إذا سقط الضوء في الزجاج بزاوية $45^\\circ > 41.8^\\circ$، يحدث انعكاس كلي داخلي بزاوية انعكاس $45^\\circ$.',
-        contentEn: 'Snell\'s law n₁ sin ϕ = n₂ sin θ dictates refraction. Angles exceeding critical angle sin ϕ_c = n₂/n₁ undergo total internal reflection.'
+        contentAr: `1) معامل الانكسار وقانون سنل:
+- معامل الانكسار المطلق: $n = \\frac{c}{v}$ (حيث $c = 3 \\times 10^8\\text{ m/s}$ سرعة الضوء في الفراغ).
+- قانون سنل: $n_1 \\sin\\phi = n_2 \\sin\\theta$.
+
+2) الزاوية الحرجة والانعكاس الكلي:
+- عند سقوط الضوء من وسط ذي معامل انكسار $n_1$ إلى وسط أقل $n_2$ بزاوية حرجة $\\phi_c$:
+  $\\sin\\phi_c = \\frac{n_2}{n_1}$. (وبالنسبة للهواء $n_2 = 1 \\implies \\sin\\phi_c = \\frac{1}{n}$).
+- مثال: للزجاج ذي معامل الانكسار $n = 1.5$:
+  $\\sin\\phi_c = \\frac{1}{1.5} = 0.6667 \\implies \\phi_c \\approx 41.8^\\circ$.
+- إذا سقط الضوء في الزجاج بزاوية $45^\\circ > 41.8^\\circ$، يحدث انعكاس كلي داخلي بزاوية انعكاس $45^\\circ$.
+
+![مخطط انكسار الضوء، الزاوية الحرجة، والانعكاس الكلي الداخلي والألياف الضوئية](/curriculum_images/light_refraction_total_internal_reflection.svg)`,
+        contentEn: 'Snell\'s law n₁ sin ϕ = n₂ sin θ dictates refraction. Angles exceeding critical angle sin ϕ_c = n₂/n₁ undergo total internal reflection.',
+        diagram: {
+          id: 'diagram-phy11-refraction-tir',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط انكسار الضوء والزاوية الحرجة والانعكاس الكلي',
+          titleEn: 'Light Refraction, Critical Angle & Total Internal Reflection Diagram',
+          captionAr: 'رسم علمي معتمد يوضح الحالات الثلاث لمسار الضوء عند انتقاله من وسط أكبر كثافة إلى وسط أقل، وتطبيق الألياف الضوئية لنقل البيانات.',
+          captionEn: 'Standard physics diagram illustrating normal refraction, critical angle grazing, total internal reflection, and optical fiber core bounce.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/light_refraction_total_internal_reflection.svg',
+          takeawayFormulaAr: 'قانون سنل: n₁ sin(ϕ) = n₂ sin(θ) | الزاوية الحرجة: sin(ϕc) = 1/n',
+          takeawayFormulaEn: 'Snell: n₁ sin(ϕ) = n₂ sin(θ) | Critical angle: sin(ϕc) = 1/n'
+        }
       }
     ],
 

@@ -1103,8 +1103,29 @@ export const MIDDLE_SCIENCE_G8_LECTURES: Lecture[] = [
       {
         titleAr: '4. التحليل الكهربي للماء (فولتمتر هوفمان) وتلوث المياه',
         titleEn: '4. Hofmann Voltameter Electrolysis & Water Pollution',
-        contentAr: '1) التحليل الكهربي للماء: الماء النقي رديء التوصيل للكهرباء، لذا يضاف قليل من حمض الكبريتيك المخفف أو كربونات الصوديوم لجعله موصلاً. باستخدام جهاز (فولتمتر هوفمان): يتفكك الماء كهربياً: 2H₂O -> 2H₂↑ (يتصاعد عند المهبط السالب Cathode بحجم ضعف الأكسجين) + O₂↑ (يتصاعد عند المصعد الموجب Anode بحجم نصف الهيدروجين). نكشف عن الهيدروجين بتقريب شظية مشتعلة فتشتعل بفرقعة، ونكشف عن الأكسجين فيزداد توهج الشظية. 2) تلوث المياه: أ) بيولوجي: اختلاط فضلات الكائنات بالماء (يسبب البلهارسيا والتيفود والالتهاب الكبدي الوبائي). ب) كيميائي: تصريف مخلفات المصانع (الرصاص يسبب موت خلايا المخ، الزئبق يسبب فقدان البصر، والزرنيخ يزيد سرطان الكبد). ج) حراري: تبريد المفاعلات النووية في البحار (يؤدي لموت الكائنات لانفصال الأكسجين الذائب). د) إشعاعي: تسرب المواد المشعة.',
+        contentAr: `1) التحليل الكهربي للماء: الماء النقي رديء التوصيل للكهرباء، لذا يضاف قليل من حمض الكبريتيك المخفف أو كربونات الصوديوم لجعله موصلاً. باستخدام جهاز (فولتمتر هوفمان): يتفكك الماء كهربياً: 2H₂O -> 2H₂↑ (يتصاعد عند المهبط السالب Cathode بحجم ضعف الأكسجين) + O₂↑ (يتصاعد عند المصعد الموجب Anode بحجم نصف الهيدروجين). نكشف عن الهيدروجين بتقريب شظية مشتعلة فتشتعل بفرقعة، ونكشف عن الأكسجين فيزداد توهج الشظية. 
+
+2) تلوث المياه: 
+- أ) بيولوجي: اختلاط فضلات الكائنات بالماء (يسبب البلهارسيا والتيفود والالتهاب الكبدي الوبائي). 
+- ب) كيميائي: تصريف مخلفات المصانع (الرصاص يسبب موت خلايا المخ، الزئبق يسبب فقدان البصر، والزرنيخ يزيد سرطان الكبد). 
+- ج) حراري: تبريد المفاعلات النووية في البحار (يؤدي لموت الكائنات لانفصال الأكسجين الذائب). 
+- د) إشعاعي: تسرب المواد المشعة.
+
+![مخطط التحليل الكهربي للماء في جهاز فولتمتر هوفمان ونسب الغازات والروابط الهيدروجينية](/curriculum_images/hofmann_voltameter_water_electrolysis.svg)`,
         contentEn: 'Electrolysis of acidified water in a Hofmann voltameter decomposes water into 2 volumes of Hydrogen at the negative Cathode (burns with pop sound) and 1 volume of Oxygen at the positive Anode (relights glowing splint): 2H2O -> 2H2 + O2. Water pollution includes Biological (Typhoid, Bilharzia), Chemical (Lead causes brain cell death, Mercury causes blindness, Arsenic causes cancer), Thermal, and Radioactive.',
+        diagram: {
+          id: 'diagram-sci8-hofmann-voltameter',
+          figureNumberAr: 'شكل توضيحي (٤-١)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'مخطط جهاز فولتمتر هوفمان والتحليل الكهربي للماء',
+          titleEn: 'Hofmann Voltameter Water Electrolysis Diagram',
+          captionAr: 'رسم علمي معتمد يوضح قطبي فولتمتر هوفمان، وتصاعد غاز الهيدروجين عند المهبط السالب بضعف حجم الأكسجين عند المصعد الموجب، وشذوذ كثافة الماء بالروابط الهيدروجينية.',
+          captionEn: 'Standard science apparatus diagram illustrating Hofmann voltameter poles, 2:1 hydrogen-to-oxygen volume stoichiometry, and hydrogen bonding anomalies.',
+          diagramType: 'apparatus',
+          imageUrl: '/curriculum_images/hofmann_voltameter_water_electrolysis.svg',
+          takeawayFormulaAr: 'المهبط (-) = هيدروجين (٢ حجم) | المصعد (+) = أكسجين (١ حجم) | 2H₂O ➔ 2H₂ + O₂',
+          takeawayFormulaEn: 'Cathode (-) = H2 (2 vols) | Anode (+) = O2 (1 vol) | 2H2O ➔ 2H2 + O2'
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي 4: حساب حجوم الغازات في جهاز فولتمتر هوفمان',
           titleEn: 'Worked Example 4: Gas Stoichiometry Calculations in Hofmann Voltameter',

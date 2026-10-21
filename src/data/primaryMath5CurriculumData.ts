@@ -581,7 +581,33 @@ $$\\frac{1}{2} \\div 3 = \\frac{1}{2} \\times \\frac{1}{3} = \\frac{1}{6}$$
   - نقف عند الصفر $(0, 0)$.
   - نتحرك $4$ وحدات يميناً على المحور الأفقي $X$.
   - نصعد $3$ وحدات لأعلى على المحور الرأسي $Y$ ونضع النقطة.
+
+![مخطط قوانين حجم المجسمات المكعب ومتوازي المستطيلات والمستوى الإحداثي](/curriculum_images/geometric_volume_coordinate_grid.svg)
 `,
+    sections: [
+      {
+        titleAr: 'حجم المجسمات والمستوى الإحداثي',
+        titleEn: '3D Prisms Volume & Coordinate Plane',
+        contentAr: `الحجم يمثل الحيز ثلاثي الأبعاد ويقاس بالوحدات المكعبة:
+- **متوازي المستطيلات:** الحجم = الطول × العرض × الارتفاع ($V = L \\times W \\times H$).
+- **المكعب:** الحجم = طول الحرف × نفسه × نفسه ($V = s^3$).
+- **المستوى الإحداثي:** يتكون من محورين متعامدين $X$ و $Y$ يلتقيان في نقطة الأصل $(0, 0)$ لتمثيل الأزواج المرتبة.`,
+        contentEn: 'Prism volume equals L×W×H while cube volume equals s³. The coordinate grid plots ordered pairs (x, y) starting from origin.',
+        diagram: {
+          id: 'diagram-pmath5-volume-grid',
+          figureNumberAr: 'شكل توضيحي (٤-١)',
+          figureNumberEn: 'Figure (4-1)',
+          titleAr: 'مخطط حجم المجسمات وتمثيل الأزواج المرتبة',
+          titleEn: '3D Volume & 2D Coordinate Grid Diagram',
+          captionAr: 'رسم هندسي ثلاثي الأبعاد يوضح أبعاد المكعب ومتوازي المستطيلات وقوانين الحجم، مع شبكة المستوى الإحداثي وتمثيل النقاط من نقطة الأصل.',
+          captionEn: 'Standard geometric diagram illustrating prism/cube volume formulas and 2D Cartesian coordinate plane plotting.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/geometric_volume_coordinate_grid.svg',
+          takeawayFormulaAr: 'حجم المتوازي = L × W × H | حجم المكعب = s³ | الزوج المرتب: (X أفقي ، Y رأسي)',
+          takeawayFormulaEn: 'Prism Vol = L × W × H | Cube Vol = s³ | Ordered pair (x, y)'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-math5-4',
       titleAr: 'تقييم المحاضرة 4: الحجم والمستوى الإحداثي',

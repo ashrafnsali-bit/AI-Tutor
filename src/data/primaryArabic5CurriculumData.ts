@@ -432,7 +432,32 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
 - **نون المثنى وجمع المذكر السالم:** تحذف وجوباً:
   - (طالبانِ العلم $\\implies$ **طالبا** العلمِ).
   - (مهندسونَ المشروع $\\implies$ **مهندسو** المشروعِ).
+
+![مخطط التركيب الإضافي: المضاف والمضاف إليه وعلامات الجر وضوابط حذف التنوين والنون](/curriculum_images/arabic_idafa_annexation.svg)
 `,
+    sections: [
+      {
+        titleAr: 'التركيب الإضافي وعلامات جر المضاف إليه',
+        titleEn: 'Idafa Annexation & Genitive Markers',
+        contentAr: `التركيب الإضافي يتكون من مضاف (نكرة) ومضاف إليه (معرفة مجرور):
+- **المضاف:** يعرب بحسب موقعه في الجملة، ويحذف منه التنوين ونون المثنى والجمع.
+- **المضاف إليه:** مجرور دائماً، وعلامة جره الكسرة (مفرد/جمع تكسير/جمع مؤنث) أو الياء (مثنى/جمع مذكر سالم).`,
+        contentEn: 'Idafa consists of Mudaf (indefinite, drops nunation/noon) and Mudaf Ilayhi (consistently genitive with Kasra or Yaa).',
+        diagram: {
+          id: 'diagram-arb5-idafa',
+          figureNumberAr: 'شكل توضيحي (٣-١)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط التركيب الإضافي وضوابط حذف التنوين والنون',
+          titleEn: 'Idafa Annexation & Deletion Rules Diagram',
+          captionAr: 'رسم تعليمي معتمد يوضح معادلة المضاف والمضاف إليه، وعلامات الجر الأصلية والفرعية، وقواعد حذف التنوين ونون التثنية والجمع.',
+          captionEn: 'Standard curriculum grammar diagram illustrating Idafa equation, genitive case markers, and nunation/noon omission rules.',
+          diagramType: 'arabic_sentence_structure',
+          imageUrl: '/curriculum_images/arabic_idafa_annexation.svg',
+          takeawayFormulaAr: 'مضاف (نكرة دون تنوين) + مضاف إليه (معرفة مجرور بالكسرة أو الياء)',
+          takeawayFormulaEn: 'Mudaf (no nunation/noon) + Mudaf Ilayhi (genitive Kasra/Yaa)'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-arb5-3',
       titleAr: 'تقييم المحاضرة 3: المضاف إليه وحالات جره',

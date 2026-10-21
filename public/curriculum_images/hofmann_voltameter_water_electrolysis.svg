@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="h2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="o2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-main { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 21px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .card-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #38bdf8; text-anchor: middle; }
+    .pole-label { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; font-weight: bold; }
+    .gas-stat { font-family: 'Consolas', 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #facc15; }
+    .chem-eq { font-family: 'Consolas', 'Courier New', monospace; font-size: 17px; font-weight: bold; fill: #f8fafc; text-anchor: middle; }
+    .desc-text { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 12px; fill: #cbd5e1; }
+  </style>
+
+  <!-- Background -->
+  <rect width="920" height="620" rx="16" fill="url(#bgGrad)"/>
+  <rect x="10" y="10" width="900" height="600" rx="12" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Header Banner -->
+  <rect x="30" y="22" width="860" height="64" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" filter="url(#shadow)"/>
+  <text x="460" y="50" class="title-main">مخطط التحليل الكهربي للماء (فولتمتر هوفمان) والروابط الهيدروجينية</text>
+  <text x="460" y="72" class="subtitle">Middle School Science (Prep 2): Water Electrolysis Stoichiometry &amp; Hydrogen Bonding</text>
+
+  <!-- Left Side: Detailed Hofmann Voltameter Diagram -->
+  <g transform="translate(35, 105)">
+    <rect width="440" height="490" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <text x="220" y="28" class="card-title">جهاز فولتمتر هوفمان (Hofmann Voltameter)</text>
+
+    <!-- Voltameter Glassware -->
+    <g transform="translate(60, 45)">
+      <!-- Central Funnel & Tube -->
+      <path d="M 140,20 L 180,20 L 165,60 L 165,300 L 155,300 L 155,60 Z" fill="url(#waterGrad)" stroke="#64748b" stroke-width="1.5"/>
+      <path d="M 135,15 L 185,15 L 165,55 L 165,300 L 155,300 L 155,55 Z" fill="url(#glassGrad)"/>
+      <text x="160" y="10" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">قمع صب الماء المحمض</text>
+
+      <!-- Left Tube: Cathode (-) & Hydrogen (H2) -->
+      <!-- Stopcock at top -->
+      <rect x="52" y="30" width="16" height="8" rx="2" fill="#facc15"/>
+      <line x1="60" y1="20" x2="60" y2="35" stroke="#facc15" stroke-width="3"/>
+      <!-- Glass Tube -->
+      <rect x="46" y="38" width="28" height="270" rx="4" fill="url(#waterGrad)" stroke="#64748b" stroke-width="1.5"/>
+      <!-- Trapped Gas Zone (H2) - Large Volume (height 90) -->
+      <rect x="47" y="39" width="26" height="90" fill="#0f172a" fill-opacity="0.85"/>
+      <text x="60" y="85" font-family="'Consolas', monospace" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">2H₂</text>
+      <!-- Graduations -->
+      <line x1="46" y1="60" x2="52" y2="60" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="46" y1="80" x2="52" y2="80" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="46" y1="100" x2="52" y2="100" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="46" y1="120" x2="55" y2="120" stroke="#38bdf8" stroke-width="1.5"/>
+      <!-- Bubbles in Liquid -->
+      <circle cx="56" cy="180" r="3" fill="#ffffff" fill-opacity="0.6"/>
+      <circle cx="64" cy="210" r="4" fill="#ffffff" fill-opacity="0.6"/>
+      <circle cx="54" cy="240" r="3" fill="#ffffff" fill-opacity="0.6"/>
+      <!-- Electrode (Platinum Foil) -->
+      <rect x="56" y="270" width="8" height="30" fill="#475569" stroke="#94a3b8" stroke-width="1"/>
+
+      <!-- Right Tube: Anode (+) & Oxygen (O2) -->
+      <!-- Stopcock at top -->
+      <rect x="252" y="30" width="16" height="8" rx="2" fill="#facc15"/>
+      <line x1="260" y1="20" x2="260" y2="35" stroke="#facc15" stroke-width="3"/>
+      <!-- Glass Tube -->
+      <rect x="246" y="38" width="28" height="270" rx="4" fill="url(#waterGrad)" stroke="#64748b" stroke-width="1.5"/>
+      <!-- Trapped Gas Zone (O2) - Half Volume (height 45) -->
+      <rect x="247" y="39" width="26" height="45" fill="#0f172a" fill-opacity="0.85"/>
+      <text x="260" y="66" font-family="'Consolas', monospace" font-size="13" font-weight="bold" fill="#f87171" text-anchor="middle">1O₂</text>
+      <!-- Graduations -->
+      <line x1="268" y1="60" x2="274" y2="60" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="265" y1="84" x2="274" y2="84" stroke="#f87171" stroke-width="1.5"/>
+      <!-- Bubbles in Liquid -->
+      <circle cx="258" cy="190" r="3" fill="#ffffff" fill-opacity="0.6"/>
+      <circle cx="262" cy="230" r="3" fill="#ffffff" fill-opacity="0.6"/>
+      <!-- Electrode (Platinum Foil) -->
+      <rect x="256" y="270" width="8" height="30" fill="#475569" stroke="#94a3b8" stroke-width="1"/>
+
+      <!-- Bottom Connecting U-Tubes -->
+      <path d="M 46,300 L 46,310 C 46,325 155,325 155,300" fill="none" stroke="#64748b" stroke-width="10"/>
+      <path d="M 274,300 L 274,310 C 274,325 165,325 165,300" fill="none" stroke="#64748b" stroke-width="10"/>
+
+      <!-- Electrical Connections to Battery -->
+      <path d="M 60,300 L 60,360 L 130,360" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+      <path d="M 260,300 L 260,360 L 190,360" fill="none" stroke="#f43f5e" stroke-width="2.5"/>
+
+      <!-- Battery Source Symbol -->
+      <g transform="translate(140, 345)">
+        <rect x="0" y="0" width="40" height="30" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="12" y1="6" x2="12" y2="24" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="28" y1="10" x2="28" y2="20" stroke="#f43f5e" stroke-width="3"/>
+        <text x="12" y="38" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">-</text>
+        <text x="28" y="38" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#f43f5e" text-anchor="middle">+</text>
+      </g>
+    </g>
+
+    <!-- Sub labels on bottom of left panel -->
+    <text x="110" y="445" class="pole-label" fill="#38bdf8" text-anchor="middle">المهبط السالب (-)</text>
+    <text x="110" y="465" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">غاز الهيدروجين (ضعف الحجم)</text>
+
+    <text x="330" y="445" class="pole-label" fill="#f87171" text-anchor="middle">المصعد الموجب (+)</text>
+    <text x="330" y="465" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">غاز الأكسجين (نصف الحجم)</text>
+  </g>
+
+  <!-- Right Side: Gas Comparison, Equations & Water Anomalies -->
+  <g transform="translate(490, 105)">
+    <!-- Top Box: Stoichiometry & Testing -->
+    <g transform="translate(0, 0)">
+      <rect width="395" height="260" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+      <text x="197" y="28" class="card-title">قوانين ونسب الغازات المتصاعدة</text>
+
+      <!-- Chemical Equation Badge -->
+      <rect x="25" y="45" width="345" height="48" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="197" y="75" class="chem-eq">2H₂O ➔ 2H₂↑ + O₂↑</text>
+
+      <!-- Ratio Box -->
+      <g transform="translate(25, 105)">
+        <rect width="345" height="135" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+        
+        <text x="330" y="25" class="desc-text" font-weight="bold" fill="#38bdf8" text-anchor="end">✦ نسبة حجوم الغازات المتصاعدة:</text>
+        <text x="197" y="52" class="gas-stat" text-anchor="middle">الهيدروجين (٢) : الأكسجين (١)</text>
+        
+        <text x="330" y="80" class="desc-text" text-anchor="end">✦ **الكشف عن الهيدروجين (H₂):**</text>
+        <text x="330" y="98" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#93c5fd" text-anchor="end">يشتعل بلهب أزرق باهت مصحوباً بفرقعة مسموعة.</text>
+
+        <text x="330" y="118" class="desc-text" text-anchor="end">✦ **الكشف عن الأكسجين (O₂):**</text>
+        <text x="330" y="132" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#fca5a5" text-anchor="end">يزيد من توهج واشتعال شظية خشبية متقدة دون أن يشتعل.</text>
+      </g>
+    </g>
+
+    <!-- Bottom Box: Water Anomalies & Hydrogen Bond Lattice -->
+    <g transform="translate(0, 275)">
+      <rect width="395" height="215" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+      <text x="197" y="28" class="card-title">شذوذ خواص الماء والروابط الهيدروجينية</text>
+
+      <!-- Mini Molecular Graphic -->
+      <g transform="translate(45, 60)">
+        <!-- Oxygen atom -->
+        <circle cx="40" cy="30" r="18" fill="#ef4444"/>
+        <text x="40" y="35" font-family="'Consolas', monospace" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">O δ-</text>
+        <!-- Hydrogen 1 -->
+        <circle cx="20" cy="58" r="10" fill="#38bdf8"/>
+        <text x="20" y="62" font-family="'Consolas', monospace" font-size="9" fill="#ffffff" text-anchor="middle">H+</text>
+        <line x1="32" y1="42" x2="25" y2="52" stroke="#ffffff" stroke-width="2"/>
+        <!-- Hydrogen 2 -->
+        <circle cx="60" cy="58" r="10" fill="#38bdf8"/>
+        <text x="60" y="62" font-family="'Consolas', monospace" font-size="9" fill="#ffffff" text-anchor="middle">H+</text>
+        <line x1="48" y1="42" x2="55" y2="52" stroke="#ffffff" stroke-width="2"/>
+        <!-- Angle Arc -->
+        <text x="40" y="60" font-family="'Segoe UI', sans-serif" font-size="8" fill="#facc15" text-anchor="middle">104.5°</text>
+      </g>
+
+      <!-- Facts List -->
+      <g transform="translate(125, 45)">
+        <text x="250" y="20" class="desc-text" text-anchor="end">✦ **ارتفاع الغليان (100°C) والتجمد (0°C):**</text>
+        <text x="250" y="38" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#94a3b8" text-anchor="end">لوجود الروابط الهيدروجينية التي تستهلك طاقة لتفكيكها.</text>
+
+        <text x="250" y="68" class="desc-text" text-anchor="end">✦ **انخفاض الكثافة وطفو الجليد (أقل من 4°C):**</text>
+        <text x="250" y="86" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#94a3b8" text-anchor="end">تتجمع الجزيئات ببلورات سداسية بفراغات واسعة فيزداد</text>
+        <text x="250" y="104" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" fill="#94a3b8" text-anchor="end">الحجم وتقل الكثافة، مما يحفظ الحياة المائية في القطبين.</text>
+
+        <rect x="0" y="115" width="250" height="30" rx="6" fill="#0f172a" stroke="#ca8a04" stroke-width="1"/>
+        <text x="125" y="135" font-family="'Segoe UI', Cairo, sans-serif" font-size="11" font-weight="bold" fill="#facc15" text-anchor="middle">الماء النقي متعادل التأثير على عباد الشمس</text>
+      </g>
+    </g>
+  </g>
+</svg>
