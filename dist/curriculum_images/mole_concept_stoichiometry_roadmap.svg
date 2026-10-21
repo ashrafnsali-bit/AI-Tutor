@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%" dir="rtl">
+  <defs>
+    <linearGradient id="moleBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#140f2b" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95" />
+    </linearGradient>
+
+    <linearGradient id="purpleGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+
+    <filter id="mGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="620" rx="16" fill="url(#moleBg)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Main Title Bar -->
+  <rect x="25" y="16" width="870" height="52" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="1" />
+  <circle cx="50" cy="42" r="14" fill="#8b5cf6" />
+  <text x="50" y="47" text-anchor="middle" fill="#ffffff" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٢</text>
+  <text x="80" y="48" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="18" font-weight="bold">الكيمياء الكمية: خريطة ومثلثات المول الذهبية وحسابات عدد أفوجادرو والغازات</text>
+  <rect x="730" y="27" width="150" height="30" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="0.8" />
+  <text x="805" y="47" text-anchor="middle" fill="#c4b5fd" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="600">الكيمياء - الصف الأول الثانوي</text>
+
+  <!-- Top Hub: The Three Golden Triangles -->
+
+  <!-- Triangle 1: Mass & Molar Mass (Left) -->
+  <g transform="translate(25, 78)">
+    <rect width="280" height="260" rx="12" fill="url(#cardGrad3)" stroke="#334155" stroke-width="1" />
+    <rect x="12" y="10" width="256" height="28" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="0.8" />
+    <text x="140" y="29" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="bold">١. مثلث الكتلة والكتلة المولية</text>
+
+    <!-- Visual Triangle -->
+    <g transform="translate(45, 52)">
+      <!-- Triangle Shape -->
+      <polygon points="95,15 10,135 180,135" fill="#0c4a6e" fill-opacity="0.5" stroke="#0ea5e9" stroke-width="2" />
+      <!-- Horizontal Dividing Line -->
+      <line x1="45" y1="80" x2="145" y2="80" stroke="#38bdf8" stroke-width="2" />
+      <!-- Vertical Dividing Line -->
+      <line x1="95" y1="80" x2="95" y2="135" stroke="#38bdf8" stroke-width="2" />
+
+      <!-- Top Element: Mass (m) -->
+      <text x="95" y="60" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="bold">الكتلة (m)</text>
+      <text x="95" y="74" text-anchor="middle" fill="#7dd3fc" font-family="sans-serif" font-size="9">بالجرام (g)</text>
+
+      <!-- Bottom Left: Moles (n) -->
+      <text x="55" y="105" text-anchor="middle" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">المولات (n)</text>
+      <text x="55" y="120" text-anchor="middle" fill="#fde047" font-family="sans-serif" font-size="9">mol</text>
+
+      <!-- Multiplier Symbol -->
+      <text x="95" y="112" text-anchor="middle" fill="#38bdf8" font-family="sans-serif" font-size="16" font-weight="bold">×</text>
+
+      <!-- Bottom Right: Molar Mass (M) -->
+      <text x="140" y="105" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">الكتلة المولية</text>
+      <text x="140" y="120" text-anchor="middle" fill="#7dd3fc" font-family="sans-serif" font-size="9">M (g/mol)</text>
+    </g>
+
+    <!-- Formula Badges -->
+    <rect x="15" y="196" width="250" height="24" rx="4" fill="#0f172a" stroke="#0284c7" stroke-width="0.7" />
+    <text x="140" y="213" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">n = الكتلة بالجرام ÷ الكتلة المولية (M)</text>
+    <text x="140" y="240" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">m (g) = n (mol) × M (g/mol)</text>
+  </g>
+
+  <!-- Triangle 2: Avogadro's Number & Particles (Center) -->
+  <g transform="translate(320, 78)">
+    <rect width="280" height="260" rx="12" fill="url(#cardGrad3)" stroke="#334155" stroke-width="1" />
+    <rect x="12" y="10" width="256" height="28" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="0.8" />
+    <text x="140" y="29" text-anchor="middle" fill="#c084fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="bold">٢. مثلث عدد أفوجادرو والجسيمات</text>
+
+    <!-- Visual Triangle -->
+    <g transform="translate(45, 52)">
+      <polygon points="95,15 10,135 180,135" fill="#2e1065" fill-opacity="0.5" stroke="#8b5cf6" stroke-width="2" />
+      <line x1="45" y1="80" x2="145" y2="80" stroke="#a855f7" stroke-width="2" />
+      <line x1="95" y1="80" x2="95" y2="135" stroke="#a855f7" stroke-width="2" />
+
+      <!-- Top: Number of particles N -->
+      <text x="95" y="55" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">عدد الجسيمات (N)</text>
+      <text x="95" y="72" text-anchor="middle" fill="#d8b4fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">(ذرات / جزيئات / أيونات)</text>
+
+      <!-- Bottom Left: Moles (n) -->
+      <text x="55" y="105" text-anchor="middle" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">المولات (n)</text>
+      <text x="55" y="120" text-anchor="middle" fill="#fde047" font-family="sans-serif" font-size="9">mol</text>
+
+      <!-- Multiplier Symbol -->
+      <text x="95" y="112" text-anchor="middle" fill="#c084fc" font-family="sans-serif" font-size="16" font-weight="bold">×</text>
+
+      <!-- Bottom Right: Avogadro's Number Na -->
+      <text x="140" y="105" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">عدد أفوجادرو</text>
+      <text x="140" y="120" text-anchor="middle" fill="#d8b4fe" font-family="sans-serif" font-size="8.5">6.02 × 10²³</text>
+    </g>
+
+    <!-- Formula Badges -->
+    <rect x="15" y="196" width="250" height="24" rx="4" fill="#0f172a" stroke="#7c3aed" stroke-width="0.7" />
+    <text x="140" y="213" text-anchor="middle" fill="#c084fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">N = عدد المولات (n) × 6.022 × 10²³</text>
+    <text x="140" y="240" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">عدد المولات n = عدد الجسيمات ÷ NA</text>
+  </g>
+
+  <!-- Triangle 3: Gas Volume at STP (Right) -->
+  <g transform="translate(615, 78)">
+    <rect width="280" height="260" rx="12" fill="url(#cardGrad3)" stroke="#334155" stroke-width="1" />
+    <rect x="12" y="10" width="256" height="28" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="0.8" />
+    <text x="140" y="29" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="bold">٣. مثلث حجم الغاز عند STP</text>
+
+    <!-- Visual Triangle -->
+    <g transform="translate(45, 52)">
+      <polygon points="95,15 10,135 180,135" fill="#064e3b" fill-opacity="0.5" stroke="#10b981" stroke-width="2" />
+      <line x1="45" y1="80" x2="145" y2="80" stroke="#34d399" stroke-width="2" />
+      <line x1="95" y1="80" x2="95" y2="135" stroke="#34d399" stroke-width="2" />
+
+      <!-- Top: Gas Volume V -->
+      <text x="95" y="55" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">حجم الغاز (V)</text>
+      <text x="95" y="72" text-anchor="middle" fill="#a7f3d0" font-family="sans-serif" font-size="9">باللتر (L) عند STP</text>
+
+      <!-- Bottom Left: Moles (n) -->
+      <text x="55" y="105" text-anchor="middle" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">المولات (n)</text>
+      <text x="55" y="120" text-anchor="middle" fill="#fde047" font-family="sans-serif" font-size="9">mol</text>
+
+      <!-- Multiplier Symbol -->
+      <text x="95" y="112" text-anchor="middle" fill="#34d399" font-family="sans-serif" font-size="16" font-weight="bold">×</text>
+
+      <!-- Bottom Right: Molar Volume 22.4 L -->
+      <text x="140" y="105" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">الحجم المولي</text>
+      <text x="140" y="120" text-anchor="middle" fill="#a7f3d0" font-family="sans-serif" font-size="9">22.4 L/mol</text>
+    </g>
+
+    <!-- Formula Badges -->
+    <rect x="15" y="196" width="250" height="24" rx="4" fill="#0f172a" stroke="#059669" stroke-width="0.7" />
+    <text x="140" y="213" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">V (L) = عدد المولات (n) × 22.4</text>
+    <text x="140" y="240" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">كثافة الغاز (g/L) = الكتلة المولية ÷ 22.4</text>
+  </g>
+
+  <!-- Bottom Panel: Master Roadmap (Mole as Central Bridge) -->
+  <g transform="translate(25, 350)">
+    <rect width="870" height="205" rx="12" fill="url(#cardGrad3)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="10" width="840" height="28" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="0.8" />
+    <text x="435" y="29" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٤. خارطة الطريق الكيميائية الذهبية: المول كحلقة وصل ومحور التحويلات الشاملة</text>
+
+    <!-- Central Roadmap Visualization -->
+    <g transform="translate(30, 48)">
+      <!-- Left Station: Mass -->
+      <rect x="10" y="20" width="160" height="60" rx="8" fill="#0c4a6e" stroke="#0ea5e9" stroke-width="1.2" />
+      <text x="90" y="44" text-anchor="middle" fill="#e0f2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="bold">كتلة المادة (جرام)</text>
+      <text x="90" y="64" text-anchor="middle" fill="#7dd3fc" font-family="sans-serif" font-size="10.5">Mass in Grams (m)</text>
+
+      <!-- Center Hub: THE MOLE -->
+      <rect x="305" y="8" width="200" height="84" rx="12" fill="url(#purpleGlow)" stroke="#c084fc" stroke-width="2" filter="url(#mGlow)" />
+      <text x="405" y="38" text-anchor="middle" fill="#ffffff" font-family="'Cairo', 'Segoe UI', system-ui" font-size="18" font-weight="bold">المول (The Mole)</text>
+      <text x="405" y="58" text-anchor="middle" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">الجسر المركزي للحساب الكيميائي</text>
+      <text x="405" y="78" text-anchor="middle" fill="#e9d5ff" font-family="sans-serif" font-size="10">n = m/M = N/NA = V/22.4</text>
+
+      <!-- Right Station: Volume at STP -->
+      <rect x="640" y="20" width="160" height="60" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.2" />
+      <text x="720" y="44" text-anchor="middle" fill="#d1fae5" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="bold">حجم الغاز (لتر)</text>
+      <text x="720" y="64" text-anchor="middle" fill="#6ee7b7" font-family="sans-serif" font-size="10.5">Volume at STP (L)</text>
+
+      <!-- Flow Arrows with conversion factors -->
+      <!-- Left to Center -->
+      <path d="M 170,42 L 305,42" fill="none" stroke="#38bdf8" stroke-width="2" />
+      <text x="237" y="35" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5" font-weight="bold">÷ الكتلة المولية M</text>
+      <path d="M 305,58 L 170,58" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3" />
+      <text x="237" y="74" text-anchor="middle" fill="#7dd3fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">× الكتلة المولية M</text>
+
+      <!-- Center to Right -->
+      <path d="M 505,42 L 640,42" fill="none" stroke="#34d399" stroke-width="2" />
+      <text x="572" y="35" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5" font-weight="bold">× 22.4 L</text>
+      <path d="M 640,58 L 505,58" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="3,3" />
+      <text x="572" y="74" text-anchor="middle" fill="#a7f3d0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">÷ 22.4 L</text>
+
+      <!-- Substation: Particles below center -->
+      <rect x="325" y="108" width="160" height="32" rx="6" fill="#1e1b4b" stroke="#818cf8" stroke-width="1" />
+      <text x="405" y="129" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">عدد الجسيمات: N = n × 6.02 × 10²³</text>
+    </g>
+  </g>
+
+  <!-- Bottom Takeaway Bar -->
+  <g transform="translate(25, 566)">
+    <rect width="870" height="38" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1" />
+    <text x="435" y="24" text-anchor="middle" fill="#e9d5ff" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12.5" font-weight="bold">القانون العام الشامل: n = الكتلة بالجرام ÷ M = عدد الجسيمات ÷ (6.022 × 10²³) = حجم الغاز عند STP ÷ 22.4 لتر</text>
+  </g>
+</svg>

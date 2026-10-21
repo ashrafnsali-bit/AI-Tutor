@@ -952,8 +952,21 @@ export const MIDDLE_MATH_G8_LECTURES: Lecture[] = [
       {
         titleAr: '2. المساقط الهندسية وتحديد نوع المثلث بالنسبة لزواياه',
         titleEn: '2. Geometric Projections & Classifying Triangles',
-        contentAr: 'المسقط الهندسي:\n- مسقط نقطة على مستقيم: هو موقع العمود الساقط من النقطة على المستقيم (نقطة).\n- مسقط قطعة مستقيمة على مستقيم: هو القطعة الواصلة بين مسقطي طرفيها. دائماً: طول المسقط ≤ طول القطعة الأصلية.\n\nتحديد نوع المثلث بالنسبة لزواياه (بفرض c هو أطول أضلاع المثلث):\n1) نحسب c²\n2) نحسب (a² + b²)\n- إذا كان c² = a² + b²: المثلث قائم الزاوية في الزاوية المقابلة لـ c (نظرية فيثاغورس).\n- إذا كان c² < a² + b²: المثلث حاد الزوايا.\n- إذا كان c² > a² + b²: المثلث منفرج الزاوية في الزاوية المقابلة لـ c.',
-        contentEn: 'Projection length is always ≤ original segment length. Classification: Let c be longest side. If c² = a² + b² ⟹ Right; If c² < a² + b² ⟹ Acute; If c² > a² + b² ⟹ Obtuse.'
+        contentAr: 'المسقط الهندسي:\n- مسقط نقطة على مستقيم: هو موقع العمود الساقط من النقطة على المستقيم (نقطة).\n- مسقط قطعة مستقيمة على مستقيم: هو القطعة الواصلة بين مسقطي طرفيها. دائماً: طول المسقط ≤ طول القطعة الأصلية.\n\nتحديد نوع المثلث بالنسبة لزواياه (بفرض c هو أطول أضلاع المثلث):\n1) نحسب c²\n2) نحسب (a² + b²)\n- إذا كان c² = a² + b²: المثلث قائم الزاوية في الزاوية المقابلة لـ c (نظرية فيثاغورس).\n- إذا كان c² < a² + b²: المثلث حاد الزوايا.\n- إذا كان c² > a² + b²: المثلث منفرج الزاوية في الزاوية المقابلة لـ c.\n\n![مخطط هندسة المثلث القائم: نظريتا فيثاغورس وإقليدس وتحديد نوع المثلث ومتباينة المثلث](/curriculum_images/pythagorean_euclid_theorems_geometry.svg)',
+        contentEn: 'Projection length is always ≤ original segment length. Classification: Let c be longest side. If c² = a² + b² ⟹ Right; If c² < a² + b² ⟹ Acute; If c² > a² + b² ⟹ Obtuse.',
+        diagram: {
+          id: 'diagram-m8-math-pythagoras-euclid',
+          figureNumberAr: 'شكل توضيحي (٥-١)',
+          figureNumberEn: 'Figure (5-1)',
+          titleAr: 'مخطط هندسة المثلث القائم: نظريتا فيثاغورس وإقليدس وتحديد نوع المثلث',
+          titleEn: 'Right Triangle Geometry: Pythagoras & Euclid Theorems and Triangle Classification',
+          captionAr: 'رسم بياني هندسي يوضح برهان نظرية فيثاغورس بالمربعات المنشأة على الأضلاع، حالات تحديد نوع المثلث (قائم، حاد، منفرج)، قوانين إقليدس الأربعة للارتفاع والمساقط، ومتباينة المثلث وتحديد فترة الضلع الثالث.',
+          captionEn: 'Geometric visualization of the Pythagorean theorem with squares on sides, triangle classification by angle types, Euclid\'s 4 altitude-projection formulas, and triangle inequality bounds.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/pythagorean_euclid_theorems_geometry.svg',
+          takeawayFormulaAr: 'c² = a² + b²  |  AD² = BD × CD  |  AD = (AB × AC) / BC  |  a + b > c',
+          takeawayFormulaEn: 'c² = a² + b² | AD² = BD·CD | AD = (AB·AC)/BC | a + b > c'
+        }
       },
       {
         titleAr: '3. نظرية إقليدس (Euclid\'s Theorem)',

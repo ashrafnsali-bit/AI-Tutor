@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%" dir="rtl">
+  <defs>
+    <linearGradient id="optBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#0a101f" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95" />
+    </linearGradient>
+
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+
+    <linearGradient id="cyanGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <linearGradient id="roseGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#fb7185" />
+    </linearGradient>
+
+    <linearGradient id="emeraldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+
+    <filter id="optGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <marker id="rayArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#38bdf8" />
+    </marker>
+    <marker id="redRayArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#f43f5e" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="620" rx="16" fill="url(#optBg)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Main Title Bar -->
+  <rect x="25" y="16" width="870" height="52" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="1" />
+  <circle cx="50" cy="42" r="14" fill="#3b82f6" />
+  <text x="50" y="47" text-anchor="middle" fill="#ffffff" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٣</text>
+  <text x="80" y="48" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="18" font-weight="bold">البصريات الهندسية: المرايا الكرية والعدسات وتصحيح عيوب الإبصار</text>
+  <rect x="730" y="27" width="150" height="30" rx="8" fill="#0f172a" stroke="#60a5fa" stroke-width="0.8" />
+  <text x="805" y="47" text-anchor="middle" fill="#93c5fd" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="600">العلوم - الصف الثالث الإعدادي</text>
+
+  <!-- Panel 1: Spherical Mirrors & Lenses (Top Left) -->
+  <g transform="translate(25, 78)">
+    <rect width="425" height="260" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="12" width="395" height="30" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="0.8" />
+    <text x="212" y="32" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">١. المرايا الكرية والعدسات (المجمعة والمفرقة)</text>
+
+    <!-- Concave Mirror Diagram -->
+    <g transform="translate(15, 52)">
+      <rect width="190" height="190" rx="8" fill="#0b1329" stroke="#1e293b" />
+      <text x="95" y="22" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">المرآة المقعرة (مجمعة)</text>
+      <!-- Optical Axis -->
+      <line x1="10" y1="100" x2="180" y2="100" stroke="#64748b" stroke-dasharray="3,3" stroke-width="1.2" />
+      <!-- Mirror Arc -->
+      <path d="M 160,35 Q 140,100 160,165" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" />
+      <!-- Hatching on back of mirror -->
+      <path d="M 162,40 L 168,44 M 156,65 L 162,69 M 147,95 L 153,99 M 154,125 L 160,129 M 162,155 L 168,159" stroke="#475569" stroke-width="1.5" />
+      <!-- Points: Pole P, Focus F, Center C -->
+      <circle cx="148" cy="100" r="3" fill="#ffffff" />
+      <text x="148" y="116" text-anchor="middle" fill="#e2e8f0" font-family="sans-serif" font-size="10">P (ق)</text>
+      <circle cx="105" cy="100" r="3" fill="#f59e0b" />
+      <text x="105" y="116" text-anchor="middle" fill="#fbbf24" font-family="sans-serif" font-size="10">F (ب)</text>
+      <circle cx="55" cy="100" r="3" fill="#ef4444" />
+      <text x="55" y="116" text-anchor="middle" fill="#f87171" font-family="sans-serif" font-size="10">C (م)</text>
+      <!-- Parallel rays reflecting through F -->
+      <path d="M 20,60 L 152,60 L 105,100" fill="none" stroke="#38bdf8" stroke-width="1.8" marker-mid="url(#rayArrow)" />
+      <path d="M 20,140 L 152,140 L 105,100" fill="none" stroke="#38bdf8" stroke-width="1.8" />
+      <text x="95" y="175" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">نصف القطر r = 2 × البعد البؤري f</text>
+    </g>
+
+    <!-- Convex Lens Diagram -->
+    <g transform="translate(220, 52)">
+      <rect width="190" height="190" rx="8" fill="#0b1329" stroke="#1e293b" />
+      <text x="95" y="22" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">العدسة المحدبة (مجمعة)</text>
+      <!-- Axis -->
+      <line x1="10" y1="100" x2="180" y2="100" stroke="#64748b" stroke-dasharray="3,3" stroke-width="1.2" />
+      <!-- Convex Lens Body -->
+      <path d="M 95,35 Q 112,100 95,165 Q 78,100 95,35 Z" fill="#0d9488" fill-opacity="0.35" stroke="#10b981" stroke-width="2.5" />
+      <!-- Optical Center O -->
+      <circle cx="95" cy="100" r="3" fill="#ffffff" />
+      <text x="95" y="116" text-anchor="middle" fill="#e2e8f0" font-family="sans-serif" font-size="10">O (ص)</text>
+      <!-- Focus F1 and F2 -->
+      <circle cx="50" cy="100" r="2.5" fill="#34d399" />
+      <text x="50" y="116" text-anchor="middle" fill="#6ee7b7" font-family="sans-serif" font-size="9">F₁</text>
+      <circle cx="140" cy="100" r="2.5" fill="#34d399" />
+      <text x="140" y="116" text-anchor="middle" fill="#6ee7b7" font-family="sans-serif" font-size="9">F₂</text>
+      <!-- Light Refraction converging at F2 -->
+      <path d="M 15,65 L 95,65 L 140,100 L 175,126" fill="none" stroke="#2dd4bf" stroke-width="1.8" />
+      <path d="M 15,135 L 95,135 L 140,100 L 175,74" fill="none" stroke="#2dd4bf" stroke-width="1.8" />
+      <text x="95" y="175" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">سميكة من المنتصف ورقيقة من الطرفين</text>
+    </g>
+  </g>
+
+  <!-- Panel 2: Ray Tracing & Image Properties (Top Right) -->
+  <g transform="translate(470, 78)">
+    <rect width="425" height="260" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="12" width="395" height="30" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="0.8" />
+    <text x="212" y="32" text-anchor="middle" fill="#a78bfa" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٢. مسارات الأشعة وحالات تكون الصور</text>
+
+    <!-- Table of Cases -->
+    <g transform="translate(15, 52)">
+      <!-- Table Header -->
+      <rect width="395" height="26" rx="4" fill="#1e1b4b" stroke="#4338ca" stroke-width="0.7" />
+      <text x="50" y="18" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">موضع الجسم</text>
+      <text x="160" y="18" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">موضع الصورة</text>
+      <text x="290" y="18" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">خواص الصورة الناتجة</text>
+      <text x="370" y="18" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">النوع</text>
+
+      <!-- Row 1 -->
+      <rect y="30" width="395" height="28" rx="4" fill="#0f172a" />
+      <text x="50" y="48" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">بعد مركز التكور (&gt; 2f)</text>
+      <text x="160" y="48" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">بين البؤرة والمركز (f و 2f)</text>
+      <text x="290" y="48" text-anchor="middle" fill="#e2e8f0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">حقيقية مقلوبة مصغرة</text>
+      <circle cx="370" cy="44" r="5" fill="#10b981" />
+
+      <!-- Row 2 -->
+      <rect y="62" width="395" height="28" rx="4" fill="#111827" />
+      <text x="50" y="80" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">عند مركز التكور (= 2f)</text>
+      <text x="160" y="80" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">عند مركز التكور (= 2f)</text>
+      <text x="290" y="80" text-anchor="middle" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">حقيقية مقلوبة مساوية للجسم</text>
+      <circle cx="370" cy="76" r="5" fill="#f59e0b" />
+
+      <!-- Row 3 -->
+      <rect y="94" width="395" height="28" rx="4" fill="#0f172a" />
+      <text x="50" y="112" text-anchor="middle" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">بين البؤرة والمركز (f &lt; d &lt; 2f)</text>
+      <text x="160" y="112" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">بعد مركز التكور (&gt; 2f)</text>
+      <text x="290" y="112" text-anchor="middle" fill="#e2e8f0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">حقيقية مقلوبة مكبرة</text>
+      <circle cx="370" cy="108" r="5" fill="#10b981" />
+
+      <!-- Row 4 -->
+      <rect y="126" width="395" height="28" rx="4" fill="#111827" />
+      <text x="50" y="144" text-anchor="middle" fill="#f87171" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">عند البؤرة (= f)</text>
+      <text x="160" y="144" text-anchor="middle" fill="#f87171" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">في ما لا نهاية (∞)</text>
+      <text x="290" y="144" text-anchor="middle" fill="#fca5a5" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">لا تتكون صورة (بقعة مضيئة)</text>
+      <circle cx="370" cy="140" r="5" fill="#ef4444" />
+
+      <!-- Row 5 -->
+      <rect y="158" width="395" height="28" rx="4" fill="#0f172a" />
+      <text x="50" y="176" text-anchor="middle" fill="#c084fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">قبل البؤرة (&lt; f)</text>
+      <text x="160" y="176" text-anchor="middle" fill="#c084fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">خلف المرآة / جهة الجسم</text>
+      <text x="290" y="176" text-anchor="middle" fill="#e9d5ff" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">تقديرية معتدلة مكبرة</text>
+      <circle cx="370" cy="172" r="5" fill="#a855f7" />
+    </g>
+  </g>
+
+  <!-- Panel 3: Vision Defects (Myopia & Hyperopia) (Bottom Full-Width) -->
+  <g transform="translate(25, 350)">
+    <rect width="870" height="205" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="10" width="840" height="28" rx="6" fill="#0f172a" stroke="#ec4899" stroke-width="0.8" />
+    <text x="435" y="29" text-anchor="middle" fill="#f472b6" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٣. عيوب الإبصار: قصر النظر وطول النظر والتشخيص الطبي وتصحيحهما بالعدسات</text>
+
+    <!-- Myopia (Near-sightedness) -->
+    <g transform="translate(20, 48)">
+      <rect width="405" height="142" rx="8" fill="#091024" stroke="#1e293b" />
+      <rect x="12" y="8" width="140" height="22" rx="4" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.7" />
+      <text x="82" y="23" text-anchor="middle" fill="#a5b4fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">قصر النظر (Myopia)</text>
+
+      <!-- Eye Eyeball Schematic (elongated) -->
+      <ellipse cx="230" cy="70" rx="46" ry="38" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" />
+      <!-- Cornea -->
+      <path d="M 188,52 A 22,22 0 0,1 188,88" stroke="#38bdf8" stroke-width="2.5" fill="none" />
+      <!-- Retina -->
+      <path d="M 270,45 A 40,40 0 0,1 270,95" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <text x="290" y="72" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">الشبكية</text>
+
+      <!-- Corrective Concave Lens in front of eye -->
+      <path d="M 155,42 Q 160,70 155,98 L 163,98 Q 158,70 163,42 Z" fill="#38bdf8" fill-opacity="0.4" stroke="#0284c7" stroke-width="1.5" />
+
+      <!-- Rays converging in front of retina before correction, now on retina -->
+      <!-- Defect focal point -->
+      <circle cx="255" cy="70" r="3" fill="#f43f5e" />
+      <text x="255" y="85" text-anchor="middle" fill="#f87171" font-family="'Cairo', 'Segoe UI', system-ui" font-size="8">أمام الشبكية</text>
+      <!-- Rays entering -->
+      <line x1="120" y1="58" x2="155" y2="58" stroke="#38bdf8" stroke-width="1.4" />
+      <line x1="120" y1="82" x2="155" y2="82" stroke="#38bdf8" stroke-width="1.4" />
+
+      <!-- Description bullet points -->
+      <text x="12" y="52" fill="#e2e8f0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">▪ يرى الأجسام القريبة بوضوح والبعيدة مشوهة.</text>
+      <text x="12" y="72" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">▪ السبب: زيادة قطر كرة العين أو زيادة تحدب العدسة.</text>
+      <text x="12" y="92" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">▪ تجمّع الأشعة: أمام الشبكية.</text>
+      <rect x="12" y="106" width="380" height="26" rx="5" fill="#0c4a6e" stroke="#0284c7" stroke-width="0.8" />
+      <text x="202" y="123" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">العلاج: عدسة مقعرة (مفرقة) لتسقط الأشعة على الشبكية تماماً</text>
+    </g>
+
+    <!-- Hyperopia (Far-sightedness) -->
+    <g transform="translate(445, 48)">
+      <rect width="405" height="142" rx="8" fill="#091024" stroke="#1e293b" />
+      <rect x="12" y="8" width="140" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="0.7" />
+      <text x="82" y="23" text-anchor="middle" fill="#6ee7b7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">طول النظر (Hyperopia)</text>
+
+      <!-- Eye Eyeball Schematic (shortened) -->
+      <ellipse cx="230" cy="70" rx="36" ry="38" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
+      <!-- Cornea -->
+      <path d="M 197,52 A 20,20 0 0,1 197,88" stroke="#10b981" stroke-width="2.5" fill="none" />
+      <!-- Retina -->
+      <path d="M 262,45 A 35,35 0 0,1 262,95" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <text x="282" y="72" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">الشبكية</text>
+
+      <!-- Corrective Convex Lens in front of eye -->
+      <path d="M 160,42 Q 166,70 160,98 Q 154,70 160,42 Z" fill="#10b981" fill-opacity="0.4" stroke="#059669" stroke-width="1.5" />
+
+      <!-- Defect focal point behind retina -->
+      <circle cx="280" cy="70" r="3" fill="#f43f5e" />
+      <text x="280" y="85" text-anchor="middle" fill="#f87171" font-family="'Cairo', 'Segoe UI', system-ui" font-size="8">خلف الشبكية</text>
+      <!-- Rays entering -->
+      <line x1="125" y1="58" x2="155" y2="58" stroke="#34d399" stroke-width="1.4" />
+      <line x1="125" y1="82" x2="155" y2="82" stroke="#34d399" stroke-width="1.4" />
+
+      <!-- Description bullet points -->
+      <text x="12" y="52" fill="#e2e8f0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10.5">▪ يرى الأجسام البعيدة بوضوح والقريبة مشوهة.</text>
+      <text x="12" y="72" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">▪ السبب: صغر قطر كرة العين أو نقص تحدب العدسة.</text>
+      <text x="12" y="92" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">▪ تجمّع الأشعة: خلف الشبكية.</text>
+      <rect x="12" y="106" width="380" height="26" rx="5" fill="#064e3b" stroke="#059669" stroke-width="0.8" />
+      <text x="202" y="123" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">العلاج: عدسة محدبة (مجمعة) لتسقط الأشعة على الشبكية تماماً</text>
+    </g>
+  </g>
+
+  <!-- Bottom Takeaway Bar -->
+  <g transform="translate(25, 566)">
+    <rect width="870" height="38" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1" />
+    <text x="435" y="24" text-anchor="middle" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12.5" font-weight="bold">القاعدة الذهبية: r = 2f  |  الصورة الحقيقية مقلوبة دائماً وتستقبل على حائل  |  قصر النظر ⟵ عدسة مقعرة  |  طول النظر ⟵ عدسة محدبة</text>
+  </g>
+</svg>

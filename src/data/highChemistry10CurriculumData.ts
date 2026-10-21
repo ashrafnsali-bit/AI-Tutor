@@ -327,8 +327,33 @@ export const HIGH_CHEMISTRY_G10_LECTURES: Lecture[] = [
       {
         titleAr: '1. الكتلة المولية وحساب عدد الجسيمات',
         titleEn: '1. Molar Mass & Particle Calculations',
-        contentAr: '1) الكتلة المولية (Molar Mass):\n- هي مجموع الكتل الذرية للعناصر المكونة للجزئ أو وحدة الصيغة معبراً عنها بوحدة g/mol.\n- مثال: الكتلة المولية لغاز ثاني أكسيد الكربون $CO_2$:\n  $M = 12 + (2 \\times 16) = 44\\text{ g/mol}$.\n\n2) حساب عدد الجسيمات (ذرات، جزيئات، أيونات):\n- $\\text{عدد الجسيمات} = \\text{عدد المولات} \\times 6.02 \\times 10^{23}$.\n- مثال: احسب عدد جزيئات الماء في $36\\text{ g}$ من الماء $H_2O$ (حيث $H=1, O=16$):\n  * الكتلة المولية للماء $= (2 \\times 1) + 16 = 18\\text{ g/mol}$.\n  * عدد مولات الماء $= \\frac{36}{18} = 2\\text{ mol}$.\n  * عدد جزيئات الماء $= 2 \\times 6.02 \\times 10^{23} = 1.204 \\times 10^{24}\\text{ molecule}$.',
-        contentEn: 'Molar mass is the sum of atomic masses in g/mol. Particle count = moles × 6.02 × 10²³.'
+        contentAr: `1) الكتلة المولية (Molar Mass):
+- هي مجموع الكتل الذرية للعناصر المكونة للجزئ أو وحدة الصيغة معبراً عنها بوحدة g/mol.
+- مثال: الكتلة المولية لغاز ثاني أكسيد الكربون $CO_2$:
+  $M = 12 + (2 \\times 16) = 44\\text{ g/mol}$.
+
+2) حساب عدد الجسيمات (ذرات، جزيئات، أيونات):
+- $\\text{عدد الجسيمات} = \\text{عدد المولات} \\times 6.02 \\times 10^{23}$.
+- مثال: احسب عدد جزيئات الماء في $36\\text{ g}$ من الماء $H_2O$ (حيث $H=1, O=16$):
+  * الكتلة المولية للماء $= (2 \\times 1) + 16 = 18\\text{ g/mol}$.
+  * عدد مولات الماء $= \\frac{36}{18} = 2\\text{ mol}$.
+  * عدد جزيئات الماء $= 2 \\times 6.02 \\times 10^{23} = 1.204 \\times 10^{24}\\text{ molecule}$.
+
+![مخطط الكيمياء الكمية: خريطة ومثلثات المول الذهبية وحسابات عدد أفوجادرو والغازات عند STP](/curriculum_images/mole_concept_stoichiometry_roadmap.svg)`,
+        contentEn: 'Molar mass is the sum of atomic masses in g/mol. Particle count = moles × 6.02 × 10²³.',
+        diagram: {
+          id: 'diagram-chem10-mole-roadmap',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'خريطة ومثلثات المول الذهبية وحسابات الكيمياء الكمية',
+          titleEn: 'The Mole Concept, Stoichiometry & Avogadro Gas Roadmap',
+          captionAr: 'مخطط كيميائي معياري يوضح المثلثات الحسابية الثلاثة للمول (الكتلة والكتلة المولية، عدد الجسيمات وعدد أفوجادرو، حجم الغاز عند STP)، وخارطة التحويل المركزية بين الكتل والحجوم والجسيمات.',
+          captionEn: 'Standard stoichiometry reference illustrating the 3 mole calculation triangles (mass & molar mass, particles & Avogadro\'s constant, gas volume at STP) with central mole interconversion roadmap.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/mole_concept_stoichiometry_roadmap.svg',
+          takeawayFormulaAr: 'n = m / M = N / (6.022 × 10²³) = V_stp / 22.4 L',
+          takeawayFormulaEn: 'n = m/M = N/(6.022 × 10²³) = V_stp / 22.4 L'
+        }
       },
       {
         titleAr: '2. حجم الغاز وقوانين أفوجادرو عند STP',

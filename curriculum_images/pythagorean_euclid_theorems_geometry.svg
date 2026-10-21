@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%" dir="rtl">
+  <defs>
+    <linearGradient id="geomBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#09131f" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95" />
+    </linearGradient>
+
+    <linearGradient id="blueSquare" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.9" />
+    </linearGradient>
+
+    <linearGradient id="amberSquare" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#b45309" stop-opacity="0.9" />
+    </linearGradient>
+
+    <linearGradient id="emeraldSquare" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="620" rx="16" fill="url(#geomBg)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Main Title Bar -->
+  <rect x="25" y="16" width="870" height="52" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="1" />
+  <circle cx="50" cy="42" r="14" fill="#10b981" />
+  <text x="50" y="47" text-anchor="middle" fill="#ffffff" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٥</text>
+  <text x="80" y="48" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="18" font-weight="bold">هندسة المثلث القائم: نظريتا فيثاغورس وإقليدس وتحديد نوع المثلث</text>
+  <rect x="730" y="27" width="150" height="30" rx="8" fill="#0f172a" stroke="#34d399" stroke-width="0.8" />
+  <text x="805" y="47" text-anchor="middle" fill="#6ee7b7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="13" font-weight="600">الرياضيات - الصف الثاني الإعدادي</text>
+
+  <!-- Panel 1: Pythagoras Theorem & Converse (Top Left) -->
+  <g transform="translate(25, 78)">
+    <rect width="425" height="260" rx="12" fill="url(#cardGrad2)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="12" width="395" height="30" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="0.8" />
+    <text x="212" y="32" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">١. نظرية فيثاغورس (a² + b² = c²) والمربعات المنشأة</text>
+
+    <!-- Visual Geometric Square Proof Graphic -->
+    <g transform="translate(20, 52)">
+      <rect width="180" height="190" rx="8" fill="#091224" stroke="#1e293b" />
+      <!-- Triangle ABC (Right angle at C) -->
+      <!-- Base AC = 48 (b=4), Height BC = 36 (a=3), Hypotenuse AB = 60 (c=5) -->
+      <!-- Right angle marker -->
+      <rect x="110" y="125" width="10" height="10" fill="none" stroke="#f59e0b" stroke-width="1.5" />
+      <!-- Triangle fill -->
+      <polygon points="120,85 120,135 60,135" fill="#3b82f6" fill-opacity="0.3" stroke="#60a5fa" stroke-width="2" />
+      <text x="126" y="85" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">B</text>
+      <text x="126" y="142" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">C</text>
+      <text x="50" y="142" fill="#f8fafc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">A</text>
+
+      <!-- Square on Leg BC (a=3): 36x36 -->
+      <rect x="120" y="85" width="45" height="50" fill="url(#amberSquare)" stroke="#f59e0b" stroke-width="1" />
+      <text x="142" y="114" text-anchor="middle" fill="#fef3c7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10" font-weight="bold">a² = 9</text>
+
+      <!-- Square on Leg AC (b=4): 60x50 -->
+      <rect x="60" y="135" width="60" height="45" fill="url(#blueSquare)" stroke="#0ea5e9" stroke-width="1" />
+      <text x="90" y="162" text-anchor="middle" fill="#e0f2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10" font-weight="bold">b² = 16</text>
+
+      <!-- Hypotenuse label -->
+      <text x="80" y="102" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10" font-weight="bold">c = 5</text>
+      <text x="90" y="32" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">c² = a² + b² = 25</text>
+    </g>
+
+    <!-- Converse of Pythagoras & Classification -->
+    <g transform="translate(210, 52)">
+      <rect width="200" height="190" rx="8" fill="#091224" stroke="#1e293b" />
+      <text x="100" y="22" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">تحديد نوع المثلث (c أطول ضلع)</text>
+
+      <!-- Case 1: Right -->
+      <rect x="10" y="34" width="180" height="42" rx="6" fill="#0c4a6e" stroke="#0284c7" stroke-width="0.8" />
+      <text x="100" y="52" text-anchor="middle" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">إذا كان c² = a² + b²</text>
+      <text x="100" y="68" text-anchor="middle" fill="#bae6fd" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">المثلث قائم الزاوية في الزاوية المقابلة لـ c</text>
+
+      <!-- Case 2: Acute -->
+      <rect x="10" y="84" width="180" height="42" rx="6" fill="#064e3b" stroke="#059669" stroke-width="0.8" />
+      <text x="100" y="102" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">إذا كان c² &lt; a² + b²</text>
+      <text x="100" y="118" text-anchor="middle" fill="#a7f3d0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">المثلث حاد الزوايا (كل زواياه حادة)</text>
+
+      <!-- Case 3: Obtuse -->
+      <rect x="10" y="134" width="180" height="42" rx="6" fill="#4c0519" stroke="#e11d48" stroke-width="0.8" />
+      <text x="100" y="152" text-anchor="middle" fill="#fb7185" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">إذا كان c² &gt; a² + b²</text>
+      <text x="100" y="168" text-anchor="middle" fill="#fecdd3" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">المثلث منفرج الزاوية في الزاوية المقابلة لـ c</text>
+    </g>
+  </g>
+
+  <!-- Panel 2: Euclid's Theorem in Right Triangles (Top Right) -->
+  <g transform="translate(470, 78)">
+    <rect width="425" height="260" rx="12" fill="url(#cardGrad2)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="12" width="395" height="30" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="0.8" />
+    <text x="212" y="32" text-anchor="middle" fill="#a78bfa" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٢. نظرية إقليدس وقوانين الارتفاع والمساقط</text>
+
+    <!-- Euclid Diagram Graphic -->
+    <g transform="translate(15, 52)">
+      <rect width="185" height="190" rx="8" fill="#091224" stroke="#1e293b" />
+      <!-- Right Triangle ABC (A is top right vertex: 90 deg) -->
+      <!-- B at (25, 145), C at (165, 145), A at (75, 45) -->
+      <!-- Hypotenuse BC -->
+      <line x1="25" y1="145" x2="165" y2="145" stroke="#f8fafc" stroke-width="2.5" />
+      <!-- Leg AB -->
+      <line x1="25" y1="145" x2="75" y2="45" stroke="#38bdf8" stroke-width="2.2" />
+      <!-- Leg AC -->
+      <line x1="165" y1="145" x2="75" y2="45" stroke="#34d399" stroke-width="2.2" />
+      <!-- Altitude AD perpendicular to BC -->
+      <line x1="75" y1="45" x2="75" y2="145" stroke="#f59e0b" stroke-dasharray="3,3" stroke-width="2" />
+
+      <!-- Right Angle at A -->
+      <path d="M 67,61 L 77,66 L 85,50" fill="none" stroke="#f43f5e" stroke-width="1.5" />
+      <!-- Right Angle at D -->
+      <rect x="67" y="137" width="8" height="8" fill="none" stroke="#f59e0b" stroke-width="1.3" />
+
+      <!-- Vertices -->
+      <circle cx="75" cy="45" r="4" fill="#ef4444" />
+      <text x="75" y="36" text-anchor="middle" fill="#fca5a5" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">A (رأس القائمة)</text>
+      <circle cx="25" cy="145" r="4" fill="#38bdf8" />
+      <text x="16" y="158" text-anchor="middle" fill="#7dd3fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">B</text>
+      <circle cx="165" cy="145" r="4" fill="#34d399" />
+      <text x="175" y="158" text-anchor="middle" fill="#6ee7b7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">C</text>
+      <circle cx="75" cy="145" r="4" fill="#f59e0b" />
+      <text x="75" y="162" text-anchor="middle" fill="#fde047" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">D</text>
+
+      <!-- Altitude AD label -->
+      <text x="88" y="98" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11">الارتفاع AD</text>
+      <!-- Segments BD and CD -->
+      <text x="45" y="136" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="9">BD</text>
+      <text x="120" y="136" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="9">CD</text>
+      <text x="95" y="180" text-anchor="middle" fill="#e2e8f0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="10">الوتر كاملاً BC = BD + CD</text>
+    </g>
+
+    <!-- Euclid's 4 Golden Formulas -->
+    <g transform="translate(210, 52)">
+      <rect width="200" height="190" rx="8" fill="#091224" stroke="#1e293b" />
+      <text x="100" y="20" text-anchor="middle" fill="#c084fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">قوانين إقليدس الذهبية الأربعة</text>
+
+      <!-- Rule 1 -->
+      <rect x="8" y="28" width="184" height="34" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.7" />
+      <text x="100" y="44" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">AB² = BD × BC</text>
+      <text x="100" y="57" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">مربع ضلع القائمة = مسقطه × الوتر كلاً</text>
+
+      <!-- Rule 2 -->
+      <rect x="8" y="67" width="184" height="34" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.7" />
+      <text x="100" y="83" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">AC² = CD × BC</text>
+      <text x="100" y="96" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">مربع ضلع القائمة الآخر = مسقطه × الوتر</text>
+
+      <!-- Rule 3 -->
+      <rect x="8" y="106" width="184" height="34" rx="5" fill="#0f2b36" stroke="#06b6d4" stroke-width="0.7" />
+      <text x="100" y="122" text-anchor="middle" fill="#67e8f9" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">AD² = BD × CD</text>
+      <text x="100" y="135" text-anchor="middle" fill="#94a3b8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">مربع الارتفاع = حاصل ضرب جزأي الوتر</text>
+
+      <!-- Rule 4 -->
+      <rect x="8" y="145" width="184" height="36" rx="5" fill="#064e3b" stroke="#10b981" stroke-width="0.7" />
+      <text x="100" y="161" text-anchor="middle" fill="#6ee7b7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">AD = (AB × AC) / BC</text>
+      <text x="100" y="174" text-anchor="middle" fill="#a7f3d0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="9">طول الارتفاع = (حاصل ضرب ضلعي القائمة) ÷ الوتر</text>
+    </g>
+  </g>
+
+  <!-- Panel 3: Pythagorean Triples & Triangle Inequality (Bottom Full-Width) -->
+  <g transform="translate(25, 350)">
+    <rect width="870" height="205" rx="12" fill="url(#cardGrad2)" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="10" width="840" height="28" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="0.8" />
+    <text x="435" y="29" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="14" font-weight="bold">٣. الثلاثيات الفيثاغورسية القياسية ومتباينة المثلث وتحديد فترة الضلع الثالث</text>
+
+    <!-- Column 1: Famous Triples -->
+    <g transform="translate(20, 48)">
+      <rect width="405" height="142" rx="8" fill="#091224" stroke="#1e293b" />
+      <rect x="12" y="8" width="170" height="22" rx="4" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.7" />
+      <text x="97" y="23" text-anchor="middle" fill="#a5b4fc" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">أشهر الثلاثيات الفيثاغورسية (a, b, c)</text>
+
+      <g transform="translate(15, 38)">
+        <!-- Triple 1 -->
+        <rect x="0" y="0" width="180" height="42" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="0.8" />
+        <text x="90" y="20" text-anchor="middle" fill="#60a5fa" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">(٣ ، ٤ ، ٥) ومضاعفاتها</text>
+        <text x="90" y="34" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="10">3² + 4² = 9 + 16 = 25 = 5²</text>
+
+        <!-- Triple 2 -->
+        <rect x="195" y="0" width="180" height="42" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="0.8" />
+        <text x="285" y="20" text-anchor="middle" fill="#34d399" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">(٥ ، ١٢ ، ١٣)</text>
+        <text x="285" y="34" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="10">5² + 12² = 25 + 144 = 169 = 13²</text>
+
+        <!-- Triple 3 -->
+        <rect x="0" y="50" width="180" height="42" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="0.8" />
+        <text x="90" y="70" text-anchor="middle" fill="#fbbf24" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">(٨ ، ١٥ ، ١٧)</text>
+        <text x="90" y="84" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="10">8² + 15² = 64 + 225 = 289 = 17²</text>
+
+        <!-- Triple 4 -->
+        <rect x="195" y="50" width="180" height="42" rx="6" fill="#0f172a" stroke="#ec4899" stroke-width="0.8" />
+        <text x="285" y="70" text-anchor="middle" fill="#f472b6" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">(٧ ، ٢٤ ، ٢٥)</text>
+        <text x="285" y="84" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="10">7² + 24² = 49 + 576 = 625 = 25²</text>
+      </g>
+    </g>
+
+    <!-- Column 2: Triangle Inequality -->
+    <g transform="translate(445, 48)">
+      <rect width="405" height="142" rx="8" fill="#091224" stroke="#1e293b" />
+      <rect x="12" y="8" width="160" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="0.7" />
+      <text x="92" y="23" text-anchor="middle" fill="#6ee7b7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">متباينة المثلث (Triangle Inequality)</text>
+
+      <text x="15" y="52" fill="#e2e8f0" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">▪ نص النظرية: في أي مثلث، مجموع طولي أي ضلعين أكبر من الضلع الثالث:</text>
+      <text x="35" y="70" fill="#38bdf8" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">a + b &gt; c    ,    a + c &gt; b    ,    b + c &gt; a</text>
+
+      <text x="15" y="92" fill="#fef08a" font-family="'Cairo', 'Segoe UI', system-ui" font-size="11" font-weight="bold">▪ قاعدة إيجاد فترة طول الضلع الثالث (x):</text>
+      <rect x="15" y="102" width="375" height="28" rx="6" fill="#1e1b4b" stroke="#818cf8" stroke-width="0.8" />
+      <text x="202" y="121" text-anchor="middle" fill="#c7d2fe" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12" font-weight="bold">طول الضلع الثالث ينتمي للفترة المفتوحة: ( |a - b|  ،  a + b )</text>
+    </g>
+  </g>
+
+  <!-- Bottom Takeaway Bar -->
+  <g transform="translate(25, 566)">
+    <rect width="870" height="38" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1" />
+    <text x="435" y="24" text-anchor="middle" fill="#6ee7b7" font-family="'Cairo', 'Segoe UI', system-ui" font-size="12.5" font-weight="bold">القاعدة الذهبية: الوتر² = مجموع مربعي ضلعي القائمة  |  AD² = BD × CD  |  AD = (AB × AC) / BC  |  طول المسقط ≤ طول القطعة الأصلية</text>
+  </g>
+</svg>

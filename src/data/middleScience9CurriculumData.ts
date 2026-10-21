@@ -382,8 +382,21 @@ export const MIDDLE_SCIENCE_G9_LECTURES: Lecture[] = [
       {
         titleAr: '1. المرايا الكرية ومسارات الأشعة وخواص الصور',
         titleEn: '1. Spherical Mirrors & Ray Tracing Geometry',
-        contentAr: '1) المفاهيم الأساسية في المرآة الكرية:\n- قطب المرآة (P): نقطة تتوسط السطح العاكس.\n- مركز التكور (C): مركز الكرة التي تعتبر المرآة جزءاً من سطحها.\n- المحور الأصلي: المستقيم المار بقطب المرآة ومركز تكورها.\n- البؤرة الأصلية (F): نقطة تجمع الأشعة المنعكسة الموازية للمحور الأصلي.\n- البعد البؤري (f): المسافة بين البؤرة والقطب، ونصف قطر التكور r = 2f.\n\n2) قواعد مسارات الأشعة في المرآة المقعرة:\n- الشعاع الساقط موازياً للمحور الأصلي ⟹ ينعكس ماراً بالبؤرة الأصلية.\n- الشعاع الساقط ماراً بالبؤرة الأصلية ⟹ ينعكس موازياً للمحور الأصلي.\n- الشعاع الساقط ماراً بمركز التكور ⟹ ينعكس على نفسه لأن زاوية سقوطه وزاوية انعكاسه = صفر.',
-        contentEn: 'Spherical mirrors have pole P, center C, focus F, and focal length f = r/2. Parallel incident rays reflect through focus; rays through center reflect back on themselves.'
+        contentAr: '1) المفاهيم الأساسية في المرآة الكرية:\n- قطب المرآة (P): نقطة تتوسط السطح العاكس.\n- مركز التكور (C): مركز الكرة التي تعتبر المرآة جزءاً من سطحها.\n- المحور الأصلي: المستقيم المار بقطب المرآة ومركز تكورها.\n- البؤرة الأصلية (F): نقطة تجمع الأشعة المنعكسة الموازية للمحور الأصلي.\n- البعد البؤري (f): المسافة بين البؤرة والقطب، ونصف قطر التكور r = 2f.\n\n2) قواعد مسارات الأشعة في المرآة المقعرة:\n- الشعاع الساقط موازياً للمحور الأصلي ⟹ ينعكس ماراً بالبؤرة الأصلية.\n- الشعاع الساقط ماراً بالبؤرة الأصلية ⟹ ينعكس موازياً للمحور الأصلي.\n- الشعاع الساقط ماراً بمركز التكور ⟹ ينعكس على نفسه لأن زاوية سقوطه وزاوية انعكاسه = صفر.\n\n![مخطط البصريات الهندسية: المرايا الكرية والعدسات وتصحيح عيوب الإبصار (قصر وطول النظر)](/curriculum_images/optics_mirrors_lenses_vision.svg)',
+        contentEn: 'Spherical mirrors have pole P, center C, focus F, and focal length f = r/2. Parallel incident rays reflect through focus; rays through center reflect back on themselves.',
+        diagram: {
+          id: 'diagram-m9-sci-optics',
+          figureNumberAr: 'شكل توضيحي (٣-١)',
+          figureNumberEn: 'Figure (3-1)',
+          titleAr: 'مخطط البصريات الهندسية: المرايا الكرية والعدسات وتصحيح عيوب الإبصار',
+          titleEn: 'Geometric Optics: Mirrors, Lenses, Ray Tracing & Vision Correction',
+          captionAr: 'رسم بياني شامل يوضح عناصر المرايا الكرية والعدسات المحدبة والمقعرة، جدول مسارات الأشعة وتكون الصور الحقيقية والتقديرية، وتشخيص عيوبي الإبصار (قصر وطول النظر) وطرق تصحيحهما بالعدسات.',
+          captionEn: 'Comprehensive optics diagram illustrating spherical mirrors, convex/concave lenses, ray-tracing image formation, and correction of myopia and hyperopia with lenses.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/optics_mirrors_lenses_vision.svg',
+          takeawayFormulaAr: 'r = 2f  |  قصر النظر ⟵ عدسة مقعرة (أمام الشبكية)  |  طول النظر ⟵ عدسة محدبة (خلف الشبكية)',
+          takeawayFormulaEn: 'r = 2f | Myopia: Concave lens (front of retina) | Hyperopia: Convex lens (behind retina)'
+        }
       },
       {
         titleAr: '2. العدسات وعيوب الإبصار (قصر وطول النظر)',

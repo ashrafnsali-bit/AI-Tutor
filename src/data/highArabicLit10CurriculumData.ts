@@ -196,12 +196,27 @@ Islamic impact unified dialects under Qurayshite Arabic, eradicated tribal secta
 **3. أسرار جمال التشبيه والاستعارة**:
 - **التشخيص**: منح الجماد أو المعنوي صفات إنسان عاقل.
 - **التجسيم**: تحويل الأمر المعنوي غير المحسوس إلى جسم مادي ملموس ("الصبر مفتاح الفرج").
-- **التوضيح**: تشبيه معنوي بمعنوي أو مادي بمادي.`,
+- **التوضيح**: تشبيه معنوي بمعنوي أو مادي بمادي.
+
+![مخطط علم البيان: أركان التشبيه وأنواعه والاستعارة المكنية والتصريحية وأسرار الجمال](/curriculum_images/arabic_rhetoric_simile_metaphor.svg)`,
         contentEn: `Simile breakdown: Detailed, Concise, Emphatic, and Baleegh.
 Metaphors:
 - Explicit (Tasreehiyya): Vehicle expressed overtly; tenor omitted.
 - Implicit (Makniyya): Vehicle suppressed; indicated by an active attribute.
-Aesthetic mechanisms: Personification (attributing human soul), Embodiment (reifying abstract concepts), Clarification.`
+Aesthetic mechanisms: Personification (attributing human soul), Embodiment (reifying abstract concepts), Clarification.`,
+        diagram: {
+          id: 'diagram-lit10-rhetoric-simile-metaphor',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط علم البيان: أركان التشبيه والاستعارة وأسرار الجمال',
+          titleEn: 'Arabic Rhetoric: Simile Types, Metaphor Rules & Aesthetic Secrets',
+          captionAr: 'لوحة بلاغية تفاعلية توضح الأركان الأربعة للتشبيه وأنواعه (المفصل والمجمل والمؤكد والبليغ)، الفرق بين الاستعارة المكنية والتصريحية، ومحاور أسرار الجمال الثلاثة (التشخيص والتجسيم والتوضيح).',
+          captionEn: 'Interactive rhetoric diagram illustrating the 4 simile pillars, simile taxonomy, implicit vs explicit metaphors, and aesthetic mechanisms (personification, embodiment, clarification).',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/arabic_rhetoric_simile_metaphor.svg',
+          takeawayFormulaAr: 'التشبيه البليغ = مشبه + مشبه به  |  الاستعارة = تشبيه بليغ حُذف أحد طرفيه  |  أسرار الجمال: تشخيص، تجسيم، توضيح',
+          takeawayFormulaEn: 'Baleegh Simile = Tenor + Vehicle | Metaphor = Elliptical Simile | Aesthetics: Personification, Embodiment, Clarification'
+        }
       }
     ],
 
