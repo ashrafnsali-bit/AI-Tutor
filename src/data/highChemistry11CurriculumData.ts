@@ -87,11 +87,15 @@ export const HIGH_CHEMISTRY_G11_LECTURES: Lecture[] = [
 
 ---
 
-### 2. نموذج بور لذرة الهيدروجين (Bohr Atomic Model)
+### 2. نموذج بور لذرة الهيدروجين والتركيب الذري (Bohr Model & Atomic Structure)
+
+![مخطط التركيب الذري ومستويات الطاقة الرئيسية وقواعد التوزيع الإلكتروني](/curriculum_images/atomic_structure_electron_shells.svg)
+
 * تدور الإلكترونات في مستويات طاقة محددة وثابتة (أغلفة $n = 1, 2, 3, \\dots$) وتكون الفراغات بينها محرمة على الإلكترونات.
 * عند اكتساب الإلكترون كمية محددة من الطاقة (**كم أو كوانتم Quantum**)، يقفز إلى مستوى طاقة أعلى (ذرة مثارة).
 * عند عودته لمستواه الأصلي، يشع فوتوناً طاقته تساوي فرق الطاقتين:
   $$\\Delta E = E_2 - E_1 = h \\cdot \\nu$$
+* سعة المستويات الرئيسية بالإلكترونات ($2n^2$): $K(2), L(8), M(18), N(32)$.
 
 ---
 
@@ -105,9 +109,17 @@ export const HIGH_CHEMISTRY_G11_LECTURES: Lecture[] = [
 * Majority penetrated: Atom is mostly empty space.
 * Minor deflections/rebounds: Dense positive nucleus.
 
-### 2. Bohr's Quantized Hydrogen Model
+---
+
+### 2. Bohr's Quantized Hydrogen Model & Atomic Structure
+
+![Atomic Structure, Electron Shells and Sublevels Diagram](/curriculum_images/atomic_structure_electron_shells.svg)
+
 * Discrete quantized energy levels: $\\Delta E = E_2 - E_1 = h\\nu$.
 * Line spectra produced upon de-excitation.
+* Capacity rule: $2n^2$ for first four principal energy shells ($K=2, L=8, M=18, N=32$).
+
+---
 
 ### 3. Modern Quantum Mechanics
 * **de Broglie Duality:** $\\lambda = h/(mv)$

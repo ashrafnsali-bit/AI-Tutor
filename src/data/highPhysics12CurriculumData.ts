@@ -115,6 +115,9 @@ export const HIGH_PHYSICS_G12_LECTURES: Lecture[] = [
 ---
 
 ### 2. توصيل المقاومات وقانون أوم للدوائر المغلقة
+
+![مخطط الدوائر الكهربائية وقانون أوم وتوصيل المقاومات بالتوالي والتوازي](/curriculum_images/electric_circuit_ohms_law.svg)
+
 * **التوصيل على التوالي:** $R_{eq} = R_1 + R_2 + R_3$ (التيار ثابت $I = I_1 = I_2 = I_3$، والجهد يتجزأ $V = V_1 + V_2 + V_3$).
 * **التوصيل على التوازي:** $\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}$ (الجهد متساوٍ $V = V_1 = V_2 = V_3$، والتيار يتجزأ $I = I_1 + I_2 + I_3$).
   * لمقاومتين على التوازي: $R_{eq} = \\frac{R_1 \\cdot R_2}{R_1 + R_2}$، وتيار أحد الفرعين: $I_1 = I_{total} \\cdot \\frac{R_{parallel}}{R_1}$.
@@ -138,6 +141,16 @@ export const HIGH_PHYSICS_G12_LECTURES: Lecture[] = [
 ### 1. Electric Current & Resistivity
 * Current Intensity: $I = \\frac{Q}{t} = \\frac{n e}{t}$ (Ampere = C/s).
 * Resistance formula: $R = \\rho_e \\frac{L}{A} = \\frac{L}{\\sigma A}$.
+
+---
+
+### 2. Series & Parallel Resistors & Closed Circuit Ohm's Law
+
+![Electric Circuit, Ohm's Law and Resistor Networks Diagram](/curriculum_images/electric_circuit_ohms_law.svg)
+
+* Series: $R_{eq} = R_1 + R_2 + R_3$, constant current $I$.
+* Parallel: $\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2}$, constant potential difference $V$.
+* Closed Circuit Ohm's Law: $I = \\frac{V_B}{R_{eq} + r}$ and terminal voltage $V = V_B - I r$.
 * Stretching wire by factor $k$ increases length by $k$, reduces area to $A/k$, and increases resistance to $k^2 R$.
 
 ### 2. Series & Parallel Networks and Closed-Circuit Ohm's Law

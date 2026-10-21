@@ -1366,6 +1366,19 @@ export const MIDDLE_SCIENCE_G8_LECTURES: Lecture[] = [
         titleEn: '1. Atmospheric Pressure & The Four Atmospheric Layers',
         contentAr: 'يمتد الغلاف الجوي لارتفاع 1000 كم فوق مستوى سطح البحر، والضغط الجوي المعتاد عند سطح البحر يساوي 1013.25 مليبار (mbar). يقاس الضغط بالبارومترات ومنها: الأنيرويد (Aneroid لمعرفة طقس اليوم) والالتيميتر (Altimeter في الطائرات لتحديد الارتفاع). ينقسم الغلاف الجوي إلى 4 طبقات تفصل بينها حدود توقف (Tropopause, Stratopause, Mesopause): 1) التروبوسفير: الطبقة الأولى المضطربة. 2) الستراتوسفير: الطبقة الثانية الهادئة. 3) الميزوسفير: الطبقة الثالثة المتوسطة. 4) الثرموسفير: الطبقة الرابعة الحرارية.',
         contentEn: 'The atmosphere extends 1000 km with standard sea-level pressure of 1013.25 mbar. Measured via Aneroids (weather forecasting) and Altimeters (aircraft altitude). Subdivided into 4 primary layers bounded by pauses: Troposphere, Stratosphere, Mesosphere, and Thermosphere.',
+        diagram: {
+          id: 'diagram-sci8-atmospheric-layers',
+          figureNumberAr: 'شكل توضيحي (٤-٢)',
+          figureNumberEn: 'Figure (4-2)',
+          titleAr: 'مخطط طبقات الغلاف الجوي وتدرج درجات الحرارة والضغط',
+          titleEn: 'Atmospheric Layers Stratification & Temperature Gradient Diagram',
+          captionAr: 'رسم علمي معتمد يوضح طبقات الغلاف الجوي الأربع (التروبوسفير، الستراتوسفير، الميزوسفير، الثرموسفير)، وحدود التوقف الفاصلة، ودرجات الحرارة وضغط الهواء وتواجد الأوزون والأقمار والشهب.',
+          captionEn: 'Standard science diagram displaying four atmospheric layers, bounding pauses, temperature lapse curves, ozone layer shield, and ionospheric radio reflection.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/atmospheric_layers_stratification.svg',
+          takeawayFormulaAr: 'معدل الانخفاض بالتروبوسفير = الارتفاع (كم) × 6.5°C | الضغط الجوي المعتاد = 1013.25 مليبار',
+          takeawayFormulaEn: 'Troposphere lapse rate = Altitude (km) × 6.5°C | Standard Sea-Level Pressure = 1013.25 mbar'
+        },
         interactiveExample: {
           titleAr: 'مثال تطبيقي 1: حساب درجة الحرارة عند قمة جبل بالتروبوسفير',
           titleEn: 'Worked Example 1: Calculating Temperature Drop at Mountain Summits',

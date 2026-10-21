@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyBg" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"/>
+      <stop offset="25%" stop-color="#0369a1" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="#1e1b4b" stop-opacity="0.8"/>
+      <stop offset="85%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="ozoneGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <linearGradient id="auroraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    .main-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 21px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+    .subtitle { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 13px; fill: #94a3b8; text-anchor: middle; }
+    .section-title { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #38bdf8; text-anchor: middle; }
+    .layer-name { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 14px; font-weight: bold; }
+    .layer-stats { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    .temp-label { font-family: 'Consolas', monospace; font-size: 11px; font-weight: bold; }
+    .badge { font-family: 'Segoe UI', Tahoma, Cairo, Arial, sans-serif; font-size: 10px; font-weight: bold; }
+  </style>
+
+  <!-- Frame Background -->
+  <rect width="920" height="600" rx="16" fill="#0b1120"/>
+  <rect x="10" y="10" width="900" height="580" rx="12" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Header Banner -->
+  <rect x="30" y="22" width="860" height="62" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" filter="url(#cardShadow)"/>
+  <text x="460" y="48" class="main-title">طبقات الغلاف الجوي وتدرج درجات الحرارة والضغط الجوي</text>
+  <text x="460" y="70" class="subtitle">Middle School Science 8 / Prep 2: Troposphere, Stratosphere, Mesosphere, Thermosphere &amp; Ionosphere</text>
+
+  <!-- Left Main Panel: Atmospheric Layers Column (0 to 690 km) -->
+  <g transform="translate(30, 98)">
+    <rect width="470" height="480" rx="12" fill="url(#skyBg)" stroke="#334155" stroke-width="1.2" filter="url(#cardShadow)"/>
+    
+    <!-- Y-Axis Altitudes (km) on the left side -->
+    <line x1="60" y1="440" x2="60" y2="40" stroke="#64748b" stroke-width="2"/>
+    <text x="50" y="35" font-family="'Segoe UI', Cairo" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="end">الارتفاع</text>
+    
+    <!-- Earth Surface (0 km) -->
+    <rect x="60" y="440" width="395" height="30" fill="#15803d" stroke="#22c55e" stroke-width="1"/>
+    <text x="50" y="445" font-family="'Segoe UI', Cairo" font-size="10" fill="#94a3b8" text-anchor="end">0 km</text>
+    <text x="250" y="458" font-family="'Segoe UI', Cairo" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">سطح الأرض (مستوى البحر) • 1013.25 mbar • +15°C</text>
+
+    <!-- 1. Troposphere (0 to 13 km) -->
+    <!-- y: 440 to 345 (height 95) -->
+    <rect x="60" y="345" width="395" height="95" fill="#0284c7" fill-opacity="0.18"/>
+    <!-- Weather Clouds & Rain -->
+    <path d="M 100 405 q 15 -18 35 -5 q 20 -20 40 0 q 15 -10 30 10 z" fill="#ffffff" fill-opacity="0.5"/>
+    <text x="135" y="423" font-family="'Segoe UI', Cairo" font-size="10" fill="#bae6fd">سحب وأمطار (كافة تقلبات الطقس)</text>
+    <!-- Mount Everest -->
+    <polygon points="380,440 400,395 420,440" fill="#475569" stroke="#94a3b8" stroke-width="1"/>
+    <text x="400" y="390" font-family="'Segoe UI', Cairo" font-size="9" fill="#f8fafc" text-anchor="middle">إيفرست 8.8km</text>
+
+    <!-- Tropopause Boundary (13 km) -->
+    <line x1="60" y1="345" x2="455" y2="345" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="1.5"/>
+    <text x="50" y="349" font-family="'Segoe UI', Cairo" font-size="10" fill="#38bdf8" text-anchor="end">13 km</text>
+    <rect x="330" y="335" width="120" height="18" rx="4" fill="#0284c7" fill-opacity="0.7"/>
+    <text x="390" y="348" class="badge" fill="#ffffff" text-anchor="middle">التروبوبوز (-60°C)</text>
+
+    <!-- 2. Stratosphere (13 to 50 km) -->
+    <!-- y: 345 to 235 (height 110) -->
+    <rect x="60" y="235" width="395" height="110" fill="#1e3a8a" fill-opacity="0.25"/>
+    <!-- Ozone Layer (20 to 40 km, y: 300 to 255) -->
+    <rect x="60" y="260" width="395" height="42" fill="url(#ozoneGrad)"/>
+    <text x="260" y="285" font-family="'Segoe UI', Cairo" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">🛡️ طبقة الأوزون (Ozone Layer O₃) • حماية من الأشعة UV (20-40 km)</text>
+    <!-- Aeroplane silhouette -->
+    <path d="M 120 325 l 20 0 l 8 -8 l 15 0 l -6 8 l 15 0 l 4 3 l -4 3 l -15 0 l 6 8 l -15 0 l -8 -8 z" fill="#fbbf24"/>
+    <text x="175" y="330" font-family="'Segoe UI', Cairo" font-size="10" fill="#fef08a">تحليق الطائرات (هواء أفقي هادئ)</text>
+
+    <!-- Stratopause Boundary (50 km) -->
+    <line x1="60" y1="235" x2="455" y2="235" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="1.5"/>
+    <text x="50" y="239" font-family="'Segoe UI', Cairo" font-size="10" fill="#38bdf8" text-anchor="end">50 km</text>
+    <rect x="330" y="225" width="120" height="18" rx="4" fill="#1d4ed8" fill-opacity="0.7"/>
+    <text x="390" y="238" class="badge" fill="#ffffff" text-anchor="middle">الستراتوبوز (0°C)</text>
+
+    <!-- 3. Mesosphere (50 to 85 km) -->
+    <!-- y: 235 to 145 (height 90) -->
+    <rect x="60" y="145" width="395" height="90" fill="#312e81" fill-opacity="0.35"/>
+    <!-- Shooting Meteor -->
+    <path d="M 280 160 L 210 205" stroke="#f43f5e" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="210" cy="205" r="4" fill="#fbbf24" filter="url(#glow)"/>
+    <text x="300" y="175" font-family="'Segoe UI', Cairo" font-size="11" font-weight="bold" fill="#f43f5e">احتراق الكتل الصخرية وتكون الشهب 🌠</text>
+
+    <!-- Mesopause Boundary (85 km) -->
+    <line x1="60" y1="145" x2="455" y2="145" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="1.5"/>
+    <text x="50" y="149" font-family="'Segoe UI', Cairo" font-size="10" fill="#38bdf8" text-anchor="end">85 km</text>
+    <rect x="310" y="135" width="140" height="18" rx="4" fill="#4338ca" fill-opacity="0.7"/>
+    <text x="380" y="148" class="badge" fill="#ffffff" text-anchor="middle">الميزوبوز (أبرد نقطة: -90°C)</text>
+
+    <!-- 4. Thermosphere & Ionosphere (85 to 690 km) -->
+    <!-- y: 145 to 45 (height 100) -->
+    <rect x="60" y="45" width="395" height="100" fill="#4c1d95" fill-opacity="0.35"/>
+    <!-- Aurora Waves -->
+    <path d="M 80 85 Q 160 55 240 75 T 400 65" fill="none" stroke="url(#auroraGrad)" stroke-width="6" filter="url(#glow)"/>
+    <text x="180" y="105" font-family="'Segoe UI', Cairo" font-size="10" font-weight="bold" fill="#a7f3d0">الأيونوسفير وانعكاس موجات الراديو + الشفق القطبي (الأورورا)</text>
+    <!-- Satellite Icon -->
+    <rect x="360" y="55" width="18" height="12" rx="2" fill="#38bdf8"/>
+    <line x1="350" y1="61" x2="360" y2="61" stroke="#facc15" stroke-width="3"/>
+    <line x1="378" y1="61" x2="388" y2="61" stroke="#facc15" stroke-width="3"/>
+    <text x="400" y="65" font-family="'Segoe UI', Cairo" font-size="9" fill="#bae6fd">إكسوسفير والأقمار</text>
+
+    <text x="50" y="50" font-family="'Segoe UI', Cairo" font-size="10" fill="#38bdf8" text-anchor="end">690 km</text>
+    <text x="240" y="62" font-family="'Segoe UI', Cairo" font-size="12" font-weight="bold" fill="#f43f5e">الثرموسفير (أسخن الطبقات 1200°C)</text>
+
+    <!-- Temperature Lapse Curve Line (Red zig-zag) -->
+    <!-- Surface 15C (x: 200, y: 440) -> Tropopause -60C (x: 90, y: 345) -> Stratopause 0C (x: 175, y: 235) -> Mesopause -90C (x: 75, y: 145) -> Thermosphere 1200C (x: 320, y: 55) -->
+    <path d="M 190 440 L 95 345 L 175 235 L 75 145 L 290 55" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round"/>
+    <text x="110" y="375" class="temp-label" fill="#ef4444">منحنى الحرارة</text>
+  </g>
+
+  <!-- Right Panel: Comprehensive Pedagogical Comparison Cards -->
+  <g transform="translate(515, 98)">
+    <rect width="375" height="480" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <text x="187" y="26" class="section-title">المقارنة المعيارية لطبقات الغلاف الجوي</text>
+
+    <!-- Layer 1 Card: Troposphere -->
+    <g transform="translate(15, 38)">
+      <rect width="345" height="85" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+      <rect x="0" y="0" width="345" height="22" rx="8" fill="#0284c7" fill-opacity="0.3"/>
+      <text x="15" y="16" class="layer-name" fill="#38bdf8">1. التروبوسفير (الطبقة المضطربة)</text>
+      <text x="330" y="16" font-family="'Consolas', monospace" font-size="10" fill="#94a3b8" text-anchor="end">0 ➔ 13 km</text>
+      <text x="15" y="38" class="layer-stats">• السمك: 13 كم | تحوي 75% من كتلة الهواء و99% من بخار الماء.</text>
+      <text x="15" y="55" class="layer-stats">• الحرارة: تنخفض بمعدل 6.5°C لكل 1 كم صعوداً حتى -60°C.</text>
+      <text x="15" y="72" class="layer-stats">• حركة الهواء: رأسية (صعود تيارات دافئة وهبوط باردة) وتنشأ السحب.</text>
+    </g>
+
+    <!-- Layer 2 Card: Stratosphere -->
+    <g transform="translate(15, 131)">
+      <rect width="345" height="85" rx="8" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+      <rect x="0" y="0" width="345" height="22" rx="8" fill="#1d4ed8" fill-opacity="0.3"/>
+      <text x="15" y="16" class="layer-name" fill="#60a5fa">2. الستراتوسفير (الطبقة المتطابقة)</text>
+      <text x="330" y="16" font-family="'Consolas', monospace" font-size="10" fill="#94a3b8" text-anchor="end">13 ➔ 50 km</text>
+      <text x="15" y="38" class="layer-stats">• الأهمية: تحتوي على طبقة الأوزون (O₃) الممتصة للأشعة فوق البنفسجية.</text>
+      <text x="15" y="55" class="layer-stats">• الحرارة: ترتفع من -60°C حتى تصل إلى 0°C عند الستراتوبوز.</text>
+      <text x="15" y="72" class="layer-stats">• الطيران: حركة الهواء أفقية وخالية من الغيوم والاضطرابات الجوية.</text>
+    </g>
+
+    <!-- Layer 3 Card: Mesosphere -->
+    <g transform="translate(15, 224)">
+      <rect width="345" height="80" rx="8" fill="#0f172a" stroke="#4338ca" stroke-width="1"/>
+      <rect x="0" y="0" width="345" height="22" rx="8" fill="#4338ca" fill-opacity="0.3"/>
+      <text x="15" y="16" class="layer-name" fill="#a5b4fc">3. الميزوسفير (الطبقة المتوسطة)</text>
+      <text x="330" y="16" font-family="'Consolas', monospace" font-size="10" fill="#94a3b8" text-anchor="end">50 ➔ 85 km</text>
+      <text x="15" y="38" class="layer-stats">• البرودة: أبرد طبقات الغلاف الجوي تنخفض فيها الحرارة إلى -90°C.</text>
+      <text x="15" y="55" class="layer-stats">• الخصائص: طبقة مخلخلة جداً خالية من الأكسجين وبخار الماء تقريباً.</text>
+      <text x="15" y="72" class="layer-stats">• الحماية: تحترق فيها الشهب كلياً نتيجة الاحتكاك بجزيئات الهواء.</text>
+    </g>
+
+    <!-- Layer 4 Card: Thermosphere & Ionosphere -->
+    <g transform="translate(15, 312)">
+      <rect width="345" height="85" rx="8" fill="#0f172a" stroke="#7e22ce" stroke-width="1"/>
+      <rect x="0" y="0" width="345" height="22" rx="8" fill="#7e22ce" fill-opacity="0.3"/>
+      <text x="15" y="16" class="layer-name" fill="#c084fc">4. الثرموسفير والأيونوسفير</text>
+      <text x="330" y="16" font-family="'Consolas', monospace" font-size="10" fill="#94a3b8" text-anchor="end">85 ➔ 690 km</text>
+      <text x="15" y="38" class="layer-stats">• الحرارة: أسخن الطبقات تصل إلى 1200°C، والضغط الجوي ضئيل جداً.</text>
+      <text x="15" y="55" class="layer-stats">• الأيونوسفير: غازات متأينة تعكس موجات الراديو للاتصالات اللاسلكية.</text>
+      <text x="15" y="72" class="layer-stats">• حزاما فان ألين: يشتتان الإشعاعات الكونية مسببين الشفق القطبي.</text>
+    </g>
+
+    <!-- Bottom Equation Box -->
+    <g transform="translate(15, 405)">
+      <rect width="345" height="65" rx="8" fill="#090d16" stroke="#f59e0b" stroke-width="1.2"/>
+      <text x="172" y="22" font-family="'Segoe UI', Cairo" font-size="12" font-weight="bold" fill="#facc15" text-anchor="middle">⚡ القانون الحسابي للانخفاض الحراري بالتروبوسفير</text>
+      <text x="172" y="42" font-family="'Consolas', 'Segoe UI'" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">مقدار التغير في الحرارة (°C) = الارتفاع (كم) × 6.5</text>
+      <text x="172" y="58" font-family="'Segoe UI', Cairo" font-size="10" fill="#cbd5e1" text-anchor="middle">درجة حرارة القمة = حرارة السفح - (الارتفاع × 6.5)</text>
+    </g>
+  </g>
+</svg>
