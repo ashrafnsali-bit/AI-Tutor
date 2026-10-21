@@ -14,9 +14,21 @@ export function resolveDiagramImageUrl(url: string | undefined): string {
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
     return url;
   }
-  const base = import.meta.env.BASE_URL || '/';
   const clean = url.replace(/^\/+/, '');
-  return `${base.endsWith('/') ? base : base + '/'}${clean}`;
+
+  if (typeof window !== 'undefined' && window.location) {
+    if (window.location.protocol === 'file:') {
+      return `./${clean}`;
+    }
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const isSubfolder = pathParts.length > 0 && !pathParts[0].includes('.') && pathParts[0] !== 'index.html';
+    const prefix = isSubfolder ? `/${pathParts[0]}/` : '/';
+    return `${prefix}${clean}`;
+  }
+
+  const base = import.meta.env.BASE_URL || '/';
+  const normBase = base.endsWith('/') ? base : `${base}/`;
+  return `${normBase}${clean}`;
 }
 
 interface CurriculumDiagramRendererProps {
@@ -30,6 +42,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeLabelIdx, setActiveLabelIdx] = useState<number | null>(null);
+  const [imgFailed, setImgFailed] = useState(false);
 
   const isEn = lang === 'en';
   const figureNum = isEn ? diagram.figureNumberEn : diagram.figureNumberAr;
@@ -3324,7 +3337,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
 
       {/* SVG Canvas Area */}
       <div className="diagram-canvas-box">
-        {diagram.imageUrl ? (
+        {diagram.imageUrl && !imgFailed ? (
           <img
             src={resolveDiagramImageUrl(diagram.imageUrl)}
             alt={title}
@@ -3338,6 +3351,8 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
               } else if (img.dataset.retryCount === '1') {
                 img.dataset.retryCount = '2';
                 img.src = `/${clean}`;
+              } else {
+                setImgFailed(true);
               }
             }}
           />
@@ -3393,7 +3408,7 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
             </div>
 
             <div className="df-canvas-body">
-              {diagram.imageUrl ? (
+              {diagram.imageUrl && !imgFailed ? (
                 <img
                   src={resolveDiagramImageUrl(diagram.imageUrl)}
                   alt={title}
@@ -3407,6 +3422,8 @@ export const CurriculumDiagramRenderer: React.FC<CurriculumDiagramRendererProps>
                     } else if (img.dataset.retryCount === '1') {
                       img.dataset.retryCount = '2';
                       img.src = `/${clean}`;
+                    } else {
+                      setImgFailed(true);
                     }
                   }}
                 />

@@ -106,9 +106,7 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
         contentAr: `تبدأ الجملة الفعلية دائماً بفعل، وتتكون من أركان أساسية:
 1. **الفعل:** الحدث المرتبط بزمن معين (ماضٍ، مضارع، أمر).
 2. **الفاعل:** هو من قام بالفعل أو اتصف به ويكون مرفوعاً دائماً.
-3. **المفعول به:** هو الاسم المنصوب الذي وقع عليه فعل الفاعل (مثل: كَتَبَ الطّالِبُ الدَّرْسَ).
-
-![مخطط توضيحي لأركان الجملة الفعلية من الكتاب المدرسي](/curriculum_images/arabic_grammar_sentence.jpg)`,
+3. **المفعول به:** هو الاسم المنصوب الذي وقع عليه فعل الفاعل (مثل: كَتَبَ الطّالِبُ الدَّرْسَ).`,
         contentEn: 'The verbal sentence begins with a verb and consists of: Verb, Subject (agent), and Direct Object (receiver of the action).',
         diagram: {
           id: 'diagram-arb5-verbal-sentence',

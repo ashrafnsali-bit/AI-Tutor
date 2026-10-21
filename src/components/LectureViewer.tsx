@@ -649,6 +649,11 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const [openSections, setOpenSections]           = useState<Record<number, boolean>>({ 0: true });
   const [activeExampleStep, setActiveExampleStep] = useState<Record<string, number>>({});
   const [showAllSteps, setShowAllSteps]           = useState<Record<string, boolean>>({});
+  const [coverImgFailed, setCoverImgFailed]       = useState(false);
+
+  useEffect(() => {
+    setCoverImgFailed(false);
+  }, [lecture?.id]);
 
   const isArabicLanguageLesson = Boolean(
     (effectiveSubject || rawLecture?.subject) &&
@@ -712,9 +717,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const warmup     = (isLessonTargetLang ? lecture.warmupHookEn : lecture.warmupHookAr) || lecture.warmupHookEn || lecture.warmupHookAr || '';
   const unitTitle  = (isLessonTargetLang ? lecture.unitTitleEn : lecture.unitTitleAr) || lecture.unitTitleEn || lecture.unitTitleAr || '';
   const curriculumCoverUrl =
-    ((lecture.sections || []).find(s => (s.diagram as any)?.diagramType === 'curriculum_cover')?.diagram?.imageUrl) ||
     (lecture as any).coverUrl ||
-    lecture.diagramData?.imageUrl ||
+    ((lecture.sections || []).find(s => (s.diagram as any)?.diagramType === 'curriculum_cover')?.diagram?.imageUrl) ||
     (isForeignLanguageLesson && (lecture.gradeLevel === 'G1' || (lecture.id || '').includes('connect-1') || (lecture.id || '').includes('g1-u'))
       ? '/curriculum_covers/egypt_primary_1_english.png'
       : undefined);
@@ -770,7 +774,7 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
           <p className="lesson-hero-subtitle" dir="auto">{subtitle}</p>
 
           {/* Official Textbook Cover Card */}
-          {curriculumCoverUrl && (
+          {!coverImgFailed && curriculumCoverUrl && (
             <div className="textbook-cover-hero-badge" title={isLessonTargetLang ? 'Official MOE Textbook' : 'غلاف الكتاب المدرسي المعتمد'}>
               <img
                 src={resolveDiagramImageUrl(curriculumCoverUrl)}
@@ -785,6 +789,8 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
                   } else if (img.dataset.retryCount === '1') {
                     img.dataset.retryCount = '2';
                     img.src = `/${clean}`;
+                  } else {
+                    setCoverImgFailed(true);
                   }
                 }}
               />

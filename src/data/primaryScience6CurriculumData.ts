@@ -128,9 +128,7 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 وتنفرد الخلية النباتية بوجود:
 1. **الجدار الخلوي السليلوزي:** يعطي الخلية شكلاً ثابتاً ودعماً قوياً.
 2. **البلاستيدات الخضراء:** تمتص طاقة الضوء لتصنع الغذاء بعملية البناء الضوئي.
-3. **الفجوة العصارية الكبيرة:** لتخزين الماء والغذاء.
-
-![المقارنة التشريحية بين الخلية النباتية والخلية الحيوانية وعضياتهما](/curriculum_images/plant_animal_cell_diagram.jpg)`,
+3. **الفجوة العصارية الكبيرة:** لتخزين الماء والغذاء.`,
         contentEn: 'Cells are the fundamental units of life. Plant and animal cells share the nucleus, membrane, and mitochondria. Plant cells uniquely feature a cell wall, chloroplasts, and a large central vacuole.',
         diagram: {
           id: 'diagram-psci6-plant-animal-cell',
@@ -330,9 +328,7 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
         titleEn: 'Body Systems Integration: Circulatory System & Heart',
         contentAr: `يتكامل الجهاز الدوري مع الأجهزة الحيوية لتزويد الجسم بالأكسجين والغذاء:
 - **القلب:** مضخة عضلية مجوفة لاإرادية تتكون من ٤ حجرات (أذينان وبطينان).
-- **الدورة الدموية:** تدفع الشرايين الدم المؤكسج إلى الخلايا، وتجمع الأوردة الدم غير المؤكسج ليعود إلى القلب ثم الرئتين لتنقيته.
-
-![مخطط تشريح القلب ومسار الدورة الدموية](/curriculum_images/heart_circulatory_system.jpg)`,
+- **الدورة الدموية:** تدفع الشرايين الدم المؤكسج إلى الخلايا، وتجمع الأوردة الدم غير المؤكسج ليعود إلى القلب ثم الرئتين لتنقيته.`,
         contentEn: 'The circulatory system coordinates with vital organs to supply oxygen and nutrients. The heart is an involuntary pump made of four chambers driving blood through arteries and veins.',
         diagram: {
           id: 'diagram-psci6-heart-circulatory',

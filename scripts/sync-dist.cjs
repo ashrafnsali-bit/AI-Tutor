@@ -49,6 +49,14 @@ if (fs.existsSync(distDir)) {
     try { fs.cpSync(currCoversSrc, path.join(rootDir, 'curriculum_covers'), { recursive: true }); } catch {}
   }
 
+  // Copy curriculum_images to dist, docs, and root
+  const currImagesSrc = path.join(publicDir, 'curriculum_images');
+  if (fs.existsSync(currImagesSrc)) {
+    try { fs.cpSync(currImagesSrc, path.join(distDir, 'curriculum_images'), { recursive: true }); } catch {}
+    try { fs.cpSync(currImagesSrc, path.join(docsDir, 'curriculum_images'), { recursive: true }); } catch {}
+    try { fs.cpSync(currImagesSrc, path.join(rootDir, 'curriculum_images'), { recursive: true }); } catch {}
+  }
+
   // Copy .htaccess to root and docs for Apache / Hostinger hosting
   const htaccessSrc = path.join(publicDir, '.htaccess');
   if (fs.existsSync(htaccessSrc)) {

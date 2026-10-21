@@ -1,5 +1,6 @@
 import React from 'react';
 import { removeExternalLinksFromText } from '../services/studentContentSanitizer';
+import { resolveDiagramImageUrl } from './CurriculumDiagramRenderer';
 
 interface RichContentRendererProps {
   content: string;
@@ -45,15 +46,7 @@ export function cleanLatexMath(mathStr: string): string {
     .trim();
 }
 
-function resolveImageUrl(url: string): string {
-  if (!url) return '';
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
-    return url;
-  }
-  const base = import.meta.env.BASE_URL || '/';
-  const clean = url.replace(/^\/+/, '');
-  return `${base.endsWith('/') ? base : base + '/'}${clean}`;
-}
+
 
 export const RichContentRenderer: React.FC<RichContentRendererProps> = ({ content, isEn = false }) => {
   if (!content) return null;
@@ -266,7 +259,7 @@ function renderMarkdownParagraphs(text: string, _isEn?: boolean): React.ReactNod
       flushTable();
       const altText = imgMatch[1] || 'رسم توضيحي للدرس';
       const rawSrc = imgMatch[2].trim();
-      const resolvedSrc = resolveImageUrl(rawSrc);
+      const resolvedSrc = resolveDiagramImageUrl(rawSrc);
       nodes.push(
         <figure
           key={`img-block-${nodeKey++}`}
@@ -304,6 +297,8 @@ function renderMarkdownParagraphs(text: string, _isEn?: boolean): React.ReactNod
               } else if (img.dataset.retryCount === '1') {
                 img.dataset.retryCount = '2';
                 img.src = `/${clean}`;
+              } else {
+                img.style.display = 'none';
               }
             }}
           />
