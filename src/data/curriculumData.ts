@@ -2490,6 +2490,19 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
         titleEn: '1. Verbal Sentence Pillars & Agent Typologies',
         contentAr: 'تتألف الجملة الفعلية من ركنين رئيسين:\n1. الفعل: وهو اللبنة الأولى الدالة على الحدث والزمن.\n2. الفاعل: وهو الاسم المرفوع الذي يدل على من فعل الفعل أو اتصف به، وحكمه الإعرابي: الرَّفْعُ دائماً.\n\nيأتي الفاعل على ثلاث صور رئيسة:\n- أولاً: اسم ظاهر: (مثل: حَفِظَ الطَّالِبُ القُرْآنَ) -> الفاعل "الطالبُ" اسم مفرد مرفوع بالضمة.\n- ثانياً: ضمير متصل: (مثل: كَتَبْتُ الواجبَ - الطلابُ حَضَرُوا - الفتياتُ كَتَبْنَ) -> التاء، واو الجماعة، ونون النسوة ضمائر متصلة مبنية في محل رفع فاعل.\n- ثالثاً: ضمير مستتر: (مثل: الجنديُّ دَافَعَ عن الوطنِ -> أي دافع [هُوَ] - اكْتُبْ دَرْسَكَ -> أي اكتب [أَنْتَ]).',
         contentEn: 'Verbal sentences feature Verb and Agent. The Agent is strictly nominative and manifests as an Explicit Noun, Attached Pronoun (e.g. Taa, Waw, Nun), or Latent Pronoun (Huwa, Anta, Ana).',
+        diagram: {
+          id: 'diagram-verbal-sentence-overview',
+          figureNumberAr: 'شكل توضيحي (٧-١)',
+          figureNumberEn: 'Figure (7-1)',
+          titleAr: 'مخطط أركان الجملة الفعلية: الفعل والفاعل والمفعول به',
+          titleEn: 'Components of the Verbal Sentence: Verb, Agent & Direct Object',
+          captionAr: 'رسم توضيحي تعليمي معتمد يوضح أركان الجملة الفعلية: الفعل (كَتَبَ) + الفاعل (الطّالِبُ) + المفعول به (الدَّرْسَ) مع تفصيل دلالة كل ركن.',
+          captionEn: 'Educational infographic diagram showing the three pillars of the verbal sentence: Verb, Subject, and Direct Object with illustrative examples.',
+          diagramType: 'arabic_sentence_structure',
+          imageUrl: '/curriculum_images/arabic_grammar_sentence.jpg',
+          takeawayFormulaAr: 'الجملة الفعلية = فعل + فاعل (مرفوع) + مفعول به (منصوب)',
+          takeawayFormulaEn: 'Verbal Sentence = Verb + Nominative Subject + Accusative Object'
+        },
         interactiveExample: {
           titleAr: 'تطبيق منهجي (3-1): تحديد صور الفاعل وإعرابه في شواهد متعددة',
           titleEn: 'Worked Example (3-1): Identifying Agent Forms & Syntactic Parsing',
@@ -3683,6 +3696,7 @@ export const GENERAL_SCIENCE_LECTURES: Lecture[] = [
           captionAr: 'مخطط مقارن يبين العضيات المشتركة (النواة، الميتوكوندريا، الغشاء البلازمي، السيتوبلازم)، والتركيبات الحصرية للخلية النباتية (الجدار الخلوي السليلوزي، البلاستيدات الخضراء، الفجوة العصارية الضخمة)، والخلية الحيوانية (الجسم المركزي).',
           captionEn: 'Detailed vector cytological comparison contrasting plant-exclusive chloroplasts and cell walls with animal cell morphology.',
           diagramType: 'plant_animal_cell',
+          imageUrl: '/curriculum_images/plant_animal_cell_diagram.jpg',
           takeawayFormulaAr: 'الخلية النباتية = جدار خلوي صلب + بلاستيدات خضراء + فجوة عصارية كبيرة',
           takeawayFormulaEn: 'Plant Cell = Rigid Cellulose Wall + Chloroplasts + Giant Vacuole',
           keyLabels: [

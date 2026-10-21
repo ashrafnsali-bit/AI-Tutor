@@ -97,6 +97,39 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
 3. **الكسرة (علامة فرعية هامة جداً):**
    - **جمع المؤنث السالم:** كافأت المعلمةُ **المتفوقاتِ** (المتفوقاتِ: مفعول به منصوب وعلامة نصبه الكسرة نيابة عن الفتحة لأنه جمع مؤنث سالم).
 `,
+    sections: [
+      {
+        titleAr: 'أركان الجملة الفعلية وموقع المفعول به',
+        titleEn: 'Components of the Verbal Sentence & Direct Object',
+        contentAr: `تبدأ الجملة الفعلية دائماً بفعل، وتتكون من أركان أساسية:
+1. **الفعل:** الحدث المرتبط بزمن معين (ماضٍ، مضارع، أمر).
+2. **الفاعل:** هو من قام بالفعل أو اتصف به ويكون مرفوعاً دائماً.
+3. **المفعول به:** هو الاسم المنصوب الذي وقع عليه فعل الفاعل (مثل: كَتَبَ الطّالِبُ الدَّرْسَ).`,
+        contentEn: 'The verbal sentence begins with a verb and consists of: Verb, Subject (agent), and Direct Object (receiver of the action).',
+        diagram: {
+          id: 'diagram-arb5-verbal-sentence',
+          figureNumberAr: 'شكل توضيحي (١)',
+          figureNumberEn: 'Figure (1)',
+          titleAr: 'مخطط أركان الجملة الفعلية: الفعل والفاعل والمفعول به',
+          titleEn: 'Structure of the Arabic Verbal Sentence: Verb, Subject & Object',
+          captionAr: 'رسم تعليمي ملون أصيل يوضح أركان الجملة الفعلية: الفعل (كَتَبَ) + الفاعل (الطّالِبُ) + المفعول به (الدَّرْسَ) مع الأمثلة والتطبيقات النحوية.',
+          captionEn: 'Textbook learning diagram illustrating the verbal sentence sequence: Verb + Subject + Object with examples.',
+          diagramType: 'arabic_sentence_structure',
+          imageUrl: '/curriculum_images/arabic_grammar_sentence.jpg',
+          takeawayFormulaAr: 'الجملة الفعلية = فعل + فاعل (مرفوع) + مفعول به (منصوب)',
+          takeawayFormulaEn: 'Verbal Sentence = Verb + Subject (Marfoo) + Object (Mansoub)'
+        }
+      },
+      {
+        titleAr: 'علامات إعراب المفعول به بالتفصيل',
+        titleEn: 'Detailed Accusative Case Markers',
+        contentAr: `علامات نصب المفعول به:
+- **الفتحة الظاهرة:** إذا كان مفرداً أو جمع تكسير (شرب الطفلُ الحليبَ / قرأ التلميذُ الكتبَ).
+- **الياء:** إذا كان مثنى أو جمع مذكر سالماً (كافأ المديرُ الفائزَيْنِ / شكر المعلمُ المتفوقِينَ).
+- **الكسرة نيابة عن الفتحة:** إذا كان جمع مؤنث سالماً (شكرتُ المعلماتِ).`,
+        contentEn: 'Accusative case markers for the direct object: Fatha (singular/broken plural), Yaa (dual/sound masculine plural), and Kasra substituting Fatha (sound feminine plural).'
+      }
+    ],
     assessment: {
       id: 'assess-arb5-1',
       titleAr: 'تقييم المحاضرة 1: المفعول به وعلامات نصبه',

@@ -116,6 +116,19 @@ export const SUDAN_PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
    - **الصفائح الدموية:** قطع خلوية صغيرة تسد الجروح وتساعد على تخثر وتجلط الدم لمنع النزف عند حدوث جرح.
    - **البلازما:** السائل الأصفر الذي تسبح فيه كل مكونات الدم، وينقل المواد الغذائية الذائبة والفضلات.`,
         contentEn: 'The circulatory system consists of the four-chambered heart, blood vessels (arteries, veins, capillaries), and blood composed of red cells, white cells, platelets, and plasma.',
+        diagram: {
+          id: 'diagram-sudan-sci6-heart',
+          figureNumberAr: 'شكل علمي (١-١)',
+          figureNumberEn: 'Scientific Figure (1-1)',
+          titleAr: 'مخطط تشريح القلب والدورة الدموية الكبرى والصغرى',
+          titleEn: 'Heart Anatomy & Double Circulation Loops',
+          captionAr: 'رسم تعليمي معتمد من كتاب العلوم يوضح حجرات القلب الأربع وتدفق الدم المؤكسج وغير المؤكسج بين القلب والرئتين وأنحاء الجسم.',
+          captionEn: 'Textbook diagram showing heart chambers and double circulation between heart, lungs, and body.',
+          diagramType: 'forces_motion_vector',
+          imageUrl: '/curriculum_images/heart_circulatory_system.jpg',
+          takeawayFormulaAr: 'القلب يضخ الدم عبر دورتين: الدورة الصغرى (الرئوية) والدورة الكبرى (الجهازية)',
+          takeawayFormulaEn: 'Heart pumps via Pulmonary and Systemic loops'
+        },
         interactiveExample: {
           titleAr: 'تطبيق عملي 1: تتبع مسار قطرة دم عبر الدورة الصغرى والكبرى',
           titleEn: 'Interactive Example 1: Tracing Blood Flow in Pulmonic & Systemic Loops',

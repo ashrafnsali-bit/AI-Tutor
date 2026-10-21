@@ -117,6 +117,32 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 | **الفجوة العصارية** | فجوة واحدة **كبيرة ومركزية** | فجوات **صغيرة ومتعددة** |
 | **غشاء الخلية والنواة** | موجودان | موجودان |
 `,
+    sections: [
+      {
+        titleAr: 'بنية الخلية وعضياتها ومقارنة الخلية النباتية والحيوانية',
+        titleEn: 'Cellular Structure & Plant vs Animal Cell Comparison',
+        contentAr: `تعد الخلية وحدة البناء والوظيفة الأساسية في الكائن الحي.
+تشترك الخلايا النباتية والحيوانية في وجود النواة، غشاء الخلية، السيتوبلازم، والميتوكوندريا.
+وتنفرد الخلية النباتية بوجود:
+1. **الجدار الخلوي السليلوزي:** يعطي الخلية شكلاً ثابتاً ودعماً قوياً.
+2. **البلاستيدات الخضراء:** تمتص طاقة الضوء لتصنع الغذاء بعملية البناء الضوئي.
+3. **الفجوة العصارية الكبيرة:** لتخزين الماء والغذاء.`,
+        contentEn: 'Cells are the fundamental units of life. Plant and animal cells share the nucleus, membrane, and mitochondria. Plant cells uniquely feature a cell wall, chloroplasts, and a large central vacuole.',
+        diagram: {
+          id: 'diagram-psci6-plant-animal-cell',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'المقارنة التشريحية بين الخلية النباتية والخلية الحيوانية',
+          titleEn: 'Comparative Anatomy: Plant vs Animal Cell',
+          captionAr: 'رسم تعليمي علمي معتمد يوضح المقارنة الدقيقة بين عضيات الخلية النباتية والخلية الحيوانية (الجدار الخلوي، النواة، البلاستيدات، الميتوكوندريا، والفجوة العصارية).',
+          captionEn: 'Educational biology textbook diagram comparing plant and animal cell cross-sections and organelles.',
+          diagramType: 'plant_animal_cell',
+          imageUrl: '/curriculum_images/plant_animal_cell_diagram.jpg',
+          takeawayFormulaAr: 'الخلية النباتية = جدار خلوي صلب + بلاستيدات خضراء + فجوة عصارية كبيرة',
+          takeawayFormulaEn: 'Plant Cell = Cellulose Wall + Chloroplasts + Central Vacuole'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-sci6-1',
       titleAr: 'تقييم المحاضرة 1: الخلية كنظام متكامل',
@@ -292,6 +318,29 @@ export const PRIMARY_SCIENCE_G6_LECTURES: Lecture[] = [
 - **الجلد:** يفرز العرق المحمل بالماء والأملاح للمساعدة في تبريد الجسم والتخلص من الفضلات.
 - **الرئتان:** تطرد غاز ثاني أكسيد الكربون وبخار الماء الناتج عن التنفس الخلوي.
 `,
+    sections: [
+      {
+        titleAr: 'تكامل أجهزة الجسم: الجهاز الدوري وعضلة القلب',
+        titleEn: 'Body Systems Integration: Circulatory System & Heart',
+        contentAr: `يتكامل الجهاز الدوري مع الأجهزة الحيوية لتزويد الجسم بالأكسجين والغذاء:
+- **القلب:** مضخة عضلية مجوفة لاإرادية تتكون من ٤ حجرات (أذينان وبطينان).
+- **الدورة الدموية:** تدفع الشرايين الدم المؤكسج إلى الخلايا، وتجمع الأوردة الدم غير المؤكسج ليعود إلى القلب ثم الرئتين لتنقيته.`,
+        contentEn: 'The circulatory system coordinates with vital organs to supply oxygen and nutrients. The heart is an involuntary pump made of four chambers driving blood through arteries and veins.',
+        diagram: {
+          id: 'diagram-psci6-heart-circulatory',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط تشريح القلب ومسار الدورة الدموية',
+          titleEn: 'Heart Anatomy & Circulatory Flow Diagram',
+          captionAr: 'رسم علمي تشريحي معتمد يوضح حجرات القلب الأربع (الأذينان والبطينان) ومسار تدفق الدم المؤكسج وغير المؤكسج عبر الشرايين والأوردة والدورتين الصغرى والكبرى.',
+          captionEn: 'Anatomical textbook diagram illustrating four heart chambers and oxygenated vs deoxygenated blood flow in circulatory loops.',
+          diagramType: 'forces_motion_vector',
+          imageUrl: '/curriculum_images/heart_circulatory_system.jpg',
+          takeawayFormulaAr: 'القلب = مضخة حيوية مكونة من ٤ حجرات تدفع الدم في الدورتين الرئوية والجهازية',
+          takeawayFormulaEn: 'Heart = 4-chambered pump driving pulmonic and systemic loops'
+        }
+      }
+    ],
     assessment: {
       id: 'assess-sci6-2',
       titleAr: 'تقييم المحاضرة 2: الجسم كنظام متكامل',
