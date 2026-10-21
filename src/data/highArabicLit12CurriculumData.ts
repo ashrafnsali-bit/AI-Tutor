@@ -53,13 +53,13 @@ export const HIGH_ARABIC_LIT_G12_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'المعارضة الشعرية (Poetic Contention / Mu\'arada)',
+        termAr: 'المعارضة الشعرية',
         termEn: 'Poetic Emulation (Mu\'arada)',
         definitionAr: 'أن ينظم شاعر حديث قصيدة على نفس وزن وقافية وروي قصيدة مشهورة لشاعر قديم منافساً له في الإبداع.',
         definitionEn: 'The neoclassical technique of composing a modern poem adhering to the exact meter and rhyme of an ancient classic.'
       },
       {
-        termAr: 'المسرح الشعري (Verse Drama)',
+        termAr: 'المسرح الشعري',
         termEn: 'Verse Drama',
         definitionAr: 'فن درامي مسرحي تُكتب حواراته ومواقفه بالكامل بالشعر العربي الفصيح، وأسسه أحمد شوقي (مثل: مصرع كليوباترا، مجنون ليلى).',
         definitionEn: 'Theatrical drama written entirely in metered classical poetry, pioneered in Arabic by Ahmed Shawqi.'
@@ -306,13 +306,13 @@ Adapting Arabic verse to epic historiography in "Majd al-Islam" (The Islamic Ili
 
     vocabulary: [
       {
-        termAr: 'الوحدة العضوية (Organic Unity)',
+        termAr: 'الوحدة العضوية',
         termEn: 'Organic Unity',
         definitionAr: 'تماسك القصيدة وتكاملها الفني بحيث تدور حول موضوع واحد وجو نفسي واحد، وتتسلسل الأفكار تسلسلاً لا يمكن فيه حذف بيت أو نقله.',
         definitionEn: 'The aesthetic coherence of a poem unified around a single theme and atmospheric mood where stanzas cannot be rearranged.'
       },
       {
-        termAr: 'غلبة الذهنية (Cerebral Rationalism)',
+        termAr: 'غلبة الذهنية',
         termEn: 'Intellectual Abstraction',
         definitionAr: 'طغيان التفكير العقلي والتأمل الفلسفي الجاف على العاطفة ودفء الإحساس في شعر مدرسة الديوان.',
         definitionEn: 'The ascendancy of analytical intellect, philosophical speculation, and dry cognitive inquiry over lyric emotion.'
@@ -554,13 +554,13 @@ Internal polemics fractured the group; Shukri ceased writing, Mazini pivoted to 
 
     vocabulary: [
       {
-        termAr: 'تراسل الحواس (Synesthesia)',
+        termAr: 'تراسل الحواس',
         termEn: 'Synesthesia (Tarasul al-Hawas)',
         definitionAr: 'ظاهرة أسلوبية عند مدرسة أبوللو يتم فيها إعطاء حاسة وظيفة حاسة أخرى (مثل: العطر القمري، النغم المعطر، تذوق الضوء).',
         definitionEn: 'A poetic technique blending sensory perceptions: describing olfactory scents visually or auditory melodies aromatically.'
       },
       {
-        termAr: 'شعر التفعيلة (Free-Verse Taf\'ila)',
+        termAr: 'شعر التفعيلة',
         termEn: 'Free Verse (Taf\'ila Poetry)',
         definitionAr: 'شكل شعري حديث يعتمد على تكرار التفعيلة العروضية بعدد غير محدد في أسطر شعرية متفاوتة الطول دون الالتزام بنظام الشطرين.',
         definitionEn: 'Modern metric poetry based on an organic variable number of rhythmic feet (Taf\'ila) per line without dual hemistichs.'
@@ -817,13 +817,13 @@ Poets embraced contemporary realism to confront collective public struggles: soc
 
     vocabulary: [
       {
-        termAr: 'محاكاة الواقع (Realistic Verisimilitude)',
+        termAr: 'محاكاة الواقع',
         termEn: 'Realism / Verisimilitude',
         definitionAr: 'أن تكون أحداث الرواية وشخصياتها وأزمنتها وأماكنها ولغتها مما يجري في بيئة الناس المعاشة وليست خوارق أسطورية.',
         definitionEn: 'The aesthetic imperative that narrative events, characters, settings, and dialogue mirror plausible human reality.'
       },
       {
-        termAr: 'لحظة التنوير (Moment of Epiphany)',
+        termAr: 'لحظة التنوير',
         termEn: 'Epiphanic Illumination',
         definitionAr: 'اللحظة الحاسمة والمكثفة في نهاية القصة القصيرة التي ينكشف فيها المعنى العميق للحدث في ومضة إدراك مفاجئة.',
         definitionEn: 'The climactic flash in a short story where underlying emotional or thematic truth is instantaneously unveiled.'
@@ -962,7 +962,7 @@ No drama exists without conflict; it is the ethical, philosophical, or sociopoli
       {
         titleAr: '4. فن المقال وأثر الصحافة في تطور النثر الحديث وأقسامه',
         titleEn: '4. The Essay (Al-Maqal): Journalistic Impact & Contemporary Taxonomy',
-        contentAr: `### تعريف المقال (The Essay):
+        contentAr: `### تعريف المقال :
 بحث قصير في العلم أو الأدب أو السياسة أو الاجتماع، يُنشر في صحيفة أو مجلة سيارة.
 
 ### أثر الصحافة الحديثة في تطور المقال والنثر العربي:
@@ -1085,13 +1085,13 @@ A focused prose disquisition on literature, sociology, or politics published in 
 
     vocabulary: [
       {
-        termAr: 'التجربة الشعرية (The Poetic Experience)',
+        termAr: 'التجربة الشعرية',
         termEn: 'The Poetic Experience',
         definitionAr: 'الموقف الشعوري والفكري الكامل الذي يمر به الشاعر حين ينفعل بمؤثر خارجي أو داخلي فيصوغه ببراعة في نص أدبي.',
         definitionEn: 'The total psychological and intellectual encounter wherein an inspired poet translates emotional stimuli into poetic art.'
       },
       {
-        termAr: 'الموسيقى الخفية (Covert / Internal Music)',
+        termAr: 'الموسيقى الخفية',
         termEn: 'Internal Covert Musicality',
         definitionAr: 'نغم داخلي عذب ينبع من دقة اختيار الكلمات الموحية، وتناسق الحروف، وترتيب الأفكار، وصدق العاطفة دون الاعتماد على الوزن والقافية فقط.',
         definitionEn: 'Subtle internal resonance emanating from evocative diction, euphonic consonant sequencing, and genuine emotive sincerity.'
@@ -1102,7 +1102,7 @@ A focused prose disquisition on literature, sociology, or politics published in 
       {
         titleAr: '1. مفهوم التجربة الشعرية وعناصرها الأساسية (الوجدان والفكر)',
         titleEn: '1. The Poetic Experience: Essence & Pillars (Emotion & Intellect)',
-        contentAr: `### مفهوم التجربة الشعرية (Poetic Experience):
+        contentAr: `### مفهوم التجربة الشعرية :
 هي الرؤية النفسية والوجدانية الكاملة للشاعر حين ينفعل بمؤثر واقعي أو إنساني أو كوني، فيستغرق فيه بفكره ووجدانه، حتى يتفجر التعبير عنه في صياغة شعرية موحية متكاملة.
 
 ### عناصر التجربة الشعرية الثلاثة:

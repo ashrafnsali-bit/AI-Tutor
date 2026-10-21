@@ -42,5 +42,25 @@ function sanitizeValue(value: unknown): unknown {
 }
 
 export function sanitizeLectureForStudents(lecture: Lecture): Lecture {
-  return sanitizeValue(lecture) as Lecture;
+  const sanitized = sanitizeValue(lecture) as Lecture;
+  if (!sanitized) return sanitized;
+
+  const isArabicSubj = Boolean(
+    sanitized.subject && String(sanitized.subject).toUpperCase().includes('ARABIC')
+  );
+
+  if (isArabicSubj && Array.isArray(sanitized.vocabulary)) {
+    sanitized.vocabulary = sanitized.vocabulary.map((vocab) => {
+      if (!vocab) return vocab;
+      const cleanTermAr = vocab.termAr
+        ? vocab.termAr.replace(/\s*\([A-Za-z0-9\s\-–—_/'&.,:;\\]+\)\s*/g, '').trim()
+        : vocab.termAr;
+      return {
+        ...vocab,
+        termAr: cleanTermAr
+      };
+    });
+  }
+
+  return sanitized;
 }

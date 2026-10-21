@@ -62,13 +62,13 @@ export const PRIMARY_ARABIC_G3_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'اللام القمرية (Lunar Lam)',
+        termAr: 'اللام القمرية',
         termEn: 'Lunar Lam',
         definitionAr: 'لام ساكنة تُكتب وتُنطق واضحة في الكلام وتتبعها حروف جملة (ابغ حجك وخف عقيمه).',
         definitionEn: 'Definite article Lam that is written and articulated with Sukun.'
       },
       {
-        termAr: 'اللام الشمسية (Solar Lam)',
+        termAr: 'اللام الشمسية',
         termEn: 'Solar Lam',
         definitionAr: 'لام تُكتب ولا تُنطق، ويأتي بعدها حرف مشدد.',
         definitionEn: 'Definite article Lam that is written but assimilated into the subsequent doubled consonant.'
@@ -186,7 +186,7 @@ export const PRIMARY_ARABIC_G3_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'التَّنْوِين (Tanween / Nunation)',
+        termAr: 'التَّنْوِين',
         termEn: 'Tanween',
         definitionAr: 'نون ساكنة تلحق آخر الاسم نطقاً وتفارقه خطاً ووقفاً، وعلامته مضاعفة الحركة.',
         definitionEn: 'An unwritten vocalic Nun suffix indicating indefiniteness in nouns.'
@@ -303,13 +303,13 @@ export const PRIMARY_ARABIC_G3_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'حُرُوفُ المَدّ (Madd Letters / Long Vowels)',
+        termAr: 'حُرُوفُ المَدّ',
         termEn: 'Long Vowels (Madd)',
         definitionAr: 'ثلاثة أحرف (ا، و، ي) ساكنة خالية من الحركة تمد صوت الحركة التي قبلها.',
         definitionEn: 'Three Arabic letters extending preceding harmonic vowels into long vowels.'
       },
       {
-        termAr: 'الحَرْفُ المَمْدُود (Prolonged Consonant)',
+        termAr: 'الحَرْفُ المَمْدُود',
         termEn: 'Prolonged Consonant',
         definitionAr: 'الحرف الذي يسبق حرف المد مباشرة وتظهر عليه حركة تناسب نوع المد.',
         definitionEn: 'The consonant directly before the Madd letter carrying the matching vowel.'
@@ -430,13 +430,13 @@ export const PRIMARY_ARABIC_G3_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'التَّاءُ المَرْبُوطَة (Taa Marbuta)',
+        termAr: 'التَّاءُ المَرْبُوطَة',
         termEn: 'Taa Marbuta',
         definitionAr: 'تاء تلحق أواخر الأسماء المؤنثة، تُنطق تاءً في الوصل وهاءً عند الوقف وعليها نقطتان.',
         definitionEn: 'Feminine noun suffix pronounced as "t" when voweled and "h" when paused.'
       },
       {
-        termAr: 'الهَاءُ المَرْبُوطَة (Terminal Haa)',
+        termAr: 'الهَاءُ المَرْبُوطَة',
         termEn: 'Terminal Haa',
         definitionAr: 'هاء تنطق هاءً وصلاً ووقفاً وتُكتب بدون نقاط.',
         definitionEn: 'Terminal letter pronounced "h" in all syntactic states without dots.'
@@ -567,13 +567,13 @@ export const PRIMARY_ARABIC_G3_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'أُسْلُوبُ النَّهْي (Prohibition Style)',
+        termAr: 'أُسْلُوبُ النَّهْي',
         termEn: 'Prohibition (Nahy)',
         definitionAr: 'تركيب لغوي نطلب به من المخاطب الكف عن فعل شيء، ويبدأ بـ (لا الناهية).',
         definitionEn: 'Syntactic construct urging someone to refrain from an action using "La".'
       },
       {
-        termAr: 'أُسْلُوبُ التَّعَجُّب (Exclamatory Style)',
+        termAr: 'أُسْلُوبُ التَّعَجُّب',
         termEn: 'Exclamation (Ta\'ajjub)',
         definitionAr: 'تركيب يعبر عن الإعجاب والدهشة ويكون على صيغة (ما أفعلَ...!).',
         definitionEn: 'Formulaic construction conveying wonder on the pattern of "Ma Af\'ala!".'

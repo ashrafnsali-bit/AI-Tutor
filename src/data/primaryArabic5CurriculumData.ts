@@ -52,13 +52,13 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'المفعول به (Direct Object - Maf\'ul Bihi)',
+        termAr: 'المفعول به',
         termEn: 'Direct Object',
         definitionAr: 'اسم منصوب يدل على ما أو من وقع عليه فعل الفاعل في الجملة الفعلية.',
         definitionEn: 'An accusative noun indicating what or who received the action of the subject.'
       },
       {
-        termAr: 'الكسرة نيابة عن الفتحة (Kasra for Fatha)',
+        termAr: 'الكسرة نيابة عن الفتحة',
         termEn: 'Kasra Substituting Fatha',
         definitionAr: 'علامة نصب فرعية خاصة بجمع المؤنث السالم المنتهي بألف وتاء (مثل: شكرتُ المعلماتِ).',
         definitionEn: 'A secondary accusative marker exclusive to sound feminine plurals ending in Alif and Taa.'
@@ -186,13 +186,13 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الفاعل المؤخر (Delayed Subject)',
+        termAr: 'الفاعل المؤخر',
         termEn: 'Delayed Subject',
         definitionAr: 'فاعل تأخر ترتيبه في الجملة وجاء بعد المفعول به، ويبقى دائماً مرفوعاً.',
         definitionEn: 'A subject placed after the direct object, retaining its strict nominative case.'
       },
       {
-        termAr: 'المفعول به المقدم (Fronted Object)',
+        termAr: 'المفعول به المقدم',
         termEn: 'Fronted Direct Object',
         definitionAr: 'مفعول به تقدم في الترتيب وجاء مباشرة بعد الفعل وقبل الفاعل، ويبقى منصوباً.',
         definitionEn: 'A direct object appearing ahead of the subject, retaining its accusative case.'
@@ -344,13 +344,13 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'المضاف (The Annexed Noun - Mudaf)',
+        termAr: 'المضاف',
         termEn: 'Mudaf (Annexed Head Noun)',
         definitionAr: 'الاسم الأول النكرة في التركيب الإضافي، ويعرب حسب موقعه في الجملة، ولا يقبل التنوين ولا النون.',
         definitionEn: 'The first noun in an Idafa construction, parsed according to sentence role, shedding nunation and Noon.'
       },
       {
-        termAr: 'المضاف إليه (The Possessor / Genitive - Mudaf Ilayhi)',
+        termAr: 'المضاف إليه',
         termEn: 'Mudaf Ilayhi (Genitive Annexed Noun)',
         definitionAr: 'الاسم الثاني المعرف الذي يضاف إليه الاسم الأول ليزيل إبهامه ويحدده، ويكون دائماً مجروراً.',
         definitionEn: 'The second noun defining the first, consistently taking genitive markers (Kasra or Yaa).'
@@ -497,19 +497,19 @@ export const PRIMARY_ARABIC_G5_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'قاعدة أقوى الحركات (Vowel Hierarchy Rule)',
+        termAr: 'قاعدة أقوى الحركات',
         termEn: 'Strongest Vowel Hierarchy',
         definitionAr: 'قاعدة إملائية: الكسرة (تناسبها الياء) أقوى من الضمة (تناسبها الواو) أقوى من الفتحة (تناسبها الألف) أقوى من السكون.',
         definitionEn: 'Hierarchy: Kasra (seats on Nabrah) > Damma (Waw) > Fatha (Alif) > Sukun (Line).'
       },
       {
-        termAr: 'الهمزة المتطرفة (Terminal Hamzah)',
+        termAr: 'الهمزة المتطرفة',
         termEn: 'Terminal Hamzah',
         definitionAr: 'همزة تأتي في نهاية الكلمة وتكتب حسب حركة الحرف الذي قبلها مباشرة دون النظر لحركتها هي.',
         definitionEn: 'A Hamzah at the word end, shaped purely by the single preceding vowel.'
       },
       {
-        termAr: 'السيرة الغيرية (Biography)',
+        termAr: 'السيرة الغيرية',
         termEn: 'Biography (Seerah Ghayriyyah)',
         definitionAr: 'نص وصفي سردي يكتبه المؤلف عن شخصية أخرى مؤثرة، يسرد فيه قصة حياتها وأهم محطاتها وإنجازاتها.',
         definitionEn: 'A biographical narrative detailing another notable person\'s milestones and legacy.'

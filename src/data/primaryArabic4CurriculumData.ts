@@ -50,13 +50,13 @@ export const PRIMARY_ARABIC_G4_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'أقسام الكلمة (Parts of Speech)',
+        termAr: 'أقسام الكلمة',
         termEn: 'Parts of Speech',
         definitionAr: 'تنقسم الكلمة في اللغة العربية إلى: اسم (إنسان، حيوان، نبات، جماد، صفة)، فعل (ماضٍ، مضارع، أمر)، وحرف.',
         definitionEn: 'The three grammatical categories in Arabic: Noun (Ism), Verb (Fi\'l), and Particle (Harf).'
       },
       {
-        termAr: 'المبتدأ والخبر (Subject & Predicate)',
+        termAr: 'المبتدأ والخبر',
         termEn: 'Mubtada & Khabar',
         definitionAr: 'ركنان أساسيان في الجملة الاسمية مرفوعان دائماً؛ المبتدأ تبدأ به الجملة، والخبر يخبرنا عنه ويتمم الفائدة.',
         definitionEn: 'The two foundational nominative elements of an Arabic nominal sentence.'
@@ -201,13 +201,13 @@ export const PRIMARY_ARABIC_G4_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الجملة الفعلية (Verbal Sentence)',
+        termAr: 'الجملة الفعلية',
         termEn: 'Verbal Sentence',
         definitionAr: 'جملة تبدأ بفعل وتتكون من ركنين أساسيين هما: الفعل والفاعل.',
         definitionEn: 'A sentence beginning with a verb, structurally centered on verb and subject.'
       },
       {
-        termAr: 'الفاعل (Subject - Fa\'il)',
+        termAr: 'الفاعل',
         termEn: 'Subject (Doer of Action)',
         definitionAr: 'اسم مرفوع يدل على من قام بالفعل أو اتصف به، ونسأل عنه بـ (مَنْ فعل؟).',
         definitionEn: 'A nominative noun indicating who executed or manifested the action.'
@@ -346,19 +346,19 @@ export const PRIMARY_ARABIC_G4_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'شبه الجملة (Semi-Sentence - Shibh Jumla)',
+        termAr: 'شبه الجملة',
         termEn: 'Semi-Sentence',
         definitionAr: 'تركيب لا يكتمل به المعنى منفرداً ولكنه يكمل معنى جملة أخرى، ويأتي في صورتين: جار ومجرور أو ظرف.',
         definitionEn: 'A phrase functioning as a sentence complement: either a prepositional phrase or an adverbial phrase.'
       },
       {
-        termAr: 'ظرف الزمان (Adverb of Time)',
+        termAr: 'ظرف الزمان',
         termEn: 'Adverb of Time',
         definitionAr: 'اسم منصوب يوضح زمن حدوث الفعل، ونسأل عنه بـ (متى؟) مثل: صباحاً، ليلاً، صيفاً، ساعةً.',
         definitionEn: 'An accusative noun clarifying when an action took place (answered by "When?").'
       },
       {
-        termAr: 'ظرف المكان (Adverb of Place)',
+        termAr: 'ظرف المكان',
         termEn: 'Adverb of Place',
         definitionAr: 'اسم منصوب يوضح مكان حدوث الفعل، ونسأل عنه بـ (أين؟) مثل: فوق، تحت، أمام، خلف، بين.',
         definitionEn: 'An accusative noun clarifying where an action took place (answered by "Where?").'
@@ -496,13 +496,13 @@ export const PRIMARY_ARABIC_G4_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'علامات الترقيم (Punctuation Marks)',
+        termAr: 'علامات الترقيم',
         termEn: 'Punctuation Marks',
         definitionAr: 'رموز اصطلاحية توضع بين الجمل أثناء الكتابة لتنظيم القراءة وتوضيح المعاني ومواضع الوقف.',
         definitionEn: 'Conventional typographical symbols placed between sentences to structure reading cadence and clarify meaning.'
       },
       {
-        termAr: 'النقطتان الرأسيتان (Colon - :)',
+        termAr: 'النقطتان الرأسيتان',
         termEn: 'Colon (:)',
         definitionAr: 'علامة ترقيم توضع بعد القول ومترادفاته (مثل: قال المعلم:) أو قبل الشيء وأقسامه.',
         definitionEn: 'Punctuation used after speech tags (e.g., "He said:") or preceding list items.'

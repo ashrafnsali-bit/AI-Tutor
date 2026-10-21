@@ -650,7 +650,10 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
   const [activeExampleStep, setActiveExampleStep] = useState<Record<string, number>>({});
   const [showAllSteps, setShowAllSteps]           = useState<Record<string, boolean>>({});
 
-  const isArabicLanguageLesson = ['ARABIC_LIT', 'ARABIC_LANG', 'PRIMARY_ARABIC'].includes(rawLecture?.subject || '');
+  const isArabicLanguageLesson = Boolean(
+    (effectiveSubject || rawLecture?.subject) &&
+    String(effectiveSubject || rawLecture?.subject).toUpperCase().includes('ARABIC')
+  );
   const t = getTranslations(isEn ? 'en' : 'ar');
 
   let socraticTitle = t.socraticCalloutTitle;
@@ -941,27 +944,36 @@ export const LectureViewer: React.FC<LectureViewerProps> = ({
             </h2>
           </div>
           <div className="vocab-grid">
-            {vocab.map((v, i) => (
-              <div key={i} className="vocab-card">
-                <div className="vocab-term-row">
-                  <span className="vocab-term-ar">{isLessonTargetLang ? (v.termEn || v.termAr) : v.termAr}</span>
-                  {!isArabicLanguageLesson && !isLessonTargetLang && v.termEn !== v.termAr && (
-                    <span className="vocab-term-en">{v.termEn}</span>
-                  )}
-                  <button
-                    type="button"
-                    className="vocab-audio-listen-btn"
-                    onClick={() => playAudioSpeech(isLessonTargetLang ? (v.termEn || v.termAr) : v.termAr, isLessonTargetLang, rawLecture?.subject)}
-                    title={isLessonTargetLang ? 'Listen to pronunciation' : 'استمع للنطق الصوتي 🎧'}
-                  >
-                    <Volume2 size={13} />
-                  </button>
+            {vocab.map((v, i) => {
+              const displayTermAr = isArabicLanguageLesson
+                ? (v.termAr || '').replace(/\s*\([A-Za-z0-9\s\-–—_/'&.,:;\\]+\)\s*/g, '').trim()
+                : v.termAr;
+              const termToSpeak = isLessonTargetLang
+                ? (v.termEn || v.termAr)
+                : (isArabicLanguageLesson ? displayTermAr : v.termAr);
+
+              return (
+                <div key={i} className="vocab-card">
+                  <div className="vocab-term-row">
+                    <span className="vocab-term-ar">{isLessonTargetLang ? (v.termEn || v.termAr) : displayTermAr}</span>
+                    {!isArabicLanguageLesson && !isLessonTargetLang && v.termEn && v.termEn !== v.termAr && (
+                      <span className="vocab-term-en">{v.termEn}</span>
+                    )}
+                    <button
+                      type="button"
+                      className="vocab-audio-listen-btn"
+                      onClick={() => playAudioSpeech(termToSpeak, isLessonTargetLang, rawLecture?.subject)}
+                      title={isLessonTargetLang ? 'Listen to pronunciation' : 'استمع للنطق الصوتي 🎧'}
+                    >
+                      <Volume2 size={13} />
+                    </button>
+                  </div>
+                  <p className="vocab-definition" dir="auto">
+                    {(isLessonTargetLang ? (v.definitionEn || v.definitionAr) : (v.definitionAr || v.definitionEn)) || ''}
+                  </p>
                 </div>
-                <p className="vocab-definition" dir="auto">
-                  {(isLessonTargetLang ? (v.definitionEn || v.definitionAr) : (v.definitionAr || v.definitionEn)) || ''}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}

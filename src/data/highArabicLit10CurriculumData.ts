@@ -53,13 +53,13 @@ export const HIGH_ARABIC_LIT_G10_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'المعلقات (The Mu\'allaqat)',
+        termAr: 'المعلقات',
         termEn: 'The Hanging Odes (Mu\'allaqat)',
         definitionAr: 'قصائد طوال من عيون الشعر الجاهلي وأجوده، اختيرت لجزالتها وعُلقت على أستار الكعبة أو في الأذهان.',
         definitionEn: 'Seven to ten masterwork Pre-Islamic odes revered for sublime meter, lyricism, and desert imagery.'
       },
       {
-        termAr: 'الوقوف على الأطلال (Weeping over Ruins)',
+        termAr: 'الوقوف على الأطلال',
         termEn: 'Naseeb / Weeping at the Campsite',
         definitionAr: 'مقدمة تقليدية في القصيدة الجاهلية يقف فيها الشاعر مسترجعاً ذكريات ديار الأحبة الراحلين.',
         definitionEn: 'A conventional poetic prologue reminiscing over abandoned desert encampments and departed loved ones.'
@@ -166,13 +166,13 @@ Islamic impact unified dialects under Qurayshite Arabic, eradicated tribal secta
 
     vocabulary: [
       {
-        termAr: 'التشبيه البليغ (Eloquent Simile)',
+        termAr: 'التشبيه البليغ',
         termEn: 'Eloquent Simile (Tashbeeh Baleegh)',
         definitionAr: 'تشبيه حذفت منه أداة التشبيه ووجه الشبه معاً، وبقي الطرفان الأساسيان فقط: المشبه والمشبه به (مثل: العلمُ نورٌ).',
         definitionEn: 'A high-impact simile omitting both comparative particle and ground, leaving only tenor and vehicle.'
       },
       {
-        termAr: 'الاستعارة المكنية (Implicit Metaphor)',
+        termAr: 'الاستعارة المكنية',
         termEn: 'Implicative Metaphor (Isti\'arah Makniyyah)',
         definitionAr: 'استعارة حُذف فيها المشبه به وذُكر المشبه، مع الإبقاء على صفة أو لازمة من لوازم المشبه به تدل عليه.',
         definitionEn: 'A metaphor where the vehicle is suppressed and represented only by one of its characteristic attributes.'
@@ -281,13 +281,13 @@ Aesthetic mechanisms: Personification (attributing human soul), Embodiment (reif
 
     vocabulary: [
       {
-        termAr: 'كان التامة (Complete Kaana)',
+        termAr: 'كان التامة',
         termEn: 'Complete Copula (Kaana Taammah)',
         definitionAr: 'فعل يكتفي بفاعله المرفوع ليتم به المعنى ولا يحتاج إلى خبر منصوب.',
         definitionEn: 'An intransitive verb taking a normal nominative agent (Fa\'il) without requiring a complementary predicate.'
       },
       {
-        termAr: 'أفعال الشروع (Inceptive Verbs)',
+        termAr: 'أفعال الشروع',
         termEn: 'Inchoative / Inceptive Verbs',
         definitionAr: 'أفعال تدل على البدء في الفعل (مثل: شرع، بدأ، أخذ، طفق)، ويمتنع اقتران خبرها بأنْ نهائياً.',
         definitionEn: 'Verbs signifying commencement of an action whose verbal predicates categorically prohibit particle An.'
@@ -397,13 +397,13 @@ Particle An attachment rules:
 
     vocabulary: [
       {
-        termAr: 'المعمول (The Governed Complement)',
+        termAr: 'المعمول',
         termEn: 'Al-Ma\'mool (Governed Complement)',
         definitionAr: 'الاسم المرفوع أو المنصوب الذي تأثر بالمشتق العامل (فاعلاً أو مفعولاً به أو نائب فاعل).',
         definitionEn: 'The noun governed syntactically by the active participle as an agent, direct object, or deputy agent.'
       },
       {
-        termAr: 'صيغ المبالغة القياسية (Intensive Forms)',
+        termAr: 'صيغ المبالغة القياسية',
         termEn: 'Intensive Paradigm Forms',
         definitionAr: 'خمس صيغ قياسية تدل على كثرة حدوث الفعل: (مِفْعال، فَعُول، فَعِيل، فَعِل، فَعَّال) وتعمل عمل فعلها.',
         definitionEn: 'Five classical morphological templates denoting extreme frequency and intensity of action.'
@@ -513,13 +513,13 @@ Conditions:
 
     vocabulary: [
       {
-        termAr: 'الاستثناء الناقص المنفي (Truncated Exception)',
+        termAr: 'الاستثناء الناقص المنفي',
         termEn: 'Truncated Exception (Naqis Manfi)',
         definitionAr: 'أسلوب حُذف منه المستثنى منه وسُبق بنفي أو شبهه، ويُعرب الاسم الواقع بعد إلا حسب موقعه في الجملة بحذف النفي وإلا.',
         definitionEn: 'An exception structure omitting the general collective set preceded by negation, parsed strictly by grammatical position.'
       },
       {
-        termAr: 'الاسم المنقوص (Defective Yaa Noun)',
+        termAr: 'الاسم المنقوص',
         termEn: 'Al-Ism Al-Manqoos',
         definitionAr: 'كل اسم معرب آخره ياء لازمة غير مشددة مكسور ما قبلها (مثل: القاضي، الداعي)، وتُحذف ياؤه رفعاً وجراً عند التنكير (قاضٍ).',
         definitionEn: 'An inflected noun ending with an unaccented Yaa preceded by kasra, dropping its Yaa in indefinite nominative/genitive states.'

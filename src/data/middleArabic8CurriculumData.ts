@@ -53,13 +53,13 @@ export const MIDDLE_ARABIC_G8_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الإعراب (Inflection)',
+        termAr: 'الإعراب',
         termEn: 'I\'rab (Inflection)',
         definitionAr: 'تغير ضبط آخر الكلمة بتغير موقعها الإعرابي في الجملة (رفعاً ونصباً وجراً وجزماً).',
         definitionEn: 'The variation of a word\'s final diacritical mark depending on its grammatical case in the sentence.'
       },
       {
-        termAr: 'البناء (Invariance / Mabni)',
+        termAr: 'البناء',
         termEn: 'Binaa (Invariance)',
         definitionAr: 'ثبوت حركة أو سكون آخر الكلمة مهما تغير موقعها الإعرابي، وتكون في محل رفع أو نصب أو جر.',
         definitionEn: 'The invariable ending of a word that never changes regardless of grammatical case.'
@@ -163,13 +163,13 @@ export const MIDDLE_ARABIC_G8_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'النعت (The Adjective / Modifier)',
+        termAr: 'النعت',
         termEn: 'Al-Na\'t (Adjective)',
         definitionAr: 'تابع يذكر لبيان صفة في متبوعه (المنعوت)، ويتبعه في الإعراب.',
         definitionEn: 'A grammatical follower that describes an attribute of the preceding modified noun.'
       },
       {
-        termAr: 'الرابط (Connecting Pronoun)',
+        termAr: 'الرابط',
         termEn: 'The Link / Pronoun',
         definitionAr: 'ضمير بارز أو مستتر في جملة النعت يعود على المنعوت النكرة ويطابقه نوعاً وعدداً.',
         definitionEn: 'A pronoun within the descriptive clause linking it back to the indefinite modified noun.'
@@ -269,13 +269,13 @@ export const MIDDLE_ARABIC_G8_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'المعطوف والمعطوف عليه (Coordinated Terms)',
+        termAr: 'المعطوف والمعطوف عليه',
         termEn: 'Al-Ma\'toof & Ma\'toof \'Alayh',
         definitionAr: 'المعطوف عليه يقع قبل حرف العطف ويعرب حسب موقعه، والمعطوف يقع بعده ويتبعه في الإعراب.',
         definitionEn: 'The first term precedes the conjunction and takes case by position; the second term follows and mirrors the case.'
       },
       {
-        termAr: 'الترتيب والتراخي (Delayed Sequence)',
+        termAr: 'الترتيب والتراخي',
         termEn: 'Tarakee (Sequence with Delay)',
         definitionAr: 'دلالة حرف العطف (ثم) على وقوع الحدث الثاني بعد الأول بمهلة زمنية وتراخٍ.',
         definitionEn: 'The semantic property of Thumma signifying an interval of time between the two events.'
@@ -378,13 +378,13 @@ export const MIDDLE_ARABIC_G8_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'التوكيد اللفظي (Verbal Corroboration)',
+        termAr: 'التوكيد اللفظي',
         termEn: 'Verbal Emphasis',
         definitionAr: 'تكرار اللفظ الأول بعينه (اسماً كان أو فعلاً أو حرفاً أو جملة).',
         definitionEn: 'Emphasis achieved by verbatim repetition of a noun, verb, particle, or clause.'
       },
       {
-        termAr: 'التوكيد المعنوي (Semantic Corroboration)',
+        termAr: 'التوكيد المعنوي',
         termEn: 'Semantic Emphasis',
         definitionAr: 'توكيد يتم بألفاظ مخصوصة تتبع المؤكَّد في الإعراب بشرط اتصالها بضمير يعود عليه.',
         definitionEn: 'Emphasis using dedicated words linked to the antecedent through an agreement pronoun.'
@@ -488,13 +488,13 @@ Special distinction for Kila/Kilta:
 
     vocabulary: [
       {
-        termAr: 'الحال (The Circumstantial Adverbial / Hal)',
+        termAr: 'الحال',
         termEn: 'Al-Hal (Circumstantial State)',
         definitionAr: 'اسم نكرة مشتق منصوب يذكر لبيان هيئة الفاعل أو المفعول به عند صدور الفعل ويصح جواباً لكيف.',
         definitionEn: 'An indefinite accusative descriptor expressing the state of the agent or patient when the verb occurs.'
       },
       {
-        termAr: 'واو الحال (Waw of Hal)',
+        termAr: 'واو الحال',
         termEn: 'Waw of Circumstance',
         definitionAr: 'واو تدخل على جملة الحال الاسمية أو الفعلية لربطها بصاحب الحال المعرفة وتفيد التزامن.',
         definitionEn: 'A linking particle introducing a circumstantial clause that correlates simultaneously with the main clause.'

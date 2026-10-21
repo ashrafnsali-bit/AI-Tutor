@@ -57,25 +57,25 @@ export const MIDDLE_ARABIC_G9_LECTURES: Lecture[] = [
     // Vocabulary
     vocabulary: [
       {
-        termAr: 'المنادى (The Vocative - Al-Munada)',
+        termAr: 'المنادى',
         termEn: 'The Vocative (Al-Munada)',
         definitionAr: 'اسم ظاهر يذكر بعد أداة من أدوات النداء لطلب إقبال مدلوله أو التنبيه لأمر ما.',
         definitionEn: 'A noun placed after a vocative particle to call upon or alert the addressee.'
       },
       {
-        termAr: 'المنادى المضاف (Annexed Vocative)',
+        termAr: 'المنادى المضاف',
         termEn: 'Annexed Vocative (Mudaf)',
         definitionAr: 'منادى يليه مضاف إليه يوضحه، وحكمه الإعرابي النصب دائماً، وتحذف منه التنوين ونون المثنى وجمع المذكر السالم (مثل: يا طالبَ العلمِ، يا معلِّمي المدرسةِ).',
         definitionEn: 'A vocative followed by a genitive annexation, always inflected in the accusative with nunation dropped.'
       },
       {
-        termAr: 'المنادى الشبيه بالمضاف (Semi-Annexed Vocative)',
+        termAr: 'المنادى الشبيه بالمضاف',
         termEn: 'Semi-Annexed Vocative',
         definitionAr: 'منادى اتصل به شيء يتمم معناه (غالباً جار ومجرور أو معمول لمشتق)، ويكون منوناً وتثبت فيه النون (مثل: يا طالباً للعلمِ، يا صاعداً جبلاً).',
         definitionEn: 'A vocative attached to a complementing phrase (prepositional or object) retaining its nunation/nun.'
       },
       {
-        termAr: 'النكرة المقصودة (Intended Indefinite Vocative)',
+        termAr: 'النكرة المقصودة',
         termEn: 'Intended Indefinite Vocative',
         definitionAr: 'اسم نكرة يُقصد به شخص معين يوجه إليه النداء، وحكمه البناء على ما يرفع به في محل نصب (مثل: يا رجلُ، يا طالبانِ، يا معلمونَ).',
         definitionEn: 'An indefinite noun addressed specifically, built on its nominative marker in place of accusative.'
@@ -293,25 +293,25 @@ export const MIDDLE_ARABIC_G9_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'البدل (Apposition - Badal)',
+        termAr: 'البدل',
         termEn: 'The Apposition (Badal)',
         definitionAr: 'تابع مقصود بالحكم بلا واسطة، يذكر بعد اسم قبله يسمى المبدل منه يمهد له ويزيل غموضه، ويتبعه في الإعراب رفعاً ونصباً وجراً.',
         definitionEn: 'A syntactic follower directly intended by the ruling predicate, following an antecedent (Mubdal minhu) in case.'
       },
       {
-        termAr: 'البدل المطابق / كل من كل (Full Matching Badal)',
+        termAr: 'البدل المطابق / كل من كل',
         termEn: 'Full Matching Badal (Kul min Kul)',
         definitionAr: 'بدل يتطابق فيه البدل مع المبدل منه تطابقاً تاماً ويتساويان في المعنى والدلالة (مثل: حكم الخليفةُ عادلٌ عمرُ بالعدل).',
         definitionEn: 'An apposition identical in referent and meaning to its antecedent.'
       },
       {
-        termAr: 'بدل بعض من كل (Part-of-Whole Badal)',
+        termAr: 'بدل بعض من كل',
         termEn: 'Part-of-Whole Badal (Ba\'d min Kul)',
         definitionAr: 'أن يكون البدل جزءاً حقيقياً ومادياً من المبدل منه، ويشترط أن يتصل بضمير يعود على المبدل منه ويطابقه في النوع والعدد (مثل: قرأتُ الكتابَ نصفَهُ).',
         definitionEn: 'An apposition that is a tangible physical component of the whole, containing a matching referential pronoun.'
       },
       {
-        termAr: 'بدل الاشتمال (Inclusive Badal - Ishtimal)',
+        termAr: 'بدل الاشتمال',
         termEn: 'Inclusive Badal (Ishtimal)',
         definitionAr: 'أن يكون البدل مما يشتمل عليه المبدل منه وليس جزءاً مادياً منه (شيء معنوي)، ويشترط فيه ضمير رابط (مثل: أعجبني المعلمُ خلقُهُ / نفعني الطبيبُ علمُهُ).',
         definitionEn: 'An apposition denoting an intangible attribute or quality included within the antecedent, containing a linking pronoun.'
@@ -472,19 +472,19 @@ export const MIDDLE_ARABIC_G9_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'أسلوب المدح (Praise Style - Al-Madh)',
+        termAr: 'أسلوب المدح',
         termEn: 'Praise Style (Al-Madh)',
         definitionAr: 'أسلوب لغوي يُستخدم لاستحسان أمر أو صفة تستحق الثناء، وأشهر أفعاله: نِعْمَ، وحَبَّذا.',
         definitionEn: 'A syntactic construction used to express approval/commendation (Ni\'ma, Habbadha).'
       },
       {
-        termAr: 'أسلوب الذم (Dispraise Style - Adh-Dhamm)',
+        termAr: 'أسلوب الذم',
         termEn: 'Dispraise Style (Adh-Dhamm)',
         definitionAr: 'أسلوب لغوي يُستخدم لاستهجان أمر أو صفة تستحق العيب والتقبيح، وأشهر أفعاله: بِئْسَ، ولا حَبَّذا.',
         definitionEn: 'A syntactic construction used to express disapproval/condemnation (Bi\'sa, La Habbadha).'
       },
       {
-        termAr: 'المخصوص بالمدح أو الذم (Al-Makhsoos)',
+        termAr: 'المخصوص بالمدح أو الذم',
         termEn: 'The Designated Entity (Al-Makhsoos)',
         definitionAr: 'الاسم المعين المراد مدحه أو ذمه في الجملة، وهو مرفوع دائماً، ويجوز تقديمه مع نعم وبئس، ويمتنع تقديمه مع حبذا ولا حبذا.',
         definitionEn: 'The specific noun being praised or dispraised, always in the nominative case.'
@@ -618,13 +618,13 @@ export const MIDDLE_ARABIC_G9_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الممنوع من الصرف (The Diptote)',
+        termAr: 'الممنوع من الصرف',
         termEn: 'The Diptote (Mamnoo\' Min As-Sarf)',
         definitionAr: 'اسم معرب لا يدخله التنوين، ويرفع بالضمة، وينصب بالفتحة، ويجر بالفتحة نيابة عن الكسرة ما لم يُعرّف بـ (أل) أو يضاف.',
         definitionEn: 'A noun that does not take nunation, inflected with Damma (nom), Fatha (acc), and Fatha (gen) unless defined by Al or annexed.'
       },
       {
-        termAr: 'صيغة منتهى الجموع (Ultimate Plural Formula)',
+        termAr: 'صيغة منتهى الجموع',
         termEn: 'Ultimate Plural Formula',
         definitionAr: 'كل جمع تكسير بعد ألف تكسيره حرفان (مثل: مساجد، معالم) أو ثلاثة أحرف أوسطها ساكن (مثل: مصابيح، قناديل، عصافير).',
         definitionEn: 'A broken plural pattern with an internal Alif followed by 2 letters or 3 letters with a middle sakin.'
@@ -761,25 +761,25 @@ export const MIDDLE_ARABIC_G9_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'المشتقات (Morphological Derivatives)',
+        termAr: 'المشتقات',
         termEn: 'Derivatives (Mushtaqqat)',
         definitionAr: 'أسماء مأخوذة من غيرها (من المصدر أو الفعل) لتدل على معنى مع زيادة (الفاعل، المفعول، الزمان، المكان، الآلة، التفضيل).',
         definitionEn: 'Nouns systematically derived from root verbs to signify specific entities or modalities.'
       },
       {
-        termAr: 'اسم الفاعل (Active Participle)',
+        termAr: 'اسم الفاعل',
         termEn: 'Active Participle (Ism al-Fa\'il)',
         definitionAr: 'اسم مشتق يدل على من قام بالفعل أو اتصف به (مثل: كاتب، صائم، مُنطلِق).',
         definitionEn: 'A derived noun denoting the doer of an action (e.g. Katib, Sa\'im, Muntaliq).'
       },
       {
-        termAr: 'صيغ المبالغة (Intensive Forms)',
+        termAr: 'صيغ المبالغة',
         termEn: 'Intensive Forms (Siyagh al-Mubalagha)',
         definitionAr: 'أسماء مشتقة من الفعل الثلاثي غالباً تدل على حدوث الفعل بكثرة وشدة، وأوزانها: فَعَّال، مِفْعَال، فَعُول، فَعِيل، فَعِل.',
         definitionEn: 'Intensified verbal adjectives signifying frequent or intense action across 5 standard meters.'
       },
       {
-        termAr: 'اسم المفعول (Passive Participle)',
+        termAr: 'اسم المفعول',
         termEn: 'Passive Participle (Ism al-Maf\'ool)',
         definitionAr: 'اسم مشتق من الفعل المبني للمجهول يدل على من وقع عليه فعل الفاعل (مثل: مَكْتُوب، مَرْجُوّ، مُسْتَخْرَج).',
         definitionEn: 'A derived noun denoting the recipient/object of an action (e.g. Maktoob, Mustakhraj).'

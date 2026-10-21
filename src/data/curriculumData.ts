@@ -335,37 +335,37 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
     // Key Vocabulary
     vocabulary: [
       {
-        termAr: 'علم البيان (Ilm Al-Bayan)',
+        termAr: 'علم البيان',
         termEn: 'Ilm Al-Bayan (Rhetoric / Imagery)',
         definitionAr: 'علم يُعرف به إيراد المعنى الواحد بطرق مختلفة في وضوح الدلالة عليه (التشبيه، الاستعارة، الكناية، المجاز).',
         definitionEn: 'The classical Arabic rhetorical discipline of expressing a single idea through diverse figurative modalities.'
       },
       {
-        termAr: 'المشبه والمشبه به (Tenor & Vehicle)',
+        termAr: 'المشبه والمشبه به',
         termEn: 'Tenor and Vehicle',
         definitionAr: 'طرفا التشبيه الأساسيان اللذان لا يقوم التشبيه إلا بهما؛ المشبه هو المراد إيضاحه، والمشبه به هو الطرف الأقوى في الصفة.',
         definitionEn: 'The two indispensable pillars of comparison: the entity described and the illustrative analogue.'
       },
       {
-        termAr: 'وجه الشبه (Ground / Shared Quality)',
+        termAr: 'وجه الشبه',
         termEn: 'Wajh Ash-Shabah (Ground)',
         definitionAr: 'الوصف أو الصفة المشتركة التي تجمع بين المشبه والمشبه به، ويكون في المشبه به أقوى وأظهر.',
         definitionEn: 'The common attribute linking tenor and vehicle, predominantly manifested in the vehicle.'
       },
       {
-        termAr: 'التشبيه البليغ (Eloquent Simile)',
+        termAr: 'التشبيه البليغ',
         termEn: 'Eloquent Simile (Baleegh)',
         definitionAr: 'تشبيه حُذفت منه أداة التشبيه ووجه الشبه معاً وبقي الطرفان فقط (مثل: العلمُ نورٌ)، وهو أعلى مراتب التشبيه.',
         definitionEn: 'The pinnacle of simile where connective particle and ground are deleted, leaving direct identification.'
       },
       {
-        termAr: 'التشبيه التمثيلي (Composite Simile)',
+        termAr: 'التشبيه التمثيلي',
         termEn: 'Composite Simile (Tamtheeli)',
         definitionAr: 'تشبيه تكون فيه صورة مركبة من عدة عناصر مشبهة بصورة مركبة أخرى منتزعة من متعدد.',
         definitionEn: 'A holistic analogy comparing a complex multifaceted scene with another multi-element tableau.'
       },
       {
-        termAr: 'التشبيه الضمني (Implied Simile)',
+        termAr: 'التشبيه الضمني',
         termEn: 'Implied Simile (Dhimni)',
         definitionAr: 'تشبيه لا يُصرّح فيه بأركان التشبيه في صورة تركيبية معتادة، بل يُلمح التشبيه من سياق المعنى ويؤتى بالشطر الثاني كبرهان.',
         definitionEn: 'An analogy where comparison is subtly woven into context without formal syntactic markers.'
@@ -724,25 +724,25 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الاستعارة (Metaphor / Isti\'arah)',
+        termAr: 'الاستعارة',
         termEn: 'Metaphor (Isti\'arah)',
         definitionAr: 'تشبيه حُذف أحد طرفيه الأساسيين (المشبه أو المشبه به) مع وجود علاقة المشابهة وقرينة مانعة من إرادة المعنى الأصلي.',
         definitionEn: 'A figurative trope formed by deleting either the tenor or the vehicle while retaining a prohibitive contextual clue.'
       },
       {
-        termAr: 'الاستعارة المكنية (Implicit Metaphor / Makniyyah)',
+        termAr: 'الاستعارة المكنية',
         termEn: 'Implicit Metaphor (Makniyyah)',
         definitionAr: 'استعارة يُذكر فيها المشبه ويُحذف المشبه به، ويُكنى عنه بشيء من لوازمه وصفاته (مثل: طار الخبر، وبكت السماء).',
         definitionEn: 'A metaphor retaining the tenor while omitting the vehicle, alluding to it via a signature characteristic.'
       },
       {
-        termAr: 'الاستعارة التصريحية (Explicit Metaphor / Tasrihiyyah)',
+        termAr: 'الاستعارة التصريحية',
         termEn: 'Explicit Metaphor (Tasrihiyyah)',
         definitionAr: 'استعارة يُحذف فيها المشبه ويُصرّح بلفظ المشبه به مباشرة (مثل: واعتصموا بحبل الله - أي دينه).',
         definitionEn: 'A metaphor omitting the tenor and explicitly declaring the illustrative vehicle.'
       },
       {
-        termAr: 'القرينة (Contextual Clue / Qarinah)',
+        termAr: 'القرينة',
         termEn: 'Contextual Clue (Qarinah)',
         definitionAr: 'اللفظ أو السياق الدال على أن المعنى الحقيقي غير مقصود، بل المقصود هو المعنى المجازي الخيالي.',
         definitionEn: 'The lexical marker or situational context that rules out a literal reading and confirms figurative intent.'
@@ -1074,25 +1074,25 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'علم البديع (Ilm Al-Badi\')',
+        termAr: 'علم البديع',
         termEn: 'Ilm Al-Badi (Aesthetic Ornamentation)',
         definitionAr: 'علم بلاغي يُعرف به وجوه تحسين الكلام وتزيينه بعد مطابقة المعنى لمقتضى الحال، وينقسم إلى محسنات لفظية ومعنوية.',
         definitionEn: 'The classical Arabic rhetorical science of verbal and conceptual embellishment.'
       },
       {
-        termAr: 'الجناس (Paronomasia / Jinas)',
+        termAr: 'الجناس',
         termEn: 'Paronomasia (Jinas)',
         definitionAr: 'تشابه كلمتين في اللفظ مع اختلافهما التام في المعنى؛ تام إذا تطابقت الكلمتان في أربعة أمور، وناقص إذا اختلفت في أحدها.',
         definitionEn: 'Phonetic similarity between words carrying divergent semantic meanings (Complete vs Partial).'
       },
       {
-        termAr: 'السجع (Prose Rhyme / Saj\')',
+        termAr: 'السجع',
         termEn: 'Prose Rhyme (Saj\')',
         definitionAr: 'توافق الحرف الأخير في فواصل الجمل النثرية مما يحدث جرساً موسيقياً عذباً.',
         definitionEn: 'Rhyming cadence at the terminations of consecutive prose clauses.'
       },
       {
-        termAr: 'المقابلة (Multi-Polar Antithesis / Muqabalah)',
+        termAr: 'المقابلة',
         termEn: 'Structured Contrast (Muqabalah)',
         definitionAr: 'أن يؤتى بمعنيين أو أكثر ثم يؤتى بما يقابل ذلك على الترتيب (مثل: "يحل لهم الطيبات ويحرم عليهم الخبائث").',
         definitionEn: 'Syntactic arrangement where two or more concepts are paired with sequential opposing counterparts.'
@@ -1395,25 +1395,25 @@ export const ARABIC_LIT_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'النقد الأدبي (Literary Criticism)',
+        termAr: 'النقد الأدبي',
         termEn: 'Literary Criticism',
         definitionAr: 'دراسة النصوص الأدبية وفحصها وتفسيرها وتقويمها لبيان مواطن الجمال والقوة وأوجه القصور والضعف وفق معايير موضوعية وذوقية.',
         definitionEn: 'The disciplined analysis, interpretation, and qualitative evaluation of literary texts based on objective aesthetic criteria.'
       },
       {
-        termAr: 'الوحدة العضوية (Organic Unity)',
+        termAr: 'الوحدة العضوية',
         termEn: 'Organic Unity',
         definitionAr: 'تماسك القصيدة بحيث تصبح كالكائن الحي؛ تدور حول موضوع واحد (وحدة الموضوع)، وتسيطر عليها عاطفة واحدة (وحدة الجو النفسي)، مع ترابط الأفكار وتسلسلها.',
         definitionEn: 'Coherence where a poem functions like a living organism with thematic singularity, emotional consistency, and sequential progression.'
       },
       {
-        termAr: 'صدق العاطفة (Emotional Sincerity)',
+        termAr: 'صدق العاطفة',
         termEn: 'Emotional Sincerity',
         definitionAr: 'أن تكون المشاعر المنبثة في النص نابعة من تجربة شعورية حقيقية وإحساس صادق لدى الأديب بعيداً عن الافتعال والنفاق والتقليد البارد.',
         definitionEn: 'Authentic affective resonance stemming from genuine lived psychological experience rather than artificial imitation.'
       },
       {
-        termAr: 'الجو النفسي (Atmospheric Tone / Mood)',
+        termAr: 'الجو النفسي',
         termEn: 'Atmospheric Mood',
         definitionAr: 'الحالة الوجدانية والشعورية العامة التي تخيم على النص الأدبي وتوجه اختيار الألفاظ والصور والإيقاع الموسيقي.',
         definitionEn: 'The overarching emotional climate governing lexical choice, imagery, and rhythmic cadence.'
@@ -1738,43 +1738,43 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
     // Key Vocabulary
     vocabulary: [
       {
-        termAr: 'الاسم (Noun)',
+        termAr: 'الاسم',
         termEn: 'Ism (Noun)',
         definitionAr: 'كلمة دلت على معنى في نفسها دون أن تقترن بزمن محدد (مثل: كتاب، شجرة، أحمد، عدل).',
         definitionEn: 'A word denoting a substantive or abstract meaning in itself, unbound to temporal tense.'
       },
       {
-        termAr: 'الفعل (Verb)',
+        termAr: 'الفعل',
         termEn: 'Fil (Verb)',
         definitionAr: 'كلمة دلت على حدث مقترن بزمن محدد؛ فإن دلت على ما مضى فهو ماضٍ، وإن دلت على الحال والاستقبال فهو مضارع، وإن دلت على طلب فهو أمر.',
         definitionEn: 'A word expressing an action intrinsically tethered to past, present, or future command time.'
       },
       {
-        termAr: 'الحرف (Particle)',
+        termAr: 'الحرف',
         termEn: 'Harf (Particle)',
         definitionAr: 'كلمة لا تدل على معنى مستقل بذاتها، وإنما يظهر معناها التام عند ضمها إلى غيرها في جملة مفيدة (مثل: من، إلى، ثم، هل).',
         definitionEn: 'A connective particle with no standalone semantic meaning until paired with words in context.'
       },
       {
-        termAr: 'التنوين (Nunation)',
+        termAr: 'التنوين',
         termEn: 'Tanween',
         definitionAr: 'نون ساكنة زائدة تلحق آخر الأسماء المعربة لفظاً وتفارقها خطاً ووقفاً (مثل: قلمٌ، قلماً، قلمٍ)، وهي علامة فارقة للاسم.',
         definitionEn: 'An unwritten doubled vocalic suffix (un, an, in) strictly unique to non-definite Arabic nouns.'
       },
       {
-        termAr: 'أل التعريف (Definite Article)',
+        termAr: 'أل التعريف',
         termEn: 'Al-Taareef',
         definitionAr: 'حرف تعريف يدخل على الأسماء النكرة ليكسبها التعيين والتعريف (مثل: علم -> العلم)، ولا يدخل مطلقاً على الأفعال أو الحروف.',
         definitionEn: 'The definite prefix "Al-" transforming generic nouns into designated entities; rejected by verbs.'
       },
       {
-        termAr: 'تاء التأنيث الساكنة (Feminine Taa)',
+        termAr: 'تاء التأنيث الساكنة',
         termEn: 'Taat At-Taaneeth',
         definitionAr: 'تاء ساكنة تلحق آخر الفعل الماضي فقط للدلالة على أن الفاعل مؤنث (مثل: كَتَبَتْ، نَجَحَتْ).',
         definitionEn: 'Quiescent suffix Taa exclusively accepted by past-tense verbs when the agent is feminine.'
       },
       {
-        termAr: 'الإسناد (Attribution)',
+        termAr: 'الإسناد',
         termEn: 'Isnad',
         definitionAr: 'أن يُسند إلى الكلمة حكم أو خبر يفيد المعنى (مثل: الصدقُ منجاةٌ، قمتُ)، وهو أعم علامات الاسم.',
         definitionEn: 'Syntactic predication or attribution, constituting the most comprehensive noun identifier.'
@@ -2132,25 +2132,25 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الجملة الاسمية (Nominal Sentence)',
+        termAr: 'الجملة الاسمية',
         termEn: 'Nominal Sentence',
         definitionAr: 'كل جملة تبتدئ باسم في الأصل، وتتألف من ركنين أساسيين هما المبتدأ والخبر.',
         definitionEn: 'A sentence commencing with a noun, fundamentally structured around Subject and Predicate.'
       },
       {
-        termAr: 'المبتدأ (Subject / Mubtada)',
+        termAr: 'المبتدأ',
         termEn: 'Mubtada (Subject)',
         definitionAr: 'اسم صريح أو مؤول مرفوع، مجرد عن العوامل اللفظية غير الزائدة، يقع في صدر الجملة غالباً ليكون محور الحديث.',
         definitionEn: 'The primary nominative noun positioned as the thematic anchor of the nominal sentence.'
       },
       {
-        termAr: 'الخبر (Predicate / Khabar)',
+        termAr: 'الخبر',
         termEn: 'Khabar (Predicate)',
         definitionAr: 'الجزء المنتظم منه مع المبتدأ جملة مفيدة تُتمم المعنى وتخبر عن حال المبتدأ.',
         definitionEn: 'The syntactically vital complement that completes the propositional meaning of the subject.'
       },
       {
-        termAr: 'علامات الرفع الأصلية والفرعية (Nominative Markers)',
+        termAr: 'علامات الرفع الأصلية والفرعية',
         termEn: 'Nominative Inflections',
         definitionAr: 'الضمة (العلامة الأصلية للمفرد وجمع التكسير وجمع المؤنث السالم)، والألف (للمثنى)، والواو (لجمع المذكر السالم والأسماء الخمسة).',
         definitionEn: 'Dammah (primary for singular/broken plural), Alif (for dual), and Waw (for sound masculine plural & five nouns).'
@@ -2444,25 +2444,25 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الجملة الفعلية (Verbal Sentence)',
+        termAr: 'الجملة الفعلية',
         termEn: 'Verbal Sentence',
         definitionAr: 'كل جملة تبدأ بفعل تام (ماضٍ أو مضارع أو أمر)، وتتألف أساساً من فعل وفاعل.',
         definitionEn: 'A sentence commencing with a finite verb and constituted fundamentally of Verb and Agent.'
       },
       {
-        termAr: 'الفاعل (Faail / Agent)',
+        termAr: 'الفاعل',
         termEn: 'Faail (Agent / Subject of Verb)',
         definitionAr: 'اسم مرفوع أو في محل رفع، يقع بعد فعل تام مبني للمعلوم ويدل على من قام بالفعل أو اتصف به.',
         definitionEn: 'The nominative entity succeeding an active verb, denoting the doer or bearer of the action.'
       },
       {
-        termAr: 'الضمير المتصل (Attached Pronoun Agent)',
+        termAr: 'الضمير المتصل',
         termEn: 'Attached Pronoun',
         definitionAr: 'ضمير يتصل بالفعل مباشرة ليكون في محل رفع فاعل (مثل تاء الفاعل، نا الفاعلين، واو الجماعة، ألف الاثنين، ياء المخاطبة، نون النسوة).',
         definitionEn: 'Nominative pronoun suffixes directly fusing to verbs (Taa, Na, Waw of Plurality, Alif of Dual, Nun of Femininity).'
       },
       {
-        termAr: 'الضمير المستتر (Implicit / Latent Pronoun)',
+        termAr: 'الضمير المستتر',
         termEn: 'Latent Pronoun',
         definitionAr: 'ضمير غير منطوق ولا مكتوب يُقدر في الذهن ويكون في محل رفع فاعل (مثل: محمدٌ قَرَأَ [أي: هو]).',
         definitionEn: 'An unpronounced, implicit subject pronoun mentally inferred from context (e.g. He/She/I).'
@@ -2731,25 +2731,25 @@ export const ARABIC_LANG_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الفكرة الرئيسة (Main Idea)',
+        termAr: 'الفكرة الرئيسة',
         termEn: 'Main Idea',
         definitionAr: 'المعنى العام والشامل الذي يدور حوله النص بأكمله وتنتظم تحته جميع الأفكار الفرعية.',
         definitionEn: 'The central overarching proposition around which the entire text revolves.'
       },
       {
-        termAr: 'الحقيقة مقابل الرأي (Fact vs Opinion)',
+        termAr: 'الحقيقة مقابل الرأي',
         termEn: 'Fact vs Opinion',
         definitionAr: 'الحقيقة معلومة مثبتة بالدليل والواقع لا خلاف عليها، أما الرأي فهو وجهة نظر أو مشاعر شخصية تقبل الصواب والخطأ.',
         definitionEn: 'A fact is an objectively verifiable truth; an opinion reflects personal subjective sentiment or evaluation.'
       },
       {
-        termAr: 'همزة الوصل (Hamzat Al-Wasl)',
+        termAr: 'همزة الوصل',
         termEn: 'Hamzat Al-Wasl',
         definitionAr: 'همزة تُنطق في ابتداء الكلام وتسقط في دَرَجِهِ ووصله، وتُكتب ألفاً قائمة دون رأس عين (ا) مثل: انْطَلَقَ، اسْم.',
         definitionEn: 'A glottal onset pronounced only at utterance beginning, dropping in connected speech, written as plain Alif (ا).'
       },
       {
-        termAr: 'همزة القطع (Hamzat Al-Qat)',
+        termAr: 'همزة القطع',
         termEn: 'Hamzat Al-Qat',
         definitionAr: 'همزة أصلية تثبت في النطق والكتابة دائماً سواء في أول الكلام أو في وسطه، وتكتب برأس عين (أَ / أُ / إِ) مثل: أَكْرَمَ، إِحْسَان.',
         definitionEn: 'A stable phonemic glottal stop explicitly pronounced and orthographically marked with Hamzah head (أ/إ).'

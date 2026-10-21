@@ -541,19 +541,19 @@ export const PRIMARY_ARABIC_LECTURES: Lecture[] = [
     // Key Vocabulary
     vocabulary: [
       {
-        termAr: 'اللام القمرية (Lunar Lam)',
+        termAr: 'اللام القمرية',
         termEn: 'Lunar Lam',
         definitionAr: 'لام ساكنة تُكتب وتُنطق بوضوح عند دخولها على أحد الحروف القمرية الأربعة عشر (ابغِ حجك وخف عقيمه).',
         definitionEn: 'Definite article Lam that is written and clearly pronounced with Sukun.'
       },
       {
-        termAr: 'اللام الشمسية (Solar Lam)',
+        termAr: 'اللام الشمسية',
         termEn: 'Solar Lam',
         definitionAr: 'لام تُكتب ولا تُنطق، ويُدغم صوتها في الحرف الشمسي التالي لها ويُوضع عليه شدّة.',
         definitionEn: 'Definite article Lam that is written but assimilated into the subsequent consonant with Shaddah.'
       },
       {
-        termAr: 'الشَّدَّة (Shaddah)',
+        termAr: 'الشَّدَّة',
         termEn: 'Shaddah',
         definitionAr: 'علامة تدل على تكرار الحرف مرتين؛ الأول ساكن والثاني متحرك، فيدغمان معاً.',
         definitionEn: 'Diacritical sign indicating a doubled/geminated consonant.'

@@ -52,19 +52,19 @@ export const PRIMARY_ARABIC_G6_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الأسماء الخمسة (The Five Nouns)',
+        termAr: 'الأسماء الخمسة',
         termEn: 'The Five Nouns',
         definitionAr: 'خمسة أسماء في اللغة العربية (أب، أخ، حم، فو، ذو) تعرب بالحروف نيابة عن الحركات بشروط محددة.',
         definitionEn: 'Five specific Arabic nouns inflected by letters instead of short vowels under set syntactical conditions.'
       },
       {
-        termAr: 'ذو (Dhu - Possessor of)',
+        termAr: 'ذو',
         termEn: 'Dhu (Possessor/Owner of)',
         definitionAr: 'اسم من الأسماء الخمسة يأتي دائماً بمعنى "صاحب" ولا يضاف إلا إلى اسم ظاهر (مثل: ذو العلم، ذو الفضل).',
         definitionEn: 'One of the Five Nouns meaning "possessor of", strictly annexed to an explicit noun.'
       },
       {
-        termAr: 'العلامات الفرعية (Secondary Parsing Markers)',
+        termAr: 'العلامات الفرعية',
         termEn: 'Sub-Inflectional Markers',
         definitionAr: 'علامات إعراب بالحروف (كالواو والألف والياء) تنوب عن العلامات الأصلية (الضمة والفتحة والكسرة).',
         definitionEn: 'Letters acting as case markers in place of default diacritics.'
@@ -235,19 +235,19 @@ export const PRIMARY_ARABIC_G6_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الأفعال الناسخة (Defective Verbs - Kana & Sisters)',
+        termAr: 'الأفعال الناسخة',
         termEn: 'Defective Verbs (Kana and Sisters)',
         definitionAr: 'أفعال ناقصة تدخل على الجملة الاسمية، فترفع المبتدأ ويسمى اسمها، وتنصب الخبر ويسمى خبرها.',
         definitionEn: 'Auxiliary/defective verbs entering nominal sentences, making the subject nominative and predicate accusative.'
       },
       {
-        termAr: 'ناسخة (Abrogating)',
+        termAr: 'ناسخة',
         termEn: 'Abrogating (Nasikhah)',
         definitionAr: 'تغير وتبدل حكم الإعراب الأصلي لخبر المبتدأ من الرفع إلى النصب.',
         definitionEn: 'Cancels the original nominative case of the predicate, replacing it with accusative.'
       },
       {
-        termAr: 'أنواع الخبر (Types of Predicate)',
+        termAr: 'أنواع الخبر',
         termEn: 'Predicate Formats',
         definitionAr: 'الأشكال التي يكتمل بها معنى المبتدأ: 1- مفرد (ليس جملة ولا شبه جملة)، 2- جملة اسمية أو فعلية، 3- شبه جملة.',
         definitionEn: 'Three structures completing nominal meaning: single word, clause (verbal/nominal), or prepositional/adverbial phrase.'
@@ -401,19 +401,19 @@ export const PRIMARY_ARABIC_G6_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الحروف الناسخة (Inna and Sisters)',
+        termAr: 'الحروف الناسخة',
         termEn: 'Inna and Sisters (Assimilated Particles)',
         definitionAr: 'ستة حروف تدخل على الجملة الاسمية فتنصب المبتدأ اسماً لها وترفع الخبر خبراً لها.',
         definitionEn: 'Six particles governing nominal sentences, making the subject accusative and the predicate nominative.'
       },
       {
-        termAr: 'التوكيد والاستدراك (Emphasis & Qualification)',
+        termAr: 'التوكيد والاستدراك',
         termEn: 'Emphasis & Qualification (Tawkeed & Istidrak)',
         definitionAr: 'إن وأن للتوكيد وتثبيت المعنى؛ ولكنّ للاستدراك (منع الفهم الخاطئ لما قبلها).',
         definitionEn: 'Inna/Anna express firm affirmation; Lakinna conveys qualification/rectification.'
       },
       {
-        termAr: 'الترجي والتمني (Hope vs. Wishful Thinking)',
+        termAr: 'الترجي والتمني',
         termEn: 'Tarajji (Hope) vs Tamanni (Wish)',
         definitionAr: 'الترجي (لعلّ) يكون في الأمر الممكن المحبوب؛ والتمني (ليتَ) يكون في الأمر المستحيل أو شديد الصعوبة.',
         definitionEn: 'Tarajji (La\'alla) expresses feasible hopeful outcome; Tamanni (Layta) expresses impossible wistfulness.'
@@ -563,25 +563,25 @@ export const PRIMARY_ARABIC_G6_LECTURES: Lecture[] = [
 
     vocabulary: [
       {
-        termAr: 'الضمير المستتر (Latent / Hidden Pronoun)',
+        termAr: 'الضمير المستتر',
         termEn: 'Latent Pronoun (Mustatir)',
         definitionAr: 'ضمير ليس له صورة منطوقة أو مكتوبة في اللفظ، وإنما يُفهم ويُقدر في الذهن من خلال صيغة الفعل.',
         definitionEn: 'An unwritten, unspoken pronoun implicitly embedded in verb inflection.'
       },
       {
-        termAr: 'أدوات نصب المضارع (Subjunctive Particles)',
+        termAr: 'أدوات نصب المضارع',
         termEn: 'Subjunctive Particles',
         definitionAr: 'حروف تدخل على الفعل المضارع فتجعله منصوباً وعلامة نصبه الفتحة: (أَنْ، لَنْ، كَيْ، حَتَّى، لَامُ التَّعْلِيل).',
         definitionEn: 'Particles that shift the following present verb into the subjunctive mood with Fatha.'
       },
       {
-        termAr: 'أدوات جزم المضارع (Jussive Particles)',
+        termAr: 'أدوات جزم المضارع',
         termEn: 'Jussive Particles',
         definitionAr: 'أدوات تجزم فعلاً مضارعاً واحداً وعلامة جزمه السكون: (لَمْ، لَا النَّاهِيَة، لَامُ الأَمْر).',
         definitionEn: 'Particles shifting a single present verb into jussive mood with Sukun.'
       },
       {
-        termAr: 'المذكرات اليومية (Daily Diaries)',
+        termAr: 'المذكرات اليومية',
         termEn: 'Daily Diary Writing',
         definitionAr: 'فن تعبيري يسجل فيه الكاتب أحداثاً يومية مهمة مر بها، محددة باليوم والتاريخ والزمان والمشاعر الشخصية.',
         definitionEn: 'Expressive functional writing chronicling significant personal events with date, time, and reflections.'
