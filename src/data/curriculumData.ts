@@ -4845,6 +4845,19 @@ export function isSudanPublicGrade10SubjectAvailable(
     (subject === 'CHEMISTRY' || subject === 'GEOGRAPHY' || subject === 'HISTORY' || subject === 'PHYSICS');
 }
 
+export const SUDAN_GRADE11_SUBJECTS: Subject[] = [
+  'PHYSICS',
+  'CHEMISTRY',
+  'BIOLOGY',
+  'MATH',
+  'ARABIC_LIT',
+  'ENGLISH',
+  'ISLAMIC_STUDIES',
+  'GEOGRAPHY',
+  'HISTORY',
+  'COMPUTER_SCIENCE'
+];
+
 export function isSudanPublicGrade11SubjectAvailable(
   subject: Subject,
   country: CountryCode,
@@ -4852,10 +4865,14 @@ export function isSudanPublicGrade11SubjectAvailable(
   _educationType: EducationType = 'PUBLIC',
   track: EducationTrack = 'GENERAL'
 ): boolean {
-  return country === 'SD' &&
-    gradeLevel === 'G11' &&
-    track !== 'SHARIA_HUMANITIES' &&
-    subject === 'BIOLOGY';
+  if (country !== 'SD' || gradeLevel !== 'G11') return false;
+  if (track === 'SHARIA_HUMANITIES') {
+    return ['ARABIC_LIT', 'ENGLISH', 'ISLAMIC_STUDIES', 'MATH', 'GEOGRAPHY', 'HISTORY'].includes(subject);
+  }
+  if (track === 'SCIENCE_BIO' || track === 'SCIENCE_MATH' || track === 'CS_ENGINEERING') {
+    return ['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'MATH', 'ARABIC_LIT', 'ENGLISH', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE'].includes(subject);
+  }
+  return SUDAN_GRADE11_SUBJECTS.includes(subject);
 }
 
 export function isSudanPublicGrade12SubjectAvailable(
@@ -4907,6 +4924,7 @@ export function isEnglishCourseAvailable(
   return isSaudiPublicEnglishAvailable(country, gradeLevel, educationType) ||
     country === 'EG' ||
     isSudanPublicGrade12SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
+    isSudanPublicGrade11SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicMiddleSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicPrimaryCurriculumSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track);
 }
@@ -5538,6 +5556,9 @@ export function getCurriculumForSubject(
     if (country === 'SD' && gradeLevel === 'G3') {
       return SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES;
     }
+    if (country === 'SD' && (gradeLevel === 'G10' || gradeLevel === 'G11')) {
+      return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
+    }
     if (gradeLevel && gradeLevel !== 'G10') return [];
     if (country === 'SD') return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
     if (country === 'EG') return EGYPT_HIGH_GEOGRAPHY_G10_LECTURES;
@@ -5547,6 +5568,9 @@ export function getCurriculumForSubject(
   if (subject === 'HISTORY') {
     if (country === 'SD' && gradeLevel === 'G3') {
       return SUDAN_PRIMARY_HISTORY_G3_LECTURES;
+    }
+    if (country === 'SD' && (gradeLevel === 'G10' || gradeLevel === 'G11')) {
+      return SUDAN_HIGH_HISTORY_G10_LECTURES;
     }
     if (country === 'SA' && gradeLevel === 'G11') {
       return educationType === 'PUBLIC' && _track === 'GENERAL'
@@ -5910,6 +5934,7 @@ export function loadSubjectLectures(
     isProtectedSudanGrade7Course ||
     isProtectedSudanGrade8Course ||
     isProtectedSudanGrade9Course ||
+    isProtectedSudanGrade11Course ||
     isProtectedSudanGrade12Course;
   if (subject === 'ENGLISH' && !isProtectedEnglish) return [];
   const isProtectedSaudiTajweed =

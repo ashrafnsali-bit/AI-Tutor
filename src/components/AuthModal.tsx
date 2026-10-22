@@ -998,8 +998,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           ))}
                         </optgroup>
                       ) : regCountry === 'SD' && regGrade === 'G11' ? (
-                        <optgroup label={regLanguage === 'en' ? 'Verified Grade 11 subject' : 'المادة الموثقة للصف الثاني الثانوي'}>
-                          <option value="BIOLOGY">{getNationalSubjectLabel('BIOLOGY', regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}</option>
+                        <optgroup label={regLanguage === 'en' ? 'Sudan Secondary 2 (Grade 11) courses' : 'مقررات الصف الثاني الثانوي السوداني'}>
+                          {(['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'MATH', 'ARABIC_LIT', 'ENGLISH', 'ISLAMIC_STUDIES', 'GEOGRAPHY', 'HISTORY', 'COMPUTER_SCIENCE'] as Subject[])
+                            .filter((subj) => isSudanPublicGrade11SubjectAvailable(
+                              subj,
+                              regCountry,
+                              regGrade,
+                              regEducationType,
+                              regEducationTrack
+                            ))
+                            .map((subj) => (
+                              <option key={subj} value={subj}>
+                                {getNationalSubjectLabel(subj, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
+                              </option>
+                            ))}
                         </optgroup>
                       ) : regCountry === 'SD' && regGrade === 'G12' ? (
                         <optgroup label={regLanguage === 'en' ? 'Grade 12 textbook courses' : 'مقررات الصف الثالث الثانوي'}>

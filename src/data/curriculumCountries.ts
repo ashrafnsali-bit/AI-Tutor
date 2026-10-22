@@ -2479,6 +2479,25 @@ export function getNationalSubjectLabel(
   if (subject === 'GERMAN') return isEn ? 'German' : 'اللغة الألمانية';
   if (subject === 'ITALIAN') return isEn ? 'Italian' : 'اللغة الإيطالية';
 
+  if (country === 'SD' && _gradeLevel === 'G11') {
+    const grade11Labels: Partial<Record<Subject, [string, string]>> = {
+      PHYSICS: ['Physics', 'الفيزياء'],
+      CHEMISTRY: ['Chemistry', 'الكيمياء'],
+      BIOLOGY: ['Biology', 'علم الأحياء'],
+      MATH: track === 'SHARIA_HUMANITIES'
+        ? ['Basic Mathematics', 'الرياضيات الأساسية']
+        : ['Specialized Mathematics', 'الرياضيات المتخصصة'],
+      ARABIC_LIT: ['Arabic Language & Literature', 'اللغة العربية وآدابها'],
+      ENGLISH: ['English Language', 'اللغة الإنجليزية'],
+      ISLAMIC_STUDIES: ['Islamic Studies', 'التربية الإسلامية'],
+      GEOGRAPHY: ['Geography & Environmental Studies', 'الجغرافيا والدراسات البيئية'],
+      HISTORY: ['Modern & Contemporary History', 'التاريخ الحديث والمعاصر'],
+      COMPUTER_SCIENCE: ['Computer Science', 'علوم الحاسوب']
+    };
+    const label = grade11Labels[subject];
+    if (label) return isEn ? label[0] : label[1];
+  }
+
   if (country === 'SD' && _gradeLevel === 'G12') {
     const grade12Labels: Partial<Record<Subject, [string, string]>> = {
       ARABIC_LIT: ['Arabic Language, Literature, Grammar and Rhetoric', 'اللغة العربية وآدابها وقواعدها وبلاغتها'],

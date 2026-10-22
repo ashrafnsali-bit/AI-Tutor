@@ -424,15 +424,98 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       );
     }
     if (selectedCountry === 'SD' && selectedGrade === 'G11') {
-      return [{
-        id: 'BIOLOGY' as const,
-        nameAr: 'الأحياء',
-        nameEn: 'Biology',
-        descAr: 'التغذية والنقل والتنفس والإخراج والتنسيق في الكائنات الحية',
-        descEn: 'Nutrition, transport, respiration, excretion, and coordination in living organisms',
-        icon: <Dna size={28} />,
-        color: '#a3e635'
-      }].filter((course) => isSudanPublicGrade11SubjectAvailable(
+      return [
+        {
+          id: 'PHYSICS' as const,
+          nameAr: 'الفيزياء',
+          nameEn: 'Physics',
+          descAr: 'الميكانيكا والموجات والصوت والضوء والكهرباء والمغناطيسية',
+          descEn: 'Mechanics, waves, sound, optics, electricity & magnetism',
+          icon: <Atom size={28} />,
+          color: '#0284c7'
+        },
+        {
+          id: 'CHEMISTRY' as const,
+          nameAr: 'الكيمياء',
+          nameEn: 'Chemistry',
+          descAr: 'الاتزان الكيميائي والمحاليل والأحماض والقواعد والكيمياء العضوية',
+          descEn: 'Chemical equilibrium, solutions, acids & bases, organic chemistry',
+          icon: <FlaskConical size={28} />,
+          color: '#ec4899'
+        },
+        {
+          id: 'BIOLOGY' as const,
+          nameAr: 'علم الأحياء',
+          nameEn: 'Biology',
+          descAr: 'التغذية والنقل والتنفس والإخراج والتنسيق العصبي والهرموني',
+          descEn: 'Nutrition, transport, respiration, excretion, neural and hormonal coordination',
+          icon: <Dna size={28} />,
+          color: '#10b981'
+        },
+        {
+          id: 'MATH' as const,
+          nameAr: 'الرياضيات',
+          nameEn: 'Mathematics',
+          descAr: 'الدوال، التفاضل، التكامل، الهندسة التحليلية، وحساب المثلثات',
+          descEn: 'Functions, differentiation, integration, analytical geometry, trigonometry',
+          icon: <Calculator size={28} />,
+          color: '#3b82f6'
+        },
+        {
+          id: 'ARABIC_LIT' as const,
+          nameAr: 'اللغة العربية',
+          nameEn: 'Arabic Language',
+          descAr: 'الأدب والنصوص والبلاغة والنقد وقواعد النحو والصرف',
+          descEn: 'Literature, texts, rhetoric, literary criticism, and grammar',
+          icon: <BookOpen size={28} />,
+          color: '#f59e0b'
+        },
+        {
+          id: 'ENGLISH' as const,
+          nameAr: 'اللغة الإنجليزية',
+          nameEn: 'English Language',
+          descAr: 'مهارات القراءة المتقدمة، القواعد، الكتابة، واستيعاب النصوص',
+          descEn: 'Advanced reading, grammar, writing, and text comprehension',
+          icon: <Sparkles size={28} />,
+          color: '#6366f1'
+        },
+        {
+          id: 'ISLAMIC_STUDIES' as const,
+          nameAr: 'التربية الإسلامية',
+          nameEn: 'Islamic Studies',
+          descAr: 'القرآن الكريم، علوم الحديث، العقيدة، الفقه الإسلامي، والسيرة',
+          descEn: 'Holy Quran, Hadith, Aqeedah, Islamic Fiqh, and Sirah',
+          icon: <Compass size={28} />,
+          color: '#14b8a6'
+        },
+        {
+          id: 'GEOGRAPHY' as const,
+          nameAr: 'الجغرافيا',
+          nameEn: 'Geography',
+          descAr: 'جغرافية السودان والدراسات البيئية والموارد الطبيعية والاقتصادية',
+          descEn: 'Sudan geography, environmental studies, natural & economic resources',
+          icon: <Globe2 size={28} />,
+          color: '#84cc16'
+        },
+        {
+          id: 'HISTORY' as const,
+          nameAr: 'التاريخ',
+          nameEn: 'History',
+          descAr: 'تاريخ السودان الحديث والمعاصر، الثورة المهدية، والحركات الوطنية',
+          descEn: 'Modern & contemporary Sudan history, Mahdist revolution, national movements',
+          icon: <BookMarked size={28} />,
+          color: '#d97706'
+        },
+        {
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: 'علوم الحاسوب',
+          nameEn: 'Computer Science',
+          descAr: 'أساسيات البرمجة، الخوارزميات، قواعد البيانات، والشبكات',
+          descEn: 'Programming fundamentals, algorithms, databases, and networks',
+          icon: <Code2 size={28} />,
+          color: '#8b5cf6'
+        }
+      ].filter((course) => isSudanPublicGrade11SubjectAvailable(
         course.id,
         selectedCountry,
         selectedGrade,

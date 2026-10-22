@@ -1381,17 +1381,27 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                   </optgroup>
                 ) : formData.country === 'SD' &&
                   formData.gradeLevel === 'G11' ? (
-                  <optgroup label={formData.language === 'en' ? 'Verified Grade 11 subject' : 'المادة الموثقة للصف الثاني الثانوي'}>
-                    <option value="BIOLOGY">
-                      {getNationalSubjectLabel(
-                        'BIOLOGY',
+                  <optgroup label={formData.language === 'en' ? 'Sudan Secondary 2 (Grade 11) courses' : 'مقررات الصف الثاني الثانوي السوداني'}>
+                    {(['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'MATH', 'ARABIC_LIT', 'ENGLISH', 'ISLAMIC_STUDIES', 'GEOGRAPHY', 'HISTORY', 'COMPUTER_SCIENCE'] as Subject[])
+                      .filter((subj) => isSudanPublicGrade11SubjectAvailable(
+                        subj,
                         formData.country,
                         formData.gradeLevel,
-                        formData.language,
                         formData.educationType,
                         formData.educationTrack
-                      )}
-                    </option>
+                      ))
+                      .map((subj) => (
+                        <option key={subj} value={subj}>
+                          {getNationalSubjectLabel(
+                            subj,
+                            formData.country,
+                            formData.gradeLevel,
+                            formData.language,
+                            formData.educationType,
+                            formData.educationTrack
+                          )}
+                        </option>
+                      ))}
                   </optgroup>
                 ) : formData.country === 'EG' &&
                   formData.gradeLevel === 'G10' ? (
