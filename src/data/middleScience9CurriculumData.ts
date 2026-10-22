@@ -95,8 +95,37 @@ export const MIDDLE_SCIENCE_G9_LECTURES: Lecture[] = [
       {
         titleAr: '1. تفاعلات الانحلال الحراري وتفاعلات الإحلال',
         titleEn: '1. Thermal Decomposition & Substitution Reactions',
-        contentAr: '1) تفاعلات الانحلال الحراري (Thermal Decomposition):\n- تفكك المركب بالحرارة إلى عناصره الأولية أو مركبات أبسط منه:\n  * أكسيد الزئبق الأحمر: 2HgO ⟹ 2Hg (زئبق فضي) + O₂ ↑ (يزيد توهج شظية مشتعلة).\n  * هيدروكسيد النحاس الأزرق: Cu(OH)₂ ⟹ CuO (أكسيد نحاس أسود) + H₂O ↑.\n  * كربونات النحاس الخضراء: CuCO₃ ⟹ CuO (أسود) + CO₂ ↑ (يعكر ماء الجير الرائق).\n  * كبريتات النحاس الزرقاء: CuSO₄ ⟹ CuO (أسود) + SO₃ ↑.\n  * نترات الصوديوم البيضاء: 2NaNO₃ ⟹ 2NaNO₂ (نيتريت صوديوم أبيض مصفر) + O₂ ↑.\n\n2) تفاعلات الإحلال (Substitution Reactions):\n- إحلال بسيط: عنصر نشط يحل محل عنصر أقل نشاطاً وفق متسلسلة النشاط الكيميائي:\n  * الخارصين مع الحمض: Zn + 2HCl ⟹ ZnCl₂ + H₂ ↑ (يشتعل بفرقعة).\n  * المغنيسيوم مع كبريتات النحاس: Mg + CuSO₄ ⟹ MgSO₄ + Cu ↓ (راسب أحمر).\n- إحلال مزدوج: تبادل شقي الأيونات بين مركبين:\n  * تعادل: NaOH + HCl ⟹ NaCl + H₂O.\n  * ترسيب: NaCl + AgNO₃ ⟹ NaNO₃ + AgCl ↓ (راسب أبيض من كلوريد الفضة).',
-        contentEn: 'Thermal decomposition breaks down compounds via heat. Single substitution relies on the Chemical Activity Series. Double substitution includes neutralization and precipitation (AgCl white precipitate).'
+        contentAr: `1) تفاعلات الانحلال الحراري (Thermal Decomposition):
+- تفكك المركب بالحرارة إلى عناصره الأولية أو مركبات أبسط منه:
+  * أكسيد الزئبق الأحمر: 2HgO ⟹ 2Hg (زئبق فضي) + O₂ ↑ (يزيد توهج شظية مشتعلة).
+  * هيدروكسيد النحاس الأزرق: Cu(OH)₂ ⟹ CuO (أكسيد نحاس أسود) + H₂O ↑.
+  * كربونات النحاس الخضراء: CuCO₃ ⟹ CuO (أسود) + CO₂ ↑ (يعكر ماء الجير الرائق).
+  * كبريتات النحاس الزرقاء: CuSO₄ ⟹ CuO (أسود) + SO₃ ↑.
+  * نترات الصوديوم البيضاء: 2NaNO₃ ⟹ 2NaNO₂ (نيتريت صوديوم أبيض مصفر) + O₂ ↑.
+
+2) تفاعلات الإحلال (Substitution Reactions):
+- إحلال بسيط: عنصر نشط يحل محل عنصر أقل نشاطاً وفق متسلسلة النشاط الكيميائي:
+  * الخارصين مع الحمض: Zn + 2HCl ⟹ ZnCl₂ + H₂ ↑ (يشتعل بفرقعة).
+  * المغنيسيوم مع كبريتات النحاس: Mg + CuSO₄ ⟹ MgSO₄ + Cu ↓ (راسب أحمر).
+- إحلال مزدوج: تبادل شقي الأيونات بين مركبين:
+  * تعادل: NaOH + HCl ⟹ NaCl + H₂O.
+  * ترسيب: NaCl + AgNO₃ ⟹ NaNO₃ + AgCl ↓ (راسب أبيض من كلوريد الفضة).
+
+![مخطط أنواع التفاعلات الكيميائية ومخطط طاقة التنشيط وسرعة التفاعل الكيميائي](/curriculum_images/chemical_reactions_types_kinetics.svg)`,
+        contentEn: 'Thermal decomposition breaks down compounds via heat. Single substitution relies on the Chemical Activity Series. Double substitution includes neutralization and precipitation (AgCl white precipitate). Reaction kinetics are accelerated by concentration, temperature, and catalysts.',
+        diagram: {
+          id: 'diagram-m9-sci-chemical-reactions',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط أنواع التفاعلات الكيميائية وآليات سرعة التفاعل الكيميائي',
+          titleEn: 'Chemical Reactions Classification & Kinetics Schematic Diagram',
+          captionAr: 'مخطط علمي شامل ومعتمد يوضح تصنيف التفاعلات الكيميائية (الانحلال الحراري، الإحلال البسيط والمزدوج)، المفهوم الإلكتروني للأكسدة والاختزال، ونظرية التصادمات والعوامل المؤثرة في سرعة التفاعل (التركيز، درجة الحرارة، العوامل الحفازة).',
+          captionEn: 'Comprehensive scientific schematic detailing reaction types (thermal decomposition, single/double displacement), electronic redox mechanisms, and collision theory factors influencing chemical kinetics.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/chemical_reactions_types_kinetics.svg',
+          takeawayFormulaAr: 'الانحلال: بالحرارة | الإحلال: حسب متسلسلة النشاط | الأكسدة: فقد إلكترونات | زيادة السرعة: بالتركيز والحرارة والحفاز',
+          takeawayFormulaEn: 'Decomposition: thermal | Substitution: reactivity series | Oxidation: electron loss | Kinetics: concentration, temperature & catalysts'
+        }
       },
       {
         titleAr: '2. الأكسدة والاختزال وسرعة التفاعل الكيميائي',
@@ -244,8 +273,29 @@ export const MIDDLE_SCIENCE_G9_LECTURES: Lecture[] = [
       {
         titleAr: '1. قوانين السرعة والسرعة النسبية والتمثيل البياني',
         titleEn: '1. Speed Formulas, Relative Speed & Graphs',
-        contentAr: '1) السرعة (v = d/t): تقاس بـ (م/ث) أو (كم/س). للتحويل من كم/س إلى م/ث نضرب في 5/18 (مثل: 72 كم/س = 72 × 5/18 = 20 م/ث).\n2) السرعة النسبية:\n- إذا تحركت سيارتان في عكس الاتجاه (السيارة A بسرعة 70 كم/س والسيارة B بسرعة 50 كم/س): السرعة النسبية للسيارة A بالنسبة للمراقب في B = 70 + 50 = 120 كم/س.\n- إذا تحركتا في نفس الاتجاه: السرعة النسبية = 70 - 50 = 20 كم/س.\n3) التمثيل البياني للحركة:\n- علاقة مسافة - زمن (d - t): خط مستقيم مائل يمر بنقطة الأصل يمثل "سرعة منتظمة"، وخط أفقي يوازي محور الزمن يمثل "جسماً ساكناً".\n- علاقة سرعة - زمن (v - t): خط أفقي يوازي محور الزمن يمثل "سرعة منتظمة وعجلة = صفر".',
-        contentEn: 'Velocity v = d/t. Relative speed adds in opposite directions and subtracts in same directions. Distance-time straight line = constant velocity; horizontal line = stationary.'
+        contentAr: `1) السرعة (v = d/t): تقاس بـ (م/ث) أو (كم/س). للتحويل من كم/س إلى م/ث نضرب في 5/18 (مثل: 72 كم/س = 72 × 5/18 = 20 م/ث).
+2) السرعة النسبية:
+- إذا تحركت سيارتان في عكس الاتجاه (السيارة A بسرعة 70 كم/س والسيارة B بسرعة 50 كم/س): السرعة النسبية للسيارة A بالنسبة للمراقب في B = 70 + 50 = 120 كم/س.
+- إذا تحركتا في نفس الاتجاه: السرعة النسبية = 70 - 50 = 20 كم/س.
+3) التمثيل البياني للحركة:
+- علاقة مسافة - زمن (d - t): خط مستقيم مائل يمر بنقطة الأصل يمثل "سرعة منتظمة"، وخط أفقي يوازي محور الزمن يمثل "جسماً ساكناً".
+- علاقة سرعة - زمن (v - t): خط أفقي يوازي محور الزمن يمثل "سرعة منتظمة وعجلة = صفر".
+
+![التمثيل البياني للحركة والسرعة والعجلة المنتظمة وقوانين الحركة الكينماتيكية](/curriculum_images/motion_graphs_kinematics_acceleration.svg)`,
+        contentEn: 'Velocity v = d/t. Relative speed adds in opposite directions and subtracts in same directions. Distance-time straight line = constant velocity; horizontal line = stationary. Slope of d-t yields velocity; slope of v-t yields acceleration.',
+        diagram: {
+          id: 'diagram-m9-sci-motion-graphs',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط الرسوم البيانية للحركة والسرعة والعجلة المنتظمة',
+          titleEn: 'Motion Graphs, Velocity & Uniform Acceleration Diagram',
+          captionAr: 'رسم بياني وفيزيائي معتمد يوضح دلالات منحنيات (المسافة - الزمن) و(السرعة - الزمن)، التمييز بين السرعة المنتظمة وحالة السكون والعجلة المنتظمة (موجبة وسالبة وصفرية)، ومثلثات قوانين الحركة v = d/t و a = Δv/Δt.',
+          captionEn: 'Approved kinematics schematic detailing distance-time and velocity-time curve interpretations, uniform vs non-uniform velocity, positive/negative/zero acceleration, and core motion calculation triangles.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/motion_graphs_kinematics_acceleration.svg',
+          takeawayFormulaAr: 'v = d / t  |  a = (v₂ - v₁) / Δt  |  ميل (d-t) = السرعة  |  ميل (v-t) = العجلة',
+          takeawayFormulaEn: 'v = d/t | a = Δv/Δt | slope(d-t) = velocity | slope(v-t) = acceleration'
+        }
       },
       {
         titleAr: '2. العجلة المنتظمة والكميات القياسية والمتجهة',

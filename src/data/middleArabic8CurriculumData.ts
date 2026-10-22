@@ -551,5 +551,212 @@ Special distinction for Kila/Kilta:
         }
       ]
     }
+  },
+
+  // ── LECTURE 6: الميزان الصرفي والمجرد والمزيد من الأفعال ──
+  {
+    id: 'm-arab8-6',
+    order: 6,
+    titleAr: 'المحاضرة 6: علم الصرف: الميزان الصرفي والمجرد والمزيد من الأفعال والكشف في المعجم',
+    titleEn: 'Lecture 6: Arabic Morphology: The Morphological Balance (Mizan Sarfi) & Abstract vs Augmented Verbs',
+    subtitleAr: 'أصل وضع الميزان (فَـ ـعَـ ـلَ)، أحرف الزيادة (سألتمونيها)، والفرق الدقيق بين الفعل المجرد والمزيد وحالات الحذف والكشف في المعاجم',
+    subtitleEn: 'Master the tri-consonantal scale Fa-Ayn-Lam, the ten augmentation letters, abstract vs augmented triliteral/quadriliteral verbs, elision, and dictionary search.',
+    durationMinutes: 35,
+    isLocked: false,
+    isCompleted: false,
+    passingScoreRequired: 80,
+
+    gradeLevelNameAr: 'الصف الثاني الإعدادي / المتوسط - اللغة العربية',
+    gradeLevelNameEn: 'Grade 8 / Middle School - Arabic Grammar & Morphology',
+    termAr: 'الفصل الدراسي الثاني',
+    termEn: 'Term 2 Official Arabic Curriculum',
+    unitTitleAr: 'الوحدة الرابعة: علم الصرف والميزان اللغوي',
+    unitTitleEn: 'Unit 4: Arabic Morphology & Word Scales',
+    lessonNumberAr: 'الدرس 6: الميزان الصرفي والمجرد والمزيد',
+    lessonNumberEn: 'Lesson 6: The Morphological Balance & Verb Augmentation',
+
+    warmupHookAr: 'كما يزن الصائغ الذهب بميزان حساس بالغ الدقة لمعرفة العيار ونقاء المعدن، ابتكر علماء العربية القدماء ميزاناً عبقرياً يتألف من ثلاثة أحرف أصلية (ف - ع - ل) لوزن كل كلمة عربية! فإذا زادت الكلمة حرفاً زاد في الميزان، وإذا حُذف منها حرف حُذف ما يقابله! فكيف نزن كلمة مثل "استخرجَ" أو "قِفْ" أو "انتصار"؟ وما هي حروف الزيادة العشرة المجمعة في كلمة (سألتمونيها)؟',
+    warmupHookEn: 'Just as a jeweler weighs gold with precision, classical Arabic grammarians designed a 3-letter scale (F-A-L) to measure any word. Extra letters mirror in the scale and dropped letters vanish from it. Master the foundational scale and augmentation rules!',
+
+    learningOutcomesAr: [
+      'أن يشرح الطالب فكرة الميزان الصرفي ومقابلة فاء الكلمة وعينها ولامها بالأحرف الأصلية',
+      'أن يميز بين الفعل المجرد (ثلاثي مثل: كتب، أو رباعي مثل: دحرج) والفعل المزيد بحرف أو حرفين أو ثلاثة',
+      'أن يحفظ حروف الزيادة العشرة المجمعة في قولهم (سألتمونيها) أو (هناء وتسليم) بالإضافة إلى التضعيف',
+      'أن يزن الكلمات المزيدة بإنزال حروف الزيادة في الميزان بنفس حركاتها وضبطها',
+      'أن يزن الكلمات التي حدث فيها حذف (مثل: قُلْ ⟵ فُلْ، قِ ⟵ عِ، اسْعَ ⟵ افْعَ)',
+      'أن يطبق خطوات الكشف في المعاجم اللغوية بعد تجريد الكلمة ورد الجمع للمفرد والمضارع للماضي'
+    ],
+    learningOutcomesEn: [
+      'Explain the morphological scale concept correlating radical letters to Fa, Ayn, and Lam',
+      'Differentiate abstract (Mujarrad) verbs from augmented (Mazeed) verbs in 3-letter and 4-letter forms',
+      'Identify the 10 augmentation letters summarized in "Sa\'altumooneeha" plus consonant gemination',
+      'Balance augmented words by mapping radical roots and reflecting affixes precisely',
+      'Balance words with deleted radicals (e.g., Qul -> Ful, Qi -> \'I)',
+      'Execute dictionary lookup procedures by extracting base roots and restoring elided vowels'
+    ],
+
+    vocabulary: [
+      {
+        termAr: 'الميزان الصرفي (The Morphological Balance)',
+        termEn: 'The Morphological Balance (Mizan Sarfi)',
+        definitionAr: 'مقياس وضعه علماء الصرف لمعرفة أحوال بنية الكلمة وأصولها وما يطرأ عليها من زيادة أو حذف، وأصله مادة (ف - ع - ل).',
+        definitionEn: 'A linguistic benchmark designed by Arabic morphologists to analyze word structures and affixes using the root F-A-L.'
+      },
+      {
+        termAr: 'الفعل المجرد والمزيد (Mujarrad vs Mazeed)',
+        termEn: 'Abstract vs Augmented Verbs',
+        definitionAr: 'المجرد: ما كانت جميع حروفه أصلية لا يمكن الاستغناء عن حرف منها (ثلاثي أو رباعي). المزيد: ما زاد على أحرفه الأصلية حرف أو اثنان أو ثلاثة أحرف.',
+        definitionEn: 'Mujarrad verbs comprise purely root consonants. Mazeed verbs incorporate one to three additional morphological affixes.'
+      },
+      {
+        termAr: 'حروف الزيادة (Augmentation Letters)',
+        termEn: 'Augmentation Letters',
+        definitionAr: 'عشرة أحرف يجمعها قولك: (سَأَلْتُمُونِيهَا) أو (هَنَاءٌ وَتَسْلِيمٌ) بالإضافة إلى تضعيف الحرف الأصلي.',
+        definitionEn: 'Ten specific letters used for morphological expansion, gathered in the mnemonic "Sa-al-tu-moo-nee-ha" plus consonant doubling.'
+      }
+    ],
+
+    sections: [
+      {
+        titleAr: '1. أصول الميزان الصرفي ووزن الفعل المجرد والمزيد',
+        titleEn: '1. Foundations of Mizan Sarfi & Verb Augmentation Rules',
+        contentAr: `1) أصل الميزان الصرفي:
+- اختار الصرفيون كلمة **(فَعَلَ)** لأن أغلب أصول الكلمات العربية ثلاثية:
+  * الحرف الأول الأصلي يُسمى: **فاء الكلمة**.
+  * الحرف الثاني الأصلي يُسمى: **عين الكلمة**.
+  * الحرف الثالث الأصلي يُسمى: **لام الكلمة**.
+  * مثال: (كَتَبَ ⟵ فَعَلَ)، (عَلِمَ ⟵ فَعِلَ)، (شَرُفَ ⟵ فَعُلَ).
+  * الرباعي المجرد: نزيد لاماً في آخره (فَعْلَلَ): مثل: (دَحْرَجَ ⟵ فَعْلَلَ)، (زَلْزَلَ ⟵ فَعْلَلَ).
+
+2) وزن الكلمات المزيدة:
+- تقابل الأصول بأحرف (ف، ع، ل) وتنزل أحرف الزيادة كما هي مع نفس الضبط:
+  * (أَكْرَمَ ⟵ أَفْعَلَ)، (انْطَلَقَ ⟵ انْفَعَلَ)، (اسْتَغْفَرَ ⟵ اسْتَفْعَلَ).
+  * إذا كان التضعيف أصلياً ضُعف في الميزان: (قَدَّمَ ⟵ فَعَّلَ).
+
+3) الحذف في الميزان الصرفي:
+- ما يُحذف من أصول الكلمة يُحذف ما يقابله في الميزان:
+  * الفعل (قالَ): أصله (فَعَلَ) ⟵ الأمر منه (قُلْ): حذفت الألف (عين الكلمة) ⟵ وزنه: **(فُلْ)**.
+  * الفعل (وَقَفَ): أصله (فَعَلَ) ⟵ الأمر منه (قِفْ): حذفت الواو (فاء الكلمة) ⟵ وزنه: **(عِلْ)**.
+  * الفعل (وَقَى): الأمر منه (قِ): حذفت الفاء واللام ⟵ وزنه: **(عِ)**.
+
+![مخطط الميزان الصرفي والمجرد والمزيد من الأفعال وحالات الزيادة والحذف والكشف في المعجم](/curriculum_images/arabic_morphology_mizan_sarfi.svg)`,
+        contentEn: 'Arabic words balance against Fa-Ayn-Lam. Pure triliteral verbs map directly; quadriliterals append an extra Lam (Fa\'lala). Augmentations are reflected identically; deleted radicals delete their corresponding scale letters. Dictionary lookup requires returning words to past triliteral roots.',
+        diagram: {
+          id: 'diagram-m8-arab-morphology-mizan',
+          figureNumberAr: 'شكل توضيحي (١-١)',
+          figureNumberEn: 'Figure (1-1)',
+          titleAr: 'مخطط الميزان الصرفي والمجرد والمزيد من الأفعال',
+          titleEn: 'Arabic Morphological Balance (Mizan Sarfi) & Verb Augmentation Diagram',
+          captionAr: 'مخطط تعليمي معتمد يوضح كفتي الميزان الصرفي (فَـ ـعَـ ـلَ)، أوزان المجرد الثلاثي والرباعي، أحرف الزيادة العشرة (سألتمونيها)، قواعد وزن الزيادة والتضعيف، وحالات الحذف من الميزان وكيفية الكشف في المعاجم.',
+          captionEn: 'Standard pedagogical diagram detailing the morphological scale balance (Fa-Ayn-Lam), pure triliteral and quadriliteral weights, the ten augmentation letters, elision rules, and dictionary root lookup.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/arabic_morphology_mizan_sarfi.svg',
+          takeawayFormulaAr: 'الأصل: ف-ع-ل | أحرف الزيادة: سألتمونيها + التضعيف | ما يزاد يزاد في الميزان | ما يحذف يحذف من الميزان',
+          takeawayFormulaEn: 'Base: F-A-L | Augmentation: Sa\'altumooneeha + Shaddah | Added affixes mirror in scale | Dropped letters elide from scale'
+        }
+      },
+      {
+        titleAr: '2. الكشف في المعاجم اللغوية وخطوات تجريد الكلمات',
+        titleEn: '2. Arabic Lexicography & Dictionary Lookup Procedures',
+        contentAr: `خطوات البحث عن معنى أي كلمة في المعجم الوجيز أو الوسيط:
+1. **رد الجمع والمثنى إلى المفرد:** (علماء ⟵ عالِم).
+2. **تجريد الكلمة من أحرف الزيادة والضمائر وأل التعريف:** (استخراج ⟵ خَرَجَ).
+3. **رد حرف العلة إلى أصله (الواو أو الياء) عن طريق المضارع أو المصدر:**
+   - (قالَ ⟵ يقول ⟵ أصل الألف واو: ق-و-ل).
+   - (باعَ ⟵ يبيع ⟵ أصل الألف ياء: ب-ي-ع).
+   - (دعا ⟵ يدعو ⟵ د-ع-و).
+4. **فك الإدغام في الحرف المضعف الثلاثي:** (ردَّ ⟵ ر-د-د)، (شدَّ ⟵ ش-د-د).
+5. **طريقة المعاجم القديمة (كالقاموس المحيط ولسان العرب):** باب الحرف الأخير، فصل الحرف الأول.
+6. **طريقة المعاجم الحديثة (كالوسيط والمنجد والوجيز):** باب الحرف الأول، ثم الثاني، ثم الثالث.`,
+        contentEn: 'Dictionary lookup requires: returning plurals to singular, stripping augmentation letters and prefixes/suffixes, restoring weak vowels (Alif to Waw/Yaa) via present tense, uncoupling geminated letters, and indexing by root.'
+      }
+    ],
+
+    keyConceptsAr: [
+      'الميزان الصرفي يزن الكلمات العربية الثلاثية بـ (فَعَلَ) والرباعية بـ (فَعْلَلَ)',
+      'أحرف الزيادة عشرة تجمعها كلمة (سألتمونيها) أو (هناء وتسليم) إضافة إلى التضعيف',
+      'حركات الميزان الصرفي تطابق حركات الكلمة الموزونة تماماً',
+      'إذا حذف حرف أصلي من الكلمة يحذف ما يقابله في الميزان (قِف ⟵ عِلْ، قُلْ ⟵ فُلْ)',
+      'للكشف في المعجم: نجرد الكلمة ونرد أحرف العلة لأصلها ونفك التضعيف الثلاثي'
+    ],
+    keyConceptsEn: [
+      'Morphological scale balances triliterals with Fa-Ayn-Lam and quadriliterals with Fa\'lala',
+      'Ten augmentation letters in "Sa\'altumooneeha" plus gemination',
+      'Scale diacritics strictly mirror word vocalization',
+      'Deleted radicals lead to corresponding elisions in the scale',
+      'Dictionary lookup requires stripping to root, restoring weak letters, and decoupling doubled roots'
+    ],
+    summaryAr: 'تتناول هذه المحاضرة الميزان الصرفي في اللغة العربية لصف الثاني الإعدادي: كيفية وزن الكلمات المجردة والمزيدة، قواعد إسقاط الحروف المحذوفة من الميزان، وحفظ حروف الزيادة (سألتمونيها) مع التدريب التطبيقي على الكشف في المعاجم اللغوية.',
+    summaryEn: 'Comprehensive Grade 8 morphology lecture: balancing pure and augmented words, elision rules in scale derivations, the 10 augmentation letters, and dictionary search algorithms.',
+
+    textbookExercises: [
+      {
+        id: 'tb-m8-arab6-1',
+        questionAr: 'زن الكلمات الآتية مبيناً ما حدث فيها من زيادة أو حذف:\n1) اسْتَقَامَ\n2) مَهَابَة\n3) صِلَة\n4) اسْعَ',
+        questionEn: 'Balance the following words indicating augmentations or elisions: 1) Istaqaama, 2) Mahaabah, 3) Silah, 4) Is\'a',
+        solutionStepsAr: [
+          '1) (اسْتَقَامَ): أصلها (قَوَمَ ⟵ فَعَلَ)، زادت بالهمزة والسين والتاء ⟵ الوزن: (اسْتَفْعَلَ).',
+          '2) (مَهَابَة): أصلها (هَابَ / هَيَبَ ⟵ فَعَلَ)، زادت بالميم والتاء المربوطة ⟵ الوزن: (مَفْعَلَة).',
+          '3) (صِلَة): أصلها (وَصَلَ ⟵ فَعَلَ)، حذفت الفاء (الواو) وعُوّض عنها بتاء مربوطة ⟵ الوزن: (عِلَة).',
+          '4) (اسْعَ): أصلها (سَعَى ⟵ فَعَلَ)، زادت همزة الوصل وحذفت اللام (حرف العلة للجزم في الأمر) ⟵ الوزن: (افْعَ).'
+        ],
+        solutionStepsEn: [
+          '1) Istaqaama: root Q-W-M + I-S-T affixes -> Istaf\'ala.',
+          '2) Mahaabah: root H-Y-B + M and Ta-Marbuta -> Maf\'alah.',
+          '3) Silah: root W-S-L, dropped Fa (Waw), appended Ta-Marbuta -> \'Ilah.',
+          '4) Is\'a: root S-\'A-Y, added imperative Hamza, elided Lam (weak letter) -> If\'a.'
+        ],
+        answerAr: 'الأوزان: استقام (اسْتَفْعَلَ) - مهابة (مَفْعَلَة) - صلة (عِلَة) - اسعَ (افْعَ).',
+        answerEn: 'Scales: Istaqaama (Istaf\'ala) - Mahaabah (Maf\'alah) - Silah (\'Ilah) - Is\'a (If\'a).'
+      }
+    ],
+
+    assessment: {
+      id: 'quiz-marab8-6',
+      titleAr: 'اختبار تمكين الميزان الصرفي والمجرد والمزيد',
+      titleEn: 'Morphological Scale & Verb Augmentation Mastery Quiz',
+      passingScore: 80,
+      questions: [
+        {
+          id: 'q1-m8-arab6',
+          textAr: 'ما وزن الفعل (انتصرَ) في الميزان الصرفي؟',
+          textEn: 'What is the morphological scale of the verb (Intasara)?',
+          optionsAr: ['انفعلَ', 'افتعلَ', 'استفعلَ', 'تفاعلَ'],
+          optionsEn: ['Infa\'ala', 'Ifta\'ala', 'Istaf\'ala', 'Tafa\'ala'],
+          correctIndex: 1,
+          conceptTestedAr: 'تحديد أحرف الزيادة في الميزان',
+          conceptTestedEn: 'Identifying augmentation affixes',
+          explanationAr: 'أصل الفعل (نَصَرَ ⟵ فَعَلَ)، النون أصلية تقابل الفاء، وزادت الألف والتاء، فيكون وزنه: (افْتَعَلَ).',
+          explanationEn: 'The root is N-S-R where Nun is a radical (Fa). Added letters are Alif and Taa, producing Ifta\'ala.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'q2-m8-arab6',
+          textAr: 'ما وزن كلمة (قِفْ) في الميزان الصرفي؟',
+          textEn: 'What is the morphological scale of (Qif)?',
+          optionsAr: ['فِلْ', 'عِلْ', 'عِفْ', 'لِفْ'],
+          optionsEn: ['Fil', '\'Il', '\'If', 'Lif'],
+          correctIndex: 1,
+          conceptTestedAr: 'الحذف في الميزان الصرفي',
+          conceptTestedEn: 'Elision in morphological scale',
+          explanationAr: 'الفعل الماضي (وَقَفَ ⟵ فَعَلَ)، حذفت الواو (فاء الكلمة) في فعل الأمر، فبقيت العين واللام مكسورة العين: (عِلْ).',
+          explanationEn: 'Past tense is W-Q-F (Fa\'ala). The Waw (Fa) is deleted in the imperative, leaving Ayn and Lam: \'Il.',
+          difficulty: 'medium'
+        },
+        {
+          id: 'q3-m8-arab6',
+          textAr: 'نكشف في المعجم عن كلمة (استقامة) في مادة:',
+          textEn: 'We look up the word (Istiqaamah) in the root:',
+          optionsAr: ['س-ق-م', 'ق-ي-م', 'ق-و-م', 'ا-س-ت'],
+          optionsEn: ['S-Q-M', 'Q-Y-M', 'Q-W-M', 'A-S-T'],
+          correctIndex: 2,
+          conceptTestedAr: 'خطوات الكشف في المعاجم ورد حرف العلة لأصله',
+          conceptTestedEn: 'Dictionary lookup and weak letter restoration',
+          explanationAr: 'نجرد الكلمة من الزيادة (استـ...ـة) فتصبح (قام)، ونرد الألف لأصلها بالمضارع (يقوم) فتكون المادة: (ق - و - م).',
+          explanationEn: 'Stripping affixes leaves Q-A-M. Restoring Alif via present tense Yaqoom yields the root Q-W-M.',
+          difficulty: 'easy'
+        }
+      ]
+    }
   }
 ];

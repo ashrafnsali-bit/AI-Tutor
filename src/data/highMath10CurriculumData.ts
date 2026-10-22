@@ -288,8 +288,31 @@ export const HIGH_MATH_G10_LECTURES: Lecture[] = [
       {
         titleAr: '2. دائرة الوحدة والزوايا المنتسبة',
         titleEn: '2. Unit Circle & Related Angle Identities',
-        contentAr: '1) دائرة الوحدة:\n- نقطة التقاطع $(x, y) = (\\cos\\theta, \\sin\\theta)$.\n- المتطابقة الأساسية: $\\sin^2\\theta + \\cos^2\\theta = 1$.\n- المقلوبات: $\\sec\\theta = \\frac{1}{\\cos\\theta}$ ، $\\csc\\theta = \\frac{1}{\\sin\\theta}$ ، $\\cot\\theta = \\frac{1}{\\tan\\theta}$.\n\n2) تبسيط الزوايا المنتسبة:\n- احسب قيمة $\\cos(150^\\circ)$ بدون آلة حاسبة:\n  * $150^\\circ = 180^\\circ - 30^\\circ$ (الربع الثاني، حيث الجتا سالبة).\n  * $\\cos(150^\\circ) = \\cos(180^\\circ - 30^\\circ) = -\\cos(30^\\circ) = -\\frac{\\sqrt{3}}{2}$.',
-        contentEn: 'Unit circle coordinates give (cos θ, sin θ). Angle reductions use quadrant ASTC signs.'
+        contentAr: `1) دائرة الوحدة:
+- نقطة التقاطع $(x, y) = (\\cos\\theta, \\sin\\theta)$.
+- المتطابقة الأساسية: $\\sin^2\\theta + \\cos^2\\theta = 1$.
+- المقلوبات: $\\sec\\theta = \\frac{1}{\\cos\\theta}$ ، $\\csc\\theta = \\frac{1}{\\sin\\theta}$ ، $\\cot\\theta = \\frac{1}{\\tan\\theta}$.
+
+2) تبسيط الزوايا المنتسبة:
+- احسب قيمة $\\cos(150^\\circ)$ بدون آلة حاسبة:
+  * $150^\\circ = 180^\\circ - 30^\\circ$ (الربع الثاني، حيث الجتا سالبة).
+  * $\\cos(150^\\circ) = \\cos(180^\\circ - 30^\\circ) = -\\cos(30^\\circ) = -\\frac{\\sqrt{3}}{2}$.
+
+![مخطط دائرة الوحدة والنسب المثلثية والزوايا الخاصة وقاعدة إشارات الأرباع](/curriculum_images/trigonometric_unit_circle_angles.svg)`,
+        contentEn: 'Unit circle coordinates give (cos θ, sin θ). Angle reductions use quadrant ASTC signs and special angle radian equivalents.',
+        diagram: {
+          id: 'diagram-h10-math-unit-circle',
+          figureNumberAr: 'شكل توضيحي (٢-١)',
+          figureNumberEn: 'Figure (2-1)',
+          titleAr: 'مخطط دائرة الوحدة والنسب المثلثية والزوايا المنتسبة',
+          titleEn: 'Unit Circle Trigonometry, ASTC Signs & Special Angles Diagram',
+          captionAr: 'مخطط هندسي ورياضي دقيق لدائرة الوحدة (r = 1) يوضح إحداثيات النقطة المثلثية P(cos θ, sin θ)، قاعدة إشارات النسب في الأرباع الأربعة (ASTC: الكل، جا، ظا، جتا)، والزوايا الخاصة ومكافئاتها بالراديان والدرجات.',
+          captionEn: 'Accurate trigonometric unit circle schematic (r = 1) showing coordinates P(cos θ, sin θ), ASTC quadrant sign distribution, special angles values in degrees and radians, and related angle reductions.',
+          diagramType: 'custom_svg',
+          imageUrl: '/curriculum_images/trigonometric_unit_circle_angles.svg',
+          takeawayFormulaAr: 'x = cos θ | y = sin θ | cos²θ + sin²θ = 1 | ASTC: الربع 1 (الكل+)، 2 (جا+)، 3 (ظا+)، 4 (جتا+)',
+          takeawayFormulaEn: 'x = cos θ | y = sin θ | cos²θ + sin²θ = 1 | ASTC: Q1 (All+), Q2 (Sin+), Q3 (Tan+), Q4 (Cos+)'
+        }
       }
     ],
 

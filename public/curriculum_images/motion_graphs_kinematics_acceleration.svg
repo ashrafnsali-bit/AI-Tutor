@@ -1,0 +1,266 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradMotion" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050b14"/>
+      <stop offset="50%" stop-color="#0a1526"/>
+      <stop offset="100%" stop-color="#0f2038"/>
+    </linearGradient>
+
+    <linearGradient id="cardGradMotion" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111f38" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#091322" stop-opacity="0.98"/>
+    </linearGradient>
+
+    <linearGradient id="gridGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="boxShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <marker id="arrowCyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#10b981"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 800; fill: #f8fafc; }
+    .subtitle { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 600; fill: #94a3b8; }
+    .card-header { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 16px; }
+    .label-ar { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-size: 13px; fill: #cbd5e1; }
+    .math-text { font-family: 'Consolas', 'Courier New', monospace; font-weight: bold; font-size: 14px; }
+    .axis-label { font-family: 'Cairo', 'Segoe UI', sans-serif; font-weight: bold; font-size: 12px; fill: #94a3b8; }
+  </style>
+
+  <!-- Background -->
+  <rect width="980" height="640" fill="url(#bgGradMotion)" rx="16"/>
+
+  <!-- Header Banner -->
+  <g transform="translate(40, 24)">
+    <rect width="900" height="66" rx="14" fill="#0c1a30" stroke="#1d4ed8" stroke-width="1.5" filter="url(#boxShadow)"/>
+    <rect x="888" y="0" width="12" height="66" rx="6" fill="#38bdf8"/>
+    <text x="860" y="30" class="title" font-size="22" text-anchor="end">التمثيل البياني للحركة والسرعة والعجلة — علوم الصف الثالث الإعدادي</text>
+    <text x="860" y="52" class="subtitle" font-size="13" text-anchor="end">منحنيات (المسافة - الزمن) و(السرعة - الزمن)، أنواع العجلة المنتظمة، ومثلثات قوانين الحركة</text>
+    
+    <rect x="25" y="17" width="130" height="32" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <text x="90" y="38" class="title" font-size="12" fill="#38bdf8" text-anchor="middle">فيزياء الميكانيكا</text>
+  </g>
+
+  <!-- Left Main Column: Two Coordinate Graphs (Distance-Time & Velocity-Time) -->
+  
+  <!-- Graph Card 1: منحنيات (المسافة - الزمن) d - t -->
+  <g transform="translate(40, 106)" filter="url(#boxShadow)">
+    <rect width="455" height="254" rx="14" fill="url(#cardGradMotion)" stroke="#0ea5e9" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 441 0 Q 455 0 455 14 L 455 36 L 0 36 Z" fill="#0369a1" fill-opacity="0.3"/>
+    
+    <circle cx="432" cy="18" r="8" fill="#0ea5e9"/>
+    <text x="432" y="23" class="title" font-size="11" fill="#fff" text-anchor="middle">A</text>
+    <text x="415" y="24" class="card-header" fill="#7dd3fc" text-anchor="end">منحنيات (المسافة - الزمن) Distance - Time Graph</text>
+
+    <!-- Graph Axes & Grid -->
+    <g transform="translate(30, 48)">
+      <!-- Inner Grid -->
+      <rect x="35" y="10" width="180" height="135" fill="url(#gridGrad)" rx="4"/>
+      <!-- Grid Lines -->
+      <line x1="35" y1="45" x2="215" y2="45" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+      <line x1="35" y1="80" x2="215" y2="80" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+      <line x1="35" y1="115" x2="215" y2="115" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+      <line x1="95" y1="10" x2="95" y2="145" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+      <line x1="155" y1="10" x2="155" y2="145" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+
+      <!-- Axes -->
+      <line x1="35" y1="145" x2="225" y2="145" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+      <line x1="35" y1="145" x2="35" y2="5" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+      <text x="228" y="150" class="axis-label">t (ث)</text>
+      <text x="18" y="18" class="axis-label">d (م)</text>
+      <text x="24" y="150" class="axis-label">0</text>
+
+      <!-- Curve 1: Uniform Speed (Straight diagonal line) -->
+      <line x1="35" y1="145" x2="190" y2="25" stroke="#10b981" stroke-width="3"/>
+      <!-- Curve 2: Body at Rest (Horizontal line) -->
+      <line x1="70" y1="75" x2="210" y2="75" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="5,3"/>
+      <!-- Curve 3: Non-uniform Speed (Curved line) -->
+      <path d="M 35 145 Q 110 135 180 60" fill="none" stroke="#ec4899" stroke-width="2.5"/>
+
+      <!-- Labels / Legend on Right -->
+      <g transform="translate(230, 10)">
+        <!-- Case 1 -->
+        <rect x="0" y="0" width="180" height="38" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+        <line x1="168" y1="12" x2="150" y2="12" stroke="#10b981" stroke-width="3"/>
+        <text x="142" y="16" class="label-ar" font-weight="700" fill="#34d399" text-anchor="end">سرعة منتظمة ثابتة</text>
+        <text x="170" y="30" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="end">خط مائل يمر بنقطة الأصل (ميل ثابت)</text>
+
+        <!-- Case 2 -->
+        <rect x="0" y="44" width="180" height="38" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="1"/>
+        <line x1="168" y1="12" x2="150" y2="12" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4,2"/>
+        <text x="142" y="60" class="label-ar" font-weight="700" fill="#fbbf24" text-anchor="end">جسم ساكن (v = 0)</text>
+        <text x="170" y="74" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="end">خط أفقي موازٍ لمحور الزمن</text>
+
+        <!-- Case 3 -->
+        <rect x="0" y="88" width="180" height="38" rx="6" fill="#0f172a" stroke="#ec4899" stroke-width="1"/>
+        <path d="M 168 14 Q 158 10 150 2" fill="none" stroke="#ec4899" stroke-width="2.5"/>
+        <text x="142" y="104" class="label-ar" font-weight="700" fill="#f472b6" text-anchor="end">سرعة غير منتظمة</text>
+        <text x="170" y="118" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="end">خط منحنٍ (يقطع مسافات غير متساوية)</text>
+      </g>
+    </g>
+
+    <!-- Bottom summary tag -->
+    <rect x="25" y="212" width="405" height="28" rx="6" fill="#1e293b"/>
+    <text x="227" y="231" class="label-ar" font-size="12" fill="#7dd3fc" text-anchor="middle">ميل الخط المستقيم في منحنى (d - t) = السرعة (v = Δd / Δt)</text>
+  </g>
+
+  <!-- Graph Card 2: منحنيات (السرعة - الزمن) v - t -->
+  <g transform="translate(40, 372)" filter="url(#boxShadow)">
+    <rect width="455" height="244" rx="14" fill="url(#cardGradMotion)" stroke="#10b981" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 441 0 Q 455 0 455 14 L 455 36 L 0 36 Z" fill="#065f46" fill-opacity="0.3"/>
+    
+    <circle cx="432" cy="18" r="8" fill="#10b981"/>
+    <text x="432" y="23" class="title" font-size="11" fill="#fff" text-anchor="middle">B</text>
+    <text x="415" y="24" class="card-header" fill="#a7f3d0" text-anchor="end">منحنيات (السرعة - الزمن) Velocity - Time Graph</text>
+
+    <!-- Graph Axes & Grid -->
+    <g transform="translate(30, 44)">
+      <rect x="35" y="10" width="180" height="135" fill="url(#gridGrad)" rx="4"/>
+      <line x1="35" y1="45" x2="215" y2="45" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+      <line x1="35" y1="80" x2="215" y2="80" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+      <line x1="35" y1="115" x2="215" y2="115" stroke="#334155" stroke-width="0.75" stroke-dasharray="2,2"/>
+
+      <line x1="35" y1="145" x2="225" y2="145" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowGreen)"/>
+      <line x1="35" y1="145" x2="35" y2="5" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowGreen)"/>
+      <text x="228" y="150" class="axis-label">t (ث)</text>
+      <text x="15" y="18" class="axis-label">v (م/ث)</text>
+      <text x="24" y="150" class="axis-label">0</text>
+
+      <!-- Curve 1: Positive Acceleration (Upward slope) -->
+      <line x1="35" y1="145" x2="160" y2="25" stroke="#38bdf8" stroke-width="3"/>
+      <!-- Curve 2: Zero Acceleration (Constant Speed Horizontal) -->
+      <line x1="35" y1="50" x2="200" y2="50" stroke="#facc15" stroke-width="2.5"/>
+      <!-- Curve 3: Negative Deceleration (Downward slope) -->
+      <line x1="35" y1="25" x2="185" y2="145" stroke="#ef4444" stroke-width="3"/>
+
+      <!-- Legend on Right -->
+      <g transform="translate(230, 5)">
+        <rect x="0" y="0" width="180" height="38" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+        <text x="170" y="16" class="label-ar" font-weight="700" fill="#38bdf8" text-anchor="end">عجلة موجبة (a > 0)</text>
+        <text x="170" y="30" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="end">تزايدية: السرعة تزداد بمرور الزمن</text>
+
+        <rect x="0" y="44" width="180" height="38" rx="6" fill="#0f172a" stroke="#facc15" stroke-width="1"/>
+        <text x="170" y="60" class="label-ar" font-weight="700" fill="#facc15" text-anchor="end">عجلة صفرية (a = 0)</text>
+        <text x="170" y="74" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="end">سرعة منتظمة ثابتة (خط أفقي)</text>
+
+        <rect x="0" y="88" width="180" height="38" rx="6" fill="#0f172a" stroke="#ef4444" stroke-width="1"/>
+        <text x="170" y="104" class="label-ar" font-weight="700" fill="#f87171" text-anchor="end">عجلة سالبة (a &lt; 0)</text>
+        <text x="170" y="118" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="end">تناقصية تقصيرية: عند الضغط ع الفرامل</text>
+      </g>
+    </g>
+
+    <rect x="25" y="202" width="405" height="28" rx="6" fill="#1e293b"/>
+    <text x="227" y="221" class="label-ar" font-size="12" fill="#a7f3d0" text-anchor="middle">ميل الخط المستقيم في منحنى (v - t) = العجلة (a = Δv / Δt)</text>
+  </g>
+
+  <!-- Right Main Column: Motion Formulas Triangles & Relative Speed -->
+
+  <!-- Panel 3: مثلثات القوانين والتحويلات -->
+  <g transform="translate(515, 106)" filter="url(#boxShadow)">
+    <rect width="425" height="254" rx="14" fill="url(#cardGradMotion)" stroke="#f59e0b" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 411 0 Q 425 0 425 14 L 425 36 L 0 36 Z" fill="#b45309" fill-opacity="0.3"/>
+    
+    <circle cx="402" cy="18" r="8" fill="#f59e0b"/>
+    <text x="402" y="23" class="title" font-size="11" fill="#fff" text-anchor="middle">C</text>
+    <text x="385" y="24" class="card-header" fill="#fde68a" text-anchor="end">مثلثات قوانين السرعة والعجلة</text>
+
+    <!-- Triangle 1: Speed v = d / t -->
+    <g transform="translate(225, 48)">
+      <polygon points="90,15 15,115 165,115" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="45" y1="70" x2="135" y2="70" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="90" y1="70" x2="90" y2="115" stroke="#38bdf8" stroke-width="2"/>
+      
+      <!-- Inside Letters -->
+      <text x="90" y="52" class="math-text" font-size="18" fill="#38bdf8" text-anchor="middle">d</text>
+      <text x="65" y="98" class="math-text" font-size="17" fill="#fbbf24" text-anchor="middle">v</text>
+      <text x="115" y="98" class="math-text" font-size="17" fill="#34d399" text-anchor="middle">t</text>
+      
+      <text x="90" y="132" class="label-ar" font-weight="700" fill="#93c5fd" text-anchor="middle">مثلث السرعة (v = d / t)</text>
+      <text x="90" y="148" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="middle">d = المسافة ، t = الزمن</text>
+    </g>
+
+    <!-- Triangle 2: Acceleration a = Δv / t -->
+    <g transform="translate(25, 48)">
+      <polygon points="90,15 15,115 165,115" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+      <line x1="45" y1="70" x2="135" y2="70" stroke="#f43f5e" stroke-width="2"/>
+      <line x1="90" y1="70" x2="90" y2="115" stroke="#f43f5e" stroke-width="2"/>
+      
+      <!-- Inside Letters -->
+      <text x="90" y="52" class="math-text" font-size="16" fill="#f43f5e" text-anchor="middle">Δv</text>
+      <text x="65" y="98" class="math-text" font-size="17" fill="#a78bfa" text-anchor="middle">a</text>
+      <text x="115" y="98" class="math-text" font-size="17" fill="#34d399" text-anchor="middle">t</text>
+
+      <text x="90" y="132" class="label-ar" font-weight="700" fill="#fca5a5" text-anchor="middle">مثلث العجلة (a = Δv / t)</text>
+      <text x="90" y="148" class="label-ar" font-size="11" fill="#94a3b8" text-anchor="middle">Δv = v₂ - v₁ (النهائية - الابتدائية)</text>
+    </g>
+
+    <!-- Speed Conversion Banner -->
+    <g transform="translate(20, 204)">
+      <rect width="385" height="38" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="372" y="24" class="label-ar" font-weight="700" fill="#fbbf24">تحويل السرعة:</text>
+      <text x="260" y="24" class="math-text" font-size="13" fill="#67e8f9">كم/س × (5 / 18) ⟹ م/ث</text>
+      <text x="12" y="24" class="label-ar" font-size="11" fill="#cbd5e1">مثال: 72 كم/س = 20 م/ث</text>
+    </g>
+  </g>
+
+  <!-- Panel 4: السرعة النسبية والكميات القياسية والمتجهة -->
+  <g transform="translate(515, 372)" filter="url(#boxShadow)">
+    <rect width="425" height="244" rx="14" fill="url(#cardGradMotion)" stroke="#8b5cf6" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 411 0 Q 425 0 425 14 L 425 36 L 0 36 Z" fill="#6d28d9" fill-opacity="0.3"/>
+    
+    <circle cx="402" cy="18" r="8" fill="#8b5cf6"/>
+    <text x="402" y="23" class="title" font-size="11" fill="#fff" text-anchor="middle">D</text>
+    <text x="385" y="24" class="card-header" fill="#c4b5fd" text-anchor="end">السرعة النسبية والكميات الفيزيائية</text>
+
+    <!-- Relative Speed Box -->
+    <g transform="translate(20, 48)">
+      <rect width="385" height="92" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="370" y="22" class="label-ar" font-weight="700" fill="#a78bfa">حساب السرعة النسبية (Relative Speed):</text>
+      
+      <!-- In Opposite Directions -->
+      <circle cx="365" cy="42" r="3" fill="#38bdf8"/>
+      <text x="355" y="46" class="label-ar" font-size="12" fill="#cbd5e1">1) في عكس الاتجاه (تقتربان): نجمع السرعتين</text>
+      <text x="20" y="46" class="math-text" font-size="12.5" fill="#38bdf8">V_rel = V₁ + V₂</text>
+
+      <!-- In Same Direction -->
+      <circle cx="365" cy="68" r="3" fill="#ec4899"/>
+      <text x="355" y="72" class="label-ar" font-size="12" fill="#cbd5e1">2) في نفس الاتجاه (تتباعدان): نطرح السرعتين</text>
+      <text x="20" y="72" class="math-text" font-size="12.5" fill="#f472b6">V_rel = V₁ - V₂</text>
+    </g>
+
+    <!-- Scalar vs Vector Box -->
+    <g transform="translate(20, 150)">
+      <rect width="185" height="82" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+      <text x="175" y="22" class="label-ar" font-weight="700" fill="#34d399">الكمية القياسية (Scalar):</text>
+      <text x="175" y="42" class="label-ar" font-size="11" fill="#cbd5e1">مقدار ووحدة قياس فقط</text>
+      <text x="175" y="60" class="label-ar" font-size="11" fill="#94a3b8">أمثلة: المسافة (d)، الزمن (t)</text>
+      <text x="175" y="74" class="label-ar" font-size="11" fill="#94a3b8">الكتلة (m)، السرعة القياسية</text>
+    </g>
+
+    <g transform="translate(220, 150)">
+      <rect width="185" height="82" rx="8" fill="#0f172a" stroke="#f43f5e" stroke-width="1"/>
+      <text x="175" y="22" class="label-ar" font-weight="700" fill="#f87171">الكمية المتجهة (Vector):</text>
+      <text x="175" y="42" class="label-ar" font-size="11" fill="#cbd5e1">مقدار واتجاه ووحدة قياس</text>
+      <text x="175" y="60" class="label-ar" font-size="11" fill="#94a3b8">أمثلة: الإزاحة (d⃗)، العجلة (a⃗)</text>
+      <text x="175" y="74" class="label-ar" font-size="11" fill="#94a3b8">القوة (F⃗)، السرعة المتجهة</text>
+    </g>
+  </g>
+</svg>

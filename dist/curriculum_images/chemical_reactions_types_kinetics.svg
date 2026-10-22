@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="50%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#0d1b3a"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14213d" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0b1326" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#192a48" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0c162d" stop-opacity="0.95"/>
+    </linearGradient>
+    
+    <!-- Accent Gradients -->
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="50%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+
+    <linearGradient id="redoxGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <linearGradient id="copperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-text { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 800; fill: #f8fafc; }
+    .subtitle-text { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 600; fill: #94a3b8; }
+    .card-title { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 17px; }
+    .body-ar { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-size: 13.5px; fill: #cbd5e1; }
+    .chem-eq { font-family: 'Consolas', 'Courier New', monospace; font-weight: bold; font-size: 13.5px; fill: #38bdf8; }
+    .badge-text { font-family: 'Cairo', 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 12px; }
+    .highlight { font-weight: bold; fill: #fbbf24; }
+  </style>
+
+  <!-- Deep Background -->
+  <rect width="980" height="640" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- Top Header Banner -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="900" height="68" rx="14" fill="#0f1f3d" stroke="#1e3a8a" stroke-width="1.5" filter="url(#softShadow)"/>
+    <rect x="888" y="0" width="12" height="68" rx="6" fill="#3b82f6"/>
+    
+    <text x="860" y="32" class="title-text" font-size="22" text-anchor="end">مخطط التفاعلات الكيميائية وسرعة التفاعل — علوم الصف الثالث الإعدادي</text>
+    <text x="860" y="54" class="subtitle-text" font-size="13" text-anchor="end">تصنيف التفاعلات: الانحلال الحراري، الإحلال، المفهوم الإلكتروني للأكسدة والاختزال، وعوامل سرعة التفاعل</text>
+    
+    <rect x="25" y="18" width="130" height="32" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+    <text x="90" y="39" class="badge-text" fill="#60a5fa" text-anchor="middle">منهج وزارة التعليم</text>
+  </g>
+
+  <!-- 4 Primary Sections Grid -->
+
+  <!-- Panel 1: تفاعلات الانحلال الحراري (Thermal Decomposition) -->
+  <g transform="translate(500, 108)" filter="url(#softShadow)">
+    <rect width="440" height="248" rx="14" fill="url(#cardGrad1)" stroke="#f97316" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 426 0 Q 440 0 440 14 L 440 38 L 0 38 Z" fill="#9a3412" fill-opacity="0.35"/>
+    
+    <!-- Title -->
+    <circle cx="414" cy="19" r="9" fill="#f97316"/>
+    <text x="414" y="24" class="title-text" font-size="12" fill="#fff" text-anchor="middle">1</text>
+    <text x="395" y="25" class="card-title" fill="#fdba74" text-anchor="end">تفاعلات الانحلال الحراري (Thermal Decomposition)</text>
+
+    <!-- Content Row 1: Mercury Oxide -->
+    <g transform="translate(20, 48)">
+      <rect width="400" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="382" cy="21" r="5" fill="#ef4444"/>
+      <text x="370" y="18" class="body-ar" font-weight="700">انحلال أكسيد الزئبق الأحمر:</text>
+      <text x="370" y="34" class="body-ar" font-size="11.5" fill="#94a3b8">يتكون زئبق فضي ويتصاعد غاز الأكسجين (يزيد توهج شظية)</text>
+      <text x="18" y="27" class="chem-eq" fill="#f87171">2HgO ⟹ 2Hg + O₂↑</text>
+    </g>
+
+    <!-- Content Row 2: Copper Carbonate -->
+    <g transform="translate(20, 96)">
+      <rect width="400" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="382" cy="21" r="5" fill="#10b981"/>
+      <text x="370" y="18" class="body-ar" font-weight="700">انحلال كربونات النحاس الخضراء:</text>
+      <text x="370" y="34" class="body-ar" font-size="11.5" fill="#94a3b8">يتكون أكسيد نحاس أسود ويتصاعد غاز CO₂ (يعكر ماء الجير)</text>
+      <text x="18" y="27" class="chem-eq" fill="#34d399">CuCO₃ ⟹ CuO + CO₂↑</text>
+    </g>
+
+    <!-- Content Row 3: Copper Sulfate & Hydroxide -->
+    <g transform="translate(20, 144)">
+      <rect width="400" height="42" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="382" cy="21" r="5" fill="#0ea5e9"/>
+      <text x="370" y="18" class="body-ar" font-weight="700">انحلال كبريتات وهيدروكسيد النحاس:</text>
+      <text x="370" y="34" class="body-ar" font-size="11.5" fill="#94a3b8">تنحل بالحرارة إلى أكسيد نحاس أسود وبخار ماء أو SO₃</text>
+      <text x="18" y="27" class="chem-eq" fill="#38bdf8">CuSO₄ ⟹ CuO + SO₃↑</text>
+    </g>
+
+    <!-- Content Row 4: Sodium Nitrate -->
+    <g transform="translate(20, 192)">
+      <rect width="400" height="44" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="382" cy="22" r="5" fill="#eab308"/>
+      <text x="370" y="20" class="body-ar" font-weight="700">انحلال نترات الصوديوم البيضاء:</text>
+      <text x="370" y="36" class="body-ar" font-size="11.5" fill="#94a3b8">تنحل إلى نيتريت صوديوم (أبيض مصفر) ويتصاعد غاز O₂</text>
+      <text x="18" y="28" class="chem-eq" fill="#facc15">2NaNO₃ ⟹ 2NaNO₂ + O₂↑</text>
+    </g>
+  </g>
+
+  <!-- Panel 2: تفاعلات الإحلال ومتسلسلة النشاط (Substitution Reactions) -->
+  <g transform="translate(40, 108)" filter="url(#softShadow)">
+    <rect width="440" height="248" rx="14" fill="url(#cardGrad2)" stroke="#3b82f6" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 426 0 Q 440 0 440 14 L 440 38 L 0 38 Z" fill="#1e3a8a" fill-opacity="0.35"/>
+    
+    <circle cx="414" cy="19" r="9" fill="#3b82f6"/>
+    <text x="414" y="24" class="title-text" font-size="12" fill="#fff" text-anchor="middle">2</text>
+    <text x="395" y="25" class="card-title" fill="#93c5fd" text-anchor="end">تفاعلات الإحلال (بسيط ومزدوج)</text>
+
+    <!-- Mini Chemical Activity Series Banner -->
+    <g transform="translate(20, 48)">
+      <rect width="400" height="34" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="388" y="22" class="body-ar" font-size="12" font-weight="700" fill="#fbbf24">متسلسلة النشاط:</text>
+      <text x="260" y="22" class="chem-eq" font-size="12" fill="#e2e8f0">K > Na > Ca > Mg > Al > Zn > Fe > (H) > Cu > Ag</text>
+      <text x="12" y="22" class="body-ar" font-size="11" fill="#f87171">الأكثر نشاطاً ⟵ الأقل</text>
+    </g>
+
+    <!-- Sub 1: Single Replacement -->
+    <g transform="translate(20, 90)">
+      <rect width="400" height="68" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <rect x="310" y="8" width="80" height="20" rx="4" fill="#1e3a8a"/>
+      <text x="350" y="22" class="badge-text" fill="#bfdbfe" text-anchor="middle">إحلال بسيط</text>
+      <text x="295" y="23" class="body-ar" font-size="12" fill="#cbd5e1">يحل المغنسيوم محل النحاس في كبريتات النحاس الزرقاء</text>
+      <text x="20" y="52" class="chem-eq" fill="#60a5fa">Mg + CuSO₄ ⟹ MgSO₄ + Cu↓ <tspan fill="#f87171">(راسب أحمر)</tspan></text>
+    </g>
+
+    <!-- Sub 2: Double Replacement -->
+    <g transform="translate(20, 166)">
+      <rect width="400" height="70" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <rect x="310" y="8" width="80" height="20" rx="4" fill="#065f46"/>
+      <text x="350" y="22" class="badge-text" fill="#a7f3d0" text-anchor="middle">إحلال مزدوج</text>
+      <text x="295" y="23" class="body-ar" font-size="12" fill="#cbd5e1">1) تعادل: حمض + قلوي ⟹ ملح + ماء</text>
+      <text x="20" y="44" class="chem-eq" fill="#34d399">NaOH + HCl ⟹ NaCl + H₂O</text>
+      <text x="20" y="62" class="chem-eq" fill="#38bdf8">NaCl + AgNO₃ ⟹ NaNO₃ + AgCl↓ <tspan fill="#e2e8f0">(راسب أبيض)</tspan></text>
+    </g>
+  </g>
+
+  <!-- Panel 3: الأكسدة والاختزال بالمفهوم الإلكتروني الحديث -->
+  <g transform="translate(500, 370)" filter="url(#softShadow)">
+    <rect width="440" height="244" rx="14" fill="url(#cardGrad1)" stroke="#8b5cf6" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 426 0 Q 440 0 440 14 L 440 38 L 0 38 Z" fill="#5b21b6" fill-opacity="0.35"/>
+    
+    <circle cx="414" cy="19" r="9" fill="#8b5cf6"/>
+    <text x="414" y="24" class="title-text" font-size="12" fill="#fff" text-anchor="middle">3</text>
+    <text x="395" y="25" class="card-title" fill="#c4b5fd" text-anchor="end">الأكسدة والاختزال (المفهوم الإلكتروني الحديث)</text>
+
+    <!-- Overall Reaction Equation -->
+    <g transform="translate(20, 48)">
+      <rect width="400" height="38" rx="8" fill="#1e1b4b" stroke="#4c1d95" stroke-width="1"/>
+      <text x="385" y="24" class="body-ar" font-weight="700" fill="#a78bfa">تفاعل الصوديوم والكلور:</text>
+      <text x="18" y="25" class="chem-eq" font-size="14.5" fill="#f43f5e">2Na + Cl₂ ⟹ 2NaCl (2Na⁺ + 2Cl⁻)</text>
+    </g>
+
+    <!-- Oxidation Box -->
+    <g transform="translate(225, 96)">
+      <rect width="195" height="88" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1"/>
+      <rect x="100" y="8" width="85" height="20" rx="4" fill="#991b1b"/>
+      <text x="142" y="22" class="badge-text" fill="#fecaca" text-anchor="middle">عملية الأكسدة</text>
+      <text x="185" y="44" class="body-ar" font-size="12" fill="#f87171">• فقد إلكترونات (e⁻)</text>
+      <text x="185" y="62" class="body-ar" font-size="11.5" fill="#cbd5e1">الصوديوم: <tspan fill="#facc15" font-weight="700">عامل مختزل</tspan></text>
+      <text x="12" y="80" class="chem-eq" font-size="12" fill="#fca5a5">Na ⟹ Na⁺ + e⁻</text>
+    </g>
+
+    <!-- Reduction Box -->
+    <g transform="translate(20, 96)">
+      <rect width="195" height="88" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1"/>
+      <rect x="100" y="8" width="85" height="20" rx="4" fill="#1e40af"/>
+      <text x="142" y="22" class="badge-text" fill="#bfdbfe" text-anchor="middle">عملية الاختزال</text>
+      <text x="185" y="44" class="body-ar" font-size="12" fill="#60a5fa">• اكتساب إلكترونات (e⁻)</text>
+      <text x="185" y="62" class="body-ar" font-size="11.5" fill="#cbd5e1">الكلور: <tspan fill="#facc15" font-weight="700">عامل مؤكسد</tspan></text>
+      <text x="12" y="80" class="chem-eq" font-size="12" fill="#93c5fd">Cl + e⁻ ⟹ Cl⁻</text>
+    </g>
+
+    <!-- Golden Rule Footer -->
+    <g transform="translate(20, 192)">
+      <rect width="400" height="38" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="388" y="24" class="body-ar" font-size="12" font-weight="700" fill="#fbbf24">القاعدة الذهبية:</text>
+      <text x="300" y="24" class="body-ar" font-size="12" fill="#e2e8f0">"العامل عكس العملية" — الأكسدة والاختزال عمليتان متلازمتان متزامنتان</text>
+    </g>
+  </g>
+
+  <!-- Panel 4: العوامل المؤثرة في سرعة التفاعل الكيميائي -->
+  <g transform="translate(40, 370)" filter="url(#softShadow)">
+    <rect width="440" height="244" rx="14" fill="url(#cardGrad2)" stroke="#10b981" stroke-width="1.5"/>
+    <path d="M 0 14 Q 0 0 14 0 L 426 0 Q 440 0 440 14 L 440 38 L 0 38 Z" fill="#065f46" fill-opacity="0.35"/>
+    
+    <circle cx="414" cy="19" r="9" fill="#10b981"/>
+    <text x="414" y="24" class="title-text" font-size="12" fill="#fff" text-anchor="middle">4</text>
+    <text x="395" y="25" class="card-title" fill="#a7f3d0" text-anchor="end">العوامل الأربعة المؤثرة في سرعة التفاعل</text>
+
+    <!-- 4 Factor Grid -->
+    <!-- Factor 1: مساحة السطح -->
+    <g transform="translate(225, 48)">
+      <rect width="195" height="85" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="178" cy="18" r="4" fill="#34d399"/>
+      <text x="168" y="22" class="body-ar" font-weight="700" fill="#34d399">1. مساحة السطح المعرض</text>
+      <text x="185" y="44" class="body-ar" font-size="11.5" fill="#cbd5e1">زيادة التجزئة تزيد التصادمات:</text>
+      <text x="185" y="62" class="body-ar" font-size="11" fill="#94a3b8">برادة الحديد أسرع من قطعة الحديد</text>
+      <text x="185" y="78" class="chem-eq" font-size="11" fill="#facc15">Fe (filings) > Fe (block)</text>
+    </g>
+
+    <!-- Factor 2: تركيز المتفاعلات -->
+    <g transform="translate(20, 48)">
+      <rect width="195" height="85" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="178" cy="18" r="4" fill="#38bdf8"/>
+      <text x="168" y="22" class="body-ar" font-weight="700" fill="#38bdf8">2. تركيز المتفاعلات</text>
+      <text x="185" y="44" class="body-ar" font-size="11.5" fill="#cbd5e1">زيادة التركيز تزيد الجزيئات:</text>
+      <text x="185" y="62" class="body-ar" font-size="11" fill="#94a3b8">احتراق سلك التنظيف في الأكسجين النقي</text>
+      <text x="185" y="78" class="body-ar" font-size="11" fill="#67e8f9">أسرع من احتراقه في الهواء الجوي</text>
+    </g>
+
+    <!-- Factor 3: درجة الحرارة -->
+    <g transform="translate(225, 142)">
+      <rect width="195" height="88" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="178" cy="18" r="4" fill="#fb923c"/>
+      <text x="168" y="22" class="body-ar" font-weight="700" fill="#fb923c">3. درجة الحرارة</text>
+      <text x="185" y="44" class="body-ar" font-size="11.5" fill="#cbd5e1">الحرارة تزيد سرعة وطاقة الحركة:</text>
+      <text x="185" y="62" class="body-ar" font-size="11" fill="#94a3b8">فوران قرص الفوار في الماء الساخن</text>
+      <text x="185" y="80" class="body-ar" font-size="11" fill="#fde047">أسرع بكثير من الماء البارد</text>
+    </g>
+
+    <!-- Factor 4: العوامل الحفازة والإنزيمات -->
+    <g transform="translate(20, 142)">
+      <rect width="195" height="88" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <circle cx="178" cy="18" r="4" fill="#c084fc"/>
+      <text x="168" y="22" class="body-ar" font-weight="700" fill="#c084fc">4. الحفازات والإنزيمات</text>
+      <text x="185" y="44" class="body-ar" font-size="11.5" fill="#cbd5e1">تقلل طاقة التنشيط وتسرع التفاعل:</text>
+      <text x="185" y="62" class="body-ar" font-size="11" fill="#94a3b8">• حفاز: ثاني أكسيد المنجنيز MnO₂</text>
+      <text x="185" y="80" class="body-ar" font-size="11" fill="#e9d5ff">• إنزيم الأوكسيديز (قطعة البطاطا)</text>
+    </g>
+  </g>
+</svg>
