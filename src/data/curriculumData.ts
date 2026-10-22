@@ -162,7 +162,7 @@ import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
 import { HIGH_COMP_G12_LECTURES } from './highComp12CurriculumData';
 import { MIDDLE_SCIENCE_G8_LECTURES } from './middleScience8CurriculumData';
 import { MIDDLE_SCIENCE_G9_LECTURES } from './middleScience9CurriculumData';
-import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES, SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES, SUDAN_PRIMARY_HISTORY_G3_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES, getSudanCurriculum } from './sudanCurriculumData';
+import { SUDAN_MIDDLE_SCIENCE_G9_LECTURES, SUDAN_PRIMARY_SCIENCE_G6_LECTURES, SUDAN_PRIMARY_GEOGRAPHY_G3_LECTURES, SUDAN_PRIMARY_HISTORY_G3_LECTURES, SUDAN_HIGH_GEOGRAPHY_G10_LECTURES, SUDAN_HIGH_HISTORY_G10_LECTURES, SUDAN_HIGH_PHYSICS_G10_LECTURES, getSudanCurriculum } from './sudanCurriculumData';
 import {
   getSudanGrade12Curriculum,
   getSudanGrade12Subjects
@@ -245,6 +245,7 @@ export {
   SUDAN_PRIMARY_SCIENCE_G6_LECTURES,
   SUDAN_HIGH_GEOGRAPHY_G10_LECTURES,
   SUDAN_HIGH_HISTORY_G10_LECTURES,
+  SUDAN_HIGH_PHYSICS_G10_LECTURES,
   MIDDLE_MATH_LECTURES,
   MIDDLE_MATH_G8_LECTURES,
   MIDDLE_MATH_G9_LECTURES,
@@ -4841,7 +4842,7 @@ export function isSudanPublicGrade10SubjectAvailable(
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G10' &&
-    (subject === 'CHEMISTRY' || subject === 'GEOGRAPHY' || subject === 'HISTORY');
+    (subject === 'CHEMISTRY' || subject === 'GEOGRAPHY' || subject === 'HISTORY' || subject === 'PHYSICS');
 }
 
 export function isSudanPublicGrade11SubjectAvailable(
@@ -5471,6 +5472,9 @@ export function getCurriculumForSubject(
     return GENERAL_SCIENCE_LECTURES;
   }
   if (subject === 'PHYSICS') {
+    if (country === 'SD' && gradeLevel === 'G10') {
+      return SUDAN_HIGH_PHYSICS_G10_LECTURES;
+    }
     if (gradeLevel === 'G10') {
       return HIGH_PHYSICS_G10_LECTURES;
     }

@@ -51,6 +51,7 @@ import { SUDAN_PRIMARY_ART_G5_LECTURES } from './sudanPrimaryArt5CurriculumData'
 import { SUDAN_HIGH_GEOGRAPHY_G10_LECTURES } from './sudanHighGeography10CurriculumData';
 import { SUDAN_HIGH_HISTORY_G10_LECTURES } from './sudanHighHistory10CurriculumData';
 import { SUDAN_HIGH_CHEMISTRY_G10_LECTURES } from './sudanHighChemistry10CurriculumData';
+import { SUDAN_HIGH_PHYSICS_G10_LECTURES } from './sudanHighPhysics10CurriculumData';
 
 export {
   SUDAN_PRIMARY_ARABIC_G1_LECTURES,
@@ -104,7 +105,8 @@ export {
   SUDAN_MIDDLE_G9_LECTURES,
   SUDAN_HIGH_GEOGRAPHY_G10_LECTURES,
   SUDAN_HIGH_HISTORY_G10_LECTURES,
-  SUDAN_HIGH_CHEMISTRY_G10_LECTURES
+  SUDAN_HIGH_CHEMISTRY_G10_LECTURES,
+  SUDAN_HIGH_PHYSICS_G10_LECTURES
 };
 
 // ============================================================================
@@ -921,6 +923,9 @@ export function getSudanCurriculum(subject: string, gradeLevel?: string): Lectur
   }
   if (subject === 'ARABIC_LIT' && (gradeLevel === 'G12' || !gradeLevel)) {
     return SUDAN_HIGH_ARABIC_LIT_G12_LECTURES;
+  }
+  if (subject === 'PHYSICS' && gradeLevel === 'G10') {
+    return SUDAN_HIGH_PHYSICS_G10_LECTURES;
   }
   if (subject === 'PHYSICS' && (gradeLevel === 'G12' || !gradeLevel)) {
     return SUDAN_HIGH_PHYSICS_G12_LECTURES;

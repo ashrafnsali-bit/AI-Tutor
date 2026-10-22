@@ -443,6 +443,15 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
     if (selectedCountry === 'SD' && selectedGrade === 'G10') {
       return [
         {
+          id: 'PHYSICS' as const,
+          nameAr: 'الفيزياء',
+          nameEn: 'Physics',
+          descAr: 'المادة والحركة، معادلات الحركة، قوانين نيوتن، خواص المادة، وقياس الحرارة',
+          descEn: 'Matter & motion, motion equations, Newton’s laws, properties of matter, and thermometry',
+          icon: <Atom size={28} />,
+          color: '#0284c7'
+        },
+        {
           id: 'CHEMISTRY' as const,
           nameAr: 'الكيمياء',
           nameEn: 'Chemistry',

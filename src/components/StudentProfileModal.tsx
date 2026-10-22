@@ -1338,6 +1338,16 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 ) : formData.country === 'SD' &&
                   formData.gradeLevel === 'G10' ? (
                   <optgroup label={formData.language === 'en' ? 'Sudan Secondary 1 (Grade 10) courses' : 'مقررات الصف الأول الثانوي السوداني'}>
+                    <option value="PHYSICS">
+                      {getNationalSubjectLabel(
+                        'PHYSICS',
+                        formData.country,
+                        formData.gradeLevel,
+                        formData.language,
+                        formData.educationType,
+                        formData.educationTrack
+                      )}
+                    </option>
                     <option value="CHEMISTRY">
                       {getNationalSubjectLabel(
                         'CHEMISTRY',
