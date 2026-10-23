@@ -2432,15 +2432,17 @@ export function getNationalSubjectLabel(
   if (country === 'EG' && _gradeLevel === 'G12') {
     const egyptG12Labels: Partial<Record<Subject, [string, string]>> = {
       ARABIC_LIT: ['Arabic Language & Literature', 'اللغة العربية وآدابها'],
+      ARABIC_LANG: ['Arabic Language & Literature', 'اللغة العربية وآدابها'],
       ENGLISH: ['English (First Language)', 'اللغة الإنجليزية (لغة أولى)'],
       FRENCH: ['French (Second Language)', 'اللغة الفرنسية (لغة ثانية)'],
       GERMAN: ['German (Second Language)', 'اللغة الألمانية (لغة ثانية)'],
       ITALIAN: ['Italian (Second Language)', 'اللغة الإيطالية (لغة ثانية)'],
       ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية'],
+      NATIONAL_EDUCATION: ['National Education & Citizenship', 'التربية الوطنية والمواطنة'],
       PHYSICS: ['Physics (Scientific Section)', 'الفيزياء (الشعبة العلمية)'],
       CHEMISTRY: ['Chemistry (Scientific Section)', 'الكيمياء (الشعبة العلمية)'],
       BIOLOGY: ['Biology (Scientific Section: Biology)', 'الأحياء (شعبة علمي علوم)'],
-      MATH: track === 'SHARIA_HUMANITIES' || track === 'SCIENCE_BIO'
+      MATH: track === 'SHARIA_HUMANITIES' || track === 'SCIENCE_BIO' || track === 'HEALTH_LIFE'
         ? ['Statistics & Probability', 'الإحصاء والاحتمال']
         : ['Pure Mathematics (Calculus, Algebra & Solid Geometry) — Math Section', 'الرياضيات البحتة (تفاضل وتكامل وجبر وهندسة فراغية) — شعبة علمي رياضة'],
       COMPUTER_SCIENCE: ['Applied Mathematics (Statics & Dynamics) — Math Section', 'الرياضيات التطبيقية (الاستاتيكا والديناميكا) — شعبة علمي رياضة'],

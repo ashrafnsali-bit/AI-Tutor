@@ -162,6 +162,10 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       selectedCountry === 'EG' &&
       selectedGrade === 'G11' &&
       !isEgyptG11SubjectAvailable(selectedSubject, selectedTrack, educationType);
+    const invalidEgyptG12Subject =
+      selectedCountry === 'EG' &&
+      selectedGrade === 'G12' &&
+      !isEgyptG12SubjectAvailable(selectedSubject, selectedTrack, educationType);
     if (
       invalidSudanMiddleSubject ||
       invalidSudanGrade10Subject ||
@@ -169,6 +173,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       invalidSudanGrade12Subject ||
       invalidEgyptG10Subject ||
       invalidEgyptG11Subject ||
+      invalidEgyptG12Subject ||
       (selectedSubject === 'PHYSICS' &&
         selectedCountry === 'SA' &&
         selectedGrade === 'G11' &&
@@ -257,6 +262,8 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           ? getSudanPublicGrade12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
         : selectedCountry === 'EG' && selectedGrade === 'G11'
           ? getEgyptG11Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+        : selectedCountry === 'EG' && selectedGrade === 'G12'
+          ? getEgyptG12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
         : ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade)
         ? 'PRIMARY_ARABIC'
         : isMiddle ? 'ARABIC_LANG' : 'ARABIC_LIT');
@@ -383,6 +390,54 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
   };
 
   const getAvailableSubjects = (): { id: Subject; nameAr: string; nameEn: string; descAr: string; descEn: string; icon: React.ReactNode; color: string }[] => {
+    if (selectedCountry === 'EG' && selectedGrade === 'G12') {
+      const isBio = selectedTrack === 'SCIENCE_BIO';
+      const isMath = selectedTrack === 'SCIENCE_MATH';
+      const isHumanities = selectedTrack === 'SHARIA_HUMANITIES';
+      const commonCourses = [
+        { id: 'ARABIC_LIT' as const, nameAr: 'اللغة العربية (الأدب والنصوص والنحو والبلاغة)', nameEn: 'Arabic Language & Literature', descAr: 'الأدب والنصوص الشعرية والنثرية وقواعد النحو والبلاغة والتعبير', descEn: 'Literature, poetry, prose texts, advanced grammar, and rhetoric', icon: <BookMarked size={28} />, color: '#34d399' },
+        { id: 'ENGLISH' as const, nameAr: 'اللغة الإنجليزية (لغة أولى)', nameEn: 'English (First Language)', descAr: 'كتاب الوزارة المعتمد للثانوية العامة والقصة المقررة ومهارات الترجمة', descEn: 'Ministry textbook, literature, and advanced translation skills', icon: <BookOpen size={28} />, color: '#a78bfa' },
+        { id: 'FRENCH' as const, nameAr: 'اللغة الفرنسية (لغة ثانية)', nameEn: 'French (Second Language)', descAr: 'منهج اللغة الفرنسية المعتمد للثانوية العامة', descEn: 'Accredited French secondary curriculum', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        { id: 'GERMAN' as const, nameAr: 'اللغة الألمانية (لغة ثانية)', nameEn: 'German (Second Language)', descAr: 'منهج اللغة الألمانية المعتمد للثانوية العامة', descEn: 'Accredited German secondary curriculum', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        { id: 'ITALIAN' as const, nameAr: 'اللغة الإيطالية (لغة ثانية)', nameEn: 'Italian (Second Language)', descAr: 'منهج اللغة الإيطالية المعتمد للثانوية العامة', descEn: 'Accredited Italian secondary curriculum', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        { id: 'ISLAMIC_STUDIES' as const, nameAr: 'التربية الدينية الإسلامية — الصف الثالث الثانوي', nameEn: 'Islamic Studies — Secondary 3', descAr: 'منهاج التربية الإسلامية المعتمد للثانوية العامة', descEn: 'Official Thanawya Amma Islamic religious education', icon: <Award size={28} />, color: '#fbbf24' },
+        { id: 'NATIONAL_EDUCATION' as const, nameAr: 'التربية الوطنية — الدستور وحقوق الإنسان والمواطنة', nameEn: 'National Education & Citizenship — Secondary 3', descAr: 'القانون والدستور والديمقراطية والأحزاب السياسية والمشاركة الانتخابية', descEn: 'Constitutional law, democratic institutions, political parties, and elections', icon: <ShieldCheck size={28} />, color: '#e11d48' }
+      ];
+      if (isBio) {
+        return [
+          ...commonCourses,
+          { id: 'PHYSICS' as const, nameAr: 'الفيزياء — شعبة علمي علوم', nameEn: 'Physics — Biological Sciences Track', descAr: 'الكهربية والتيار المتردد والمغناطيسية والفيزياء الحديثة وازدواجية الموجة والجسيم', descEn: 'Electromagnetism, AC circuits, and modern quantum physics', icon: <Atom size={28} />, color: '#38bdf8' },
+          { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء — شعبة علمي علوم', nameEn: 'Chemistry — Biological Sciences Track', descAr: 'العناصر الانتقالية والتحليل الكيميائي والاتزان والكهربية والكيمياء العضوية', descEn: 'Transition elements, equilibrium, electrochemistry, and organic chemistry', icon: <TestTube2 size={28} />, color: '#ec4899' },
+          { id: 'BIOLOGY' as const, nameAr: 'الأحياء — شعبة علمي علوم', nameEn: 'Biology — Biological Sciences Track', descAr: 'الدعامة والحركة والتنسيق الهرموني والتكاثر والمناعة والبيولوجيا الجزيئية (DNA/RNA)', descEn: 'Support, endocrine system, reproduction, immunity, and molecular biology (DNA/RNA)', icon: <Dna size={28} />, color: '#a3e635' },
+          { id: 'MATH' as const, nameAr: 'الإحصاء والاحتمال — شعبة علمي علوم', nameEn: 'Statistics & Probability — Biological Sciences Track', descAr: 'الارتباط والانحدار والمتغيرات العشوائية والتوزيع الطبيعي المعياري', descEn: 'Correlation, regression, random variables, and normal distribution', icon: <Calculator size={28} />, color: '#60a5fa' }
+        ];
+      }
+      if (isMath) {
+        return [
+          ...commonCourses,
+          { id: 'PHYSICS' as const, nameAr: 'الفيزياء — شعبة علمي رياضة', nameEn: 'Physics — Mathematical Sciences Track', descAr: 'الكهربية والتيار المتردد والمغناطيسية والفيزياء الحديثة', descEn: 'Electromagnetism, AC circuits, and modern physics', icon: <Atom size={28} />, color: '#38bdf8' },
+          { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء — شعبة علمي رياضة', nameEn: 'Chemistry — Mathematical Sciences Track', descAr: 'العناصر الانتقالية والاتزان والكيمياء الكهربية والعضوية', descEn: 'Transition metals, equilibrium, electrochemistry, and organic chemistry', icon: <TestTube2 size={28} />, color: '#ec4899' },
+          { id: 'MATH' as const, nameAr: 'الرياضيات البحتة — شعبة علمي رياضة', nameEn: 'Pure Mathematics (Calculus, Algebra & Solid Geometry)', descAr: 'تفاضل وتكامل الدوال الأسية واللوغاريتمية، الجبر التباديل والتوافيق، ونظرية ذات الحدين والهندسة الفراغية', descEn: 'Advanced calculus, permutations/combinations, binomial theorem, and 3D geometry', icon: <Calculator size={28} />, color: '#60a5fa' },
+          { id: 'COMPUTER_SCIENCE' as const, nameAr: 'الرياضيات التطبيقية (الاستاتيكا والديناميكا) — علمي رياضة', nameEn: 'Applied Mathematics (Statics & Dynamics)', descAr: 'الاحتكاك وعزوم القوى والاتزان العام والمركز الثقلي وقوانين نيوتن وحركة المقذوفات والشغل والطاقة', descEn: 'Statics friction and moments, Newton laws of motion, momentum, work, and energy', icon: <Code2 size={28} />, color: '#22c55e' }
+        ];
+      }
+      if (isHumanities) {
+        return [
+          ...commonCourses,
+          { id: 'HISTORY' as const, nameAr: 'التاريخ الحديث والمعاصر — الشعبة الأدبية', nameEn: 'Modern & Contemporary History — Literary Track', descAr: 'تاريخ مصر والعرب الحديث من الحملة الفرنسية وثورة 1919 حتى حرب أكتوبر 1973', descEn: 'Modern Arab and Egyptian history from French expedition to 1973 October War', icon: <BookOpen size={28} />, color: '#f59e0b' },
+          { id: 'GEOGRAPHY' as const, nameAr: 'الجغرافيا السياسية — الشعبة الأدبية', nameEn: 'Political Geography — Literary Track', descAr: 'الدولة والموقع والحدود السياسية والأحلاف العسكرية والتكتلات الاقتصادية والنظام العالمي الجديد', descEn: 'Nation-states, political boundaries, military pacts, economic blocs, and global order', icon: <Globe2 size={28} />, color: '#10b981' },
+          { id: 'PHILOSOPHY' as const, nameAr: 'الفلسفة والمنطق — الشعبة الأدبية', nameEn: 'Philosophy and Logic — Literary Track', descAr: 'الفلسفة البيئية والبيوتيقا وأخلاقيات المهنة، ومناهج الاستدلال الاستقرائي والمنطق الرمزي', descEn: 'Environmental ethics, bioethics, professional ethics, inductive logic, and symbolic reasoning', icon: <Brain size={28} />, color: '#c084fc' },
+          { id: 'MATH' as const, nameAr: 'الإحصاء والاحتمال — الشعبة الأدبية', nameEn: 'Statistics & Probability — Literary Track', descAr: 'الارتباط الخطي والانحدار والاحتمال الشرطي والمتغيرات العشوائية والتوزيع الطبيعي', descEn: 'Linear correlation, regression, conditional probability, and normal distribution', icon: <Calculator size={28} />, color: '#38bdf8' }
+        ];
+      }
+      return [
+        ...commonCourses,
+        { id: 'PHYSICS' as const, nameAr: 'الفيزياء — الثانوية العامة', nameEn: 'Physics — Thanawya Amma', descAr: 'الكهربية والمغناطيسية والفيزياء الحديثة', descEn: 'Electromagnetism and modern physics', icon: <Atom size={28} />, color: '#38bdf8' },
+        { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء — الثانوية العامة', nameEn: 'Chemistry — Thanawya Amma', descAr: 'العناصر الانتقالية والاتزان والكيمياء العضوية', descEn: 'Transition metals and organic chemistry', icon: <TestTube2 size={28} />, color: '#ec4899' },
+        { id: 'BIOLOGY' as const, nameAr: 'الأحياء — الثانوية العامة', nameEn: 'Biology — Thanawya Amma', descAr: 'الدعامة والحركة والتكاثر والمناعة والـ DNA', descEn: 'Physiology, immunity, and genetics', icon: <Dna size={28} />, color: '#a3e635' },
+        { id: 'MATH' as const, nameAr: 'الرياضيات — الثانوية العامة', nameEn: 'Mathematics — Thanawya Amma', descAr: 'التفاضل والتكامل والإحصاء', descEn: 'Calculus, algebra, and statistics', icon: <Calculator size={28} />, color: '#60a5fa' }
+      ];
+    }
     if (selectedCountry === 'EG' && selectedGrade === 'G11') {
       const isHumanities = selectedTrack === 'SHARIA_HUMANITIES';
       const commonCourses = [
@@ -1066,7 +1121,13 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       specialization: (isPrimary || isMiddle) 
         ? 'GENERAL' 
         : getSpecializationForEducationTrack(selectedTrack),
-      subject: (selectedSubject === 'PHYSICS' &&
+      subject: (selectedCountry === 'EG' && selectedGrade === 'G12' &&
+        !isEgyptG12SubjectAvailable(selectedSubject, selectedTrack, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))
+        ? getEgyptG12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+        : (selectedCountry === 'EG' && selectedGrade === 'G11' &&
+          !isEgyptG11SubjectAvailable(selectedSubject, selectedTrack, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))
+        ? getEgyptG11Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+        : (selectedSubject === 'PHYSICS' &&
         !isSaudiPublicG11PhysicsAvailable(
           selectedCountry,
           selectedGrade,

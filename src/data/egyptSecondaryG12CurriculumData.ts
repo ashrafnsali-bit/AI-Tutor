@@ -36,7 +36,8 @@ const COMMON_G12_SUBJECTS: readonly Subject[] = [
   'FRENCH',
   'GERMAN',
   'ITALIAN',
-  'ISLAMIC_STUDIES'
+  'ISLAMIC_STUDIES',
+  'NATIONAL_EDUCATION'
 ];
 
 // شعبة علمي علوم
@@ -85,16 +86,17 @@ export function isEgyptG12SubjectAvailable(
   educationType: EducationType = 'PUBLIC'
 ): boolean {
   if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
+  const normalizedSubject: Subject = subject === 'ARABIC_LANG' ? 'ARABIC_LIT' : subject;
   if (track === 'SCIENCE_BIO' || track === 'HEALTH_LIFE') {
-    return SCIENCE_BIO_G12_SUBJECTS.includes(subject);
+    return SCIENCE_BIO_G12_SUBJECTS.includes(normalizedSubject);
   }
   if (track === 'SCIENCE_MATH' || track === 'CS_ENGINEERING') {
-    return SCIENCE_MATH_G12_SUBJECTS.includes(subject);
+    return SCIENCE_MATH_G12_SUBJECTS.includes(normalizedSubject);
   }
   if (track === 'SHARIA_HUMANITIES') {
-    return LITERARY_G12_SUBJECTS.includes(subject);
+    return LITERARY_G12_SUBJECTS.includes(normalizedSubject);
   }
-  return ALL_G12_SUBJECTS.includes(subject);
+  return ALL_G12_SUBJECTS.includes(normalizedSubject);
 }
 
 export function getEgyptG12Subjects(track: EducationTrack = 'SCIENCE_BIO'): Subject[] {
@@ -107,7 +109,7 @@ export function getEgyptG12Subjects(track: EducationTrack = 'SCIENCE_BIO'): Subj
   if (track === 'SHARIA_HUMANITIES') {
     return [...LITERARY_G12_SUBJECTS];
   }
-  return [...SCIENCE_BIO_G12_SUBJECTS];
+  return [...ALL_G12_SUBJECTS];
 }
 
 // ---------------------------------------------------------------------------
@@ -1608,6 +1610,148 @@ const islamicUnitsG12: UnitDefinition[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// 11. Italian Language G12 (اللغة الإيطالية كلغة أجنبية ثانية - الثانوية العامة)
+// ---------------------------------------------------------------------------
+const italianUnitsG12: UnitDefinition[] = [
+  {
+    unitTitleAr: 'الوحدة الأولى والثانية: اللغة الإيطالية للثانوية العامة',
+    unitTitleEn: 'Unit 1 & 2: Italian Language for Secondary 3 / Thanawya Amma',
+    lessons: [
+      {
+        titleAr: 'Comprensione e lessico: Il tempo libero, la musica e l’ambiente',
+        titleEn: 'Reading Comprehension & Lexicon: Leisure, Italian Music, and Ecology',
+        subtitleAr: 'استيعاب النصوص حول المهرجانات الموسيقية كسان ريمو، حماية البيئة وإعادة التدوير، والتعبير عن الرأي',
+        subtitleEn: 'Italian reading comprehension on musical festivals, ecological conservation, and cultural life',
+        focusAr: 'فهم النصوص الإيطالية المتخصصة واستخراج الأفكار الرئيسة والتعبير عن المشاريع الشخصية وحماية البيئة.',
+        focusEn: 'Analyze Italian authentic articles, discern arguments, and express hypotheses and viewpoints.',
+        activityAr: 'Leggi il testo e rispondi alle domande sul festival musicale di Sanremo e l’ecologia.',
+        activityEn: 'Read the text and answer comprehension questions on Italian cultural trends.',
+        questionAr: 'Scegli la risposta corretta: "Per proteggere l’ambiente, dobbiamo fare la raccolta _______."',
+        questionEn: 'Choose the correct word: "Per proteggere l’ambiente, dobbiamo fare la raccolta _______."',
+        optionsAr: ['differenziata', 'musicale', 'sportiva'],
+        optionsEn: ['differenziata', 'musicale', 'sportiva'],
+        correctIndex: 0,
+        vocabulary: [['l’ambiente', 'البيئة'], ['il festival', 'المهرجان'], ['la raccolta differenziata', 'إعادة التدوير / الفرز']]
+      },
+      {
+        titleAr: 'Grammatica: Il passato prossimo, l’imperfetto, e il futuro composto',
+        titleEn: 'Grammar: Passato Prossimo, Imperfetto, and Future Compound (Futuro Composto)',
+        subtitleAr: 'التمييز بين الماضي القريب والماضي المستمر، وقواعد المستقبل المركب بعد (quando, appena, dopo che)',
+        subtitleEn: 'Contrast passato prossimo with imperfetto, and construct compound future actions',
+        focusAr: 'التفريق الدقيق بين الأحداث المنتهية والسرد الوصفي في الماضي وتصريف أزمنة المستقبل المركب.',
+        focusEn: 'Master past narrative discourse and express sequential future anteriority in Italian.',
+        activityAr: 'Completa le frasi coniugando il verbo all’imperfetto o al passato prossimo.',
+        activityEn: 'Complete sentences selecting appropriate past indicative or compound future forms.',
+        questionAr: 'Completa: "Appena _______ i compiti, uscirò con gli amici."',
+        questionEn: 'Complete: "Appena _______ i compiti, uscirò con gli amici."',
+        optionsAr: ['avrò finito', 'finirò', 'finivo'],
+        optionsEn: ['avrò finito', 'finirò', 'finivo'],
+        correctIndex: 0,
+        vocabulary: [['il futuro composto', 'المستقبل المركب'], ['l’imperfetto', 'الماضي المستمر'], ['la regola', 'القاعدة']]
+      },
+      {
+        titleAr: 'I pronomi diretti, indiretti, e combinati (Me lo, te la, glielo)',
+        titleEn: 'Pronouns: Direct, Indirect and Combined Pronouns (Pronomi Combinati)',
+        subtitleAr: 'استخدام الضمائر المباشرة وغير المباشرة، وقواعد دمج الضمائر (mi + lo = me lo / gli + la = gliela)',
+        subtitleEn: 'Double pronouns synthesis, pronominal particles (ci / ne), and modal verb attachments',
+        focusAr: 'إتقان استبدال المفعول المباشر وغير المباشر بضمائر مدمجة لتسهيل التعبير السلس وتجنب التكرار.',
+        focusEn: 'Formulate fluent Italian dialogue employing combined pronouns and clitic pronoun placement.',
+        activityAr: 'Riscrivi la frase usando i pronomi combinati: "Spedisci la lettera a Marco? -> Sì, gliela spedisco."',
+        activityEn: 'Rewrite sentences combining indirect and direct pronouns.',
+        questionAr: 'Scegli la combinazione corretta: "Hai regalato il libro a Sara? — Sì, _______ ho regalato ieri."',
+        questionEn: 'Choose the correct combined pronoun: "Hai regalato il libro a Sara? — Sì, _______ ho regalato ieri."',
+        optionsAr: ['gliel’', 'me l’', 'te l’'],
+        optionsEn: ['gliel’', 'me l’', 'te l’'],
+        correctIndex: 0,
+        vocabulary: [['i pronomi combinati', 'الضمائر المدمجة'], ['il regalo', 'الهدية'], ['sostituire', 'يستبدل']]
+      }
+    ]
+  }
+];
+
+// ---------------------------------------------------------------------------
+// 12. National Education G12 (التربية الوطنية - الثانوية العامة المصرية)
+// ---------------------------------------------------------------------------
+const nationalEducationUnitsG12: UnitDefinition[] = [
+  {
+    unitTitleAr: 'الفصل الأول والثاني: القانون والدستور والديمقراطية',
+    unitTitleEn: 'Chapters 1 & 2: Law, Constitution and Democratic Systems',
+    lessons: [
+      {
+        titleAr: 'القانون والدستور: المفهوم، المصادر، والمحكمة الدستورية العليا',
+        titleEn: 'Law & Constitution: Concept, Sources, and the Supreme Constitutional Court',
+        subtitleAr: 'خصائص القاعدة القانونية، الفرق بين القانون والأخلاق، مراحل تعديل الدستور، ودور المحكمة الدستورية العليا في الرقابة القضائية',
+        subtitleEn: 'Legal norm characteristics, law vs morals, constitutional amendment stages, and Supreme Constitutional Court oversight',
+        focusAr: 'فهم مفهوم القانون والدستور وأهمية المحكمة الدستورية العليا في مصر كحارس للشرعية الدستورية وحماية الحقوق والحريات.',
+        focusEn: 'Analyze constitutional law frameworks and examine the Supreme Constitutional Court’s judicial review in Egypt.',
+        activityAr: 'صمم خريطة ذهنية لمصادر القانون (التشريع، العرف، مبادئ الشريعة الإسلامية، ومبادئ القانون الطبيعي والعدالة).',
+        activityEn: 'Create a concept map categorizing legal sources: legislation, customary law, Islamic jurisprudence, and natural justice.',
+        questionAr: 'ما الهيئة القضائية المستقلة القائمة بذاتها في مصر المختصة حصرياً بالرقابة على دستورية القوانين واللوائح؟',
+        questionEn: 'Which independent judicial body in Egypt possesses exclusive jurisdiction over constitutional review of laws?',
+        optionsAr: ['المحكمة الدستورية العليا', 'محكمة النقض', 'مجلس الدولة'],
+        optionsEn: ['Supreme Constitutional Court', 'Court of Cassation', 'State Council'],
+        correctIndex: 0,
+        vocabulary: [['الدستور', 'Constitution'], ['المحكمة الدستورية العليا', 'Supreme Constitutional Court'], ['الرقابة القضائية', 'Judicial Review']]
+      },
+      {
+        titleAr: 'الديمقراطية: النشأة، الخصائص، وأهميتها في بناء الدولة الحديثة',
+        titleEn: 'Democracy: Origins, Core Characteristics, and Modern State Building',
+        subtitleAr: 'تطور الديمقراطية عبر التاريخ (مصر القديمة، أثينا، الحضارة الإسلامية)، مقومات الديمقراطية، وتحديات التحول الديمقراطي',
+        subtitleEn: 'Historical evolution of democracy from ancient civilizations to Islamic shura, and constitutional democratic pillars',
+        focusAr: 'استيعاب الديمقراطية كقيمة إنسانية ونظام حكم يضمن المشاركة الشعبية وسيادة الشعب وحماية حقوق الأقليات.',
+        focusEn: 'Evaluate democracy as a governance framework securing popular sovereignty and constitutional equality.',
+        activityAr: 'ناقش في حلقة نقاشية العلاقة الوثيقة بين ترسيخ الممارسة الديمقراطية وتحقيق التنمية الاقتصادية الشاملة.',
+        activityEn: 'Discuss the reciprocal correlation between democratic stability and sustainable economic development.',
+        questionAr: 'أي من المقومات الآتية تُعد شرطاً جوهرياً لقيام نظام حكم ديمقراطي حقيقي؟',
+        questionEn: 'Which of the following represents an indispensable prerequisite for a genuine democratic system?',
+        optionsAr: ['التعددية السياسية وحرية التعبير والتداول السلمي للسلطة', 'احتكار الحزب الواحد للسلطة', 'تعطيل الاستحقاقات الانتخابية'],
+        optionsEn: ['Political pluralism, free speech, and peaceful transfer of power', 'Single-party monopoly', 'Suspending elections'],
+        correctIndex: 0,
+        vocabulary: [['الديمقراطية', 'Democracy'], ['التعددية السياسية', 'Political Pluralism'], ['المواطنة', 'Citizenship']]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الفصل الثالث والرابع: الأحزاب السياسية والمشاركة الانتخابية',
+    unitTitleEn: 'Chapters 3 & 4: Political Parties and Electoral Participation',
+    lessons: [
+      {
+        titleAr: 'الأحزاب السياسية: المفهوم، شروط التأسيس، والوظائف المجتمعية',
+        titleEn: 'Political Parties: Definition, Establishment Conditions, and Societal Functions',
+        subtitleAr: 'شروط تأسيس الأحزاب وفق القانون المصري، مبادئ الأحزاب السياسية، دورها في التوعية السياسية ودعم الديمقراطية',
+        subtitleEn: 'Legal conditions for establishing political parties under Egyptian law, core principles, and public mobilization roles',
+        focusAr: 'فهم دور الأحزاب السياسية كقناة رئيسة للمشاركة السياسية السلمية وتكوين الكوادر الوطنية والتعبير عن الإرادة الشعبية.',
+        focusEn: 'Examine political parties as institutional vehicles for civic engagement, peaceful governance, and public policy formulation.',
+        activityAr: 'حلل نص المادة الدستورية المصرية التي تحظر قيام الأحزاب السياسية على أساس ديني أو طائفي أو جغرافي.',
+        activityEn: 'Analyze constitutional provisions prohibiting political parties formed on religious, sectarian, or geographical discrimination.',
+        questionAr: 'من شروط تأسيس الحزب السياسي في القانون المصري ألا يتعارض برنامجه مع:',
+        questionEn: 'Under Egyptian law, an essential condition for party establishment is that its platform must not contradict:',
+        optionsAr: ['الدستور ومبادئ حماية الأمن القومي والنظام الديمقراطي', 'مصالح الشركات الخاصة', 'التقاليد الفردية'],
+        optionsEn: ['The Constitution, national security, and democratic principles', 'Private corporate interests', 'Individual customs'],
+        correctIndex: 0,
+        vocabulary: [['الحزب السياسي', 'Political Party'], ['العمل الحزبي', 'Party Politics'], ['التداول السلمي', 'Peaceful Transition']]
+      },
+      {
+        titleAr: 'المشاركة السياسية والانتخابات: مراحل العملية الانتخابية والواجب الوطني',
+        titleEn: 'Political Participation & Elections: Electoral Process Stages and Civic Duty',
+        subtitleAr: 'مراحل العملية الانتخابية (قيد الناخبين، الترشح، الدعاية، الاقتراع، الفرز)، دور الهيئة الوطنية للانتخابات والمجتمع المدني',
+        subtitleEn: 'Electoral cycle phases (voter registry, candidacy, campaigning, polling, tabulation), and the National Elections Authority',
+        focusAr: 'ترسيخ الإيمان بأن المشاركة في الاستحقاقات الانتخابية واجب وطني وحق دستوري يعزز مكانة الوطن واستقراره.',
+        focusEn: 'Internalize voter turnout as a paramount civic responsibility and sovereign democratic constitutional entitlement.',
+        activityAr: 'قم بإعداد محاكاة مدرسية لإجراء انتخابات طلابية توضح جميع مراحل العملية الانتخابية من القيد حتى إعلان النتيجة.',
+        activityEn: 'Organize a school mock election demonstrating the full electoral cycle from voter registration to result certification.',
+        questionAr: 'ما الجهة المستقلة المسؤولة دستورياً في مصر عن إدارة وتنظيم جميع الاستفتاءات والانتخابات الرئاسية والنيابية؟',
+        questionEn: 'Which constitutional independent body in Egypt is tasked with managing all referendums and national elections?',
+        optionsAr: ['الهيئة الوطنية للانتخابات', 'وزارة الداخلية', 'المجلس الأعلى للإعلام'],
+        optionsEn: ['National Elections Authority', 'Ministry of Interior', 'Supreme Media Council'],
+        correctIndex: 0,
+        vocabulary: [['المشاركة السياسية', 'Political Participation'], ['العملية الانتخابية', 'Electoral Process'], ['الهيئة الوطنية للانتخابات', 'National Elections Authority']]
+      }
+    ]
+  }
+];
+
+// ---------------------------------------------------------------------------
 // Main Curriculum Retrieval for Egypt Grade 12
 // ---------------------------------------------------------------------------
 export function getEgyptG12Curriculum(
@@ -1615,7 +1759,8 @@ export function getEgyptG12Curriculum(
   track: EducationTrack = 'GENERAL',
   educationType: EducationType = 'PUBLIC'
 ): Lecture[] {
-  if (!isEgyptG12SubjectAvailable(subject, track, educationType)) return [];
+  const normalizedSubject: Subject = subject === 'ARABIC_LANG' ? 'ARABIC_LIT' : subject;
+  if (!isEgyptG12SubjectAvailable(normalizedSubject, track, educationType)) return [];
 
   const isLangTrack = educationType === 'INTERNATIONAL';
   const gradeLevelNameAr = isLangTrack
@@ -1625,7 +1770,7 @@ export function getEgyptG12Curriculum(
     ? 'Secondary 3 / Grade 12 (Language Schools Track - English Medium)'
     : 'Secondary 3 / Grade 12 (Egyptian National Curriculum)';
 
-  switch (subject) {
+  switch (normalizedSubject) {
     case 'PHYSICS':
       return HIGH_PHYSICS_G12_LECTURES.map((lec) => ({
         ...lec,
@@ -1651,12 +1796,12 @@ export function getEgyptG12Curriculum(
       }));
 
     case 'BIOLOGY':
-      return buildLecturesFromUnits(biologyUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(biologyUnitsG12, normalizedSubject, educationType, track);
 
     case 'MATH':
       // إذا كان مسار أدبي أو علمي علوم: مادة الإحصاء المعتمدة
-      if (track === 'SHARIA_HUMANITIES' || track === 'SCIENCE_BIO') {
-        return buildLecturesFromUnits(statisticsUnitsG12, subject, educationType, track);
+      if (track === 'SHARIA_HUMANITIES' || track === 'SCIENCE_BIO' || track === 'HEALTH_LIFE') {
+        return buildLecturesFromUnits(statisticsUnitsG12, normalizedSubject, educationType, track);
       }
       // علمي رياضة أو عام: الرياضيات البحتة (تفاضل وتكامل وجبر وهندسة فراغية)
       return HIGH_MATH_G12_LECTURES.map((lec) => ({
@@ -1672,16 +1817,16 @@ export function getEgyptG12Curriculum(
 
     case 'COMPUTER_SCIENCE':
       // في علمي رياضة: الرياضيات التطبيقية (استاتيكا وديناميكا)
-      return buildLecturesFromUnits(appliedMathUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(appliedMathUnitsG12, normalizedSubject, educationType, track);
 
     case 'HISTORY':
-      return buildLecturesFromUnits(historyUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(historyUnitsG12, normalizedSubject, educationType, track);
 
     case 'GEOGRAPHY':
-      return buildLecturesFromUnits(geographyUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(geographyUnitsG12, normalizedSubject, educationType, track);
 
     case 'PHILOSOPHY':
-      return buildLecturesFromUnits(philosophyUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(philosophyUnitsG12, normalizedSubject, educationType, track);
 
     case 'ARABIC_LIT':
       return HIGH_ARABIC_LIT_G12_LECTURES.map((lec) => ({
@@ -1696,19 +1841,22 @@ export function getEgyptG12Curriculum(
       }));
 
     case 'ENGLISH':
-      return buildLecturesFromUnits(englishUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(englishUnitsG12, normalizedSubject, educationType, track);
 
     case 'GERMAN':
-      return buildLecturesFromUnits(germanUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(germanUnitsG12, normalizedSubject, educationType, track);
 
     case 'FRENCH':
-      return buildLecturesFromUnits(frenchUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(frenchUnitsG12, normalizedSubject, educationType, track);
 
     case 'ITALIAN':
-      return buildLecturesFromUnits(frenchUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(italianUnitsG12, normalizedSubject, educationType, track);
 
     case 'ISLAMIC_STUDIES':
-      return buildLecturesFromUnits(islamicUnitsG12, subject, educationType, track);
+      return buildLecturesFromUnits(islamicUnitsG12, normalizedSubject, educationType, track);
+
+    case 'NATIONAL_EDUCATION':
+      return buildLecturesFromUnits(nationalEducationUnitsG12, normalizedSubject, educationType, track);
 
     default:
       return [];
