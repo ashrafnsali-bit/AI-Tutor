@@ -636,7 +636,8 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         GEOGRAPHY: { descAr: 'الجغرافيا الاقتصادية والبيئة والتنمية', descEn: 'Economic geography, environment, and development', icon: <Globe2 size={28} />, color: '#38bdf8' },
         HISTORY: { descAr: 'تاريخ السودان والعالم العربي', descEn: 'Sudanese and Arab history', icon: <BookOpen size={28} />, color: '#f59e0b' },
         ISLAMIC_STUDIES: { descAr: 'التفسير والفقه والعقيدة والتجويد', descEn: 'Tafsir, jurisprudence, creed, and tajweed', icon: <Award size={28} />, color: '#fbbf24' },
-        MATH: { descAr: selectedTrack === 'SCIENCE_MATH' ? 'الدوال والتفاضل والتكامل والرياضيات المتخصصة' : 'الدوال والتفاضل والتكامل والإحصاء والاحتمالات', descEn: selectedTrack === 'SCIENCE_MATH' ? 'Functions, calculus, and specialized mathematics' : 'Functions, calculus, statistics, and probability', icon: <Calculator size={28} />, color: '#60a5fa' },
+        MATH: { descAr: (selectedTrack === 'SCIENCE_MATH' || selectedTrack === 'CS_ENGINEERING') ? 'الدوال والتفاضل والتكامل والرياضيات المتخصصة' : 'الدوال والتفاضل والتكامل والإحصاء والاحتمالات', descEn: (selectedTrack === 'SCIENCE_MATH' || selectedTrack === 'CS_ENGINEERING') ? 'Functions, calculus, and specialized mathematics' : 'Functions, calculus, statistics, and probability', icon: <Calculator size={28} />, color: '#60a5fa' },
+        PHYSICS: { descAr: 'المجال التثاقلي، الحركة الدائرية والتوافقية، الموجات، الضوء، الكهربية، والمغناطيسية', descEn: 'Gravitational field, circular & harmonic motion, waves, light, electricity, and magnetism', icon: <Atom size={28} />, color: '#38bdf8' },
         TECHNICAL_EDUCATION: { descAr: 'موضوعات العلوم الهندسية وتطبيقاتها', descEn: 'Engineering science topics and applications', icon: <Atom size={28} />, color: '#22c55e' }
       };
       return getSudanPublicGrade12Subjects(selectedTrack)

@@ -2526,9 +2526,10 @@ export function getNationalSubjectLabel(
       GEOGRAPHY: ['Geography and Environmental Studies', 'الجغرافيا والدراسات البيئية'],
       HISTORY: ['History', 'التاريخ'],
       ISLAMIC_STUDIES: ['Islamic Studies', 'التربية الإسلامية'],
-      MATH: track === 'SCIENCE_MATH'
+      MATH: (track === 'SCIENCE_MATH' || track === 'CS_ENGINEERING')
         ? ['Specialized Mathematics', 'الرياضيات المتخصصة']
         : ['Basic Mathematics', 'الرياضيات الأساسية'],
+      PHYSICS: ['Physics', 'الفيزياء'],
       TECHNICAL_EDUCATION: ['Engineering Sciences', 'العلوم الهندسية']
     };
     const label = grade12Labels[subject];
