@@ -173,7 +173,7 @@ export function App() {
             merged.educationType,
             merged.educationTrack
           );
-          if (!validEgyptPrep && !validEnglish && (merged.country === 'SD' && ['G7', 'G8'].includes(merged.gradeLevel)
+          if (!validEgyptPrep && !validEnglish && (merged.country === 'SD' && ['G7', 'G8', 'G9'].includes(merged.gradeLevel)
             ? !validSudanMiddleSubject
             : !MIDDLE_SUBJS.includes(merged.subject)) &&
               !(merged.subject === 'SAUDI_SOCIAL_STUDIES' &&
@@ -857,7 +857,7 @@ export function App() {
         sanitized.educationType,
         sanitized.educationTrack
       );
-      if (!validEgyptPrep && !validEnglish && (sanitized.country === 'SD' && ['G7', 'G8'].includes(sanitized.gradeLevel)
+      if (!validEgyptPrep && !validEnglish && (sanitized.country === 'SD' && ['G7', 'G8', 'G9'].includes(sanitized.gradeLevel)
         ? !validSudanMiddleSubject
         : !MIDDLE_SUBJS.includes(sanitized.subject)) &&
           !(sanitized.subject === 'SAUDI_SOCIAL_STUDIES' &&

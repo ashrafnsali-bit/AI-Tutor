@@ -2536,6 +2536,23 @@ export function getNationalSubjectLabel(
     if (label) return isEn ? label[0] : label[1];
   }
 
+  if (country === 'SD' && _gradeLevel === 'G9') {
+    const grade9Labels: Partial<Record<Subject, [string, string]>> = {
+      ISLAMIC_STUDIES: ['Islamic Studies (Grade 9 / Middle 3)', 'التربية الإسلامية (الصف الثالث المتوسط)'],
+      ARABIC_LANG: ['Arabic Language (Grade 9 / Middle 3)', 'اللغة العربية (الصف الثالث المتوسط)'],
+      ENGLISH: ['English (SMILE Book 9 — Grade 3 Intermediate)', 'اللغة الإنجليزية (SMILE Book 9 — الصف الثالث المتوسط)'],
+      MATH: ['Mathematics (Grade 9 / Middle 3)', 'الرياضيات (الصف الثالث المتوسط)'],
+      GENERAL_SCIENCE: ['Natural Science (Grade 9 / Middle 3)', 'العلوم الطبيعية (الصف الثالث المتوسط)'],
+      GEOGRAPHY: ['Geography (Grade 9 / Middle 3)', 'الجغرافيا (الصف الثالث المتوسط)'],
+      HISTORY: ['History (Grade 9 / Middle 3)', 'التاريخ (الصف الثالث المتوسط)'],
+      COMPUTER_SCIENCE: ['Information & Communication Technology (Grade 9 / Middle 3)', 'تكنولوجيا المعلومات والاتصالات (الصف الثالث المتوسط)'],
+      NATIONAL_EDUCATION: ['National Education (Grade 9 / Middle 3)', 'التربية الوطنية (الصف الثالث المتوسط)'],
+      TECHNICAL_EDUCATION: ['Foundations of Technical Education (Grade 9 / Middle 3)', 'أساسيات التربية التقنية (الصف الثالث المتوسط)']
+    };
+    const label = grade9Labels[subject];
+    if (label) return isEn ? label[0] : label[1];
+  }
+
   if (subject === 'PRIMARY_MATH' && isSaudiPublicG2PrimaryMathAvailable(country, _gradeLevel, educationType)) {
     return isEn
       ? 'Mathematics (Saudi public Grade 2 — verified descriptive axes)'

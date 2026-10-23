@@ -202,7 +202,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     if (country === 'EG') {
       return isEgyptPrepSubjectAvailable(subject, gradeLevel, educationType || 'PUBLIC');
     }
-    return country === 'SD' && (gradeLevel === 'G7' || gradeLevel === 'G8')
+    return country === 'SD' && (gradeLevel === 'G7' || gradeLevel === 'G8' || gradeLevel === 'G9')
     ? isSudanPublicMiddleSubjectAvailable(
       subject,
       country,

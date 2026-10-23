@@ -4821,6 +4821,19 @@ export function isSudanPublicGrade8SubjectAvailable(
       subject === 'TECHNICAL_EDUCATION');
 }
 
+export const SUDAN_GRADE9_SUBJECTS: Subject[] = [
+  'ISLAMIC_STUDIES',
+  'ARABIC_LANG',
+  'ENGLISH',
+  'MATH',
+  'GENERAL_SCIENCE',
+  'GEOGRAPHY',
+  'HISTORY',
+  'COMPUTER_SCIENCE',
+  'NATIONAL_EDUCATION',
+  'TECHNICAL_EDUCATION'
+];
+
 export function isSudanPublicGrade9SubjectAvailable(
   subject: Subject,
   country: CountryCode,
@@ -4830,7 +4843,11 @@ export function isSudanPublicGrade9SubjectAvailable(
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G9' &&
-    (subject === 'ENGLISH' || subject === 'HISTORY');
+    SUDAN_GRADE9_SUBJECTS.includes(subject);
+}
+
+export function getSudanPublicGrade9Subjects(): Subject[] {
+  return SUDAN_GRADE9_SUBJECTS;
 }
 
 export const SUDAN_GRADE10_SUBJECTS: Subject[] = [
@@ -5080,21 +5097,15 @@ export function getCurriculumForSubject(
     }
     return getSudanCurriculum(subject, gradeLevel) ?? [];
   }
-  if (
-    country === 'SD' &&
-    gradeLevel === 'G9' &&
-    isSudanPublicGrade9SubjectAvailable(
+  if (country === 'SD' && gradeLevel === 'G9') {
+    if (!isSudanPublicGrade9SubjectAvailable(
       subject,
       country as CountryCode,
       gradeLevel as GradeLevel,
       educationType,
       _track
-    )
-  ) {
+    )) return [];
     return getSudanCurriculum(subject, gradeLevel) ?? [];
-  }
-  if (country === 'SD' && gradeLevel === 'G9' && (subject === 'ENGLISH' || subject === 'HISTORY')) {
-    return [];
   }
   if (country === 'SD' && gradeLevel === 'G6') {
     if (!isSudanPublicGrade6SubjectAvailable(
@@ -5956,7 +5967,9 @@ export function loadSubjectLectures(
   const isSudanGrade12Route = country === 'SD' && gradeLevel === 'G12';
   if (isSudanGrade12Route && !isProtectedSudanGrade12Course) return [];
   const isSudanGrade8Route = country === 'SD' && gradeLevel === 'G8';
+  if (isSudanGrade8Route && !isProtectedSudanGrade8Course) return [];
   const isSudanGrade9Route = country === 'SD' && gradeLevel === 'G9';
+  if (isSudanGrade9Route && !isProtectedSudanGrade9Course) return [];
   const isProtectedSaudiEnglish = isSaudiPublicEnglishAvailable(country, gradeLevel, educationType);
   const isProtectedEgyptEnglish = country === 'EG' && (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL');
   const isProtectedEnglish = isProtectedSaudiEnglish ||

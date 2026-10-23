@@ -597,8 +597,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       return [
         {
           id: 'GENERAL_SCIENCE',
-          nameAr: selectedCountry === 'SD' && ['G7', 'G8'].includes(selectedGrade) ? 'العلوم الطبيعية' : 'العلوم العامة',
-          nameEn: selectedCountry === 'SD' && ['G7', 'G8'].includes(selectedGrade) ? 'Natural Science' : 'General Science',
+          nameAr: selectedCountry === 'SD' && ['G7', 'G8', 'G9'].includes(selectedGrade) ? 'العلوم الطبيعية' : 'العلوم العامة',
+          nameEn: selectedCountry === 'SD' && ['G7', 'G8', 'G9'].includes(selectedGrade) ? 'Natural Science' : 'General Science',
           descAr: 'الطاقة، المادة، والظواهر الطبيعية',
           descEn: 'Energy, physical forces & life systems',
           icon: <Microscope size={24} />,
@@ -615,8 +615,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         },
         {
           id: 'ARABIC_LANG',
-          nameAr: selectedCountry === 'SD' && ['G7', 'G8'].includes(selectedGrade) ? 'اللغة العربية' : 'لغتي الخالدة',
-          nameEn: selectedCountry === 'SD' && ['G7', 'G8'].includes(selectedGrade) ? 'Arabic Language' : 'Arabic Language & Grammar',
+          nameAr: selectedCountry === 'SD' && ['G7', 'G8', 'G9'].includes(selectedGrade) ? 'اللغة العربية' : 'لغتي الخالدة',
+          nameEn: selectedCountry === 'SD' && ['G7', 'G8', 'G9'].includes(selectedGrade) ? 'Arabic Language' : 'Arabic Language & Grammar',
           descAr: 'النحو، الصرف، والتعبير البلاغي',
           descEn: 'Grammar, morphology & expression',
           icon: <BookMarked size={24} />,
@@ -624,8 +624,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         },
         {
           id: 'COMPUTER_SCIENCE',
-          nameAr: selectedCountry === 'SD' && ['G7', 'G8'].includes(selectedGrade) ? 'تكنولوجيا المعلومات والاتصالات' : 'التقنية والحاسب الآلي',
-          nameEn: selectedCountry === 'SD' && ['G7', 'G8'].includes(selectedGrade) ? 'Information and Communication Technology' : 'Computer Science & Tech',
+          nameAr: selectedCountry === 'SD' && ['G7', 'G8', 'G9'].includes(selectedGrade) ? 'تكنولوجيا المعلومات والاتصالات' : 'التقنية والحاسب الآلي',
+          nameEn: selectedCountry === 'SD' && ['G7', 'G8', 'G9'].includes(selectedGrade) ? 'Information and Communication Technology' : 'Computer Science & Tech',
           descAr: 'أساسيات البرمجة، والمنطق الرقمي',
           descEn: 'Algorithms, logic & digital skills',
           icon: <Code2 size={24} />,
@@ -635,7 +635,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           id: 'ENGLISH' as const,
           nameAr: getNationalSubjectLabel('ENGLISH', selectedCountry, selectedGrade, 'ar', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack),
           nameEn: getNationalSubjectLabel('ENGLISH', selectedCountry, selectedGrade, 'en', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack),
-          descAr: selectedCountry === 'EG' ? 'منهج Prep Connect - لغة وقواعد وكتابة متقدمة' : selectedCountry === 'SD' ? `ثماني وحدات في مهارات اللغة والتواصل (SMILE Book ${selectedGrade === 'G8' ? '8' : '7'})` : 'مهارات اللغة الإنجليزية والتواصل',
+          descAr: selectedCountry === 'EG' ? 'منهج Prep Connect - لغة وقواعد وكتابة متقدمة' : selectedCountry === 'SD' ? `ثماني وحدات في مهارات اللغة والتواصل (SMILE Book ${selectedGrade === 'G9' ? '9' : selectedGrade === 'G8' ? '8' : '7'})` : 'مهارات اللغة الإنجليزية والتواصل',
           descEn: 'Eight units in language and communication skills',
           icon: <BookOpen size={24} />,
           color: '#a78bfa'
@@ -655,8 +655,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           id: 'GEOGRAPHY' as const,
           nameAr: 'الجغرافيا',
           nameEn: 'Geography',
-          descAr: selectedGrade === 'G8' ? 'دراسة قارات أمريكا الشمالية والجنوبية وأستراليا' : 'دراسة قارات إفريقيا وآسيا وأوروبا',
-          descEn: selectedGrade === 'G8' ? 'Study of North America, South America, and Australia' : 'Study of Africa, Asia, and Europe',
+          descAr: selectedGrade === 'G9' ? 'دراسة قارات آسيا وأوروبا وجغرافية السودان الإقليمية' : selectedGrade === 'G8' ? 'دراسة قارات أمريكا الشمالية والجنوبية وأستراليا' : 'دراسة قارات إفريقيا وآسيا وأوروبا',
+          descEn: selectedGrade === 'G9' ? 'Study of Asia, Europe, and Sudan regional geography' : selectedGrade === 'G8' ? 'Study of North America, South America, and Australia' : 'Study of Africa, Asia, and Europe',
           icon: <Globe2 size={24} />,
           color: '#38bdf8'
         }] : []),
@@ -665,8 +665,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           id: 'HISTORY' as const,
           nameAr: 'التاريخ',
           nameEn: 'History',
-          descAr: selectedGrade === 'G8' ? 'تاريخ السودان والدولة الأموية وإفريقيا وأوروبا' : 'تاريخ السودان والدولة الإسلامية وإفريقيا وأوروبا القديمة',
-          descEn: selectedGrade === 'G8' ? 'Sudanese, Umayyad, African, and European history' : 'Sudanese, Islamic, African, and ancient European history',
+          descAr: selectedGrade === 'G9' ? 'تاريخ المهدية والحكم الثنائي والتطورات المعاصرة' : selectedGrade === 'G8' ? 'تاريخ السودان والدولة الأموية وإفريقيا وأوروبا' : 'تاريخ السودان والدولة الإسلامية وإفريقيا وأوروبا القديمة',
+          descEn: selectedGrade === 'G9' ? 'Mahdist state, condominium rule, and contemporary developments' : selectedGrade === 'G8' ? 'Sudanese, Umayyad, African, and European history' : 'Sudanese, Islamic, African, and ancient European history',
           icon: <BookOpen size={24} />,
           color: '#f59e0b'
         }] : []),

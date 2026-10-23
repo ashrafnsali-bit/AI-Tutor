@@ -1503,8 +1503,8 @@ export const getSubjectVisual = (
     case 'GENERAL_SCIENCE':
       return {
         id: 'GENERAL_SCIENCE',
-        titleAr: country === 'SD' && ['G7', 'G8'].includes(grade) ? 'العلوم الطبيعية' : 'العلوم العامة / المتكاملة',
-        titleEn: country === 'SD' && ['G7', 'G8'].includes(grade) ? 'Natural Science' : 'General / Integrated Science',
+        titleAr: country === 'SD' && ['G7', 'G8', 'G9'].includes(grade) ? 'العلوم الطبيعية' : 'العلوم العامة / المتكاملة',
+        titleEn: country === 'SD' && ['G7', 'G8', 'G9'].includes(grade) ? 'Natural Science' : 'General / Integrated Science',
         stageAr: isMiddle ? 'المرحلة المتوسطة' : 'المرحلة الثانوية',
         stageEn: isMiddle ? 'Middle School' : 'High School',
         badgeAr: badge.ar,

@@ -328,7 +328,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
     if (
       country === 'SD' &&
-      (grade === 'G7' || grade === 'G8') &&
+      (grade === 'G7' || grade === 'G8' || grade === 'G9') &&
       !isSudanPublicMiddleSubjectAvailable(subject, country, grade, educationType, track)
     ) return defaultSubjectForGrade(grade);
     if (subject === 'TAJWEED' && !isSaudiPublicTajweedAvailable(country, grade, educationType)) {
@@ -468,7 +468,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     } else if (mid) {
       setRegSpec('GENERAL');
       setRegEducationTrack('GENERAL');
-      if ((regCountry === 'SD' && grade === 'G7'
+      if ((regCountry === 'SD' && ['G7', 'G8', 'G9'].includes(grade)
         ? !isSudanPublicMiddleSubjectAvailable(regSubject, regCountry, grade, regEducationType, 'GENERAL')
         : !MIDDLE_SUBJECTS.includes(regSubject)) &&
           !(regSubject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(grade))) setRegSubject('ARABIC_LANG');
