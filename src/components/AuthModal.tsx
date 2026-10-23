@@ -1022,11 +1022,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           ))}
                         </optgroup>
                       ) : regCountry === 'SD' && regGrade === 'G10' ? (
-                        <optgroup label={regLanguage === 'en' ? 'Grade 10 subjects' : 'مواد الصف الأول الثانوي'}>
-                          <option value="PHYSICS">{getNationalSubjectLabel('PHYSICS', regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}</option>
-                          <option value="CHEMISTRY">{getNationalSubjectLabel('CHEMISTRY', regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}</option>
-                          <option value="GEOGRAPHY">{getNationalSubjectLabel('GEOGRAPHY', regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}</option>
-                          <option value="HISTORY">{getNationalSubjectLabel('HISTORY', regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}</option>
+                        <optgroup label={regLanguage === 'en' ? 'Sudan Secondary 1 (Grade 10) courses' : 'مقررات الصف الأول الثانوي السوداني'}>
+                          {(['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'MATH', 'ARABIC_LIT', 'ENGLISH', 'ISLAMIC_STUDIES', 'GEOGRAPHY', 'HISTORY', 'COMPUTER_SCIENCE'] as Subject[])
+                            .filter((subj) => isSudanPublicGrade10SubjectAvailable(
+                              subj,
+                              regCountry,
+                              regGrade,
+                              regEducationType,
+                              regEducationTrack
+                            ))
+                            .map((subj) => (
+                              <option key={subj} value={subj}>
+                                {getNationalSubjectLabel(subj, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
+                              </option>
+                            ))}
                         </optgroup>
                       ) : (
                       <optgroup label="المواد التخصصية">

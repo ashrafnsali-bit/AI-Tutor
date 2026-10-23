@@ -342,7 +342,52 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           descAr: 'التركيب الذري والروابط والمعادلات والتفاعلات والحساب الكيميائي',
           descEn: 'Atomic structure, bonds, equations, reactions, and chemical calculations',
           icon: <FlaskConical size={24} />,
-          color: '#f472b6'
+          color: '#ec4899'
+        },
+        {
+          id: 'BIOLOGY' as const,
+          nameAr: 'علم الأحياء',
+          nameEn: 'Biology',
+          descAr: 'الخلية وتركيبها، تصنيف الكائنات الحية، التنوع البيولوجي، والبيئة',
+          descEn: 'Cell biology, taxonomy of organisms, biodiversity, and ecology',
+          icon: <Dna size={24} />,
+          color: '#10b981'
+        },
+        {
+          id: 'MATH' as const,
+          nameAr: 'الرياضيات',
+          nameEn: 'Mathematics',
+          descAr: 'المجموعات، العلاقات، الدوال، الهندسة المستوية، وحساب المثلثات',
+          descEn: 'Sets, relations, functions, plane geometry, and trigonometry',
+          icon: <Calculator size={24} />,
+          color: '#3b82f6'
+        },
+        {
+          id: 'ARABIC_LIT' as const,
+          nameAr: 'اللغة العربية',
+          nameEn: 'Arabic Language',
+          descAr: 'قواعد النحو والإعراب، البلاغة، الأدب والنصوص، والإملاء',
+          descEn: 'Grammar, rhetoric, literature, assigned texts, and spelling rules',
+          icon: <BookOpen size={24} />,
+          color: '#f59e0b'
+        },
+        {
+          id: 'ENGLISH' as const,
+          nameAr: 'اللغة الإنجليزية',
+          nameEn: 'English Language',
+          descAr: 'بناء الجملة، القواعد، القراءة والاستيعاب، والتعبير الكتابي',
+          descEn: 'Sentence structure, grammar, reading comprehension, and writing',
+          icon: <Sparkles size={24} />,
+          color: '#6366f1'
+        },
+        {
+          id: 'ISLAMIC_STUDIES' as const,
+          nameAr: 'التربية الإسلامية',
+          nameEn: 'Islamic Studies',
+          descAr: 'تلاوة القرآن الكريم وتفسيره، الحديث الشريف، العقيدة، والفقه',
+          descEn: 'Holy Quran recitation and tafsir, Hadith, Aqeedah, and Fiqh',
+          icon: <Compass size={24} />,
+          color: '#14b8a6'
         },
         {
           id: 'GEOGRAPHY' as const,
@@ -357,10 +402,19 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           id: 'HISTORY' as const,
           nameAr: 'التاريخ',
           nameEn: 'History',
-          descAr: 'تاريخ السودان والإسلام وأفريقيا والتاريخ الإنساني',
-          descEn: 'Sudanese, Islamic, African, and human history',
-          icon: <BookOpen size={24} />,
-          color: '#f59e0b'
+          descAr: 'تاريخ السودان القديم والوسيط، الحضارات النوبية، والتاريخ الإنساني',
+          descEn: 'Ancient and medieval Sudan history, Nubian civilizations, and human history',
+          icon: <BookMarked size={24} />,
+          color: '#d97706'
+        },
+        {
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: 'علوم الحاسوب',
+          nameEn: 'Computer Science',
+          descAr: 'مكونات الحاسوب، نظم التشغيل، أساسيات البرمجة، والشبكات',
+          descEn: 'Computer hardware, operating systems, programming basics, and networks',
+          icon: <Code2 size={24} />,
+          color: '#8b5cf6'
         }
       ].filter((course) => isSudanPublicGrade10SubjectAvailable(
         course.id,

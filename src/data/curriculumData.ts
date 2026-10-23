@@ -4833,6 +4833,19 @@ export function isSudanPublicGrade9SubjectAvailable(
     (subject === 'ENGLISH' || subject === 'HISTORY');
 }
 
+export const SUDAN_GRADE10_SUBJECTS: Subject[] = [
+  'PHYSICS',
+  'CHEMISTRY',
+  'BIOLOGY',
+  'MATH',
+  'ARABIC_LIT',
+  'ENGLISH',
+  'ISLAMIC_STUDIES',
+  'GEOGRAPHY',
+  'HISTORY',
+  'COMPUTER_SCIENCE'
+];
+
 export function isSudanPublicGrade10SubjectAvailable(
   subject: Subject,
   country: CountryCode,
@@ -4842,7 +4855,7 @@ export function isSudanPublicGrade10SubjectAvailable(
 ): boolean {
   return country === 'SD' &&
     gradeLevel === 'G10' &&
-    (subject === 'CHEMISTRY' || subject === 'GEOGRAPHY' || subject === 'HISTORY' || subject === 'PHYSICS');
+    SUDAN_GRADE10_SUBJECTS.includes(subject);
 }
 
 export const SUDAN_GRADE11_SUBJECTS: Subject[] = [
@@ -4925,6 +4938,7 @@ export function isEnglishCourseAvailable(
     country === 'EG' ||
     isSudanPublicGrade12SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicGrade11SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
+    isSudanPublicGrade10SubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicMiddleSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track) ||
     isSudanPublicPrimaryCurriculumSubjectAvailable('ENGLISH', country, gradeLevel, educationType, track);
 }
@@ -4992,26 +5006,44 @@ export function getCurriculumForSubject(
     return getEgyptPrimaryCurriculum(subject, gradeLevel as GradeLevel, educationType, _track);
   }
   if (country === 'SD' && gradeLevel === 'G10') {
-    return isSudanPublicGrade10SubjectAvailable(
+    if (!isSudanPublicGrade10SubjectAvailable(
       subject,
       country as CountryCode,
       gradeLevel as GradeLevel,
       educationType,
       _track
-    )
-      ? getSudanCurriculum(subject, gradeLevel) ?? []
-      : [];
+    )) return [];
+    const sudanLec = getSudanCurriculum(subject, gradeLevel);
+    if (sudanLec && sudanLec.length > 0) return sudanLec;
+    if (subject === 'BIOLOGY') return HIGH_BIO_G10_LECTURES;
+    if (subject === 'MATH') return HIGH_MATH_G10_LECTURES;
+    if (subject === 'ARABIC_LIT') return HIGH_ARABIC_LIT_G10_LECTURES;
+    if (subject === 'ENGLISH') return SUBJECT_CURRICULA['ENGLISH'] ?? [];
+    if (subject === 'ISLAMIC_STUDIES') return ISLAMIC_STUDIES_FULL;
+    if (subject === 'COMPUTER_SCIENCE') return HIGH_COMP_G10_LECTURES;
+    return [];
   }
   if (country === 'SD' && gradeLevel === 'G11') {
-    return isSudanPublicGrade11SubjectAvailable(
+    if (!isSudanPublicGrade11SubjectAvailable(
       subject,
       country as CountryCode,
       gradeLevel as GradeLevel,
       educationType,
       _track
-    )
-      ? HIGH_BIO_G11_LECTURES
-      : [];
+    )) return [];
+    const sudanLec = getSudanCurriculum(subject, gradeLevel);
+    if (sudanLec && sudanLec.length > 0) return sudanLec;
+    if (subject === 'PHYSICS') return HIGH_PHYSICS_G11_LECTURES;
+    if (subject === 'CHEMISTRY') return HIGH_CHEMISTRY_G11_LECTURES;
+    if (subject === 'BIOLOGY') return HIGH_BIO_G11_LECTURES;
+    if (subject === 'MATH') return HIGH_MATH_G11_LECTURES;
+    if (subject === 'ARABIC_LIT') return ARABIC_LIT_LECTURES;
+    if (subject === 'ENGLISH') return SUBJECT_CURRICULA['ENGLISH'] ?? [];
+    if (subject === 'ISLAMIC_STUDIES') return ISLAMIC_STUDIES_FULL;
+    if (subject === 'GEOGRAPHY') return SUDAN_HIGH_GEOGRAPHY_G10_LECTURES;
+    if (subject === 'HISTORY') return SUDAN_HIGH_HISTORY_G10_LECTURES;
+    if (subject === 'COMPUTER_SCIENCE') return HIGH_COMP_G11_LECTURES;
+    return [];
   }
   if (country === 'SD' && gradeLevel === 'G12') {
     return isSudanPublicGrade12SubjectAvailable(
@@ -5934,6 +5966,7 @@ export function loadSubjectLectures(
     isProtectedSudanGrade7Course ||
     isProtectedSudanGrade8Course ||
     isProtectedSudanGrade9Course ||
+    isProtectedSudanGrade10Course ||
     isProtectedSudanGrade11Course ||
     isProtectedSudanGrade12Course;
   if (subject === 'ENGLISH' && !isProtectedEnglish) return [];

@@ -322,7 +322,14 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
         copy.educationType,
         copy.educationTrack
       );
-      if (!isVerifiedSudanGrade12 && !isVerifiedSudanGrade10 && (copy.subject === 'GEOGRAPHY' || copy.subject === 'HISTORY') &&
+      const isVerifiedSudanGrade11 = isSudanPublicGrade11SubjectAvailable(
+        copy.subject,
+        copy.country,
+        copy.gradeLevel,
+        copy.educationType,
+        copy.educationTrack
+      );
+      if (!isVerifiedSudanGrade12 && !isVerifiedSudanGrade11 && !isVerifiedSudanGrade10 && (copy.subject === 'GEOGRAPHY' || copy.subject === 'HISTORY') &&
           !isLegacyGeographyHistoryAvailable(copy.country, copy.educationType, copy.educationTrack)) copy.subject = 'ARABIC_LIT';
       if (!isEgyptG10BookSubject && (copy.subject === 'GENERAL_SCIENCE' || copy.subject === 'PRIMARY_SCIENCE')) copy.subject = 'PHYSICS';
       if (copy.subject === 'PRIMARY_MATH') copy.subject = 'MATH';
@@ -475,7 +482,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'VISUAL_ARTS' || nextSubj === 'LIFE_SKILLS' || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
       if (nextSubj === 'GENERAL_SCIENCE' || nextSubj === 'PRIMARY_SCIENCE') nextSubj = 'PHYSICS';
       if (nextSubj === 'PRIMARY_MATH') nextSubj = 'MATH';
-      if (formData.country === 'SD') nextSubj = 'BIOLOGY';
+      if (formData.country === 'SD' && !isSudanPublicGrade11SubjectAvailable(nextSubj, formData.country, 'G11', formData.educationType, nextTrack)) nextSubj = 'BIOLOGY';
     } else if (age >= 18) {
       nextGrade = 'G12';
       if (PRIMARY_SUBJECTS.includes(nextSubj) || nextSubj === 'VISUAL_ARTS' || nextSubj === 'LIFE_SKILLS' || nextSubj === 'ARABIC_LANG') nextSubj = 'ARABIC_LIT';
@@ -1338,46 +1345,26 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 ) : formData.country === 'SD' &&
                   formData.gradeLevel === 'G10' ? (
                   <optgroup label={formData.language === 'en' ? 'Sudan Secondary 1 (Grade 10) courses' : 'مقررات الصف الأول الثانوي السوداني'}>
-                    <option value="PHYSICS">
-                      {getNationalSubjectLabel(
-                        'PHYSICS',
+                    {(['PHYSICS', 'CHEMISTRY', 'BIOLOGY', 'MATH', 'ARABIC_LIT', 'ENGLISH', 'ISLAMIC_STUDIES', 'GEOGRAPHY', 'HISTORY', 'COMPUTER_SCIENCE'] as Subject[])
+                      .filter((subj) => isSudanPublicGrade10SubjectAvailable(
+                        subj,
                         formData.country,
                         formData.gradeLevel,
-                        formData.language,
                         formData.educationType,
                         formData.educationTrack
-                      )}
-                    </option>
-                    <option value="CHEMISTRY">
-                      {getNationalSubjectLabel(
-                        'CHEMISTRY',
-                        formData.country,
-                        formData.gradeLevel,
-                        formData.language,
-                        formData.educationType,
-                        formData.educationTrack
-                      )}
-                    </option>
-                    <option value="GEOGRAPHY">
-                      {getNationalSubjectLabel(
-                        'GEOGRAPHY',
-                        formData.country,
-                        formData.gradeLevel,
-                        formData.language,
-                        formData.educationType,
-                        formData.educationTrack
-                      )}
-                    </option>
-                    <option value="HISTORY">
-                      {getNationalSubjectLabel(
-                        'HISTORY',
-                        formData.country,
-                        formData.gradeLevel,
-                        formData.language,
-                        formData.educationType,
-                        formData.educationTrack
-                      )}
-                    </option>
+                      ))
+                      .map((subj) => (
+                        <option key={subj} value={subj}>
+                          {getNationalSubjectLabel(
+                            subj,
+                            formData.country,
+                            formData.gradeLevel,
+                            formData.language,
+                            formData.educationType,
+                            formData.educationTrack
+                          )}
+                        </option>
+                      ))}
                   </optgroup>
                 ) : formData.country === 'SD' &&
                   formData.gradeLevel === 'G11' ? (
