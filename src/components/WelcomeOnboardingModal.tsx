@@ -41,6 +41,10 @@ import {
   isEgyptG12SubjectAvailable,
   getEgyptG12Subjects
 } from '../data/egyptSecondaryG12CurriculumData';
+import {
+  isSaudiSecondarySubjectAvailable,
+  getSaudiSecondarySubjects
+} from '../data/saudiSecondaryCurriculumData';
 import { setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
   Sparkles, 
@@ -138,7 +142,12 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       selectedCountry === 'EG' &&
       selectedGrade === 'G12' &&
       !isEgyptG12SubjectAvailable(selectedSubject, selectedTrack, educationType);
+    const invalidSaudiSecondarySubject =
+      selectedCountry === 'SA' &&
+      ['G10', 'G11', 'G12'].includes(selectedGrade) &&
+      !isSaudiSecondarySubjectAvailable(selectedSubject, selectedGrade, selectedTrack, educationType);
     if (
+      invalidSaudiSecondarySubject ||
       invalidSudanGrade7Subject ||
       invalidSudanGrade10Subject ||
       invalidSudanGrade11Subject ||
@@ -173,7 +182,10 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         !isSudanPublicGrade5SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack) &&
         !isSudanPublicGrade6SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack))
     ) {
-      setSelectedSubject(selectedCountry === 'SD' && selectedGrade === 'G10'
+      setSelectedSubject(
+        selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade)
+          ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
+        : selectedCountry === 'SD' && selectedGrade === 'G10'
         ? 'CHEMISTRY'
         : selectedCountry === 'SD' && selectedGrade === 'G11' ? 'BIOLOGY'
         : selectedCountry === 'SD' && selectedGrade === 'G12'
@@ -199,6 +211,127 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
 
   // Available subjects based on stage
   const getAvailableSubjects = (): { id: Subject; nameAr: string; nameEn: string; descAr: string; descEn: string; icon: React.ReactNode; color: string }[] => {
+    if (selectedCountry === 'SA' && selectedGrade === 'G10') {
+      return [
+        { id: 'MATH' as const, nameAr: 'الرياضيات 1 (السنة الأولى المشتركة)', nameEn: 'Mathematics 1 (Common First Year)', descAr: 'التبرير والبرهان، التوازي والتعامد، وتطابق المثلثات والعلاقات فيها', descEn: 'Reasoning and proof, parallel lines, triangle congruence and relationships', icon: <Calculator size={24} />, color: '#60a5fa' },
+        { id: 'PHYSICS' as const, nameAr: 'الفيزياء 1 (السنة الأولى المشتركة)', nameEn: 'Physics 1 (Common First Year)', descAr: 'مدخل إلى علم الفيزياء، تمثيل الحركة، الحركة المتسارعة، والقوى في بعد واحد', descEn: 'Introduction to physics, motion representation, accelerated motion, forces', icon: <Atom size={24} />, color: '#38bdf8' },
+        { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 1 (السنة الأولى المشتركة)', nameEn: 'Chemistry 1 (Common First Year)', descAr: 'المادة وخواصها، التركيب الذري، الجدول الدوري، والتفاعلات الكيميائية', descEn: 'Matter and properties, atomic structure, periodic trends, chemical reactions', icon: <FlaskConical size={24} />, color: '#f472b6' },
+        { id: 'BIOLOGY' as const, nameAr: 'علم البيئة والأحياء 1 (السنة الأولى المشتركة)', nameEn: 'Ecology & Biology 1 (Common First Year)', descAr: 'مبادئ علم البيئة، المجتمعات الحيوية، التنوع الحيوي والمحافظة عليه، وسلوك الحيوان', descEn: 'Principles of ecology, biomes, biodiversity conservation, and animal behavior', icon: <Dna size={24} />, color: '#34d399' },
+        { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية 1 (السنة الأولى المشتركة)', nameEn: 'Digital Technology 1 (Common First Year)', descAr: 'أساسيات الحوسبة، معالجة الصور المتقدمة، البرمجة بلغة بايثون، وتصميم الويب', descEn: 'Computing fundamentals, advanced graphics, Python programming, and web design', icon: <Code2 size={24} />, color: '#c084fc' },
+        { id: 'ENGLISH' as const, nameAr: 'اللغة الإنجليزية 1 (Mega Goal 1)', nameEn: 'English 1 (Mega Goal 1)', descAr: 'كتاب وزارة التعليم المعتمد للسنة الأولى المشتركة بنظام المسارات', descEn: 'Official Ministry textbook for Secondary Common First Year', icon: <BookOpen size={24} />, color: '#a78bfa' },
+        { id: 'ARABIC_LIT' as const, nameAr: 'الكفايات اللغوية 1 (السنة الأولى المشتركة)', nameEn: 'Arabic Competencies 1 (Common First Year)', descAr: 'الكفاية النحوية والإملائية والقرائية والكتابية والتواصل الشفهي', descEn: 'Grammar, orthography, critical reading, writing, and oral communication', icon: <BookMarked size={24} />, color: '#10b981' },
+        { id: 'ISLAMIC_STUDIES' as const, nameAr: 'القرآن والتفسير والدراسات الإسلامية', nameEn: 'Islamic Studies & Quranic Sciences', descAr: 'التوحيد والعقيدة وعلوم القرآن والتفسير والحديث والفقه الإسلامي', descEn: 'Tawheed, Quranic tafsir, Hadith sciences, and practical Fiqh', icon: <Award size={24} />, color: '#fbbf24' },
+        { id: 'HISTORY' as const, nameAr: 'الدراسات الاجتماعية والوطنية', nameEn: 'Social & National Studies', descAr: 'تاريخ المملكة العربية السعودية وجغرافيتها ورؤية 2030 والهوية الوطنية', descEn: 'Saudi history, geography, Vision 2030, and national identity', icon: <Compass size={24} />, color: '#f59e0b' },
+        { id: 'LIFE_SKILLS' as const, nameAr: 'المهارات الحياتية والتربية المهنية', nameEn: 'Life Skills & Career Education', descAr: 'تنمية المهارات الشخصية والاجتماعية وثقافة العمل والتخطيط المهني', descEn: 'Personal development, social skills, work culture, and career planning', icon: <ShieldCheck size={24} />, color: '#e11d48' }
+      ];
+    }
+    if (selectedCountry === 'SA' && selectedGrade === 'G11') {
+      const isCs = selectedTrack === 'CS_ENGINEERING';
+      const isHealth = selectedTrack === 'HEALTH_LIFE';
+      const isBusiness = selectedTrack === 'BUSINESS';
+      const isSharia = selectedTrack === 'SHARIA_HUMANITIES';
+      const commonCourses = [
+        { id: 'ENGLISH' as const, nameAr: 'اللغة الإنجليزية 2 (Mega Goal 2)', nameEn: 'English 2 (Mega Goal 2)', descAr: 'كتاب وزارة التعليم المعتمد لمسارات الصف الثاني الثانوي', descEn: 'Official Ministry textbook for Secondary Grade 11 pathways', icon: <BookOpen size={24} />, color: '#a78bfa' },
+        { id: 'ARABIC_LIT' as const, nameAr: 'الكفايات اللغوية 2', nameEn: 'Arabic Competencies 2', descAr: 'التطبيق النحوي المتقدم والإملاء والقراءة التحليلية والمهارات الكتابية', descEn: 'Applied syntax, orthography, analytical reading, and writing skills', icon: <BookMarked size={24} />, color: '#10b981' },
+        { id: 'ISLAMIC_STUDIES' as const, nameAr: 'الدراسات الإسلامية (التوحيد والفقه)', nameEn: 'Islamic Studies (Tawheed & Fiqh)', descAr: 'منهاج وزارة التعليم المعتمد لنظام المسارات التخصصية', descEn: 'Accredited Islamic studies curriculum for secondary tracks', icon: <Award size={24} />, color: '#fbbf24' }
+      ];
+      if (isCs) {
+        return [
+          ...commonCourses,
+          { id: 'MATH' as const, nameAr: 'الرياضيات 2 المتقدمة — مسار الحاسب والهندسة', nameEn: 'Mathematics 2 — CS & Engineering Track', descAr: 'المصفوفات، العلاقات والدوال، وتطبيقات الهندسة التحليلية', descEn: 'Matrices, relations, functions, and analytical geometry', icon: <Calculator size={24} />, color: '#60a5fa' },
+          { id: 'PHYSICS' as const, nameAr: 'الفيزياء 2 — مسار الحاسب والهندسة', nameEn: 'Physics 2 — CS & Engineering Track', descAr: 'الحركة الدورانية، الزخم وحفظه، والشغل والطاقة والآلات', descEn: 'Rotational motion, momentum conservation, work, and energy', icon: <Atom size={24} />, color: '#38bdf8' },
+          { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 2 — مسار الحاسب والهندسة', nameEn: 'Chemistry 2 — CS & Engineering Track', descAr: 'الحسابات الكيميائية، الإلكترونات في الذرات، والجدول الدوري', descEn: 'Stoichiometry, electrons in atoms, and periodic table', icon: <FlaskConical size={24} />, color: '#f472b6' },
+          { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية المتقدمة وهندسة البرمجيات', nameEn: 'Advanced Digital Tech & Software Engineering', descAr: 'علم البيانات، الذكاء الاصطناعي، البرمجة المتقدمة، وبناء النظم البرمجية', descEn: 'Data science, AI, advanced programming, and software systems', icon: <Code2 size={24} />, color: '#c084fc' }
+        ];
+      }
+      if (isHealth) {
+        return [
+          ...commonCourses,
+          { id: 'BIOLOGY' as const, nameAr: 'الأحياء 2 والعلوم الحياتية — مسار الصحة والحياة', nameEn: 'Biology 2 & Life Sciences — Health & Life Track', descAr: 'أجهزة جسم الإنسان، الجهاز العصبي، الغدد الصم، والتكاثر والوراثة', descEn: 'Human body systems, nervous system, endocrinology, genetics', icon: <Dna size={24} />, color: '#34d399' },
+          { id: 'HEALTH_SCIENCE' as const, nameAr: 'مبادئ العلوم الصحية — مسار الصحة والحياة', nameEn: 'Health Science Principles — Health & Life Track', descAr: 'مفاهيم الرعاية الصحية، العلامات الحيوية، الإسعافات، ومكافحة العدوى', descEn: 'Healthcare fundamentals, vital signs, first aid, and infection control', icon: <ShieldCheck size={24} />, color: '#e11d48' },
+          { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 2 — مسار الصحة والحياة', nameEn: 'Chemistry 2 — Health & Life Track', descAr: 'المركبات الأيونية والفلزات والروابط التساهمية والتفاعلات الحيوية', descEn: 'Ionic compounds, covalent bonding, and biochemical reactions', icon: <FlaskConical size={24} />, color: '#f472b6' },
+          { id: 'PHYSICS' as const, nameAr: 'الفيزياء 2 — مسار الصحة والحياة', nameEn: 'Physics 2 — Health & Life Track', descAr: 'الميكانيكا الحيوية والحرارة والموائع والصوت في التطبيقات الطبية', descEn: 'Biomechanics, thermodynamics, fluids, and acoustics in medicine', icon: <Atom size={24} />, color: '#38bdf8' },
+          { id: 'MATH' as const, nameAr: 'الرياضيات 2 والإحصاء الحيوي — مسار الصحة والحياة', nameEn: 'Mathematics 2 & Biostatistics', descAr: 'الدوال والعلاقات والنمذجة الرياضية للمؤشرات الحيوية', descEn: 'Functions, mathematical modeling, and health statistics', icon: <Calculator size={24} />, color: '#60a5fa' }
+        ];
+      }
+      if (isBusiness) {
+        return [
+          ...commonCourses,
+          { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية 2 (نسخة مسار إدارة الأعمال BM)', nameEn: 'Digital Technology 2 (Business Track BM)', descAr: 'علم البيانات، الذكاء الاصطناعي، التصميم والتسويق الرقمي وتطوير الأعمال', descEn: 'Data science, AI, business marketing, and digital administration', icon: <Code2 size={24} />, color: '#c084fc' },
+          { id: 'MATH' as const, nameAr: 'الرياضيات المالية والإحصاء التجاري', nameEn: 'Financial Mathematics & Business Statistics', descAr: 'الاحتمالات، الإحصاء المالي، اتخاذ القرار، وإدارة المخاطر', descEn: 'Probabilities, financial statistics, and decision analysis', icon: <Calculator size={24} />, color: '#60a5fa' },
+          { id: 'HISTORY' as const, nameAr: 'الدراسات الاجتماعية وإدارة الموارد', nameEn: 'Social Studies & Resource Management', descAr: 'الجغرافيا الاقتصادية والتاريخ التنموي للمملكة وتطور قطاع الأعمال', descEn: 'Economic geography and Saudi business development', icon: <Compass size={24} />, color: '#f59e0b' }
+        ];
+      }
+      if (isSharia) {
+        return [
+          ...commonCourses,
+          { id: 'HISTORY' as const, nameAr: 'التاريخ الوطني والدراسات الاجتماعية', nameEn: 'National History & Social Studies', descAr: 'التاريخ الإسلامي وتاريخ الدولة السعودية والعلاقات السياسية والحضارية', descEn: 'Islamic history, Saudi state history, and social relations', icon: <Compass size={24} />, color: '#f59e0b' },
+          { id: 'GEOGRAPHY' as const, nameAr: 'الجغرافيا والمواطنة البيئية', nameEn: 'Geography & Environmental Citizenship', descAr: 'التوزيع السكاني والبيئة والموارد الطبيعية في العالم الإسلامي', descEn: 'Population distribution, environment, and natural resources', icon: <Globe2 size={24} />, color: '#10b981' }
+        ];
+      }
+      return [
+        ...commonCourses,
+        { id: 'MATH' as const, nameAr: 'الرياضيات 2 (المسار العام)', nameEn: 'Mathematics 2 (General Track)', descAr: 'المصفوفات والدوال كثيرة الحدود والعمليات عليها وتطبيقاتها', descEn: 'Matrices, polynomial functions, and operations', icon: <Calculator size={24} />, color: '#60a5fa' },
+        { id: 'PHYSICS' as const, nameAr: 'الفيزياء 2 (المسار العام)', nameEn: 'Physics 2 (General Track)', descAr: 'الحركة الدورانية والزخم والحرارة وقوانين الديناميكا الحرارية', descEn: 'Rotational motion, momentum, heat, and thermodynamics', icon: <Atom size={24} />, color: '#38bdf8' },
+        { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 2 (المسار العام)', nameEn: 'Chemistry 2 (General Track)', descAr: 'الحسابات الكيميائية والروابط والمحاليل وحالات المادة', descEn: 'Stoichiometry, bonding, solutions, and states of matter', icon: <FlaskConical size={24} />, color: '#f472b6' },
+        { id: 'BIOLOGY' as const, nameAr: 'الأحياء 2 (المسار العام)', nameEn: 'Biology 2 (General Track)', descAr: 'أجهزة الدوران والتنفس والإخراج والهضم والتنظيم العصبي', descEn: 'Circulatory, respiratory, excretory, and nervous systems', icon: <Dna size={24} />, color: '#34d399' },
+        { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية 2 (المسار العام)', nameEn: 'Digital Technology 2 (General Track)', descAr: 'علم البيانات، الذكاء الاصطناعي، والتصميم الرقمي والتسويق', descEn: 'Data science, AI, and digital design fundamentals', icon: <Code2 size={24} />, color: '#c084fc' },
+        { id: 'HISTORY' as const, nameAr: 'التاريخ (المسار العام)', nameEn: 'History (General Track)', descAr: 'تاريخ المملكة والمواطنة والتطور الحضاري والاقتصادي', descEn: 'Saudi history, citizenship, and modern development', icon: <Compass size={24} />, color: '#f59e0b' },
+        { id: 'HEALTH_SCIENCE' as const, nameAr: 'اللياقة والثقافة الصحية', nameEn: 'Health Fitness & Physical Wellness', descAr: 'النمط الصحي، اللياقة البدنية، والتغذية السليمة والوقاية', descEn: 'Healthy lifestyle, physical fitness, nutrition, and prevention', icon: <ShieldCheck size={24} />, color: '#e11d48' }
+      ];
+    }
+    if (selectedCountry === 'SA' && selectedGrade === 'G12') {
+      const isCs = selectedTrack === 'CS_ENGINEERING';
+      const isHealth = selectedTrack === 'HEALTH_LIFE';
+      const isBusiness = selectedTrack === 'BUSINESS';
+      const isSharia = selectedTrack === 'SHARIA_HUMANITIES';
+      const commonCourses = [
+        { id: 'ENGLISH' as const, nameAr: 'اللغة الإنجليزية 3 (Mega Goal 3)', nameEn: 'English 3 (Mega Goal 3)', descAr: 'كتاب وزارة التعليم المعتمد لمسارات الصف الثالث الثانوي', descEn: 'Official Ministry textbook for Secondary Grade 12 pathways', icon: <BookOpen size={24} />, color: '#a78bfa' },
+        { id: 'ARABIC_LIT' as const, nameAr: 'الدراسات الأدبية والكفايات اللغوية', nameEn: 'Arabic Literary Studies & Competencies', descAr: 'الأدب العربي عبر العصور وفنون النقد والبلاغة والتحليل الأدبي', descEn: 'Arabic literature, literary criticism, rhetoric, and textual analysis', icon: <BookMarked size={24} />, color: '#10b981' },
+        { id: 'ISLAMIC_STUDIES' as const, nameAr: 'الدراسات الإسلامية والعلوم الشرعية', nameEn: 'Islamic Studies & Advanced Sharia', descAr: 'منهاج وزارة التعليم المعتمد للصف الثالث الثانوي مسارات', descEn: 'Accredited Islamic studies curriculum for Grade 12 pathways', icon: <Award size={24} />, color: '#fbbf24' }
+      ];
+      if (isCs) {
+        return [
+          ...commonCourses,
+          { id: 'MATH' as const, nameAr: 'الرياضيات 3 المتقدمة (التفاضل والتكامل) — مسار الحاسب والهندسة', nameEn: 'Mathematics 3 (Calculus) — CS & Engineering', descAr: 'النهايات والاشتقاق والتكامل والمتجهات والإحداثيات القطبية والأعداد المركبة', descEn: 'Limits, derivatives, integrals, vectors, polar coordinates, and complex numbers', icon: <Calculator size={24} />, color: '#60a5fa' },
+          { id: 'PHYSICS' as const, nameAr: 'الفيزياء 3 — مسار الحاسب والهندسة', nameEn: 'Physics 3 — CS & Engineering Track', descAr: 'الكهرباء التيارية، الدوائر الكهربائية، المجالات المغناطيسية، والفيزياء الحديثة', descEn: 'Current electricity, electric circuits, magnetic fields, and modern physics', icon: <Atom size={24} />, color: '#38bdf8' },
+          { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية 3 (الأمن السيبراني والذكاء الاصطناعي وإنترنت الأشياء)', nameEn: 'Digital Tech 3 (Cybersecurity, IoT & AI)', descAr: 'هندسة الشبكات، التشفير وحماية البيانات، إنترنت الأشياء والتعلم الآلي', descEn: 'Network engineering, cryptography, data protection, IoT, and machine learning', icon: <Code2 size={24} />, color: '#c084fc' },
+          { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 3 — مسار الحاسب والهندسة', nameEn: 'Chemistry 3 — CS & Engineering Track', descAr: 'الاتزان الكيميائي وسرعة التفاعلات والكيمياء الكهربية والمركبات العضوية', descEn: 'Chemical equilibrium, reaction rates, electrochemistry, and organic compounds', icon: <FlaskConical size={24} />, color: '#f472b6' }
+        ];
+      }
+      if (isHealth) {
+        return [
+          ...commonCourses,
+          { id: 'BIOLOGY' as const, nameAr: 'الأحياء 3 والوراثة الجزيئية — مسار الصحة والحياة', nameEn: 'Biology 3 & Molecular Genetics — Health & Life', descAr: 'التنظيم الجيني، التكنولوجيا الحيوية، المناعة المتقدمة، وبيولوجيا الخلية', descEn: 'Gene regulation, biotechnology, advanced immunology, and cellular biology', icon: <Dna size={24} />, color: '#34d399' },
+          { id: 'HEALTH_SCIENCE' as const, nameAr: 'العلوم الصحية المتقدمة وعلم وظائف الأعضاء', nameEn: 'Advanced Health Sciences & Physiology', descAr: 'التشريح البشري، المصطلحات الطبية، علم الأمراض، وأخلاقيات الرعاية الصحية', descEn: 'Human anatomy, medical terminology, pathology, and healthcare ethics', icon: <ShieldCheck size={24} />, color: '#e11d48' },
+          { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 3 والكيمياء الحيوية — مسار الصحة والحياة', nameEn: 'Chemistry 3 & Biochemistry — Health & Life', descAr: 'الأحماض والقواعد، الأكسدة والاختزال، والكيمياء العضوية الحيوية والبروتينات', descEn: 'Acids and bases, redox reactions, bio-organic chemistry, and proteins', icon: <FlaskConical size={24} />, color: '#f472b6' },
+          { id: 'PHYSICS' as const, nameAr: 'الفيزياء 3 — مسار الصحة والحياة', nameEn: 'Physics 3 — Health & Life Track', descAr: 'الكهرومغناطيسية، الأشعة والتصوير الطبي، والموجات وتطبيقاتها الحيوية', descEn: 'Electromagnetism, radiation, medical imaging, and biophysical acoustics', icon: <Atom size={24} />, color: '#38bdf8' },
+          { id: 'MATH' as const, nameAr: 'الرياضيات 3 والإحصاء التطبيقي — مسار الصحة والحياة', nameEn: 'Mathematics 3 & Applied Biostatistics', descAr: 'التفاضل والتكامل الأساسي، التوزيعات الاحتمالية، وتحليل البيانات الصحية', descEn: 'Calculus fundamentals, probability distributions, and health data analysis', icon: <Calculator size={24} />, color: '#60a5fa' }
+        ];
+      }
+      if (isBusiness) {
+        return [
+          ...commonCourses,
+          { id: 'MATH' as const, nameAr: 'الرياضيات والإحصاء التطبيقي لإدارة الأعمال', nameEn: 'Business Applied Mathematics & Statistics', descAr: 'التمويل والاستثمار، تحليل سلاسل القيمة، التنبؤ المالي، والقرارات الاستثمارية', descEn: 'Finance and investment, forecasting, and quantitative business decisions', icon: <Calculator size={24} />, color: '#60a5fa' },
+          { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية 3 ونظم المعلومات الإدارية (MIS)', nameEn: 'Digital Tech 3 & Management Info Systems', descAr: 'التجارة الإلكترونية، قواعد البيانات الضخمة، التحول الرقمي وحوكمة النظم', descEn: 'E-commerce, big data, digital transformation, and business systems', icon: <Code2 size={24} />, color: '#c084fc' }
+        ];
+      }
+      if (isSharia) {
+        return [
+          ...commonCourses,
+          { id: 'HISTORY' as const, nameAr: 'التاريخ الوطني والعالم المعاصر', nameEn: 'National History & Contemporary World', descAr: 'دور المملكة الإقليمي والدولي، المنظمات العالمية، والقضايا السياسية المعاصرة', descEn: 'Saudi regional and international role, global organizations, and contemporary issues', icon: <Compass size={24} />, color: '#f59e0b' },
+          { id: 'GEOGRAPHY' as const, nameAr: 'الجغرافيا السياسية والاقتصادية', nameEn: 'Political & Economic Geography', descAr: 'الجغرافيا السياسية، الحدود الدولية، التكتلات الاقتصادية، والملاحة العالمية', descEn: 'Political geography, borders, economic blocs, and global transport routes', icon: <Globe2 size={24} />, color: '#10b981' }
+        ];
+      }
+      return [
+        ...commonCourses,
+        { id: 'MATH' as const, nameAr: 'الرياضيات 3 (المسار العام)', nameEn: 'Mathematics 3 (General Track)', descAr: 'الدوال وتحليلها، المتجهات، الإحداثيات القطبية، وحساب التفاضل والتكامل', descEn: 'Functions and analysis, vectors, polar coordinates, and calculus', icon: <Calculator size={24} />, color: '#60a5fa' },
+        { id: 'PHYSICS' as const, nameAr: 'الفيزياء 3 (المسار العام)', nameEn: 'Physics 3 (General Track)', descAr: 'أساسيات الضوء والانعكاس والانكسار والمجالات الكهربائية والمغناطيسية', descEn: 'Optics, reflection, refraction, electric and magnetic fields', icon: <Atom size={24} />, color: '#38bdf8' },
+        { id: 'CHEMISTRY' as const, nameAr: 'الكيمياء 3 (المسار العام)', nameEn: 'Chemistry 3 (General Track)', descAr: 'الاتزان الكيميائي والأحماض والقواعد والأكسدة والكيمياء العضوية', descEn: 'Equilibrium, acids and bases, redox, and organic chemistry', icon: <FlaskConical size={24} />, color: '#f472b6' },
+        { id: 'BIOLOGY' as const, nameAr: 'الأحياء 3 (المسار العام)', nameEn: 'Biology 3 (General Track)', descAr: 'التنظيم الخلوي والوراثة الجزيئية والمناعة وتطبيقات التكنولوجيا الحيوية', descEn: 'Cellular regulation, molecular genetics, immunity, and biotechnology', icon: <Dna size={24} />, color: '#34d399' },
+        { id: 'COMPUTER_SCIENCE' as const, nameAr: 'التقنية الرقمية 3 (المسار العام)', nameEn: 'Digital Technology 3 (General Track)', descAr: 'الأمن السيبراني، الذكاء الاصطناعي، إنترنت الأشياء، وبناء التطبيقات', descEn: 'Cybersecurity, AI, IoT, and intelligent applications', icon: <Code2 size={24} />, color: '#c084fc' }
+      ];
+    }
     if (selectedCountry === 'EG' && selectedGrade === 'G12') {
       const isBio = selectedTrack === 'SCIENCE_BIO' || selectedTrack === 'HEALTH_LIFE';
       const isMath = selectedTrack === 'SCIENCE_MATH' || selectedTrack === 'CS_ENGINEERING';
@@ -1052,7 +1185,10 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       gradeLevel: selectedGrade,
       educationTrack: selectedTrack,
       specialization: (isPrim || isMid) ? 'GENERAL' : getSpecializationForEducationTrack(selectedTrack),
-      subject: selectedSubject === 'ENGLISH' && !englishCourseAvailable
+      subject: (selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade) &&
+        !isSaudiSecondarySubjectAvailable(selectedSubject, selectedGrade, selectedTrack, educationType))
+        ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
+        : selectedSubject === 'ENGLISH' && !englishCourseAvailable
         ? isPrim ? 'PRIMARY_MATH' : isMid ? 'GENERAL_SCIENCE' : 'PHYSICS'
         : selectedSubject === 'PHYSICS' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
           !isSaudiPublicG11PhysicsAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)

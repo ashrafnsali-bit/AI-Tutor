@@ -42,6 +42,7 @@ import {
 } from '../data/egyptSecondaryCoreCurriculumData';
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
+import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
 import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
 import { 
@@ -354,6 +355,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         !isSudanPublicGrade6SubjectAvailable(subject, country, grade, educationType, track) &&
         !isSudanPublicMiddleSubjectAvailable(subject, country, grade, educationType, track)) {
       return defaultSubjectForGrade(grade);
+    }
+    if (
+      country === 'SA' &&
+      ['G10', 'G11', 'G12'].includes(grade) &&
+      !isSaudiSecondarySubjectAvailable(subject, grade, track, educationType)
+    ) {
+      return getSaudiSecondarySubjects(grade, track)[0] ?? 'MATH';
     }
     if (
       subject === 'COMPUTER_SCIENCE' &&
@@ -1028,6 +1036,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                                 {getNationalSubjectLabel(subj, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
                               </option>
                             ))}
+                        </optgroup>
+                      ) : regCountry === 'SA' && (regGrade === 'G10' || regGrade === 'G11' || regGrade === 'G12') ? (
+                        <optgroup label={regGrade === 'G10'
+                          ? (regLanguage === 'en' ? 'Common First Year courses' : 'مقررات السنة الأولى المشتركة')
+                          : (regLanguage === 'en' ? `Saudi Secondary (${regGrade}) — Pathways` : `مقررات المرحلة الثانوية (${regGrade}) — نظام المسارات`)}>
+                          {getSaudiSecondarySubjects(regGrade, regEducationTrack).map((subject) => (
+                            <option key={subject} value={subject}>
+                              {getNationalSubjectLabel(subject, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
+                            </option>
+                          ))}
                         </optgroup>
                       ) : (
                       <optgroup label="المواد التخصصية">

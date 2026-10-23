@@ -489,6 +489,12 @@ export function getAvailableTracksForCountryAndGrade(
       return ['SCIENCE_BIO', 'SCIENCE_MATH', 'SHARIA_HUMANITIES'];
     }
   }
+  if (country === 'SA') {
+    if (gradeLevel === 'G10') {
+      return ['GENERAL'];
+    }
+    return ['GENERAL', 'CS_ENGINEERING', 'HEALTH_LIFE', 'BUSINESS', 'SHARIA_HUMANITIES'];
+  }
   return getCountryInfo(country).availableTracks;
 }
 
@@ -603,6 +609,14 @@ export function isSaudiPublicG11EnglishAvailable(
   return country === 'SA' && gradeLevel === 'G11' && educationType === 'PUBLIC';
 }
 
+export function isSaudiPublicG12EnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && gradeLevel === 'G12' && educationType === 'PUBLIC';
+}
+
 export function isSaudiPublicEnglishAvailable(
   country: string,
   gradeLevel: string | undefined,
@@ -612,7 +626,8 @@ export function isSaudiPublicEnglishAvailable(
     isSaudiPublicG3EnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicG5EnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicCommonYearEnglishAvailable(country, gradeLevel, educationType) ||
-    isSaudiPublicG11EnglishAvailable(country, gradeLevel, educationType);
+    isSaudiPublicG11EnglishAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicG12EnglishAvailable(country, gradeLevel, educationType);
 }
 
 export function isSaudiPublicG5TajweedAvailable(
@@ -2971,12 +2986,15 @@ export function getNationalSubjectLabel(
         return isEn ? 'Middle School Science' : 'العلوم (المرحلة المتوسطة السعودية)';
       case 'MATH':
         if (_gradeLevel === 'G10' && educationType === 'PUBLIC') {
-          return isEn ? 'Mathematics 1-1 (Common First Year)' : 'رياضيات 1-1 (السنة الأولى المشتركة)';
+          return isEn ? 'Mathematics 1 (Common First Year)' : 'الرياضيات 1 (السنة الأولى المشتركة)';
         }
         if (_gradeLevel === 'G11' && educationType === 'PUBLIC') {
-          return isEn ? 'Mathematics 2-1 (Saudi Pathways)' : 'رياضيات 2-1 (نظام المسارات)';
+          return isEn ? 'Mathematics 2 (Second Secondary — Pathways)' : 'الرياضيات 2 (الصف الثاني الثانوي — نظام المسارات)';
         }
-        return isEn ? 'Mathematics (Masarat Track)' : 'الرياضيات (نظام مسارات الثانوية)';
+        if (_gradeLevel === 'G12' && educationType === 'PUBLIC') {
+          return isEn ? 'Mathematics 3 (Third Secondary — Pathways)' : 'الرياضيات 3 (الصف الثالث الثانوي — نظام المسارات)';
+        }
+        return isEn ? 'Mathematics (Saudi Secondary Pathways)' : 'الرياضيات (نظام مسارات الثانوية)';
       case 'PHYSICS':
         if (_gradeLevel === 'G10') {
           return educationType === 'PUBLIC'
@@ -2985,8 +3003,13 @@ export function getNationalSubjectLabel(
         }
         if (_gradeLevel === 'G11') {
           return isSaudiPublicG11PhysicsAvailable(country, _gradeLevel, educationType, track)
-            ? isEn ? 'Physics 2 (Second Secondary)' : 'الفيزياء 2 (الصف الثاني الثانوي)'
+            ? isEn ? 'Physics 2 (Second Secondary — Pathways)' : 'الفيزياء 2 (الصف الثاني الثانوي — نظام المسارات)'
             : isEn ? 'Physics 2 (Unverified Track)' : 'الفيزياء 2 (مسار غير متحقق)';
+        }
+        if (_gradeLevel === 'G12') {
+          return educationType === 'PUBLIC'
+            ? isEn ? 'Physics 3 (Third Secondary — Pathways)' : 'الفيزياء 3 (الصف الثالث الثانوي — نظام المسارات)'
+            : isEn ? 'Physics 3 (Unverified Track)' : 'الفيزياء 3 (مسار غير متحقق)';
         }
         return isEn ? 'Physics (CS & Engineering)' : 'الفيزياء (مسار علوم الحاسب والهندسة)';
       case 'CHEMISTRY':
@@ -2994,38 +3017,57 @@ export function getNationalSubjectLabel(
           return isEn ? 'Chemistry 1 (Common First Year)' : 'الكيمياء 1 (السنة الأولى المشتركة)';
         }
         if (_gradeLevel === 'G11' && educationType === 'PUBLIC') {
-          return isEn ? 'Chemistry 2-1 (Second Secondary)' : 'الكيمياء 2-1 (الصف الثاني الثانوي)';
+          return isEn ? 'Chemistry 2 (Second Secondary — Pathways)' : 'الكيمياء 2 (الصف الثاني الثانوي — نظام المسارات)';
         }
         if (_gradeLevel === 'G11') {
-          return isEn ? 'Chemistry 2-1 (Unverified Track)' : 'الكيمياء 2-1 (مسار غير متحقق)';
+          return isEn ? 'Chemistry 2 (Unverified Track)' : 'الكيمياء 2 (مسار غير متحقق)';
         }
         if (_gradeLevel === 'G12' && educationType === 'PUBLIC') {
-          return isEn ? 'Chemistry 3 (Third Secondary)' : 'الكيمياء 3 (الثالث الثانوي)';
+          return isEn ? 'Chemistry 3 (Third Secondary — Pathways)' : 'الكيمياء 3 (الصف الثالث الثانوي — نظام المسارات)';
         }
         return isEn ? 'Chemistry (Health & Life)' : 'الكيمياء (مسار الصحة والحياة)';
       case 'BIOLOGY':
         if (_gradeLevel === 'G10') {
           return educationType === 'PUBLIC'
-            ? isEn ? 'Biology 1 (Common First Year)' : 'الأحياء 1 (السنة الأولى المشتركة)'
+            ? isEn ? 'Biology 1 & Ecology (Common First Year)' : 'علم البيئة والأحياء 1 (السنة الأولى المشتركة)'
             : isEn ? 'Biology 1 (Unverified Track)' : 'الأحياء 1 (مسار غير متحقق)';
         }
         if (_gradeLevel === 'G11') {
           return isSaudiPublicG11BiologyAvailable(country, _gradeLevel, educationType, track)
-            ? isEn ? 'Biology 2-1 (Second Secondary)' : 'الأحياء 2-1 (الصف الثاني الثانوي)'
-            : isEn ? 'Biology 2-1 (Unverified Track)' : 'الأحياء 2-1 (مسار غير متحقق)';
+            ? isEn ? 'Biology 2 (Second Secondary — Pathways)' : 'الأحياء 2 (الصف الثاني الثانوي — نظام المسارات)'
+            : isEn ? 'Biology 2 (Unverified Track)' : 'الأحياء 2 (مسار غير متحقق)';
+        }
+        if (_gradeLevel === 'G12') {
+          return educationType === 'PUBLIC'
+            ? isEn ? 'Biology 3 (Third Secondary — Pathways)' : 'الأحياء 3 (الصف الثالث الثانوي — نظام المسارات)'
+            : isEn ? 'Biology 3 (Unverified Track)' : 'الأحياء 3 (مسار غير متحقق)';
         }
         return isEn ? 'Biology (Health & Life)' : 'الأحياء (مسار الصحة والحياة)';
       case 'HEALTH_SCIENCE':
+        if (_gradeLevel === 'G12') {
+          return isEn ? 'Health Sciences & Patient Care (Third Secondary)' : 'العلوم الصحية والرعاية الطبية (الصف الثالث الثانوي)';
+        }
         return isSaudiPublicG11HealthScienceAvailable(country, _gradeLevel, educationType, track)
-          ? isEn ? 'Health Science Principles (Second Secondary)' : 'مبادئ العلوم الصحية (الصف الثاني الثانوي)'
+          ? isEn ? 'Health Science Principles (Second Secondary)' : 'مبادئ العلوم الصحية واللياقة (الصف الثاني الثانوي)'
           : isEn ? 'Health Science Principles (Unverified Track)' : 'مبادئ العلوم الصحية (مسار غير متحقق)';
       case 'HISTORY':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Social Studies (Common First Year)' : 'الدراسات الاجتماعية والوطنية (السنة الأولى المشتركة)';
+        }
         if (_gradeLevel === 'G11') {
-          return educationType === 'PUBLIC' && track === 'GENERAL'
-            ? isEn ? 'History (Second Secondary)' : 'التاريخ (الصف الثاني الثانوي)'
+          return educationType === 'PUBLIC'
+            ? isEn ? 'History (Second Secondary — Pathways)' : 'التاريخ (الصف الثاني الثانوي — نظام المسارات)'
             : isEn ? 'History (Unverified Track)' : 'التاريخ (مسار غير متحقق)';
         }
+        if (_gradeLevel === 'G12') {
+          return isEn ? 'National History & Contemporary World' : 'التاريخ الوطني والعالم المعاصر (الصف الثالث الثانوي)';
+        }
         break;
+      case 'GEOGRAPHY':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Geography & Environment (Common First Year)' : 'الجغرافيا والبيئة (السنة الأولى المشتركة)';
+        }
+        return isEn ? 'Geography & Human Settlement' : 'الجغرافيا ودراسات التوطين (المسار الشرعي والإنساني)';
       case 'ENGLISH':
         return isSaudiPublicG2EnglishAvailable(country, _gradeLevel, educationType)
           ? isEn ? 'English (We Can! Student’s Book 2 — Grade 2)' : 'اللغة الإنجليزية (We Can! كتاب الطالب 2 — الصف الثاني)'
@@ -3034,15 +3076,20 @@ export function getNationalSubjectLabel(
           : isSaudiPublicG5EnglishAvailable(country, _gradeLevel, educationType)
           ? isEn ? 'English (Top Goal, Student Book 2 — Grade 5)' : 'اللغة الإنجليزية (Top Goal، كتاب الطالب 2 — الصف الخامس)'
           : isSaudiPublicCommonYearEnglishAvailable(country, _gradeLevel, educationType)
-          ? isEn ? 'English 1 (Mega Goal)' : 'اللغة الإنجليزية 1 (Mega Goal)'
+          ? isEn ? 'English 1 (Mega Goal 1)' : 'اللغة الإنجليزية 1 (Mega Goal 1)'
           : _gradeLevel === 'G10'
-          ? isEn ? 'English 1 (Unverified Track)' : 'اللغة الإنجليزية 1 (مسار غير متحقق)'
+          ? isEn ? 'English 1 (Mega Goal 1)' : 'اللغة الإنجليزية 1 (Mega Goal 1)'
           : isSaudiPublicG11EnglishAvailable(country, _gradeLevel, educationType)
           ? isEn ? 'English 2 (Mega Goal 2)' : 'اللغة الإنجليزية 2 (Mega Goal 2)'
           : _gradeLevel === 'G11'
-          ? isEn ? 'English 2 (Unverified Track)' : 'اللغة الإنجليزية 2 (مسار غير متحقق)'
+          ? isEn ? 'English 2 (Mega Goal 2)' : 'اللغة الإنجليزية 2 (Mega Goal 2)'
+          : isSaudiPublicG12EnglishAvailable(country, _gradeLevel, educationType) || _gradeLevel === 'G12'
+          ? isEn ? 'English 3 (Mega Goal 3)' : 'اللغة الإنجليزية 3 (Mega Goal 3)'
           : isEn ? `English (Unverified ${_gradeLevel ?? 'Saudi'} edition)` : `اللغة الإنجليزية (${_gradeLevel ?? 'صف سعودي'} غير متحقق)`;
       case 'LIFE_SKILLS':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Life Skills & Career Education (Common First Year)' : 'المهارات الحياتية والتربية المهنية (السنة الأولى المشتركة)';
+        }
         return isSaudiPublicG3LifeSkillsAvailable(country, _gradeLevel, educationType, track)
           ? isEn
             ? 'Life and Family Skills (Grade 3)'
@@ -3064,6 +3111,9 @@ export function getNationalSubjectLabel(
             ? 'Life and Family Skills (not available for this grade, track, or education type)'
             : 'المهارات الحياتية والأسرية (غير متاحة لهذا الصف أو المسار أو نوع التعليم)';
       case 'COMPUTER_SCIENCE':
+        if (_gradeLevel === 'G10') {
+          return isEn ? 'Digital Technology 1 (Common First Year)' : 'التقنية الرقمية 1 (السنة الأولى المشتركة)';
+        }
         if (_gradeLevel === 'G11') {
           return isSaudiPublicBusinessG11DigitalTechnologyAvailable(
             country,
@@ -3071,8 +3121,11 @@ export function getNationalSubjectLabel(
             educationType,
             track
           )
-            ? isEn ? 'Digital Technology 2 (Business Management)' : 'التقنية الرقمية 2 (مسار إدارة الأعمال)'
-            : isEn ? 'Digital Technology 2 (Unverified Track)' : 'التقنية الرقمية 2 (مسار غير متحقق)';
+            ? isEn ? 'Digital Technology 2 (Business Management)' : 'التقنية الرقمية 2 (مسار إدارة الأعمال BM)'
+            : isEn ? 'Digital Technology 2 (Second Secondary — Pathways)' : 'التقنية الرقمية 2 (الصف الثاني الثانوي — نظام المسارات)';
+        }
+        if (_gradeLevel === 'G12') {
+          return isEn ? 'Digital Technology 3 (Third Secondary — Pathways)' : 'التقنية الرقمية 3 (الصف الثالث الثانوي — نظام المسارات)';
         }
         if (country === 'SA' && _gradeLevel === 'G4') {
           return educationType === 'PUBLIC'
@@ -3099,15 +3152,20 @@ export function getNationalSubjectLabel(
       case 'ARABIC_LIT':
         if (_gradeLevel === 'G10' && educationType === 'PUBLIC') {
           return isEn
-            ? 'Arabic Language 1-1 (Language Competencies)'
-            : 'اللغة العربية 1-1 (الكفايات اللغوية)';
+            ? 'Arabic Language 1 (Language Competencies)'
+            : 'الكفايات اللغوية 1 (السنة الأولى المشتركة)';
         }
         if (_gradeLevel === 'G11' && educationType === 'PUBLIC') {
           return isEn
-            ? 'Arabic Language 1-2 (Language Competencies)'
-            : 'اللغة العربية 1-2 (الكفايات اللغوية)';
+            ? 'Arabic Language 2 (Language Competencies)'
+            : 'الكفايات اللغوية 2 (الصف الثاني الثانوي)';
         }
-        return isEn ? 'Literary Studies (Sharia Track)' : 'الدراسات الأدبية واللغوية (المسار الشرعي)';
+        if (_gradeLevel === 'G12' && educationType === 'PUBLIC') {
+          return isEn
+            ? 'Arabic Literary Studies (Third Secondary)'
+            : 'الدراسات الأدبية والكفايات (الصف الثالث الثانوي)';
+        }
+        return isEn ? 'Literary Studies & Arabic Competencies' : 'الدراسات الأدبية والكفايات اللغوية';
       default:
         break;
     }

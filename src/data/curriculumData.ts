@@ -90,6 +90,15 @@ import {
   isEgyptG12SubjectAvailable
 } from './egyptSecondaryG12CurriculumData';
 export {
+  getSaudiSecondaryCurriculum,
+  isSaudiSecondarySubjectAvailable,
+  getSaudiSecondarySubjects
+} from './saudiSecondaryCurriculumData';
+import {
+  getSaudiSecondaryCurriculum,
+  isSaudiSecondarySubjectAvailable
+} from './saudiSecondaryCurriculumData';
+export {
   getEgyptPrepCurriculum,
   isEgyptPrepSubjectAvailable,
   getEgyptPrepSubjects
@@ -5019,6 +5028,12 @@ export function getCurriculumForSubject(
   if (country === 'EG' && gradeLevel === 'G12') {
     return getEgyptG12Curriculum(subject, _track, educationType);
   }
+  if (country === 'SA' && (gradeLevel === 'G10' || gradeLevel === 'G11' || gradeLevel === 'G12')) {
+    if (!isSaudiSecondarySubjectAvailable(subject, gradeLevel as GradeLevel, _track, educationType)) {
+      return [];
+    }
+    return getSaudiSecondaryCurriculum(subject, gradeLevel as GradeLevel, _track, educationType);
+  }
   if (country === 'EG' && ['G7', 'G8', 'G9'].includes(gradeLevel || '')) {
     return getEgyptPrepCurriculum(subject, gradeLevel as GradeLevel, educationType, _track);
   }
@@ -5879,6 +5894,11 @@ export function loadSubjectLectures(
 ): Lecture[] {
   if (!isActiveCurriculumCountry(country as CountryCode)) return [];
   if (
+    country === 'SA' &&
+    (gradeLevel === 'G10' || gradeLevel === 'G11' || gradeLevel === 'G12') &&
+    !isSaudiSecondarySubjectAvailable(subject, gradeLevel as GradeLevel, track, educationType)
+  ) return [];
+  if (
     country === 'EG' &&
     gradeLevel === 'G10' &&
     !isEgyptG10SubjectAvailable(subject, country as CountryCode, gradeLevel as GradeLevel, educationType, track)
@@ -6161,6 +6181,7 @@ export function loadSubjectLectures(
     isEgyptVerifiedSecondaryLanguageRoute ||
     isEgyptVerifiedBookCourse ||
     isVerifiedSaudiG11History ||
+    (country === 'SA' && (gradeLevel === 'G10' || gradeLevel === 'G11' || gradeLevel === 'G12')) ||
     isBlockedGeographyHistoryRoute(subject, country, educationType, track);
   const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country, educationType, track);
   

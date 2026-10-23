@@ -5,7 +5,6 @@ import { detectStudentCountry, setManualCountryOverride } from '../services/geoS
 import {
   ACTIVE_CURRICULUM_COUNTRIES,
   EDUCATION_TYPE_LABELS,
-  TRACK_LABELS,
   getActiveCurriculumCountry,
   getCountryInfo,
   getSpecializationForEducationTrack,
@@ -44,6 +43,7 @@ import {
 } from '../data/egyptSecondaryCoreCurriculumData';
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
+import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
 import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
 import { getSubjectVisual } from '../data/subjectVisuals';
@@ -337,6 +337,18 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   });
 
   useEffect(() => {
+    if (
+      formData.country === 'SA' &&
+      ['G10', 'G11', 'G12'].includes(formData.gradeLevel) &&
+      !isSaudiSecondarySubjectAvailable(formData.subject, formData.gradeLevel, formData.educationTrack, formData.educationType)
+    ) {
+      const allowed = getSaudiSecondarySubjects(formData.gradeLevel, formData.educationTrack);
+      setFormData(current => ({
+        ...current,
+        subject: allowed[0] ?? 'MATH'
+      }));
+      return;
+    }
     if (
       formData.country === 'SA' &&
       formData.gradeLevel === 'G11' &&
@@ -1432,18 +1444,14 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                     ))}
                   </optgroup>
                 ) : formData.country === 'SA' &&
-                  formData.gradeLevel === 'G11' &&
-                  formData.educationTrack === 'BUSINESS' ? (
-                  <optgroup label={TRACK_LABELS.BUSINESS[formData.language === 'en' ? 'en' : 'ar']}>
-                    {isSaudiPublicBusinessG11DigitalTechnologyAvailable(
-                      formData.country,
-                      formData.gradeLevel,
-                      formData.educationType,
-                      formData.educationTrack
-                    ) && (
-                      <option value="COMPUTER_SCIENCE">
+                  (formData.gradeLevel === 'G10' || formData.gradeLevel === 'G11' || formData.gradeLevel === 'G12') ? (
+                  <optgroup label={formData.gradeLevel === 'G10'
+                    ? (formData.language === 'en' ? 'Common First Year courses' : 'مقررات السنة الأولى المشتركة')
+                    : (formData.language === 'en' ? `Saudi Secondary (${formData.gradeLevel}) — Pathways` : `مقررات المرحلة الثانوية (${formData.gradeLevel}) — نظام المسارات`)}>
+                    {getSaudiSecondarySubjects(formData.gradeLevel, formData.educationTrack).map((subject) => (
+                      <option key={subject} value={subject}>
                         {getNationalSubjectLabel(
-                          'COMPUTER_SCIENCE',
+                          subject,
                           formData.country,
                           formData.gradeLevel,
                           formData.language,
@@ -1451,15 +1459,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                           formData.educationTrack
                         )}
                       </option>
-                    )}
-                    <option value="ARABIC_LIT">
-                      {getNationalSubjectLabel(
-                        'ARABIC_LIT',
-                        formData.country,
-                        formData.gradeLevel,
-                        formData.language
-                      )}
-                    </option>
+                    ))}
                   </optgroup>
                 ) : formData.specialization === 'HUMANITIES' ? (
                   <optgroup label={t.specLabels.HUMANITIES}>
