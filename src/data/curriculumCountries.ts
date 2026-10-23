@@ -2364,12 +2364,21 @@ export function getNationalSubjectLabel(
     const grade10Labels: Partial<Record<Subject, [string, string]>> = {
       ARABIC_LIT: ['Arabic Language', 'اللغة العربية'],
       ARABIC_LANG: ['Arabic Language', 'اللغة العربية'],
+      ENGLISH: ['English (First Language)', 'اللغة الإنجليزية (لغة أولى)'],
+      FRENCH: ['French (Second Language)', 'اللغة الفرنسية (لغة ثانية)'],
+      GERMAN: ['German (Second Language)', 'اللغة الألمانية (لغة ثانية)'],
+      ITALIAN: ['Italian (Second Language)', 'اللغة الإيطالية (لغة ثانية)'],
       MATH: ['Mathematics', 'الرياضيات'],
-      HISTORY: ['History (Civilization of Egypt & Ancient World)', 'التاريخ (حضارة مصر والعالم القديم)'],
       GENERAL_SCIENCE: ['Integrated Science', 'العلوم المتكاملة'],
+      PHYSICS: ['Physics', 'الفيزياء'],
+      CHEMISTRY: ['Chemistry', 'الكيمياء'],
+      BIOLOGY: ['Biology', 'الأحياء'],
+      HISTORY: ['History (Civilization of Egypt & Ancient World)', 'التاريخ (حضارة مصر والعالم القديم)'],
+      GEOGRAPHY: ['Geography (Geography of Egypt)', 'الجغرافيا (جغرافية مصر)'],
       PHILOSOPHY: ['Philosophy and Logic', 'الفلسفة والمنطق'],
       ISLAMIC_STUDIES: ['Islamic Religious Education', 'التربية الدينية الإسلامية'],
-      COMPUTER_SCIENCE: ['ICT & Information Technology', 'تكنولوجيا المعلومات والاتصالات']
+      COMPUTER_SCIENCE: ['ICT & Information Technology', 'تكنولوجيا المعلومات والاتصالات'],
+      NATIONAL_EDUCATION: ['National Education & Citizenship', 'التربية الوطنية والمواطنة']
     };
     const label = grade10Labels[subject];
     if (label) return isEn ? label[0] : label[1];

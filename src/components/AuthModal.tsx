@@ -36,7 +36,10 @@ import {
   getSudanPublicGrade12Subjects,
   isSudanPublicGrade12SubjectAvailable
 } from '../data/curriculumData';
-import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
+import {
+  getEgyptG10Subjects,
+  isEgyptG10SubjectAvailable
+} from '../data/egyptSecondaryCoreCurriculumData';
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
@@ -291,13 +294,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       return defaultSubjectForGrade(grade);
     }
     if (country === 'EG' && grade === 'G10') {
-      if (['MATH', 'HISTORY', 'GENERAL_SCIENCE', 'PHILOSOPHY', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE'].includes(subject)) {
-        return isEgyptG10BookCourseAvailable(subject, educationType, track) ? subject : 'MATH';
-      }
-      return ['ARABIC_LIT', 'ARABIC_LANG', 'ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(subject) &&
-        (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL')
+      return isEgyptG10SubjectAvailable(subject, country, grade, educationType, track)
         ? subject
-        : 'ARABIC_LIT';
+        : 'MATH';
     }
     if (country === 'EG' && grade === 'G11') {
       return isEgyptG11SubjectAvailable(subject, track, educationType) ? subject : 'ARABIC_LIT';
@@ -968,18 +967,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {!isPrimary && !isMiddle ? (
                       regCountry === 'EG' && regGrade === 'G10' ? (
                         <optgroup label={regLanguage === 'en' ? 'Egypt Secondary 1 textbook courses' : 'مقررات كتب الصف الأول الثانوي المصري'}>
-                          <option value="ARABIC_LIT">{getNationalSubjectLabel('ARABIC_LIT', regCountry, regGrade, regLanguage)}</option>
-                          <option value="ENGLISH">{getNationalSubjectLabel('ENGLISH', regCountry, regGrade, regLanguage)}</option>
-                          <option value="FRENCH">{getNationalSubjectLabel('FRENCH', regCountry, regGrade, regLanguage)}</option>
-                          <option value="GERMAN">{getNationalSubjectLabel('GERMAN', regCountry, regGrade, regLanguage)}</option>
-                          <option value="ITALIAN">{getNationalSubjectLabel('ITALIAN', regCountry, regGrade, regLanguage)}</option>
-                          {(['MATH', 'HISTORY', 'GENERAL_SCIENCE', 'PHILOSOPHY', 'ISLAMIC_STUDIES', 'COMPUTER_SCIENCE'] as Subject[])
-                            .filter((subject) => isEgyptG10BookCourseAvailable(subject, regEducationType, regEducationTrack))
-                            .map((subject) => (
-                              <option key={subject} value={subject}>
-                                {getNationalSubjectLabel(subject, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
-                              </option>
-                            ))}
+                          {getEgyptG10Subjects(regEducationTrack, regEducationType).map((subject) => (
+                            <option key={subject} value={subject}>
+                              {getNationalSubjectLabel(subject, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
+                            </option>
+                          ))}
                         </optgroup>
                       ) : regCountry === 'EG' && regGrade === 'G11' ? (
                         <optgroup label={regLanguage === 'en' ? 'Egypt Secondary 2 textbook courses' : 'مقررات كتب الصف الثاني الثانوي المصري'}>

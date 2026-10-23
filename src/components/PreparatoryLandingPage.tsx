@@ -35,7 +35,9 @@ import {
   isEgyptPrepSubjectAvailable,
   isEnglishCourseAvailable
 } from '../data/curriculumData';
-import { isEgyptG10BookCourseAvailable } from '../data/egyptSecondaryCoreCurriculumData';
+import {
+  isEgyptG10SubjectAvailable
+} from '../data/egyptSecondaryCoreCurriculumData';
 import { isForeignLanguageSubject, isArabicSubject } from '../data/foreignLanguageLessonLocalization';
 import { getSubjectVisual, getStageVisual } from '../data/subjectVisuals';
 import { detectStudentCountry, setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
@@ -155,9 +157,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
     const invalidEgyptG10Subject =
       selectedCountry === 'EG' &&
       selectedGrade === 'G10' &&
-      !((['ARABIC_LIT', 'ARABIC_LANG', 'ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(selectedSubject) &&
-        (educationType === 'PUBLIC' || educationType === 'PRIVATE')) ||
-        isEgyptG10BookCourseAvailable(selectedSubject, educationType, selectedTrack));
+      !isEgyptG10SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack);
     if (
       invalidSudanMiddleSubject ||
       invalidSudanGrade10Subject ||
@@ -404,23 +404,26 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
     }
     if (selectedCountry === 'EG' && selectedGrade === 'G10') {
       const books: { id: Subject; nameAr: string; nameEn: string; descAr: string; descEn: string; icon: React.ReactNode; color: string }[] = [
-        { id: 'ARABIC_LIT', nameAr: 'اللغة العربية (الفصل الأول)', nameEn: 'Arabic Language (Semester 1)', descAr: 'مقرر كتاب الوزارة للفصل الدراسي الأول 2026–2027', descEn: 'Ministry textbook course for Semester 1, 2026–2027', icon: <BookMarked size={28} />, color: '#34d399' },
-        { id: 'ENGLISH', nameAr: 'اللغة الإنجليزية', nameEn: 'English Language', descAr: 'كتاب وزارة التربية والتعليم المصرية، ست وحدات', descEn: 'Egyptian Ministry textbook, six units', icon: <BookOpen size={28} />, color: '#a78bfa' },
-        { id: 'FRENCH', nameAr: 'الفرنسية (لغة أولى / مسار اللغات)', nameEn: 'French First Language (Language Track)', descAr: 'مقرر مساند تختاره المدرسة، وليس كتابًا وزاريًا موثقًا', descEn: 'School-selected support course, not a verified Ministry textbook', icon: <Globe2 size={28} />, color: '#60a5fa' },
-        { id: 'GERMAN', nameAr: 'الألمانية (لغة ثانية)', nameEn: 'German (Second Language)', descAr: 'مقرر مساند تختاره المدرسة، وليس كتابًا وزاريًا موثقًا', descEn: 'School-selected support course, not a verified Ministry textbook', icon: <Globe2 size={28} />, color: '#60a5fa' },
-        { id: 'ITALIAN', nameAr: 'الإيطالية (لغة ثانية)', nameEn: 'Italian (Second Language)', descAr: 'مقرر مساند تختاره المدرسة، وليس كتابًا وزاريًا موثقًا', descEn: 'School-selected support course, not a verified Ministry textbook', icon: <Globe2 size={28} />, color: '#60a5fa' },
-        { id: 'MATH', nameAr: 'الرياضيات (الفصل الأول)', nameEn: 'Mathematics (Semester 1)', descAr: 'الجبر والدوال والتشابه وحساب المثلثات وفق موضوعات الكتاب المرفق', descEn: 'Algebra, functions, similarity, and trigonometry from the supplied book', icon: <Calculator size={28} />, color: '#60a5fa' },
-        { id: 'HISTORY', nameAr: 'التاريخ (الفصل الأول)', nameEn: 'History (Semester 1)', descAr: 'مصر والعالم القديم وفق الكتاب الوزاري المرفق', descEn: 'Egypt and the ancient world, based on the supplied Ministry textbook', icon: <BookOpen size={28} />, color: '#f59e0b' },
-        { id: 'GENERAL_SCIENCE', nameAr: 'العلوم المتكاملة (الفصل الأول)', nameEn: 'Integrated Science (Semester 1)', descAr: 'النظام البيئي المائي والغلاف الجوي وفق الكتاب المرفق', descEn: 'Aquatic ecosystems and the atmosphere from the supplied book', icon: <Microscope size={28} />, color: '#38bdf8' },
-        { id: 'PHILOSOPHY', nameAr: 'الفلسفة والمنطق (الفصل الأول)', nameEn: 'Philosophy and Logic (Semester 1)', descAr: 'التفكير الإنساني والتفلسف ومبادئ المنطق والاستدلال', descEn: 'Human thought, philosophical inquiry, logic, and reasoning', icon: <Brain size={28} />, color: '#c084fc' },
-        { id: 'ISLAMIC_STUDIES', nameAr: 'التربية الدينية الإسلامية', nameEn: 'Islamic Religious Education', descAr: 'مقرر الكتاب الوزاري للفصلين الدراسيين', descEn: 'Ministry textbook course for both semesters', icon: <Award size={28} />, color: '#fbbf24' },
-        { id: 'COMPUTER_SCIENCE', nameAr: 'تكنولوجيا المعلومات والاتصالات', nameEn: 'Information and Communication Technology', descAr: 'مقرر ICT من النسخة الإنجليزية للكتاب المرفق', descEn: 'ICT course from the supplied English-edition textbook', icon: <Code2 size={28} />, color: '#22c55e' }
+        { id: 'ARABIC_LIT', nameAr: 'اللغة العربية — الصف الأول الثانوي', nameEn: 'Arabic Language — Secondary 1', descAr: 'مقرر كتاب الوزارة للفصل الدراسي الأول (قراءة ونصوص ونحو وبلاغة وأدب)', descEn: 'Ministry textbook course for Semester 1 (Reading, Texts, Grammar, Rhetoric, Literature)', icon: <BookMarked size={28} />, color: '#34d399' },
+        { id: 'ENGLISH', nameAr: 'اللغة الإنجليزية (لغة أولى) — New Hello!', nameEn: 'English (First Language) — New Hello!', descAr: 'كتاب وزارة التربية والتعليم المصرية للصف الأول الثانوي', descEn: 'Egyptian Ministry textbook for Secondary 1', icon: <BookOpen size={28} />, color: '#a78bfa' },
+        { id: 'FRENCH', nameAr: 'اللغة الفرنسية (لغة ثانية)', nameEn: 'French (Second Language)', descAr: 'مقرر اللغة الأجنبية الثانية لطلاب الصف الأول الثانوي', descEn: 'Second Foreign Language course for Secondary 1 students', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        { id: 'GERMAN', nameAr: 'الألمانية (لغة ثانية)', nameEn: 'German (Second Language)', descAr: 'مقرر اللغة الأجنبية الثانية لطلاب الصف الأول الثانوي', descEn: 'Second Foreign Language course for Secondary 1 students', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        { id: 'ITALIAN', nameAr: 'الإيطالية (لغة ثانية)', nameEn: 'Italian (Second Language)', descAr: 'مقرر اللغة الأجنبية الثانية لطلاب الصف الأول الثانوي', descEn: 'Second Foreign Language course for Secondary 1 students', icon: <Globe2 size={28} />, color: '#60a5fa' },
+        { id: 'MATH', nameAr: 'الرياضيات — كتاب الصف الأول الثانوي', nameEn: 'Mathematics — Secondary 1', descAr: 'الجبر والدوال والتشابه وحساب المثلثات وفق كتاب الوزارة المعتمد', descEn: 'Algebra, functions, similarity, and trigonometry from the Ministry textbook', icon: <Calculator size={28} />, color: '#60a5fa' },
+        { id: 'GENERAL_SCIENCE', nameAr: 'العلوم المتكاملة — كتاب الصف الأول الثانوي', nameEn: 'Integrated Science — Secondary 1', descAr: 'المنهج المحدث لوزارة التربية والتعليم للعلوم المتكاملة', descEn: 'Updated Ministry of Education integrated science curriculum', icon: <Microscope size={28} />, color: '#38bdf8' },
+        { id: 'PHYSICS', nameAr: 'الفيزياء — الصف الأول الثانوي', nameEn: 'Physics — Secondary 1', descAr: 'القياس الفيزيائي والكميات المتجهة والحركة الخطية وقوانين نيوتن', descEn: 'Physical measurement, vectors, linear motion, and Newton’s laws', icon: <Atom size={28} />, color: '#0284c7' },
+        { id: 'CHEMISTRY', nameAr: 'الكيمياء — الصف الأول الثانوي', nameEn: 'Chemistry — Secondary 1', descAr: 'الكيمياء مركز العلوم وكيمياء النانو والمول والحساب الكيميائي', descEn: 'Chemistry as central science, nanochemistry, the mole, and stoichiometry', icon: <FlaskConical size={28} />, color: '#ec4899' },
+        { id: 'BIOLOGY', nameAr: 'الأحياء — الصف الأول الثانوي', nameEn: 'Biology — Secondary 1', descAr: 'الأساس الكيميائي للحياة والخلية والتركيب والوظيفة وتنوع الأنسجة', descEn: 'Chemical basis of life, cell structure and function, and tissue diversity', icon: <Dna size={28} />, color: '#a3e635' },
+        { id: 'HISTORY', nameAr: 'التاريخ — حضارة مصر والعالم القديم', nameEn: 'History — Civilization of Egypt & Ancient World', descAr: 'مصر والعالم القديم وفق الكتاب الوزاري المعتمد', descEn: 'Egypt and the ancient world, based on the Ministry textbook', icon: <BookOpen size={28} />, color: '#f59e0b' },
+        { id: 'GEOGRAPHY', nameAr: 'الجغرافيا — جغرافية مصر وموقعها ومواردها', nameEn: 'Geography — Geography of Egypt', descAr: 'الموقع والتكوينات الجيولوجية والتضاريس والمناخ وسكان مصر والأنشطة الاقتصادية', descEn: 'Location, geology, landforms, climate, population, and economic activities', icon: <Compass size={28} />, color: '#10b981' },
+        { id: 'PHILOSOPHY', nameAr: 'الفلسفة والمنطق — مبادئ التفكير الفلسفي والعلمي', nameEn: 'Philosophy and Logic — Secondary 1', descAr: 'التفكير الإنساني والتفلسف ومبادئ المنطق والاستدلال وفق الوزارة', descEn: 'Human thought, philosophical inquiry, logic, and reasoning from the Ministry', icon: <Brain size={28} />, color: '#c084fc' },
+        { id: 'ISLAMIC_STUDIES', nameAr: 'التربية الدينية الإسلامية — كتاب الصف الأول الثانوي', nameEn: 'Islamic Religious Education — Secondary 1', descAr: 'مقرر الكتاب الوزاري للقرآن الكريم والحديث والعقيدة والعبادات', descEn: 'Ministry textbook course for Quran, Hadith, Faith, and Worship', icon: <Award size={28} />, color: '#fbbf24' },
+        { id: 'COMPUTER_SCIENCE', nameAr: 'تكنولوجيا المعلومات والاتصالات والحاسب الآلي', nameEn: 'ICT & Computer Science', descAr: 'مبادئ البرمجة وقواعد البيانات ونظم المعلومات والأمن الرقمي', descEn: 'Programming fundamentals, databases, information systems, and digital safety', icon: <Code2 size={28} />, color: '#22c55e' },
+        { id: 'NATIONAL_EDUCATION', nameAr: 'التربية الوطنية والمواطنة وحقوق الإنسان', nameEn: 'National Education & Citizenship', descAr: 'الشخصية المصرية والدستور وسيادة القانون والديمقراطية وحقوق الإنسان', descEn: 'Egyptian personality, constitution, rule of law, democracy, and human rights', icon: <ShieldCheck size={28} />, color: '#e11d48' }
       ];
       const educationType = normalizeEducationTypeForCountry(selectedCountry, profile.educationType);
       return books.filter((course) =>
-        isEgyptG10BookCourseAvailable(course.id, educationType, selectedTrack) ||
-        (['ARABIC_LIT', 'ENGLISH', 'FRENCH', 'GERMAN', 'ITALIAN'].includes(course.id) &&
-          (educationType === 'PUBLIC' || educationType === 'PRIVATE'))
+        isEgyptG10SubjectAvailable(course.id, selectedCountry, selectedGrade, educationType, selectedTrack)
       );
     }
     if (selectedCountry === 'SD' && selectedGrade === 'G11') {
