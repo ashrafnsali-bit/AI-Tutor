@@ -6105,6 +6105,13 @@ export function loadSubjectLectures(
     gradeLevel === 'G11' &&
     (educationType === 'PUBLIC' || educationType === 'PRIVATE' || educationType === 'INTERNATIONAL') &&
     isEgyptG11SubjectAvailable(subject, track, educationType);
+  if (
+    country === 'EG' &&
+    gradeLevel === 'G11' &&
+    !isEgyptG11SubjectAvailable(subject, track, educationType)
+  ) {
+    return [];
+  }
   const isEgyptVerifiedG12Course =
     country === 'EG' &&
     gradeLevel === 'G12' &&

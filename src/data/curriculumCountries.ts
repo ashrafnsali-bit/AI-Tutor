@@ -2407,6 +2407,7 @@ export function getNationalSubjectLabel(
   if (country === 'EG' && _gradeLevel === 'G11') {
     const egyptG11Labels: Partial<Record<Subject, [string, string]>> = {
       ARABIC_LIT: ['Arabic Language', 'اللغة العربية'],
+      ARABIC_LANG: ['Arabic Language', 'اللغة العربية'],
       ENGLISH: ['English (First Language)', 'اللغة الإنجليزية (لغة أولى)'],
       FRENCH: ['French (Second Language)', 'اللغة الفرنسية (لغة ثانية)'],
       GERMAN: ['German (Second Language)', 'اللغة الألمانية (لغة ثانية)'],
@@ -2420,7 +2421,9 @@ export function getNationalSubjectLabel(
       PHILOSOPHY: ['Psychology & Sociology (Literary Section)', 'علم النفس والاجتماع (الشعبة الأدبية)'],
       HISTORY: ['History (Literary Section)', 'التاريخ (الشعبة الأدبية)'],
       GEOGRAPHY: ['Geography (Literary Section)', 'الجغرافيا (الشعبة الأدبية)'],
-      BIOLOGY: ['Biology (Scientific Section)', 'الأحياء (الشعبة العلمية)']
+      BIOLOGY: ['Biology (Scientific Section)', 'الأحياء (الشعبة العلمية)'],
+      COMPUTER_SCIENCE: ['ICT & Computer Science', 'تكنولوجيا المعلومات والاتصالات والحاسب الآلي'],
+      NATIONAL_EDUCATION: ['Citizenship & Human Rights (National Education)', 'المواطنة وحقوق الإنسان (التربية الوطنية)']
     };
     const egLabel = egyptG11Labels[subject];
     if (egLabel) return isEn ? egLabel[0] : egLabel[1];

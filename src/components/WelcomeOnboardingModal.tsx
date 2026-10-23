@@ -33,6 +33,10 @@ import {
 import {
   isEgyptG10SubjectAvailable
 } from '../data/egyptSecondaryCoreCurriculumData';
+import {
+  isEgyptG11SubjectAvailable,
+  getEgyptG11Subjects
+} from '../data/egyptSecondaryG11CurriculumData';
 import { setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
 import { 
   Sparkles, 
@@ -122,12 +126,17 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       selectedCountry === 'EG' &&
       selectedGrade === 'G10' &&
       !isEgyptG10SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack);
+    const invalidEgyptG11Subject =
+      selectedCountry === 'EG' &&
+      selectedGrade === 'G11' &&
+      !isEgyptG11SubjectAvailable(selectedSubject, selectedTrack, educationType);
     if (
       invalidSudanGrade7Subject ||
       invalidSudanGrade10Subject ||
       invalidSudanGrade11Subject ||
       invalidSudanGrade12Subject ||
       invalidEgyptG10Subject ||
+      invalidEgyptG11Subject ||
       (selectedSubject === 'PHYSICS' &&
         selectedCountry === 'SA' &&
         selectedGrade === 'G11' &&
@@ -160,6 +169,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         : selectedCountry === 'SD' && selectedGrade === 'G11' ? 'BIOLOGY'
         : selectedCountry === 'SD' && selectedGrade === 'G12'
           ? getSudanPublicGrade12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+        : selectedCountry === 'EG' && selectedGrade === 'G11'
+          ? getEgyptG11Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
         : ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade)
         ? 'PRIMARY_ARABIC'
         : selectedGrade === 'G7' || selectedGrade === 'G8' || selectedGrade === 'G9'
@@ -184,7 +195,10 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         { id: 'ENGLISH' as const, nameAr: 'اللغة الإنجليزية (لغة أولى) — الصف الثاني الثانوي', nameEn: 'English First Language — Secondary 2', descAr: 'كتاب وزارة التربية والتعليم الرسمية لغة أولى', descEn: 'Official Ministry textbook first language', icon: <BookOpen size={24} />, color: '#a78bfa' },
         { id: 'FRENCH' as const, nameAr: 'اللغة الفرنسية (لغة ثانية) — الصف الثاني الثانوي', nameEn: 'French Second Language — Secondary 2', descAr: 'مقرر اللغة الأجنبية الثانية المعتمد', descEn: 'Official second foreign language course', icon: <Globe2 size={24} />, color: '#60a5fa' },
         { id: 'GERMAN' as const, nameAr: 'اللغة الألمانية (لغة ثانية) — الصف الثاني الثانوي', nameEn: 'German Second Language — Secondary 2', descAr: 'مقرر اللغة الأجنبية الثانية المعتمد', descEn: 'Official second foreign language course', icon: <Globe2 size={24} />, color: '#60a5fa' },
-        { id: 'ISLAMIC_STUDIES' as const, nameAr: 'التربية الدينية الإسلامية — الصف الثاني الثانوي', nameEn: 'Islamic Studies — Secondary 2', descAr: 'منهاج التربية الإسلامية المعتمد', descEn: 'Accredited Islamic education curriculum', icon: <Award size={24} />, color: '#fbbf24' }
+        { id: 'ITALIAN' as const, nameAr: 'اللغة الإيطالية (لغة ثانية) — الصف الثاني الثانوي', nameEn: 'Italian Second Language — Secondary 2', descAr: 'مقرر اللغة الأجنبية الثانية المعتمد', descEn: 'Official second foreign language course', icon: <Globe2 size={24} />, color: '#60a5fa' },
+        { id: 'ISLAMIC_STUDIES' as const, nameAr: 'التربية الدينية الإسلامية — الصف الثاني الثانوي', nameEn: 'Islamic Studies — Secondary 2', descAr: 'منهاج التربية الإسلامية المعتمد', descEn: 'Accredited Islamic education curriculum', icon: <Award size={24} />, color: '#fbbf24' },
+        { id: 'COMPUTER_SCIENCE' as const, nameAr: 'تكنولوجيا المعلومات والاتصالات والحاسب الآلي', nameEn: 'ICT & Computer Science', descAr: 'برمجة الويب وتطبيقات قواعد البيانات والأمن السيبراني', descEn: 'Web programming, relational databases, and cybersecurity', icon: <Code2 size={24} />, color: '#22c55e' },
+        { id: 'NATIONAL_EDUCATION' as const, nameAr: 'المواطنة وحقوق الإنسان — التربية الوطنية', nameEn: 'Citizenship & Human Rights — National Education', descAr: 'الدولة والمواطنة والدستور والمشاركة السياسية والتسامح والمسؤولية المجتمعية', descEn: 'State and citizenship, human rights, civic participation, and social responsibility', icon: <ShieldCheck size={24} />, color: '#e11d48' }
       ];
       if (isHumanities) {
         return [

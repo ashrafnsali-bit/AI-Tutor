@@ -1,5 +1,6 @@
 import type { EducationTrack, EducationType, Lecture, Subject } from '../types';
 import { HIGH_BIO_G11_LECTURES } from './highBio11CurriculumData';
+import { HIGH_COMP_G11_LECTURES } from './highComp11CurriculumData';
 
 export interface EgyptG11LessonPlan {
   id: string;
@@ -30,7 +31,9 @@ const COMMON_G11_SUBJECTS: readonly Subject[] = [
   'FRENCH',
   'GERMAN',
   'ITALIAN',
-  'ISLAMIC_STUDIES'
+  'ISLAMIC_STUDIES',
+  'COMPUTER_SCIENCE',
+  'NATIONAL_EDUCATION'
 ];
 
 const SCIENTIFIC_G11_SUBJECTS: readonly Subject[] = [
@@ -55,11 +58,12 @@ export function isEgyptG11SubjectAvailable(
   educationType: EducationType = 'PUBLIC'
 ): boolean {
   if (educationType !== 'PUBLIC' && educationType !== 'PRIVATE' && educationType !== 'INTERNATIONAL') return false;
+  const normalizedSubject: Subject = subject === 'ARABIC_LANG' ? 'ARABIC_LIT' : subject;
   if (track === 'SHARIA_HUMANITIES') {
-    return LITERARY_G11_SUBJECTS.includes(subject);
+    return LITERARY_G11_SUBJECTS.includes(normalizedSubject);
   }
   // Scientific track (SCIENCE_MATH, SCIENCE_BIO, CS_ENGINEERING, HEALTH_LIFE, GENERAL):
-  return SCIENTIFIC_G11_SUBJECTS.includes(subject);
+  return SCIENTIFIC_G11_SUBJECTS.includes(normalizedSubject);
 }
 
 export function getEgyptG11Subjects(track: EducationTrack = 'GENERAL'): Subject[] {
@@ -667,6 +671,72 @@ const germanUnitsG11: { unitTitleAr: string; unitTitleEn: string; lessons: Omit<
 ];
 
 // ---------------------------------------------------------------------------
+// 7. Italian Language G11 (Second Foreign Language - Egypt Secondary 2)
+// ---------------------------------------------------------------------------
+const italianUnitsG11: { unitTitleAr: string; unitTitleEn: string; lessons: Omit<EgyptG11LessonPlan, 'id' | 'order' | 'unitTitleAr' | 'unitTitleEn' | 'termAr' | 'termEn'>[] }[] = [
+  {
+    unitTitleAr: 'الوحدة الأولى: وقت الفراغ والموضة الإيطالية',
+    unitTitleEn: 'Unità 1: Il tempo libero e la moda italiana',
+    lessons: [
+      {
+        titleAr: 'الأنشطة اليومية وأوقات الفراغ والأفعال المنعكسة',
+        titleEn: 'Le attività del tempo libero e i verbi riflessivi',
+        subtitleAr: 'المفردات الإيطالية للهوايات والرياضات وقضاء العطلة، وتصريف الأفعال المنعكسة (alzarsi, svegliarsi, divertirsi)',
+        subtitleEn: 'Italian vocabulary for leisure, hobbies, sports, and conjugating reflexive verbs in the present indicative',
+        focusAr: 'التحدث عن الروتين اليومي وأنشطة عطلة نهاية الأسبوع باللغة الإيطالية واستخدام الأفعال المنعكسة بدقة.',
+        focusEn: 'Express daily routine and leisure pastimes in Italian utilizing reflexive verbs accurately.',
+        activityAr: 'Scrivi tre frasi su come passi la domenica usando i verbi riflessivi (es. Mi sveglio alle 9).',
+        activityEn: 'Write three sentences about how you spend your Sunday using reflexive verbs.',
+        questionAr: 'Come si dice: "أنا أستيقظ مبكراً كل صباح" in italiano?',
+        questionEn: 'How do you say "I wake up early every morning" in Italian?',
+        optionsAr: ['Mi sveglio presto ogni mattina', 'Mi alzi tardi ogni giorno', 'Si sveglia presto'],
+        optionsEn: ['Mi sveglio presto ogni mattina', 'Mi alzi tardi ogni giorno', 'Si sveglia presto'],
+        correctIndex: 0,
+        vocabulary: [['il tempo libero', 'وقت الفراغ'], ['svegliarsi', 'يستيقظ'], ['divertirsi', 'يستمتع']]
+      },
+      {
+        titleAr: 'الموضة والملابس والتسوق وحروف الجر المدمجة',
+        titleEn: 'La moda, l’abbigliamento e le preposizioni articolate',
+        subtitleAr: 'أسماء الملابس والإكسسوارات والألوان، وحروف الجر مع أدوات التعريف (a + il = al, in + la = nella)',
+        subtitleEn: 'Clothing items, shopping expressions, Italian fashion, and articulated prepositions',
+        focusAr: 'وصف ما يرتديه الشخص والتسوق في المتاجر الإيطالية وصياغة جمل سليمة باستخدام حروف الجر المدمجة.',
+        focusEn: 'Describe outfits, negotiate shopping in Italian boutiques, and use articulated prepositions.',
+        activityAr: 'Descrivi l’abbigliamento del tuo migliore amico con colori e taglie in italiano.',
+        activityEn: 'Describe your best friend’s outfit specifying colors and sizes in Italian.',
+        questionAr: 'Quale preposizione articolata completa correttamente la frase: "Vado ______ negozio di moda"? (a + il)',
+        questionEn: 'Which articulated preposition correctly completes the sentence: "Vado ______ negozio di moda"?',
+        optionsAr: ['al', 'nel', 'dal'],
+        optionsEn: ['al', 'nel', 'dal'],
+        correctIndex: 0,
+        vocabulary: [['la moda', 'الموضة'], ['i vestiti', 'الملابس'], ['il negozio', 'المتجر']]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الوحدة الثانية: مشاريع المستقبل والرحلات',
+    unitTitleEn: 'Unità 2: Progetti per il futuro e gite in città',
+    lessons: [
+      {
+        titleAr: 'تنظيم الحفلات والمستقبل البسيط',
+        titleEn: 'Organizzare una festa e il futuro semplice',
+        subtitleAr: 'التخطيط لمناسبة ودعوة الأصدقاء، وتصريف الأفعال المنتظمة وغير المنتظمة في زمن المستقبل البسيط (parlerò, farò)',
+        subtitleEn: 'Planning celebrations, invitations, and conjugating regular and irregular verbs in future simple tense',
+        focusAr: 'التعبير عن المشاريع المستقبلية والخطط الشخصية باستخدام زمن المستقبل البسيط باللغة الإيطالية.',
+        focusEn: 'Articulate future plans, promises, and predictions in Italian using il futuro semplice.',
+        activityAr: 'Scrivi due progetti che realizzerai durante le prossime vacanze estive con il futuro semplice.',
+        activityEn: 'Write two plans you will realize next summer using the future simple tense in Italian.',
+        questionAr: 'Qual è la forma corretta del verbo "partire" al futuro semplice per "Noi"?',
+        questionEn: 'What is the correct future simple conjugation of "partire" for "noi"?',
+        optionsAr: ['partiremo', 'partiranno', 'partirò'],
+        optionsEn: ['partiremo', 'partiranno', 'partirò'],
+        correctIndex: 0,
+        vocabulary: [['il futuro', 'المستقبل'], ['la festa', 'الحفل'], ['invitare', 'يدعو']]
+      }
+    ]
+  }
+];
+
+// ---------------------------------------------------------------------------
 // 8. Arabic Literature & Grammar G11 (Common Core - Egypt Secondary 2)
 // ---------------------------------------------------------------------------
 const arabicLitUnitsG11: { unitTitleAr: string; unitTitleEn: string; lessons: Omit<EgyptG11LessonPlan, 'id' | 'order' | 'unitTitleAr' | 'unitTitleEn' | 'termAr' | 'termEn'>[] }[] = [
@@ -979,6 +1049,88 @@ const islamicUnitsG11: { unitTitleAr: string; unitTitleEn: string; lessons: Omit
 ];
 
 // ---------------------------------------------------------------------------
+// 12. Citizenship & Human Rights / National Education G11 (Egypt Secondary 2)
+// ---------------------------------------------------------------------------
+const nationalEducationUnitsG11: { unitTitleAr: string; unitTitleEn: string; lessons: Omit<EgyptG11LessonPlan, 'id' | 'order' | 'unitTitleAr' | 'unitTitleEn' | 'termAr' | 'termEn'>[] }[] = [
+  {
+    unitTitleAr: 'الفصل الأول: المواطنة والدولة والهوية المصرية',
+    unitTitleEn: 'Chapter 1: Citizenship, State and Egyptian National Identity',
+    lessons: [
+      {
+        titleAr: 'مفهوم الدولة وأركانها ودور الدستور وسيادة القانون',
+        titleEn: 'Concept of the State, Core Pillars, and the Rule of Law',
+        subtitleAr: 'أركان الدولة (الشعب والإقليم والسلطة والسيادة)، والفرق بين الأمة والدولة، ومبدأ الفصل بين السلطات',
+        subtitleEn: 'Pillars of the state (people, territory, authority, sovereignty), nation vs state, and separation of powers',
+        focusAr: 'فهم أركان الدولة الحديثة والتمييز العلمي بين مفهوم الأمة والدولة، وإدراك أهمية سيادة القانون كأساس للعدالة.',
+        focusEn: 'Analyze pillars of modern statehood, contrast nation and state concepts, and recognize the rule of law as foundation of justice.',
+        activityAr: 'قارن في جدول منظم بين مفهوم "الأمة" ومفهوم "الدولة" مستشهداً بنماذج واقعية كالأمة العربية والدولة المصرية.',
+        activityEn: 'Tabulate differences between "Nation" and "State" citing examples like the Arab Nation and Egyptian State.',
+        questionAr: 'ما الركن الأساسي الذي تختلف فيه "الدولة" عن "الأمة" ويمنحها صفة الإلزام القانوني والاعتراف الدولي؟',
+        questionEn: 'Which essential pillar distinguishes a "State" from a "Nation", granting legal enforcement and sovereignty?',
+        optionsAr: ['وجود سلطة سياسية ذات سيادة وقوانين ملزمة', 'اشتراك الأفراد في لغة وتاريخ واحد فقط', 'العيش في بقعة جغرافية دون حكومة'],
+        optionsEn: ['A sovereign political authority with binding laws', 'Shared language and history only', 'Living in a territory without government'],
+        correctIndex: 0,
+        vocabulary: [['الدولة', 'State'], ['السيادة', 'Sovereignty'], ['سيادة القانون', 'Rule of Law']]
+      },
+      {
+        titleAr: 'المواطنة: الأبعاد، الحقوق والواجبات الدستورية، والهوية الوطنية',
+        titleEn: 'Citizenship: Dimensions, Constitutional Rights, and National Identity',
+        subtitleAr: 'مفهوم المواطنة وعناصرها (الولاء، الانتماء، المشاركة)، والحقوق المدنية والسياسية والواجبات الإلزامية والطوعية',
+        subtitleEn: 'Elements of citizenship (loyalty, belonging, civic duty), constitutional rights, and duties',
+        focusAr: 'ترسيخ قيم المواطنة المتساوية لجميع المواطنين دون تمييز، واستيعاب التوازن الدقيق بين الحقوق الدستورية والواجبات الوطنية.',
+        focusEn: 'Instill equal citizenship values without discrimination, balancing constitutional rights with civic duties.',
+        activityAr: 'صمم ميثاقاً طلابياً يوضح ثلاثة واجبات وطنية إيجابية يقوم بها الطالب لخدمة مجتمعه ومدرسته.',
+        activityEn: 'Draft a student charter detailing three positive civic responsibilities to serve school and community.',
+        questionAr: 'تُعد أداء الخدمة العسكرية والدفاع عن الوطن وفقاً للدستور المصري من الواجبات:',
+        questionEn: 'Performing military service and defending the homeland under the Egyptian Constitution is classified as:',
+        optionsAr: ['الواجبات الإلزامية والشرف الوطني المقدس', 'الواجبات التطوعية الاختيارية', 'الحقوق الاقتصادية المجردة'],
+        optionsEn: ['Mandatory constitutional duty and sacred honor', 'Optional voluntary activity', 'Economic rights'],
+        correctIndex: 0,
+        vocabulary: [['المواطنة', 'Citizenship'], ['الانتماء', 'Belonging'], ['الهوية الوطنية', 'National Identity']]
+      }
+    ]
+  },
+  {
+    unitTitleAr: 'الفصل الثاني: حقوق الإنسان والمشاركة السياسية والديمقراطية',
+    unitTitleEn: 'Chapter 2: Human Rights, Political Participation and Democracy',
+    lessons: [
+      {
+        titleAr: 'حقوق الإنسان: النشأة، المفاهيم، والمواثيق الدولية والدستور المصري',
+        titleEn: 'Human Rights: Origins, Concepts, International Charters, and Egyptian Constitution',
+        subtitleAr: 'الإعلان العالمي لحقوق الإنسان ١٩٤٨، تصنيف الحقوق (مدنية، سياسية، اقتصادية، وبيئية)، ودستور مصر ٢٠١٤',
+        subtitleEn: 'Universal Declaration of Human Rights (1948), generational classification of rights, and the 2014 Constitution',
+        focusAr: 'التعرف على تطور الإعلانات الدولية لحقوق الإنسان، وكيف كفل الدستور المصري كرامة المواطن وحرية الفكر والاعتقاد والتعليم.',
+        focusEn: 'Analyze international human rights conventions and how Egypt’s 2014 Constitution safeguards dignity and freedoms.',
+        activityAr: 'استخرج من مواد الدستور المصري ثلاث مواد تؤكد على عدم التمييز بين المواطنين والمساواة بين الجنسين.',
+        activityEn: 'Identify three articles from Egypt’s Constitution ensuring non-discrimination and gender equality.',
+        questionAr: 'في أي عام اعتمدت الجمعية العامة للأمم المتحدة "الإعلان العالمي لحقوق الإنسان" التاريخي؟',
+        questionEn: 'In which year did the UN General Assembly adopt the landmark Universal Declaration of Human Rights?',
+        optionsAr: ['عام ١٩٤٨م', 'عام ١٩١٩م', 'عام ١٩٧٣م'],
+        optionsEn: ['1948 AD', '1919 AD', '1973 AD'],
+        correctIndex: 0,
+        vocabulary: [['حقوق الإنسان', 'Human Rights'], ['الكرامة الإنسانية', 'Human Dignity'], ['المواثيق الدولية', 'International Conventions']]
+      },
+      {
+        titleAr: 'المشاركة السياسية والعمليات الانتخابية ودور الشباب ومؤسسات المجتمع المدني',
+        titleEn: 'Political Participation, Electoral Systems, Youth Role, and Civil Society',
+        subtitleAr: 'مفهوم المشاركة السياسية وخصائصها، آليات التصويت، تمكين الشباب والمرأة، ومؤسسات المجتمع المدني والتطوع',
+        subtitleEn: 'Political participation mechanisms, voting, youth and women empowerment, and civil society volunteering',
+        focusAr: 'إدراك أهمية المشاركة الإيجابية في الاستحقاقات الانتخابية وصنع القرار لتعزيز الاستقرار والتنمية المستدامة.',
+        focusEn: 'Evaluate the role of constructive political engagement, voting, and youth leadership in sustainable development.',
+        activityAr: 'ناقش في حلقة حوارية أثر عزوف بعض الأفراد عن المشاركة الانتخابية وكيفية تحفيز الوعي السياسي الإيجابي.',
+        activityEn: 'Discuss how abstaining from voting affects democratic development and propose methods to boost civic awareness.',
+        questionAr: 'أي من الآليات الآتية تعتبر من أهم صور ممارسة المواطن لحقه الدستوري في المشاركة السياسية المباشرة؟',
+        questionEn: 'Which of the following is the most direct constitutional mechanism for civic political participation?',
+        optionsAr: ['المشاركة في الانتخابات والاستفتاءات العامة', 'متابعة الأخبار دون إبداء رأي', 'الامتناع عن التصويت'],
+        optionsEn: ['Voting in elections and public referendums', 'Passive news following', 'Abstaining from ballots'],
+        correctIndex: 0,
+        vocabulary: [['المشاركة السياسية', 'Political Participation'], ['المجتمع المدني', 'Civil Society'], ['الانتخابات', 'Elections']]
+      }
+    ]
+  }
+];
+
+// ---------------------------------------------------------------------------
 // Lecture Builder Helper
 // ---------------------------------------------------------------------------
 function buildLecturesFromUnits(
@@ -1109,15 +1261,16 @@ export function getEgyptG11Curriculum(
   track: EducationTrack = 'GENERAL',
   educationType: EducationType = 'PUBLIC'
 ): Lecture[] {
-  if (!isEgyptG11SubjectAvailable(subject, track, educationType)) return [];
+  const normalizedSubject: Subject = subject === 'ARABIC_LANG' ? 'ARABIC_LIT' : subject;
+  if (!isEgyptG11SubjectAvailable(normalizedSubject, track, educationType)) return [];
 
-  switch (subject) {
+  switch (normalizedSubject) {
     case 'PHYSICS':
-      return buildLecturesFromUnits(physicsUnits, subject, educationType, track);
+      return buildLecturesFromUnits(physicsUnits, normalizedSubject, educationType, track);
     case 'CHEMISTRY':
-      return buildLecturesFromUnits(chemistryUnits, subject, educationType, track);
+      return buildLecturesFromUnits(chemistryUnits, normalizedSubject, educationType, track);
     case 'MATH':
-      return buildLecturesFromUnits(pureMathUnits, subject, educationType, track);
+      return buildLecturesFromUnits(pureMathUnits, normalizedSubject, educationType, track);
     case 'BIOLOGY':
       return HIGH_BIO_G11_LECTURES.map((lec) => ({
         ...lec,
@@ -1128,22 +1281,34 @@ export function getEgyptG11Curriculum(
         educationTrack: track
       }));
     case 'PHILOSOPHY':
-      return buildLecturesFromUnits(psychologySociologyUnits, subject, educationType, track);
+      return buildLecturesFromUnits(psychologySociologyUnits, normalizedSubject, educationType, track);
     case 'ENGLISH':
-      return buildLecturesFromUnits(englishUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(englishUnitsG11, normalizedSubject, educationType, track);
     case 'FRENCH':
-      return buildLecturesFromUnits(frenchUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(frenchUnitsG11, normalizedSubject, educationType, track);
     case 'GERMAN':
+      return buildLecturesFromUnits(germanUnitsG11, normalizedSubject, educationType, track);
     case 'ITALIAN':
-      return buildLecturesFromUnits(germanUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(italianUnitsG11, normalizedSubject, educationType, track);
     case 'ARABIC_LIT':
-      return buildLecturesFromUnits(arabicLitUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(arabicLitUnitsG11, normalizedSubject, educationType, track);
     case 'HISTORY':
-      return buildLecturesFromUnits(historyUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(historyUnitsG11, normalizedSubject, educationType, track);
     case 'GEOGRAPHY':
-      return buildLecturesFromUnits(geographyUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(geographyUnitsG11, normalizedSubject, educationType, track);
     case 'ISLAMIC_STUDIES':
-      return buildLecturesFromUnits(islamicUnitsG11, subject, educationType, track);
+      return buildLecturesFromUnits(islamicUnitsG11, normalizedSubject, educationType, track);
+    case 'COMPUTER_SCIENCE':
+      return HIGH_COMP_G11_LECTURES.map((lec) => ({
+        ...lec,
+        subject: 'COMPUTER_SCIENCE',
+        country: 'EG',
+        gradeLevel: 'G11',
+        educationType,
+        educationTrack: track
+      }));
+    case 'NATIONAL_EDUCATION':
+      return buildLecturesFromUnits(nationalEducationUnitsG11, normalizedSubject, educationType, track);
     default:
       return [];
   }
