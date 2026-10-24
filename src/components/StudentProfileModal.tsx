@@ -44,6 +44,7 @@ import {
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
 import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
+import { isSaudiMiddleSubjectAvailable, getSaudiMiddleSubjects } from '../data/saudiMiddleCurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
 import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
 import { getSubjectVisual } from '../data/subjectVisuals';
@@ -198,6 +199,9 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
     educationType?: StudentProfile['educationType'],
     educationTrack?: StudentProfile['educationTrack']
   ) => {
+    if (country === 'SA') {
+      return isSaudiMiddleSubjectAvailable(subject, gradeLevel, educationType);
+    }
     if (country === 'EG') {
       return isEgyptPrepSubjectAvailable(subject, gradeLevel, educationType || 'PUBLIC');
     }
@@ -267,7 +271,7 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
         copy.subject = 'GENERAL_SCIENCE';
       }
       if (!isMiddleSubjectAvailable(copy.subject, copy.gradeLevel, copy.country, copy.educationType, copy.educationTrack)) {
-        copy.subject = 'ARABIC_LANG';
+        copy.subject = copy.country === 'SA' ? getSaudiMiddleSubjects(copy.gradeLevel)[0] : 'ARABIC_LANG';
       }
     } else {
       const isVerifiedSudanGrade12 = isSudanPublicGrade12SubjectAvailable(
@@ -343,6 +347,18 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       !isSaudiSecondarySubjectAvailable(formData.subject, formData.gradeLevel, formData.educationTrack, formData.educationType)
     ) {
       const allowed = getSaudiSecondarySubjects(formData.gradeLevel, formData.educationTrack);
+      setFormData(current => ({
+        ...current,
+        subject: allowed[0] ?? 'MATH'
+      }));
+      return;
+    }
+    if (
+      formData.country === 'SA' &&
+      ['G7', 'G8', 'G9'].includes(formData.gradeLevel) &&
+      !isSaudiMiddleSubjectAvailable(formData.subject, formData.gradeLevel, formData.educationType)
+    ) {
+      const allowed = getSaudiMiddleSubjects(formData.gradeLevel);
       setFormData(current => ({
         ...current,
         subject: allowed[0] ?? 'MATH'
@@ -1318,6 +1334,16 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                   formData.country === 'EG' ? (
                     <optgroup label={formData.language === 'en' ? "Egyptian Preparatory Core Subjects (Ministry)" : "مقررات المرحلة الإعدادية المصرية (وزارة التربية والتعليم)"}>
                       {getEgyptPrepSubjects(formData.gradeLevel).map((subj) => (
+                        <option key={subj} value={subj}>
+                          {getNationalSubjectLabel(subj, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : formData.country === 'SA' && ['G7', 'G8', 'G9'].includes(formData.gradeLevel) ? (
+                    <optgroup label={formData.language === 'en'
+                      ? `Saudi Middle School (${formData.gradeLevel}) Subjects`
+                      : `مواد المرحلة المتوسطة بالسعودية (${formData.gradeLevel === 'G7' ? 'الأول متوسط' : formData.gradeLevel === 'G8' ? 'الثاني متوسط' : 'الثالث متوسط'})`}>
+                      {getSaudiMiddleSubjects(formData.gradeLevel).map((subj) => (
                         <option key={subj} value={subj}>
                           {getNationalSubjectLabel(subj, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
                         </option>

@@ -99,6 +99,15 @@ import {
   isSaudiSecondarySubjectAvailable
 } from './saudiSecondaryCurriculumData';
 export {
+  getSaudiMiddleCurriculum,
+  isSaudiMiddleSubjectAvailable,
+  getSaudiMiddleSubjects
+} from './saudiMiddleCurriculumData';
+import {
+  getSaudiMiddleCurriculum,
+  isSaudiMiddleSubjectAvailable
+} from './saudiMiddleCurriculumData';
+export {
   getEgyptPrepCurriculum,
   isEgyptPrepSubjectAvailable,
   getEgyptPrepSubjects
@@ -5034,6 +5043,12 @@ export function getCurriculumForSubject(
     }
     return getSaudiSecondaryCurriculum(subject, gradeLevel as GradeLevel, _track, educationType);
   }
+  if (country === 'SA' && (gradeLevel === 'G7' || gradeLevel === 'G8' || gradeLevel === 'G9')) {
+    if (!isSaudiMiddleSubjectAvailable(subject, gradeLevel as GradeLevel, educationType)) {
+      return [];
+    }
+    return getSaudiMiddleCurriculum(subject, gradeLevel as GradeLevel, educationType);
+  }
   if (country === 'EG' && ['G7', 'G8', 'G9'].includes(gradeLevel || '')) {
     return getEgyptPrepCurriculum(subject, gradeLevel as GradeLevel, educationType, _track);
   }
@@ -5899,6 +5914,11 @@ export function loadSubjectLectures(
     !isSaudiSecondarySubjectAvailable(subject, gradeLevel as GradeLevel, track, educationType)
   ) return [];
   if (
+    country === 'SA' &&
+    (gradeLevel === 'G7' || gradeLevel === 'G8' || gradeLevel === 'G9') &&
+    !isSaudiMiddleSubjectAvailable(subject, gradeLevel as GradeLevel, educationType)
+  ) return [];
+  if (
     country === 'EG' &&
     gradeLevel === 'G10' &&
     !isEgyptG10SubjectAvailable(subject, country as CountryCode, gradeLevel as GradeLevel, educationType, track)
@@ -6003,7 +6023,8 @@ export function loadSubjectLectures(
       isSaudiPublicG2VisualArtsAvailable(country, gradeLevel, educationType) ||
       isSaudiPublicG5VisualArtsAvailable(country, gradeLevel, educationType) ||
       isSaudiPublicG4VisualArtsAvailable(country, gradeLevel, educationType) ||
-      isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType)
+      isSaudiPublicG6VisualArtsAvailable(country, gradeLevel, educationType) ||
+      (country === 'SA' && ['G7', 'G8', 'G9'].includes(gradeLevel || '') && educationType === 'PUBLIC')
     );
   if (subject === 'VISUAL_ARTS' && !isProtectedSaudiVisualArts) return [];
   const isProtectedSaudiIslamicStudies =
@@ -6013,12 +6034,14 @@ export function loadSubjectLectures(
       isSaudiPublicG3IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
       isSaudiPublicG4IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
       isSaudiPublicG5IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
-      isSaudiPublicG6IslamicStudiesAvailable(country, gradeLevel, educationType, track)
+      isSaudiPublicG6IslamicStudiesAvailable(country, gradeLevel, educationType, track) ||
+      (country === 'SA' && ['G7', 'G8', 'G9'].includes(gradeLevel || '') && educationType === 'PUBLIC')
     );
   if (country === 'SA' && subject === 'ISLAMIC_STUDIES' && !isProtectedSaudiIslamicStudies) return [];
   const isProtectedSaudiLifeSkills =
     subject === 'LIFE_SKILLS' &&
-    isSaudiPublicLifeSkillsAvailable(country, gradeLevel, educationType, track);
+    (isSaudiPublicLifeSkillsAvailable(country, gradeLevel, educationType, track) ||
+      (country === 'SA' && ['G7', 'G8', 'G9'].includes(gradeLevel || '') && educationType === 'PUBLIC'));
   if (subject === 'LIFE_SKILLS' && !isProtectedSaudiLifeSkills) return [];
   const isProtectedSaudiPrimaryVerifiedCourses =
     isProtectedSaudiTajweed ||
@@ -6182,6 +6205,7 @@ export function loadSubjectLectures(
     isEgyptVerifiedBookCourse ||
     isVerifiedSaudiG11History ||
     (country === 'SA' && (gradeLevel === 'G10' || gradeLevel === 'G11' || gradeLevel === 'G12')) ||
+    (country === 'SA' && (gradeLevel === 'G7' || gradeLevel === 'G8' || gradeLevel === 'G9')) ||
     isBlockedGeographyHistoryRoute(subject, country, educationType, track);
   const masterCurriculum = getCurriculumForSubject(subject, gradeLevel, country, educationType, track);
   

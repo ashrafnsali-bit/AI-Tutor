@@ -43,6 +43,7 @@ import {
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
 import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
+import { isSaudiMiddleSubjectAvailable, getSaudiMiddleSubjects } from '../data/saudiMiddleCurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
 import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
 import { 
@@ -291,7 +292,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     track: EducationTrack,
     grade: GradeLevel
   ): Subject => {
-    if (subject === 'PHILOSOPHY' && !(country === 'EG' && grade === 'G10')) {
+    if (subject === 'PHILOSOPHY' && !(country === 'EG' && grade === 'G10') && !(country === 'SA' && (grade === 'G9' || ['G10', 'G11', 'G12'].includes(grade)))) {
       return defaultSubjectForGrade(grade);
     }
     if (country === 'EG' && grade === 'G10') {
@@ -362,6 +363,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       !isSaudiSecondarySubjectAvailable(subject, grade, track, educationType)
     ) {
       return getSaudiSecondarySubjects(grade, track)[0] ?? 'MATH';
+    }
+    if (
+      country === 'SA' &&
+      ['G7', 'G8', 'G9'].includes(grade) &&
+      !isSaudiMiddleSubjectAvailable(subject, grade, educationType)
+    ) {
+      return getSaudiMiddleSubjects(grade)[0] ?? 'MATH';
     }
     if (
       subject === 'COMPUTER_SCIENCE' &&
@@ -475,7 +483,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     } else if (mid) {
       setRegSpec('GENERAL');
       setRegEducationTrack('GENERAL');
-      if ((regCountry === 'SD' && ['G7', 'G8', 'G9'].includes(grade)
+      if (regCountry === 'SA') {
+        if (!isSaudiMiddleSubjectAvailable(regSubject, grade, regEducationType)) {
+          setRegSubject(getSaudiMiddleSubjects(grade)[0] ?? 'MATH');
+        }
+      } else if ((regCountry === 'SD' && ['G7', 'G8', 'G9'].includes(grade)
         ? !isSudanPublicMiddleSubjectAvailable(regSubject, regCountry, grade, regEducationType, 'GENERAL')
         : !MIDDLE_SUBJECTS.includes(regSubject)) &&
           !(regSubject === 'SAUDI_SOCIAL_STUDIES' && isSaudiSocialStudies(grade))) setRegSubject('ARABIC_LANG');
@@ -1121,6 +1133,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       regCountry === 'EG' ? (
                         <optgroup label={regLanguage === 'en' ? 'Egyptian Preparatory School (Ministry)' : 'مقررات المرحلة الإعدادية المصرية (وزارة التربية والتعليم)'}>
                           {getEgyptPrepSubjects(regGrade).map((subject) => (
+                            <option key={subject} value={subject}>
+                              {getNationalSubjectLabel(subject, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ) : regCountry === 'SA' ? (
+                        <optgroup label={regLanguage === 'en'
+                          ? `Saudi Middle School (${regGrade}) Subjects`
+                          : `مواد المرحلة المتوسطة بالسعودية (${regGrade === 'G7' ? 'الأول متوسط' : regGrade === 'G8' ? 'الثاني متوسط' : 'الثالث متوسط'})`}>
+                          {getSaudiMiddleSubjects(regGrade).map((subject) => (
                             <option key={subject} value={subject}>
                               {getNationalSubjectLabel(subject, regCountry, regGrade, regLanguage, regEducationType, regEducationTrack)}
                             </option>

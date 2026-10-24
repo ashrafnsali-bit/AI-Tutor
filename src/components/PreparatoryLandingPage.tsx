@@ -23,6 +23,7 @@ import {
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
+import { isSaudiMiddleSubjectAvailable, getSaudiMiddleSubjects } from '../data/saudiMiddleCurriculumData';
 import {
   isSudanPublicGrade4SubjectAvailable,
   isSudanPublicGrade5SubjectAvailable,
@@ -159,6 +160,10 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       selectedCountry === 'SA' &&
       ['G10', 'G11', 'G12'].includes(selectedGrade) &&
       !isSaudiSecondarySubjectAvailable(selectedSubject, selectedGrade, selectedTrack, educationType);
+    const invalidSaudiMiddleSubject =
+      selectedCountry === 'SA' &&
+      ['G7', 'G8', 'G9'].includes(selectedGrade) &&
+      !isSaudiMiddleSubjectAvailable(selectedSubject, selectedGrade, educationType);
     const invalidEgyptG10Subject =
       selectedCountry === 'EG' &&
       selectedGrade === 'G10' &&
@@ -173,6 +178,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       !isEgyptG12SubjectAvailable(selectedSubject, selectedTrack, educationType);
     if (
       invalidSaudiSecondarySubject ||
+      invalidSaudiMiddleSubject ||
       invalidSudanMiddleSubject ||
       invalidSudanGrade10Subject ||
       invalidSudanGrade11Subject ||
@@ -234,6 +240,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
         )) ||
       (selectedSubject === 'VISUAL_ARTS' &&
+        !(selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade)) &&
         !isSaudiPublicG6VisualArtsAvailable(
           selectedCountry,
           selectedGrade,
@@ -264,6 +271,8 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       setSelectedSubject(
         selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade)
           ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
+        : selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade)
+          ? getSaudiMiddleSubjects(selectedGrade)[0] ?? 'MATH'
         : selectedCountry === 'SD' && selectedGrade === 'G10'
           ? 'CHEMISTRY'
         : selectedCountry === 'SD' && selectedGrade === 'G11' ? 'BIOLOGY'
@@ -359,6 +368,12 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       }
     } else if (inMiddle) {
       setSelectedTrack('GENERAL');
+      if (selectedCountry === 'SA') {
+        if (!isSaudiMiddleSubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType))) {
+          setSelectedSubject(getSaudiMiddleSubjects(grade)[0] ?? 'MATH');
+        }
+        return;
+      }
       const validEgyptPrep = selectedCountry === 'EG' && isEgyptPrepSubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
       const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
       if (!validEgyptPrep && !validEnglish && !['MATH', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'].includes(selectedSubject) &&
@@ -1023,6 +1038,104 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       ];
     }
 
+    if (selectedCountry === 'SA' && (selectedGrade === 'G7' || selectedGrade === 'G8' || selectedGrade === 'G9')) {
+      const gNum = selectedGrade === 'G7' ? '1' : selectedGrade === 'G8' ? '2' : '3';
+      const gNameAr = selectedGrade === 'G7' ? 'الأول متوسط' : selectedGrade === 'G8' ? 'الثاني متوسط' : 'الثالث متوسط';
+      const gNameEn = selectedGrade === 'G7' ? 'Grade 7' : selectedGrade === 'G8' ? 'Grade 8' : 'Grade 9';
+      return [
+        {
+          id: 'MATH' as const,
+          nameAr: `الرياضيات (${gNameAr})`,
+          nameEn: `Mathematics (${gNameEn})`,
+          descAr: 'كتاب وزارة التعليم المعتمد للمرحلة المتوسطة؛ الجبر والدوال والقياس والهندسة والإحصاء',
+          descEn: 'Official Ministry of Education textbook; algebra, functions, geometry and statistics',
+          icon: <Calculator size={28} />,
+          color: '#60a5fa'
+        },
+        {
+          id: 'GENERAL_SCIENCE' as const,
+          nameAr: `العلوم (${gNameAr})`,
+          nameEn: `General Science (${gNameEn})`,
+          descAr: 'كتاب وزارة التعليم للعلوم؛ استكشاف المادة والطاقة والأرض والفضاء والأنظمة الحية',
+          descEn: 'Official Ministry textbook; exploring matter, energy, earth, space, and life systems',
+          icon: <Microscope size={28} />,
+          color: '#38bdf8'
+        },
+        {
+          id: 'ARABIC_LANG' as const,
+          nameAr: `لغتي الخالدة (${gNameAr})`,
+          nameEn: `Arabic Language (${gNameEn})`,
+          descAr: 'كتاب لغتي الخالدة المعتمد؛ التحليل القرائي، الأسلوب والصنف اللغوي، والوظيفة النحوية والإملائية',
+          descEn: 'Accredited Lughati Al-Khalidah textbook; comprehension, language styles, and grammar',
+          icon: <BookMarked size={28} />,
+          color: '#34d399'
+        },
+        {
+          id: 'ENGLISH' as const,
+          nameAr: `اللغة الإنجليزية (Super Goal ${gNum})`,
+          nameEn: `English (Super Goal ${gNum})`,
+          descAr: `سلسلة Super Goal المعتمدة رسمياً من وزارة التعليم للصف ${gNameAr}`,
+          descEn: `Official Ministry accredited Super Goal ${gNum} textbook for Saudi middle school`,
+          icon: <BookOpen size={28} />,
+          color: '#a78bfa'
+        },
+        {
+          id: 'ISLAMIC_STUDIES' as const,
+          nameAr: `الدراسات الإسلامية (${gNameAr})`,
+          nameEn: `Islamic Studies (${gNameEn})`,
+          descAr: 'المنهج الوزاري الشامل في التوحيد والعقيدة، التفسير، الحديث النبوي الشريف، وأحكام الفقه',
+          descEn: 'Comprehensive Ministry curriculum in Tawheed, Tafsir, Hadith, and Islamic jurisprudence',
+          icon: <Award size={28} />,
+          color: '#fbbf24'
+        },
+        {
+          id: 'HISTORY' as const,
+          nameAr: `الدراسات الاجتماعية (${gNameAr})`,
+          nameEn: `Social Studies (${gNameEn})`,
+          descAr: 'تاريخ المملكة والمواطنة الصالحة، الهوية الوطنية، الجغرافيا الإقليمية والتنمية المستدامة',
+          descEn: 'Saudi history, citizenship, national identity, regional geography, and sustainable development',
+          icon: <Compass size={28} />,
+          color: '#f59e0b'
+        },
+        {
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: `المهارات الرقمية (${gNameAr})`,
+          nameEn: `Digital Skills (${gNameEn})`,
+          descAr: 'معالجة النصوص والجداول، البرمجة بلغة بايثون وScratch، وتصميم الوسائط والأمن السيبراني',
+          descEn: 'Document/spreadsheet processing, Python/Scratch programming, multimedia and cybersecurity',
+          icon: <Code2 size={28} />,
+          color: '#c084fc'
+        },
+        {
+          id: 'VISUAL_ARTS' as const,
+          nameAr: `التربية الفنية (${gNameAr})`,
+          nameEn: `Art Education (${gNameEn})`,
+          descAr: 'مجالات الرسم والتصوير التشكيلي، الخزف، الزخرفة، والنسيج والأشغال اليدوية التراثية',
+          descEn: 'Drawing, plastic arts, ceramics, ornamentation, textiles, and traditional crafts',
+          icon: <Palette size={28} />,
+          color: '#fb7185'
+        },
+        {
+          id: 'LIFE_SKILLS' as const,
+          nameAr: `المهارات الحياتية والأسرية (${gNameAr})`,
+          nameEn: `Life and Family Skills (${gNameEn})`,
+          descAr: 'بناء الشخصية، مهارات التواصل الأسري، التغذية والصحة العامة، وإدارة الموارد الشخصية',
+          descEn: 'Character building, family communication, nutrition, and personal resource management',
+          icon: <ShieldCheck size={28} />,
+          color: '#10b981'
+        },
+        ...(selectedGrade === 'G9' ? [{
+          id: 'PHILOSOPHY' as const,
+          nameAr: 'التفكير الناقد (الصف الثالث المتوسط)',
+          nameEn: 'Critical Thinking (Grade 9)',
+          descAr: 'المقرر الوزاري المعتمد للتفكير الناقد: معايير التفكير، الحجاج والمغالطات، والتفكير الناقد والإعلام',
+          descEn: 'Official Ministry textbook in Critical Thinking: thinking standards, arguments, and media literacy',
+          icon: <Brain size={28} />,
+          color: '#e11d48'
+        }] : [])
+      ];
+    }
+
     if (isMiddle) {
       return [
         {
@@ -1260,7 +1373,10 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       specialization: (isPrimary || isMiddle) 
         ? 'GENERAL' 
         : getSpecializationForEducationTrack(selectedTrack),
-      subject: (selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade) &&
+      subject: (selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade) &&
+        !isSaudiMiddleSubjectAvailable(selectedSubject, selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))
+        ? getSaudiMiddleSubjects(selectedGrade)[0] ?? 'MATH'
+        : (selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade) &&
         !isSaudiSecondarySubjectAvailable(selectedSubject, selectedGrade, selectedTrack, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))
         ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
         : (selectedCountry === 'EG' && selectedGrade === 'G12' &&

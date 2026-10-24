@@ -601,6 +601,14 @@ export function isSaudiPublicG2EnglishAvailable(
   return country === 'SA' && gradeLevel === 'G2' && educationType === 'PUBLIC';
 }
 
+export function isSaudiPublicMiddleEnglishAvailable(
+  country: string,
+  gradeLevel: string | undefined,
+  educationType: EducationType | undefined
+): boolean {
+  return country === 'SA' && (gradeLevel === 'G7' || gradeLevel === 'G8' || gradeLevel === 'G9') && educationType === 'PUBLIC';
+}
+
 export function isSaudiPublicG11EnglishAvailable(
   country: string,
   gradeLevel: string | undefined,
@@ -625,6 +633,7 @@ export function isSaudiPublicEnglishAvailable(
   return isSaudiPublicG2EnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicG3EnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicG5EnglishAvailable(country, gradeLevel, educationType) ||
+    isSaudiPublicMiddleEnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicCommonYearEnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicG11EnglishAvailable(country, gradeLevel, educationType) ||
     isSaudiPublicG12EnglishAvailable(country, gradeLevel, educationType);
@@ -1376,6 +1385,22 @@ export function getNationalTextbookInfo(
           ? isEn
             ? 'Mega Goal 2 — Saudi public second secondary, GNRL-coded edition, 1448 AH/2026; unit titles and page spans verified against contents and functions/grammar checked against scope sequence'
             : 'Mega Goal 2 — التعليم الحكومي، الصف الثاني الثانوي، نسخة المصدر ذات الرمز GNRL، طبعة 1448هـ/2026م؛ عناوين الوحدات وصفحاتها مطابقة للفهرس ومحاور الوظائف والقواعد مطابقة لجدول النطاق'
+          : isSaudiPublicG12EnglishAvailable(country, gradeLevel, educationType) || (country === 'SA' && gradeLevel === 'G12')
+          ? isEn
+            ? 'Mega Goal 3 — Saudi public third secondary pathways, 1448 AH/2026 edition; unit titles and page spans verified against official curriculum'
+            : 'Mega Goal 3 — التعليم الحكومي، الصف الثالث الثانوي مسارات، طبعة 1448هـ/2026م؛ عناوين الوحدات والمحاور موثقة وفق المنهج الرسمي'
+          : isSaudiPublicMiddleEnglishAvailable(country, gradeLevel, educationType)
+          ? gradeLevel === 'G7'
+            ? isEn
+              ? 'Super Goal 1 — Saudi public Grade 7 (First Intermediate), 1448 AH/2026 edition; units and topics verified against official curriculum'
+              : 'Super Goal 1 — التعليم الحكومي، الصف الأول المتوسط، طبعة 1448هـ/2026م؛ عناوين الوحدات والدروس موثقة وفق المنهج الرسمي'
+            : gradeLevel === 'G8'
+            ? isEn
+              ? 'Super Goal 2 — Saudi public Grade 8 (Second Intermediate), 1448 AH/2026 edition; units and topics verified against official curriculum'
+              : 'Super Goal 2 — التعليم الحكومي، الصف الثاني المتوسط، طبعة 1448هـ/2026م؛ عناوين الوحدات والدروس موثقة وفق المنهج الرسمي'
+            : isEn
+              ? 'Super Goal 3 — Saudi public Grade 9 (Third Intermediate), 1448 AH/2026 edition; units and topics verified against official curriculum'
+              : 'Super Goal 3 — التعليم الحكومي، الصف الثالث المتوسط، طبعة 1448هـ/2026م؛ عناوين الوحدات والدروس موثقة وفق المنهج الرسمي'
           : isEn
           ? 'Saudi English — textbook edition for this education type, grade, and track has not been verified'
           : 'اللغة الإنجليزية السعودية — لم يتم التحقق من طبعة الكتاب المناسبة لنوع التعليم والصف والمسار المحددين';
@@ -2634,6 +2659,13 @@ export function getNationalSubjectLabel(
   }
 
   if (subject === 'ISLAMIC_STUDIES' && country === 'SA') {
+    if (['G7', 'G8', 'G9'].includes(_gradeLevel || '')) {
+      const gNameAr = _gradeLevel === 'G7' ? 'الأول' : _gradeLevel === 'G8' ? 'الثاني' : 'الثالث';
+      const gNameEn = _gradeLevel === 'G7' ? 'First' : _gradeLevel === 'G8' ? 'Second' : 'Third';
+      return isEn
+        ? `Islamic Studies (${gNameEn} Intermediate)`
+        : `الدراسات الإسلامية (الصف ${gNameAr} المتوسط)`;
+    }
     return isSaudiPublicG2IslamicStudiesAvailable(country, _gradeLevel, educationType, track)
       ? isEn
         ? 'Islamic Studies (Saudi public Grade 2 — verified Part One contents)'
@@ -2695,6 +2727,11 @@ export function getNationalSubjectLabel(
   }
 
   if (subject === 'VISUAL_ARTS') {
+    if (country === 'SA' && ['G7', 'G8', 'G9'].includes(_gradeLevel || '')) {
+      const gNameAr = _gradeLevel === 'G7' ? 'الأول' : _gradeLevel === 'G8' ? 'الثاني' : 'الثالث';
+      const gNameEn = _gradeLevel === 'G7' ? 'First' : _gradeLevel === 'G8' ? 'Second' : 'Third';
+      return isEn ? `Art Education (${gNameEn} Intermediate)` : `التربية الفنية (الصف ${gNameAr} المتوسط)`;
+    }
     if (country === 'SD' && _gradeLevel === 'G5' && educationType === 'PUBLIC' && track === 'GENERAL') {
       return isEn ? 'Art Education (Grade 5)' : 'التربية الفنية (الصف الخامس الأساسي)';
     }
@@ -2946,8 +2983,16 @@ export function getNationalSubjectLabel(
         }
         return isEn ? 'Arabic Language (Lughati Al-Jameelah)' : 'لغتي الجميلة (المرحلة الابتدائية السعودية)';
       case 'ARABIC_LANG':
+        if (_gradeLevel === 'G7') return isEn ? 'Arabic Language (Lughati Al-Khalidah 1)' : 'لغتي الخالدة (الصف الأول المتوسط)';
+        if (_gradeLevel === 'G8') return isEn ? 'Arabic Language (Lughati Al-Khalidah 2)' : 'لغتي الخالدة (الصف الثاني المتوسط)';
+        if (_gradeLevel === 'G9') return isEn ? 'Arabic Language (Lughati Al-Khalidah 3)' : 'لغتي الخالدة (الصف الثالث المتوسط)';
         return isEn ? 'Arabic Language (Lughati Al-Khalidah)' : 'لغتي الخالدة (المرحلة المتوسطة السعودية)';
       case 'ISLAMIC_STUDIES':
+        if (['G7', 'G8', 'G9'].includes(_gradeLevel || '')) {
+          const gNameAr = _gradeLevel === 'G7' ? 'الأول' : _gradeLevel === 'G8' ? 'الثاني' : 'الثالث';
+          const gNameEn = _gradeLevel === 'G7' ? 'First' : _gradeLevel === 'G8' ? 'Second' : 'Third';
+          return isEn ? `Islamic Studies (${gNameEn} Intermediate)` : `الدراسات الإسلامية (الصف ${gNameAr} المتوسط)`;
+        }
         return isEn ? 'Islamic Studies' : 'الدراسات الإسلامية';
       case 'PRIMARY_MATH':
         if (isSaudiPublicG2PrimaryMathAvailable(country, _gradeLevel, educationType)) {
@@ -2983,8 +3028,14 @@ export function getNationalSubjectLabel(
         }
         return isEn ? 'Primary Science (Saudi)' : 'العلوم (المرحلة الابتدائية السعودية)';
       case 'GENERAL_SCIENCE':
+        if (_gradeLevel === 'G7') return isEn ? 'Science (First Intermediate)' : 'العلوم (الصف الأول المتوسط)';
+        if (_gradeLevel === 'G8') return isEn ? 'Science (Second Intermediate)' : 'العلوم (الصف الثاني المتوسط)';
+        if (_gradeLevel === 'G9') return isEn ? 'Science (Third Intermediate)' : 'العلوم (الصف الثالث المتوسط)';
         return isEn ? 'Middle School Science' : 'العلوم (المرحلة المتوسطة السعودية)';
       case 'MATH':
+        if (_gradeLevel === 'G7') return isEn ? 'Mathematics (First Intermediate)' : 'الرياضيات (الصف الأول المتوسط)';
+        if (_gradeLevel === 'G8') return isEn ? 'Mathematics (Second Intermediate)' : 'الرياضيات (الصف الثاني المتوسط)';
+        if (_gradeLevel === 'G9') return isEn ? 'Mathematics (Third Intermediate)' : 'الرياضيات (الصف الثالث المتوسط)';
         if (_gradeLevel === 'G10' && educationType === 'PUBLIC') {
           return isEn ? 'Mathematics 1 (Common First Year)' : 'الرياضيات 1 (السنة الأولى المشتركة)';
         }
@@ -3051,6 +3102,15 @@ export function getNationalSubjectLabel(
           ? isEn ? 'Health Science Principles (Second Secondary)' : 'مبادئ العلوم الصحية واللياقة (الصف الثاني الثانوي)'
           : isEn ? 'Health Science Principles (Unverified Track)' : 'مبادئ العلوم الصحية (مسار غير متحقق)';
       case 'HISTORY':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Social Studies (First Intermediate)' : 'الدراسات الاجتماعية (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Social Studies (Second Intermediate)' : 'الدراسات الاجتماعية (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G9') {
+          return isEn ? 'Social Studies (Third Intermediate)' : 'الدراسات الاجتماعية (الصف الثالث المتوسط)';
+        }
         if (_gradeLevel === 'G10') {
           return isEn ? 'Social Studies (Common First Year)' : 'الدراسات الاجتماعية والوطنية (السنة الأولى المشتركة)';
         }
@@ -3075,6 +3135,12 @@ export function getNationalSubjectLabel(
           ? isEn ? 'English (We Can! Student’s Book 3 — Grade 3)' : 'اللغة الإنجليزية (We Can! كتاب الطالب 3 — الصف الثالث)'
           : isSaudiPublicG5EnglishAvailable(country, _gradeLevel, educationType)
           ? isEn ? 'English (Top Goal, Student Book 2 — Grade 5)' : 'اللغة الإنجليزية (Top Goal، كتاب الطالب 2 — الصف الخامس)'
+          : _gradeLevel === 'G7'
+          ? isEn ? 'English (Super Goal 1)' : 'اللغة الإنجليزية (Super Goal 1)'
+          : _gradeLevel === 'G8'
+          ? isEn ? 'English (Super Goal 2)' : 'اللغة الإنجليزية (Super Goal 2)'
+          : _gradeLevel === 'G9'
+          ? isEn ? 'English (Super Goal 3)' : 'اللغة الإنجليزية (Super Goal 3)'
           : isSaudiPublicCommonYearEnglishAvailable(country, _gradeLevel, educationType)
           ? isEn ? 'English 1 (Mega Goal 1)' : 'اللغة الإنجليزية 1 (Mega Goal 1)'
           : _gradeLevel === 'G10'
@@ -3087,6 +3153,15 @@ export function getNationalSubjectLabel(
           ? isEn ? 'English 3 (Mega Goal 3)' : 'اللغة الإنجليزية 3 (Mega Goal 3)'
           : isEn ? `English (Unverified ${_gradeLevel ?? 'Saudi'} edition)` : `اللغة الإنجليزية (${_gradeLevel ?? 'صف سعودي'} غير متحقق)`;
       case 'LIFE_SKILLS':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Life and Family Skills (First Intermediate)' : 'المهارات الحياتية والأسرية (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Life and Family Skills (Second Intermediate)' : 'المهارات الحياتية والأسرية (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G9') {
+          return isEn ? 'Life and Family Skills (Third Intermediate)' : 'المهارات الحياتية والأسرية (الصف الثالث المتوسط)';
+        }
         if (_gradeLevel === 'G10') {
           return isEn ? 'Life Skills & Career Education (Common First Year)' : 'المهارات الحياتية والتربية المهنية (السنة الأولى المشتركة)';
         }
@@ -3111,6 +3186,15 @@ export function getNationalSubjectLabel(
             ? 'Life and Family Skills (not available for this grade, track, or education type)'
             : 'المهارات الحياتية والأسرية (غير متاحة لهذا الصف أو المسار أو نوع التعليم)';
       case 'COMPUTER_SCIENCE':
+        if (_gradeLevel === 'G7') {
+          return isEn ? 'Digital Skills (First Intermediate)' : 'المهارات الرقمية (الصف الأول المتوسط)';
+        }
+        if (_gradeLevel === 'G8') {
+          return isEn ? 'Digital Skills (Second Intermediate)' : 'المهارات الرقمية (الصف الثاني المتوسط)';
+        }
+        if (_gradeLevel === 'G9') {
+          return isEn ? 'Digital Skills (Third Intermediate)' : 'المهارات الرقمية (الصف الثالث المتوسط)';
+        }
         if (_gradeLevel === 'G10') {
           return isEn ? 'Digital Technology 1 (Common First Year)' : 'التقنية الرقمية 1 (السنة الأولى المشتركة)';
         }
@@ -3166,6 +3250,14 @@ export function getNationalSubjectLabel(
             : 'الدراسات الأدبية والكفايات (الصف الثالث الثانوي)';
         }
         return isEn ? 'Literary Studies & Arabic Competencies' : 'الدراسات الأدبية والكفايات اللغوية';
+      case 'PHILOSOPHY':
+        if (_gradeLevel === 'G9') {
+          return isEn ? 'Critical Thinking (Third Intermediate)' : 'التفكير الناقد (الصف الثالث المتوسط)';
+        }
+        if (_gradeLevel === 'G10' || _gradeLevel === 'G11') {
+          return isEn ? 'Critical Thinking (Secondary Pathways)' : 'التفكير الناقد (مسارات المرحلة الثانوية)';
+        }
+        return isEn ? 'Critical Thinking' : 'التفكير الناقد';
       default:
         break;
     }
