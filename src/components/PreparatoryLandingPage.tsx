@@ -24,6 +24,7 @@ import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSe
 import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSecondaryG11CurriculumData';
 import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
 import { isSaudiMiddleSubjectAvailable, getSaudiMiddleSubjects } from '../data/saudiMiddleCurriculumData';
+import { isSaudiPrimarySubjectAvailable, getSaudiPrimarySubjects } from '../data/saudiPrimaryCurriculumData';
 import {
   isSudanPublicGrade4SubjectAvailable,
   isSudanPublicGrade5SubjectAvailable,
@@ -164,6 +165,10 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
       selectedCountry === 'SA' &&
       ['G7', 'G8', 'G9'].includes(selectedGrade) &&
       !isSaudiMiddleSubjectAvailable(selectedSubject, selectedGrade, educationType);
+    const invalidSaudiPrimarySubject =
+      selectedCountry === 'SA' &&
+      ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade) &&
+      !isSaudiPrimarySubjectAvailable(selectedSubject, selectedGrade, educationType);
     const invalidEgyptG10Subject =
       selectedCountry === 'EG' &&
       selectedGrade === 'G10' &&
@@ -179,6 +184,7 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
     if (
       invalidSaudiSecondarySubject ||
       invalidSaudiMiddleSubject ||
+      invalidSaudiPrimarySubject ||
       invalidSudanMiddleSubject ||
       invalidSudanGrade10Subject ||
       invalidSudanGrade11Subject ||
@@ -269,7 +275,9 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         ))
     ) {
       setSelectedSubject(
-        selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade)
+        selectedCountry === 'SA' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade)
+          ? getSaudiPrimarySubjects(selectedGrade)[0] ?? 'PRIMARY_MATH'
+        : selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade)
           ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
         : selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade)
           ? getSaudiMiddleSubjects(selectedGrade)[0] ?? 'MATH'
@@ -322,6 +330,12 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
 
     if (inPrimary) {
       setSelectedTrack('GENERAL');
+      if (selectedCountry === 'SA') {
+        if (!isSaudiPrimarySubjectAvailable(selectedSubject, grade)) {
+          setSelectedSubject(getSaudiPrimarySubjects(grade)[0] ?? 'PRIMARY_MATH');
+        }
+        return;
+      }
       const validEgyptPrimary = selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
       const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
       if (!validEgyptPrimary && !validEnglish && !['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'].includes(selectedSubject) &&
@@ -900,6 +914,131 @@ export const PreparatoryLandingPage: React.FC<PreparatoryLandingPageProps> = ({
         nameEn: getNationalSubjectLabel(id, 'EG', 'G12', 'en', normalizeEducationTypeForCountry('EG', profile.educationType), selectedTrack),
         ...(g12Meta[id] ?? { descAr: 'محاور الكتاب المقرر', descEn: 'Textbook course topics', icon: <BookOpen size={28} />, color: '#60a5fa' })
       }));
+    }
+    if (selectedCountry === 'SA' && isPrimary) {
+      const gNum = selectedGrade.replace('G', '');
+      const gradeNamesAr: Record<string, string> = {
+        G1: 'الأول الابتدائي',
+        G2: 'الثاني الابتدائي',
+        G3: 'الثالث الابتدائي',
+        G4: 'الرابع الابتدائي',
+        G5: 'الخامس الابتدائي',
+        G6: 'السادس الابتدائي'
+      };
+      const gradeNamesEn: Record<string, string> = {
+        G1: 'Grade 1',
+        G2: 'Grade 2',
+        G3: 'Grade 3',
+        G4: 'Grade 4',
+        G5: 'Grade 5',
+        G6: 'Grade 6'
+      };
+      const gNameAr = gradeNamesAr[selectedGrade] || selectedGrade;
+      const gNameEn = gradeNamesEn[selectedGrade] || selectedGrade;
+
+      const allSaudiPrimaryCards = [
+        {
+          id: 'PRIMARY_MATH' as const,
+          nameAr: `الرياضيات (${gNameAr})`,
+          nameEn: `Mathematics (${gNameEn})`,
+          descAr: 'كتاب وزارة التعليم المعتمد؛ الأعداد والعمليات الحسابية والهندسة والقياس',
+          descEn: 'Official Ministry mathematics textbook; numbers, operations, geometry, and measurement',
+          icon: <Calculator size={28} />,
+          color: '#38bdf8'
+        },
+        {
+          id: 'PRIMARY_ARABIC' as const,
+          nameAr: `لغتي الجميلة (${gNameAr})`,
+          nameEn: `Lughati Al-Jameelah (${gNameEn})`,
+          descAr: 'كتاب لغتي الجميلة المعتمد؛ القراءة التحليلية، الكفايات اللغوية، والظواهر الإملائية والنحوية',
+          descEn: 'Official Lughati Al-Jameelah textbook; analytical reading, language competencies, grammar, and spelling',
+          icon: <BookMarked size={28} />,
+          color: '#10b981'
+        },
+        {
+          id: 'PRIMARY_SCIENCE' as const,
+          nameAr: `العلوم (${gNameAr})`,
+          nameEn: `Science (${gNameEn})`,
+          descAr: 'كتاب وزارة التعليم للعلوم؛ استكشاف المخلوقات الحية والأنظمة البيئية والمادة والقوى والطاقة',
+          descEn: 'Official Ministry science textbook; living things, ecosystems, matter, forces, and energy',
+          icon: <Microscope size={28} />,
+          color: '#38bdf8'
+        },
+        {
+          id: 'ENGLISH' as const,
+          nameAr: `اللغة الإنجليزية (We Can! ${gNum})`,
+          nameEn: `English (We Can! ${gNum})`,
+          descAr: `سلسلة We Can! المعتمدة رسمياً من وزارة التعليم للصف ${gNameAr}`,
+          descEn: `Official Ministry accredited We Can! ${gNum} course for Saudi elementary school`,
+          icon: <BookOpen size={28} />,
+          color: '#a78bfa'
+        },
+        {
+          id: 'ISLAMIC_STUDIES' as const,
+          nameAr: `الدراسات الإسلامية (${gNameAr})`,
+          nameEn: `Islamic Studies (${gNameEn})`,
+          descAr: 'منهاج وزارة التعليم الشامل؛ التوحيد والعقيدة، الفقه والسلوك، والحديث النبوي الشريف',
+          descEn: 'Comprehensive Ministry curriculum in Tawheed, Fiqh, Conduct, and Hadith',
+          icon: <Award size={28} />,
+          color: '#fbbf24'
+        },
+        ...(isSaudiPrimarySubjectAvailable('TAJWEED', selectedGrade) ? [{
+          id: 'TAJWEED' as const,
+          nameAr: `التجويد (${gNameAr})`,
+          nameEn: `Tajweed (${gNameEn})`,
+          descAr: 'مبادئ وأحكام التلاوة والتجويد المعتمدة بمدارس المملكة',
+          descEn: 'Official Tajweed rules and Quran recitation principles',
+          icon: <Compass size={28} />,
+          color: '#f59e0b'
+        }] : []),
+        ...(isSaudiPrimarySubjectAvailable('QURAN_RECITATION', selectedGrade) ? [{
+          id: 'QURAN_RECITATION' as const,
+          nameAr: `تلاوة القرآن الكريم وتجويده (${gNameAr})`,
+          nameEn: `Quran Recitation (${gNameEn})`,
+          descAr: 'المقرر المعتمد لتلاوة وتدبر السور الكريمة وتطبيق أحكام التجويد',
+          descEn: 'Accredited curriculum for Quranic recitation and practical tajweed',
+          icon: <Sparkles size={28} />,
+          color: '#d4a72c'
+        }] : []),
+        ...(isSaudiPrimarySubjectAvailable('HISTORY', selectedGrade) ? [{
+          id: 'HISTORY' as const,
+          nameAr: `الدراسات الاجتماعية (${gNameAr})`,
+          nameEn: `Social Studies (${gNameEn})`,
+          descAr: 'تاريخ شبه الجزيرة العربية، الدولة السعودية، المواطنة، وجغرافية وطني',
+          descEn: 'Saudi Arabian history, national identity, citizenship, and geography',
+          icon: <Compass size={28} />,
+          color: '#eab308'
+        }] : []),
+        ...(isSaudiPrimarySubjectAvailable('COMPUTER_SCIENCE', selectedGrade) ? [{
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: `المهارات الرقمية (${gNameAr})`,
+          nameEn: `Digital Skills (${gNameEn})`,
+          descAr: 'أساسيات الحاسب، معالجة النصوص، البرمجة المرئية بلبنات سكراتش، والمواطنة الرقمية',
+          descEn: 'Computer fundamentals, word processing, Scratch visual programming, and cyber safety',
+          icon: <Code2 size={28} />,
+          color: '#c084fc'
+        }] : []),
+        {
+          id: 'VISUAL_ARTS' as const,
+          nameAr: `التربية الفنية (${gNameAr})`,
+          nameEn: `Art Education (${gNameEn})`,
+          descAr: 'عالم الألوان، التشكيل المجسم بالصلصال والخزف، الزخارف والفنون الشعبية السعودية',
+          descEn: 'Colors, sculpture, ceramics, ornamentations, and Saudi traditional folk arts',
+          icon: <Palette size={28} />,
+          color: '#fb7185'
+        },
+        {
+          id: 'LIFE_SKILLS' as const,
+          nameAr: `المهارات الحياتية والأسرية (${gNameAr})`,
+          nameEn: `Life and Family Skills (${gNameEn})`,
+          descAr: 'صحتي وسلامتي، التغذية المتوازنة، آداب السلوك، وترشيد الموارد والادخار',
+          descEn: 'Personal wellness, balanced nutrition, etiquette, and resource conservation',
+          icon: <ShieldCheck size={28} />,
+          color: '#e11d48'
+        }
+      ];
+
+      return allSaudiPrimaryCards.filter(c => isSaudiPrimarySubjectAvailable(c.id, selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)));
     }
     if (isPrimary) {
       return [

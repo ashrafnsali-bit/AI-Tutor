@@ -45,6 +45,7 @@ import { isEgyptG11SubjectAvailable, getEgyptG11Subjects } from '../data/egyptSe
 import { isEgyptG12SubjectAvailable, getEgyptG12Subjects } from '../data/egyptSecondaryG12CurriculumData';
 import { isSaudiSecondarySubjectAvailable, getSaudiSecondarySubjects } from '../data/saudiSecondaryCurriculumData';
 import { isSaudiMiddleSubjectAvailable, getSaudiMiddleSubjects } from '../data/saudiMiddleCurriculumData';
+import { isSaudiPrimarySubjectAvailable, getSaudiPrimarySubjects } from '../data/saudiPrimaryCurriculumData';
 import { isEgyptPrepSubjectAvailable, getEgyptPrepSubjects } from '../data/egyptPrepCurriculumData';
 import { isEgyptPrimarySubjectAvailable, getEgyptPrimarySubjects } from '../data/egyptPrimaryCurriculumData';
 import { getSubjectVisual } from '../data/subjectVisuals';
@@ -362,6 +363,18 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
       setFormData(current => ({
         ...current,
         subject: allowed[0] ?? 'MATH'
+      }));
+      return;
+    }
+    if (
+      formData.country === 'SA' &&
+      ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(formData.gradeLevel) &&
+      !isSaudiPrimarySubjectAvailable(formData.subject, formData.gradeLevel, formData.educationType)
+    ) {
+      const allowed = getSaudiPrimarySubjects(formData.gradeLevel);
+      setFormData(current => ({
+        ...current,
+        subject: allowed[0] ?? 'PRIMARY_MATH'
       }));
       return;
     }
@@ -1267,6 +1280,16 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                   formData.country === 'EG' ? (
                     <optgroup label={formData.language === 'en' ? "Egyptian Primary Core Subjects (Ministry Edu 2.0)" : "مقررات المرحلة الابتدائية المصرية (منظومة التعليم 2.0 المطورة)"}>
                       {getEgyptPrimarySubjects(formData.gradeLevel).map((subj) => (
+                        <option key={subj} value={subj}>
+                          {getNationalSubjectLabel(subj, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : formData.country === 'SA' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(formData.gradeLevel) ? (
+                    <optgroup label={formData.language === 'en'
+                      ? `Saudi Primary (${formData.gradeLevel}) Subjects`
+                      : `مواد المرحلة الابتدائية بالسعودية (${formData.gradeLevel === 'G1' ? 'الأول الابتدائي' : formData.gradeLevel === 'G2' ? 'الثاني الابتدائي' : formData.gradeLevel === 'G3' ? 'الثالث الابتدائي' : formData.gradeLevel === 'G4' ? 'الرابع الابتدائي' : formData.gradeLevel === 'G5' ? 'الخامس الابتدائي' : 'السادس الابتدائي'})`}>
+                      {getSaudiPrimarySubjects(formData.gradeLevel).map((subj) => (
                         <option key={subj} value={subj}>
                           {getNationalSubjectLabel(subj, formData.country, formData.gradeLevel, formData.language, formData.educationType, formData.educationTrack)}
                         </option>

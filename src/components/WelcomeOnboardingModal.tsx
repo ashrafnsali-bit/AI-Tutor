@@ -49,24 +49,28 @@ import {
   isSaudiMiddleSubjectAvailable,
   getSaudiMiddleSubjects
 } from '../data/saudiMiddleCurriculumData';
+import {
+  isSaudiPrimarySubjectAvailable,
+  getSaudiPrimarySubjects
+} from '../data/saudiPrimaryCurriculumData';
 import { setManualCountryOverride, isManualCountryOverride } from '../services/geoService';
-import { 
-  Sparkles, 
-  Compass, 
-  BookOpen, TestTube2, 
-  Brain, 
-  CheckCircle2, 
-  Layers, 
-  ArrowRight, 
-  ArrowLeft, 
-  Rocket, 
-  Atom, 
-  Calculator, 
-  FlaskConical, 
-  Dna, 
-  Code2, 
-  BookMarked, 
-  Microscope, 
+import {
+  Sparkles,
+  Compass,
+  BookOpen, TestTube2,
+  Brain,
+  CheckCircle2,
+  Layers,
+  ArrowRight,
+  ArrowLeft,
+  Rocket,
+  Atom,
+  Calculator,
+  FlaskConical,
+  Dna,
+  Code2,
+  BookMarked,
+  Microscope,
   GraduationCap,
   Globe2,
   X,
@@ -154,9 +158,14 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       selectedCountry === 'SA' &&
       ['G7', 'G8', 'G9'].includes(selectedGrade) &&
       !isSaudiMiddleSubjectAvailable(selectedSubject, selectedGrade, educationType);
+    const invalidSaudiPrimarySubject =
+      selectedCountry === 'SA' &&
+      isPrimary &&
+      !isSaudiPrimarySubjectAvailable(selectedSubject, selectedGrade, educationType);
     if (
       invalidSaudiSecondarySubject ||
       invalidSaudiMiddleSubject ||
+      invalidSaudiPrimarySubject ||
       invalidSudanGrade7Subject ||
       invalidSudanGrade10Subject ||
       invalidSudanGrade11Subject ||
@@ -195,22 +204,24 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       setSelectedSubject(
         selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade)
           ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
-        : selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade)
-          ? getSaudiMiddleSubjects(selectedGrade)[0] ?? 'MATH'
-        : selectedCountry === 'SD' && selectedGrade === 'G10'
-        ? 'CHEMISTRY'
-        : selectedCountry === 'SD' && selectedGrade === 'G11' ? 'BIOLOGY'
-        : selectedCountry === 'SD' && selectedGrade === 'G12'
-          ? getSudanPublicGrade12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
-        : selectedCountry === 'EG' && selectedGrade === 'G11'
-          ? getEgyptG11Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
-        : selectedCountry === 'EG' && selectedGrade === 'G12'
-          ? getEgyptG12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
-        : ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade)
-        ? 'PRIMARY_ARABIC'
-        : selectedGrade === 'G7' || selectedGrade === 'G8' || selectedGrade === 'G9'
-          ? 'ARABIC_LANG'
-          : 'ARABIC_LIT');
+          : selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade)
+            ? getSaudiMiddleSubjects(selectedGrade)[0] ?? 'MATH'
+            : selectedCountry === 'SA' && isPrimary
+              ? getSaudiPrimarySubjects(selectedGrade)[0] ?? 'PRIMARY_MATH'
+              : selectedCountry === 'SD' && selectedGrade === 'G10'
+                ? 'CHEMISTRY'
+              : selectedCountry === 'SD' && selectedGrade === 'G11' ? 'BIOLOGY'
+                : selectedCountry === 'SD' && selectedGrade === 'G12'
+                  ? getSudanPublicGrade12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+                  : selectedCountry === 'EG' && selectedGrade === 'G11'
+                    ? getEgyptG11Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+                    : selectedCountry === 'EG' && selectedGrade === 'G12'
+                      ? getEgyptG12Subjects(selectedTrack)[0] ?? 'ARABIC_LIT'
+                      : ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(selectedGrade)
+                        ? 'PRIMARY_ARABIC'
+                        : selectedGrade === 'G7' || selectedGrade === 'G8' || selectedGrade === 'G9'
+                          ? 'ARABIC_LANG'
+                          : 'ARABIC_LIT');
     }
   }, [selectedCountry, selectedGrade, selectedSubject, selectedTrack, profile.educationType]);
 
@@ -677,6 +688,120 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           ...(meta[id] ?? { descAr: 'محاور الكتاب المقرر', descEn: 'Textbook course topics', icon: <BookOpen size={24} />, color: '#60a5fa' })
         }));
     }
+    if (selectedCountry === 'SA' && isPrimary) {
+      const gNum = selectedGrade.slice(1);
+      const gNameAr = selectedGrade === 'G1' ? 'الأول الابتدائي'
+        : selectedGrade === 'G2' ? 'الثاني الابتدائي'
+        : selectedGrade === 'G3' ? 'الثالث الابتدائي'
+        : selectedGrade === 'G4' ? 'الرابع الابتدائي'
+        : selectedGrade === 'G5' ? 'الخامس الابتدائي'
+        : 'السادس الابتدائي';
+      const gNameEn = `Grade ${gNum} Primary`;
+
+      const allSaudiPrimaryCards: { id: Subject; nameAr: string; nameEn: string; descAr: string; descEn: string; icon: React.ReactNode; color: string }[] = [
+        {
+          id: 'PRIMARY_MATH',
+          nameAr: `الرياضيات (${gNameAr})`,
+          nameEn: `Mathematics (${gNameEn})`,
+          descAr: 'كتاب وزارة التعليم المعتمد؛ الأعداد والعمليات والقيمة المنزلية والهندسة والقياس',
+          descEn: 'Official Ministry textbook; numbers, operations, place value, geometry, and measurement',
+          icon: <Calculator size={24} />,
+          color: '#60a5fa'
+        },
+        {
+          id: 'PRIMARY_ARABIC',
+          nameAr: `لغتي الجميلة (${gNameAr})`,
+          nameEn: `Lughati Al-Jameelah (${gNameEn})`,
+          descAr: 'كتاب لغتي الجميلة المعتمد؛ القراءة التحليلية، الكفايات اللغوية، والظواهر الإملائية والنحوية',
+          descEn: 'Official Lughati Al-Jameelah textbook; analytical reading, language competencies, grammar, and spelling',
+          icon: <BookMarked size={24} />,
+          color: '#10b981'
+        },
+        {
+          id: 'PRIMARY_SCIENCE',
+          nameAr: `العلوم (${gNameAr})`,
+          nameEn: `Science (${gNameEn})`,
+          descAr: 'كتاب وزارة التعليم للعلوم؛ استكشاف المخلوقات الحية والأنظمة البيئية والمادة والقوى والطاقة',
+          descEn: 'Official Ministry science textbook; living things, ecosystems, matter, forces, and energy',
+          icon: <Microscope size={24} />,
+          color: '#38bdf8'
+        },
+        {
+          id: 'ENGLISH',
+          nameAr: `اللغة الإنجليزية (We Can! ${gNum})`,
+          nameEn: `English (We Can! ${gNum})`,
+          descAr: `سلسلة We Can! المعتمدة رسمياً من وزارة التعليم للصف ${gNameAr}`,
+          descEn: `Official Ministry accredited We Can! ${gNum} course for Saudi elementary school`,
+          icon: <BookOpen size={24} />,
+          color: '#a78bfa'
+        },
+        {
+          id: 'ISLAMIC_STUDIES',
+          nameAr: `الدراسات الإسلامية (${gNameAr})`,
+          nameEn: `Islamic Studies (${gNameEn})`,
+          descAr: 'منهاج وزارة التعليم الشامل؛ التوحيد والعقيدة، الفقه والسلوك، والحديث النبوي الشريف',
+          descEn: 'Comprehensive Ministry curriculum in Tawheed, Fiqh, Conduct, and Hadith',
+          icon: <Award size={24} />,
+          color: '#fbbf24'
+        },
+        ...(isSaudiPrimarySubjectAvailable('TAJWEED', selectedGrade) ? [{
+          id: 'TAJWEED' as const,
+          nameAr: `التجويد (${gNameAr})`,
+          nameEn: `Tajweed (${gNameEn})`,
+          descAr: 'مبادئ وأحكام التلاوة والتجويد المعتمدة بمدارس المملكة',
+          descEn: 'Official Tajweed rules and Quran recitation principles',
+          icon: <Compass size={24} />,
+          color: '#f59e0b'
+        }] : []),
+        ...(isSaudiPrimarySubjectAvailable('QURAN_RECITATION', selectedGrade) ? [{
+          id: 'QURAN_RECITATION' as const,
+          nameAr: `تلاوة القرآن الكريم وتجويده (${gNameAr})`,
+          nameEn: `Quran Recitation (${gNameEn})`,
+          descAr: 'المقرر المعتمد لتلاوة وتدبر السور الكريمة وتطبيق أحكام التجويد',
+          descEn: 'Accredited curriculum for Quranic recitation and practical tajweed',
+          icon: <Sparkles size={24} />,
+          color: '#d4a72c'
+        }] : []),
+        ...(isSaudiPrimarySubjectAvailable('HISTORY', selectedGrade) ? [{
+          id: 'HISTORY' as const,
+          nameAr: `الدراسات الاجتماعية (${gNameAr})`,
+          nameEn: `Social Studies (${gNameEn})`,
+          descAr: 'تاريخ شبه الجزيرة العربية، الدولة السعودية، المواطنة، وجغرافية وطني',
+          descEn: 'Saudi Arabian history, national identity, citizenship, and geography',
+          icon: <Compass size={24} />,
+          color: '#eab308'
+        }] : []),
+        ...(isSaudiPrimarySubjectAvailable('COMPUTER_SCIENCE', selectedGrade) ? [{
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: `المهارات الرقمية (${gNameAr})`,
+          nameEn: `Digital Skills (${gNameEn})`,
+          descAr: 'أساسيات الحاسب، معالجة النصوص، البرمجة المرئية بلبنات سكراتش، والمواطنة الرقمية',
+          descEn: 'Computer fundamentals, word processing, Scratch visual programming, and cyber safety',
+          icon: <Code2 size={24} />,
+          color: '#c084fc'
+        }] : []),
+        {
+          id: 'VISUAL_ARTS',
+          nameAr: `التربية الفنية (${gNameAr})`,
+          nameEn: `Art Education (${gNameEn})`,
+          descAr: 'عالم الألوان، التشكيل المجسم بالصلصال والخزف، الزخارف والفنون الشعبية السعودية',
+          descEn: 'Colors, sculpture, ceramics, ornamentations, and Saudi traditional folk arts',
+          icon: <Palette size={24} />,
+          color: '#fb7185'
+        },
+        {
+          id: 'LIFE_SKILLS',
+          nameAr: `المهارات الحياتية والأسرية (${gNameAr})`,
+          nameEn: `Life and Family Skills (${gNameEn})`,
+          descAr: 'صحتي وسلامتي، التغذية المتوازنة، آداب السلوك، وترشيد الموارد والادخار',
+          descEn: 'Personal wellness, balanced nutrition, etiquette, and resource conservation',
+          icon: <ShieldCheck size={24} />,
+          color: '#e11d48'
+        }
+      ];
+
+      return allSaudiPrimaryCards.filter(c => isSaudiPrimarySubjectAvailable(c.id, selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)));
+    }
     if (isPrimary) {
       return [
         {
@@ -731,40 +856,40 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           isSudanPublicGrade6SubjectAvailable('COMPUTER_SCIENCE', selectedCountry, selectedGrade,
             normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           (selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable('COMPUTER_SCIENCE', selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType))) ? [{
-          id: 'COMPUTER_SCIENCE' as const,
-          nameAr: 'تكنولوجيا المعلومات والاتصالات',
-          nameEn: 'Information and Communication Technology',
-          descAr: 'مهارات رقمية واستخدام آمن للتقنية',
-          descEn: 'Digital skills and safe use of technology',
-          icon: <Code2 size={24} />,
-          color: '#c084fc'
-        }] : []),
+            id: 'COMPUTER_SCIENCE' as const,
+            nameAr: 'تكنولوجيا المعلومات والاتصالات',
+            nameEn: 'Information and Communication Technology',
+            descAr: 'مهارات رقمية واستخدام آمن للتقنية',
+            descEn: 'Digital skills and safe use of technology',
+            icon: <Code2 size={24} />,
+            color: '#c084fc'
+          }] : []),
         ...((isSudanPublicGrade5SubjectAvailable('GEOGRAPHY', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           isSudanPublicGrade6SubjectAvailable('GEOGRAPHY', selectedCountry, selectedGrade,
             normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           (selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable('GEOGRAPHY', selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))) ? [{
-          id: 'GEOGRAPHY' as const,
-          nameAr: selectedCountry === 'EG' ? 'الدراسات الاجتماعية (الجغرافيا)' : 'الجغرافيا',
-          nameEn: 'Geography',
-          descAr: selectedCountry === 'EG' ? 'البيئات والموارد الطبيعية والموقع الجغرافي' : 'الخرائط والبيئات والموارد في السودان',
-          descEn: 'Maps, environments and resources',
-          icon: <Globe2 size={24} />,
-          color: '#38bdf8'
-        }] : []),
+            id: 'GEOGRAPHY' as const,
+            nameAr: selectedCountry === 'EG' ? 'الدراسات الاجتماعية (الجغرافيا)' : 'الجغرافيا',
+            nameEn: 'Geography',
+            descAr: selectedCountry === 'EG' ? 'البيئات والموارد الطبيعية والموقع الجغرافي' : 'الخرائط والبيئات والموارد في السودان',
+            descEn: 'Maps, environments and resources',
+            icon: <Globe2 size={24} />,
+            color: '#38bdf8'
+          }] : []),
         ...((isSudanPublicGrade5SubjectAvailable('HISTORY', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           isSudanPublicGrade6SubjectAvailable('HISTORY', selectedCountry, selectedGrade,
             normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           (selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable('HISTORY', selectedGrade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType)))) ? [{
-          id: 'HISTORY' as const,
-          nameAr: selectedCountry === 'EG' ? 'الدراسات الاجتماعية (التاريخ)' : 'التاريخ',
-          nameEn: 'History',
-          descAr: selectedCountry === 'EG' ? 'شخصيات وأحداث وحضارات عبر العصور' : 'محطات وشخصيات من تاريخ السودان',
-          descEn: 'Historical figures and civilizations',
-          icon: <BookOpen size={24} />,
-          color: '#f59e0b'
-        }] : []),
+            id: 'HISTORY' as const,
+            nameAr: selectedCountry === 'EG' ? 'الدراسات الاجتماعية (التاريخ)' : 'التاريخ',
+            nameEn: 'History',
+            descAr: selectedCountry === 'EG' ? 'شخصيات وأحداث وحضارات عبر العصور' : 'محطات وشخصيات من تاريخ السودان',
+            descEn: 'Historical figures and civilizations',
+            icon: <BookOpen size={24} />,
+            color: '#f59e0b'
+          }] : []),
         ...(isSaudiPublicTajweedAvailable(
           selectedCountry,
           selectedGrade,
@@ -803,14 +928,14 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ||
           isSudanPublicGrade5SubjectAvailable('VISUAL_ARTS', selectedCountry, selectedGrade,
             normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack)) ? [{
-          id: 'VISUAL_ARTS' as const,
-          nameAr: 'التربية الفنية',
-          nameEn: 'Art Education',
-          descAr: 'الرسم والتصميم والتشكيل بخامات متنوعة',
-          descEn: 'Drawing, design and construction with varied materials',
-          icon: <Palette size={24} />,
-          color: '#fb7185'
-        }] : [])
+              id: 'VISUAL_ARTS' as const,
+              nameAr: 'التربية الفنية',
+              nameEn: 'Art Education',
+              descAr: 'الرسم والتصميم والتشكيل بخامات متنوعة',
+              descEn: 'Drawing, design and construction with varied materials',
+              icon: <Palette size={24} />,
+              color: '#fb7185'
+            }] : [])
       ];
     }
 
@@ -961,54 +1086,54 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
         }] : []),
         ...(isSudanPublicMiddleSubjectAvailable('ISLAMIC_STUDIES', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
-          id: 'ISLAMIC_STUDIES' as const,
-          nameAr: 'التربية الإسلامية',
-          nameEn: 'Islamic Studies',
-          descAr: 'القرآن والتجويد والحديث والعقيدة والفقه والسيرة',
-          descEn: 'Quran, tajweed, hadith, creed, jurisprudence, and biography',
-          icon: <Award size={24} />,
-          color: '#fbbf24'
-        }] : []),
+            id: 'ISLAMIC_STUDIES' as const,
+            nameAr: 'التربية الإسلامية',
+            nameEn: 'Islamic Studies',
+            descAr: 'القرآن والتجويد والحديث والعقيدة والفقه والسيرة',
+            descEn: 'Quran, tajweed, hadith, creed, jurisprudence, and biography',
+            icon: <Award size={24} />,
+            color: '#fbbf24'
+          }] : []),
         ...(isSudanPublicMiddleSubjectAvailable('GEOGRAPHY', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
-          id: 'GEOGRAPHY' as const,
-          nameAr: 'الجغرافيا',
-          nameEn: 'Geography',
-          descAr: selectedGrade === 'G9' ? 'دراسة قارات آسيا وأوروبا وجغرافية السودان الإقليمية' : selectedGrade === 'G8' ? 'دراسة قارات أمريكا الشمالية والجنوبية وأستراليا' : 'دراسة قارات إفريقيا وآسيا وأوروبا',
-          descEn: selectedGrade === 'G9' ? 'Study of Asia, Europe, and Sudan regional geography' : selectedGrade === 'G8' ? 'Study of North America, South America, and Australia' : 'Study of Africa, Asia, and Europe',
-          icon: <Globe2 size={24} />,
-          color: '#38bdf8'
-        }] : []),
+            id: 'GEOGRAPHY' as const,
+            nameAr: 'الجغرافيا',
+            nameEn: 'Geography',
+            descAr: selectedGrade === 'G9' ? 'دراسة قارات آسيا وأوروبا وجغرافية السودان الإقليمية' : selectedGrade === 'G8' ? 'دراسة قارات أمريكا الشمالية والجنوبية وأستراليا' : 'دراسة قارات إفريقيا وآسيا وأوروبا',
+            descEn: selectedGrade === 'G9' ? 'Study of Asia, Europe, and Sudan regional geography' : selectedGrade === 'G8' ? 'Study of North America, South America, and Australia' : 'Study of Africa, Asia, and Europe',
+            icon: <Globe2 size={24} />,
+            color: '#38bdf8'
+          }] : []),
         ...(isSudanPublicMiddleSubjectAvailable('HISTORY', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
-          id: 'HISTORY' as const,
-          nameAr: 'التاريخ',
-          nameEn: 'History',
-          descAr: selectedGrade === 'G9' ? 'تاريخ المهدية والحكم الثنائي والتطورات المعاصرة' : selectedGrade === 'G8' ? 'تاريخ السودان والدولة الأموية وإفريقيا وأوروبا' : 'تاريخ السودان والدولة الإسلامية وإفريقيا وأوروبا القديمة',
-          descEn: selectedGrade === 'G9' ? 'Mahdist state, condominium rule, and contemporary developments' : selectedGrade === 'G8' ? 'Sudanese, Umayyad, African, and European history' : 'Sudanese, Islamic, African, and ancient European history',
-          icon: <BookOpen size={24} />,
-          color: '#f59e0b'
-        }] : []),
+            id: 'HISTORY' as const,
+            nameAr: 'التاريخ',
+            nameEn: 'History',
+            descAr: selectedGrade === 'G9' ? 'تاريخ المهدية والحكم الثنائي والتطورات المعاصرة' : selectedGrade === 'G8' ? 'تاريخ السودان والدولة الأموية وإفريقيا وأوروبا' : 'تاريخ السودان والدولة الإسلامية وإفريقيا وأوروبا القديمة',
+            descEn: selectedGrade === 'G9' ? 'Mahdist state, condominium rule, and contemporary developments' : selectedGrade === 'G8' ? 'Sudanese, Umayyad, African, and European history' : 'Sudanese, Islamic, African, and ancient European history',
+            icon: <BookOpen size={24} />,
+            color: '#f59e0b'
+          }] : []),
         ...(isSudanPublicMiddleSubjectAvailable('NATIONAL_EDUCATION', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
-          id: 'NATIONAL_EDUCATION' as const,
-          nameAr: 'التربية الوطنية',
-          nameEn: 'National Education',
-          descAr: 'الوطن والوطنية والسودان والمجتمع والدولة',
-          descEn: 'Homeland, citizenship, Sudan, society, and the state',
-          icon: <Award size={24} />,
-          color: '#fb923c'
-        }] : []),
+            id: 'NATIONAL_EDUCATION' as const,
+            nameAr: 'التربية الوطنية',
+            nameEn: 'National Education',
+            descAr: 'الوطن والوطنية والسودان والمجتمع والدولة',
+            descEn: 'Homeland, citizenship, Sudan, society, and the state',
+            icon: <Award size={24} />,
+            color: '#fb923c'
+          }] : []),
         ...(isSudanPublicMiddleSubjectAvailable('TECHNICAL_EDUCATION', selectedCountry, selectedGrade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) ? [{
-          id: 'TECHNICAL_EDUCATION' as const,
-          nameAr: 'أساسيات التربية التقنية',
-          nameEn: 'Foundations of Technical Education',
-          descAr: 'تطبيقات هندسية وزراعية وفندقية وتجارية',
-          descEn: 'Engineering, agriculture, hospitality, and commerce',
-          icon: <Code2 size={24} />,
-          color: '#22c55e'
-        }] : [])
+            id: 'TECHNICAL_EDUCATION' as const,
+            nameAr: 'أساسيات التربية التقنية',
+            nameEn: 'Foundations of Technical Education',
+            descAr: 'تطبيقات هندسية وزراعية وفندقية وتجارية',
+            descEn: 'Engineering, agriculture, hospitality, and commerce',
+            icon: <Code2 size={24} />,
+            color: '#22c55e'
+          }] : [])
       ];
     }
 
@@ -1034,14 +1159,14 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
           selectedTrack
         ) ? [] : [{
-        id: 'PHYSICS' as const,
-        nameAr: 'الفيزياء',
-        nameEn: 'Physics',
-        descAr: 'الميكانيكا، الكهرومغناطيسية، والضوء والجسيمات',
-        descEn: 'Mechanics, electromagnetism & modern physics',
-        icon: <Atom size={24} />,
-        color: '#38bdf8'
-      }]),
+          id: 'PHYSICS' as const,
+          nameAr: 'الفيزياء',
+          nameEn: 'Physics',
+          descAr: 'الميكانيكا، الكهرومغناطيسية، والضوء والجسيمات',
+          descEn: 'Mechanics, electromagnetism & modern physics',
+          icon: <Atom size={24} />,
+          color: '#38bdf8'
+        }]),
       {
         id: 'MATH' as const,
         nameAr: 'الرياضيات المتقدمة',
@@ -1067,29 +1192,29 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
           selectedTrack
         ) ? [] : [{
-        id: 'BIOLOGY' as const,
-        nameAr: 'الأحياء',
-        nameEn: 'Biology',
-        descAr: 'الوراثة الجزيئية، الخلية، ووظائف الأعضاء',
-        descEn: 'Genetics, cell biology & physiology',
-        icon: <Dna size={24} />,
-        color: '#34d399'
-      }]),
+          id: 'BIOLOGY' as const,
+          nameAr: 'الأحياء',
+          nameEn: 'Biology',
+          descAr: 'الوراثة الجزيئية، الخلية، ووظائف الأعضاء',
+          descEn: 'Genetics, cell biology & physiology',
+          icon: <Dna size={24} />,
+          color: '#34d399'
+        }]),
       ...(selectedCountry === 'SA' && selectedGrade === 'G11'
         ? isSaudiPublicBusinessG11DigitalTechnologyAvailable(
-            selectedCountry,
-            selectedGrade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-            selectedTrack
-          ) ? [{
-            id: 'COMPUTER_SCIENCE' as const,
-            nameAr: 'التقنية الرقمية 2 (نسخة BM لمسار إدارة الأعمال)',
-            nameEn: 'Digital Technology 2 (BM Edition, Business Track)',
-            descAr: 'علم البيانات والذكاء الاصطناعي والتصميم والتسويق الإلكتروني وتطوير المواقع',
-            descEn: 'Data science, AI, graphic design, e-marketing, and web development',
-            icon: <Code2 size={24} />,
-            color: '#c084fc'
-          }] : []
+          selectedCountry,
+          selectedGrade,
+          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+          selectedTrack
+        ) ? [{
+          id: 'COMPUTER_SCIENCE' as const,
+          nameAr: 'التقنية الرقمية 2 (نسخة BM لمسار إدارة الأعمال)',
+          nameEn: 'Digital Technology 2 (BM Edition, Business Track)',
+          descAr: 'علم البيانات والذكاء الاصطناعي والتصميم والتسويق الإلكتروني وتطوير المواقع',
+          descEn: 'Data science, AI, graphic design, e-marketing, and web development',
+          icon: <Code2 size={24} />,
+          color: '#c084fc'
+        }] : []
         : [{
           id: 'COMPUTER_SCIENCE' as const,
           nameAr: 'علوم الحاسب وهياكل البيانات',
@@ -1118,89 +1243,33 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
 
     if (inPrimary) {
       setSelectedTrack('GENERAL');
+      if (selectedCountry === 'SA') {
+        if (!isSaudiPrimarySubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType))) {
+          setSelectedSubject(getSaudiPrimarySubjects(grade)[0] ?? 'PRIMARY_MATH');
+        }
+        return;
+      }
       const validEgyptPrimary = selectedCountry === 'EG' && isEgyptPrimarySubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
       const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
       if (!validEgyptPrimary && !validEnglish && !['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES'].includes(selectedSubject) &&
-          !(selectedSubject === 'TAJWEED' &&
-            isSaudiPublicTajweedAvailable(
-              selectedCountry,
-              grade,
-              normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
-            )) &&
-          !(selectedSubject === 'QURAN_RECITATION' &&
-            isSaudiPublicQuranRecitationAvailable(
-              selectedCountry,
-              grade,
-              normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
-            )) &&
-          !(selectedSubject === 'VISUAL_ARTS' &&
-            isSaudiPublicG6VisualArtsAvailable(
-              selectedCountry,
-              grade,
-              normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
-            )) &&
-          !isSudanPublicGrade4SubjectAvailable(
-            selectedSubject,
+        !(selectedSubject === 'TAJWEED' &&
+          isSaudiPublicTajweedAvailable(
             selectedCountry,
             grade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-            'GENERAL'
-          ) &&
-          !isSudanPublicGrade5SubjectAvailable(
-            selectedSubject,
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+          )) &&
+        !(selectedSubject === 'QURAN_RECITATION' &&
+          isSaudiPublicQuranRecitationAvailable(
             selectedCountry,
             grade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-            'GENERAL'
-          ) &&
-          !isSudanPublicGrade6SubjectAvailable(
-            selectedSubject,
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+          )) &&
+        !(selectedSubject === 'VISUAL_ARTS' &&
+          isSaudiPublicG6VisualArtsAvailable(
             selectedCountry,
             grade,
-            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-            'GENERAL'
-          )) {
-        setSelectedSubject('PRIMARY_MATH');
-      }
-    } else if (inMiddle) {
-      setSelectedTrack('GENERAL');
-      const validEgyptPrep = selectedCountry === 'EG' && isEgyptPrepSubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
-      const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
-      if (!validEgyptPrep && !validEnglish && !['MATH', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'].includes(selectedSubject) &&
-          !(selectedCountry === 'SD' &&
-            isSudanPublicMiddleSubjectAvailable(
-              selectedSubject,
-              selectedCountry,
-              grade,
-              normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-              'GENERAL'
-            ))) {
-        setSelectedSubject('GENERAL_SCIENCE');
-      }
-    } else {
-      if (selectedCountry === 'SD' && grade === 'G12') {
-        const available = getSudanPublicGrade12Subjects(selectedTrack);
-        if (!available.includes(selectedSubject)) setSelectedSubject(available[0] ?? 'ARABIC_LIT');
-        return;
-      }
-      if (['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES', 'TAJWEED', 'QURAN_RECITATION', 'VISUAL_ARTS', 'ARABIC_LANG', 'GENERAL_SCIENCE'].includes(selectedSubject)) {
-        setSelectedSubject('PHYSICS');
-      }
-    }
-    if (selectedSubject === 'ENGLISH' &&
-        !(selectedCountry === 'EG' && selectedGrade === 'G10') &&
-        !isSudanPublicGrade12SubjectAvailable(
-          selectedSubject,
-          selectedCountry,
-          grade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-          selectedTrack
-        ) &&
-        !isSaudiPublicEnglishAvailable(
-          selectedCountry,
-          grade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
-        ) &&
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+          )) &&
         !isSudanPublicGrade4SubjectAvailable(
           selectedSubject,
           selectedCountry,
@@ -1221,14 +1290,76 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
           grade,
           normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
           'GENERAL'
-        ) &&
-        !isSudanPublicMiddleSubjectAvailable(
-          selectedSubject,
-          selectedCountry,
-          grade,
-          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-          'GENERAL'
         )) {
+        setSelectedSubject('PRIMARY_MATH');
+      }
+    } else if (inMiddle) {
+      setSelectedTrack('GENERAL');
+      const validEgyptPrep = selectedCountry === 'EG' && isEgyptPrepSubjectAvailable(selectedSubject, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType));
+      const validEnglish = selectedSubject === 'ENGLISH' && isEnglishCourseAvailable(selectedCountry, grade, normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack);
+      if (!validEgyptPrep && !validEnglish && !['MATH', 'ARABIC_LANG', 'GENERAL_SCIENCE', 'COMPUTER_SCIENCE'].includes(selectedSubject) &&
+        !(selectedCountry === 'SD' &&
+          isSudanPublicMiddleSubjectAvailable(
+            selectedSubject,
+            selectedCountry,
+            grade,
+            normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+            'GENERAL'
+          ))) {
+        setSelectedSubject('GENERAL_SCIENCE');
+      }
+    } else {
+      if (selectedCountry === 'SD' && grade === 'G12') {
+        const available = getSudanPublicGrade12Subjects(selectedTrack);
+        if (!available.includes(selectedSubject)) setSelectedSubject(available[0] ?? 'ARABIC_LIT');
+        return;
+      }
+      if (['PRIMARY_MATH', 'PRIMARY_ARABIC', 'PRIMARY_SCIENCE', 'ISLAMIC_STUDIES', 'TAJWEED', 'QURAN_RECITATION', 'VISUAL_ARTS', 'ARABIC_LANG', 'GENERAL_SCIENCE'].includes(selectedSubject)) {
+        setSelectedSubject('PHYSICS');
+      }
+    }
+    if (selectedSubject === 'ENGLISH' &&
+      !(selectedCountry === 'EG' && selectedGrade === 'G10') &&
+      !isSudanPublicGrade12SubjectAvailable(
+        selectedSubject,
+        selectedCountry,
+        grade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+        selectedTrack
+      ) &&
+      !isSaudiPublicEnglishAvailable(
+        selectedCountry,
+        grade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType)
+      ) &&
+      !isSudanPublicGrade4SubjectAvailable(
+        selectedSubject,
+        selectedCountry,
+        grade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+        'GENERAL'
+      ) &&
+      !isSudanPublicGrade5SubjectAvailable(
+        selectedSubject,
+        selectedCountry,
+        grade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+        'GENERAL'
+      ) &&
+      !isSudanPublicGrade6SubjectAvailable(
+        selectedSubject,
+        selectedCountry,
+        grade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+        'GENERAL'
+      ) &&
+      !isSudanPublicMiddleSubjectAvailable(
+        selectedSubject,
+        selectedCountry,
+        grade,
+        normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+        'GENERAL'
+      )) {
       setSelectedSubject(inPrimary ? 'PRIMARY_MATH' : inMiddle ? 'GENERAL_SCIENCE' : 'PHYSICS');
     }
   };
@@ -1298,34 +1429,40 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
       subject: (selectedCountry === 'SA' && ['G10', 'G11', 'G12'].includes(selectedGrade) &&
         !isSaudiSecondarySubjectAvailable(selectedSubject, selectedGrade, selectedTrack, educationType))
         ? getSaudiSecondarySubjects(selectedGrade, selectedTrack)[0] ?? 'MATH'
-        : selectedSubject === 'ENGLISH' && !englishCourseAvailable
-        ? isPrim ? 'PRIMARY_MATH' : isMid ? 'GENERAL_SCIENCE' : 'PHYSICS'
-        : selectedSubject === 'PHYSICS' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
-          !isSaudiPublicG11PhysicsAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)
-        ? 'ARABIC_LIT'
-        : selectedSubject === 'BIOLOGY' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
-          !isSaudiPublicG11BiologyAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)
-        ? 'ARABIC_LIT'
-        : selectedSubject === 'COMPUTER_SCIENCE' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
-          !isSaudiPublicBusinessG11DigitalTechnologyAvailable(
-            selectedCountry,
-            selectedGrade,
-            educationType,
-            selectedTrack
-          )
-        ? 'ARABIC_LIT'
-          : selectedSubject === 'TAJWEED' &&
-            !isSaudiPublicTajweedAvailable(selectedCountry, selectedGrade, educationType)
-          ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
-          : selectedSubject === 'QURAN_RECITATION' &&
-            !isSaudiPublicQuranRecitationAvailable(selectedCountry, selectedGrade, educationType)
-          ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
-          : selectedSubject === 'VISUAL_ARTS' &&
-            !isSaudiPublicG6VisualArtsAvailable(selectedCountry, selectedGrade, educationType) &&
-            !isSudanPublicGrade4SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack) &&
-            !isSudanPublicGrade5SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack)
-          ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
-          : selectedSubject,
+        : (selectedCountry === 'SA' && ['G7', 'G8', 'G9'].includes(selectedGrade) &&
+          !isSaudiMiddleSubjectAvailable(selectedSubject, selectedGrade, educationType))
+          ? getSaudiMiddleSubjects(selectedGrade)[0] ?? 'MATH'
+          : (selectedCountry === 'SA' && isPrim &&
+            !isSaudiPrimarySubjectAvailable(selectedSubject, selectedGrade, educationType))
+            ? getSaudiPrimarySubjects(selectedGrade)[0] ?? 'PRIMARY_MATH'
+            : selectedSubject === 'ENGLISH' && !englishCourseAvailable
+          ? isPrim ? 'PRIMARY_MATH' : isMid ? 'GENERAL_SCIENCE' : 'PHYSICS'
+          : selectedSubject === 'PHYSICS' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
+            !isSaudiPublicG11PhysicsAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)
+            ? 'ARABIC_LIT'
+            : selectedSubject === 'BIOLOGY' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
+              !isSaudiPublicG11BiologyAvailable(selectedCountry, selectedGrade, educationType, selectedTrack)
+              ? 'ARABIC_LIT'
+              : selectedSubject === 'COMPUTER_SCIENCE' && selectedCountry === 'SA' && selectedGrade === 'G11' &&
+                !isSaudiPublicBusinessG11DigitalTechnologyAvailable(
+                  selectedCountry,
+                  selectedGrade,
+                  educationType,
+                  selectedTrack
+                )
+                ? 'ARABIC_LIT'
+                : selectedSubject === 'TAJWEED' &&
+                  !isSaudiPublicTajweedAvailable(selectedCountry, selectedGrade, educationType)
+                  ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
+                  : selectedSubject === 'QURAN_RECITATION' &&
+                    !isSaudiPublicQuranRecitationAvailable(selectedCountry, selectedGrade, educationType)
+                    ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
+                    : selectedSubject === 'VISUAL_ARTS' &&
+                      !isSaudiPublicG6VisualArtsAvailable(selectedCountry, selectedGrade, educationType) &&
+                      !isSudanPublicGrade4SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack) &&
+                      !isSudanPublicGrade5SubjectAvailable(selectedSubject, selectedCountry, selectedGrade, educationType, selectedTrack)
+                      ? isPrim ? 'PRIMARY_ARABIC' : 'ARABIC_LIT'
+                      : selectedSubject,
       age: defaultAge,
       isAutoDetectedCountry: !isManualCountryOverride()
     };
@@ -1335,7 +1472,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
 
   return (
     <div className="modal-backdrop-blur" onClick={onClose}>
-      <div 
+      <div
         className="onboarding-modal-container"
         onClick={(e) => e.stopPropagation()}
         dir={isEn ? 'ltr' : 'rtl'}
@@ -1357,8 +1494,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
               </h2>
             </div>
           </div>
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="onboarding-close-btn"
             onClick={onClose}
             aria-label="Close"
@@ -1493,8 +1630,8 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                 {isEn ? 'Structured Educational Pathway' : 'خريطة المسارات التعليمية المعتمدة'}
               </span>
               <h3>
-                {isEn 
-                  ? 'Choose how the curriculum aligns with your educational level' 
+                {isEn
+                  ? 'Choose how the curriculum aligns with your educational level'
                   : 'تعرف على تسلسل المراحل التعليمية وكيف يتكيف المنهج مع مستواك'}
               </h3>
               <p>
@@ -1507,7 +1644,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
             {/* Interactive Stage Pathway */}
             <div className="stages-pathway-container">
               {/* Stage 1: Primary */}
-              <div 
+              <div
                 className={`stage-pathway-card ${isPrimary ? 'stage-card-active' : ''}`}
                 onClick={() => handleSelectGrade('G4')}
               >
@@ -1538,7 +1675,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
               </div>
 
               {/* Stage 2: Middle */}
-              <div 
+              <div
                 className={`stage-pathway-card ${isMiddle ? 'stage-card-active' : ''}`}
                 onClick={() => handleSelectGrade('G8')}
               >
@@ -1569,7 +1706,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
               </div>
 
               {/* Stage 3: High / STEM */}
-              <div 
+              <div
                 className={`stage-pathway-card ${isHigh ? 'stage-card-active' : ''}`}
                 onClick={() => handleSelectGrade('G10')}
               >
@@ -1627,11 +1764,11 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                         setSelectedTrack(current => normalizeEducationTrackForCountry(cCode, current));
                         const educationType = normalizeEducationTypeForCountry(cCode, profile.educationType);
                         if (selectedSubject === 'ENGLISH' &&
-                            !isSaudiPublicEnglishAvailable(cCode, selectedGrade, educationType) &&
-                            !isSudanPublicGrade4SubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack) &&
-                            !isSudanPublicGrade5SubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack) &&
-                            !isSudanPublicGrade6SubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack) &&
-                            !isSudanPublicMiddleSubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack)) {
+                          !isSaudiPublicEnglishAvailable(cCode, selectedGrade, educationType) &&
+                          !isSudanPublicGrade4SubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack) &&
+                          !isSudanPublicGrade5SubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack) &&
+                          !isSudanPublicGrade6SubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack) &&
+                          !isSudanPublicMiddleSubjectAvailable('ENGLISH', cCode, selectedGrade, educationType, selectedTrack)) {
                           setSelectedSubject(isPrimary ? 'PRIMARY_MATH' : isMiddle ? 'GENERAL_SCIENCE' : 'PHYSICS');
                         }
                       }}
@@ -1714,13 +1851,13 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
                     const track = event.target.value as EducationTrack;
                     setSelectedTrack(track);
                     if (selectedCountry === 'SD' && selectedGrade === 'G12' &&
-                        !isSudanPublicGrade12SubjectAvailable(
-                          selectedSubject,
-                          selectedCountry,
-                          selectedGrade,
-                          normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
-                          track
-                        )) {
+                      !isSudanPublicGrade12SubjectAvailable(
+                        selectedSubject,
+                        selectedCountry,
+                        selectedGrade,
+                        normalizeEducationTypeForCountry(selectedCountry, profile.educationType),
+                        track
+                      )) {
                       setSelectedSubject(getSudanPublicGrade12Subjects(track)[0] ?? 'ARABIC_LIT');
                     }
                   }}
@@ -1819,7 +1956,7 @@ export const WelcomeOnboardingModal: React.FC<WelcomeOnboardingModalProps> = ({
               >
                 <Rocket size={18} />
                 <span>
-                  {isEn 
+                  {isEn
                     ? `Launch ${getNationalSubjectLabel(selectedSubject, selectedCountry, selectedGrade, 'en', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) || selectedSubject}`
                     : `ابدأ رحلة التعلم في ${getNationalSubjectLabel(selectedSubject, selectedCountry, selectedGrade, 'ar', normalizeEducationTypeForCountry(selectedCountry, profile.educationType), selectedTrack) || selectedSubject}`}
                 </span>

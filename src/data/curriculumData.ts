@@ -108,6 +108,15 @@ import {
   isSaudiMiddleSubjectAvailable
 } from './saudiMiddleCurriculumData';
 export {
+  getSaudiPrimaryCurriculum,
+  isSaudiPrimarySubjectAvailable,
+  getSaudiPrimarySubjects
+} from './saudiPrimaryCurriculumData';
+import {
+  getSaudiPrimaryCurriculum,
+  isSaudiPrimarySubjectAvailable
+} from './saudiPrimaryCurriculumData';
+export {
   getEgyptPrepCurriculum,
   isEgyptPrepSubjectAvailable,
   getEgyptPrepSubjects
@@ -5049,6 +5058,12 @@ export function getCurriculumForSubject(
     }
     return getSaudiMiddleCurriculum(subject, gradeLevel as GradeLevel, educationType);
   }
+  if (country === 'SA' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel || '')) {
+    if (!isSaudiPrimarySubjectAvailable(subject, gradeLevel as GradeLevel, educationType)) {
+      return [];
+    }
+    return getSaudiPrimaryCurriculum(subject, gradeLevel as GradeLevel, educationType);
+  }
   if (country === 'EG' && ['G7', 'G8', 'G9'].includes(gradeLevel || '')) {
     return getEgyptPrepCurriculum(subject, gradeLevel as GradeLevel, educationType, _track);
   }
@@ -5917,6 +5932,11 @@ export function loadSubjectLectures(
     country === 'SA' &&
     (gradeLevel === 'G7' || gradeLevel === 'G8' || gradeLevel === 'G9') &&
     !isSaudiMiddleSubjectAvailable(subject, gradeLevel as GradeLevel, educationType)
+  ) return [];
+  if (
+    country === 'SA' &&
+    ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(gradeLevel || '') &&
+    !isSaudiPrimarySubjectAvailable(subject, gradeLevel as GradeLevel, educationType)
   ) return [];
   if (
     country === 'EG' &&

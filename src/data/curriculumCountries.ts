@@ -34,8 +34,8 @@ export const SUPPORTED_COUNTRIES: Record<CountryCode, CountryCurriculumInfo> = {
     nameEn: 'Saudi Arabia',
     ministryAr: 'وزارة التعليم بالمملكة العربية السعودية',
     ministryEn: 'Ministry of Education - Kingdom of Saudi Arabia',
-    systemNameAr: 'محتوى تعليمي مكيّف للسعودية (مطابقة المنهج الرسمي قيد التحقق)',
-    systemNameEn: 'Saudi-adapted learning content (official curriculum alignment under review)',
+    systemNameAr: 'المنهج السعودي المعتمد والموثق (نظام المسارات، والمرحلة المتوسطة، والمرحلة الابتدائية المطورة)',
+    systemNameEn: 'Official Saudi National Curriculum (Pathways, Middle, and Enhanced Primary)',
     termDefaultAr: 'الفصل الدراسي الثاني',
     termDefaultEn: 'Second Trimester / Term 2',
     termsCount: 3,
@@ -490,7 +490,7 @@ export function getAvailableTracksForCountryAndGrade(
     }
   }
   if (country === 'SA') {
-    if (gradeLevel === 'G10') {
+    if (gradeLevel && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10'].includes(gradeLevel)) {
       return ['GENERAL'];
     }
     return ['GENERAL', 'CS_ENGINEERING', 'HEALTH_LIFE', 'BUSINESS', 'SHARIA_HUMANITIES'];
@@ -2525,6 +2525,31 @@ export function getNationalSubjectLabel(
     };
     const primLabel = primaryLabels[subject];
     if (primLabel) return isEn ? primLabel[0] : primLabel[1];
+  }
+
+  if (country === 'SA' && ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'].includes(_gradeLevel || '')) {
+    const gNum = _gradeLevel ? _gradeLevel.slice(1) : '1';
+    const gNameAr = _gradeLevel === 'G1' ? 'الأول' : _gradeLevel === 'G2' ? 'الثاني' : _gradeLevel === 'G3' ? 'الثالث' : _gradeLevel === 'G4' ? 'الرابع' : _gradeLevel === 'G5' ? 'الخامس' : 'السادس';
+    const saPrimaryLabels: Partial<Record<Subject, [string, string]>> = {
+      PRIMARY_MATH: [`Mathematics (Grade ${gNum})`, `الرياضيات (الصف ${gNameAr} الابتدائي)`],
+      MATH: [`Mathematics (Grade ${gNum})`, `الرياضيات (الصف ${gNameAr} الابتدائي)`],
+      PRIMARY_ARABIC: [`Lughati Al-Jameelah (Grade ${gNum})`, `لغتي الجميلة (الصف ${gNameAr} الابتدائي)`],
+      ARABIC_LANG: [`Lughati Al-Jameelah (Grade ${gNum})`, `لغتي الجميلة (الصف ${gNameAr} الابتدائي)`],
+      ARABIC_LIT: [`Lughati Al-Jameelah (Grade ${gNum})`, `لغتي الجميلة (الصف ${gNameAr} الابتدائي)`],
+      PRIMARY_SCIENCE: [`Science (Grade ${gNum})`, `العلوم (الصف ${gNameAr} الابتدائي)`],
+      GENERAL_SCIENCE: [`Science (Grade ${gNum})`, `العلوم (الصف ${gNameAr} الابتدائي)`],
+      ENGLISH: [`English (We Can! ${gNum})`, `اللغة الإنجليزية (We Can! ${gNum})`],
+      ISLAMIC_STUDIES: [`Islamic Studies (Grade ${gNum})`, `الدراسات الإسلامية (الصف ${gNameAr} الابتدائي)`],
+      TAJWEED: [`Tajweed (Grade ${gNum})`, `التجويد (الصف ${gNameAr} الابتدائي)`],
+      QURAN_RECITATION: [`Quran Recitation & Tajweed (Grade ${gNum})`, `تلاوة القرآن الكريم وتجويده (الصف ${gNameAr} الابتدائي)`],
+      HISTORY: [`Social Studies (Grade ${gNum})`, `الدراسات الاجتماعية والمواطنة (الصف ${gNameAr} الابتدائي)`],
+      SAUDI_SOCIAL_STUDIES: [`Social Studies (Grade ${gNum})`, `الدراسات الاجتماعية والمواطنة (الصف ${gNameAr} الابتدائي)`],
+      COMPUTER_SCIENCE: [`Digital Skills (Grade ${gNum})`, `المهارات الرقمية (الصف ${gNameAr} الابتدائي)`],
+      VISUAL_ARTS: [`Art Education (Grade ${gNum})`, `التربية الفنية (الصف ${gNameAr} الابتدائي)`],
+      LIFE_SKILLS: [`Life & Family Skills (Grade ${gNum})`, `المهارات الحياتية والأسرية (الصف ${gNameAr} الابتدائي)`]
+    };
+    const saLabel = saPrimaryLabels[subject];
+    if (saLabel) return isEn ? saLabel[0] : saLabel[1];
   }
 
   if (subject === 'FRENCH') {
